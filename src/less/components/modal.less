@@ -1,0 +1,98 @@
+.modal {
+    opacity: 0;
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: scroll;
+    z-index: 4;
+    transition: opacity @trans-fast;
+
+    @media ( max-width: @screen-xs-max ) {
+        background: @color-white;
+    }
+}
+
+.modal--open {
+    opacity: 1;
+}
+
+.modal__wrapper {
+    @media ( min-width: @screen-sm ) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        min-height: 100%;
+        padding: 20rem 0 10rem 0;
+    }
+}
+
+.modal__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.15);
+    transition: @trans-fast;
+    cursor: pointer;
+
+    @media ( max-width: @screen-xs-max ) {
+        display: none;
+    }
+}
+
+.modal__box {
+    position: relative;
+    max-width: 72.8rem;
+    width: 100%;
+    min-height: 100%;
+    padding: 7rem 2rem 5rem 2rem;
+    background: @color-white;
+
+    @media ( min-width: @screen-sm ) {
+        align-self: flex-start;
+        padding: 4rem;
+        box-shadow: @box-shadow;
+        z-index: 1;
+    }
+}
+
+.modal__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    padding: 2rem;
+    color: @color-grey--60;
+    transition: color @trans-fast;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+        color: @color-secondary;
+    }
+
+    .icon(cross);
+    &:before {
+        font-size: 1.4rem;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        right: 0;
+        top: 0;
+
+        &:before {
+            font-size: 1.2rem;
+        }
+    }
+
+    @media (min-width: @screen-sm) {
+        right: 2rem;
+        top: 2rem;
+    }
+}
+

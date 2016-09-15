@@ -1,0 +1,307 @@
+// Main navigation button that contains dropdown
+.navigation__dropdown {
+    @media (min-width: @screen-lg) {
+        position: relative;
+
+        &.___mobile {
+            display: none;
+        }
+    }
+}
+
+.submenu__links {
+    @media (min-width: @screen-lg) {
+        .navigation__dropdown:hover & {
+            position: static;
+
+            .submenu {
+                min-height: 100%;
+                top: 0;
+
+                &.___open {
+                    visibility: visible;
+                    opacity: 1;
+                }
+
+                .submenu__list {
+                    width: 100%;
+                }
+            }
+
+            // Hide submenu's that are not hovered
+            &.___hide {
+                .submenu {
+                    visibility: hidden;
+                    opacity: 0;
+                }
+            }
+
+        }
+    }
+
+    // DESKTOP
+    @media (min-width: @screen-lg) {
+        &:hover > a {
+            color: @color-black;
+        }
+
+        &.___is-active {
+            background-color: @color-tertiary--lighter;
+        }
+    }
+}
+
+// The dropdown
+.submenu {
+    position: absolute;
+    width: 100%;
+    left: 100%;
+    top: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility @trans-normal, opacity @trans-normal;
+    white-space: nowrap;
+
+    // MOBILE & TABLET
+    @media (max-width: @screen-md-max) {
+
+        &.___open {
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+
+    // DESKTOP
+    @media (min-width: @screen-lg) {
+        left: 100%;
+        overflow: visible;
+
+        &:before {
+            position: absolute;
+            width: 1px;
+            background-color: @color-grey--50;
+            top: 1.1rem;
+            bottom: 1.1rem;
+            left: 100%;
+            content: '';
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .navigation__dropdown:hover > &,
+        &.___hover {
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+
+    //
+    // Scope
+    //
+
+    a {
+        position: relative;
+
+        &.___dropdown {
+            .icon(angle-right, after);
+
+            &:after {
+                position: absolute;
+                right: 2rem;
+                line-height: inherit;
+            }
+
+            // DESKTOP
+            @media (min-width: @screen-lg) {
+                &:after {
+                    transition: transform @trans-fast;
+                }
+
+                &.___hover{
+                    &:after {
+                        transform: translate(0.5rem, 0);
+                    }
+                }
+            }
+        }
+
+        &.___hover {
+            // MOBILE & TABLET
+            @media (max-width: @screen-md-max) {
+                background-color: @color-black;
+            }
+
+            // DESKTOP
+            @media (min-width: @screen-lg) {
+                color: @color-black;
+            }
+        }
+
+        &.___is-active {
+            // MOBILE & TABLET
+            @media (max-width: @screen-md-max) {
+                color: @color-black;
+            }
+
+            // DESKTOP
+            @media (min-width: @screen-lg) {
+                background-color: @color-black;
+            }
+        }
+    }
+}
+
+.submenu.___dropdown {
+    @media (min-width: @screen-lg) {
+        width: auto;
+        min-width: 100%;
+        top: auto;
+        left: 0;
+        background-color: @color-white;
+        overflow: hidden;
+        z-index: 3;
+        box-shadow: @box-shadow;
+    }
+}
+
+/* Multi-level dropdowns */
+@media (min-width: @screen-lg) {
+
+    // Two-level-dropdown
+    .navigation__links.___2-levels > .navigation__dropdown  {
+        position: static;
+
+        > .submenu.___dropdown {
+            width: 60rem;
+            left: auto;
+
+            > .submenu__list {
+                width: calc(100% / 2);
+            }
+
+            // Sub navigation divider
+            &:before {
+                left: calc(100% / 2);
+            }
+        }
+    }
+
+    // Three-level-dropdown
+    .navigation__links.___3-levels > .navigation__dropdown  {
+        position: static;
+
+        .submenu.___dropdown {
+            width: 98.4rem;
+
+            > .submenu__list {
+                width: calc(100% / 3);
+            }
+
+            // Sub navigation divider
+            &:before {
+                left: calc(100% / 3);
+            }
+        }
+
+        .___level-2-of-3 > .submenu {
+            width: calc(100% / 3);
+            left: calc(100% / 3);
+        }
+
+        .___level-3-of-3 > .submenu {
+            width: 100%;
+            left: 100%;
+        }
+    }
+}
+
+// Mobile back button
+.submenu__back {
+    position: relative;
+    display: block;
+    line-height: 5rem;
+    padding:0 2rem;
+    margin: 0 0 1rem 0;
+    cursor: pointer;
+    transition: color @trans-fast, background-color @trans-fast;
+
+    .icon(angle-left, after);
+
+    &:after {
+        position: absolute;
+        right: 2rem;
+        line-height: inherit;
+    }
+
+    &:before {
+        position: absolute;
+        content:"";
+        height: 1px;
+        left: 2rem;
+        bottom: 0;
+        right: 2rem;
+        background-color: @color-grey--50;
+    }
+
+    // MOBILE & TABLET
+    @media (max-width: @screen-md-max) {
+        &:hover {
+            background-color: @color-tertiary--lighter;
+        }
+    }
+
+    @media (min-width: @screen-lg) {
+        display: none;
+    }
+}
+
+// Sub navigation list
+.submenu__list {
+    list-style-type: none;
+    margin: 0;
+    padding:0;
+    background-color: @color-white;
+    display: flex;
+    flex-direction: column;
+
+    a, span {
+        text-decoration: none;
+        display: block;
+        line-height: 3.2rem;
+        color: @color-black;
+        padding: 0 2rem;
+        position: relative;
+        transition: color @trans-fast, background-color @trans-fast;
+    }
+
+    // MOBILE & TABLET
+    @media (max-width: @screen-md-max) {
+        a:hover {
+            background-color: @color-tertiary--lighter;
+        }
+    }
+
+    @media (min-width: @screen-lg) {
+        position: relative;
+        padding: 1.1rem 0;
+    }
+}
+
+// Mobile sub navigation list subject
+.submenu__list-subject {
+    font-weight: bold;
+
+    @media (max-width: @screen-md-max) {
+        a:hover {
+            background-color: @color-black;
+        }
+    }
+
+    @media (min-width: @screen-lg) {
+        display: none;
+    }
+}
+
+.submenu__list .submenu__list-link {
+    display: none;
+}

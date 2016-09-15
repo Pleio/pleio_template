@@ -1,0 +1,130 @@
+.card-list {
+    @media ( max-width: @screen-xs-max ) {
+        border-bottom: 1px solid @color-grey--50;
+
+        .read-more {
+            justify-content: flex-end;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+
+        .read-more__circle {
+            order: 1;
+            margin: 0 0 0 0.8rem;
+        }
+    }
+
+    @media ( min-width: @screen-sm ) {
+        margin: 0 0 2rem 0;
+        padding: 3rem;
+        background-color: @color-white;
+        box-shadow: @box-shadow;
+
+        .read-more {
+            margin-top: 2.5rem;
+        }
+    }
+}
+
+.card-list__title {
+    font-size: @font-size--title-small;
+    line-height: @line-height--title-small;
+    font-weight: bold;
+
+    .icon(angle-down, after);
+    &:after {
+        font-size: 0.8rem;
+        color: @color-secondary;
+        padding: 0 1rem;
+        transition: transform @trans-fast;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: @font-size--title-extra-small;
+        line-height: 4rem;
+        cursor: pointer;
+
+        &.___is-open {
+            &:after {
+                transform: scaleY(-1);
+            }
+        }
+    }
+
+    @media ( min-width: @screen-sm ) {
+        margin: 0 0 1rem 0;
+
+        &:after {
+            display: none;
+        }
+    }
+}
+
+.card-list__items {
+    @media ( max-width: @screen-xs-max ) {
+        height: 0;
+        overflow: hidden;
+        transition: height @trans-normal;
+    }
+}
+
+.card-list__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: @font-size--medium;
+    line-height: @line-height--medium;
+    padding: 1rem 0;
+    color: @color-black;
+    text-decoration: none;
+    border-bottom: 1px solid @color-grey--50;
+
+    @media ( max-width: @screen-xs-max ) {
+        flex-wrap: wrap;
+        line-height: 2.4rem;
+    }
+}
+
+.card-list__date {
+    flex-shrink: 0;
+    width: 5rem;
+    color: @color-primary;
+
+    @media ( max-width: @screen-xs-max ) {
+        flex-grow: 1;
+    }
+}
+
+.card-list__post {
+    flex-grow: 1;
+    padding: 0 1rem 0 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color @trans-fast;
+
+    .card-list__item:hover & {
+        color: @color-secondary;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        width: 100%;
+        order: 1;
+    }
+}
+
+.card-list__comments {
+    flex-shrink: 0;
+    width: 3.8rem;
+    color: @color-grey--60;
+
+    .icon(comments);
+    &:before {
+        font-size: 1.4rem;
+        color: @color-grey--50;
+        margin: 0 0.5rem 0 0;
+    }
+}

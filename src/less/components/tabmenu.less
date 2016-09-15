@@ -1,0 +1,28 @@
+.tabmenu {
+
+}
+
+.tabmenu__link {
+  display: inline-block;
+  color: @color-black;
+  font-size: @font-size--base;
+  line-height: @line-height--base;
+  border-bottom: 0.5rem solid @color-white;
+  padding: 1rem 0.8rem 1rem 0.8rem;
+  text-decoration: none;
+  margin-left: 0.8rem;
+  transition: color @trans-fast;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:hover {
+    color: @color-primary;
+  }
+
+  &.___is-active {
+    border-color: @color-primary;
+    color: @color-septenary;
+  }
+}

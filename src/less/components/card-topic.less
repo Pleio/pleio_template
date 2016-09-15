@@ -1,0 +1,226 @@
+.card-topic {
+    position: relative;
+    background-color: @color-white;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-decoration: none;
+    color: inherit;
+    width: 100%; // IE10-11 COLUMN FIX
+    box-shadow: @box-shadow;
+
+    @media ( min-width: @screen-sm ) {
+        display: flex;
+        padding: 3rem 3rem 3rem 8rem;
+    }
+}
+
+.card-topic__picture {
+    width: 4rem;
+    height: 4rem;
+    position: absolute;
+    top: 3rem;
+    left: 2.4rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 50%;
+    overflow: hidden;
+
+    @media ( max-width: @screen-xs-max ) {
+        display: none;
+    }
+}
+
+.card-topic__post {
+    flex: 1 1 auto;
+
+    @media ( min-width: @screen-sm ) {
+        padding: 0 2.5rem 0 0;
+    }
+}
+
+.card-topic__title {
+    display: block;
+    .font(title-small);
+    font-weight: bold;
+    color: @color-primary;
+
+    @media ( max-width: @screen-xs-max ) {
+        .font(base);
+    }
+
+    @media ( min-width: @screen-sm ) {
+        margin: 0 0 1rem 0;
+    }
+}
+
+.card-topic__meta {
+    margin: 0 0 1.2rem 0;
+    .font(medium);
+    color: @color-grey--60;
+
+    a {
+        color: @color-secondary;
+        font-weight: bold;
+        transition: color @trans-fast;
+
+        &:hover {
+            color: @color-primary;
+        }
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        span {
+            display: none;
+        }
+    }
+}
+
+.card-topic__subject {
+    @media ( max-width: @screen-xs-max ) {
+        display: none;
+    }
+}
+
+.card-topic__content {
+    @media ( max-width: @screen-xs-max ) {
+        display: none;
+    }
+
+    @media ( min-width: @screen-sm ) {
+        .multiline-ellipsis( @font-size--base, @line-height--base, 2 );
+    }
+}
+
+.card-topic__actions {
+    display: flex;
+    justify-content: space-between;
+    flex-shrink: 0;
+
+    @media ( min-width: @screen-sm ) {
+        flex-direction: column;
+        width: 20rem;
+    }
+}
+
+.card-topic__justify {
+    .font(medium);
+    color: @color-grey--60;
+}
+
+.card-topic__views {
+    display: flex;
+    align-items: center;
+
+    .icon(eye);
+    &:before {
+        width: 2.4rem;
+        margin: 0 0.8rem 0 0;
+        font-size: 1.3rem;
+        text-align: center;
+    }
+}
+
+.card-topic__bookmark {
+    padding: 0 0 0 3.2rem;
+    font-weight: normal;
+    color: @color-grey--60;
+    .icon(bookmark-line);
+    .icon(bookmark, after);
+
+    @media ( max-width: @screen-xs-max ) {
+        display: none;
+    }
+
+    &:before,
+    &:after {
+        position: absolute;
+        width: 2.4rem;
+        left: 0;
+        top: 0.9rem;
+        font-size: 2.3rem;
+        text-align: center;
+        transition: opacity @trans-fast, color @trans-fast;
+
+        @media ( max-width: @screen-xs-max ) {
+            right: 0;
+            text-align: center;
+        }
+    }
+
+    &:after {
+        opacity: 0;
+    }
+
+    &:hover {
+        &:before {
+            opacity: 0;
+        }
+
+        &:after {
+            opacity: 1;
+        }
+    }
+
+    span {
+        transition: opacity @trans-fast;
+
+        @media ( max-width: @screen-xs-max ) {
+            display: none;
+        }
+
+        &.___save {
+            opacity: 1;
+        }
+
+        &.___saved {
+            position: absolute;
+            opacity: 0;
+        }
+    }
+
+    &.___is-saved {
+        &:before {
+            opacity: 0;
+        }
+
+        &:after {
+            color: @color-secondary;
+            opacity: 1;
+        }
+
+        .___save {
+            opacity: 0;
+        }
+
+        .___saved {
+            opacity: 1;
+        }
+    }
+}
+
+.card-topic__comments {
+    font-weight: bold;
+    color: @color-grey--80;
+
+    .icon(comments);
+    &:before {
+        margin: 0 1rem 0 0;
+        color: @color-secondary;
+        font-size: 1.9rem;
+        transition: color @trans-fast;
+    }
+
+    &:hover:before {
+        color: @color-primary;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        order: -1;
+    }
+}
+
+
+
+
+

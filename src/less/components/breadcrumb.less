@@ -1,0 +1,29 @@
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    margin: 0 0 0.6rem 0;
+
+    a {
+        display: flex;
+        align-items: center;
+        color: @color-grey--60;
+        transition: color @trans-fast;
+
+        &:not(:first-child) {
+            .icon(angle-right);
+            &:before {
+                font-size: 1rem;
+                margin: 0 1rem;
+                color: @color-grey--60;
+            }
+        }
+
+        &:hover {
+            color: @color-primary;
+
+            &:before {
+                color: @color-grey--60;
+            }
+        }
+    }
+}

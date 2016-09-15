@@ -1,0 +1,120 @@
+.read-more {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: @color-black;
+    line-height: 1;
+
+    &.___invert,
+    .read-more__inverted & {
+        color: @color-white;
+
+        .read-more__circle {
+            background-color: @color-white;
+
+            &:before {
+                color: @color-primary;
+            }
+        }
+    }
+
+    [href=""] > & {
+        opacity: 0;
+    }
+
+    .content & {
+        color: @color-black;
+        margin-bottom: .5rem;
+
+        &:hover {
+            border-color: transparent;
+        }
+    }
+
+    &.___bottom {
+        position: absolute;
+        bottom: 3rem;
+    }
+
+    &.___addgutter {
+        margin-left: 1rem;
+    }
+
+    &.___margin-top {
+        margin-top: 4rem;
+    }
+
+    span {
+        font-size: @font-size--medium;
+        font-weight: bold;
+        padding: 0.2rem 0 0 0;
+
+        .card-tile:not(.___image-full) & {
+            @media ( max-width: @screen-xs-max ) {
+                display: none;
+            }
+        }
+    }
+}
+
+.read-more__circle {
+    width: 2rem;
+    height: 2rem;
+    margin: 0 0.8rem 0 0;
+    background-color: @color-secondary;
+    line-height: 2rem;
+    border-radius: 100%;
+    transition: background-color @trans-fast;
+
+    .card-tile:not(.___image-full) & {
+        @media ( max-width: @screen-xs-max ) {
+            margin: 0;
+            position: absolute;
+            right: 2rem;
+            bottom: 2rem;
+        }
+    }
+
+    a.read-more:hover &,
+    a.card-tile:hover & {
+        background-color: @color-quaternary;
+    }
+
+    .icon(arrow-right-circle-transparent);
+
+    &:before {
+        display: block;
+        color: @color-white;
+        font-size: 2rem;
+        text-shadow: none;
+        transition: color @trans-fast;
+    }
+
+    .read-more-circle:hover & {
+        background-color: @color-tertiary;
+
+        &:before {
+            color: @color-tertiary;
+        }
+    }
+
+    .___redicon & {
+        background-color: #d52b1e;
+    }
+
+    .___greenicon & {
+        background-color: #76d2b6;
+    }
+}
+
+.read-more__icon {
+    color: @color-primary;
+    font-size: 2rem;
+    margin: 0 0.8rem 0 0;
+    transition: color @trans-fast, background-color @trans-fast;
+
+    // In case of being used on a tile
+    .card-tile:hover & {
+        color: @color-tertiary;
+    }
+}

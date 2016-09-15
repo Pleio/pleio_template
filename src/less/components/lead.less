@@ -1,0 +1,191 @@
+.lead {
+    position: relative;
+    display: flex; // IE10-11 COLUMN FIX
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    color: @color-white;
+    text-shadow: @text-shadow;
+    text-align: center;
+
+    &.___text-align-left {
+        text-align: left;
+
+        .lead__title,
+        .lead__sub-title {
+            margin-left: 0;
+            margin-right: 0;
+            max-width: 58rem;
+        }
+    }
+
+    &.___forum-lead {
+        display: block;
+
+        > .container {
+            position: relative;
+            width: 100%;
+            z-index: 1;
+        }
+
+        &:before {
+            display: none;
+        }
+    }
+
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        display: block;
+        background: fade(@color-grey--80, 25%);
+        background: linear-gradient(to right, fade(@color-grey--80, 40%) 0%, fade(@color-grey--80, 0%) 100%);
+    }
+
+    //
+    //
+    // Heights of lead
+    //
+    //
+
+    &.lead__landing {
+        .lead__justify {
+            min-height: 25rem;
+        }
+    }
+
+    &.lead__scheiden-home {
+        .lead__justify {
+            min-height: 26rem;
+        }
+    }
+
+    &.lead__content {
+        .lead__justify {
+            @media (max-width: @screen-xs-max) {
+                min-height: 13rem;
+            }
+
+            @media (min-width: @screen-sm) {
+                min-height: 33rem;
+            }
+        }
+
+        &:before {
+            background: none;
+        }
+    }
+    &.lead__large {  // only for video?
+        .lead__justify {
+            min-height: 35.5rem;
+        }
+    }
+
+    &.lead__small {         // @TODO : kan weg, ongebruikt?!
+        .lead__justify {
+            min-height: 31rem;
+        }
+
+        .lead-video__title {
+            font-size: @font-size--title-main;
+            line-height: @line-height--title-main;
+        }
+
+        .lead__sub-title {
+            font-size: @font-size--title-small;
+            line-height: @line-height--title-small;
+            font-weight: normal;
+        }
+    }
+
+    &.___blue {
+        .lead__justify {
+            min-height: 29rem;
+        }
+
+        margin: 1rem 0 0 0;
+        text-shadow: none;
+        background-color: @color-primary;
+
+        &:before {
+            display: none;
+        }
+    }
+}
+
+.lead__background {
+    height: 10rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+    @media ( min-width: @screen-sm ) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 20rem;
+    }
+}
+
+.lead__justify {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 20rem;
+    padding: 2rem 0;
+
+    .___forum-lead & {
+        display: block;
+        padding: 0;
+    }
+
+    > .container {
+        width: 100%;
+    }
+}
+
+.lead__title {
+    position: relative;
+    margin-bottom: 0.7rem;
+    max-width: 77rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: @font-size--title-normal;
+    line-height: @line-height--title-normal;
+
+    @media( min-width: @screen-sm ) {
+        font-size: 5rem;
+        line-height: 5.6rem;
+    }
+}
+
+.lead__sub-title {
+    position: relative;
+    max-width: 77rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: @font-size--title-small;
+    line-height: @line-height--title-small;
+    font-weight: normal;
+}
+
+.lead__button {
+    margin: 1rem 0 0 0;
+    float: right;
+    text-shadow: none;
+
+    .___blue & {
+        background-color: @color-black;
+
+        &:hover {
+            color: @color-black;
+            background-color: @color-white;
+        }
+    }
+}

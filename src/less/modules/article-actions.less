@@ -1,0 +1,210 @@
+.article-actions {
+    margin: 3rem 0 0 0;
+
+    @media ( max-width: @screen-xs-max ) {
+        margin-top: 2rem;
+    }
+
+    &.___no-padding {
+        padding: 0;
+    }
+}
+
+.article-actions__share {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.article-actions__justify {
+    display: flex;
+    justify-content: space-between;
+}
+
+.article-action {
+
+    &.button:hover {
+        background-color: @color-primary;
+    }
+
+    &.___share {
+        margin: 0 1rem 2rem 0;
+        background-color: @color-grey--50;
+        .icon(share);
+
+        &:before {
+            font-size: 1.3rem;
+            margin: 0 0.8rem 0.2rem 0;
+
+            @media ( max-width: @screen-xs-max ) {
+                margin-right: 0;
+            }
+        }
+
+        &.___is-open {
+            background-color: @color-primary;
+        }
+
+        span {
+            @media ( max-width: @screen-xs-max ) {
+                display: none;
+            }
+        }
+
+        @media ( max-width: @screen-xs-max ) {
+            width: 3.6rem;
+            padding: 0;
+            text-align: center;
+        }
+    }
+
+    &.___comment {
+        .icon(pencil);
+
+        &:before {
+            font-size: 1.5rem;
+            margin: 0 0.8rem 0.2rem 0;
+        }
+    }
+
+    &.___bookmark {
+        padding: 0 0 0 2.2rem;
+        color: @color-grey--60;
+        .icon(bookmark-line);
+        .icon(bookmark, after);
+
+        @media ( max-width: @screen-xs-max ) {
+            width: 3.6rem;
+            padding: 0;
+        }
+
+        &:before,
+        &:after {
+            position: absolute;
+            left: 0;
+            top: 0.9rem;
+            font-size: 2rem;
+            transition: opacity @trans-fast, color @trans-fast;
+
+            @media ( max-width: @screen-xs-max ) {
+                right: 0;
+                text-align: center;
+            }
+        }
+
+        &:after {
+            opacity: 0;
+        }
+
+        &:hover {
+            &:before {
+                opacity: 0;
+            }
+
+            &:after {
+                opacity: 1;
+            }
+        }
+
+        span {
+            transition: opacity @trans-fast;
+
+            @media ( max-width: @screen-xs-max ) {
+                display: none;
+            }
+
+            &.___save {
+                opacity: 1;
+            }
+
+            &.___saved {
+                position: absolute;
+                top: 0.8rem;
+                opacity: 0;
+            }
+        }
+
+        &.___is-saved {
+            &:before {
+                opacity: 0;
+            }
+
+            &:after {
+                color: @color-secondary;
+                opacity: 1;
+            }
+
+            .___save {
+                opacity: 0;
+            }
+
+            .___saved {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.article-share {
+    max-height: 0;
+    transition: max-height @trans-fast;
+    transition-delay: 0.35s;
+
+    .button__share {
+        visibility: hidden;
+        opacity: 0;
+        transform: translate(-1rem, 0);
+        transition: visibility @trans-fast, opacity @trans-fast, transform @trans-fast;
+
+        &:not(:last-child) {
+            margin: 0 1rem 1rem 0;
+        }
+
+        &:last-child {
+            margin: 0 0 2rem 0;
+        }
+
+        &:nth-child(1) {
+            transition-delay: 0.2s;
+        }
+        &:nth-child(2) {
+            transition-delay: 0.15s;
+        }
+        &:nth-child(3) {
+            transition-delay: 0.1s;
+        }
+        &:nth-child(4) {
+            transition-delay: 0.05s;
+        }
+        &:nth-child(5) {
+            transition-delay: 0s;
+        }
+    }
+
+    &.___is-open {
+        max-height: 6rem;
+        transition-delay: 0s;
+
+        .button__share {
+            visibility: visible;
+            opacity: 1;
+            transform: translate(0, 0);
+            transition: visibility @trans-fast, opacity @trans-fast, transform @trans-fast;
+
+            &:nth-child(1) {
+                transition-delay: 0s;
+            }
+            &:nth-child(2) {
+                transition-delay: 0.05s;
+            }
+            &:nth-child(3) {
+                transition-delay: 0.1s;
+            }
+            &:nth-child(4) {
+                transition-delay: 0.15s;
+            }
+            &:nth-child(5) {
+                transition-delay: 0.2s;
+            }
+        }
+    }
+}

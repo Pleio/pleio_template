@@ -1,0 +1,42 @@
+.header {
+  position: relative;
+  width: 100%;
+  min-height: 7.4rem;
+  background-color: @color-white;
+
+  @media(min-width: @screen-md) {
+    min-height: 8.8rem;
+  }
+
+  .container {
+    position: relative;
+  }
+}
+
+.header__logo {
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -2.2rem;
+
+  img {
+    display: block;
+    height: 6.3rem;
+
+    @media(min-width: @screen-md) {
+      height: 7.7rem;
+    }
+  }
+}
+
+.header__background {
+  display: none;
+
+  @media (min-width: @screen-sm) {
+    display: block;
+    height: 39.6rem;
+    background-size: cover;
+    background-position: center;
+  }
+}

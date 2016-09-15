@@ -1,0 +1,158 @@
+.button {
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+    border: none;
+    border-radius: @border-radius-button;
+    height: 4rem;
+    line-height: 4rem;
+    padding: 0 2rem;
+    font-weight: bold;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: @color-secondary;
+    color: @color-white;
+    transition: background-color @trans-fast, color @trans-fast;
+    cursor: pointer;
+    user-select: none;
+    -webkit-appearance: none;
+         -moz-appearance: none;
+
+    &.___is-active,
+    &:hover,
+    &:active {
+        background-color: @color-primary;
+    }
+
+    &:disabled {
+        background-color: @color-grey--50;
+        cursor: default;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        height: 3.6rem;
+        line-height: 3.6rem;
+    }
+}
+
+// Grey button
+.button.___grey {
+    background: @color-grey--50;
+}
+
+// Full width button
+.button.___block {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+// Tall button
+.button.___large {
+    height: 4.6rem;
+    line-height: 4.6rem;
+
+    @media ( max-width: @screen-xs-max ) {
+        height: 4rem;
+        line-height: 4rem;
+    }
+}
+
+// Link button
+.button.___link {
+    height: auto;
+    padding: 0;
+    color: @color-grey--80;
+    background: transparent;
+    font-weight: normal;
+    border-radius: 0;
+    transition: color @trans-fast;
+
+    &:hover,
+    &:focus {
+        color: @color-secondary;
+        border-color: @color-secondary;
+        background: transparent;
+    }
+}
+
+.button.___underlined {
+    border-bottom: 1px solid @color-grey--80;
+}
+
+.button__icon {
+    margin-right: 0.8rem;
+    font-size: 1.2rem;
+    position: relative;
+    top: -0.1rem;
+
+    &.___base {
+        top: 0.1rem;
+        font-size: 1.7rem;
+    }
+}
+
+.button__share {
+    &:extend(.button);
+    width: 4rem;
+    float: left;
+    padding: 0;
+    text-align: center;
+
+    &.___twitter {
+        background-color: @color-twitter;
+        .icon(social-twitter);
+
+        &:before {
+                font-size: 1.4rem;
+        }
+    }
+    &.___facebook {
+        background-color: @color-facebook;
+        .icon(social-facebook);
+
+        &:before {
+                font-size: 1.8rem;
+        }
+    }
+    &.___google {
+        background-color: @color-google;
+        .icon(social-google);
+
+        &:before {
+                font-size: 1.4rem;
+        }
+    }
+    &.___linkedin {
+        background-color: @color-linkedin;
+        .icon(social-linkedin);
+
+        &:before {
+                font-size: 1.8rem;
+        }
+    }
+    &.___mail {
+        background-color: @color-grey--80;
+        .icon(envelope);
+
+        &:before {
+                font-size: 1.2rem;
+        }
+    }
+}
+
+.button__text {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    height: 4rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color @trans-fast;
+    user-select: none;
+
+    @media ( max-width: @screen-xs-max ) {
+        height: 3.6rem;
+    }
+}

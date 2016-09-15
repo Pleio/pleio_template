@@ -1,0 +1,439 @@
+.container-card-tile {
+    display: flex; // IE10-11 COLUMN FIX
+    height: 100%; // fill to row height
+}
+
+.card-tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: @color-white;
+    box-shadow: @box-shadow;
+    margin-bottom: 2rem;
+    text-decoration: none;
+    color: inherit;
+    width: 100%; // IE10-11 COLUMN FIX
+
+    .read-more {
+        margin-top: 1.8rem;
+    }
+
+    &[href=""] {
+        color: inherit;
+        pointer-events: none;
+        color: @color-grey--60;
+        background: @color-grey--40;
+    }
+
+    &.___no-margin-bottom {
+        margin-bottom: 0;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        &.___no-image {
+            .read-more__circle {
+                background-color: @color-white;
+            }
+            .card-tile__title,
+            .read-more {
+                color: @color-white;
+            }
+
+            &.card-tile:hover {
+                .read-more__circle {
+                    background-color: @color-quaternary;
+
+                    &:before {
+                        color: @color-white;
+                    }
+                }
+            }
+
+            &.___onderwijs {
+                background-color: @color-onderwijs;
+
+                .read-more__circle:before {
+                    color: @color-onderwijs;
+                }
+            }
+            &.___kwaliteit {
+                background-color: @color-kwaliteit;
+
+                .read-more__circle:before {
+                    color: @color-kwaliteit;
+                }
+            }
+            &.___beroepsorganisatie {
+                background-color: @color-beroepsorganisatie;
+
+                .read-more__circle:before {
+                    color: @color-beroepsorganisatie;
+                }
+            }
+        }
+    }
+
+    @media ( min-width: @screen-sm ) {
+        min-height: 35.5rem;
+
+        &.___small-card {
+            min-height: 27.5rem;
+        }
+
+        &.homepage-block {
+            min-height: 16rem;
+        }
+
+        &.navigation-block {
+            min-height: 27.4rem;
+        }
+    }
+
+    &.___blue,
+    &.___green {
+        color: @color-white;
+
+        .card-tile__title {
+            .font(title-small);
+        }
+
+        .read-more__circle {
+            background-color: @color-white;
+        }
+
+        &:hover {
+            .card-tile__title {
+                color: @color-white;
+            }
+        }
+    }
+
+    &.___blue {
+        background-color: @color-primary;
+
+        .read-more__circle:before {
+            color: @color-primary;
+        }
+    }
+
+    &.___contact {
+        &::before {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            font-size: 10rem;
+            color: @color-tertiary;
+            opacity: .5;
+            z-index: 0;
+        }
+    }
+}
+
+// Full cover image
+.card-tile.___image-full {
+    @media ( max-width: @screen-xs-max ) {
+        min-height: 25rem;
+    }
+
+    .card-tile__image {
+        display: flex;
+        flex-grow: 1;
+
+        &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            display: block;
+            background: fade(@color-grey--80, 25%);
+            background: linear-gradient(to right, fade(@color-grey--80, 40%) 0%, fade(@color-grey--80, 0%) 100%);
+        }
+    }
+
+    .card-tile__title {
+        .font(title-small);
+        color: @color-white;
+        text-shadow: @text-shadow;
+
+        &:hover {
+            color: @color-white;
+        }
+
+        @media ( max-width: @screen-xs-max ) {
+            padding: 0;
+        }
+
+        @media ( min-width: @screen-sm ) {
+            padding: 0 6rem 0 0;
+            .font(title-extra-large);
+        }
+    }
+
+    .read-more {
+        color: @color-white;
+    }
+}
+
+.card-tile__image {
+    position: relative;
+    width: 100%;
+    min-height: 12rem;
+    background-size: cover;
+    background-position: center;
+
+    @media ( max-width: @screen-xs-max ) {
+        min-height: 9rem;
+    }
+
+    .card-tile.___kwaliteit &,
+    .card-tile.___onderwijs &,
+    .card-tile.___maatschappij &,
+    .card-tile.___beroepsorganisatie & {
+        &:after {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            width: 4.6rem;
+            height: 4.6rem;
+            line-height: inherit;
+            background-color: fade(@color-black, 40%);
+            top: 3rem;
+            right: 3rem;
+            border-radius: 50%;
+            color: @color-white;
+            text-align: center;
+        }
+    }
+
+    .card-tile.___onderwijs & {
+        .icon(cat-onderwijs, after);
+        &:after {
+            font-size: 3rem;
+        }
+    }
+
+    .card-tile.___maatschappij & {
+        .icon(cat-maatschappij, after);
+        &:after {
+            font-size: 2rem;
+        }
+    }
+
+    .card-tile.___kwaliteit & {
+        .icon(cat-kwaliteit, after);
+        &:after {
+            font-size: 3rem;
+        }
+    }
+
+    .card-tile.___beroepsorganisatie & {
+        .icon(cat-beroepsorganisatie, after);
+        &:after {
+            font-size: 2rem;
+        }
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            display: block;
+            background: fade(@color-grey--80, 25%);
+            background: linear-gradient(to right, fade(@color-grey--80, 40%) 0%, fade(@color-grey--80, 0%) 100%);
+        }
+
+        &:after {
+            opacity: 0;
+            visibility: none;
+        }
+    }
+}
+
+.card-tile__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 12rem;
+
+    &:after {
+        color: fade(@color-black, 40%);
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        min-height: 9rem;
+
+        &:after {
+            opacity: 0;
+            visibility: none;
+        }
+    }
+
+    .card-tile.___onderwijs & {
+        background-color: @color-onderwijs;
+
+        .icon(cat-onderwijs, after);
+
+        &:after {
+            font-size: 7.8rem;
+        }
+    }
+
+    .card-tile.___beroepsorganisatie & {
+        background-color: @color-beroepsorganisatie;
+
+        .icon(cat-beroepsorganisatie, after);
+
+        &:after {
+            font-size: 6.2rem;
+        }
+    }
+
+    .card-tile.___kwaliteit & {
+        background-color: @color-kwaliteit;
+
+        .icon(cat-kwaliteit, after);
+
+        &:after {
+            font-size: 7.9rem;
+        }
+    }
+}
+
+.card-tile__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    width: 100%;
+    padding: 2.5rem 3rem 3rem;
+    z-index: 0;  // stay on top of grey background gradient
+    position: relative;
+
+    @media ( max-width: @screen-xs-max ) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 2rem;
+    }
+
+    p {
+        max-height: @line-height--base * 4;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+        margin-bottom: 0;
+
+        @media ( max-width: @screen-xs-max ) {
+            display: none;
+        }
+    }
+}
+
+.card-tile__title {
+    font-size: @font-size--title-small;
+    line-height: @line-height--title-small;
+    margin: 0 0 1rem 0;
+
+    @media ( max-width: @screen-xs-max ) {
+        padding: 0 4rem 0 0;
+        .font(medium);
+        color: @color-white;
+        text-shadow: @text-shadow;
+
+        .card-tile.___no-image & {
+            text-shadow: none;
+        }
+    }
+
+    .___small-card & {
+        margin: 0;
+    }
+}
+
+.card-tile__subtitle {
+    .font(base);
+    color: @color-primary;
+    margin: 0 0 1rem 0;
+}
+
+.card-tile__small-text {
+    .font(medium);
+}
+
+.card-tile__icon {
+    display: block;
+    position: relative;
+    min-height: 10rem;
+    text-align: center;
+    color: @color-primary;
+    font-size: 8rem;
+    transition: color @trans-fast;
+
+    [href=""] > & {
+        color: @color-grey--50;
+    }
+
+    .card-tile:hover & {
+        color: @color-tertiary;
+    }
+
+    &.___positioned-right {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        right: 4.5rem;
+        bottom: 0;
+        font-size: 6.5rem;
+    }
+
+    &.___large {
+        font-size: 8rem;
+    }
+
+    &.___nudge-to-right {
+        margin-right: -1.5rem;
+    }
+}
+
+.card-tile__link {
+    display: block;
+    margin: -(@calc-line-height/2) 0 -(@calc-line-height/2);
+    text-decoration: none;
+    color: @color-black;
+    transition: color @trans-fast;
+
+    [href=""] > & {
+        color: transparent;
+    }
+
+    .card-tile:hover & {
+        color: @color-primary;
+    }
+}
+
+.card-tile__link__icon {
+    padding-right: 0.8rem;
+    font-size: 1.1rem;
+    position: relative;
+    top: -0.1rem;
+}

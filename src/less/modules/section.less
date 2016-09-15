@@ -1,0 +1,73 @@
+.section {
+  padding: 2rem 0;
+
+  @media ( max-width: @screen-xs-max ) {
+
+  }
+
+  @media (min-width: @screen-sm) {
+    padding: 4rem 0 2rem 0;
+  }
+
+  &.___last-section {        // @TODO: replaces ___no-padding-bottom and ___less-padding-bottom
+    padding-bottom: 0;
+    margin-bottom: -2rem;   // wordt van marge .main-content afgehaald
+  }
+
+  &.___no-padding-bottom {
+    padding-bottom: 0;
+  }
+
+  &.___no-vertical-padding {
+    padding: 0;
+  }
+
+  &.___add-padding-bottom {
+    padding-bottom: 5.2rem;
+  }
+}
+
+.section.___grey {
+    background-color: @color-grey--20;
+}
+.section.___background-white {
+    background-color: @color-white;
+}
+.section.___background-blue {
+    background-color: @color-secondary;
+    padding: 3.6rem 0 3.6rem 0;
+
+    &.relevant-articles {
+        padding-bottom: 3rem;
+    }
+}
+.section.___background-image {
+    background-size: cover;
+    background-position: center center;
+}
+
+.main__title {
+    .font(title-extra-large);
+    color: @color-secondary;
+    margin: 0 0 3rem 0;
+
+    &.___no-margin {
+        margin: 0;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        .font(title-large);
+        margin: 0 0 1.5rem 0;
+    }
+}
+
+.section__title {
+    .font(title-large);
+    color: @color-primary;
+    margin: 0 0 2rem 0;
+
+    @media ( max-width: @screen-xs-max ) {
+        .font(title-small);
+        margin: 0 0 1rem 0;
+    }
+}

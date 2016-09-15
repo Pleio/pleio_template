@@ -1,0 +1,244 @@
+.navigation__dropdown.___mobile {
+    @media (min-width: @screen-lg) {
+        display: none;
+    }
+}
+
+.mobile-navigation__bar {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+
+    @media (min-width: @screen-lg) {
+        display: none;
+    }
+}
+
+.mobile-navigation__trigger {
+    padding: 0 1rem;
+    font-weight: bold;
+    color: @color-secondary--light;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: center;
+
+    .icon(mobile-menu);
+
+    @media (max-width: @screen-xs-max) {
+        line-height: 4.5rem;
+
+        &:before {
+            font-size: 1.7rem;
+        }
+    }
+
+    @media (min-width: @screen-sm) {
+        line-height: 6rem;
+
+        &:before {
+            font-size: 2.1rem;
+        }
+    }
+}
+
+.mobile-navigation__close {
+    text-align: right;
+
+    @media (min-width: @screen-lg) {
+        display: none;
+    }
+
+    span {
+        font-size: 1.2rem;
+        color: @color-grey--60;
+        padding: 2rem;
+        cursor: pointer;
+        transition: color @trans-fast;
+
+        &:hover {
+            color: @color-secondary;
+        }
+    }
+}
+
+.mobile-navigation__search {
+    position: relative;
+    line-height: 4rem;
+    padding: 0 0 0 2rem;
+    background-color: @color-tertiary--light;
+
+    @media (min-width: @screen-lg) {
+        display: none;
+    }
+
+    .icon(search);
+
+    &:before {
+        position: absolute;
+        /* icon height */
+        font-size: 1.2rem;
+        color: @color-primary;
+        line-height: inherit;
+    }
+
+    label { display: none; }
+
+    input {
+        background-color: transparent;
+        border: none;
+        width: 100%;
+        height: 4rem;
+        padding: 0 0 0 2rem;
+    }
+
+    ::-webkit-input-placeholder {
+        /* Safari, Chrome and Opera */
+        color: @color-tertiary;
+        font-weight: bold;
+    }
+
+    :-moz-placeholder {
+        /* Firefox 18- */
+        color: @color-tertiary;
+        font-weight: bold;
+    }
+
+    ::-moz-placeholder {
+        /* Firefox 19+ */
+        color: @color-tertiary;
+        font-weight: bold;
+    }
+
+    :-ms-input-placeholder {
+        /* IE 10+ */
+        color: @color-tertiary;
+        font-weight: bold;
+    }
+
+    :-ms-input-placeholder {
+        /* Edge */
+        color: @color-tertiary;
+        font-weight: bold;
+    }
+}
+
+.mobile-navigation__spacer {
+    height: 2rem;
+
+    @media (min-width: @screen-lg) {
+        display: none;
+    }
+}
+
+.mobile-navigation__home {
+    position: absolute;
+    width: 7rem;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+
+    .icon(home);
+    &:before {
+        width: 100%;
+        color: @color-white;
+    }
+
+    @media (max-width: @screen-xs-max) {
+        line-height: 4.5rem;
+
+        &:before {
+            font-size: 2.2rem;
+        }
+    }
+
+    @media (min-width: @screen-sm) {
+        line-height: 6rem;
+
+        &:before {
+            font-size: 2.8rem;
+        }
+    }
+}
+
+.mobile-navigation__actions {
+    display: flex;
+
+    @media (min-width: @screen-lg) {
+        float: right;
+    }
+}
+
+.mobile-navigation__action {
+    display: block;
+    height: 100%;
+    padding: 0 1.2rem;
+    color: @color-secondary--light;
+    text-decoration: none;
+    transition: background-color @trans-fast;
+
+    @media (max-width: @screen-xs-max) {
+        line-height: 4.5rem;
+    }
+    @media (min-width: @screen-sm) {
+        line-height: 6rem;
+    }
+
+    &.___bookmarks {
+        .icon(bookmark);
+
+        &:before {
+            /* icon height */
+            font-size: 2.1rem;
+        }
+
+        @media (max-width: @screen-xs-max) {
+            display: none;
+        }
+    }
+
+    &.___search {
+        .icon(search);
+
+        @media (max-width: @screen-xs-max) {
+            line-height: 4.5rem;
+
+            &:before {
+                font-size: 1.7rem;
+            }
+        }
+
+        @media (min-width: @screen-sm) {
+            line-height: 6rem;
+
+            &:before {
+                font-size: 2.1rem;
+            }
+        }
+    }
+
+    &.___account {
+        display: flex;
+        align-items: center;
+        padding: 1rem 0.8rem;
+
+        &:before {
+            display: block;
+            content: '';
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            background-size: cover;
+        }
+
+        @media (max-width: @screen-xs-max) {
+            display: none;
+        }
+    }
+
+    @media (min-width: @screen-lg) {
+        span {
+            display: none;
+        }
+    }
+}

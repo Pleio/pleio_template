@@ -1,0 +1,222 @@
+.form {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: @font-size--base;
+}
+
+.form__group {
+    position: relative;
+    margin-top: 2rem;
+    &:first-child {
+        margin-top: 2rem;
+    }
+    .form__group--euro {}
+}
+
+.form__label {
+    font-size: 1.8rem;
+    display: block;
+    a {}
+}
+
+.form__label-text {
+    display: block;
+    padding: 0 0 0.38rem 0;
+    font-weight: bold;
+    line-height: @line-height--medium;
+    a {
+        color: @color-secondary;
+        text-decoration: none;
+    }
+}
+
+.form__label--medium-bottom-padding {
+    padding-bottom: 0.6rem;
+}
+
+.form__label--large-bottom-padding {
+    padding-bottom: 0.8rem;
+}
+
+.form__label-text--hidden {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+.form__label-message {
+    display: block;
+    padding: 0.6rem 0 0 0;
+    color: @color-error;
+    font-size: @font-size--medium;
+    line-height: @line-height--extra-small;
+}
+
+.form__label-message--above-input {
+    padding-top: 0;
+    padding-bottom: 0.6rem;
+}
+
+.form__label-message--inline {
+    display: inline;
+    padding-top: 0;
+    padding-left: 0.5rem;
+}
+
+.form__label-message--problem {
+    color: @color-error;
+}
+
+.form__label-extra-info {
+    // Under the form element (such as a __input)
+    display: block;
+    padding: 0.75rem 0 0 0;
+    color: @color-grey--60;
+    font-size: @font-size--medium;
+    line-height: @line-height--medium;
+}
+
+.input() {
+    font-size: @font-size--base;
+    border: 0.1rem solid @color-grey--50;
+    padding: 1.2rem 2rem 1.1rem 2rem;
+    transition: @trans-fast;
+    &::placeholder {
+        font-size: 1.8rem;
+        line-height: 2.4rem;
+        color: @color-grey--60;
+    }
+    label.__problem & {
+        border-color: @color-error;
+    }
+    &.form__input--euro {
+        padding-left: 3rem;
+    }
+    &:hover {
+        border-color: @color-secondary;
+    }
+    &:focus,
+    &:active {
+        border-color: @color-secondary;
+    }
+    &.error {
+        border: 0.1rem solid @color-error;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        padding: 1rem 2rem 1rem 1.5rem;
+        font-size: @font-size--medium;
+
+        &::placeholder {
+            font-size: @font-size--medium;
+        }
+    }
+}
+
+.form__input {
+    width: 100%;
+    .input();
+}
+
+.form__input--fit {
+    padding: 0 0.5rem;
+    font-size: inherit;
+}
+
+.form__input--small-right-inset {
+    padding-right: 0.4rem;
+}
+
+.form-sign--euro {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 2.4rem;
+}
+
+.form__actions {
+    margin: 0;
+    margin: 3rem 0 0 0;
+    text-align: right;
+    a,
+    button {
+        margin-left: 1rem;
+    }
+}
+
+.form__actions--small-button-margin {
+    a,
+    button {
+        margin-left: 0.75rem;
+    }
+}
+
+.form__actions-block {
+    margin-left: 2rem;
+}
+
+.form__under-tinymce {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+}
+
+.form__element {
+    margin: 0 0 2rem 0;
+}
+
+.form__element--text {
+    font-size: @font-size--medium;
+}
+
+.form__element--small-padding {
+    margin: 0 0 1rem 0;
+}
+
+.form__element--no-padding {
+    margin: 0;
+}
+
+.form__background {
+    margin: 0 -1rem 1rem -1rem;
+    padding: 1rem 1.5rem 0.5rem 1.5rem;
+    font-size: @font-size--medium;
+    background: @color-secondary;
+}
+
+////
+//// FORM - TinyMCE
+////
+.form__tinymce-field {}
+
+.form__tinymce-field--no-bottom-padding {
+    > #mceu_6 {
+        padding-bottom: 0;
+    }
+}
+
+////
+//// FORM - Date
+//// Consists of three input fields
+////
+.form__date {
+
+}
+
+.form__date__input {
+    float: left;
+}
+
+.form__date__input--day {
+    width: 28%;
+}
+
+.form__date__input--month {
+    width: 32%;
+    padding: 0 0.5rem;
+}
+
+.form__date__input--year {
+    width: 40%;
+}
+

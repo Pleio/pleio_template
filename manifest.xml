@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+    <name>Pleio template</name>
+    <author>Stichting Pleio</author>
+    <version>1.0</version>
+    <description>The responsive theme for Pleio subsites.</description>
+    <website>https://www.pleio.nl/</website>
+    <repository>https://github.com/Pleio/pleio_template</repository>
+    <bugtracker>https://github.com/Pleio/pleio_template/issues</bugtracker>
+    <copyright>(C) Stichting Pleio</copyright>
+    <license>GNU General Public License version 2</license>
+    <requires>
+        <type>elgg_release</type>
+        <version>1.8.3</version>
+    </requires>
+    <requires>
+        <type>plugin</type>
+        <name>elasticsearch</name>
+    </requires>
+    <requires>
+        <type>plugin</type>
+        <name>newsletter</name>
+    </requires>
+</plugin_manifest>

@@ -1,0 +1,101 @@
+.relevant-articles {
+    padding: 3.6rem 0 4rem 0;
+    background-color: @color-grey--20;
+
+    @media ( max-width: @screen-xs-max ) {
+        padding: 2rem 0 2rem 0;
+    }
+
+    &.no-slider {
+        padding-bottom: 7.2rem;
+    }
+
+    .relevant-articles--white {
+        background-color: @color-white;
+        padding-top: 0;
+    }
+
+    .relevant-articles__title {
+        color: @color-primary;
+        .font(title-large);
+        margin-bottom: 1.5rem;
+
+        @media ( max-width: @screen-xs-max ) {
+            .font(title-small);
+            margin: 0 0 1rem 0;
+        }
+    }
+
+    .card-tile__title {
+        color: @color-black;
+        font-size: @font-size--large;
+        line-height: @line-height--large;
+        transition: color @trans-fast;
+
+        @media(min-width: @screen-md) {
+            margin: 0 0 1.1rem 0;
+        }
+    }
+
+    .card-tile {
+        min-height: 18.5rem;
+
+        &.___onderwijs,
+        &.___kwaliteit,
+        &.___beroepsorganisatie {
+            .read-more__circle {
+                background-color: @color-white;
+            }
+            .card-tile__title,
+            .read-more {
+                color: @color-white;
+            }
+        }
+
+        &.card-tile:hover {
+            .read-more__circle {
+                background-color: @color-quaternary;
+
+                &:before {
+                    color: @color-white;
+                }
+            }
+        }
+
+        &.___onderwijs {
+            background-color: @color-onderwijs;
+
+            .read-more__circle:before {
+                color: @color-onderwijs;
+            }
+        }
+        &.___kwaliteit {
+            background-color: @color-kwaliteit;
+
+            .read-more__circle:before {
+                color: @color-kwaliteit;
+            }
+        }
+        &.___beroepsorganisatie {
+            background-color: @color-beroepsorganisatie;
+
+            .read-more__circle:before {
+                color: @color-beroepsorganisatie;
+            }
+        }
+
+        .card-tile__title {
+            padding: 0;
+            .font(large);
+        }
+    }
+
+    .relevant-articles__carousel {
+        width: 100%;
+        margin: 0;
+
+        @media (min-width: @screen-sm) {
+            margin: 0;
+        }
+    }
+}

@@ -1,0 +1,196 @@
+@font-face {
+    font-family: "icons-webfont";
+    src: url('../../fonts/icons-webfont.eot');
+    src: url('../../fonts/icons-webfont.eot?#iefix') format('eot'),
+        url('../../fonts/icons-webfont.woff2') format('woff2'),
+        url('../../fonts/icons-webfont.woff') format('woff'),
+        url('../../fonts/icons-webfont.ttf') format('truetype'),
+        url('../../fonts/icons-webfont.svg#icons-webfont') format('svg');
+}
+
+[class^="icon-"],
+[class*=" icon-"],
+.icon-base-pseudo {
+    display: inline-block;
+    vertical-align: middle;
+    font-family: "icons-webfont";
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    // speak: none; // only necessary if not using the private unicode range (firstGlyph option)
+    text-decoration: none;
+    text-transform: none;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.icon-char(@filename) {
+    @angle-down: "\E001";
+    @angle-left: "\E002";
+    @angle-right: "\E003";
+    @arrow-right-circle-transparent: "\E004";
+    @arrow-right-circle: "\E005";
+    @bookmark-line: "\E006";
+    @bookmark: "\E007";
+    @cat-beroepsorganisatie: "\E008";
+    @cat-kwaliteit: "\E009";
+    @cat-maatschappij: "\E00A";
+    @cat-onderwijs: "\E00B";
+    @chevron-down: "\E00C";
+    @comments: "\E00D";
+    @cross: "\E00E";
+    @delete: "\E00F";
+    @envelope: "\E010";
+    @eye: "\E011";
+    @home: "\E012";
+    @mobile-menu: "\E013";
+    @next: "\E014";
+    @pencil: "\E015";
+    @prev: "\E016";
+    @print: "\E017";
+    @search: "\E018";
+    @share: "\E019";
+    @social-facebook: "\E01A";
+    @social-google: "\E01B";
+    @social-linkedin: "\E01C";
+    @social-twitter: "\E01D";
+    @users: "\E01E";
+    
+    content: @@filename;
+}
+
+.icon(@filename, @insert: before) {
+    @pseudo-selector: ~":@{insert}";
+
+    &@{pseudo-selector} {
+        &:extend(.icon-base-pseudo);
+        .icon-char(@filename);
+    }
+}
+
+//
+// Icons
+//
+
+.icon-angle-down:before {
+    content: "\E001";
+}
+
+.icon-angle-left:before {
+    content: "\E002";
+}
+
+.icon-angle-right:before {
+    content: "\E003";
+}
+
+.icon-arrow-right-circle-transparent:before {
+    content: "\E004";
+}
+
+.icon-arrow-right-circle:before {
+    content: "\E005";
+}
+
+.icon-bookmark-line:before {
+    content: "\E006";
+}
+
+.icon-bookmark:before {
+    content: "\E007";
+}
+
+.icon-cat-beroepsorganisatie:before {
+    content: "\E008";
+}
+
+.icon-cat-kwaliteit:before {
+    content: "\E009";
+}
+
+.icon-cat-maatschappij:before {
+    content: "\E00A";
+}
+
+.icon-cat-onderwijs:before {
+    content: "\E00B";
+}
+
+.icon-chevron-down:before {
+    content: "\E00C";
+}
+
+.icon-comments:before {
+    content: "\E00D";
+}
+
+.icon-cross:before {
+    content: "\E00E";
+}
+
+.icon-delete:before {
+    content: "\E00F";
+}
+
+.icon-envelope:before {
+    content: "\E010";
+}
+
+.icon-eye:before {
+    content: "\E011";
+}
+
+.icon-home:before {
+    content: "\E012";
+}
+
+.icon-mobile-menu:before {
+    content: "\E013";
+}
+
+.icon-next:before {
+    content: "\E014";
+}
+
+.icon-pencil:before {
+    content: "\E015";
+}
+
+.icon-prev:before {
+    content: "\E016";
+}
+
+.icon-print:before {
+    content: "\E017";
+}
+
+.icon-search:before {
+    content: "\E018";
+}
+
+.icon-share:before {
+    content: "\E019";
+}
+
+.icon-social-facebook:before {
+    content: "\E01A";
+}
+
+.icon-social-google:before {
+    content: "\E01B";
+}
+
+.icon-social-linkedin:before {
+    content: "\E01C";
+}
+
+.icon-social-twitter:before {
+    content: "\E01D";
+}
+
+.icon-users:before {
+    content: "\E01E";
+}
+
