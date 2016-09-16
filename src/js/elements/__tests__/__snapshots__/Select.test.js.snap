@@ -23,7 +23,7 @@ exports[`test Changes value on clicking an item 1`] = `
         Maak een keuze
       </li>
       <li
-        className="selector__option"
+        className="selector__option ___is-selected"
         onClick={[Function onClick]}>
         First option
       </li>

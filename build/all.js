@@ -68,13 +68,13 @@
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _reactApollo = __webpack_require__(318);
+	var _reactApollo = __webpack_require__(319);
 	
 	var _redux = __webpack_require__(195);
 	
-	var _Reducers = __webpack_require__(323);
+	var _Reducers = __webpack_require__(324);
 	
-	var _cookies = __webpack_require__(324);
+	var _cookies = __webpack_require__(325);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -41530,15 +41530,15 @@
 	
 	var _News2 = _interopRequireDefault(_News);
 	
-	var _Forum = __webpack_require__(315);
+	var _Forum = __webpack_require__(316);
 	
 	var _Forum2 = _interopRequireDefault(_Forum);
 	
-	var _Bookmarks = __webpack_require__(316);
+	var _Bookmarks = __webpack_require__(317);
 	
 	var _Bookmarks2 = _interopRequireDefault(_Bookmarks);
 	
-	var _Search = __webpack_require__(317);
+	var _Search = __webpack_require__(318);
 	
 	var _Search2 = _interopRequireDefault(_Search);
 	
@@ -48136,7 +48136,7 @@
 /* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -48147,6 +48147,10 @@
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _classnames = __webpack_require__(315);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -48175,21 +48179,21 @@
 	    }
 	
 	    _createClass(Select, [{
-	        key: "componentWillReceiveProps",
+	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(nextProps) {
 	            this.setState({
 	                value: nextProps.value
 	            });
 	        }
 	    }, {
-	        key: "onToggle",
+	        key: 'onToggle',
 	        value: function onToggle(e) {
 	            this.setState({
 	                isOpen: !this.state.isOpen
 	            });
 	        }
 	    }, {
-	        key: "onSelect",
+	        key: 'onSelect',
 	        value: function onSelect(e, value) {
 	            if (value) {
 	                this.setState({
@@ -48202,7 +48206,7 @@
 	            });
 	        }
 	    }, {
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
 	
@@ -48213,8 +48217,8 @@
 	
 	            var ulOptions = Object.keys(options).map(function (option) {
 	                return _react2.default.createElement(
-	                    "li",
-	                    { key: option, className: "selector__option", onClick: function onClick(e) {
+	                    'li',
+	                    { key: option, className: (0, _classnames2.default)({ "selector__option": true, "___is-selected": option == _this2.state.value }), onClick: function onClick(e) {
 	                            return _this2.onSelect(e, option);
 	                        } },
 	                    options[option]
@@ -48232,28 +48236,28 @@
 	            }
 	
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "selector-container ___mobile-margin-bottom" },
+	                'div',
+	                { className: 'selector-container ___mobile-margin-bottom' },
 	                _react2.default.createElement(
-	                    "label",
-	                    { htmlFor: "sectorFilter", className: "selector__label" },
-	                    "Sector"
+	                    'label',
+	                    { htmlFor: 'sectorFilter', className: 'selector__label' },
+	                    'Sector'
 	                ),
 	                _react2.default.createElement(
-	                    "div",
+	                    'div',
 	                    { className: "selector " + isOpenClass },
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "selector__select", tabIndex: "0", onClick: this.onToggle },
+	                        'div',
+	                        { className: 'selector__select', tabIndex: '0', onClick: this.onToggle },
 	                        selected
 	                    ),
 	                    _react2.default.createElement(
-	                        "ul",
-	                        { className: "selector__options" },
+	                        'ul',
+	                        { className: 'selector__options' },
 	                        _react2.default.createElement(
-	                            "li",
-	                            { className: "selector__option ___is-disabled", "data-value": "", onClick: this.onSelect },
-	                            "Maak een keuze"
+	                            'li',
+	                            { className: 'selector__option ___is-disabled', 'data-value': '', onClick: this.onSelect },
+	                            'Maak een keuze'
 	                        ),
 	                        ulOptions
 	                    )
@@ -48269,6 +48273,60 @@
 
 /***/ },
 /* 315 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+	
+	(function () {
+		'use strict';
+	
+		var hasOwn = {}.hasOwnProperty;
+	
+		function classNames () {
+			var classes = [];
+	
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+	
+				var argType = typeof arg;
+	
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+	
+			return classes.join(' ');
+		}
+	
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
+
+/***/ },
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48317,7 +48375,7 @@
 	exports.default = Forum;
 
 /***/ },
-/* 316 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48366,7 +48424,7 @@
 	exports.default = Bookmarks;
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48415,19 +48473,19 @@
 	exports.default = Search;
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var ApolloProvider_1 = __webpack_require__(319);
+	var ApolloProvider_1 = __webpack_require__(320);
 	exports.ApolloProvider = ApolloProvider_1.default;
-	var graphql_1 = __webpack_require__(320);
+	var graphql_1 = __webpack_require__(321);
 	exports.graphql = graphql_1.default;
 	exports.withApollo = graphql_1.withApollo;
 	//# sourceMappingURL=index.js.map
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -48486,7 +48544,7 @@
 	//# sourceMappingURL=ApolloProvider.js.map
 
 /***/ },
-/* 320 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -48498,14 +48556,14 @@
 	var react_1 = __webpack_require__(1);
 	var isEqual = __webpack_require__(229);
 	var flatten = __webpack_require__(218);
-	var shallowEqual_1 = __webpack_require__(321);
+	var shallowEqual_1 = __webpack_require__(322);
 	var invariant = __webpack_require__(247);
 	var assign = __webpack_require__(4);
 	var hoistNonReactStatics = __webpack_require__(282);
 	var apollo_client_1 = __webpack_require__(176);
 	var getFromAST_1 = __webpack_require__(184);
 	var errors_1 = __webpack_require__(217);
-	var parser_1 = __webpack_require__(322);
+	var parser_1 = __webpack_require__(323);
 	var defaultQueryData = {
 	    loading: true,
 	    errors: null,
@@ -48871,7 +48929,7 @@
 	//# sourceMappingURL=graphql.js.map
 
 /***/ },
-/* 321 */
+/* 322 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -48897,7 +48955,7 @@
 	//# sourceMappingURL=shallowEqual.js.map
 
 /***/ },
-/* 322 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -48939,7 +48997,7 @@
 	//# sourceMappingURL=parser.js.map
 
 /***/ },
-/* 323 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48964,7 +49022,7 @@
 	};
 
 /***/ },
-/* 324 */
+/* 325 */
 /***/ function(module, exports) {
 
 	"use strict";

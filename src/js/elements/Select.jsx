@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 
 export default class Select extends React.Component {
     constructor(props) {
@@ -44,7 +45,7 @@ export default class Select extends React.Component {
         }
 
         let ulOptions = Object.keys(options).map(option => (
-            <li key={option} className="selector__option" onClick={(e) => this.onSelect(e, option)}>
+            <li key={option} className={classNames({"selector__option": true, "___is-selected": option == this.state.value})} onClick={(e) => this.onSelect(e, option)}>
                 {options[option]}
             </li>
         ))
