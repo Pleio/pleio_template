@@ -29,6 +29,7 @@
     "redux": "^3.6.0"
   },
   "jest": {
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.jsx$",
     "moduleFileExtensions": [
       "js",
       "jsx"

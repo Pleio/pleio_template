@@ -25,8 +25,6 @@ it("Toggles on click", () => {
 })
 
 it("Changes value on clicking an item", () => {
-    console.log(tree.children[1].children[1].children[1].props.onClick())
-
     tree = component.toJSON()
     expect(tree).toMatchSnapshot()
 })
