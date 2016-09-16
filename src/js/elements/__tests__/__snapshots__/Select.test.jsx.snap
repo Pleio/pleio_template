@@ -7,7 +7,7 @@ exports[`test Changes value on clicking an item 1`] = `
     Sector
   </label>
   <div
-    className="selector ">
+    className="selector">
     <div
       className="selector__select"
       onClick={[Function bound onToggle]}
@@ -46,7 +46,7 @@ exports[`test Renders correctly 1`] = `
     Sector
   </label>
   <div
-    className="selector ">
+    className="selector">
     <div
       className="selector__select"
       onClick={[Function bound onToggle]}

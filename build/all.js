@@ -48230,11 +48230,6 @@
 	                selected = options[this.state.value];
 	            }
 	
-	            var isOpenClass = "";
-	            if (this.state.isOpen) {
-	                isOpenClass = "___is-open";
-	            }
-	
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'selector-container ___mobile-margin-bottom' },
@@ -48245,7 +48240,7 @@
 	                ),
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: "selector " + isOpenClass },
+	                    { className: (0, _classnames2.default)({ "selector": true, "___is-open": this.state.isOpen }) },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'selector__select', tabIndex: '0', onClick: this.onToggle },

@@ -55,15 +55,10 @@ export default class Select extends React.Component {
             selected = options[this.state.value]
         }
 
-        let isOpenClass = ""
-        if (this.state.isOpen) {
-            isOpenClass = "___is-open"
-        }
-
         return (
             <div className="selector-container ___mobile-margin-bottom">
                 <label htmlFor="sectorFilter" className="selector__label">Sector</label>
-                <div className={"selector " + isOpenClass}>
+                <div className={classNames({"selector": true, "___is-open": this.state.isOpen})}>
                     <div className="selector__select" tabIndex="0" onClick={this.onToggle}>
                         {selected}
                     </div>
