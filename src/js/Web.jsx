@@ -13,7 +13,7 @@ import Routes from './Routes'
 
 import { ApolloProvider } from 'react-apollo';
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { currentLanguage } from './lib/Reducers'
+import { currentLanguage, modal } from './lib/reducers'
 import { readCookie } from './lib/cookies'
 
 const networkInterface = createNetworkInterface('/graphql', {
@@ -31,10 +31,12 @@ const client = new ApolloClient({
 })
 
 let store = createStore(combineReducers({
-    currentLanguage: currentLanguage,
+    currentLanguage,
+    modal,
     apollo: client.reducer()
 }), {
-    currentLanguage: lang
+    currentLanguage: lang,
+    modal: null
 }, applyMiddleware(client.middleware()))
 
 moment.locale(lang)

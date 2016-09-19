@@ -1,22 +1,30 @@
 .modal {
+    visibility: hidden;
     opacity: 0;
     position: fixed;
-    display: none;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     overflow-y: scroll;
     z-index: 4;
-    transition: opacity @trans-fast;
+    transition: visibility @trans-fast, opacity @trans-fast;
+
+    p {
+        &.___small {
+            margin: 0 0 3rem 0;
+            .font(medium);
+        }
+    }
 
     @media ( max-width: @screen-xs-max ) {
         background: @color-white;
     }
-}
 
-.modal--open {
-    opacity: 1;
+    &.___is-open {
+        visibility: visible;
+        opacity: 1;
+    }
 }
 
 .modal__wrapper {
@@ -26,7 +34,7 @@
         align-items: center;
         position: relative;
         min-height: 100%;
-        padding: 20rem 0 10rem 0;
+        padding: 16rem 0 10rem 0;
     }
 }
 
@@ -40,6 +48,10 @@
     transition: @trans-fast;
     cursor: pointer;
 
+    .___small & {
+        background-color: fade(@color-primary, 90%);
+    }
+
     @media ( max-width: @screen-xs-max ) {
         display: none;
     }
@@ -52,6 +64,18 @@
     min-height: 100%;
     padding: 7rem 2rem 5rem 2rem;
     background: @color-white;
+
+    .___small & {
+        max-width: 40rem;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        max-width: 100%;
+
+        .___small & {
+            max-width: 100%;
+        }
+    }
 
     @media ( min-width: @screen-sm ) {
         align-self: flex-start;
@@ -70,6 +94,7 @@
     color: @color-grey--60;
     transition: color @trans-fast;
     cursor: pointer;
+    z-index: 1;
 
     &:hover,
     &:focus {
@@ -81,12 +106,42 @@
         font-size: 1.4rem;
     }
 
+    .___small & {
+        top: 0;
+        right: 0;
+        padding: 2.1rem;
+        color: @color-white;
+
+        &:before {
+            font-size: 1.8rem;
+        }
+
+        &:hover,
+        &:focus {
+            color: @color-secondary--light;
+        }
+    }
+
     @media ( max-width: @screen-xs-max ) {
         right: 0;
         top: 0;
 
         &:before {
             font-size: 1.2rem;
+        }
+
+        .___small & {
+            padding: 2rem;
+            color: @color-grey--60;
+
+            &:before {
+                font-size: 1.2rem;
+            }
+
+            &:hover,
+            &:focus {
+                color: @color-secondary;
+            }
         }
     }
 
@@ -96,3 +151,12 @@
     }
 }
 
+.modal__title {
+    .font(title-large);
+    margin: 0 0 3rem 0;
+    color: @color-secondary;
+
+    span {
+        font-weight: normal;
+    }
+}

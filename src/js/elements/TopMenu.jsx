@@ -1,9 +1,22 @@
 import React from "react"
 import { Link } from "react-router"
 import { graphql } from "react-apollo"
+import { connect } from "react-redux"
 import gql from "graphql-tag"
+import { showModal } from "../lib/actions"
 
 class TopMenu extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.showLoginModal = this.showLoginModal.bind(this)
+    }
+
+    showLoginModal(e) {
+        e.preventDefault()
+        this.props.dispatch(showModal('login'))
+    }
+
     render() {
         let menuItems = "";
         if (this.props.data.site) {
@@ -49,6 +62,9 @@ class TopMenu extends React.Component {
                         <a href="#" title="Account" className="navigation__action ___account">
                             <span>Sarah Hendriks</span>
                         </a>
+                    </li>
+                    <li>
+                        <a href="#" onClick={this.showLoginModal}>Login</a>
                     </li>
                 </ul>
             )
@@ -106,6 +122,12 @@ class TopMenu extends React.Component {
     }
 }
 
+const stateToProps = (state) => {
+    return {
+        modal: state.modal
+    }
+}
+
 const WithQuery = gql`
     query {
         site {
@@ -122,4 +144,4 @@ const WithQuery = gql`
     }
 `;
 
-export default graphql(WithQuery)(TopMenu);
+export default connect(stateToProps)(graphql(WithQuery)(TopMenu));

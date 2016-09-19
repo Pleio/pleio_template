@@ -11,6 +11,7 @@ import NewsItem from './pages/NewsItem'
 import Forum from './pages/Forum'
 import Bookmarks from './pages/Bookmarks'
 import Search from './pages/Search'
+import NotFound from './pages/NotFound'
 
 export default class Routes extends React.Component {
     render() {
@@ -25,6 +26,7 @@ export default class Routes extends React.Component {
                     <Route path="/forum" component={Forum} />
                     <Route path="/bookmarks" component={Bookmarks} />
                     <Route path="/search" component={Search} />
+                    <Route path="*" component={NotFound} />
                 </Route>
             </Router>
         )

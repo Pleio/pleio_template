@@ -2,7 +2,6 @@ import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Comments from "../elements/Comments"
-import { displayTime } from "../lib/DateTime"
 import moment from "moment"
 
 class NewsItem extends React.Component {

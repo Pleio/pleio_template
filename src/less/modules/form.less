@@ -1,7 +1,5 @@
 .form {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    font-size: @font-size--base;
+    .font(base);
 }
 
 .form__group {
@@ -13,10 +11,93 @@
     .form__group--euro {}
 }
 
-.form__label {
-    font-size: 1.8rem;
+.form__item {
     display: block;
-    a {}
+}
+
+.form__label {
+    display: block;
+    font-weight: bold;
+    margin: 0 0 0.5rem 0;
+
+    &.___margin-top {
+        margin-top: 2rem;
+    }
+}
+
+.form__actions {
+    margin: 2rem 0 0 0;
+
+    &.___margin-top {
+        margin-top: 6rem;
+    }
+
+    &.___space-between {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &.___end {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+}
+
+.form__link {
+    font-size: @font-size--medium;
+    line-height: 2.4rem;
+    color: @color-grey--60;
+    margin: 0 2rem 0 0;
+    transition: color @trans-fast;
+
+    &:hover {
+        color: @color-grey--80;
+    }
+
+    &.___block-mobile {
+        @media ( max-width: @screen-xs-max ) {
+            display: block;
+            margin: 0 0 1rem 0;
+        }
+    }
+}
+
+.form__conditions {
+    margin: 1.2rem 0 4rem 0;
+    padding: 0.5rem 1rem;
+    background-color: @color-grey--20;
+}
+
+.form__input {
+    width: 100%;
+    height: 4.6rem;
+    margin: 0 0 2rem 0;
+    padding: 0 1.4rem;
+    border: 0.1rem solid @color-grey--50;
+    transition: border-color @trans-fast;
+
+    &.___no-margin {
+        margin: 0;
+    }
+
+    &:focus {
+        border-color: @color-secondary;
+    }
+}
+
+.form__input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: @color-grey--60;
+}
+.form__input::-moz-placeholder { /* Firefox 19+ */
+    color: @color-grey--60;
+}
+.form__input:-ms-input-placeholder { /* IE 10+ */
+    color: @color-grey--60;
+}
+.form__input:-moz-placeholder { /* Firefox 18- */
+    color: @color-grey--60;
 }
 
 .form__label-text {
@@ -24,6 +105,7 @@
     padding: 0 0 0.38rem 0;
     font-weight: bold;
     line-height: @line-height--medium;
+
     a {
         color: @color-secondary;
         text-decoration: none;
@@ -81,6 +163,7 @@
     border: 0.1rem solid @color-grey--50;
     padding: 1.2rem 2rem 1.1rem 2rem;
     transition: @trans-fast;
+
     &::placeholder {
         font-size: 1.8rem;
         line-height: 2.4rem;
@@ -113,11 +196,6 @@
     }
 }
 
-.form__input {
-    width: 100%;
-    .input();
-}
-
 .form__input--fit {
     padding: 0 0.5rem;
     font-size: inherit;
@@ -132,16 +210,6 @@
     top: 50%;
     transform: translate(0, -50%);
     left: 2.4rem;
-}
-
-.form__actions {
-    margin: 0;
-    margin: 3rem 0 0 0;
-    text-align: right;
-    a,
-    button {
-        margin-left: 1rem;
-    }
 }
 
 .form__actions--small-button-margin {
