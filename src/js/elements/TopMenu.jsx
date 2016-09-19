@@ -1,20 +1,12 @@
 import React from "react"
 import { Link } from "react-router"
 import { graphql } from "react-apollo"
-import { connect } from "react-redux"
 import gql from "graphql-tag"
-import { showModal } from "../lib/actions"
+import UserMenu from "./UserMenu"
 
 class TopMenu extends React.Component {
     constructor(props) {
         super(props)
-
-        this.showLoginModal = this.showLoginModal.bind(this)
-    }
-
-    showLoginModal(e) {
-        e.preventDefault()
-        this.props.dispatch(showModal('login'))
     }
 
     render() {
@@ -39,35 +31,6 @@ class TopMenu extends React.Component {
                     )
                 }
             })
-        }
-
-        let userMenu = "";
-        if (this.props.data.viewer && this.props.data.viewer.loggedIn) {
-            userMenu = (
-                <ul className="navigation__actions">
-                    <li><a href="#" title="Bookmarks" className="navigation__action ___bookmarks"><span>Bookmarks</span></a></li>
-                    <li><a href="#" title="Zoeken" data-search-trigger className="navigation__action ___search"></a></li>
-                    <li>
-                        <a href="#" title="Account" className="navigation__action ___account">
-                            <span>Sarah Hendriks</span>
-                        </a>
-                    </li>
-                </ul>
-            )
-        } else {
-            userMenu = (
-                <ul className="navigation__actions">
-                    <li><a href="#" title="Zoeken" data-search-trigger className="navigation__action ___search"></a></li>
-                    <li>
-                        <a href="#" title="Account" className="navigation__action ___account">
-                            <span>Sarah Hendriks</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" onClick={this.showLoginModal}>Login</a>
-                    </li>
-                </ul>
-            )
         }
 
         return (
@@ -103,7 +66,7 @@ class TopMenu extends React.Component {
                                 </div>
                             </li>
                         </ul>
-                        {userMenu}
+                        <UserMenu viewer={this.props.data.viewer} />
                         <a href="#" title="Pleio" className="navigation__link ___pleio">
                             Pleio
                         </a>
@@ -119,12 +82,6 @@ class TopMenu extends React.Component {
                 </div>
             </nav>
         )
-    }
-}
-
-const stateToProps = (state) => {
-    return {
-        modal: state.modal
     }
 }
 
@@ -144,4 +101,4 @@ const WithQuery = gql`
     }
 `;
 
-export default connect(stateToProps)(graphql(WithQuery)(TopMenu));
+export default graphql(WithQuery)(TopMenu);

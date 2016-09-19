@@ -234,6 +234,18 @@ class SchemaBuilder {
             'mutateAndGetPayload' => 'Pleio\Mutations::login'
         ]);
 
+        $logoutMutation = Relay::mutationWithClientMutationId([
+            'name' => 'logout',
+            'inputFields' => [],
+            'outputFields' => [
+                'viewer' => [
+                    'type' => $viewerInterface,
+                    'resolve' => 'Pleio\Resolver::getViewer'
+                ]
+            ],
+            'mutateAndGetPayload' => 'Pleio\Mutations::logout'
+        ]);
+
         $registerMutation = Relay::mutationWithClientMutationId([
             'name' => 'register',
             'inputFields' => [
@@ -280,9 +292,10 @@ class SchemaBuilder {
 
         $mutationType = new ObjectType([
             'name' => "Mutation",
-            'fields' => function() use ($loginMutation, $registerMutation, $subscribeNewsletterMutation) {
+            'fields' => function() use ($loginMutation, $logoutMutation, $registerMutation, $subscribeNewsletterMutation) {
                 return [
                     'login' => $loginMutation,
+                    'logout' => $logoutMutation,
                     'register' => $registerMutation,
                     'subscribeNewsletter' => $subscribeNewsletterMutation
                 ];

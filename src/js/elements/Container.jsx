@@ -1,6 +1,6 @@
 import React from 'react'
 import TopMenu from './TopMenu'
-import LoginModal from './LoginModal'
+import Login from '../pages/Login'
 
 export default class Container extends React.Component {
     render() {
@@ -12,7 +12,7 @@ export default class Container extends React.Component {
                 <main id="skip-navigation" className="page-layout__main ___no-padding">
                     {this.props.children}
                 </main>
-                <LoginModal />
+                <Login />
             </div>
         )
     }

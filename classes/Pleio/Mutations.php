@@ -32,6 +32,13 @@ class Mutations {
         }
     }
 
+    static function logout($input) {
+        $result = logout();
+        if (!$result) {
+            throw new Exception("could_not_logout");
+        }
+    }
+
     static function register($input) {
         $email = $input['email'];
         $password = $input['password'];

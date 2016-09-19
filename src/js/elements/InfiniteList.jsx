@@ -3,6 +3,8 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Card from "./Card"
 
+let IS_FETCHING = false;
+
 class InfiniteList extends React.Component {
     constructor(props) {
         super(props)
@@ -31,9 +33,23 @@ class InfiniteList extends React.Component {
         let currentOffset = document.body.scrollTop + window.innerHeight;
         let containerOffset = this.refs["infiniteScroll"].offsetHeight + this.refs["infiniteScroll"].offsetTop;
 
-        if (currentOffset >= containerOffset && !this.props.data.loading && this.props.data.entities.entities.length < this.props.data.entities.total) {
-            this.fetchMore()
+        if (this.props.data.loading) {
+            return;
         }
+
+        if (currentOffset < containerOffset) {
+            return;
+        }
+
+        if (!this.props.data.entities) {
+            return;
+        }
+
+        if (this.props.data.entities.entities.length >= this.props.data.entities.entities.total) {
+            return;
+        }
+
+        this.fetchMore()
     }
 
     fetchMore() {
