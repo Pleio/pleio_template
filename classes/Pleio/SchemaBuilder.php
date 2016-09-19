@@ -14,13 +14,13 @@ class SchemaBuilder {
             "name" => "User",
             "fields" => [
                 "guid" => [
-                    "type" => Type::nonNull(Type::string())
+                    "type" => Type::string()
                 ],
                 "name" => [
-                    "type" => Type::nonNull(Type::string())
+                    "type" => Type::string()
                 ],
                 "icon" => [
-                    "type" => Type::nonNull(Type::string())
+                    "type" => Type::string()
                 ]
             ]
         ]);
@@ -50,25 +50,25 @@ class SchemaBuilder {
             'name' => 'Object',
             'fields' => [
                 'guid' => [
-                    'type' => Type::nonNull(Type::string())
+                    'type' => Type::string()
                 ],
                 'title' => [
-                    'type' => Type::nonNull(Type::string())
+                    'type' => Type::string()
                 ],
                 'description' => [
-                    'type' => Type::nonNull(Type::string())
+                    'type' => Type::string()
                 ],
                 'url' => [
-                    'type' => Type::nonNull(Type::string())
+                    'type' => Type::string()
                 ],
                 'tags' => [
                     'type' => Type::listOf(Type::string())
                 ],
                 "timeCreated" => [
-                    "type" => Type::nonNull(Type::string())
+                    "type" => Type::string()
                 ],
                 "timeUpdated" => [
-                    "type" => Type::nonNull(Type::string())
+                    "type" => Type::string()
                 ],
                 "owner" => [
                     "type" => $userInterface,

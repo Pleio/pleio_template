@@ -20,16 +20,6 @@ class Resolver {
         $guid = (int) $args["guid"];
         $entity = get_entity($guid);
 
-        if (!$entity) {
-            return [
-                "guid" => 0,
-                "title" => "",
-                "description" => "",
-                "timeCreated" => "",
-                "timeUpdated" => ""
-            ];
-        }
-
         return [
             "guid" => $guid,
             "title" => $entity->title,
