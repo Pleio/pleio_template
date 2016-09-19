@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import fetch from 'isomorphic-fetch'
 import { polyfill } from 'es6-promise'
+import moment from 'moment'
+import 'moment/locale/nl';
 
 polyfill()
 
@@ -21,6 +23,8 @@ const networkInterface = createNetworkInterface('/graphql', {
     }
 })
 
+const lang = "nl"
+
 const client = new ApolloClient({
     networkInterface,
     shouldBatch: true
@@ -30,8 +34,10 @@ let store = createStore(combineReducers({
     currentLanguage: currentLanguage,
     apollo: client.reducer()
 }), {
-    currentLanguage: "nl"
+    currentLanguage: lang
 }, applyMiddleware(client.middleware()))
+
+moment.locale(lang)
 
 ReactDOM.render((
     <ApolloProvider client={client} store={store}>

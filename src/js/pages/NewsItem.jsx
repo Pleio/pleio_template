@@ -2,11 +2,14 @@ import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Comments from "../elements/Comments"
+import { displayTime } from "../lib/DateTime"
+import moment from "moment"
 
 class NewsItem extends React.Component {
     render() {
         let title = this.props.data.node ? this.props.data.node.title : "";
         let description = this.props.data.node ? this.props.data.node.description : "";
+        let timeCreated = this.props.data.node ? moment(this.props.data.node.timeCreated).format("LLL") : "";
 
         return (
             <section className="section">
@@ -16,7 +19,7 @@ class NewsItem extends React.Component {
                             <article className="article">
                                 <h3 className="article__title">{title}</h3>
                                 <div className="article-meta">
-                                    <div className="article-meta__date">23 augustus 2016</div>
+                                    <div className="article-meta__date">{timeCreated}</div>
                                     <div className="article-meta__source">Bron:&nbsp;<a href="#">Ministerie van Onderwijs, Cultuur en Wetenschap</a></div>
                                 </div>
                                 <div className="content">
@@ -54,6 +57,7 @@ const WithQuery = gql`
         node(guid: $guid) {
             title
             description
+            timeCreated
             comments {
                 description
                 owner {

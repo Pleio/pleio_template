@@ -1,13 +1,15 @@
 <?php
 use GraphQL\GraphQL as GraphQL;
 
+header('Content-Type: application/json');
+
 if ($_SERVER['REQUEST_METHOD'] !== "POST") {
-    echo "This endpoint only accepts POST requests.";
+    echo json_encode(["error" => "This endpoint only accepts POST requests."]);
     exit();
 }
 
-if (!$_SERVER['HTTP_X_CSRF_TOKEN'] | $_SERVER['HTTP_X_CSRF_TOKEN'] !== $_COOKIE['CSRF_TOKEN']) {
-    echo "CSRF Token is invalid.";
+if ($_SERVER['HTTP_X_CSRF_TOKEN'] && $_SERVER['HTTP_X_CSRF_TOKEN'] !== $_COOKIE['CSRF_TOKEN']) {
+    echo json_encode(["error" => "CSRF Token is invalid."]);
     exit();
 }
 
@@ -24,6 +26,4 @@ $variableValues = isset($data['variables']) ? $data['variables'] : null;
 
 $schema = Pleio\SchemaBuilder::build();
 $result = GraphQL::execute($schema, $requestString, null, $variableValues);
-
-header('Content-Type: application/json');
 echo json_encode($result);

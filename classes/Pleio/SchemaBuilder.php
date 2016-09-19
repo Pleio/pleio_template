@@ -34,6 +34,12 @@ class SchemaBuilder {
                 "description" => [
                     "type" => Type::nonNull(Type::string())
                 ],
+                "timeCreated" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "timeUpdated" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
                 "owner" => [
                     "type" => $userInterface
                 ]
@@ -57,6 +63,12 @@ class SchemaBuilder {
                 ],
                 'tags' => [
                     'type' => Type::listOf(Type::string())
+                ],
+                "timeCreated" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "timeUpdated" => [
+                    "type" => Type::nonNull(Type::string())
                 ],
                 "owner" => [
                     "type" => $userInterface,
@@ -85,7 +97,7 @@ class SchemaBuilder {
                 "link" => [
                     "type" => Type::nonNull(Type::string())
                 ],
-                "inJS" => [
+                "js" => [
                     "type" => Type::nonNull(Type::boolean())
                 ]
             ]

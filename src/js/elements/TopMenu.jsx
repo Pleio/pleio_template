@@ -8,7 +8,7 @@ class TopMenu extends React.Component {
         let menuItems = "";
         if (this.props.data.site) {
             menuItems = this.props.data.site.menu.map((item) => {
-                if (item.inJS) {
+                if (item.js) {
                     return (
                         <li key={item.guid}>
                             <Link to={item.link} title={item.title} className="navigation__link">
@@ -113,7 +113,7 @@ const WithQuery = gql`
                 guid
                 title
                 link
-                inJS
+                js
             }
         }
         viewer {

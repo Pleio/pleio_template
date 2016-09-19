@@ -9,16 +9,23 @@ class Resolver {
             "guid" => $site->guid,
             "title" => $site->title,
             "menu" => [
-                ["guid" => 1, "title" => "Blog", "link" => "/blog", "inJS" => true],
-                ["guid" => 2, "title" => "Nieuws", "link" => "/news", "inJS" => true],
-                ["guid" => 3, "title" => "Forum", "link" => "/forum", "inJS" => true]
+                ["guid" => 1, "title" => "Blog", "link" => "/blog", "js" => true],
+                ["guid" => 2, "title" => "Nieuws", "link" => "/news", "js" => true],
+                ["guid" => 3, "title" => "Forum", "link" => "/forum", "js" => true]
             ]
         ];
     }
 
     static function getNode($a, $args, $c) {
         $guid = (int) $args["guid"];
-        return get_entity($guid);
+        $entity = get_entity($guid);
+        return [
+            "guid" => $guid,
+            "title" => $entity->title,
+            "description" => $entity->description,
+            "timeCreated" => date("c", $entity->time_created),
+            "timeUpdated" => date("c", $entity->time_updated)
+        ];
     }
 
     static function getComments($object) {
@@ -42,7 +49,7 @@ class Resolver {
     }
 
     static function getUser($object) {
-        $owner = get_entity($object['owner_guid']);
+        $owner = get_entity($object['ownerGuid']);
 
         return [
             "guid" => $owner->guid,
@@ -74,11 +81,11 @@ class Resolver {
         foreach (elgg_get_entities($options) as $entity) {
             $entities[] = array(
                 "guid" => $entity->guid,
-                "owner_guid" => $entity->owner_guid,
+                "ownerGuid" => $entity->owner_guid,
                 "title" => $entity->title,
                 "description" => $entity->description,
-                "time_created" => $entity->time_created,
-                "time_updated" => $entity->time_updated
+                "timeCreated" => $entity->time_created,
+                "timeUpdated" => $entity->time_updated
             );
         }
 
