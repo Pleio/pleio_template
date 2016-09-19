@@ -21,7 +21,10 @@ const networkInterface = createNetworkInterface('/graphql', {
     }
 })
 
-const client = new ApolloClient({ networkInterface })
+const client = new ApolloClient({
+    networkInterface,
+    shouldBatch: true
+})
 
 let store = createStore(combineReducers({
     currentLanguage: currentLanguage,
@@ -34,4 +37,4 @@ ReactDOM.render((
     <ApolloProvider client={client} store={store}>
         <Routes />
     </ApolloProvider>
-), document.getElementById("skip-navigation"))
+), document.getElementById("react-root"))

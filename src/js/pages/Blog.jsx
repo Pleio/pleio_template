@@ -1,10 +1,11 @@
-import React from 'react'
+import React from "react"
+import ContentHeader from "../elements/ContentHeader"
 
 export default class Blog extends React.Component {
     render() {
         return (
             <div>
-                Blog
+                <ContentHeader title="Blog" />
             </div>
         )
     }

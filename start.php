@@ -15,6 +15,12 @@ function pleio_template_init() {
     elgg_register_js("pleio_template", "/mod/pleio_template/build/all.js");
 
     elgg_register_page_handler('graphql', 'pleio_template_graphql');
+
+    if (!isset($_COOKIE['CSRF_TOKEN'])) {
+        $token = md5(openssl_random_pseudo_bytes(32));
+        $domain = ini_get("session.cookie_domain");
+        setcookie("CSRF_TOKEN", $token, 0, "/", $domain);
+    }
 }
 
 elgg_register_event_handler('init', 'system', 'pleio_template_init');

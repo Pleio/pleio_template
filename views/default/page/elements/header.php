@@ -28,7 +28,11 @@
             <ul class="navigation__actions">
                 <li><a href="#" title="Bookmarks" class="navigation__action ___bookmarks"><span>Bookmarks</span></a></li>
                 <li><a href="#" title="Zoeken" data-search-trigger class="navigation__action ___search"></a></li>
-                <li><a href="#" title="Account" class="navigation__action ___account"><span>Sarah Hendriks</span></a></li>
+                <li>
+                    <a href="#" title="Account" class="navigation__action ___account">
+                        <span>Sarah Hendriks</span>
+                    </a>
+                </li>
             </ul><a href="#" title="Pleio" class="navigation__link ___pleio">Pleio</a></a>
         </div>
         <div class="mobile-navigation__bar">

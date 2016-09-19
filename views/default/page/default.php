@@ -19,13 +19,13 @@ $lang = get_current_language();
     <link href="/css/pleio_template.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div class="page-layout">
+    <div id="react-root" class="page-layout">
         <header class="page-layout__header">
             <?php echo elgg_view("page/elements/header"); ?>
         </header>
 
-        <main id="skip-navigation" class="page-layout__main">
-            <?php echo elgg_view("page/elements/body"); ?>
+        <main id="skip-navigation" class="page-layout__main ___no-padding">
+            <?php echo elgg_extract('body', $vars, ''); ?>
         </main>
     </div>
     <div data-mobile-nav-trigger class="navigation-overlay"></div>

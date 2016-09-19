@@ -1,10 +1,11 @@
 import React from 'react'
+import ContentHeader from "../elements/ContentHeader"
 
 export default class Activity extends React.Component {
     render() {
         return (
             <div>
-                Activity
+                <ContentHeader title="Laatste activiteit" />
             </div>
         )
     }

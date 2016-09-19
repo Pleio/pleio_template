@@ -28,7 +28,9 @@ export default class ContentHeader extends React.Component {
         return (
             <section className="section">
                 <div className="container">
-                    <h3 className="main__title">Nieuws</h3>
+                    <h3 className="main__title">
+                        {this.props.title}
+                    </h3>
                     <div className="row">
                         <div className="col-sm-4 col-lg-3">
                             <Select name="sectorFilter" options={sectorOptions} value="primair" />
