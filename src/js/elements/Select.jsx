@@ -36,6 +36,8 @@ export default class Select extends React.Component {
         this.setState({
             isOpen: false
         })
+
+        this.props.onChange(this.props.name, value)
     }
 
     render() {

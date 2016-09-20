@@ -61,6 +61,7 @@ class Resolver {
 
     static function getEntities($a, $args, $c) {
         $subtype = $args["subtype"];
+        $tags = $args["tags"];
 
         if (!in_array($subtype, array("news"))) {
             $subtype = "news";
@@ -74,19 +75,41 @@ class Resolver {
             "order_by" => "e.guid DESC"
         );
 
-        $total = elgg_get_entities(array_merge($options, array(
+        // @todo: Elgg will generate a query that will definately not scale for large amounts of items.
+        // Think we will need a seperate table to speed up tag matching
+        if ($tags) {
+            $options["metadata_name_value_pairs"] = [];
+            foreach ($tags as $tag) {
+                $options["metadata_name_value_pairs"][] = [
+                    "name" => "tags",
+                    "value" => $tag
+                ];
+            }
+        }
+
+        $total = elgg_get_entities_from_metadata(array_merge($options, array(
             "count" => true
         )));
 
         $entities = array();
-        foreach (elgg_get_entities($options) as $entity) {
+        foreach (elgg_get_entities_from_metadata($options) as $entity) {
+            $tags = $entity->tags;
+            if ($tags) {
+                if (!is_array($tags)) {
+                    $tags = [$tags];
+                }
+            } else {
+                $tags = [];
+            }
+
             $entities[] = array(
                 "guid" => $entity->guid,
                 "ownerGuid" => $entity->owner_guid,
                 "title" => $entity->title,
                 "description" => $entity->description,
                 "timeCreated" => $entity->time_created,
-                "timeUpdated" => $entity->time_updated
+                "timeUpdated" => $entity->time_updated,
+                "tags" => $tags
             );
         }
 

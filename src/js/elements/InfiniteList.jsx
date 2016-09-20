@@ -29,6 +29,15 @@ class InfiniteList extends React.Component {
         window.removeEventListener("touchmove", this.onScroll)
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.tags != this.props.tags) {
+            this.setState({
+                offset: this.props.offset || 0,
+                limit: this.props.limit || 20
+            })
+        }
+    }
+
     onScroll(e) {
         let currentOffset = document.body.scrollTop + window.innerHeight;
         let containerOffset = this.refs["infiniteScroll"].offsetHeight + this.refs["infiniteScroll"].offsetTop;
@@ -83,9 +92,15 @@ class InfiniteList extends React.Component {
             ))
         }
 
+        let noItems = ""
+        if (this.props.data.entities && this.props.data.entities.entities.length === 0) {
+            noItems = "Er zijn geen items in deze categorie."
+        }
+
         return (
             <div className="container" ref="infiniteScroll">
                 <div className="row">
+                    {noItems}
                     {children}
                 </div>
             </div>
@@ -94,12 +109,13 @@ class InfiniteList extends React.Component {
 }
 
 const WithQuery = gql`
-    query WithQuery($offset: Int!, $limit: Int!) {
-        entities(offset: $offset, limit: $limit) {
+    query WithQuery($offset: Int!, $limit: Int!, $tags: [String!]) {
+        entities(offset: $offset, limit: $limit, tags: $tags) {
             total
             entities {
                 guid
                 title
+                tags
             }
         }
     }

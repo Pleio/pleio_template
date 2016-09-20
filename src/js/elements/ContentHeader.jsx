@@ -2,6 +2,36 @@ import React from 'react'
 import Select from './Select'
 
 export default class ContentHeader extends React.Component {
+
+    constructor(props) {
+        super(props)
+
+        this.onChangeFilter = this.onChangeFilter.bind(this)
+
+        this.state = {
+            filter: {
+                sector: "all",
+                category: "all"
+            }
+        }
+    }
+
+    onChangeFilter(name, value) {
+        const newFilter = Object.assign({}, this.state.filter, {
+            [name]: value
+        })
+
+        this.setState({
+            filter: newFilter
+        })
+
+        const tagsArray = Object.keys(newFilter)
+            .map(key => newFilter[key])
+            .filter((value) => value != "all")
+
+        this.props.onFilter(tagsArray)
+    }
+
     render() {
         let sectorOptions = {
             "primair": "Primair onderwijs",
@@ -10,19 +40,19 @@ export default class ContentHeader extends React.Component {
             "mbo": "Mbo",
             "hbo": "Hbo",
             "wo": "WO",
-            "alle": "Alle onderwijssectoren"
+            "all": "Alle onderwijssectoren"
         }
 
         let categoryOptions = {
-            1: "Loopbaan",
-            2: "Contract & Afspraken",
-            3: "Omgaan met crises",
-            4: "In de klas",
-            5: "Wetten en regels",
-            6: "Toekomstvisies",
-            7: "Overig",
-            8: "Mijn categorieën",
-            9: "Alle categorieën"
+            "loopbaan": "Loopbaan",
+            "contract-en-afspraken": "Contract & Afspraken",
+            "omgaan-met-crises": "Omgaan met crises",
+            "in-de-klas": "In de klas",
+            "wetten-en-regels": "Wetten en regels",
+            "toekomstvisies": "Toekomstvisies",
+            "overig": "Overig",
+            "mijn": "Mijn categorieën",
+            "all": "Alle categorieën"
         }
 
         return (
@@ -33,10 +63,10 @@ export default class ContentHeader extends React.Component {
                     </h3>
                     <div className="row">
                         <div className="col-sm-4 col-lg-3">
-                            <Select name="sectorFilter" options={sectorOptions} value="primair" />
+                            <Select name="sector" options={sectorOptions} value={this.state.filter.sector} onChange={this.onChangeFilter} />
                         </div>
                         <div className="col-sm-4 col-lg-3">
-                            <Select name="categoryFilter" options={categoryOptions} value={1} />
+                            <Select name="category" options={categoryOptions} value={this.state.filter.category} onChange={this.onChangeFilter} />
                         </div>
                     </div>
                 </div>

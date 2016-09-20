@@ -201,6 +201,9 @@ class SchemaBuilder {
                         ],
                         'limit' => [
                             'type' => Type::int()
+                        ],
+                        'tags' => [
+                            'type' => Type::listOf(Type::string())
                         ]
                     ],
                     'resolve' => 'Pleio\Resolver::getEntities'
