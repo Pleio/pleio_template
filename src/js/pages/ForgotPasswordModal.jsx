@@ -58,7 +58,7 @@ class ForgotPasswordModal extends React.Component {
 
 
         return (
-            <Modal ref="modal" id="forgotPassword" title="Wachtwoord vergeten?">
+            <Modal ref="modal" id="forgotPassword" title="Wachtwoord vergeten?" small={true}>
                 {body}
             </Modal>
         )

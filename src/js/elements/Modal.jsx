@@ -29,11 +29,12 @@ class Modal extends React.Component {
             )
         }
 
-        return (
-            <div id={this.props.id} tabIndex="0" className={classNames({"modal ___small": true, "___is-open": this.props.modal == this.props.id})}>
+        let modal = ""
+        if (this.props.small) {
+            modal = (
                 <div className="modal__wrapper">
-                    <div className="modal__background" />
                     <div className="modal__close" onClick={this.onClose} />
+                    <div className="modal__background" />
                     <div className="modal__box">
                         <h3 className="modal__title">
                             {this.props.title}
@@ -42,6 +43,26 @@ class Modal extends React.Component {
                         {this.props.children}
                     </div>
                 </div>
+            )
+        } else {
+            modal = (
+                <div className="modal__wrapper">
+                    <div className="modal__background" />
+                    <div className="modal__box">
+                        <div className="modal__close" onClick={this.onClose} />
+                        <h3 className="modal__title">
+                            {this.props.title}
+                            &nbsp;{steps}
+                        </h3>
+                        {this.props.children}
+                    </div>
+                </div>
+            )
+        }
+
+        return (
+            <div id={this.props.id} tabIndex="0" className={classNames({"modal": true, "___small": this.props.small, "___is-open": this.props.modal == this.props.id})}>
+                {modal}
             </div>
         )
     }

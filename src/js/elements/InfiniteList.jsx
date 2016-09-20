@@ -1,22 +1,17 @@
 import React from "react"
-import { graphql } from "react-apollo"
-import gql from "graphql-tag"
 import Card from "./Card"
-
-let IS_FETCHING = false;
+import ContentHeader from '../elements/ContentHeader'
 
 class InfiniteList extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            loading: false,
-            offset: this.props.offset || 0,
-            limit: this.props.limit || 20
-        }
-
         this.onScroll = this.onScroll.bind(this)
         this.fetchMore = this.fetchMore.bind(this)
+
+        this.state = {
+            offset: 0
+        }
     }
 
     componentDidMount() {
@@ -30,10 +25,9 @@ class InfiniteList extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.tags != this.props.tags) {
+        if (nextProps.tags !== this.props.tags) {
             this.setState({
-                offset: this.props.offset || 0,
-                limit: this.props.limit || 20
+                offset: nextProps.offset
             })
         }
     }
@@ -62,7 +56,7 @@ class InfiniteList extends React.Component {
     }
 
     fetchMore() {
-        let offset = this.state.offset + this.state.limit
+        let offset = this.state.offset + this.props.limit
 
         this.setState({
             offset
@@ -98,27 +92,16 @@ class InfiniteList extends React.Component {
         }
 
         return (
-            <div className="container" ref="infiniteScroll">
-                <div className="row">
-                    {noItems}
-                    {children}
+            <section className="section ___grey">
+                <div className="container" ref="infiniteScroll">
+                    <div className="row">
+                        {noItems}
+                        {children}
+                    </div>
                 </div>
-            </div>
+            </section>
         )
     }
 }
 
-const WithQuery = gql`
-    query WithQuery($offset: Int!, $limit: Int!, $tags: [String!]) {
-        entities(offset: $offset, limit: $limit, tags: $tags) {
-            total
-            entities {
-                guid
-                title
-                tags
-            }
-        }
-    }
-`;
-
-export default graphql(WithQuery)(InfiniteList);
+export default InfiniteList;

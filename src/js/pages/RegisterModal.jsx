@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { connect } from "react-redux"
-import { showModal } from "../lib/actions"
+import { showModal, hideModal } from "../lib/actions"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Errors from "../elements/Errors"
@@ -42,10 +42,7 @@ class RegisterModal extends React.Component {
                 }
             }
         }).then(({data}) => {
-            if (data.login.viewer.loggedIn === true) {
-                client.resetStore()
-                this.onClose()
-            }
+            this.props.dispatch(hideModal())
         }).catch((errors) => {
             this.setState({
                 errors: errors
@@ -55,7 +52,7 @@ class RegisterModal extends React.Component {
 
     render() {
         return (
-            <Modal id="register" title="Registreren" steps={[1,2]}>
+            <Modal id="register" title="Registreren" steps={[1,2]} small={true}>
                 <p className="___small">Registreren is niet noodzakelijk indien je al een Pleio account hebt.</p>
                 <form className="form login">
                     <label className="form__item">

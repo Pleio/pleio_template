@@ -121,6 +121,9 @@ class SchemaBuilder {
                 'total' => [
                     'type' => Type::nonNull(Type::int())
                 ],
+                'canWrite' => [
+                    'type' => Type::nonNull(Type::boolean())
+                ],
                 'entities' => [
                     'type' => Type::listOf($objectInterface)
                 ]

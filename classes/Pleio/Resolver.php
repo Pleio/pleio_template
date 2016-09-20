@@ -113,8 +113,11 @@ class Resolver {
             );
         }
 
+        $site = elgg_get_site_entity();
+
         return [
             "total" => $total,
+            "canWrite" => $site->canWriteToContainer(0, "object", $subtype),
             "entities" => $entities
         ];
     }

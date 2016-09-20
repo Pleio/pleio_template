@@ -84,7 +84,7 @@ class LoginModal extends React.Component {
         }
 
         return (
-            <Modal ref="modal" id="login" title="Welkom op Leraar.nl">
+            <Modal ref="modal" id="login" title="Welkom op Leraar.nl" small={true}>
                 {errors}
                 <form className="form login" onSubmit={this.onLogin}>
                     <input name="username" type="text" placeholder="E-mailadres" className="form__input" onChange={this.onChangeUsername} />

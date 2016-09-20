@@ -7,6 +7,7 @@ export default class ContentHeader extends React.Component {
         super(props)
 
         this.onChangeFilter = this.onChangeFilter.bind(this)
+        this.onClickAdd = this.onClickAdd.bind(this)
 
         this.state = {
             filter: {
@@ -14,6 +15,10 @@ export default class ContentHeader extends React.Component {
                 category: "all"
             }
         }
+    }
+
+    onClickAdd(e) {
+        this.props.onClickAdd()
     }
 
     onChangeFilter(name, value) {
@@ -55,6 +60,17 @@ export default class ContentHeader extends React.Component {
             "all": "Alle categorieën"
         }
 
+        let add = ""
+        if (this.props.data && this.props.data.entities && this.props.data.entities.canWrite) {
+            add = (
+                <div className="col-sm-4 col-lg-3 col-lg-offset-3 end-lg">
+                    <div className="button ___large" onClick={this.onClickAdd}>
+                        +<span> Toevoegen</span>
+                    </div>
+                </div>
+            )
+        }
+
         return (
             <section className="section">
                 <div className="container">
@@ -68,6 +84,7 @@ export default class ContentHeader extends React.Component {
                         <div className="col-sm-4 col-lg-3">
                             <Select name="category" options={categoryOptions} value={this.state.filter.category} onChange={this.onChangeFilter} />
                         </div>
+                        {add}
                     </div>
                 </div>
             </section>
