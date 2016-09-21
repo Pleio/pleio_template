@@ -29,12 +29,9 @@ class DeleteModal extends React.Component {
                     clientMutationId: 1,
                     guid: this.props.object.guid,
                 }
-            }
+            },
+            refetchQueries: ["NewsList", "NewsItem"]
         }).then(({data}) => {
-            if (this.props.onSuccess) {
-                this.props.onSuccess()
-            }
-
             this.props.dispatch(hideModal())
         }).catch((errors) => {
             this.setState({

@@ -66,8 +66,8 @@ class LoginModal extends React.Component {
             }
         }).then(({data}) => {
             if (data.login.viewer.loggedIn === true) {
-                this.props.dispatch(hideModal())
                 client.resetStore()
+                this.props.dispatch(hideModal())
             }
         }).catch((errors) => {
             this.setState({

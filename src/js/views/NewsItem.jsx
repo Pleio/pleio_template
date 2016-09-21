@@ -80,8 +80,8 @@ class NewsItem extends React.Component {
     }
 }
 
-const WithQuery = gql`
-    query WithQuery($guid: String!) {
+const QUERY = gql`
+    query NewsItem($guid: String!) {
         object(guid: $guid) {
             guid
             title
@@ -100,7 +100,7 @@ const WithQuery = gql`
     }
 `;
 
-export default connect()(graphql(WithQuery, {
+export default connect()(graphql(QUERY, {
     options: (ownProps) => {
         return {
             variables: {

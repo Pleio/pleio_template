@@ -33,12 +33,14 @@ class EditModal extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            title: nextProps.object.title,
-            description: nextProps.object.description,
-            accessId: nextProps.object.accessId,
-            tags: nextProps.object.tags
-        })
+        if (nextProps.object) {
+            this.setState({
+                title: nextProps.object.title,
+                description: nextProps.object.description,
+                accessId: nextProps.object.accessId,
+                tags: nextProps.object.tags
+            })
+        }
     }
 
     onSubmit(e) {
@@ -60,10 +62,6 @@ class EditModal extends React.Component {
                 }
             }
         }).then(({data}) => {
-            if (this.props.onSuccess) {
-                this.props.onSuccess()
-            }
-
             this.props.dispatch(hideModal())
         }).catch((errors) => {
             this.setState({

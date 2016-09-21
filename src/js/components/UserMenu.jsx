@@ -33,7 +33,7 @@ class UserMenu extends React.Component {
                 client.resetStore()
             }
         }).catch((errors) => {
-            console.log(errors)
+
         })
     }
 

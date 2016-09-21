@@ -5,19 +5,21 @@ import Select from "../components/Select"
 
 class AccessSelect extends React.Component {
     render() {
-        let defaultAccessId = 0
         let options = {}
 
         if (this.props.data.site) {
-            defaultAccessId = this.props.data.site.defaultAccessId
             this.props.data.site.accessIds.forEach(accessId => {
                 options[accessId.id] = accessId.description
             })
         }
 
+        let value = this.props.value
+        if (value == null && this.props.data.site) {
+            value = this.props.data.site.defaultAccessId
+        }
 
         return (
-            <Select name={this.props.name} className={this.props.className} options={options} onChange={this.props.onChange} defaultValue={defaultAccessId} value={this.props.value} />
+            <Select name={this.props.name} className={this.props.className} options={options} onChange={this.props.onChange} value={value} />
         )
     }
 }

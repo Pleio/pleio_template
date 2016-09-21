@@ -35,7 +35,7 @@ class NewsList extends React.Component {
             <div>
                 <ContentHeaderWithData subtype="news" title="Nieuws" onFilter={this.onFilter} onClickAdd={this.onClickAdd} />
                 <InfiniteListWithData ref="infiniteList" subtype="news" offset={0} limit={20} tags={this.state.tags} />
-                <AddModal title="Nieuws toevoegen" onSuccess={() => this.refs["infiniteList"].getWrappedInstance().refetch()} />
+                <AddModal title="Nieuws toevoegen" />
             </div>
         )
     }

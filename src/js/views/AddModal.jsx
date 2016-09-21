@@ -17,12 +17,15 @@ class AddModal extends React.Component {
             errors: null,
             title: "",
             description: "",
+            tags: [],
             accessId: null
         }
 
         this.onChangeTitle = (e) => this.setState({title: e.target.value})
         this.onChangeDescription = (e) => this.setState({description: e.target.value})
+        this.onChangeTags = (e) => this.setState({tags: e.target.value})
         this.onChangeAccessId = (name, value) => this.setState({accessId: value})
+
         this.onSubmit = this.onSubmit.bind(this)
     }
 
@@ -41,14 +44,11 @@ class AddModal extends React.Component {
                     title: this.state.title,
                     description: this.state.description,
                     accessId: this.state.accessId,
-                    tags: []
+                    tags: this.state.tags
                 }
-            }
+            },
+            refetchQueries: ["NewsList"]
         }).then(({data}) => {
-            if (this.props.onSuccess) {
-                this.props.onSuccess()
-            }
-
             this.props.dispatch(hideModal())
         }).catch((errors) => {
             this.setState({
