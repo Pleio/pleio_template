@@ -97,4 +97,61 @@ class Mutations {
             throw new Exception("could_not_register");
         }
     }
+
+    static function addObject($input) {
+        $subtype = $input["subtype"];
+
+        if (!in_array($subtype, array("news"))) {
+            throw new Exception("invalid_subtype");
+        }
+
+        $object = new \ElggObject();
+        $object->subtype = $subtype;
+        $object->title = $input["title"];
+        $object->description = $input["description"];
+        $object->access_id = (int) $input["accessId"];
+        $object->tags = $input["tags"];
+        $result = $object->save();
+
+        if (!$result) {
+            throw new Exception("could_not_create");
+        }
+    }
+
+    static function editObject($input) {
+        $guid = (int) $input["guid"];
+
+        $object = get_entity($guid);
+        if (!$object) {
+            throw new Exception("could_not_find");
+        }
+
+        $object->title = $input["title"];
+        $object->description = $input["description"];
+        $object->access_id = (int) $input["accessId"];
+        $object->tags = $input["tags"];
+
+        $result = $object->save();
+        if ($result) {
+            return $result;
+        } else {
+            throw new Exception("could_not_save");
+        }
+    }
+
+    static function deleteObject($input) {
+        $guid = (int) $input["guid"];
+
+        $object = get_entity($guid);
+        if (!$object) {
+            throw new Exception("could_not_find");
+        }
+
+        $result = $object->delete();
+        if ($result) {
+            return $guid;
+        } else {
+            throw new Exception("could_not_delete");
+        }
+    }
 }

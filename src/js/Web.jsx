@@ -11,7 +11,7 @@ polyfill()
 import Routes from './Routes'
 
 import { ApolloProvider } from 'react-apollo';
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { currentLanguage, modal } from './lib/reducers'
 
 const lang = "nl"
@@ -23,7 +23,7 @@ let store = createStore(combineReducers({
 }), {
     currentLanguage: lang,
     modal: null
-}, applyMiddleware(client.middleware()))
+}, compose(applyMiddleware(client.middleware()), window.devToolsExtension ? window.devToolsExtension() : f => f))
 
 moment.locale(lang)
 

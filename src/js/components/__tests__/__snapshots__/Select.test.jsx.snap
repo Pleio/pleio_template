@@ -1,0 +1,116 @@
+exports[`test Changes value on clicking an item 1`] = `
+<div
+  className="selector-container ___mobile-margin-bottom">
+  <label
+    className="selector__label"
+    htmlFor="sectorFilter">
+    Sector
+  </label>
+  <div
+    className="selector">
+    <div
+      className="selector__select"
+      onClick={[Function bound onToggle]}
+      tabIndex="0">
+      First option
+    </div>
+    <ul
+      className="selector__options">
+      <li
+        className="selector__option ___is-disabled"
+        data-value=""
+        onClick={[Function bound onSelect]}>
+        Maak een keuze
+      </li>
+      <li
+        className="selector__option ___is-selected"
+        onClick={[Function onClick]}>
+        First option
+      </li>
+      <li
+        className="selector__option"
+        onClick={[Function onClick]}>
+        Second option
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`test Renders correctly 1`] = `
+<div
+  className="selector-container ___mobile-margin-bottom">
+  <label
+    className="selector__label"
+    htmlFor="sectorFilter">
+    Sector
+  </label>
+  <div
+    className="selector">
+    <div
+      className="selector__select"
+      onClick={[Function bound onToggle]}
+      tabIndex="0">
+      Maak een keuze
+    </div>
+    <ul
+      className="selector__options">
+      <li
+        className="selector__option ___is-disabled"
+        data-value=""
+        onClick={[Function bound onSelect]}>
+        Maak een keuze
+      </li>
+      <li
+        className="selector__option"
+        onClick={[Function onClick]}>
+        First option
+      </li>
+      <li
+        className="selector__option"
+        onClick={[Function onClick]}>
+        Second option
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`test Toggles on click 1`] = `
+<div
+  className="selector-container ___mobile-margin-bottom">
+  <label
+    className="selector__label"
+    htmlFor="sectorFilter">
+    Sector
+  </label>
+  <div
+    className="selector ___is-open">
+    <div
+      className="selector__select"
+      onClick={[Function bound onToggle]}
+      tabIndex="0">
+      Maak een keuze
+    </div>
+    <ul
+      className="selector__options">
+      <li
+        className="selector__option ___is-disabled"
+        data-value=""
+        onClick={[Function bound onSelect]}>
+        Maak een keuze
+      </li>
+      <li
+        className="selector__option"
+        onClick={[Function onClick]}>
+        First option
+      </li>
+      <li
+        className="selector__option"
+        onClick={[Function onClick]}>
+        Second option
+      </li>
+    </ul>
+  </div>
+</div>
+`;

@@ -25,4 +25,16 @@ class Helpers {
 
         return $result;
     }
+
+    static function renderTags($tags) {
+        if ($tags) {
+            if (!is_array($tags)) {
+                return [$tags];
+            } else {
+                return $tags;
+            }
+        } else {
+            return [];
+        }
+    }
 }

@@ -25,6 +25,18 @@ class SchemaBuilder {
             ]
         ]);
 
+        $accessInterface = new ObjectType([
+            "name" => "AccessId",
+            "fields" => [
+                "id" => [
+                    "type" => Type::nonNull(Type::int()),
+                ],
+                "description" => [
+                    "type" => Type::nonNull(Type::string())
+                ]
+            ]
+        ]);
+
         $commentInterface = new ObjectType([
             "name" => "Comment",
             "fields" => [
@@ -69,6 +81,12 @@ class SchemaBuilder {
                 ],
                 "timeUpdated" => [
                     "type" => Type::string()
+                ],
+                "canEdit" => [
+                    "type" => Type::boolean()
+                ],
+                "accessId" => [
+                    "type" => Type::int()
                 ],
                 "owner" => [
                     "type" => $userInterface,
@@ -161,6 +179,12 @@ class SchemaBuilder {
                 ],
                 "menu" => [
                     "type" => Type::listOf($menuItemInterface)
+                ],
+                "accessIds" => [
+                    "type" => Type::listOf($accessInterface)
+                ],
+                "defaultAccessId" => [
+                    "type" => Type::nonNull(Type::int())
                 ]
             ]
         ]);
@@ -172,14 +196,14 @@ class SchemaBuilder {
                     'type' => $viewerInterface,
                     'resolve' => 'Pleio\Resolver::getViewer'
                 ],
-                'node' => [
+                'object' => [
                     'type' => $objectInterface,
                     'args' => [
                         "guid" => [
                             "type" => Type::nonNull(Type::string())
                         ]
                     ],
-                    'resolve' => 'Pleio\Resolver::getNode'
+                    'resolve' => 'Pleio\Resolver::getObject'
                 ],
                 'search' => [
                     'type' => $searchInterface,
@@ -296,16 +320,93 @@ class SchemaBuilder {
             'mutateAndGetPayload' => 'Pleio\Mutations::subscribeNewsletter'
         ]);
 
+        $addObjectMutation = Relay::mutationWithClientMutationId([
+            'name' => 'addObject',
+            'inputFields' => [
+                'subtype' => [
+                    'type' => Type::nonNull(Type::string())
+                ],
+                'title' => [
+                    'type' => Type::nonNull(Type::string())
+                ],
+                'description' => [
+                    'type' => Type::nonNull(Type::string())
+                ],
+                'accessId' => [
+                    'type' => Type::nonNull(Type::int())
+                ],
+                'tags' => [
+                    'type' => Type::listOf(Type::string())
+                ]
+            ],
+            'outputFields' => [
+                'object' => [
+                    'type' => $objectInterface,
+                    'resolve' => 'Pleio\Resolver::getObject'
+                ]
+            ],
+            'mutateAndGetPayload' => 'Pleio\Mutations::addObject'
+        ]);
+
+        $editObjectMutation = Relay::mutationWithClientMutationId([
+            'name' => 'editObject',
+            'inputFields' => [
+                'guid' => [
+                    'type' => Type::nonNull(Type::string())
+                ],
+                'title' => [
+                    'type' => Type::nonNull(Type::string())
+                ],
+                'description' => [
+                    'type' => Type::nonNull(Type::string())
+                ],
+                'accessId' => [
+                    'type' => Type::nonNull(Type::int())
+                ],
+                'tags' => [
+                    'type' => Type::listOf(Type::string())
+                ]
+            ],
+            'outputFields' => [
+                'object' => [
+                    'type' => $objectInterface,
+                    'resolve' => function($guid) {
+                        return Resolver::getObject(null, ["guid" => $guid], null);
+                    }
+                ]
+            ],
+            'mutateAndGetPayload' => 'Pleio\Mutations::editObject'
+        ]);
+
+        $deleteObjectMutation = Relay::mutationWithClientMutationId([
+            'name' => 'deleteObject',
+            'inputFields' => [
+                'guid' => [
+                    'type' => Type::nonNull(Type::string())
+                ]
+            ],
+            'outputFields' => [
+                'guid' => [
+                    'type' => Type::nonNull(Type::string()),
+                    'resolve' => function($guid) {
+                        return $guid;
+                    }
+                ]
+            ],
+            'mutateAndGetPayload' => 'Pleio\Mutations::deleteObject'
+        ]);
+
         $mutationType = new ObjectType([
             'name' => "Mutation",
-            'fields' => function() use ($loginMutation, $logoutMutation, $registerMutation, $subscribeNewsletterMutation) {
-                return [
+            'fields' => [
                     'login' => $loginMutation,
                     'logout' => $logoutMutation,
                     'register' => $registerMutation,
+                    'addObject' => $addObjectMutation,
+                    'editObject' => $editObjectMutation,
+                    'deleteObject' => $deleteObjectMutation,
                     'subscribeNewsletter' => $subscribeNewsletterMutation
-                ];
-            }
+            ]
         ]);
 
         $schema = new Schema($queryType, $mutationType);

@@ -10,7 +10,8 @@ const networkInterface = createNetworkInterface('/graphql', {
 
 const client = new ApolloClient({
     networkInterface,
-    shouldBatch: true
+    shouldBatch: true,
+    dataIdFromObject: o => o.guid
 })
 
 export default client

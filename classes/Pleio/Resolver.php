@@ -5,6 +5,14 @@ class Resolver {
     static function site($a, $args, $c) {
         $site = elgg_get_site_entity();
 
+        $accessIds = [];
+        foreach (get_write_access_array() as $id => $description) {
+            $accessIds[] = [
+                "id" => $id,
+                "description" => $description
+            ];
+        }
+
         return [
             "guid" => $site->guid,
             "title" => $site->title,
@@ -12,20 +20,29 @@ class Resolver {
                 ["guid" => 1, "title" => "Blog", "link" => "/blog", "js" => true],
                 ["guid" => 2, "title" => "Nieuws", "link" => "/news", "js" => true],
                 ["guid" => 3, "title" => "Forum", "link" => "/forum", "js" => true]
-            ]
+            ],
+            "accessIds" => $accessIds,
+            "defaultAccessId" => get_default_access()
         ];
     }
 
-    static function getNode($a, $args, $c) {
+    static function getObject($a, $args, $c) {
         $guid = (int) $args["guid"];
         $entity = get_entity($guid);
+
+        if (!$entity) {
+            return;
+        }
 
         return [
             "guid" => $guid,
             "title" => $entity->title,
             "description" => $entity->description,
             "timeCreated" => date("c", $entity->time_created),
-            "timeUpdated" => date("c", $entity->time_updated)
+            "timeUpdated" => date("c", $entity->time_updated),
+            "canEdit" => $entity->canEdit(),
+            "accessId" => $entity->access_id,
+            "tags" => Helpers::renderTags($entity->tags)
         ];
     }
 
@@ -36,13 +53,18 @@ class Resolver {
             "container_guid" => (int) $object['guid']
         );
 
-        $comments = array();
-        foreach (elgg_get_entities($options) as $comment) {
+        $entities = elgg_get_entities($options);
+        if (!$entities) {
+            return [];
+        }
+
+        $comments = [];
+        foreach ($entities as $entity) {
             $comments[] = [
-                "guid" => $comment->guid,
-                "description" => $comment->description,
-                "time_created" => $comment->time_created,
-                "time_updated" => $comment->time_updated
+                "guid" => $entity->guid,
+                "description" => $entity->description,
+                "time_created" => $entity->time_created,
+                "time_updated" => $entity->time_updated
             ];
         }
 
@@ -93,15 +115,6 @@ class Resolver {
 
         $entities = array();
         foreach (elgg_get_entities_from_metadata($options) as $entity) {
-            $tags = $entity->tags;
-            if ($tags) {
-                if (!is_array($tags)) {
-                    $tags = [$tags];
-                }
-            } else {
-                $tags = [];
-            }
-
             $entities[] = array(
                 "guid" => $entity->guid,
                 "ownerGuid" => $entity->owner_guid,
@@ -109,7 +122,7 @@ class Resolver {
                 "description" => $entity->description,
                 "timeCreated" => $entity->time_created,
                 "timeUpdated" => $entity->time_updated,
-                "tags" => $tags
+                "tags" => Helpers::renderTags($entity->tags)
             );
         }
 
