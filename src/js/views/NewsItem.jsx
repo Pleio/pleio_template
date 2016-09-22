@@ -2,11 +2,15 @@ import React from "react"
 import { graphql } from "react-apollo"
 import { connect } from "react-redux"
 import gql from "graphql-tag"
-import Comments from "../components/Comments"
+import CommentList from "../components/CommentList"
 import EditModal from "../views/EditModal"
 import DeleteModal from "../views/DeleteModal"
 import moment from "moment"
 import { showModal } from "../lib/actions"
+import AddComment from "../containers/AddComment"
+import SocialShare from "../components/SocialShare"
+import Bookmark from "../components/Bookmark"
+import NotFound from "./NotFound"
 
 class NewsItem extends React.Component {
     constructor(props) {
@@ -14,13 +18,27 @@ class NewsItem extends React.Component {
 
         this.onEdit = () => this.props.dispatch(showModal("edit"))
         this.onDelete = () => this.props.dispatch(showModal("delete"))
+        this.toggleAddComment = () => this.setState({showAddComment: !this.state.showAddComment})
+        this.closeAddComment = () => this.setState({showAddComment: false})
+
+        this.state = {
+            showAddComment: false
+        }
     }
 
+
     render() {
-        let title = this.props.data.object ? this.props.data.object.title : "";
-        let description = this.props.data.object ? this.props.data.object.description : "";
-        let timeCreated = this.props.data.object ? moment(this.props.data.object.timeCreated).format("LLL") : "";
-        let canEdit = this.props.data.object ? this.props.data.object.canEdit : false;
+        if (this.props.data.error) {
+            return (
+                <NotFound />
+            )
+        }
+
+        let title = this.props.data.entity ? this.props.data.entity.title : "";
+        let description = this.props.data.entity ? this.props.data.entity.description : "";
+        let timeCreated = this.props.data.entity ? moment(this.props.data.entity.timeCreated).format("LLL") : "";
+        let canEdit = this.props.data.entity ? this.props.data.entity.canEdit : false;
+        let comments = this.props.data.entity ? this.props.data.entity.comments : [];
 
         let manage = ""
         if (canEdit) {
@@ -45,33 +63,28 @@ class NewsItem extends React.Component {
                             <article className="article">
                                 <h3 className="article__title">{title}</h3>
                                 <div className="article-meta">
-                                    <div className="article-meta__date">{timeCreated}</div>
-                                    <div className="article-meta__source">Bron:&nbsp;<a href="#">Ministerie van Onderwijs, Cultuur en Wetenschap</a></div>
-                                </div>
-                                <div className="content">
-                                    {description}
-                                </div>
-                                <div className="article-actions">
-                                    <div className="article-actions__share">
-                                        <div title="Deel" data-toggle-share className="button article-action ___share"><span>Deel</span></div>
-                                        <div data-toggle-share-target className="article-share">
-                                            <div className="button__share ___twitter"></div>
-                                            <div className="button__share ___facebook"></div>
-                                            <div className="button__share ___google"></div>
-                                            <div className="button__share ___linkedin"></div>
-                                            <div className="button__share ___mail"></div>
-                                        </div>
+                                    <div className="article-meta__date">
+                                        {timeCreated}
                                     </div>
+                                    <div className="article-meta__source">
+                                        Bron:&nbsp;<a href="#">Ministerie van Onderwijs, Cultuur en Wetenschap</a>
+                                    </div>
+                                </div>
+                                <div className="content" dangerouslySetInnerHTML={{__html: description}} />
+                                <div className="article-actions">
+                                    <SocialShare />
                                     <div className="article-actions__justify">
-                                        <div title="Schrijf een reactie" data-comment-add-toggle className="button article-action ___comment">Schrijf een reactie
+                                        <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
+                                            Schrijf een reactie
                                         </div>
-                                        <div title="Bewaar" data-toggle-bookmark className="button__text article-action ___bookmark"><span className="___saved">Bewaard</span><span className="___save">Bewaren</span></div>
+                                        <Bookmark />
                                     </div>
                                 </div>
                             </article>
-                            <Comments />
-                            <EditModal title="Nieuws wijzigen" object={this.props.data.object} />
-                            <DeleteModal title="Nieuws verwijderen" object={this.props.data.object} />
+                            <AddComment isOpen={this.state.showAddComment} object={this.props.data.entity} onSuccess={this.closeAddComment} />
+                            <CommentList comments={comments} />
+                            <EditModal title="Nieuws wijzigen" object={this.props.data.entity} />
+                            <DeleteModal title="Nieuws verwijderen" object={this.props.data.entity} />
                         </div>
                     </div>
                 </div>
@@ -82,19 +95,27 @@ class NewsItem extends React.Component {
 
 const QUERY = gql`
     query NewsItem($guid: String!) {
-        object(guid: $guid) {
+        entity(guid: $guid) {
+            ...newsFragment
+        }
+    }
+
+    fragment newsFragment on Object {
+        guid
+        title
+        description
+        accessId
+        timeCreated
+        canEdit
+        tags
+        comments {
             guid
-            title
             description
-            accessId
             timeCreated
-            canEdit
-            tags
-            comments {
-                description
-                owner {
-                    name
-                }
+            owner {
+                name
+                icon
+                url
             }
         }
     }

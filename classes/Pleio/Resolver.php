@@ -2,7 +2,7 @@
 namespace Pleio;
 
 class Resolver {
-    static function site($a, $args, $c) {
+    static function getSite($a, $args, $c) {
         $site = elgg_get_site_entity();
 
         $accessIds = [];
@@ -17,25 +17,26 @@ class Resolver {
             "guid" => $site->guid,
             "title" => $site->title,
             "menu" => [
-                ["guid" => 1, "title" => "Blog", "link" => "/blog", "js" => true],
-                ["guid" => 2, "title" => "Nieuws", "link" => "/news", "js" => true],
-                ["guid" => 3, "title" => "Forum", "link" => "/forum", "js" => true]
+                ["guid" => "menu:" . 1, "title" => "Blog", "link" => "/blog", "js" => true],
+                ["guid" => "menu:" . 2, "title" => "Nieuws", "link" => "/news", "js" => true],
+                ["guid" => "menu:" . 3, "title" => "Forum", "link" => "/forum", "js" => true]
             ],
             "accessIds" => $accessIds,
             "defaultAccessId" => get_default_access()
         ];
     }
 
-    static function getObject($a, $args, $c) {
+    static function getEntity($a, $args, $c) {
         $guid = (int) $args["guid"];
         $entity = get_entity($guid);
 
         if (!$entity) {
-            return;
+            throw new Exception("could_not_find");
         }
 
         return [
             "guid" => $guid,
+            "type" => $entity->type,
             "title" => $entity->title,
             "description" => $entity->description,
             "timeCreated" => date("c", $entity->time_created),
@@ -62,22 +63,59 @@ class Resolver {
         foreach ($entities as $entity) {
             $comments[] = [
                 "guid" => $entity->guid,
+                "ownerGuid" => $entity->owner_guid,
                 "description" => $entity->description,
-                "time_created" => $entity->time_created,
-                "time_updated" => $entity->time_updated
+                "timeCreated" => date("c", $entity->time_created),
+                "timeUpdated" => date("c", $entity->time_updated)
             ];
         }
 
         return $comments;
     }
 
-    static function getUser($object) {
-        $owner = get_entity($object['ownerGuid']);
+    static function getUser($guid) {
+        $user = get_entity($guid);
+        if (!$user) {
+            return [
+                "guid" => 0,
+                "name" => "Unknown user"
+            ];
+        }
 
         return [
-            "guid" => $owner->guid,
-            "name" => $owner->name,
-            "icon" => $owner->getIconURL()
+            "guid" => $user->guid,
+            "name" => $user->name,
+            "icon" => $user->getIconURL(),
+            "url" => $user->getURL()
+        ];
+    }
+
+    static function getGroups($a, $args, $c) {
+        $options = array(
+            "type" => "group",
+            "limit" => (int) $args["limit"],
+            "offset" => (int) $args["offset"]
+        );
+
+        $total = elgg_get_entities(array_merge($options, array(
+            "count" => true
+        )));
+
+        $entities = [];
+        foreach (elgg_get_entities($options) as $entity) {
+            $entities[] = [
+                "guid" => $entity->guid,
+                "name" => $entity->name,
+                "timeCreated" => date("c", $entity->time_created),
+                "timeUpdated" => date("c", $entity->time_updated),
+                "tags" => Helpers::renderTags($entity->tags)
+            ];
+        }
+
+        return [
+            "total" => $total,
+            "canWrite" => $site->canWriteToContainer(0, "group"),
+            "entities" => $entities
         ];
     }
 
@@ -119,9 +157,10 @@ class Resolver {
                 "guid" => $entity->guid,
                 "ownerGuid" => $entity->owner_guid,
                 "title" => $entity->title,
+                "type" => $entity->type,
                 "description" => $entity->description,
-                "timeCreated" => $entity->time_created,
-                "timeUpdated" => $entity->time_updated,
+                "timeCreated" => date("c", $entity->time_created),
+                "timeUpdated" => date("c", $entity->time_updated),
                 "tags" => Helpers::renderTags($entity->tags)
             );
         }
@@ -160,7 +199,9 @@ class Resolver {
             "id" => 0,
             "loggedIn" => elgg_is_logged_in(),
             "username" => $entity ? $entity->username : "",
-            "name" => $entity ? $entity->name : ""
+            "name" => $entity ? $entity->name : "",
+            "icon" => $entity ? $entity->getIconURL() : "",
+            "url" => $entity ? $entity->getURL() : ""
         ];
     }
 }

@@ -15,21 +15,17 @@ export default class Select extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let nextValue;
-
-        if (nextProps.value !== null) {
-            nextValue = nextProps.value
-        } else {
-            nextValue = nextProps.defaultValue
+        if (this.state.value === nextProps.value) {
+            return;
         }
 
         this.setState({
-            value: nextValue
+            value: nextProps.value ? nextProps.value : nextProps.defaultValue
         })
     }
 
     componentWillUpdate(nextProps, nextState) {
-        if (nextState.value != this.state.value) {
+        if (nextState.value !== null && nextState.value !== this.state.value) {
             if (this.props.onChange) {
                 this.props.onChange(this.props.name, nextState.value)
             }

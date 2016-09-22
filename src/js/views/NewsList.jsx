@@ -1,5 +1,6 @@
 import React from "react"
 import { graphql } from "react-apollo"
+import { createFragment } from "apollo-client"
 import gql from "graphql-tag"
 import { connect } from "react-redux"
 import { showModal } from "../lib/actions"
@@ -41,27 +42,32 @@ class NewsList extends React.Component {
     }
 }
 
-const HEADER_QUERY = gql`
+const headerQuery = gql`
     query NewsHeader {
         entities {
             canWrite
         }
     }
 `
-const LIST_QUERY = gql`
+
+const listQuery = gql`
     query NewsList($offset: Int!, $limit: Int!, $tags: [String!]) {
-        entities(offset: $offset, limit: $limit, tags: $tags) {
+        entities(offset: $offset, limit: $limit, tags: $tags, subtype: "news") {
             total
             entities {
-                guid
-                title
-                tags
+                ...objectFragment
             }
         }
     }
+
+    fragment objectFragment on Object {
+        guid
+        title
+        tags
+    }
 `
 
-const ContentHeaderWithData = graphql(HEADER_QUERY)(ContentHeader)
-const InfiniteListWithData = graphql(LIST_QUERY, {withRef: true})(InfiniteList)
+const ContentHeaderWithData = graphql(headerQuery)(ContentHeader)
+const InfiniteListWithData = graphql(listQuery, {withRef: true})(InfiniteList)
 
 export default connect()(NewsList)

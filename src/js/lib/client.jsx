@@ -10,7 +10,6 @@ const networkInterface = createNetworkInterface('/graphql', {
 
 const client = new ApolloClient({
     networkInterface,
-    shouldBatch: true,
     dataIdFromObject: o => {
         if (o.guid) {
             return o.guid

@@ -55,9 +55,9 @@ class DeleteModal extends React.Component {
 }
 
 const DELETE = gql`
-    mutation deleteObject($input: deleteObjectInput!) {
-        deleteObject(input: $input) {
-            guid
+    mutation deleteEntity($input: deleteEntityInput!) {
+        deleteEntity(input: $input) {
+            result
         }
     }
 `

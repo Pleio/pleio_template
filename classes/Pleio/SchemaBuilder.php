@@ -10,26 +10,46 @@ use GraphQLRelay\Relay;
 
 class SchemaBuilder {
     static function build() {
-        $userInterface = new ObjectType([
-            "name" => "User",
-            "fields" => [
-                "guid" => [
-                    "type" => Type::string()
+        $typeEnum = new EnumType([
+            "name" => "Type",
+            "description" => "The type of entity",
+            "values" => [
+                "user" => [
+                    "value" => "user"
                 ],
-                "name" => [
-                    "type" => Type::string()
+                "group" => [
+                    "value" => "group"
                 ],
-                "icon" => [
-                    "type" => Type::string()
+                "object" => [
+                    "value" => "object"
                 ]
             ]
         ]);
 
-        $accessInterface = new ObjectType([
+        $entityInterface = new InterfaceType([
+            "name" => "Entity",
+            "fields" => [
+                "guid" => [
+                    "type" => Type::nonNull(Type::string())
+                ]
+            ],
+            "resolveType" => function($object) use (&$userType, &$objectType, &$groupType) {
+                switch ($object["type"]) {
+                    case "user":
+                        return $userType;
+                    case "object":
+                        return $objectType;
+                    case "group":
+                        return $groupType;
+                }
+            }
+        ]);
+
+        $accessIdType = new ObjectType([
             "name" => "AccessId",
             "fields" => [
                 "id" => [
-                    "type" => Type::nonNull(Type::int()),
+                    "type" => Type::nonNull(Type::int())
                 ],
                 "description" => [
                     "type" => Type::nonNull(Type::string())
@@ -37,65 +57,97 @@ class SchemaBuilder {
             ]
         ]);
 
-        $commentInterface = new ObjectType([
-            "name" => "Comment",
+        $userType = new ObjectType([
+            "name" => "User",
+            "interfaces" => [$entityInterface],
             "fields" => [
                 "guid" => [
-                    "type" => Type::nonNull(Type::string()),
-                ],
-                "description" => [
                     "type" => Type::nonNull(Type::string())
                 ],
-                "timeCreated" => [
+                "name" => [
                     "type" => Type::nonNull(Type::string())
                 ],
-                "timeUpdated" => [
+                "icon" => [
                     "type" => Type::nonNull(Type::string())
                 ],
-                "owner" => [
-                    "type" => $userInterface
+                "url" => [
+                    "type" => Type::nonNull(Type::string())
                 ]
             ]
         ]);
 
-        $objectInterface = new ObjectType([
-            'name' => 'Object',
-            'fields' => [
-                'guid' => [
-                    'type' => Type::string()
+        $groupType = new ObjectType([
+            "name" => "Group",
+            "interfaces" => [$entityInterface],
+            "fields" => [
+                "guid" => [
+                    "type" => Type::nonNull(Type::string())
                 ],
-                'title' => [
-                    'type' => Type::string()
+                "name" => [
+                    "type" => Type::nonNull(Type::string())
                 ],
-                'description' => [
-                    'type' => Type::string()
-                ],
-                'url' => [
-                    'type' => Type::string()
-                ],
-                'tags' => [
-                    'type' => Type::listOf(Type::string())
-                ],
-                "timeCreated" => [
-                    "type" => Type::string()
-                ],
-                "timeUpdated" => [
-                    "type" => Type::string()
+                "icon" => [
+                    "type" => Type::nonNull(Type::string())
                 ],
                 "canEdit" => [
-                    "type" => Type::boolean()
+                    "type" => Type::nonNull(Type::boolean())
+                ],
+                "isClosed" => [
+                    "type" => Type::nonNull(Type::boolean())
+                ],
+                "canJoin" => [
+                    "type" => Type::nonNull(Type::boolean())
+                ],
+                "defaultAccessId" => [
+                    "type" => Type::nonNull(Type::int())
+                ]
+            ]
+        ]);
+
+        $objectType = new ObjectType([
+            "name" => "Object",
+            "interfaces" => [$entityInterface],
+            "fields" => [
+                "guid" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "title" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "description" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "url" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "tags" => [
+                    "type" => Type::listOf(Type::string())
+                ],
+                "timeCreated" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "timeUpdated" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "canEdit" => [
+                    "type" => Type::nonNull(Type::boolean())
+                ],
+                "canComment" => [
+                    "type" => Type::nonNull(Type::boolean())
                 ],
                 "accessId" => [
-                    "type" => Type::int()
+                    "type" => Type::nonNull(Type::int())
                 ],
                 "owner" => [
-                    "type" => $userInterface,
+                    "type" => $userType,
                     "resolve" => function($object) {
-                        return Resolver::getUser($object);
+                        return Resolver::getUser($object["ownerGuid"]);
                     }
                 ],
                 "comments" => [
-                    "type" => Type::listOf($commentInterface),
+                    "type" => function() use (&$objectType) {
+                        return Type::listOf($objectType);
+                    },
                     "resolve" => function($object) {
                         return Resolver::getComments($object);
                     }
@@ -103,7 +155,59 @@ class SchemaBuilder {
             ]
         ]);
 
-        $menuItemInterface = new ObjectType([
+        $searchListType = new ObjectType([
+            "name" => "Search",
+            "fields" => [
+                "total" => [
+                    "type" => Type::nonNull(Type::int())
+                ],
+                "results" => [
+                    "type" => Type::listOf($entityInterface)
+                ]
+            ]
+        ]);
+
+        $entityListType = new ObjectType([
+            "name" => "EntityList",
+            "fields" => [
+                "total" => [
+                    "type" => Type::nonNull(Type::int())
+                ],
+                "canWrite" => [
+                    "type" => Type::nonNull(Type::boolean())
+                ],
+                "entities" => [
+                    "type" => Type::listOf($entityInterface)
+                ]
+            ]
+        ]);
+
+        $viewerType = new ObjectType([
+            "name" => "Viewer",
+            "description" => "The current site viewer",
+            "fields" => [
+                "id" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "loggedIn" => [
+                    "type" => Type::nonNull(Type::boolean())
+                ],
+                "username" => [
+                    "type" => Type::string()
+                ],
+                "name" => [
+                    "type" => Type::string()
+                ],
+                "icon" => [
+                    "type" => Type::string()
+                ],
+                "url" => [
+                    "type" => Type::string()
+                ]
+            ]
+        ]);
+
+        $menuItemType = new ObjectType([
             "name" => "MenuItem",
             "fields" => [
                 "guid" => [
@@ -121,53 +225,7 @@ class SchemaBuilder {
             ]
         ]);
 
-        $searchInterface = new ObjectType([
-            'name' => 'Search',
-            'fields' => [
-                'total' => [
-                    'type' => Type::nonNull(Type::int())
-                ],
-                'results' => [
-                    'type' => Type::listOf($objectInterface)
-                ]
-            ]
-        ]);
-
-        $entitiesInterface = new ObjectType([
-            'name' => 'EntitiesList',
-            'fields' => [
-                'total' => [
-                    'type' => Type::nonNull(Type::int())
-                ],
-                'canWrite' => [
-                    'type' => Type::nonNull(Type::boolean())
-                ],
-                'entities' => [
-                    'type' => Type::listOf($objectInterface)
-                ]
-            ]
-        ]);
-
-        $viewerInterface = new ObjectType([
-            'name' => 'Viewer',
-            'description' => 'The current site viewer',
-            'fields' => [
-                'id' => [
-                    'type' => Type::nonNull(Type::string())
-                ],
-                'loggedIn' => [
-                    'type' => Type::nonNull(Type::boolean())
-                ],
-                'username' => [
-                    'type' => Type::string()
-                ],
-                'name' => [
-                    'type' => Type::string()
-                ]
-            ]
-        ]);
-
-        $siteInterface = new ObjectType([
+        $siteType = new ObjectType([
             "name" => "Site",
             "description" => "The current site",
             "fields" => [
@@ -178,10 +236,10 @@ class SchemaBuilder {
                     "type" => Type::nonNull(Type::string())
                 ],
                 "menu" => [
-                    "type" => Type::listOf($menuItemInterface)
+                    "type" => Type::listOf($menuItemType)
                 ],
                 "accessIds" => [
-                    "type" => Type::listOf($accessInterface)
+                    "type" => Type::listOf($accessIdType)
                 ],
                 "defaultAccessId" => [
                     "type" => Type::nonNull(Type::int())
@@ -190,222 +248,258 @@ class SchemaBuilder {
         ]);
 
         $queryType = new ObjectType([
-            'name' => 'Query',
-            'fields' => [
-                'viewer' => [
-                    'type' => $viewerInterface,
-                    'resolve' => 'Pleio\Resolver::getViewer'
+            "name" => "Query",
+            "fields" => [
+                "viewer" => [
+                    "type" => $viewerType,
+                    "resolve" => "Pleio\Resolver::getViewer"
                 ],
-                'object' => [
-                    'type' => $objectInterface,
-                    'args' => [
+                "entity" => [
+                    "type" => $entityInterface,
+                    "args" => [
                         "guid" => [
                             "type" => Type::nonNull(Type::string())
                         ]
                     ],
-                    'resolve' => 'Pleio\Resolver::getObject'
+                    "resolve" => "Pleio\Resolver::getEntity"
                 ],
-                'search' => [
-                    'type' => $searchInterface,
-                    'args' => [
-                        'q' => [
-                            'type' => Type::nonNull(Type::string()),
+                "search" => [
+                    "type" => $searchListType,
+                    "args" => [
+                        "q" => [
+                            "type" => Type::nonNull(Type::string()),
                         ],
-                        'offset' => [
-                            'type' => Type::int()
+                        "offset" => [
+                            "type" => Type::int()
                         ],
-                        'limit' => [
-                            'type' => Type::int()
+                        "limit" => [
+                            "type" => Type::int()
                         ]
                     ],
-                    'resolve' => 'Pleio\Resolver::search'
+                    "resolve" => "Pleio\Resolver::search"
                 ],
-                'entities' => [
-                    'type' => $entitiesInterface,
-                    'args' => [
-                        'offset' => [
-                            'type' => Type::int()
+                "entities" => [
+                    "type" => $entityListType,
+                    "args" => [
+                        "offset" => [
+                            "type" => Type::int()
                         ],
-                        'limit' => [
-                            'type' => Type::int()
+                        "limit" => [
+                            "type" => Type::int()
                         ],
-                        'tags' => [
-                            'type' => Type::listOf(Type::string())
+                        "type" => [
+                            "type" => $typeEnum
+                        ],
+                        "subtype" => [
+                            "type" => Type::string()
+                        ],
+                        "containerGuid" => [
+                            "type" => Type::int()
+                        ],
+                        "tags" => [
+                            "type" => Type::listOf(Type::string())
                         ]
                     ],
-                    'resolve' => 'Pleio\Resolver::getEntities'
+                    "resolve" => "Pleio\Resolver::getEntities"
                 ],
-                'site' => [
-                    'type' => $siteInterface,
-                    'resolve' => 'Pleio\Resolver::site'
+                "site" => [
+                    "type" => $siteType,
+                    "resolve" => "Pleio\Resolver::getSite"
                 ]
             ]
         ]);
 
         $loginMutation = Relay::mutationWithClientMutationId([
-            'name' => 'login',
-            'inputFields' => [
-                'username' => [
-                    'type' => Type::nonNull(Type::string())
+            "name" => "login",
+            "inputFields" => [
+                "username" => [
+                    "type" => Type::nonNull(Type::string())
                 ],
-                'password' => [
-                    'type' => Type::nonNull(Type::string())
+                "password" => [
+                    "type" => Type::nonNull(Type::string())
                 ],
-                'rememberMe' => [
-                    'type' => Type::boolean()
+                "rememberMe" => [
+                    "type" => Type::boolean()
                 ]
             ],
-            'outputFields' => [
-                'viewer' => [
-                    'type' => $viewerInterface,
-                    'resolve' => 'Pleio\Resolver::getViewer'
+            "outputFields" => [
+                "viewer" => [
+                    "type" => $viewerType,
+                    "resolve" => "Pleio\Resolver::getViewer"
                 ]
             ],
-            'mutateAndGetPayload' => 'Pleio\Mutations::login'
+            "mutateAndGetPayload" => "Pleio\Mutations::login"
         ]);
 
         $logoutMutation = Relay::mutationWithClientMutationId([
-            'name' => 'logout',
-            'inputFields' => [],
-            'outputFields' => [
-                'viewer' => [
-                    'type' => $viewerInterface,
-                    'resolve' => 'Pleio\Resolver::getViewer'
+            "name" => "logout",
+            "inputFields" => [],
+            "outputFields" => [
+                "viewer" => [
+                    "type" => $viewerType,
+                    "resolve" => "Pleio\Resolver::getViewer"
                 ]
             ],
-            'mutateAndGetPayload' => 'Pleio\Mutations::logout'
+            "mutateAndGetPayload" => "Pleio\Mutations::logout"
         ]);
 
         $registerMutation = Relay::mutationWithClientMutationId([
-            'name' => 'register',
-            'inputFields' => [
-                'name' => [
-                    'type' => Type::nonNull(Type::string())
+            "name" => "register",
+            "inputFields" => [
+                "name" => [
+                    "type" => Type::nonNull(Type::string())
                 ],
-                'email' => [
-                    'type' => Type::nonNull(Type::string())
+                "email" => [
+                    "type" => Type::nonNull(Type::string())
                 ],
-                'password' => [
-                    'type' => Type::nonNull(Type::string())
+                "password" => [
+                    "type" => Type::nonNull(Type::string())
                 ],
-                'newsletter' => [
-                    'type' => Type::boolean()
+                "newsletter" => [
+                    "type" => Type::boolean()
                 ],
-                'terms' => [
-                    'type' => Type::boolean()
+                "terms" => [
+                    "type" => Type::boolean()
                 ]
             ],
-            'outputFields' => [
-                'viewer' => [
-                    'type' => $viewerInterface,
-                    'resolve' => 'Pleio\Resolver::getViewer'
+            "outputFields" => [
+                "viewer" => [
+                    "type" => $viewerType,
+                    "resolve" => "Pleio\Resolver::getViewer"
                 ]
             ],
-            'mutateAndGetPayload' => 'Pleio\Mutations::register'
+            "mutateAndGetPayload" => "Pleio\Mutations::register"
+        ]);
+
+        $forgotPasswordMutation = Relay::mutationWithClientMutationId([
+            "name" => "forgotPassword",
+            "inputFields" => [
+                "username" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+            ],
+            "outputFields" => [
+                "username" => [
+                    "type" => $viewerType,
+                    "resolve" => function($username) {
+                        return ["username" => $username];
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::register"
         ]);
 
         $subscribeNewsletterMutation = Relay::mutationWithClientMutationId([
-            'name' => 'subscribeNewsletter',
-            'inputFields' => [
-                'email' => [
-                    'type' => Type::nonNull(Type::string())
+            "name" => "subscribeNewsletter",
+            "inputFields" => [
+                "email" => [
+                    "type" => Type::nonNull(Type::string())
                 ]
             ],
-            'outputFields' => [
-                'viewer' => [
-                    'type' => $viewerInterface,
-                    'resolve' => 'Pleio\Resolver::getViewer'
+            "outputFields" => [
+                "viewer" => [
+                    "type" => $viewerType,
+                    "resolve" => "Pleio\Resolver::getViewer"
                 ]
             ],
-            'mutateAndGetPayload' => 'Pleio\Mutations::subscribeNewsletter'
+            "mutateAndGetPayload" => "Pleio\Mutations::subscribeNewsletter"
         ]);
 
-        $addObjectMutation = Relay::mutationWithClientMutationId([
-            'name' => 'addObject',
-            'inputFields' => [
-                'subtype' => [
-                    'type' => Type::nonNull(Type::string())
+        $addEntityMutation = Relay::mutationWithClientMutationId([
+            "name" => "addEntity",
+            "inputFields" => [
+                "type" => [
+                    "type" => Type::nonNull($typeEnum)
                 ],
-                'title' => [
-                    'type' => Type::nonNull(Type::string())
+                "subtype" => [
+                    "type" => Type::nonNull(Type::string())
                 ],
-                'description' => [
-                    'type' => Type::nonNull(Type::string())
+                "title" => [
+                    "type" => Type::string()
                 ],
-                'accessId' => [
-                    'type' => Type::nonNull(Type::int())
+                "description" => [
+                    "type" => Type::nonNull(Type::string())
                 ],
-                'tags' => [
-                    'type' => Type::listOf(Type::string())
+                "containerGuid" => [
+                    "type" => Type::int()
+                ],
+                "accessId" => [
+                    "type" => Type::int()
+                ],
+                "tags" => [
+                    "type" => Type::listOf(Type::string())
                 ]
             ],
-            'outputFields' => [
-                'object' => [
-                    'type' => $objectInterface,
-                    'resolve' => 'Pleio\Resolver::getObject'
-                ]
-            ],
-            'mutateAndGetPayload' => 'Pleio\Mutations::addObject'
-        ]);
-
-        $editObjectMutation = Relay::mutationWithClientMutationId([
-            'name' => 'editObject',
-            'inputFields' => [
-                'guid' => [
-                    'type' => Type::nonNull(Type::string())
-                ],
-                'title' => [
-                    'type' => Type::nonNull(Type::string())
-                ],
-                'description' => [
-                    'type' => Type::nonNull(Type::string())
-                ],
-                'accessId' => [
-                    'type' => Type::nonNull(Type::int())
-                ],
-                'tags' => [
-                    'type' => Type::listOf(Type::string())
-                ]
-            ],
-            'outputFields' => [
-                'object' => [
-                    'type' => $objectInterface,
-                    'resolve' => function($guid) {
-                        return Resolver::getObject(null, ["guid" => $guid], null);
+            "outputFields" => [
+                "entity" => [
+                    "type" => $entityInterface,
+                    "resolve" => function($guid) {
+                        return Resolver::getEntity(null, ["guid" => $guid], null);
                     }
                 ]
             ],
-            'mutateAndGetPayload' => 'Pleio\Mutations::editObject'
+            "mutateAndGetPayload" => "Pleio\Mutations::addEntity"
         ]);
 
-        $deleteObjectMutation = Relay::mutationWithClientMutationId([
-            'name' => 'deleteObject',
-            'inputFields' => [
-                'guid' => [
-                    'type' => Type::nonNull(Type::string())
+        $editEntityMutation = Relay::mutationWithClientMutationId([
+            "name" => "editEntity",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "title" => [
+                    "type" => Type::string()
+                ],
+                "description" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "accessId" => [
+                    "type" => Type::int()
+                ],
+                "tags" => [
+                    "type" => Type::listOf(Type::string())
                 ]
             ],
-            'outputFields' => [
-                'guid' => [
-                    'type' => Type::nonNull(Type::string()),
-                    'resolve' => function($guid) {
-                        return $guid;
+            "outputFields" => [
+                "entity" => [
+                    "type" => $entityInterface,
+                    "resolve" => function($guid) {
+                        return Resolver::getEntity(null, ["guid" => $guid], null);
                     }
                 ]
             ],
-            'mutateAndGetPayload' => 'Pleio\Mutations::deleteObject'
+            "mutateAndGetPayload" => "Pleio\Mutations::editEntity"
+        ]);
+
+        $deleteEntityMutation = Relay::mutationWithClientMutationId([
+            "name" => "deleteEntity",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::nonNull(Type::string())
+                ]
+            ],
+            "outputFields" => [
+                "result" => [
+                    "type" => Type::nonNull(Type::boolean()),
+                    "resolve" => function($result) {
+                        return $result;
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::deleteEntity"
         ]);
 
         $mutationType = new ObjectType([
-            'name' => "Mutation",
-            'fields' => [
-                    'login' => $loginMutation,
-                    'logout' => $logoutMutation,
-                    'register' => $registerMutation,
-                    'addObject' => $addObjectMutation,
-                    'editObject' => $editObjectMutation,
-                    'deleteObject' => $deleteObjectMutation,
-                    'subscribeNewsletter' => $subscribeNewsletterMutation
+            "name" => "Mutation",
+            "fields" => [
+                    "login" => $loginMutation,
+                    "logout" => $logoutMutation,
+                    "register" => $registerMutation,
+                    "forgotPassword" => $forgotPasswordMutation,
+                    "addEntity" => $addEntityMutation,
+                    "editEntity" => $editEntityMutation,
+                    "deleteEntity" => $deleteEntityMutation,
+                    "subscribeNewsletter" => $subscribeNewsletterMutation
             ]
         ]);
 

@@ -8,6 +8,7 @@ import Errors from "../components/Errors"
 import Modal from "../components/Modal"
 import RichText from "../components/RichText"
 import AccessSelect from "../containers/AccessSelect"
+import { stringToTags } from "../lib/helpers"
 
 class AddModal extends React.Component {
     constructor(props) {
@@ -17,14 +18,12 @@ class AddModal extends React.Component {
             errors: null,
             title: "",
             description: "",
-            tags: [],
-            accessId: null
+            tags: []
         }
 
         this.onChangeTitle = (e) => this.setState({title: e.target.value})
         this.onChangeDescription = (e) => this.setState({description: e.target.value})
         this.onChangeTags = (e) => this.setState({tags: e.target.value})
-        this.onChangeAccessId = (name, value) => this.setState({accessId: value})
 
         this.onSubmit = this.onSubmit.bind(this)
     }
@@ -40,11 +39,11 @@ class AddModal extends React.Component {
             variables: {
                 input: {
                     clientMutationId: 1,
+                    type: "object",
                     subtype: "news",
                     title: this.state.title,
                     description: this.state.description,
-                    accessId: this.state.accessId,
-                    tags: this.state.tags
+                    tags: stringToTags(this.state.tags)
                 }
             },
             refetchQueries: ["NewsList"]
@@ -68,9 +67,6 @@ class AddModal extends React.Component {
                         <textarea placeholder="Beschrijving" onChange={this.onChangeDescription} value={this.state.description} />
                     </label>
                     <label className="form__item">
-                        <AccessSelect className="form__input" onChange={this.onChangeAccessId} value={this.state.accessId} />
-                    </label>
-                    <label className="form__item">
                         <input type="text" placeholder="Tags" className="form__input" onChange={this.onChangeTags} value={this.state.tags} />
                     </label>
 
@@ -82,14 +78,13 @@ class AddModal extends React.Component {
 }
 
 const ADD = gql`
-    mutation addObject($input: addObjectInput!) {
-        addObject(input: $input) {
-            object {
+    mutation addEntity($input: addEntityInput!) {
+        addEntity(input: $input) {
+            entity {
                 guid
             }
         }
     }
 `
 const withAdd = graphql(ADD)
-
 export default connect()(withAdd(AddModal))

@@ -26,6 +26,16 @@ class Helpers {
         return $result;
     }
 
+    static function getUsernameByInput($username) {
+        if (strpos($username, '@') !== false && ($users = get_user_by_email($username))) {
+            $username = $users[0]->username;
+        } else {
+            $username = $username;
+        }
+
+        return $username;
+    }
+
     static function renderTags($tags) {
         if ($tags) {
             if (!is_array($tags)) {

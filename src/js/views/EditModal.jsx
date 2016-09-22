@@ -8,6 +8,7 @@ import Errors from "../components/Errors"
 import Modal from "../components/Modal"
 import RichText from "../components/RichText"
 import AccessSelect from "../containers/AccessSelect"
+import { stringToTags } from "../lib/helpers"
 
 class EditModal extends React.Component {
     constructor(props) {
@@ -17,18 +18,13 @@ class EditModal extends React.Component {
             errors: null,
             title: "",
             description: "",
-            accessId: null,
             tags: []
         }
 
         this.onChangeTitle = (e) => this.setState({title: e.target.value})
         this.onChangeDescription = (e) => this.setState({description: e.target.value})
-        this.onChangeAccessId = (name, value) => {
-            this.setState({
-                accessId: value
-            })
-        }
         this.onChangeTags = (e) => this.setState({tags: e.target.value})
+
         this.onSubmit = this.onSubmit.bind(this)
     }
 
@@ -57,8 +53,7 @@ class EditModal extends React.Component {
                     guid: this.props.object.guid,
                     title: this.state.title,
                     description: this.state.description,
-                    accessId: this.state.accessId,
-                    tags: this.state.tags
+                    tags: stringToTags(this.state.tags)
                 }
             }
         }).then(({data}) => {
@@ -81,9 +76,6 @@ class EditModal extends React.Component {
                         <textarea placeholder="Beschrijving" onChange={this.onChangeDescription} value={this.state.description} />
                     </label>
                     <label className="form__item">
-                        <AccessSelect className="form__input" onChange={this.onChangeAccessId} value={this.state.accessId} />
-                    </label>
-                    <label className="form__item">
                         <input type="text" placeholder="Tags" className="form__input" onChange={this.onChangeTags} value={this.state.tags} />
                     </label>
 
@@ -95,16 +87,20 @@ class EditModal extends React.Component {
 }
 
 const EDIT = gql`
-    mutation editObject($input: editObjectInput!) {
-        editObject(input: $input) {
-            object {
-                guid
-                title
-                description
-                accessId
-                tags
+    mutation editEntity($input: editEntityInput!) {
+        editEntity(input: $input) {
+            entity {
+                ...editObject
             }
         }
+    }
+
+    fragment editObject on Object {
+        guid
+        title
+        description
+        accessId
+        tags
     }
 `
 const withEdit = graphql(EDIT)

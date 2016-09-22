@@ -3,11 +3,7 @@ namespace Pleio;
 
 class Mutations {
     static function login($input) {
-        if (strpos($input['username'], '@') !== false && ($users = get_user_by_email($input['username']))) {
-            $username = $users[0]->username;
-        } else {
-            $username = $input['username'];
-        }
+        $username = Helpers::getUsernameByInput($input["username"]);
 
         if (elgg_authenticate($username, $input['password']) !== true) {
             throw new Exception("could_not_login");
@@ -88,6 +84,20 @@ class Mutations {
         }
     }
 
+    static function forgotPassword($input) {
+        $username = Helpers::getUsernameByInput($input["username"]);
+        $user = get_user_by_username($username);
+
+        if ($user) {
+            $result = send_new_password_request($user->guid);
+            if (!$result) {
+                throw new Exception("unknown_error");
+            }
+        } else {
+            // on purpose, do not give any feedback when user is not found
+        }
+    }
+
     static function subscribeNewsletter($input) {
         $email = $input['email'];
         $site = elgg_get_site_entity();
@@ -98,60 +108,89 @@ class Mutations {
         }
     }
 
-    static function addObject($input) {
-        $subtype = $input["subtype"];
-
-        if (!in_array($subtype, array("news"))) {
-            throw new Exception("invalid_subtype");
+    static function addEntity($input) {
+        if (!in_array($input["type"], array("group", "object"))) {
+            throw new Exception("invalid_type");
         }
 
-        $object = new \ElggObject();
-        $object->subtype = $subtype;
-        $object->title = $input["title"];
-        $object->description = $input["description"];
-        $object->access_id = (int) $input["accessId"];
-        $object->tags = $input["tags"];
-        $result = $object->save();
+        switch ($input["type"]) {
+            case "group":
+                $entity = new \ElggGroup();
+                $entity->name = $input["name"];
+            case "object":
+                if (!in_array($input["subtype"], array("news", "comment"))) {
+                    throw new Exception("invalid_subtype");
+                }
 
-        if (!$result) {
-            throw new Exception("could_not_create");
+                $entity = new \ElggObject();
+                $entity->title = $input["title"];
+                $entity->subtype = $input["subtype"];
+            default:
+                $entity->description = $input["description"];
+                $entity->access_id = (int) $input["accessId"] || get_default_access();
+                $entity->tags = $input["tags"];
+
+                if ((int) $input["containerGuid"]) {
+                    $entity->container_guid = (int) $input["containerGuid"];
+                }
         }
-    }
 
-    static function editObject($input) {
-        $guid = (int) $input["guid"];
-
-        $object = get_entity($guid);
-        if (!$object) {
-            throw new Exception("could_not_find");
-        }
-
-        $object->title = $input["title"];
-        $object->description = $input["description"];
-        $object->access_id = (int) $input["accessId"];
-        $object->tags = $input["tags"];
-
-        $result = $object->save();
+        $result = $entity->save();
         if ($result) {
             return $result;
-        } else {
-            throw new Exception("could_not_save");
         }
+
+        throw new Exception("could_not_save");
     }
 
-    static function deleteObject($input) {
-        $guid = (int) $input["guid"];
-
-        $object = get_entity($guid);
-        if (!$object) {
+    static function editEntity($input) {
+        $entity = get_entity((int) $input["guid"]);
+        if (!$entity) {
             throw new Exception("could_not_find");
         }
 
-        $result = $object->delete();
-        if ($result) {
-            return $guid;
-        } else {
-            throw new Exception("could_not_delete");
+        if (!in_array($entity->type, array("group", "object"))) {
+            throw new Exception("invalid_object_type");
         }
+
+        switch ($entity->type) {
+            case "group":
+                $entity->name = $input["name"];
+            case "object":
+                $entity->title = $input["title"];
+            default:
+                $entity->description = $input["description"];
+
+                if ((int) $input["accessId"]) {
+                    $entity->access_id = (int) $input["accessId"];
+                }
+
+                $entity->tags = $input["tags"];
+        }
+
+        $result = $entity->save();
+        if ($result) {
+            return $result;
+        }
+
+        throw new Exception("could_not_save");
+    }
+
+    static function deleteEntity($input) {
+        $entity = get_entity((int) $input["guid"]);
+        if (!$entity) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!in_array($entity->type, array("group", "object"))) {
+            throw new Exception("invalid_object_type");
+        }
+
+        $result = $entity->delete();
+        if ($result) {
+            return $result;
+        }
+
+        throw new Exception("could_not_delete");
     }
 }
