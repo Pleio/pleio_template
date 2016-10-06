@@ -6,42 +6,51 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Errors from "../components/Errors"
 import Modal from "../components/Modal"
-import RichText from "../components/RichText"
 import AccessSelect from "../containers/AccessSelect"
 
 class DeleteModal extends React.Component {
     constructor(props) {
         super(props)
 
+        this.state = Object.assign({}, {errors: []}, this.props.entity)
         this.onSubmit = this.onSubmit.bind(this)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.entity) {
+            this.setState(nextProps.entity)
+        }
     }
 
     onSubmit(e) {
         e.preventDefault()
 
-        this.setState({
-            errors: null
-        })
+        this.setState({errors: null})
 
         this.props.mutate({
             variables: {
                 input: {
                     clientMutationId: 1,
-                    guid: this.props.object.guid,
+                    guid: this.state.guid
                 }
             },
-            refetchQueries: ["NewsList", "NewsItem"]
+            refetchQueries: ["NewsList"]
         }).then(({data}) => {
             this.props.dispatch(hideModal())
-        }).catch((errors) => {
-            this.setState({
-                errors: errors
-            })
         })
     }
 
     render() {
-        let title = this.props.object ? this.props.object.title : ""
+        let title = ""
+        if (this.props.entity) {
+            if (this.props.entity.title) {
+                title = this.props.entity.title
+            }
+
+            if (this.props.entity.name) {
+                name = this.props.entity.name
+            }
+        }
 
         return (
             <Modal id="delete" title={this.props.title}>
@@ -57,7 +66,10 @@ class DeleteModal extends React.Component {
 const DELETE = gql`
     mutation deleteEntity($input: deleteEntityInput!) {
         deleteEntity(input: $input) {
-            result
+            entity {
+                guid
+                status
+            }
         }
     }
 `

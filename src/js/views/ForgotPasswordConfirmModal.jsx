@@ -1,23 +1,25 @@
-import React from "react"
+import React from 'react'
+import ContentHeader from "../components/ContentHeader"
+import Lead from "../components/Lead"
 import Modal from "../components/Modal"
-import { connect } from "react-redux"
-import { showModal } from "../lib/actions"
+import { getQueryVariable } from "../lib/helpers"
+import Errors from "../components/Errors"
 import { graphql } from "react-apollo"
+import { connect } from "react-redux"
 import gql from "graphql-tag"
+import { showModal } from "../lib/actions"
+import { browserHistory } from "react-router"
 
-class ForgotPasswordModal extends React.Component {
-
+class ForgotPasswordConfirmModal extends React.Component {
     constructor(props) {
         super(props)
 
-        this.changeUsername = (e) => this.setState({username: e.target.value})
-
-        this.showLogin = this.showLogin.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
+        this.showLogin = this.showLogin.bind(this)
 
         this.state = {
             success: false,
-            username: ""
+            showMe: true
         }
     }
 
@@ -25,7 +27,8 @@ class ForgotPasswordModal extends React.Component {
         e.preventDefault()
 
         this.setState({
-            success: false
+            success: false,
+            showMe: false
         })
 
         this.props.dispatch(showModal("login"))
@@ -38,13 +41,13 @@ class ForgotPasswordModal extends React.Component {
             variables: {
                 input: {
                     clientMutationId: 1,
-                    username: this.state.username
+                    userGuid: getQueryVariable("u"),
+                    code: getQueryVariable("c")
                 }
             }
         }).then(({data}) => {
             this.setState({
-                success: true,
-                username: ""
+                success: true
             })
         }).catch((errors) => {
             this.setState({
@@ -63,8 +66,7 @@ class ForgotPasswordModal extends React.Component {
         if (!this.state.success) {
             body = (
                 <form className="form login" onSubmit={this.onSubmit}>
-                    <label className="form__label">Gebruikersnaam of e-mail</label>
-                    <input type="text" placeholder="Gebruikersnaam of e-mail" className="form__input" value={this.state.username} onChange={this.changeUsername} />
+                    <p>Klik op de knop om een nieuw wachtwoord per e-mail toegestuurd te krijgen.</p>
                     <div className="form__actions ___end">
                         <button className="button ___block ___large ___primary">
                             Aanvragen
@@ -75,7 +77,7 @@ class ForgotPasswordModal extends React.Component {
         } else {
             body = (
                 <form className="form">
-                    <p>Binnen enkele minuten ontvang je een e-mail met een link naar een unieke verificatiepagina. Klik op de link in het bericht en een nieuw wachtwoord zal naar je worden opgestuurd</p>
+                    <p>Binnen enkele minuten ontvang je een e-mail met je nieuwe wachtwoord.</p>
                     <div className="form__actions ___end ___margin-top">
                         <div className="button__underline" onClick={this.showLogin}>
                             Terug naar inloggen
@@ -86,7 +88,7 @@ class ForgotPasswordModal extends React.Component {
         }
 
         return (
-            <Modal ref="modal" id="forgotPassword" title="Wachtwoord vergeten?" steps={[1,2]} small={true}>
+            <Modal id="register" title="Wachtwoord vergeten?" steps={[2,2]} small={true} noParent={this.state.showMe}>
                 {errors}
                 {body}
             </Modal>
@@ -94,12 +96,13 @@ class ForgotPasswordModal extends React.Component {
     }
 }
 
+
 const Query = gql`
-    mutation forgotPassword($input: forgotPasswordInput!) {
-        forgotPassword(input: $input) {
+    mutation forgotPasswordConfirm($input: forgotPasswordConfirmInput!) {
+        forgotPasswordConfirm(input: $input) {
             status
         }
     }
 `
 const withQuery = graphql(Query)
-export default connect()(withQuery(ForgotPasswordModal))
+export default connect()(withQuery(ForgotPasswordConfirmModal))

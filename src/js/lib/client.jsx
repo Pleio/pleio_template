@@ -3,6 +3,7 @@ import { readCookie } from './cookies'
 
 const networkInterface = createNetworkInterface('/graphql', {
     credentials: 'same-origin',
+    shouldBatch: true,
     headers: {
         'X-CSRF-Token': readCookie('CSRF_TOKEN')
     }

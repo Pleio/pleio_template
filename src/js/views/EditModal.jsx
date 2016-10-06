@@ -6,7 +6,6 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Errors from "../components/Errors"
 import Modal from "../components/Modal"
-import RichText from "../components/RichText"
 import AccessSelect from "../containers/AccessSelect"
 import { stringToTags } from "../lib/helpers"
 
@@ -14,28 +13,17 @@ class EditModal extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            errors: null,
-            title: "",
-            description: "",
-            tags: []
-        }
+        this.state = Object.assign({}, {errors: []}, this.props.entity)
 
         this.onChangeTitle = (e) => this.setState({title: e.target.value})
         this.onChangeDescription = (e) => this.setState({description: e.target.value})
         this.onChangeTags = (e) => this.setState({tags: e.target.value})
-
         this.onSubmit = this.onSubmit.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.object) {
-            this.setState({
-                title: nextProps.object.title,
-                description: nextProps.object.description,
-                accessId: nextProps.object.accessId,
-                tags: nextProps.object.tags
-            })
+        if (nextProps.entity) {
+            this.setState(nextProps.entity)
         }
     }
 
@@ -50,7 +38,7 @@ class EditModal extends React.Component {
             variables: {
                 input: {
                     clientMutationId: 1,
-                    guid: this.props.object.guid,
+                    guid: this.state.guid,
                     title: this.state.title,
                     description: this.state.description,
                     tags: stringToTags(this.state.tags)

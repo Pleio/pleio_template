@@ -71,14 +71,6 @@ class TopMenu extends React.Component {
                             Pleio
                         </a>
                     </div>
-                    <div className="mobile-navigation__bar">
-                        <div data-mobile-nav-trigger data-mega-nav-trigger className="mobile-navigation__trigger"></div><a href="/" className="mobile-navigation__home"></a>
-                        <ul className="mobile-navigation__actions">
-                            <li><a href="#" title="Bookmarks" className="mobile-navigation__action ___bookmarks"></a></li>
-                            <li><a href="#" title="Zoeken" data-search-trigger className="mobile-navigation__action ___search"></a></li>
-                            <li><a href="#" title="Account" className="mobile-navigation__action ___account"></a></li>
-                        </ul>
-                    </div>
                 </div>
             </nav>
         )

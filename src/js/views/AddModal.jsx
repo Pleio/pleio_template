@@ -6,9 +6,9 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Errors from "../components/Errors"
 import Modal from "../components/Modal"
-import RichText from "../components/RichText"
 import AccessSelect from "../containers/AccessSelect"
 import { stringToTags } from "../lib/helpers"
+import { Editor, EditorState, convertFromRaw, convertToRaw } from "draft-js"
 
 class AddModal extends React.Component {
     constructor(props) {
@@ -64,7 +64,7 @@ class AddModal extends React.Component {
                         <input type="text" placeholder="Titel" className="form__input" onChange={this.onChangeTitle} value={this.state.title} />
                     </label>
                     <label className="form__item">
-                        <textarea placeholder="Beschrijving" onChange={this.onChangeDescription} value={this.state.description} />
+                        <input type="text" placeholder="Beschrijving" onChange={this.onChangeDescription} value={this.state.description} />
                     </label>
                     <label className="form__item">
                         <input type="text" placeholder="Tags" className="form__input" onChange={this.onChangeTags} value={this.state.tags} />

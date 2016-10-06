@@ -28,7 +28,14 @@ class NewsItem extends React.Component {
 
 
     render() {
-        if (this.props.data.error) {
+        if (!this.props.data.entity) {
+            // Loading...
+            return (
+                <div></div>
+            )
+        }
+
+        if (this.props.data.entity.status == "not_found") {
             return (
                 <NotFound />
             )
@@ -77,14 +84,14 @@ class NewsItem extends React.Component {
                                         <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
                                             Schrijf een reactie
                                         </div>
-                                        <Bookmark />
+                                        <Bookmark entity={this.props.data.entity} />
                                     </div>
                                 </div>
                             </article>
                             <AddComment isOpen={this.state.showAddComment} object={this.props.data.entity} onSuccess={this.closeAddComment} />
                             <CommentList comments={comments} />
-                            <EditModal title="Nieuws wijzigen" object={this.props.data.entity} />
-                            <DeleteModal title="Nieuws verwijderen" object={this.props.data.entity} />
+                            <EditModal title="Nieuws wijzigen" entity={this.props.data.entity} />
+                            <DeleteModal title="Nieuws verwijderen" entity={this.props.data.entity} />
                         </div>
                     </div>
                 </div>
@@ -102,12 +109,14 @@ const QUERY = gql`
 
     fragment newsFragment on Object {
         guid
+        status
         title
         description
         accessId
         timeCreated
         canEdit
         tags
+        isBookmarked
         comments {
             guid
             description

@@ -96,6 +96,23 @@ class Mutations {
         } else {
             // on purpose, do not give any feedback when user is not found
         }
+
+        return [
+            "status" => "ok"
+        ];
+    }
+
+    static function forgotPasswordConfirm($input) {
+        $userGuid = (int) $input["userGuid"];
+        $code = (int) $input["code"];
+
+        if (!execute_new_password_request($userGuid, $code)) {
+            throw new Exception("unknown_error");
+        }
+
+        return [
+            "status" => "ok"
+        ];
     }
 
     static function subscribeNewsletter($input) {
@@ -137,7 +154,9 @@ class Mutations {
 
         $result = $entity->save();
         if ($result) {
-            return $result;
+            return [
+                "guid" => $entity->guid
+            ];
         }
 
         throw new Exception("could_not_save");
@@ -170,7 +189,9 @@ class Mutations {
 
         $result = $entity->save();
         if ($result) {
-            return $result;
+            return [
+                "guid" => $entity->guid
+            ];
         }
 
         throw new Exception("could_not_save");
@@ -188,9 +209,37 @@ class Mutations {
 
         $result = $entity->delete();
         if ($result) {
-            return $result;
+            return [
+                "guid" => $input["guid"]
+            ];
         }
 
         throw new Exception("could_not_delete");
+    }
+
+    static function bookmark($input) {
+        $entity = get_entity((int) $input["guid"]);
+        if (!$entity) {
+            throw new Exception("could_not_find");
+        }
+
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            throw new Exception("not_logged_in");
+        }
+
+        if ($input["isAdding"]) {
+            $result = add_entity_relationship($user->guid, "bookmarked", $entity->guid);
+        } else {
+            $result = remove_entity_relationship($user->guid, "bookmarked", $entity->guid);
+        }
+
+        if ($result) {
+            return [
+                "guid" => $entity->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
     }
 }

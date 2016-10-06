@@ -108,7 +108,7 @@ const LOGIN = gql`
     mutation login($input: loginInput!) {
         login(input: $input) {
             viewer {
-                id
+                guid
                 loggedIn
                 name
                 username

@@ -31,11 +31,16 @@ class Resolver {
         $entity = get_entity($guid);
 
         if (!$entity) {
-            throw new Exception("could_not_find");
+            return [
+                "guid" => $guid,
+                "type" => "object",
+                "status" => "not_found"
+            ];
         }
 
         return [
             "guid" => $guid,
+            "status" => "ok",
             "type" => $entity->type,
             "title" => $entity->title,
             "description" => $entity->description,
@@ -155,6 +160,7 @@ class Resolver {
         foreach (elgg_get_entities_from_metadata($options) as $entity) {
             $entities[] = array(
                 "guid" => $entity->guid,
+                "status" => "ok",
                 "ownerGuid" => $entity->owner_guid,
                 "title" => $entity->title,
                 "type" => $entity->type,
@@ -172,6 +178,19 @@ class Resolver {
             "canWrite" => $site->canWriteToContainer(0, "object", $subtype),
             "entities" => $entities
         ];
+    }
+
+    static function isBookmarked($object) {
+        if (!elgg_is_logged_in()) {
+            return false;
+        }
+
+        $user = elgg_get_logged_in_user_entity();
+        if (check_entity_relationship($user->guid, "bookmarked", $object['guid'])) {
+            return true;
+        }
+
+        return false;
     }
 
     static function search($a, $args, $c) {
@@ -196,12 +215,47 @@ class Resolver {
         $entity = elgg_get_logged_in_user_entity();
 
         return [
-            "id" => 0,
+            "guid" => 0,
             "loggedIn" => elgg_is_logged_in(),
             "username" => $entity ? $entity->username : "",
             "name" => $entity ? $entity->name : "",
             "icon" => $entity ? $entity->getIconURL() : "",
             "url" => $entity ? $entity->getURL() : ""
+        ];
+    }
+
+    static function getBookmarks($a, $args, $c) {
+        $user = elgg_get_logged_in_user_entity();
+
+        if ($user) {
+            $options = [
+                "relationship_guid" => $user->guid,
+                "relationship" => "bookmarked",
+                "offset" => (int) $args["offset"],
+                "limit" => (int) $args["limit"]
+            ];
+
+            $total = elgg_get_entities_from_relationship(array_merge($options, ["count" => true]));
+            foreach (elgg_get_entities_from_relationship($options) as $entity) {
+                $entities[] = [
+                    "guid" => $entity->guid,
+                    "ownerGuid" => $entity->owner_guid,
+                    "title" => $entity->title,
+                    "type" => $entity->type,
+                    "description" => $entity->description,
+                    "timeCreated" => date("c", $entity->time_created),
+                    "timeUpdated" => date("c", $entity->time_updated),
+                    "tags" => Helpers::renderTags($entity->tags)
+                ];
+            }
+        } else {
+            $total = 0;
+            $entities = [];
+        }
+
+        return [
+            "total" => $total,
+            "entities" => $entities
         ];
     }
 }

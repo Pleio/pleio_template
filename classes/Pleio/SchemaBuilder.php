@@ -26,11 +26,30 @@ class SchemaBuilder {
             ]
         ]);
 
+        $statusEnum = new EnumType([
+            "name" => "Status",
+            "description" => "The status of the entity",
+            "values" => [
+                "ok" => [
+                    "value" => "ok"
+                ],
+                "access_denied" => [
+                    "value" => "access_denied"
+                ],
+                "not_found" => [
+                    "value" => "not_found"
+                ]
+            ]
+        ]);
+
         $entityInterface = new InterfaceType([
             "name" => "Entity",
             "fields" => [
                 "guid" => [
                     "type" => Type::nonNull(Type::string())
+                ],
+                "status" => [
+                    "type" => Type::nonNull($statusEnum)
                 ]
             ],
             "resolveType" => function($object) use (&$userType, &$objectType, &$groupType) {
@@ -64,14 +83,17 @@ class SchemaBuilder {
                 "guid" => [
                     "type" => Type::nonNull(Type::string())
                 ],
+                "status" => [
+                    "type" => Type::nonNull($statusEnum)
+                ],
                 "name" => [
-                    "type" => Type::nonNull(Type::string())
+                    "type" => Type::string()
                 ],
                 "icon" => [
-                    "type" => Type::nonNull(Type::string())
+                    "type" => Type::string()
                 ],
                 "url" => [
-                    "type" => Type::nonNull(Type::string())
+                    "type" => Type::string()
                 ]
             ]
         ]);
@@ -83,23 +105,26 @@ class SchemaBuilder {
                 "guid" => [
                     "type" => Type::nonNull(Type::string())
                 ],
+                "status" => [
+                    "type" => Type::nonNull($statusEnum)
+                ],
                 "name" => [
-                    "type" => Type::nonNull(Type::string())
+                    "type" => Type::string()
                 ],
                 "icon" => [
-                    "type" => Type::nonNull(Type::string())
+                    "type" => Type::string()
                 ],
                 "canEdit" => [
-                    "type" => Type::nonNull(Type::boolean())
+                    "type" => Type::boolean()
                 ],
                 "isClosed" => [
-                    "type" => Type::nonNull(Type::boolean())
+                    "type" => Type::boolean()
                 ],
                 "canJoin" => [
-                    "type" => Type::nonNull(Type::boolean())
+                    "type" => Type::boolean()
                 ],
                 "defaultAccessId" => [
-                    "type" => Type::nonNull(Type::int())
+                    "type" => Type::int()
                 ]
             ]
         ]);
@@ -111,32 +136,41 @@ class SchemaBuilder {
                 "guid" => [
                     "type" => Type::nonNull(Type::string())
                 ],
+                "status" => [
+                    "type" => Type::nonNull($statusEnum)
+                ],
                 "title" => [
-                    "type" => Type::nonNull(Type::string())
+                    "type" => Type::string()
                 ],
                 "description" => [
-                    "type" => Type::nonNull(Type::string())
+                    "type" => Type::string()
                 ],
                 "url" => [
-                    "type" => Type::nonNull(Type::string())
+                    "type" => Type::string()
                 ],
                 "tags" => [
                     "type" => Type::listOf(Type::string())
                 ],
                 "timeCreated" => [
-                    "type" => Type::nonNull(Type::string())
+                    "type" => Type::string()
                 ],
                 "timeUpdated" => [
-                    "type" => Type::nonNull(Type::string())
+                    "type" => Type::string()
                 ],
                 "canEdit" => [
-                    "type" => Type::nonNull(Type::boolean())
+                    "type" => Type::boolean()
                 ],
                 "canComment" => [
-                    "type" => Type::nonNull(Type::boolean())
+                    "type" => Type::boolean()
                 ],
                 "accessId" => [
-                    "type" => Type::nonNull(Type::int())
+                    "type" => Type::int()
+                ],
+                "isBookmarked" => [
+                    "type" => Type::boolean(),
+                    "resolve" => function($object) {
+                        return Resolver::isBookmarked($object);
+                    }
                 ],
                 "owner" => [
                     "type" => $userType,
@@ -186,7 +220,7 @@ class SchemaBuilder {
             "name" => "Viewer",
             "description" => "The current site viewer",
             "fields" => [
-                "id" => [
+                "guid" => [
                     "type" => Type::nonNull(Type::string())
                 ],
                 "loggedIn" => [
@@ -203,6 +237,18 @@ class SchemaBuilder {
                 ],
                 "url" => [
                     "type" => Type::string()
+                ],
+                "bookmarks" => [
+                    "type" => $entityListType,
+                    "args" => [
+                        "offset" => [
+                            "type" => Type::int()
+                        ],
+                        "limit" => [
+                            "type" => Type::int()
+                        ],
+                    ],
+                    "resolve" => "Pleio\Resolver::getBookmarks"
                 ]
             ]
         ]);
@@ -379,14 +425,35 @@ class SchemaBuilder {
                 ],
             ],
             "outputFields" => [
-                "username" => [
-                    "type" => $viewerType,
-                    "resolve" => function($username) {
-                        return ["username" => $username];
+                "status" => [
+                    "type" => Type::nonNull($statusEnum),
+                    "resolve" => function($return) {
+                        return $return["status"];
                     }
                 ]
             ],
-            "mutateAndGetPayload" => "Pleio\Mutations::register"
+            "mutateAndGetPayload" => "Pleio\Mutations::forgotPassword"
+        ]);
+
+        $forgotPasswordConfirmMutation = Relay::mutationWithClientMutationId([
+            "name" => "forgotPasswordConfirm",
+            "inputFields" => [
+                "userGuid" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "code" => [
+                    "type" => Type::nonNull(Type::string())
+                ]
+            ],
+            "outputFields" => [
+                "status" => [
+                    "type" => Type::nonNull($statusEnum),
+                    "resolve" => function($return) {
+                        return $return["status"];
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::forgotPasswordConfirm"
         ]);
 
         $subscribeNewsletterMutation = Relay::mutationWithClientMutationId([
@@ -433,8 +500,8 @@ class SchemaBuilder {
             "outputFields" => [
                 "entity" => [
                     "type" => $entityInterface,
-                    "resolve" => function($guid) {
-                        return Resolver::getEntity(null, ["guid" => $guid], null);
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
                     }
                 ]
             ],
@@ -463,8 +530,8 @@ class SchemaBuilder {
             "outputFields" => [
                 "entity" => [
                     "type" => $entityInterface,
-                    "resolve" => function($guid) {
-                        return Resolver::getEntity(null, ["guid" => $guid], null);
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
                     }
                 ]
             ],
@@ -479,14 +546,37 @@ class SchemaBuilder {
                 ]
             ],
             "outputFields" => [
-                "result" => [
-                    "type" => Type::nonNull(Type::boolean()),
-                    "resolve" => function($result) {
-                        return $result;
+                "entity" => [
+                    "type" => $entityInterface,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
                     }
                 ]
             ],
             "mutateAndGetPayload" => "Pleio\Mutations::deleteEntity"
+        ]);
+
+        $bookmarkMutation = Relay::mutationWithClientMutationId([
+            "name" => "bookmark",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::nonNull((Type::string())),
+                    "description" => "The guid of the entity to bookmark."
+                ],
+                "isAdding" => [
+                    "type" => Type::nonNull(Type::boolean()),
+                    "description" => "True when adding, false when removing."
+                ]
+            ],
+            "outputFields" => [
+                "object" => [
+                    "type" => Type::nonNull($objectType),
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::bookmark"
         ]);
 
         $mutationType = new ObjectType([
@@ -496,10 +586,12 @@ class SchemaBuilder {
                     "logout" => $logoutMutation,
                     "register" => $registerMutation,
                     "forgotPassword" => $forgotPasswordMutation,
+                    "forgotPasswordConfirm" => $forgotPasswordConfirmMutation,
                     "addEntity" => $addEntityMutation,
                     "editEntity" => $editEntityMutation,
                     "deleteEntity" => $deleteEntityMutation,
-                    "subscribeNewsletter" => $subscribeNewsletterMutation
+                    "subscribeNewsletter" => $subscribeNewsletterMutation,
+                    "bookmark" => $bookmarkMutation
             ]
         ]);
 

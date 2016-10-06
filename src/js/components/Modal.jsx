@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import classNames from "classnames"
 import { hideModal } from "../lib/actions"
+import { browserHistory } from "react-router"
 
 class Modal extends React.Component {
 
@@ -16,7 +17,11 @@ class Modal extends React.Component {
             e.preventDefault()
         }
 
-        this.props.dispatch(hideModal())
+        if (this.props.noParent) {
+            browserHistory.push("/")
+        } else {
+            this.props.dispatch(hideModal())
+        }
     }
 
     render() {
@@ -61,7 +66,7 @@ class Modal extends React.Component {
         }
 
         return (
-            <div id={this.props.id} tabIndex="0" className={classNames({"modal": true, "___small": this.props.small, "___is-open": this.props.modal == this.props.id})}>
+            <div id={this.props.id} tabIndex="0" className={classNames({"modal": true, "___small": this.props.small, "___is-open": this.props.modal == this.props.id || this.props.noParent})}>
                 {modal}
             </div>
         )

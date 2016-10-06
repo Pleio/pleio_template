@@ -12,6 +12,8 @@ import Forum from './views/Forum'
 import Bookmarks from './views/Bookmarks'
 import Search from './views/Search'
 import NotFound from './views/NotFound'
+import ForgotPasswordConfirmModal from './views/ForgotPasswordConfirmModal'
+import LoginModal from "./views/LoginModal"
 
 export default class Routes extends React.Component {
     render() {
@@ -26,6 +28,8 @@ export default class Routes extends React.Component {
                     <Route path="/forum" component={Forum} />
                     <Route path="/bookmarks" component={Bookmarks} />
                     <Route path="/search" component={Search} />
+                    <Route path="/resetpassword" component={ForgotPasswordConfirmModal} />
+                    <Route path="/login" component={LoginModal} />
                     <Route path="*" component={NotFound} />
                 </Route>
             </Router>

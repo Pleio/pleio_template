@@ -21,6 +21,11 @@ function pleio_template_init() {
     elgg_register_page_handler("news", "pleio_template_page_handler");
     elgg_register_page_handler("forum", "pleio_template_page_handler");
 
+    elgg_register_page_handler("login", "pleio_template_page_handler");
+    elgg_register_page_handler("register", "pleio_template_page_handler");
+    elgg_register_page_handler("forgotpassword", "pleio_template_page_handler");
+    elgg_register_page_handler("resetpassword", "pleio_template_page_handler");
+
     elgg_register_page_handler("graphql", "pleio_template_graphql");
 
     if (!isset($_COOKIE["CSRF_TOKEN"])) {
