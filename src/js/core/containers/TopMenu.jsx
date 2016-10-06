@@ -89,6 +89,9 @@ const WithQuery = gql`
         }
         viewer {
             loggedIn
+            username
+            name
+            icon
         }
     }
 `;

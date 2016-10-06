@@ -250,6 +250,7 @@ This file contains the styling for the main navigation.
     height: 100%;
     text-decoration: none;
     transition: background-color @trans-fast, color @trans-fast;
+    cursor: pointer;
 
     @media (max-width: @screen-md-max) {
         padding: 0 2rem;
@@ -276,15 +277,29 @@ This file contains the styling for the main navigation.
     }
 
     &.___bookmarks {
+        display: none;
         .icon(bookmark);
-
         &:before {
             /* icon height */
             font-size: 2.1rem;
         }
 
+        &.___is-active {
+            color: @color-white;
+        }
+
+        .navigation.___logged-in & {
+            display: block;
+        }
+
         @media (max-width: @screen-md-max) {
             &:before {
+                display: none;
+            }
+        }
+
+        @media (min-width: @screen-lg) {
+            span {
                 display: none;
             }
         }
@@ -304,8 +319,12 @@ This file contains the styling for the main navigation.
     }
 
     &.___account {
-        display: flex;
-        align-items: center;
+        display: none;
+
+        .navigation.___logged-in & {
+            display: flex;
+            align-items: center;
+        }
 
         @media (max-width: @screen-md-max) {
             padding: 0 2rem;
@@ -314,26 +333,53 @@ This file contains the styling for the main navigation.
         @media (min-width: @screen-lg) {
             padding: 1rem 0.8rem;
 
-            &:before {
-                display: block;
-                width: 4rem;
-                height: 4rem;
-                content: '';
-                border-radius: 50%;
-                background-size: cover;
-                box-shadow: inset 0 0 0 0.1rem transparent;
-                transition: box-shadow @trans-fast;
-            }
-
-            &:hover:before {
-                box-shadow: inset 0 0 0 0.1rem @color-grey;
+            span {
+                display: none;
             }
         }
     }
 
-    @media (min-width: @screen-lg) {
-        span {
+    &.___login,
+    &.___register {
+        .navigation.___logged-in & {
             display: none;
+        }
+
+        @media (min-width: @screen-lg) {
+            padding: 0;
+            color: @color-white;
+
+            &:hover {
+                color: @color-grey;
+            }
+        }
+    }
+
+    &.___login {
+        @media (min-width: @screen-lg) {
+            &:after {
+                content: '/';
+                color: @color-secondary--light;
+                margin: 0 0.5rem;
+            }
+        }
+    }
+}
+
+.navigation__picture {
+    @media (min-width: @screen-lg) {
+        width: 4rem;
+        height: 4rem;
+        content: '';
+        border-radius: 50%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        box-shadow: inset 0 0 0 0.1rem transparent;
+        transition: box-shadow @trans-fast;
+
+        .navigation__action:hover & {
+            box-shadow: inset 0 0 0 0.1rem @color-grey;
         }
     }
 }
@@ -349,4 +395,9 @@ This file contains the styling for the main navigation.
             display: inline;
         }
     }
+}
+
+.navigation__login,
+.navigation__register {
+
 }

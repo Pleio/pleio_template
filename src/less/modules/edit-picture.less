@@ -1,0 +1,36 @@
+.edit-picture__upload {
+    display: flex; align-items: center; justify-content: center;
+    height: 28.5rem;
+    border: 0.4rem dashed @color-secondary;
+    background-color: @color-tertiary--lighter;
+    font-size: @font-size--title-small;
+    color: @color-primary;
+    border-radius: 0.5rem;
+    cursor: pointer;
+
+    @media ( max-width: @screen-xs-max ) {
+        margin: 0 0 2rem 0;
+    }
+}
+
+.edit-picture__previews {
+    display: flex;
+}
+
+.edit-picture__preview {
+    position: relative;
+    background: @color-grey--20 url('../images/user.svg') no-repeat;
+    background-position: center bottom;
+    background-size: 73%;
+    border-radius: 50%;
+    overflow: hidden;
+
+    width: 14rem;
+    height: 14rem;
+
+    &.___small {
+        width: 4rem;
+        height: 4rem;
+        margin: 0 0 0 2rem;
+    }
+}

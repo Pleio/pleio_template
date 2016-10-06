@@ -47,8 +47,8 @@
   top: 0;
   right: 0;
   left: 0;
-  line-height: 4rem;
-  background-color: @color-secondary;
+  line-height: 4.5rem;
+  background-color: @color-searchbar;
   z-index: 1;
   opacity: 0;
   visibility: hidden;
@@ -65,45 +65,84 @@
     visibility: visible;
   }
 
-  @media (min-width: @screen-lg) {
-    line-height: 4.5rem;
+  @media (min-width: @screen-sm) {
+    line-height: 6rem;
   }
 }
 
 .navigation-search__icon {
   .icon(search);
-
+    padding: 0 0 0 2rem; 
+    
   &:before {
     /* icon height */
-    font-size: 1.3rem;
-    color: @color-black;
+    font-size: 1.6rem;
+    color: @color-primary;
   }
+    @media (max-width: @screen-md-max) {
+        padding: 0;
+    }
+    @media (min-width: @screen-sm) {
+        &:before {
+            font-size: 2rem;
+        }
+    }
 }
 
 .navigation-search__input {
-  flex-grow: 1;
-  height: 4rem;
-  left: 0;
-  padding: 0 0 0 1rem;
-  border: none;
-  background-color: transparent;
-  color: @color-black;
-  font-weight: bold;
-
-  @media (min-width: @screen-lg) {
+    flex-grow: 1;
     height: 4.5rem;
+    left: 0;
+    padding: 0 0 0 1rem;
+    border: none;
+    background-color: transparent;
+    color: @color-primary;
+    font-weight: bold;
+    width: 17rem;
+
+  @media (min-width: @screen-sm) {
+    height: 6rem;
+    font-size: 2.2rem;
+    line-height: 2.2rem;
   }
+    
 }
 
 .navigation-search__close {
-  display: block;
-  padding: 0 2rem;
-  color: @color-black;
-  font-weight: bold;
-  text-decoration: none;
-  transition: color @trans-fast;
+    display: block;
+    padding: 0 0 0 2rem;
+    color: @color-primary;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color @trans-fast;
+    font-size: 0;
 
-  &:hover {
-    color: @color-tertiary;
-  }
+    &:hover {
+        color: @color-tertiary;
+    }
+    
+    .icon(cross);
+    &:before {
+        font-size: 1.4rem;
+        display: inline-block;
+        vertical-align: middle;
+        font-family: "icons-webfont";
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: normal;
+        text-decoration: none;
+        text-transform: none;
+        line-height: 1;
+        color: @color-primary;
+    }
+
+    @media (min-width: @screen-sm) {
+        padding: 0 2rem;
+        font-size: inherit;
+        &:before {
+            font-size: 0;
+        }
+    }
 }

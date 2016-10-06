@@ -175,7 +175,8 @@
     padding: 0 1.2rem;
     color: @color-secondary--light;
     text-decoration: none;
-    transition: background-color @trans-fast;
+    transition: background-color @trans-fast, color @trans-fast;
+    cursor: pointer;
 
     @media (max-width: @screen-xs-max) {
         line-height: 4.5rem;
@@ -185,20 +186,31 @@
     }
 
     &.___bookmarks {
+        display: none;
         .icon(bookmark);
+
+        &:hover {
+            color: @color-grey;
+        }
 
         &:before {
             /* icon height */
             font-size: 2.1rem;
         }
 
-        @media (max-width: @screen-xs-max) {
-            display: none;
+        @media (min-width: @screen-sm) {
+            .navigation.___logged-in & {
+                display: block;
+            }
         }
     }
 
     &.___search {
         .icon(search);
+
+        &:hover {
+            color: @color-grey;
+        }
 
         @media (max-width: @screen-xs-max) {
             line-height: 4.5rem;
@@ -218,21 +230,13 @@
     }
 
     &.___account {
-        display: flex;
-        align-items: center;
+        display: none;
         padding: 1rem 0.8rem;
 
-        &:before {
-            display: block;
-            content: '';
-            width: 4rem;
-            height: 4rem;
-            border-radius: 50%;
-            background-size: cover;
-        }
-
-        @media (max-width: @screen-xs-max) {
-            display: none;
+        @media (min-width: @screen-sm) {
+            .navigation.___logged-in & {
+                display: block;
+            }
         }
     }
 
@@ -240,5 +244,43 @@
         span {
             display: none;
         }
+    }
+
+    &.___login,
+    &.___register {
+        padding: 0;
+        color: @color-white;
+
+        .navigation.___logged-in & {
+            display: none;
+        }
+
+        &:hover {
+            color: @color-grey;
+        }
+    }
+
+    &.___login {
+        &:after {
+            content: '/';
+            color: @color-secondary--light;
+            margin: 0 0.5rem;
+        }
+    }
+}
+
+.mobile-navigation__picture {
+    width: 4rem;
+    height: 4rem;
+    content: '';
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    box-shadow: inset 0 0 0 0.1rem transparent;
+    transition: box-shadow @trans-fast;
+
+    .mobile-navigation__action:hover & {
+        box-shadow: inset 0 0 0 0.1rem @color-grey;
     }
 }

@@ -1,0 +1,41 @@
+.users-online {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 0 0 1rem;
+    height: 3.4rem;
+    .font(base);
+    color: @color-tertiary;
+
+    .icon(users, after);
+    &:after {
+        font-size: 2.3rem;
+        margin: 0 0 0 1rem;
+    }
+
+    span {
+        padding-top: 0.5rem;
+    }
+
+    &.___grey {
+        color: @color-grey;
+
+        &:after {
+            color: @color-grey--50;
+        }
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        .font(small);
+
+        &:after {
+            display: none;
+        }
+    }
+
+    @media ( max-width: @screen-md-max ) {
+        &.___grey {
+            display: none;
+        }
+    }
+}

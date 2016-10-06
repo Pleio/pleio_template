@@ -1,6 +1,5 @@
 import React from 'react'
 import ContentHeader from "../components/ContentHeader"
-import Lead from "../components/Lead"
 import Modal from "../components/Modal"
 import { getQueryVariable } from "../lib/helpers"
 import Errors from "../components/Errors"

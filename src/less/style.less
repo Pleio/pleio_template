@@ -10,6 +10,7 @@
 
 // Layout
 // -------------------------------
+@import "layout/footer";
 @import "layout/header";
 @import "layout/mobile-navigation";
 @import "layout/navigation";
@@ -20,32 +21,49 @@
 // -------------------------------
 @import "components/button";
 @import "components/breadcrumb";
-@import "components/card-list";
+@import "components/card-blog-post";
+@import "components/card-initiative";
+@import "components/card-list-bloggers";
+@import "components/card-list-recommended";
+@import "components/card-list-topics";
+@import "components/card-list-trending";
+@import "components/card-profile";
 @import "components/card-tile";
+@import "components/card-contact";
 @import "components/card-topic";
+@import "components/checkbox";
 @import "components/lead";
 @import "components/comment";
 @import "components/comment-add";
+@import "components/comment-edit";
 @import "components/modal";
-@import "components/not-found";
 @import "components/read-more";
+@import "components/ripple";
 @import "components/selector";
 @import "components/single-dropdown";
+@import "components/switch";
+@import "components/tabmenu";
+@import "components/lead-search";
+@import "components/tag";
+@import "components/users-online";
 
 // Modules
 // -------------------------------
 @import "modules/article-actions";
 @import "modules/article-author";
 @import "modules/article";
+@import "modules/edit-picture";
 @import "modules/form";
 @import "modules/forum";
 @import "modules/infinite-scroll";
 @import "modules/navigation-search";
+@import "modules/navigation-search-results";
 @import "modules/pagination";
 @import "modules/relevant-articles";
 @import "modules/section";
 @import "modules/slick-slider";
 @import "modules/slick-slide";
+@import "modules/upload-image";
 
 // Mixins
 // -------------------------------
@@ -53,6 +71,9 @@
 
 @import "modules/content"; // specifity wars
 
-// Pleio
-// -------------------------------
 @import "pleio";
+
+#__bs_notify__ {
+    opacity: .15 !important;
+    pointer-events: none;
+}

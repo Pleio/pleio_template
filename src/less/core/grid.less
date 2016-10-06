@@ -68,6 +68,10 @@
     padding-right: @outer-margin;
 }
 
+.container.relative {
+    position: relative;
+}
+
 .row {
     display: flex;
     flex-direction: row;
@@ -76,6 +80,12 @@
     margin-left: @gutter-compensation;
     margin-right: @gutter-compensation;
 }
+
+.row.fill {
+    flex: 1 1 auto;
+}
+
+
 
 .row.reverse {
     flex-direction: row-reverse;
@@ -94,6 +104,10 @@
 
     @media (min-width: @screen-sm) {
         position: relative;
+    }
+
+    &.fill {
+        display: flex;
     }
 }
 
@@ -792,5 +806,29 @@
     .last-lg {
         display: flex;
         order: 1;
+    }
+}
+
+.show-lg {
+    @media (max-width: @screen-lg-max) {
+        display: none;
+    }
+}
+
+.show-md {
+    @media (max-width: @screen-md-max) {
+        display: none;
+    }
+}
+
+.show-sm {
+    @media (max-width: @screen-sm-max) {
+        display: none;
+    }
+}
+
+.show-xs {
+    @media (max-width: @screen-xs-max) {
+        display: none;
     }
 }

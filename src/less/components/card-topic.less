@@ -8,9 +8,16 @@
     width: 100%; // IE10-11 COLUMN FIX
     box-shadow: @box-shadow;
 
+
+
     @media ( min-width: @screen-sm ) {
         display: flex;
         padding: 3rem 3rem 3rem 8rem;
+
+        &.___home {
+            display: block;
+            padding: 3rem 3rem 2rem 8rem;
+        }
     }
 }
 
@@ -36,6 +43,10 @@
 
     @media ( min-width: @screen-sm ) {
         padding: 0 2.5rem 0 0;
+
+        .card-topic.___home & {
+            padding: 0;
+        }
     }
 }
 
@@ -52,6 +63,23 @@
     @media ( min-width: @screen-sm ) {
         margin: 0 0 1rem 0;
     }
+    
+    max-height: @line-height--base * 2;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+        
+        @media ( min-width: @screen-sm ) {
+            max-height: @line-height--title-small * 2; 
+        }
+        
+        @media ( min-width: @screen-md ) {
+            max-height: @line-height--title-main * 3; 
+        }
 }
 
 .card-topic__meta {
@@ -86,8 +114,9 @@
     @media ( max-width: @screen-xs-max ) {
         display: none;
     }
-
-    @media ( min-width: @screen-sm ) {
+    
+    .multiline-ellipsis( @font-size--base, @line-height--base, 1 );
+    @media ( min-width: @screen-md ) {
         .multiline-ellipsis( @font-size--base, @line-height--base, 2 );
     }
 }
@@ -98,8 +127,25 @@
     flex-shrink: 0;
 
     @media ( min-width: @screen-sm ) {
-        flex-direction: column;
+        //flex-direction: column;
+        //width: 15rem;
+    }
+    
+    @media ( min-width: @screen-lg ) {
         width: 20rem;
+
+        .card-topic.___home & {
+            flex-direction: row;
+            justify-content: space-between;
+            width: auto;
+            margin: 2.5rem 0 0 0;
+        }
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        .card-topic.___home & {
+            margin: 1.5rem 0 0 0;
+        }
     }
 }
 
@@ -200,12 +246,14 @@
 }
 
 .card-topic__comments {
+    display: flex;
+    align-items: center;
     font-weight: bold;
     color: @color-grey--80;
 
     .icon(comments);
     &:before {
-        margin: 0 1rem 0 0;
+        margin: 0 0.7rem 0 0;
         color: @color-secondary;
         font-size: 1.9rem;
         transition: color @trans-fast;

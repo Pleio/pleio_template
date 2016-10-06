@@ -1,0 +1,77 @@
+.card-contact {
+    position: relative;
+    background-color: @color-white;
+    padding: 1.5rem 1.5rem 1.5rem 6.5rem;
+    margin: 0 0 2rem 0;
+    width: 100%; // IE10-11 COLUMN FIX
+    box-shadow: @box-shadow;
+
+    &.___request {
+        padding: 1.5rem 1.5rem 2rem 6.5rem;
+    }
+
+    @media ( min-width: @screen-sm ) {
+        padding: 2.5rem 2.5rem 2.5rem 9rem;
+
+        &.___request {
+            padding: 2.5rem 2.5rem 3rem 9rem;
+        }
+    }
+}
+
+.card-contact__picture {
+    position: absolute;
+    top: 2.4rem;
+    left: 2.5rem;
+    width: 5rem;
+    height: 5rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 50%;
+    overflow: hidden;
+
+    @media ( max-width: @screen-xs-max ) {
+        width: 4rem;
+        height: 4rem;
+        top: 1.7rem;
+        left: 1.7rem;
+    }
+}
+
+.card-contact__details {
+    display: flex; align-items: center; justify-content: space-between;
+}
+
+.card-contact__user {
+    font-weight: bold;
+}
+
+.card-contact__school {
+    color: @color-grey;
+}
+
+.card-contact__delete {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0.5rem;
+    color: @color-grey;
+    cursor: pointer;
+    transition: color @trans-fast;
+
+    .icon(delete);
+    &:before {
+        font-size: 2rem;
+    }
+
+    &:hover {
+        color: @color-primary;
+    }
+
+    @media ( min-width: @screen-sm ) {
+        &:before {
+            font-size: 2.5rem;
+        }
+    }
+}

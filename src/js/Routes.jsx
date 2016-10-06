@@ -1,19 +1,34 @@
-import React from 'react'
-import { Router, Route, IndexRoute, browserHistory } from 'react-router'
-import { connect } from 'react-redux'
+import React from "react"
+import { Router, Route, IndexRoute, browserHistory } from "react-router"
+import { connect } from "react-redux"
 
-import Container from './components/Container'
+import Container from "./core/components/Container"
 
-import Activity from './views/Activity'
-import Blog from './views/Blog'
-import NewsList from './views/NewsList'
-import NewsItem from './views/NewsItem'
-import Forum from './views/Forum'
-import Bookmarks from './views/Bookmarks'
-import Search from './views/Search'
-import NotFound from './views/NotFound'
-import ForgotPasswordConfirmModal from './views/ForgotPasswordConfirmModal'
+import Activity from "./activity/Activity"
+
+import Blog from "./views/Blog"
+
+import NewsList from "./news/List"
+import NewsItem from "./news/Item"
+
+import Forum from "./views/Forum"
+
+import Bookmarks from "./views/Bookmarks"
+
+import Search from "./views/Search"
+
+import NotFound from "./views/NotFound"
+
+import ForgotPasswordConfirmModal from "./views/ForgotPasswordConfirmModal"
 import LoginModal from "./views/LoginModal"
+import Logout from "./views/Logout"
+
+import ProfileWrapper from "./profile/Wrapper"
+import Profile from "./profile/Profile"
+
+import Account from "./profile/Account"
+
+import Settings from "./profile/Settings"
 
 export default class Routes extends React.Component {
     render() {
@@ -30,6 +45,12 @@ export default class Routes extends React.Component {
                     <Route path="/search" component={Search} />
                     <Route path="/resetpassword" component={ForgotPasswordConfirmModal} />
                     <Route path="/login" component={LoginModal} />
+                    <Route path="/logout" component={Logout} />
+                    <Route path="/profile/:username" component={ProfileWrapper}>
+                        <IndexRoute component={Profile} />
+                        <Route path="account" component={Account} />
+                        <Route path="settings" component={Settings} />
+                    </Route>
                     <Route path="*" component={NotFound} />
                 </Route>
             </Router>

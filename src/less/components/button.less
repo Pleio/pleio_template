@@ -1,7 +1,9 @@
 .button {
+    position: relative;
     flex-shrink: 0;
-    display: inline-block;
-    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border: none;
     border-radius: @border-radius-button;
     height: 4rem;
@@ -13,7 +15,8 @@
     overflow: hidden;
     background-color: @color-secondary;
     color: @color-white;
-    transition: background-color @trans-fast, color @trans-fast;
+    text-shadow: none;
+    transition: background-color @trans-fast, color @trans-fast, border-color @trans-fast;
     cursor: pointer;
     user-select: none;
     -webkit-appearance: none;
@@ -30,15 +33,63 @@
         cursor: default;
     }
 
+    &.___margin-right {
+        margin-right: 2rem;
+    }
+
+    &.___logout {
+        .icon(logout);
+        &:before {
+            display: none;
+        }
+    }
+
     @media ( max-width: @screen-xs-max ) {
         height: 3.6rem;
         line-height: 3.6rem;
+
+        &.___pleio {
+            display: none;
+        }
+
+        &.___large.___logout {
+            display: flex;
+            justify-content: center;
+            width: 2.6rem;
+            height: 2.6rem;
+            line-height: 2.6rem;
+            padding: 0;
+            border-radius: 50%;
+            font-size: 2.4rem;
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+
+            span {
+                display: none;
+            }
+
+            &:before {
+                display: inline-block;
+                font-size: 1.2rem;
+                line-height: inherit;
+            }
+        }
+
+        &.___edit-email {
+            margin: 2rem 0 0 0;
+        }
     }
 }
 
 // Grey button
 .button.___grey {
-    background: @color-grey--50;
+    background-color: @color-grey--50;
+
+    &:hover,
+    &:active {
+        background-color: @color-secondary;
+    }
 }
 
 // Full width button
@@ -56,6 +107,20 @@
     @media ( max-width: @screen-xs-max ) {
         height: 4rem;
         line-height: 4rem;
+
+        .form & {
+            height: 4.6rem;
+            line-height: 4.6rem;
+        }
+    }
+}
+
+// Button with @color-primary
+.button.___primary {
+    background-color: @color-primary;
+
+    &:hover {
+        background-color: @color-secondary;
     }
 }
 
@@ -64,7 +129,7 @@
     height: auto;
     padding: 0;
     color: @color-grey--80;
-    background: transparent;
+    background-color: transparent;
     font-weight: normal;
     border-radius: 0;
     transition: color @trans-fast;
@@ -73,10 +138,21 @@
     &:focus {
         color: @color-secondary;
         border-color: @color-secondary;
-        background: transparent;
+        background-color: transparent;
     }
 }
 
+.button.___line {
+    color: @color-grey--60;
+    background-color: transparent;
+    border: 1px solid @color-grey--40;
+
+    &:hover,
+    &:focus {
+        color: @color-secondary;
+        border-color: @color-secondary;
+    }
+}
 .button.___underlined {
     border-bottom: 1px solid @color-grey--80;
 }
@@ -105,7 +181,7 @@
         .icon(social-twitter);
 
         &:before {
-                font-size: 1.4rem;
+            font-size: 1.4rem;
         }
     }
     &.___facebook {
@@ -154,5 +230,159 @@
 
     @media ( max-width: @screen-xs-max ) {
         height: 3.6rem;
+    }
+
+    &.___edit-post {
+        margin: 0 0 0 1rem;
+        padding: 0 1rem;
+        font-weight: normal;
+        color: @color-grey--60;
+        .icon(pencil);
+        &:before {
+            margin: 0 0.5rem 0.2rem 0;
+            font-size: 1.5rem;
+        }
+
+        &:hover {
+            color: @color-secondary;
+        }
+    }
+
+    &.___likes {
+        padding: 0 0 0 2.8rem;
+        color: @color-grey--80;
+
+        .icon(heart);
+        .icon(heart-fill, after);
+
+        @media ( max-width: @screen-xs-max ) {
+            padding: 0 0 0 2.5rem;
+        }
+
+        &:before,
+        &:after {
+            position: absolute;
+            width: 2.3rem;
+            left: 0;
+            top: 0.9rem;
+            font-size: 2rem;
+            text-align: center;
+            color: @color-secondary;
+            transition: opacity @trans-fast, color @trans-fast;
+
+            @media ( max-width: @screen-xs-max ) {
+                top: 0.8rem;
+                font-size: 1.8rem;
+            }
+        }
+
+        &:after {
+            opacity: 0;
+        }
+
+        &.___is-liked,
+        &:hover {
+            &:before {
+                opacity: 0;
+            }
+
+            &:after {
+                opacity: 1;
+            }
+        }
+
+        &.___margin-top {
+            margin-top: 2.5rem;
+        }
+    }
+}
+
+.button__underline {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    height: 4rem;
+    padding: 0 1rem;
+    color: @color-grey--80;
+    cursor: pointer;
+    transition: color @trans-fast;
+    user-select: none;
+
+    &:after {
+        content: '';
+        position: absolute;
+        height: 1px;
+        background-color: @color-grey--60;
+        left: 1rem;
+        right: 1rem;
+        bottom: 0.8rem;
+        transition: background-color @trans-fast;
+    }
+
+    &:hover {
+        color: @color-black;
+
+        &:after {
+            background-color: @color-grey--80;
+        }
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        height: 3.6rem;
+
+        .form & {
+            height: 4rem;
+        }
+    }
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    margin: 2rem 0 0 0;
+    flex-wrap: wrap;
+
+    &.___margin-top {
+        margin-top: 4rem;
+
+        @media ( max-width: @screen-xs-max ) {
+            margin-top: 2rem;
+
+            .modal.___blue & {
+                margin-top: 4rem;
+            }
+        }
+    }
+
+    &.___margin-top-extra {
+        margin-top: 6rem;
+    }
+
+    &.___gutter {
+        margin-bottom: -1rem;
+
+        > * {
+            margin-bottom: 1rem;
+        }
+
+        > *:not(:last-child) {
+            margin-right: 2rem;
+
+            .modal & {
+                margin-right: 1rem;
+            }
+        }
+    }
+
+    &.___space-between {
+        justify-content: space-between;
+    }
+
+    &.___center {
+        justify-content: center;
+    }
+
+    &.___end {
+        justify-content: flex-end;
     }
 }

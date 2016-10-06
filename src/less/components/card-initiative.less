@@ -1,0 +1,51 @@
+.card-initiative {
+    width: 100%;
+    background-color: @color-white;
+    padding: 3rem 3rem 2rem 3rem;
+    margin: 0 0 2rem 0;
+    box-shadow: @box-shadow;
+
+    @media ( max-width: @screen-md-max ) {
+        display: none;
+    }
+}
+
+.card-initiative__title {
+    margin: 0 0 2rem 0;
+    font-size: @font-size--title-small;
+    line-height: @line-height--title-small;
+    font-weight: bold;
+    color: @color-primary;
+}
+
+.card-initiative__line {
+    height: 1px;
+    margin-left: -3rem;
+    margin-right: -3rem;
+    background-color: @color-grey--40;
+}
+
+.card-initiative__logo {
+    width: 100%;
+    margin-top: -1px;
+}
+
+.card-initiative__link {
+    display: flex; align-items: center;
+    margin: 2.5rem 0 0 0;
+    padding: 0.5rem 0;
+    color: @color-primary;
+
+    .icon(angle-right);
+    &:before {
+        font-size: 0.9rem;
+        margin: 0 0.5rem 0.1rem 0;
+    }
+
+    .icon(external, after);
+    &:after {
+        font-size: 1.2rem;
+        margin: 0 0 0 0.5rem;
+        color: @color-grey--60;
+    }
+}

@@ -169,4 +169,26 @@ a.tooltip span
     &:hover {
         color: @color-secondary;
     }
+
+    opacity: 1;
+    transition:all .25s;
+
+    &.___hidden {
+        pointer-events: none;
+        opacity: 0;
+        height: 0;
+    }
+}
+
+.article-comments__more-container {
+    overflow: hidden;
+	max-height: 0;
+    transition: max-height @trans-normal, opacity @trans-normal;
+    opacity: 0;
+
+    &.___show {
+        overflow: auto;
+        max-height: 9999rem;
+        opacity: 1;
+    }
 }

@@ -1,0 +1,126 @@
+.upload-image {
+    position: relative;
+    display: flex;
+    align-items: center; justify-content: center;
+    height: 33rem;
+    margin: 0 0 2rem 0;
+    background-color: @color-tertiary--lighter;
+    cursor: pointer;
+    transition: background-color @trans-fast;
+
+    &:hover {
+        background-color: @color-tertiary--light;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        height: 13rem;
+    }
+}
+
+.upload-image__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 2.4rem;
+    user-select: none;
+    transition: opacity @trans-fast;
+
+    .icon(camera);
+    &:before {
+        margin: 0 0 2rem 0;
+        font-size: 4.5rem;
+        color: @color-secondary;
+        transition: color @trans-fast;
+    }
+
+    .___is-uploaded & {
+        opacity: 0;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        line-height: 2rem;
+
+        &:before {
+            font-size: 3.1rem;
+            margin: 0 0 1rem 0;
+        }
+    }
+}
+
+.upload-image__title {
+    font-size: @font-size--title-small;
+    font-weight: bold;
+    color: @color-primary;
+
+    @media ( max-width: @screen-xs-max ) {
+        font-size: @font-size--base;
+    }
+}
+
+.upload-image__dimensions {
+    color: @color-primary;
+}
+
+.upload-image__actions {
+    max-width: 64.8rem;
+    margin: 0 auto;
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    display: flex;
+    transition: opacity @trans-fast;
+
+    .button:first-child {
+        margin: 0 2rem 0 0;
+    }
+
+    .___is-uploaded & {
+        opacity: 1;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        left: 2rem;
+
+        .button:first-child {
+            margin: 0 1rem 0 0;
+        }
+    }
+}
+
+.upload-image__edit {
+    .icon(pencil);
+    &:before {
+        font-size: 1.5rem;
+        color: @color-white;
+    }
+}
+
+.upload-image__delete {
+    .icon(delete);
+    &:before {
+        font-size: 1.8rem;
+        color: @color-white;
+    }
+}
+
+.upload-image__edit,
+.upload-image__delete {
+    @media ( max-width: @screen-xs-max ) {
+        width: 3.6rem;
+        height: 3.6rem;
+        padding: 0;
+        display: flex; align-items: center; justify-content: center;
+
+        span {
+            display: none;
+        }
+    }
+
+    @media ( min-width: @screen-sm ) {
+        &:before {
+            display: none;
+        }
+    }
+}

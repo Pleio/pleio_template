@@ -10,9 +10,9 @@ import { showModal } from "../lib/actions"
 import AddComment from "../containers/AddComment"
 import SocialShare from "../components/SocialShare"
 import Bookmark from "../components/Bookmark"
-import NotFound from "./NotFound"
+import NotFound from "../views/NotFound"
 
-class NewsItem extends React.Component {
+class Item extends React.Component {
     constructor(props) {
         super(props)
 
@@ -138,4 +138,4 @@ export default connect()(graphql(QUERY, {
             }
         }
     }
-})(NewsItem));
+})(Item));

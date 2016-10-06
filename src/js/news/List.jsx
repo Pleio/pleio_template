@@ -9,7 +9,7 @@ import ContentHeader from "../components/ContentHeader"
 import InfiniteList from "../components/InfiniteList"
 import AddModal from "../views/AddModal"
 
-class NewsList extends React.Component {
+class List extends React.Component {
     constructor(props) {
         super(props)
 
@@ -70,4 +70,4 @@ const listQuery = gql`
 const ContentHeaderWithData = graphql(headerQuery)(ContentHeader)
 const InfiniteListWithData = graphql(listQuery, {withRef: true})(InfiniteList)
 
-export default connect()(NewsList)
+export default connect()(List)

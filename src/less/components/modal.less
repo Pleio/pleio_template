@@ -6,12 +6,13 @@
     left: 0;
     right: 0;
     bottom: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
     z-index: 4;
-    transition: visibility @trans-fast, opacity @trans-fast;
+    transition: visibility @trans-normal, opacity @trans-normal;
 
     p {
-        &.___small {
+        &.___blue {
             margin: 0 0 3rem 0;
             .font(medium);
         }
@@ -25,16 +26,19 @@
         visibility: visible;
         opacity: 1;
     }
+
+    &.___full {
+        background-color: @color-white;
+    }
 }
 
 .modal__wrapper {
     @media ( min-width: @screen-sm ) {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        align-items: flex-start;
         position: relative;
         min-height: 100%;
-        padding: 16rem 0 10rem 0;
+        padding: 16rem 0 4rem 0;
     }
 }
 
@@ -44,11 +48,11 @@
     left: 0;
     right: 0;
     bottom: 0;
+    margin-top: auto;
     background-color: rgba(0, 0, 0, 0.15);
-    transition: @trans-fast;
     cursor: pointer;
 
-    .___small & {
+    .___blue & {
         background-color: fade(@color-primary, 90%);
     }
 
@@ -62,11 +66,18 @@
     max-width: 72.8rem;
     width: 100%;
     min-height: 100%;
-    padding: 7rem 2rem 5rem 2rem;
-    background: @color-white;
+    margin: 0 auto;
+    padding: 7rem 2rem 4rem 2rem;
+    background-color: @color-white;
 
     .___small & {
         max-width: 40rem;
+    }
+    .___full & {
+        max-width: 100%;
+        padding: 0 0 4rem 0;
+        background-color: none;
+        box-shadow: none;
     }
 
     @media ( max-width: @screen-xs-max ) {
@@ -78,10 +89,13 @@
     }
 
     @media ( min-width: @screen-sm ) {
-        align-self: flex-start;
         padding: 4rem;
         box-shadow: @box-shadow;
         z-index: 1;
+
+        .___full & {
+            padding: 0 0 4rem 0;
+        }
     }
 }
 
@@ -92,9 +106,15 @@
     position: absolute;
     padding: 2rem;
     color: @color-grey--60;
+    border-radius: 50%;
+    overflow: hidden;
     transition: color @trans-fast;
     cursor: pointer;
     z-index: 1;
+
+    .paper-ripple {
+        color: @color-grey--50;
+    }
 
     &:hover,
     &:focus {
@@ -107,6 +127,12 @@
     }
 
     .___small & {
+        top: 0.7rem;
+        right: 0.7rem;
+    }
+
+    .___blue & {
+        // position: fixed;
         top: 0;
         right: 0;
         padding: 2.1rem;
@@ -131,6 +157,11 @@
         }
 
         .___small & {
+            top: 0;
+            right: 0;
+        }
+
+        .___blue & {
             padding: 2rem;
             color: @color-grey--60;
 
@@ -148,6 +179,11 @@
     @media (min-width: @screen-sm) {
         right: 2rem;
         top: 2rem;
+
+        .___full & {
+            right: 0;
+            top: 2rem;
+        }
     }
 }
 
@@ -159,4 +195,53 @@
     span {
         font-weight: normal;
     }
+
+    .___full & {
+        margin: 7rem 0 1rem 0;
+    }
+
+    @media (min-width: @screen-sm) {
+        .___full & {
+            margin: 3rem 0;
+        }
+    }
+}
+
+.modal__wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    flex-shrink: 0;
+    transition: transform @trans-material-normal;
+    transform: translate(0, 0);
+
+    &[data-modal-slides="2"] {
+        width: 200%;
+
+        &.___slide-2 {
+            transform: translateX(-50%);
+        }
+    }
+
+    &[data-modal-slides="3"] {
+        width: 300%;
+
+        &.___slide-2 {
+            transform: translateX(100% / -3);
+            transform: translateX(~"calc(100% / -3)");
+        }
+        &.___slide-3 {
+            transform: translateX(100% / -3 * 2);
+            transform: translateX(~"calc(100% / -3 * 2)");
+        }
+    }
+
+    @media ( min-width: @screen-sm ) {
+        position: relative;
+        min-height: 100%;
+        padding: 16rem 0 4rem 0;
+    }
+}
+
+.modal__slide {
 }

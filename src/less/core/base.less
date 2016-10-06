@@ -1,62 +1,70 @@
 *,
 *:after,
 *:before {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 *:focus {
-  outline: none; // remove outline from all focused elements
+    outline: none; // remove outline from all focused elements
 }
 
-html, body {
-  min-height: 100%;
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // remove highlight color on Android
+}
+
+html,
+body {
+    overflow-y: auto;
 }
 
 html {
-  // Set the base font size for rem sizes
-  font-size: 10px;
-
-  // Add cross-browser antialiasing
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  // Other base styling
-  text-rendering: auto;
-  -webkit-text-size-adjust: 100%;
-  position: relative;
-  margin: 0;
-  cursor: default;
-
-  @media (min-width: @screen-xl) {
-    font-size: 12px;
-  }
+    // Set the base font size for rem sizes
+    font-size: 10px;
+    // Add cross-browser antialiasing
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    // Other base styling
+    text-rendering: auto;
+    -webkit-text-size-adjust: 100%;
+    position: relative;
+    height: 100%;
+    margin: 0;
+    cursor: default;
+    @media (min-width: @screen-xl) {
+        font-size: 12px;
+    }
 }
 
 body {
-  position: relative;
-  font-size: @font-size--medium;
-  line-height: @line-height--medium;
-  font-family: @font;
-  color: @color-black;
-  background-color: @color-white;
-  width: 100%;
-  margin: 0;
-
-  @media ( min-width: @screen-sm ) {
-    font-size: @font-size--base;
-    line-height: @line-height--base;
-  }
-
-  &.___background-grey {
-    background-color: @color-grey--20;
-  }
+    position: relative;
+    font-size: @font-size--medium;
+    line-height: @line-height--medium;
+    font-family: @font;
+    color: @color-black;
+    background-color: @color-white;
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    @media ( min-width: @screen-sm ) {
+        font-size: @font-size--base;
+        line-height: @line-height--base;
+    }
+    &.___background-grey {
+        background-color: @color-grey--20;
+    }
 }
 
 img {
-  max-width: 100%;
-  border: none;
+    max-width: 100%;
+    border: none;
 }
 
 .relative {
-  position: relative;
+    position: relative;
 }
+
+// Hides "Connected to BrowserSync"
+#__bs_notify__ {
+    display: none !important;
+}
+

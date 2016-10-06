@@ -7,7 +7,7 @@ import ForgotPasswordModal from "../views/ForgotPasswordModal"
 export default class Container extends React.Component {
     render() {
         return (
-            <div>
+            <div className="page-layout">
                 <header className="page-layout__header">
                     <TopMenu />
                 </header>

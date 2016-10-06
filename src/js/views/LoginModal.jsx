@@ -87,10 +87,17 @@ class LoginModal extends React.Component {
             <Modal ref="modal" id="login" title="Welkom op Leraar.nl" small={true}>
                 {errors}
                 <form className="form login" onSubmit={this.onLogin}>
-                    <input name="username" type="text" placeholder="E-mailadres" className="form__input" onChange={this.onChangeUsername} />
-                    <input type="password" placeholder="Wachtwoord" className="form__input" onChange={this.onChangePassword} />
+                    <label className="form__item">
+                        <input name="username" type="text" placeholder="E-mailadres" className="form__input" onChange={this.onChangeUsername} />
+                    </label>
+
+                    <label className="form__item">
+                        <input type="password" placeholder="Wachtwoord" className="form__input" onChange={this.onChangePassword} />
+                    </label>
+
                     <button className="button ___block ___large ___primary">Inloggen</button>
-                    <div className="form__actions">
+
+                    <div className="buttons">
                         <a href="#" onClick={this.showRegister} className="form__link ___block-mobile">
                             Registreren
                         </a>

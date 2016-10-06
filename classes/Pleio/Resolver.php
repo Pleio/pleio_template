@@ -28,7 +28,13 @@ class Resolver {
 
     static function getEntity($a, $args, $c) {
         $guid = (int) $args["guid"];
-        $entity = get_entity($guid);
+        $username = $args["username"];
+
+        if ($guid) {
+            $entity = get_entity($guid);
+        } elseif ($username) {
+            $entity = get_user_by_username($username);
+        }
 
         if (!$entity) {
             return [
@@ -38,18 +44,33 @@ class Resolver {
             ];
         }
 
-        return [
-            "guid" => $guid,
-            "status" => "ok",
-            "type" => $entity->type,
-            "title" => $entity->title,
-            "description" => $entity->description,
-            "timeCreated" => date("c", $entity->time_created),
-            "timeUpdated" => date("c", $entity->time_updated),
-            "canEdit" => $entity->canEdit(),
-            "accessId" => $entity->access_id,
-            "tags" => Helpers::renderTags($entity->tags)
-        ];
+        if ($entity instanceof \ElggUser) {
+            return [
+                "guid" => $entity->guid,
+                "status" => "ok",
+                "type" => $entity->type,
+                "name" => $entity->name,
+                "icon" => $entity->getIconURL(),
+                "timeCreated" => $entity->time_created,
+                "timeUpdated" => $entity->time_updated,
+                "canEdit" => $entity->canEdit()
+            ];
+        }
+
+        if ($entity instanceof \ElggObject) {
+            return [
+                "guid" => $guid,
+                "status" => "ok",
+                "type" => $entity->type,
+                "title" => $entity->title,
+                "description" => $entity->description,
+                "timeCreated" => date("c", $entity->time_created),
+                "timeUpdated" => date("c", $entity->time_updated),
+                "canEdit" => $entity->canEdit(),
+                "accessId" => $entity->access_id,
+                "tags" => Helpers::renderTags($entity->tags)
+            ];
+        }
     }
 
     static function getComments($object) {
@@ -93,6 +114,31 @@ class Resolver {
             "icon" => $user->getIconURL(),
             "url" => $user->getURL()
         ];
+    }
+
+    static function getProfile($user) {
+        $user = get_entity($user["guid"]);
+        if (!$user || !$user instanceof \ElggUser) {
+            return [];
+        }
+
+        $defaultItems = [
+            [ "key" => "phone", "name" => "Telefoonnummer" ],
+            [ "key" => "mobile", "name" => "Mobiel nummer" ],
+            [ "key" => "email", "name" => "E-mailadres" ],
+            [ "key" => "site", "name" => "Website" ]
+        ];
+
+        $result = [];
+        foreach ($defaultItems as $item) {
+            $result[] = [
+                "key" => $item["key"],
+                "name" => $item["name"],
+                "value" => $user->$item["key"]
+            ];
+        }
+
+        return $result;
     }
 
     static function getGroups($a, $args, $c) {

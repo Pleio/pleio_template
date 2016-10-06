@@ -20,6 +20,7 @@ function pleio_template_init() {
     elgg_register_page_handler("blog", "pleio_template_page_handler");
     elgg_register_page_handler("news", "pleio_template_page_handler");
     elgg_register_page_handler("forum", "pleio_template_page_handler");
+    elgg_register_page_handler("profile", "pleio_template_page_handler");
 
     elgg_register_page_handler("login", "pleio_template_page_handler");
     elgg_register_page_handler("register", "pleio_template_page_handler");

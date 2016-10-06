@@ -1,6 +1,11 @@
-.container-card-tile {
+.card-tile-container {
     display: flex; // IE10-11 COLUMN FIX
-    height: 100%; // fill to row height
+
+    .___fill {
+        height: 100%; // fill to row height
+    }
+    
+    width: 100%;
 }
 
 .card-tile {
@@ -49,25 +54,53 @@
                 }
             }
 
-            &.___onderwijs {
-                background-color: @color-onderwijs;
+            &.___leren {
+                background-color: @color-leren;
 
                 .read-more__circle:before {
-                    color: @color-onderwijs;
+                    color: @color-leren;
                 }
             }
-            &.___kwaliteit {
-                background-color: @color-kwaliteit;
+            &.___vernieuwing {
+                background-color: @color-vernieuwing;
 
                 .read-more__circle:before {
-                    color: @color-kwaliteit;
+                    color: @color-vernieuwing;
                 }
             }
-            &.___beroepsorganisatie {
-                background-color: @color-beroepsorganisatie;
+            &.___arbeidsvoorwaarden {
+                background-color: @color-arbeidsvoorwaarden;
 
                 .read-more__circle:before {
-                    color: @color-beroepsorganisatie;
+                    color: @color-arbeidsvoorwaarden;
+                }
+            }
+            &.___wetten {
+                background-color: @color-wetten;
+
+                .read-more__circle:before {
+                    color: @color-wetten;
+                }
+            }
+            &.___actualiteit {
+                background-color: @color-actualiteit;
+
+                .read-more__circle:before {
+                    color: @color-actualiteit;
+                }
+            }
+            &.___overig {
+                background-color: @color-overig;
+
+                .read-more__circle:before {
+                    color: @color-overig;
+                }
+            }
+            &.___klas {
+                background-color: @color-klas;
+
+                .read-more__circle:before {
+                    color: @color-klas;
                 }
             }
         }
@@ -131,9 +164,18 @@
 }
 
 // Full cover image
-.card-tile.___image-full {
+.card-tile.___full-image {
     @media ( max-width: @screen-xs-max ) {
-        min-height: 25rem;
+        min-height: 9rem;
+
+        &.___featured {
+            min-height: 25rem;
+
+            .card-tile__title {
+                .font(title-small);
+                padding: 0;
+            }
+        }
     }
 
     .card-tile__image {
@@ -155,16 +197,11 @@
     }
 
     .card-tile__title {
-        .font(title-small);
         color: @color-white;
         text-shadow: @text-shadow;
 
         &:hover {
             color: @color-white;
-        }
-
-        @media ( max-width: @screen-xs-max ) {
-            padding: 0;
         }
 
         @media ( min-width: @screen-sm ) {
@@ -175,6 +212,160 @@
 
     .read-more {
         color: @color-white;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        .___search-results & {
+            min-height: 9rem;
+            
+            .card-tile__title {
+                max-width: ~"calc(100% - 3rem)";
+                .font(medium);
+            }
+            
+            .read-more__circle {
+                margin: 0;
+                position: absolute;
+                right: 2rem;
+                bottom: 2rem;
+            }
+            
+            .read-more span {
+                display: none;
+            }
+        }
+    }
+
+    &.___no-image {
+        &.___leren,
+        &.___vernieuwing,
+        &.___arbeidsvoorwaarden,
+        &.___wetten,
+        &.___actualiteit,
+        &.___overig,
+        &.___klas {
+            &:after {
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 15rem;
+                margin: 0 4rem 0 0;
+                color: fade(@color-black, 40%);
+
+                @media ( max-width: @screen-xs-max ) {
+                    display: none;
+                }
+            }
+        }
+
+        .read-more__circle {
+            background-color: @color-white;
+        }
+        .card-tile__title,
+        .read-more {
+            text-shadow: none;
+            color: @color-white;
+        }
+
+        &.card-tile:hover {
+            .read-more__circle {
+                background-color: @color-quaternary;
+
+                &:before {
+                    color: @color-white;
+                }
+            }
+        }
+
+        &.___leren {
+            background-color: @color-leren;
+
+            .read-more__circle:before {
+                color: @color-leren;
+            }
+
+            .icon(cat-leren, after);
+            &:after {
+                font-size: 15rem;
+            }
+        }
+        &.___vernieuwing {
+            background-color: @color-vernieuwing;
+
+            .read-more__circle:before {
+                color: @color-vernieuwing;
+            }
+
+            .icon(cat-vernieuwing, after);
+            &:after {
+                font-size: 14rem;
+            }
+        }
+        &.___arbeidsvoorwaarden {
+            background-color: @color-arbeidsvoorwaarden;
+
+            .read-more__circle:before {
+                color: @color-arbeidsvoorwaarden;
+            }
+
+            .icon(cat-arbeidsvoorwaarden, after);
+            &:after {
+                font-size: 14rem;
+            }
+        }
+        &.___wetten {
+            background-color: @color-wetten;
+
+            .read-more__circle:before {
+                color: @color-wetten;
+            }
+
+            .icon(cat-wetten-2, after);
+            &:after {
+                font-size: 13.4rem;
+            }
+        }
+        &.___actualiteit {
+            background-color: @color-actualiteit;
+
+            .read-more__circle:before {
+                color: @color-actualiteit;
+            }
+
+            .icon(cat-actualiteit, after);
+            &:after {
+                font-size: 13.6rem;
+            }
+        }
+        &.___overig {
+            background-color: @color-overig;
+
+            .read-more__circle:before {
+                color: @color-overig;
+            }
+
+            .icon(cat-overig, after);
+            &:after {
+                font-size: 13rem;
+            }
+        }
+        &.___klas {
+            background-color: @color-klas;
+
+            .read-more__circle:before {
+                color: @color-klas;
+            }
+
+            .icon(cat-klas, after);
+            &:after {
+                font-size: 13rem;
+            }
+        }
+
+        @media ( min-width: @screen-sm ) {
+            flex-direction: row;
+        }
     }
 }
 
@@ -189,10 +380,13 @@
         min-height: 9rem;
     }
 
-    .card-tile.___kwaliteit &,
-    .card-tile.___onderwijs &,
-    .card-tile.___maatschappij &,
-    .card-tile.___beroepsorganisatie & {
+    .card-tile.___leren &,
+    .card-tile.___vernieuwing &,
+    .card-tile.___arbeidsvoorwaarden &,
+    .card-tile.___wetten &,
+    .card-tile.___actualiteit &,
+    .card-tile.___overig &,
+    .card-tile.___klas & {
         &:after {
             display: flex;
             align-items: center;
@@ -210,31 +404,46 @@
         }
     }
 
-    .card-tile.___onderwijs & {
-        .icon(cat-onderwijs, after);
+    .card-tile.___leren & {
+        .icon(cat-leren, after);
         &:after {
             font-size: 3rem;
         }
     }
-
-    .card-tile.___maatschappij & {
-        .icon(cat-maatschappij, after);
+    .card-tile.___vernieuwing & {
+        .icon(cat-vernieuwing, after);
         &:after {
-            font-size: 2rem;
+            font-size: 3.1rem;
         }
     }
-
-    .card-tile.___kwaliteit & {
-        .icon(cat-kwaliteit, after);
+    .card-tile.___arbeidsvoorwaarden & {
+        .icon(cat-arbeidsvoorwaarden, after);
         &:after {
             font-size: 3rem;
         }
     }
-
-    .card-tile.___beroepsorganisatie & {
-        .icon(cat-beroepsorganisatie, after);
+    .card-tile.___wetten & {
+        .icon(cat-wetten, after);
         &:after {
-            font-size: 2rem;
+            font-size: 2.6rem;
+        }
+    }
+    .card-tile.___actualiteit & {
+        .icon(cat-actualiteit, after);
+        &:after {
+            font-size: 2.8rem;
+        }
+    }
+    .card-tile.___overig & {
+        .icon(cat-overig, after);
+        &:after {
+            font-size: 2.5rem;
+        }
+    }
+    .card-tile.___klas & {
+        .icon(cat-klas, after);
+        &:after {
+            font-size: 2.7rem;
         }
     }
 
@@ -279,33 +488,66 @@
         }
     }
 
-    .card-tile.___onderwijs & {
-        background-color: @color-onderwijs;
+    .card-tile.___leren & {
+        background-color: @color-leren;
 
-        .icon(cat-onderwijs, after);
-
+        .icon(cat-leren, after);
         &:after {
-            font-size: 7.8rem;
+            font-size: 7.2rem;
         }
     }
 
-    .card-tile.___beroepsorganisatie & {
-        background-color: @color-beroepsorganisatie;
+    .card-tile.___vernieuwing & {
+        background-color: @color-vernieuwing;
 
-        .icon(cat-beroepsorganisatie, after);
+        .icon(cat-vernieuwing, after);
+        &:after {
+            font-size: 7.2rem;
+        }
+    }
 
+    .card-tile.___arbeidsvoorwaarden & {
+        background-color: @color-arbeidsvoorwaarden;
+
+        .icon(cat-arbeidsvoorwaarden, after);
+        &:after {
+            font-size: 7rem;
+        }
+    }
+
+    .card-tile.___wetten & {
+        background-color: @color-wetten;
+
+        .icon(cat-wetten, after);
+        &:after {
+            font-size: 6rem;
+        }
+    }
+
+    .card-tile.___actualiteit & {
+        background-color: @color-actualiteit;
+
+        .icon(cat-actualiteit, after);
+        &:after {
+            font-size: 6.4rem;
+        }
+    }
+
+    .card-tile.___overig & {
+        background-color: @color-overig;
+
+        .icon(cat-overig, after);
+        &:after {
+            font-size: 6rem;
+        }
+    }
+
+    .card-tile.___klas & {
+        background-color: @color-klas;
+
+        .icon(cat-klas, after);
         &:after {
             font-size: 6.2rem;
-        }
-    }
-
-    .card-tile.___kwaliteit & {
-        background-color: @color-kwaliteit;
-
-        .icon(cat-kwaliteit, after);
-
-        &:after {
-            font-size: 7.9rem;
         }
     }
 }

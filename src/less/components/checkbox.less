@@ -1,0 +1,52 @@
+.checkbox {
+    display: flex;
+    position: relative;
+
+    label {
+        padding: 0.3rem 0 0.3rem 2.2rem;
+        font-size: @font-size--medium;
+        line-height: @line-height--medium;
+        user-select: none;
+        cursor: pointer;
+
+        &:before {
+            position: absolute;
+            left: 0;
+            top: 0.7rem;
+            content: '';
+            width: 1.5rem;
+            height: 1.5rem;
+            background: @color-white;
+            border: 0.2rem solid @color-grey--60;
+            border-radius: 0.2rem;
+            transition: border-color @trans-fast;
+        }
+
+        .icon(check, after);
+
+        &:after {
+            position: absolute;
+            top: 1.1rem;
+            left: 0.35rem;
+            font-size: 0.7rem;
+            color: transparent;
+            transition: color @trans-fast;
+        }
+
+        &:hover:after {
+            color: @color-grey--50;
+        }
+    }
+
+    input[type=checkbox] {
+        width: 0;
+        opacity: 0;
+
+        &:checked + label:after {
+            color: @color-primary;
+        }
+        &:focus + label:before {
+            border-color: @color-primary;
+        }
+    }
+}

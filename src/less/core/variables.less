@@ -6,12 +6,20 @@
 
 @color-secondary:                   #009ee3;
 @color-secondary--light:            #99d8f3;
+@color-secondary--40:               #f1f9fc;
 
 @color-tertiary:                    #8fcae7;
 @color-tertiary--light:             #ddeff8;
 @color-tertiary--lighter:           #eef7fb;
 
 @color-quaternary:                  #154273;
+
+@color-senary:                      #1AA0E0;
+
+@color-septenary:                   #01689b;
+
+@color-searchbar:                   #DDEFF8;
+@color-lightblue:                   #00c6ff;
 
 // Black & white
 @color-black:                       #000;
@@ -29,9 +37,13 @@
 @color-grey:                        #b4b4b4;
 
 // Categoriën
-@color-onderwijs:                   #ffb612;
-@color-beroepsorganisatie:          #009ee3;
-@color-kwaliteit:                   #ca005d;
+@color-leren:                       #ffb612;
+@color-vernieuwing:                 #fa6e00;
+@color-arbeidsvoorwaarden:          #ca005d;
+@color-wetten:                      #76d2b6;
+@color-actualiteit:                 #73b62a;
+@color-overig:                      #009ee3;
+@color-klas:                        #8fcae7;
 
 // Social media colors
 @color-twitter:                     #55acee;
@@ -41,7 +53,8 @@
 @color-facebook:                    #3664a2;
 
 
-@color-error:                       red;
+@color-green:                       #7cb928;
+@color-error:                       #d52b1e;
 
 // Fonts
 // -------------------------------
@@ -81,47 +94,47 @@
 
 
 .font(@size) {
-	& when (@size = extra-small) {
-		font-size: 1.2rem;
-		line-height: 1.2rem + @line-height--addition;
-	}
-	& when (@size = small) {
-		font-size: 1.4rem;
-		line-height: 1.4rem + @line-height--addition;
-	}
-	& when (@size = medium) {
-		font-size: 1.6rem;
-		line-height: 1.6rem + @line-height--addition;
-	}
-	& when (@size = base) {
-		font-size: 1.8rem;
-		line-height: 1.8rem + @line-height--addition;
-	}
-	& when (@size = large) {
-		font-size: 2rem;
-		line-height: 2rem + @line-height--addition;
-	}
+    & when (@size = extra-small) {
+        font-size: 1.2rem;
+        line-height: 1.2rem + @line-height--addition;
+    }
+    & when (@size = small) {
+        font-size: 1.4rem;
+        line-height: 1.4rem + @line-height--addition;
+    }
+    & when (@size = medium) {
+        font-size: 1.6rem;
+        line-height: 1.6rem + @line-height--addition;
+    }
+    & when (@size = base) {
+        font-size: 1.8rem;
+        line-height: 1.8rem + @line-height--addition;
+    }
+    & when (@size = large) {
+        font-size: 2rem;
+        line-height: 2rem + @line-height--addition;
+    }
 
-	& when (@size = title-extra-small) {
-		font-size: 2.2rem;
-		line-height: 2.2rem + @line-height--addition;
-	}
-	& when (@size = title-small) {
-		font-size: 2.4rem;
-		line-height: 2.4rem + @line-height--addition;
-	}
-	& when (@size = title-medium) {
-		font-size: 2.6rem;
-		line-height: 2.6rem + @line-height--addition;
-	}
-	& when (@size = title-large) {
-		font-size: 2.8rem;
-		line-height: 2.8rem + @line-height--addition;
-	}
-	& when (@size = title-extra-large) {
-		font-size: 3.6rem;
-		line-height: 3.6rem + @line-height--addition;
-	}
+    & when (@size = title-extra-small) {
+        font-size: 2.2rem;
+        line-height: 2.2rem + @line-height--addition;
+    }
+    & when (@size = title-small) {
+        font-size: 2.4rem;
+        line-height: 2.4rem + @line-height--addition;
+    }
+    & when (@size = title-medium) {
+        font-size: 2.6rem;
+        line-height: 2.6rem + @line-height--addition;
+    }
+    & when (@size = title-large) {
+        font-size: 2.8rem;
+        line-height: 2.8rem + @line-height--addition;
+    }
+    & when (@size = title-extra-large) {
+        font-size: 3.6rem;
+        line-height: 3.6rem + @line-height--addition;
+    }
 }
 
 
@@ -167,4 +180,7 @@
 
 @trans-fast:                        0.2s ease;
 @trans-normal:                      0.35s ease;
-@trans-slow:                      	0.5s ease;
+@trans-slow:                        0.5s ease;
+
+@trans-material-fast:               0.2s cubic-bezier(.4, 0, 0.2, 1);
+@trans-material-normal:             0.35s cubic-bezier(.4, 0, 0.2, 1);

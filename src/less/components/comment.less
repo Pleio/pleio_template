@@ -1,7 +1,18 @@
+.comment-container {
+    // For forum comment
+    position: relative;
+    margin: 0 0 2rem 0;
+}
+
 .comment {
     position: relative; // position .vote-up-down next to comment
     background-color: @color-tertiary--lighter;
     margin: 0 0 2rem 0;
+
+    &[data-comment-edit] {
+        transition: opacity @trans-fast;
+        cursor: pointer;
+    }
 
     @media ( max-width: @screen-xs-max ) {
         display: flex;
@@ -13,6 +24,17 @@
 
     @media ( min-width: @screen-sm ) {
         padding: 3rem 2rem 3rem 8rem;
+
+        &.___is-editing {
+            position: absolute;
+            opacity: 0;
+        }
+    }
+
+    .article-comments__more-container & {
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
 }
 
@@ -116,7 +138,9 @@
 }
 
 .comment__justify {
+    position: relative;
     display: flex;
+    flex-grow: 1;
 
     @media ( max-width: @screen-xs-max ) {
         display: flex;
@@ -133,130 +157,64 @@
     font-weight: bold;
     color: @color-primary;
     transition: color @trans-fast;
-
-    &:hover {
-        color: @color-quaternary;
-    }
 }
 
 .comment__date {
     .font(medium);
     color: @color-primary;
+    transition: opacity @trans-fast;
+
+    @media ( min-width: @screen-sm ) {
+        .comment-container .comment:hover & {
+            opacity: 0;
+        }
+    }
+}
+
+.comment__edit {
+    position: absolute;
+    right: 0;
+    .font(medium);
+    color: @color-primary;
+
+    transition: opacity @trans-fast;
+
+    .icon(pencil);
+    &:before {
+        font-size: 1.5rem;
+        margin: 0 0.5rem 0.2rem 0;
+    }
+
+    @media ( min-width: @screen-sm ) {
+        opacity: 0;
+
+        .comment:hover & {
+            opacity: 1;
+        }
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        span {
+            display: none;
+        }
+    }
+}
+
+.comment__body {
+    transition: color @trans-fast;
+
+    .comment-container .comment:hover & {
+        color: @color-primary;
+    }
+
 }
 
 .comment__description {
     color: @color-primary;
 }
 
-.comment__edit {
-    color: @color-quaternary;
-    position: relative;
-    padding-left: 2rem;
-    transition: @trans-fast;
-    cursor: pointer;
-    margin-right: 2rem;
-
-    &:before {
-        // content: @icon-pencil;
-        font-family: @font--icons;
-        position: absolute;
-        left: 0;
-        font-size: 1.4rem;
-        margin-top: -0.2rem;
-    }
-
-    &:hover {
-        color: @color-primary;
-    }
-}
-
-.comment__remove {
-    color: @color-quaternary;
-    position: relative;
-    padding-left: 2rem;
-    transition: @trans-fast;
-    cursor: pointer;
-
-    &:before {
-        // content: @icon-trashcan;
-        font-family: @font--icons;
-        position: absolute;
-        left: 0;
-        font-size: 1.3rem;
-        margin-top: -0.1rem;
-    }
-
-    &:hover {
-        color: @color-primary;
-    }
-}
-
-.comment__editable {
-    padding-bottom: 2rem;
-    cursor: pointer;
-    > * {
-        display: inline !important;
-        border-bottom: 0.1rem dotted transparent;
-        &:after {
-            content: "";
-            display: block;
-            height: 2rem;
-        }
-        &:last-child {
-            &:after {
-                display: inline-block;
-                // content: @icon-pencil;
-                font-size: 1.3rem;
-                font-family: @font--icons;
-                opacity: 0;
-                visibility: hidden;
-                position: absolute;
-                margin-left: 0.5rem;
-            }
-        }
-    }
-
-    &:hover {
-        > * {
-            color: @color-primary;
-            border-bottom: 0.1rem dotted @color-quaternary;
-            &:last-child {
-                &:after {
-                    visibility: visible;
-                    opacity: 1;
-                }
-            }
-        }
-    }
-}
-
-.comment__edit-btn {
-    display: block;
-    position: absolute;
-    right: 2rem;
-    text-decoration: none;
-    color: @color-primary;
-    top:0.5rem;
-
-    &:before {
-        // content: @icon-pencil;
-        font-family: @font--icons;
-        color: @color-primary;
-    }
-    @media (min-width: @screen-md) {
-        right: 0;
-        top:0;
-    }
-
-    @media (min-width: @screen-lg) {
+.comment-edit__cancel {
+    @media ( max-width: @screen-xs-max ) {
         display: none;
-    }
-}
-
-.comment__vote-up-down {
-    @media (min-width: @screen-md) {
-        position:absolute;
-        top: 0.75rem;
-        left: -4.5rem;
     }
 }

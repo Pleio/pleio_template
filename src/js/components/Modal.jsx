@@ -66,7 +66,7 @@ class Modal extends React.Component {
         }
 
         return (
-            <div id={this.props.id} tabIndex="0" className={classNames({"modal": true, "___small": this.props.small, "___is-open": this.props.modal == this.props.id || this.props.noParent})}>
+            <div id={this.props.id} tabIndex="0" className={classNames({"modal":true, "___blue":true, "___small": this.props.small, "___is-open": this.props.modal == this.props.id || this.props.noParent})}>
                 {modal}
             </div>
         )

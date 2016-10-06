@@ -76,6 +76,21 @@ class SchemaBuilder {
             ]
         ]);
 
+        $profileItem = new ObjectType([
+            "name" => "ProfileItem",
+            "fields" => [
+                "key" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "name" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "value" => [
+                    "type" => Type::string()
+                ]
+            ]
+        ]);
+
         $userType = new ObjectType([
             "name" => "User",
             "interfaces" => [$entityInterface],
@@ -89,11 +104,20 @@ class SchemaBuilder {
                 "name" => [
                     "type" => Type::string()
                 ],
+                "profile" => [
+                    "type" => Type::listOf($profileItem),
+                    "resolve" => function($user) {
+                        return Resolver::getProfile($user);
+                    }
+                ],
                 "icon" => [
                     "type" => Type::string()
                 ],
                 "url" => [
                     "type" => Type::string()
+                ],
+                "canEdit" => [
+                    "type" => Type::boolean()
                 ]
             ]
         ]);
@@ -304,7 +328,10 @@ class SchemaBuilder {
                     "type" => $entityInterface,
                     "args" => [
                         "guid" => [
-                            "type" => Type::nonNull(Type::string())
+                            "type" => Type::string()
+                        ],
+                        "username" => [
+                            "type" => Type::string()
                         ]
                     ],
                     "resolve" => "Pleio\Resolver::getEntity"
