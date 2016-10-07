@@ -81,7 +81,7 @@ class InfiniteList extends React.Component {
 
     refetch() {
         this.setState({offset: 0})
-        this.props.data.refetch()
+        //this.props.data.refetch()
     }
 
     render() {
@@ -98,7 +98,7 @@ class InfiniteList extends React.Component {
         }
 
         return (
-            <section className="section ___grey">
+            <section className="section ___grey ___grow">
                 <div className="container" ref="infiniteScroll">
                     <div className="row">
                         {noItems}

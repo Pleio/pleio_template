@@ -98,7 +98,7 @@ class Mutations {
         }
 
         return [
-            "status" => "ok"
+            "status" => 200
         ];
     }
 
@@ -111,7 +111,7 @@ class Mutations {
         }
 
         return [
-            "status" => "ok"
+            "status" => 200
         ];
     }
 

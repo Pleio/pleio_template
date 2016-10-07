@@ -7,6 +7,11 @@ import UserMenu from "./UserMenu"
 class TopMenu extends React.Component {
     constructor(props) {
         super(props)
+
+        this.onMobileMenuToggle = (e) => {
+            document.body.classList.toggle('mobile-nav-open')
+            document.body.classList.toggle('mega-nav-open')
+        }
     }
 
     render() {
@@ -36,8 +41,10 @@ class TopMenu extends React.Component {
         return (
             <nav className="navigation">
                 <div className="container">
-                    <div data-navigation-wrapper className="navigation__wrapper">
-                        <div className="mobile-navigation__close"><span data-mobile-nav-trigger className="icon icon-cross"></span></div>
+                    <div className="navigation__wrapper">
+                        <div className="mobile-navigation__close" onClick={this.onMobileMenuToggle}>
+                            <span className="icon icon-cross"></span>
+                        </div>
                         <div className="mobile-navigation__search">
                             <form action="#">
                                 <label htmlFor="mobile-navigation-search">Zoeken</label>
@@ -70,6 +77,34 @@ class TopMenu extends React.Component {
                         <a href="#" title="Pleio" className="navigation__link ___pleio">
                             Pleio
                         </a>
+                    </div>
+                    <div className="mobile-navigation__bar">
+                        <div className="mobile-navigation__trigger" onClick={this.onMobileMenuToggle}>
+                        </div>
+                        <a href="/" className="mobile-navigation__home"></a>
+                        <ul className="mobile-navigation__actions">
+                            <li>
+                                <a href="bewaard.html" title="Bewaard" className="mobile-navigation__action ___bookmarks"></a>
+                            </li>
+                            <li>
+                                <a href="" title="Zoeken" className="mobile-navigation__action ___search"></a>
+                            </li>
+                            <li>
+                                <a href="profiel.html" title="Profiel" className="mobile-navigation__action ___account">
+                                    <div style={{backgroundImage: "url('assets/content/sarah.jpg')"}} className="mobile-navigation__picture"></div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" title="Inloggen" className="mobile-navigation__action ___login">
+                                    Inloggen
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" title="Registreren" className="mobile-navigation__action ___register">
+                                    Registreren
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </nav>

@@ -40,14 +40,14 @@ class Resolver {
             return [
                 "guid" => $guid,
                 "type" => "object",
-                "status" => "not_found"
+                "status" => 404
             ];
         }
 
         if ($entity instanceof \ElggUser) {
             return [
                 "guid" => $entity->guid,
-                "status" => "ok",
+                "status" => 200,
                 "type" => $entity->type,
                 "name" => $entity->name,
                 "icon" => $entity->getIconURL(),
@@ -60,7 +60,7 @@ class Resolver {
         if ($entity instanceof \ElggObject) {
             return [
                 "guid" => $guid,
-                "status" => "ok",
+                "status" => 200,
                 "type" => $entity->type,
                 "title" => $entity->title,
                 "description" => $entity->description,
@@ -206,7 +206,7 @@ class Resolver {
         foreach (elgg_get_entities_from_metadata($options) as $entity) {
             $entities[] = array(
                 "guid" => $entity->guid,
-                "status" => "ok",
+                "status" => 200,
                 "ownerGuid" => $entity->owner_guid,
                 "title" => $entity->title,
                 "type" => $entity->type,

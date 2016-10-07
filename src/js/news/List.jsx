@@ -33,7 +33,7 @@ class List extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="page-layout">
                 <ContentHeaderWithData subtype="news" title="Nieuws" onFilter={this.onFilter} onClickAdd={this.onClickAdd} />
                 <InfiniteListWithData ref="infiniteList" subtype="news" offset={0} limit={20} tags={this.state.tags} />
                 <AddModal title="Nieuws toevoegen" />

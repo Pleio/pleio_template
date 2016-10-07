@@ -4,9 +4,9 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import AddCommentForm from "./AddCommentForm"
 
-class AddComment extends React.Component {
+export default class AddComment extends React.Component {
     render() {
-        let viewer = this.props.data.viewer || null
+        let viewer = this.props.viewer || null
 
         return (
             <div className={classNames({"comment-add__wrapper": true, "___is-open": this.props.isOpen})} style={{maxHeight: this.props.isOpen ? "329px" : "0px"}}>
@@ -15,15 +15,3 @@ class AddComment extends React.Component {
         )
     }
 }
-
-const QUERY = gql`
-    query AddComment {
-        viewer {
-            name
-            icon
-            url
-        }
-    }
-`;
-
-export default graphql(QUERY)(AddComment);

@@ -67,10 +67,14 @@ const DELETE = gql`
     mutation deleteEntity($input: deleteEntityInput!) {
         deleteEntity(input: $input) {
             entity {
-                guid
-                status
+                ...deleteFragment
             }
         }
+    }
+
+    fragment deleteFragment on Object {
+        guid
+        status
     }
 `
 const withDelete = graphql(DELETE)

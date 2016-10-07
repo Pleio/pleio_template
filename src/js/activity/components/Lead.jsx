@@ -9,16 +9,19 @@ export default class Lead extends React.Component {
             height: 'auto'
         }
 
-        this.onClose = (e) => this.setState({visible: false})
+        this.onClose = this.onClose.bind(this)
     }
 
+    onClose(e) {
+        this.setState({
+            height: this.refs.lead.offsetHeight
+        })
 
-    componentDidMount() {
         setTimeout(() => {
             this.setState({
-                height: this.refs.lead.offsetHeight
+                visible: false
             })
-        }, 5)
+        }, 10)
     }
 
     render() {

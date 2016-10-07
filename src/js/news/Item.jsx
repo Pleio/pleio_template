@@ -35,7 +35,7 @@ class Item extends React.Component {
             )
         }
 
-        if (this.props.data.entity.status == "not_found") {
+        if (this.props.data.entity.status == 404) {
             return (
                 <NotFound />
             )
@@ -88,7 +88,7 @@ class Item extends React.Component {
                                     </div>
                                 </div>
                             </article>
-                            <AddComment isOpen={this.state.showAddComment} object={this.props.data.entity} onSuccess={this.closeAddComment} />
+                            <AddComment viewer={this.props.data.viewer} isOpen={this.state.showAddComment} object={this.props.data.entity} onSuccess={this.closeAddComment} />
                             <CommentList comments={comments} />
                             <EditModal title="Nieuws wijzigen" entity={this.props.data.entity} />
                             <DeleteModal title="Nieuws verwijderen" entity={this.props.data.entity} />
@@ -104,6 +104,11 @@ const QUERY = gql`
     query NewsItem($guid: String!) {
         entity(guid: $guid) {
             ...newsFragment
+        }
+        viewer {
+            name
+            icon
+            url
         }
     }
 

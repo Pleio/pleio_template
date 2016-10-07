@@ -26,22 +26,6 @@ class SchemaBuilder {
             ]
         ]);
 
-        $statusEnum = new EnumType([
-            "name" => "Status",
-            "description" => "The status of the entity",
-            "values" => [
-                "ok" => [
-                    "value" => "ok"
-                ],
-                "access_denied" => [
-                    "value" => "access_denied"
-                ],
-                "not_found" => [
-                    "value" => "not_found"
-                ]
-            ]
-        ]);
-
         $entityInterface = new InterfaceType([
             "name" => "Entity",
             "fields" => [
@@ -49,7 +33,7 @@ class SchemaBuilder {
                     "type" => Type::nonNull(Type::string())
                 ],
                 "status" => [
-                    "type" => Type::nonNull($statusEnum)
+                    "type" => Type::int()
                 ]
             ],
             "resolveType" => function($object) use (&$userType, &$objectType, &$groupType) {
@@ -99,7 +83,7 @@ class SchemaBuilder {
                     "type" => Type::nonNull(Type::string())
                 ],
                 "status" => [
-                    "type" => Type::nonNull($statusEnum)
+                    "type" => Type::int()
                 ],
                 "name" => [
                     "type" => Type::string()
@@ -130,7 +114,7 @@ class SchemaBuilder {
                     "type" => Type::nonNull(Type::string())
                 ],
                 "status" => [
-                    "type" => Type::nonNull($statusEnum)
+                    "type" => Type::int()
                 ],
                 "name" => [
                     "type" => Type::string()
@@ -161,7 +145,7 @@ class SchemaBuilder {
                     "type" => Type::nonNull(Type::string())
                 ],
                 "status" => [
-                    "type" => Type::nonNull($statusEnum)
+                    "type" => Type::int()
                 ],
                 "title" => [
                     "type" => Type::string()
@@ -453,7 +437,7 @@ class SchemaBuilder {
             ],
             "outputFields" => [
                 "status" => [
-                    "type" => Type::nonNull($statusEnum),
+                    "type" => Type::int(),
                     "resolve" => function($return) {
                         return $return["status"];
                     }
@@ -474,7 +458,7 @@ class SchemaBuilder {
             ],
             "outputFields" => [
                 "status" => [
-                    "type" => Type::nonNull($statusEnum),
+                    "type" => Type::int(),
                     "resolve" => function($return) {
                         return $return["status"];
                     }
