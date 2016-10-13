@@ -50,7 +50,7 @@ class Resolver {
                 "status" => 200,
                 "type" => $entity->type,
                 "name" => $entity->name,
-                "icon" => $entity->getIconURL(),
+                "icon" => $entity->getIconURL("large"),
                 "timeCreated" => $entity->time_created,
                 "timeUpdated" => $entity->time_updated,
                 "canEdit" => $entity->canEdit()
@@ -111,7 +111,7 @@ class Resolver {
         return [
             "guid" => $user->guid,
             "name" => $user->name,
-            "icon" => $user->getIconURL(),
+            "icon" => $user->getIconURL("large"),
             "url" => $user->getURL()
         ];
     }
@@ -265,7 +265,7 @@ class Resolver {
             "loggedIn" => elgg_is_logged_in(),
             "username" => $entity ? $entity->username : "",
             "name" => $entity ? $entity->name : "",
-            "icon" => $entity ? $entity->getIconURL() : "",
+            "icon" => $entity ? $entity->getIconURL("large") : "",
             "url" => $entity ? $entity->getURL() : ""
         ];
     }

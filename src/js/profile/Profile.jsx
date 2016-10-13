@@ -1,8 +1,21 @@
 import React from "react"
 import { graphql } from "react-apollo"
+import { connect } from "react-redux"
 import gql from "graphql-tag"
+import ManageProfilePicture from "./ManageProfilePicture"
+import { showModal } from "../lib/actions"
 
 class Profile extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.editPicture = this.editPicture.bind(this)
+    }
+
+    editPicture(e) {
+        this.props.dispatch(showModal("profile-picture"))
+    }
+
     render() {
         let { entity } = this.props.data
 
@@ -34,6 +47,15 @@ class Profile extends React.Component {
             </li>
         ))
 
+        let editProfile
+        if (entity.canEdit) {
+            editProfile = (
+                <div className="card-profile__edit-picture" onClick={this.editPicture}>
+                    Profielfoto bewerken
+                </div>
+            )
+        }
+
         return (
             <section className="section ___grey ___grow">
                 <div className="container">
@@ -41,7 +63,7 @@ class Profile extends React.Component {
                         <div className="row">
                             <div className="col-sm-4 col-lg-3">
                                 <div style={pictureStyles} className="card-profile__picture">
-                                    <div className="card-profile__edit-picture">Profielfoto bewerken</div>
+                                    {editProfile}
                                 </div>
                             </div>
                             <div className="col-sm-8 col-lg-9">
@@ -102,6 +124,7 @@ class Profile extends React.Component {
                         </div>
                     </div>
                 </div>
+                <ManageProfilePicture entity={entity} />
             </section>
         )
     }
@@ -110,22 +133,21 @@ class Profile extends React.Component {
 const query = gql`
     query ProfileWrapper($username: String!) {
         entity(username: $username) {
-            ...userProfileFragment
-        }
-    }
-
-    fragment userProfileFragment on User {
-        guid
-        icon
-        profile {
-            key
-            name
-            value
+            guid
+            ... on User {
+                canEdit
+                icon
+                profile {
+                    key
+                    name
+                    value
+                }
+            }
         }
     }
 `;
 
-export default graphql(query, {
+export default connect()(graphql(query, {
     options: (ownProps) => {
         return {
             variables: {
@@ -133,4 +155,4 @@ export default graphql(query, {
             }
         }
     }
-})(Profile);
+})(Profile))

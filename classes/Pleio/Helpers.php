@@ -27,7 +27,7 @@ class Helpers {
     }
 
     static function getUsernameByInput($username) {
-        if (strpos($username, '@') !== false && ($users = get_user_by_email($username))) {
+        if (strpos($username, "@") !== false && ($users = get_user_by_email($username))) {
             $username = $users[0]->username;
         } else {
             $username = $username;
@@ -45,6 +45,32 @@ class Helpers {
             }
         } else {
             return [];
+        }
+    }
+
+    static function saveToIcon($filename, $owner) {
+        $filename = str_replace(".", "_", $filename);
+        $icon_sizes = elgg_get_config("icon_sizes");
+
+        $files = array();
+        foreach ($icon_sizes as $name => $size_info) {
+            $resized = get_resized_image_from_uploaded_file($filename, $size_info["w"], $size_info["h"], $size_info["square"], $size_info["upscale"]);
+
+            if ($resized) {
+                $file = new \ElggFile();
+                $file->owner_guid = $owner->guid;
+                $file->setFilename("profile/{$owner->guid}{$name}.jpg");
+                $file->open("write");
+                $file->write($resized);
+                $file->close();
+
+                $files[] = $file;
+            } else {
+                // cleanup on fail
+                foreach ($files as $file) {
+                    $file->delete();
+                }
+            }
         }
     }
 }

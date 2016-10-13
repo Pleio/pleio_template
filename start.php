@@ -28,6 +28,7 @@ function pleio_template_init() {
     elgg_register_page_handler("resetpassword", "pleio_template_page_handler");
 
     elgg_register_page_handler("graphql", "pleio_template_graphql");
+    elgg_register_page_handler("upload", "pleio_template_upload");
 
     if (!isset($_COOKIE["CSRF_TOKEN"])) {
         $token = md5(openssl_random_pseudo_bytes(32));
@@ -50,6 +51,11 @@ function pleio_template_page_handler($page) {
 
 function pleio_template_graphql() {
     include("pages/graphql.php");
+    return true;
+}
+
+function pleio_template_upload() {
+    include("pages/upload.php");
     return true;
 }
 

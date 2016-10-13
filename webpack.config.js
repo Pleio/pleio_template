@@ -1,6 +1,6 @@
 module.exports = {
     entry: {
-        all: "./src/js/Web.jsx"
+        all: ["./src/js/Web.jsx"]
     },
     output: {
         path: "./build",
@@ -13,6 +13,14 @@ module.exports = {
             {
                 test: /\.jsx$/,
                 loader: 'babel?presets[]=es2015,presets[]=stage-0,presets[]=react'
+            },
+            {
+                test: /\.less$/,
+                loader: [
+                    'style-loader',
+                    'css-loader?importLoaders=1',
+                    'postcss-loader'
+                ]
             }
         ]
     },

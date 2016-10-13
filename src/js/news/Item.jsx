@@ -2,15 +2,16 @@ import React from "react"
 import { graphql } from "react-apollo"
 import { connect } from "react-redux"
 import gql from "graphql-tag"
-import CommentList from "../components/CommentList"
-import EditModal from "../views/EditModal"
-import DeleteModal from "../views/DeleteModal"
+import CommentList from "../core/components/CommentList"
+import Edit from "../core/Edit"
+import Delete from "../core/Delete"
 import moment from "moment"
 import { showModal } from "../lib/actions"
-import AddComment from "../containers/AddComment"
-import SocialShare from "../components/SocialShare"
-import Bookmark from "../components/Bookmark"
-import NotFound from "../views/NotFound"
+import AddComment from "../core/containers/AddComment"
+import SocialShare from "../core/components/SocialShare"
+import Bookmark from "../bookmarks/components/Bookmark"
+import NotFound from "../core/NotFound"
+import RichText from "../core/components/RichText"
 
 class Item extends React.Component {
     constructor(props) {
@@ -28,27 +29,23 @@ class Item extends React.Component {
 
 
     render() {
-        if (!this.props.data.entity) {
+        let { entity, viewer } = this.props.data
+
+        if (!entity) {
             // Loading...
             return (
                 <div></div>
             )
         }
 
-        if (this.props.data.entity.status == 404) {
+        if (entity.status == 404) {
             return (
                 <NotFound />
             )
         }
 
-        let title = this.props.data.entity ? this.props.data.entity.title : "";
-        let description = this.props.data.entity ? this.props.data.entity.description : "";
-        let timeCreated = this.props.data.entity ? moment(this.props.data.entity.timeCreated).format("LLL") : "";
-        let canEdit = this.props.data.entity ? this.props.data.entity.canEdit : false;
-        let comments = this.props.data.entity ? this.props.data.entity.comments : [];
-
         let manage = ""
-        if (canEdit) {
+        if (entity.canEdit) {
             manage = (
                 <div className="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 end-lg">
                     <div className="button" onClick={this.onEdit}>
@@ -68,30 +65,32 @@ class Item extends React.Component {
                         {manage}
                         <div className="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
                             <article className="article">
-                                <h3 className="article__title">{title}</h3>
+                                <h3 className="article__title">{entity.title}</h3>
                                 <div className="article-meta">
                                     <div className="article-meta__date">
-                                        {timeCreated}
+                                        {moment(entity.timeCreated).format("LLL")}
                                     </div>
                                     <div className="article-meta__source">
                                         Bron:&nbsp;<a href="#">Ministerie van Onderwijs, Cultuur en Wetenschap</a>
                                     </div>
                                 </div>
-                                <div className="content" dangerouslySetInnerHTML={{__html: description}} />
+                                <div className="content">
+                                    <RichText value={entity.description} />
+                                </div>
                                 <div className="article-actions">
                                     <SocialShare />
                                     <div className="article-actions__justify">
                                         <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
                                             Schrijf een reactie
                                         </div>
-                                        <Bookmark entity={this.props.data.entity} />
+                                        <Bookmark entity={entity} />
                                     </div>
                                 </div>
                             </article>
-                            <AddComment viewer={this.props.data.viewer} isOpen={this.state.showAddComment} object={this.props.data.entity} onSuccess={this.closeAddComment} />
-                            <CommentList comments={comments} />
-                            <EditModal title="Nieuws wijzigen" entity={this.props.data.entity} />
-                            <DeleteModal title="Nieuws verwijderen" entity={this.props.data.entity} />
+                            <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} />
+                            <CommentList comments={entity.comments} />
+                            <Edit title="Nieuws wijzigen" entity={entity} />
+                            <Delete title="Nieuws verwijderen" entity={entity} />
                         </div>
                     </div>
                 </div>
@@ -102,34 +101,32 @@ class Item extends React.Component {
 
 const QUERY = gql`
     query NewsItem($guid: String!) {
-        entity(guid: $guid) {
-            ...newsFragment
-        }
         viewer {
             name
             icon
             url
         }
-    }
-
-    fragment newsFragment on Object {
-        guid
-        status
-        title
-        description
-        accessId
-        timeCreated
-        canEdit
-        tags
-        isBookmarked
-        comments {
+        entity(guid: $guid) {
             guid
-            description
-            timeCreated
-            owner {
-                name
-                icon
-                url
+            status
+            ... on Object {
+                title
+                description
+                accessId
+                timeCreated
+                canEdit
+                tags
+                isBookmarked
+                comments {
+                    guid
+                    description
+                    timeCreated
+                    owner {
+                        name
+                        icon
+                        url
+                    }
+                }
             }
         }
     }

@@ -1,15 +1,39 @@
 .edit-picture__upload {
+    position: relative;
     display: flex; align-items: center; justify-content: center;
     height: 28.5rem;
-    border: 0.4rem dashed @color-secondary;
+    border: 0.3rem dashed @color-secondary;
     background-color: @color-tertiary--lighter;
     font-size: @font-size--title-small;
     color: @color-primary;
     border-radius: 0.5rem;
-    cursor: pointer;
+    transition: background-color @trans-fast;
+
+    &:hover {
+        background-color: @color-tertiary--light;
+    }
 
     @media ( max-width: @screen-xs-max ) {
         margin: 0 0 2rem 0;
+    }
+
+    [data-image-uploader].___has-uploaden-image & {
+        display: none;
+    }
+
+    input {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        cursor: pointer;
+
+        [data-image-uploader].___has-uploaden-image & {
+            display: none;
+        }
     }
 }
 
@@ -24,7 +48,6 @@
     background-size: 73%;
     border-radius: 50%;
     overflow: hidden;
-
     width: 14rem;
     height: 14rem;
 
@@ -32,5 +55,24 @@
         width: 4rem;
         height: 4rem;
         margin: 0 0 0 2rem;
+    }
+
+    [data-image-uploader].___has-uploaden-image & {
+        background-image: none;
+        background-position: center center;
+        background-size: cover;
+    }
+}
+.edit-picture__editor {
+    display: none;
+    height: 28.5rem;
+
+
+    @media ( max-width: @screen-xs-max ) {
+        margin: 0 0 2rem 0;
+    }
+
+    [data-image-uploader].___has-uploaden-image & {
+        display: block;
     }
 }

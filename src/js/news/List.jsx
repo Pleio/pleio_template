@@ -1,73 +1,43 @@
 import React from "react"
-import { graphql } from "react-apollo"
-import { createFragment } from "apollo-client"
-import gql from "graphql-tag"
 import { connect } from "react-redux"
 import { showModal } from "../lib/actions"
 
-import ContentHeader from "../components/ContentHeader"
-import InfiniteList from "../components/InfiniteList"
-import AddModal from "../views/AddModal"
+import ContentHeader from "../core/components/ContentHeader"
+import InfiniteList from "../core/containers/InfiniteList"
+import Card from "../core/components/Card"
+import ContentFilters from "../core/containers/ContentFilters"
+import AddButton from "../core/containers/AddButton"
+import Add from "../core/Add"
 
 class List extends React.Component {
     constructor(props) {
         super(props)
 
-        this.onFilter = this.onFilter.bind(this)
-        this.onClickAdd = this.onClickAdd.bind(this)
+        this.onChangeCanWrite = (canWrite) => this.setState({canWrite})
+        this.onChangeFilter = (tags) => this.setState({ tags })
+        this.onClickAdd = (e) => this.props.dispatch(showModal('add'))
 
         this.state = {
             tags: []
         }
     }
 
-    onFilter(tags) {
-        this.setState({
-            tags
-        })
-    }
-
-    onClickAdd(e) {
-        this.props.dispatch(showModal('add'))
-    }
-
     render() {
         return (
             <div className="page-layout">
-                <ContentHeaderWithData subtype="news" title="Nieuws" onFilter={this.onFilter} onClickAdd={this.onClickAdd} />
-                <InfiniteListWithData ref="infiniteList" subtype="news" offset={0} limit={20} tags={this.state.tags} />
-                <AddModal title="Nieuws toevoegen" />
+                <ContentHeader>
+                    <h3 className="main__title">
+                        Nieuws
+                    </h3>
+                    <ContentFilters onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags}>
+                        <AddButton subtype="news" onClick={this.onClickAdd} />
+                    </ContentFilters>
+                </ContentHeader>
+                <InfiniteList childClass={Card} title="Nieuws" subtype="news" offset={0} limit={20} tags={this.state.tags} />
+                <Add title="Nieuws toevoegen" />
             </div>
         )
     }
 }
-
-const headerQuery = gql`
-    query NewsHeader {
-        entities {
-            canWrite
-        }
-    }
-`
-
-const listQuery = gql`
-    query NewsList($offset: Int!, $limit: Int!, $tags: [String!]) {
-        entities(offset: $offset, limit: $limit, tags: $tags, subtype: "news") {
-            total
-            entities {
-                ...objectFragment
-            }
-        }
-    }
-
-    fragment objectFragment on Object {
-        guid
-        title
-        tags
-    }
-`
-
-const ContentHeaderWithData = graphql(headerQuery)(ContentHeader)
-const InfiniteListWithData = graphql(listQuery, {withRef: true})(InfiniteList)
 
 export default connect()(List)

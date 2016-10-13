@@ -1,8 +1,8 @@
 import React from "react"
 import TopMenu from "../containers/TopMenu"
-import LoginModal from "../../views/LoginModal"
-import RegisterModal from "../../views/RegisterModal"
-import ForgotPasswordModal from "../../views/ForgotPasswordModal"
+import Login from "../Login"
+import Register from "../Register"
+import ForgotPassword from "../ForgotPassword"
 
 export default class Container extends React.Component {
     render() {
@@ -14,9 +14,9 @@ export default class Container extends React.Component {
                 <main id="skip-navigation" className="page-layout__main ___no-padding">
                     {this.props.children}
                 </main>
-                <LoginModal />
-                <RegisterModal />
-                <ForgotPasswordModal />
+                <Login />
+                <Register />
+                <ForgotPassword />
             </div>
         )
     }

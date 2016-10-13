@@ -51,15 +51,13 @@ class Wrapper extends React.Component {
 const query = gql`
     query ProfileWrapper($username: String!) {
         entity(username: $username) {
-            ...userFragment
+            guid
+            ... on User {
+                name
+                canEdit
+                icon
+            }
         }
-    }
-
-    fragment userFragment on User {
-        guid
-        name
-        canEdit
-        icon
     }
 `;
 

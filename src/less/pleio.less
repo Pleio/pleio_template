@@ -1,3 +1,6 @@
+@import "draft-style";
+@import "cropper";
+
 html, body {
     overflow-y: initial;
 }
@@ -10,8 +13,34 @@ html, body {
     display: block;
 }
 
-.DraftEditor-root {
-    margin: 0 0 2rem 0;
+.public-DraftEditorPlaceholder-root {
+    color: @color-grey--60;
+    position: absolute;
+    z-index: 0;
+}
+
+.rich-editor__controls {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.rich-editor__button {
+    padding: 1.4rem;
+    display: inline-block;
+    color: #999;
+    cursor: pointer;
+
+    &.___is-active {
+        color: black;
+        font-weight: bold;
+    }
+}
+
+.rich-editor__editor {
+    cursor: text;
+    min-height: 200px;
     padding: 1.4rem 1.4rem;
     border: 0.1rem solid @color-grey--50;
     transition: border-color @trans-fast;
@@ -25,14 +54,6 @@ html, body {
     }
 }
 
-.DraftEditor-editorContainer {
-    position: relative;
-    z-index: 1;
-    min-height: 200px;
-}
-
-.public-DraftEditorPlaceholder-root {
-    color: @color-grey--60;
-    position: absolute;
-    z-index: 0;
+.form__item.form__item-error  .rich-editor__editor {
+    border-color: @color-error;
 }

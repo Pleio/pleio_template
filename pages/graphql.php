@@ -22,7 +22,7 @@ if (isset($_SERVER['CONTENT_TYPE']) && $_SERVER['CONTENT_TYPE'] === 'application
 
 $requestString = isset($data['query']) ? $data['query'] : null;
 $operationName = isset($data['operation']) ? $data['operation'] : null;
-$variableValues = isset($data['variables']) ? $data['variables'] : null;
+$variableValues = isset($data['variables']) ? json_decode($data['variables'], true) : null;
 
 $schema = Pleio\SchemaBuilder::build();
 $result = GraphQL::execute($schema, $requestString, null, $variableValues);

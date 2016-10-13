@@ -226,7 +226,7 @@ class SchemaBuilder {
 
         $viewerType = new ObjectType([
             "name" => "Viewer",
-            "description" => "The current site viewer",
+            "description" => "The current viewer",
             "fields" => [
                 "guid" => [
                     "type" => Type::nonNull(Type::string())
@@ -590,6 +590,28 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::bookmark"
         ]);
 
+        $editProfileMutation = Relay::mutationWithClientMutationId([
+            "name" => "editProfile",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::string()
+                ],
+                "avatar" => [
+                    "type" => Type::string(),
+                    "description" => "The string pointer to the file object."
+                ]
+            ],
+            "outputFields" => [
+                "user" => [
+                    "type" => $userType,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::editProfile"
+        ]);
+
         $mutationType = new ObjectType([
             "name" => "Mutation",
             "fields" => [
@@ -602,7 +624,8 @@ class SchemaBuilder {
                     "editEntity" => $editEntityMutation,
                     "deleteEntity" => $deleteEntityMutation,
                     "subscribeNewsletter" => $subscribeNewsletterMutation,
-                    "bookmark" => $bookmarkMutation
+                    "bookmark" => $bookmarkMutation,
+                    "editProfile" => $editProfileMutation
             ]
         ]);
 

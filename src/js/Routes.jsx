@@ -4,30 +4,26 @@ import { connect } from "react-redux"
 
 import Container from "./core/components/Container"
 
-import Activity from "./activity/Activity"
+import NotFound from "./core/NotFound"
+import ForgotPasswordConfirm from "./core/ForgotPasswordConfirm"
+import Login from "./core/Login"
+import Logout from "./core/Logout"
+import Search from "./core/Search"
 
-import Blog from "./views/Blog"
+import ActivityList from "./activity/List"
+
+import BlogList from "./blog/List"
 
 import NewsList from "./news/List"
 import NewsItem from "./news/Item"
 
-import Forum from "./views/Forum"
+import QuestionsList from "./questions/List"
 
-import Bookmarks from "./views/Bookmarks"
+import BookmarksList from "./bookmarks/List"
 
-import Search from "./views/Search"
-
-import NotFound from "./views/NotFound"
-
-import ForgotPasswordConfirmModal from "./views/ForgotPasswordConfirmModal"
-import LoginModal from "./views/LoginModal"
-import Logout from "./views/Logout"
-
-import ProfileWrapper from "./profile/Wrapper"
+import ProfileWrapper from "./profile/components/Wrapper"
 import Profile from "./profile/Profile"
-
 import Account from "./profile/Account"
-
 import Settings from "./profile/Settings"
 
 export default class Routes extends React.Component {
@@ -35,16 +31,17 @@ export default class Routes extends React.Component {
         return (
             <Router onUpdate={() => window.scrollTo(0, 0)} history={browserHistory}>
                 <Route path="/" component={Container}>
-                    <IndexRoute component={Activity} />
-                    <Route path="/activity" component={Activity} />
-                    <Route path="/blog" component={Blog} />
-                    <Route path="/news" component={NewsList} />
-                    <Route path="/news/:guid" component={NewsItem} />
-                    <Route path="/forum" component={Forum} />
-                    <Route path="/bookmarks" component={Bookmarks} />
+                    <IndexRoute component={ActivityList} />
+                    <Route path="/blog" component={BlogList} />
+                    <Route path="/news">
+                        <IndexRoute component={NewsList} />
+                        <Route path="/news/:guid" component={NewsItem} />
+                    </Route>
+                    <Route path="/forum" component={QuestionsList} />
+                    <Route path="/bookmarks" component={BookmarksList} />
                     <Route path="/search" component={Search} />
-                    <Route path="/resetpassword" component={ForgotPasswordConfirmModal} />
-                    <Route path="/login" component={LoginModal} />
+                    <Route path="/resetpassword" component={ForgotPasswordConfirm} />
+                    <Route path="/login" component={Login} />
                     <Route path="/logout" component={Logout} />
                     <Route path="/profile/:username" component={ProfileWrapper}>
                         <IndexRoute component={Profile} />

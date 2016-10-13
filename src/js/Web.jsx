@@ -1,18 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import fetch from 'isomorphic-fetch'
-import { polyfill } from 'es6-promise'
-import moment from 'moment'
-import client from './lib/client'
-import 'moment/locale/nl';
+import "babel-polyfill"
+import React from "react"
+import ReactDOM from "react-dom"
+import fetch from "isomorphic-fetch"
+import moment from "moment"
+import client from "./lib/client"
+import "moment/locale/nl";
+import Routes from "./Routes"
 
-polyfill()
-
-import Routes from './Routes'
-
-import { ApolloProvider } from 'react-apollo';
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
-import { currentLanguage, modal } from './lib/reducers'
+import { ApolloProvider } from "react-apollo";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux"
+import { currentLanguage, modal } from "./lib/reducers"
 
 const lang = "nl"
 

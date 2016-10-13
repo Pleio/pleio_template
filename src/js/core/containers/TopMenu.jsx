@@ -3,6 +3,7 @@ import { Link } from "react-router"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import UserMenu from "./UserMenu"
+import UserMobileMenu from "./UserMobileMenu"
 
 class TopMenu extends React.Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class TopMenu extends React.Component {
                 if (item.js) {
                     return (
                         <li key={item.guid}>
-                            <Link to={item.link} title={item.title} className="navigation__link">
+                            <Link to={item.link} title={item.title} className="navigation__link" activeClassName="___is-active">
                                 {item.title}
                             </Link>
                         </li>
@@ -56,7 +57,7 @@ class TopMenu extends React.Component {
                         </a>
                         <ul className="navigation__links">
                             <li>
-                                <Link to="/activity" title="Home" className="navigation__link ___home ___is-active">Home</Link>
+                                <Link to="/" title="Home" className="navigation__link ___home" activeClassName="___is-active">Home</Link>
                             </li>
                             {menuItems}
                             <li className="navigation__dropdown ___mobile"><a href="#" title="Meer" className="navigation__link ___dropdown">Meer</a>
@@ -74,7 +75,7 @@ class TopMenu extends React.Component {
                             </li>
                         </ul>
                         <UserMenu viewer={this.props.data.viewer} />
-                        <a href="#" title="Pleio" className="navigation__link ___pleio">
+                        <a href="https://www.pleio.nl" title="Pleio" className="navigation__link ___pleio">
                             Pleio
                         </a>
                     </div>
@@ -82,29 +83,7 @@ class TopMenu extends React.Component {
                         <div className="mobile-navigation__trigger" onClick={this.onMobileMenuToggle}>
                         </div>
                         <a href="/" className="mobile-navigation__home"></a>
-                        <ul className="mobile-navigation__actions">
-                            <li>
-                                <a href="bewaard.html" title="Bewaard" className="mobile-navigation__action ___bookmarks"></a>
-                            </li>
-                            <li>
-                                <a href="" title="Zoeken" className="mobile-navigation__action ___search"></a>
-                            </li>
-                            <li>
-                                <a href="profiel.html" title="Profiel" className="mobile-navigation__action ___account">
-                                    <div style={{backgroundImage: "url('assets/content/sarah.jpg')"}} className="mobile-navigation__picture"></div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="" title="Inloggen" className="mobile-navigation__action ___login">
-                                    Inloggen
-                                </a>
-                            </li>
-                            <li>
-                                <a href="" title="Registreren" className="mobile-navigation__action ___register">
-                                    Registreren
-                                </a>
-                            </li>
-                        </ul>
+                        <UserMobileMenu viewer={this.props.data.viewer} k/>
                     </div>
                 </div>
             </nav>
