@@ -102,8 +102,10 @@ const WithQuery = gql`
             }
         }
         viewer {
+            guid
             loggedIn
             user {
+                guid
                 username
                 name
                 icon

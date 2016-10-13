@@ -49,9 +49,9 @@ class Input extends React.Component {
     }
 }
 
-InputField.contextTypes = {
+Input.contextTypes = {
     attachToForm: React.PropTypes.func,
     detachFromForm: React.PropTypes.func
 }
 
-export default InputField
+export default Input
