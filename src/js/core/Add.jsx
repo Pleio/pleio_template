@@ -10,7 +10,7 @@ import AccessSelect from "./containers/AccessSelect"
 import { stringToTags } from "../lib/helpers"
 import RichTextField from "./components/RichTextField"
 import Form from "./components/Form"
-import InputField from "./components/InputField"
+import InputField from "./components/Input"
 import Joi from "joi-browser"
 
 class AddModal extends React.Component {

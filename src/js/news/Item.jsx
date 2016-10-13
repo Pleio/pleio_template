@@ -102,9 +102,12 @@ class Item extends React.Component {
 const QUERY = gql`
     query NewsItem($guid: String!) {
         viewer {
-            name
-            icon
-            url
+            user {
+                guid
+                name
+                icon
+                url
+            }
         }
         entity(guid: $guid) {
             guid

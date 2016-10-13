@@ -85,6 +85,9 @@ class SchemaBuilder {
                 "status" => [
                     "type" => Type::int()
                 ],
+                "username" => [
+                    "type" => Type::string()
+                ],
                 "name" => [
                     "type" => Type::string()
                 ],
@@ -234,17 +237,14 @@ class SchemaBuilder {
                 "loggedIn" => [
                     "type" => Type::nonNull(Type::boolean())
                 ],
-                "username" => [
-                    "type" => Type::string()
-                ],
-                "name" => [
-                    "type" => Type::string()
-                ],
-                "icon" => [
-                    "type" => Type::string()
-                ],
-                "url" => [
-                    "type" => Type::string()
+                "user" => [
+                    "type" => $userType,
+                    "resolve" => function($viewer) {
+                        $entity = elgg_get_logged_in_user_entity();
+                        if ($entity) {
+                            return Resolver::getUser($entity->guid);
+                        }
+                    }
                 ],
                 "bookmarks" => [
                     "type" => $entityListType,

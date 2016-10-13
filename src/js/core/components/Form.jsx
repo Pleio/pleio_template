@@ -2,7 +2,7 @@ import React from "react"
 import Joi from "joi-browser"
 import classnames from "classnames"
 import { EditorState } from "draft-js"
-import InputField from "./InputField"
+import InputField from "./Input"
 import RichTextField from "./RichTextField"
 
 class Form extends React.Component {

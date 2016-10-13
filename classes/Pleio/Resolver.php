@@ -49,6 +49,7 @@ class Resolver {
                 "guid" => $entity->guid,
                 "status" => 200,
                 "type" => $entity->type,
+                "username" => $entity->username,
                 "name" => $entity->name,
                 "icon" => $entity->getIconURL("large"),
                 "timeCreated" => $entity->time_created,
@@ -110,6 +111,7 @@ class Resolver {
 
         return [
             "guid" => $user->guid,
+            "username" => $user->username,
             "name" => $user->name,
             "icon" => $user->getIconURL("large"),
             "url" => $user->getURL()
@@ -258,15 +260,9 @@ class Resolver {
     }
 
     static function getViewer() {
-        $entity = elgg_get_logged_in_user_entity();
-
         return [
             "guid" => 0,
-            "loggedIn" => elgg_is_logged_in(),
-            "username" => $entity ? $entity->username : "",
-            "name" => $entity ? $entity->name : "",
-            "icon" => $entity ? $entity->getIconURL("large") : "",
-            "url" => $entity ? $entity->getURL() : ""
+            "loggedIn" => elgg_is_logged_in()
         ];
     }
 

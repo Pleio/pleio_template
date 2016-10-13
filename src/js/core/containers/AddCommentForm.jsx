@@ -46,8 +46,8 @@ class AddCommentForm extends React.Component {
 
     render() {
         let icon, name, url
-        if (this.props.viewer) {
-            ({icon, name, url} = this.props.viewer)
+        if (this.props.user) {
+            ({icon, name, url} = this.props.user)
         }
 
         return (

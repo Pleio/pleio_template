@@ -11,7 +11,7 @@ import { stringToTags } from "../lib/helpers"
 import { convertToRaw } from "draft-js"
 import RichTextField from "./components/RichTextField"
 import Form from "./components/Form"
-import InputField from "./components/InputField"
+import InputField from "./components/Input"
 import Joi from "joi-browser"
 
 class EditModal extends React.Component {

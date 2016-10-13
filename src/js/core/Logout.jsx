@@ -35,10 +35,8 @@ const query = gql`
     mutation logout($input: logoutInput!) {
         logout(input: $input) {
             viewer {
+                guid
                 loggedIn
-                username
-                name
-                icon
             }
         }
     }

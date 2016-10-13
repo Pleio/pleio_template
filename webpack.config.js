@@ -4,6 +4,7 @@ module.exports = {
     },
     output: {
         path: "./build",
+        pathInfo: true,
         publicPath: "/mod/pleio_template/build",
         filename: "[name].js",
         chunkFilename: "[id].js"
@@ -13,18 +14,10 @@ module.exports = {
             {
                 test: /\.jsx$/,
                 loader: 'babel?presets[]=es2015,presets[]=stage-0,presets[]=react'
-            },
-            {
-                test: /\.less$/,
-                loader: [
-                    'style-loader',
-                    'css-loader?importLoaders=1',
-                    'postcss-loader'
-                ]
             }
         ]
     },
-    devtool: "eval-source-map",
+    devtool: "eval",
     resolve: {
         extensions: ['', '.js', '.jsx']
     }

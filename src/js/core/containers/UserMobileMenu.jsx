@@ -15,8 +15,8 @@ export default class UserMobileMenu extends React.Component {
                         <Link to="/search" title="Zoeken" className="mobile-navigation__action ___search" activeClassName="___is_active" />
                     </li>
                     <li>
-                        <Link to={"/profile/" + this.props.viewer.username} title="Account" className="mobile-navigation__action ___account" activeClassName="___is_active">
-                            <div style={{backgroundImage: "url('" + this.props.viewer.icon + "')"}} className="mobile-navigation__picture"></div>
+                        <Link to={"/profile/" + this.props.viewer.user.username} title="Account" className="mobile-navigation__action ___account" activeClassName="___is_active">
+                            <div style={{backgroundImage: "url('" + this.props.viewer.user.icon + "')"}} className="mobile-navigation__picture"></div>
                         </Link>
                     </li>
                 </ul>

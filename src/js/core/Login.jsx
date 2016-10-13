@@ -7,7 +7,7 @@ import client from "../lib/client"
 import Modal from "./components/Modal"
 import { connect } from "react-redux"
 import Form from "./components/Form"
-import InputField from "./Components/InputField"
+import InputField from "./components/Input"
 import { showModal, hideModal } from "../lib/actions"
 import Joi from "joi-browser"
 

@@ -142,8 +142,6 @@ const REGISTER = gql`
             viewer {
                 guid
                 loggedIn
-                name
-                username
             }
         }
     }

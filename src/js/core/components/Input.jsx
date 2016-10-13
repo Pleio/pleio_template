@@ -2,7 +2,7 @@ import React from "react"
 import classnames from "classnames"
 import Joi from "joi-browser"
 
-class InputField extends React.Component {
+class Input extends React.Component {
     constructor(props) {
         super(props)
 

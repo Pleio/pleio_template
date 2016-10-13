@@ -2,7 +2,7 @@ import React from "react"
 import { graphql } from "react-apollo"
 import { connect } from "react-redux"
 import gql from "graphql-tag"
-import ManageProfilePicture from "./ManageProfilePicture"
+import ProfilePicture from "./ProfilePicture"
 import { showModal } from "../lib/actions"
 
 class Profile extends React.Component {
@@ -124,7 +124,7 @@ class Profile extends React.Component {
                         </div>
                     </div>
                 </div>
-                <ManageProfilePicture entity={entity} />
+                <ProfilePicture entity={entity} />
             </section>
         )
     }

@@ -6,7 +6,7 @@ import { connect } from "react-redux"
 import gql from "graphql-tag"
 import Cropper from "react-cropper"
 
-class ManageProfilePicture extends React.Component {
+class ProfilePicture extends React.Component {
     constructor(props) {
         super(props)
 
@@ -164,4 +164,4 @@ const Query = gql`
     }
 `
 const withQuery = graphql(Query)
-export default connect()(withQuery(ManageProfilePicture))
+export default connect()(withQuery(ProfilePicture))

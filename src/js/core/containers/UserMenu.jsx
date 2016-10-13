@@ -28,9 +28,9 @@ class UserMenu extends React.Component {
                     <li><Link to="/bookmarks" title="Bookmarks" className="navigation__action ___bookmarks"><span>Bookmarks</span></Link></li>
                     <li><a href="#" title="Zoeken" data-search-trigger className="navigation__action ___search"></a></li>
                     <li>
-                        <Link to={"/profile/" + this.props.viewer.username} title="Account" className="navigation__action ___account">
-                            <div style={{backgroundImage: "url('" + this.props.viewer.icon + "')"}} className="navigation__picture"></div>
-                            <span>{this.props.viewer.name}</span>
+                        <Link to={"/profile/" + this.props.viewer.user.username} title="Account" className="navigation__action ___account">
+                            <div style={{backgroundImage: "url('" + this.props.viewer.user.icon + "')"}} className="navigation__picture"></div>
+                            <span>{this.props.viewer.user.name}</span>
                         </Link>
                     </li>
                 </ul>
