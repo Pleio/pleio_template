@@ -10,19 +10,16 @@ import AccessSelect from "./containers/AccessSelect"
 import { stringToTags } from "../lib/helpers"
 import RichTextField from "./components/RichTextField"
 import Form from "./components/Form"
-import InputField from "./components/Input"
-import Joi from "joi-browser"
+import InputField from "./components/InputField"
 
 class AddModal extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            errors: null,
-            tags: []
+            errors: []
         }
 
-        this.onChangeTags = (e) => this.setState({tags: e.target.value})
         this.onSubmit = this.onSubmit.bind(this)
     }
 
@@ -30,11 +27,10 @@ class AddModal extends React.Component {
         e.preventDefault()
 
         this.setState({
-            errors: null
+            errors: []
         })
 
         let values = this.refs.form.getValues()
-        console.log(values)
 
         this.props.mutate({
             variables: {
@@ -61,8 +57,8 @@ class AddModal extends React.Component {
         return (
             <Modal id="add" title={this.props.title}>
                 <Form ref="form" className="form" onSubmit={this.onSubmit}>
-                    <InputField name="title" type="text" placeholder="Titel" className="form__input" validate={Joi.string().required()} />
-                    <RichTextField name="description" ref="description" placeholder="Beschrijving" validate={Joi.string().required()} />
+                    <InputField name="title" type="text" placeholder="Titel" className="form__input" rules="required" autofocus />
+                    <RichTextField name="description" placeholder="Beschrijving" rules="required" />
                     <InputField name="tags" ref="tags" type="text" placeholder="Tags" className="form__input" />
                     <button className="button" type="submit">
                         Toevoegen

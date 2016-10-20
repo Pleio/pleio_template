@@ -150,6 +150,9 @@ class SchemaBuilder {
                 "status" => [
                     "type" => Type::int()
                 ],
+                "subtype" => [
+                    "type" => Type::string()
+                ],
                 "title" => [
                     "type" => Type::string()
                 ],
@@ -201,7 +204,7 @@ class SchemaBuilder {
         ]);
 
         $searchListType = new ObjectType([
-            "name" => "Search",
+            "name" => "SearchList",
             "fields" => [
                 "total" => [
                     "type" => Type::nonNull(Type::int())
@@ -279,11 +282,47 @@ class SchemaBuilder {
             ]
         ]);
 
+        $activityType = new ObjectType([
+            "name" => "Activity",
+            "fields" => [
+                "guid" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "subject" => [
+                    "type" => Type::nonNull($userType),
+                    "resolve" => function($activity) {
+                        return Resolver::getUser($activity["subject_guid"]);
+                    }
+                ],
+                "object" => [
+                    "type" => Type::nonNull($objectType),
+                    "resolve" => function($activity) {
+                        return Resolver::getEntity(null, ["guid" => $activity["object_guid"]], null);
+                    }
+                ],
+                "timeCreated" => [
+                    "type" => Type::string()
+                ]
+            ]
+        ]);
+
+        $activityListType = new ObjectType([
+            "name" => "ActivityList",
+            "fields" => [
+                "total" => [
+                    "type" => Type::nonNull(Type::int())
+                ],
+                "entities" => [
+                    "type" => Type::listOf($activityType)
+                ]
+            ]
+        ]);
+
         $siteType = new ObjectType([
             "name" => "Site",
             "description" => "The current site",
             "fields" => [
-                "id" => [
+                "guid" => [
                     "type" => Type::nonNull(Type::string())
                 ],
                 "title" => [
@@ -294,6 +333,10 @@ class SchemaBuilder {
                 ],
                 "accessIds" => [
                     "type" => Type::listOf($accessIdType)
+                ],
+                "usersOnline" => [
+                    "type" => Type::nonNull(Type::int()),
+                    "resolve" => "Pleio\Resolver::getUsersOnline"
                 ],
                 "defaultAccessId" => [
                     "type" => Type::nonNull(Type::int())
@@ -358,6 +401,21 @@ class SchemaBuilder {
                         ]
                     ],
                     "resolve" => "Pleio\Resolver::getEntities"
+                ],
+                "activities" => [
+                    "type" => $activityListType,
+                    "args" => [
+                        "offset" => [
+                            "type" => Type::int()
+                        ],
+                        "limit" => [
+                            "type" => Type::int()
+                        ],
+                        "tags" => [
+                            "type" => Type::listOf(Type::string())
+                        ]
+                    ],
+                    "resolve" => "Pleio\Resolver::getActivities"
                 ],
                 "site" => [
                     "type" => $siteType,

@@ -26,6 +26,42 @@ class Resolver {
         ];
     }
 
+    static function getActivities($query) {
+        $options = array(
+            "limit" => (int) $args["limit"],
+            "offset" => (int) $args["offset"],
+        );
+
+        $total = elgg_get_river(array_merge($options, array(
+            "count" => true
+        )));
+
+        $entities = array();
+        foreach (elgg_get_river($options) as $river) {
+            $subject = $river->getSubjectEntity();
+            $object = $river->getObjectEntity();
+            if (!$subject || !$object) {
+                continue;
+            }
+
+            $entities[] = array(
+                "guid" => "activity:" . $river->id,
+                "subject_guid" => $river->subject_guid,
+                "object_guid" => $river->object_guid,
+                "timeCreated" => date("c", $river->posted)
+            );
+        }
+
+        return [
+            "total" => $total,
+            "entities" => $entities
+        ];
+    }
+
+    static function getUsersOnline($site) {
+        return count(find_active_users());
+    }
+
     static function getEntity($a, $args, $c) {
         $guid = (int) $args["guid"];
         $username = $args["username"];
@@ -63,6 +99,7 @@ class Resolver {
                 "guid" => $guid,
                 "status" => 200,
                 "type" => $entity->type,
+                "subtype" => $entity->getSubtype(),
                 "title" => $entity->title,
                 "description" => $entity->description,
                 "timeCreated" => date("c", $entity->time_created),

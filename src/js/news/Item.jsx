@@ -5,13 +5,12 @@ import gql from "graphql-tag"
 import CommentList from "../core/components/CommentList"
 import Edit from "../core/Edit"
 import Delete from "../core/Delete"
-import moment from "moment"
 import { showModal } from "../lib/actions"
 import AddComment from "../core/containers/AddComment"
 import SocialShare from "../core/components/SocialShare"
 import Bookmark from "../bookmarks/components/Bookmark"
 import NotFound from "../core/NotFound"
-import RichText from "../core/components/RichText"
+import showDate from "../lib/showDate"
 
 class Item extends React.Component {
     constructor(props) {
@@ -68,15 +67,13 @@ class Item extends React.Component {
                                 <h3 className="article__title">{entity.title}</h3>
                                 <div className="article-meta">
                                     <div className="article-meta__date">
-                                        {moment(entity.timeCreated).format("LLL")}
+                                        {showDate(entity.timeCreated)}
                                     </div>
                                     <div className="article-meta__source">
                                         Bron:&nbsp;<a href="#">Ministerie van Onderwijs, Cultuur en Wetenschap</a>
                                     </div>
                                 </div>
-                                <div className="content">
-                                    <RichText value={entity.description} />
-                                </div>
+                                <div className="content" dangerouslySetInnerHTML={{__html: entity.description}} />
                                 <div className="article-actions">
                                     <SocialShare />
                                     <div className="article-actions__justify">
@@ -102,6 +99,7 @@ class Item extends React.Component {
 const QUERY = gql`
     query NewsItem($guid: String!) {
         viewer {
+            guid
             user {
                 guid
                 name

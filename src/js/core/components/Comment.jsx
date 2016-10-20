@@ -1,5 +1,5 @@
 import React from "react"
-import moment from "moment"
+import showDate from "../../lib/showDate"
 
 export default class Comment extends React.Component {
     render() {
@@ -16,7 +16,7 @@ export default class Comment extends React.Component {
                             {this.props.owner.name}
                         </a>
                         <div className="comment__date">
-                            {moment(this.props.timeCreated).format("LLL")}
+                            {showDate(this.props.timeCreated)}
                         </div>
                     </div>
                 </div>

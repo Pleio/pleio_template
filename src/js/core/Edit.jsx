@@ -8,45 +8,38 @@ import Errors from "./components/Errors"
 import Modal from "./components/Modal"
 import AccessSelect from "./containers/AccessSelect"
 import { stringToTags } from "../lib/helpers"
-import { convertToRaw } from "draft-js"
 import RichTextField from "./components/RichTextField"
 import Form from "./components/Form"
-import InputField from "./components/Input"
-import Joi from "joi-browser"
+import InputField from "./components/InputField"
 
 class EditModal extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = Object.assign({}, {errors: []}, this.props.entity)
-
-        this.onChangeTitle = (e) => this.setState({title: e.target.value})
-        this.onChangeDescription = (description) => this.setState({description})
-        this.onChangeTags = (e) => this.setState({tags: e.target.value})
-        this.onSubmit = this.onSubmit.bind(this)
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.entity) {
-            this.setState(nextProps.entity)
+        this.state = {
+            errors: []
         }
+
+        this.onSubmit = this.onSubmit.bind(this)
     }
 
     onSubmit(e) {
         e.preventDefault()
 
         this.setState({
-            errors: null
+            errors: []
         })
+
+        let values = this.refs.form.getValues()
 
         this.props.mutate({
             variables: {
                 input: {
                     clientMutationId: 1,
-                    guid: this.state.guid,
-                    title: this.state.title,
-                    description: JSON.stringify(convertToRaw(this.state.description.getCurrentContent())),
-                    tags: stringToTags(this.state.tags)
+                    guid: this.props.entity.guid,
+                    title: values.title,
+                    description: values.description,
+                    tags: stringToTags(values.tags)
                 }
             }
         }).then(({data}) => {
@@ -61,11 +54,13 @@ class EditModal extends React.Component {
     render() {
         return (
             <Modal id="edit" title={this.props.title}>
-                <Form className="form" onSubmit={this.onSubmit}>
-                    <InputField type="text" placeholder="Titel" className="form__input" onChange={this.onChangeTitle} value={this.state.title} validate={Joi.string().required()} />
-                    <RichTextField placeholder="Beschrijving" onChange={this.onChangeDescription} value={this.state.description} validate={Joi.string().required()} />
-                    <InputField type="text" placeholder="Tags" className="form__input" onChange={this.onChangeTags} value={this.state.tags} />
-                    <button className="button" type="submit">Wijzigen</button>
+                <Form ref="form" className="form" onSubmit={this.onSubmit}>
+                    <InputField name="title" type="text" placeholder="Titel" className="form__input" value={this.props.entity.title} rules="required" autofocus />
+                    <RichTextField name="description" placeholder="Beschrijving" value={this.props.entity.description} rules="required" />
+                    <InputField name="tags" type="text" placeholder="Tags" className="form__input" value={this.props.entity.tags} />
+                    <button className="button" type="submit">
+                        Wijzigen
+                    </button>
                 </Form>
             </Modal>
         )

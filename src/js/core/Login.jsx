@@ -7,9 +7,8 @@ import client from "../lib/client"
 import Modal from "./components/Modal"
 import { connect } from "react-redux"
 import Form from "./components/Form"
-import InputField from "./components/Input"
+import InputField from "./components/InputField"
 import { showModal, hideModal } from "../lib/actions"
-import Joi from "joi-browser"
 
 class Login extends React.Component {
     constructor(props) {
@@ -90,9 +89,12 @@ class Login extends React.Component {
             <Modal ref="modal" id="login" title="Welkom op Leraar.nl" small={true} isBlue={true}>
                 {errors}
                 <Form className="login" onSubmit={this.onSubmit}>
-                    <InputField name="username" type="text" placeholder="E-mailadres" className="form__input" value={this.state.username} onChange={this.onChangeUsername} validate={Joi.string().email()} />
-                    <InputField type="password" placeholder="Wachtwoord" className="form__input" value={this.state.password} onChange={this.onChangePassword} validate={Joi.string().min(6).max(50)} />
-                    <button className="button ___block ___large ___primary" type="submit">Inloggen</button>
+                    <InputField name="username" type="text" placeholder="E-mailadres" className="form__input" onChange={this.onChangeUsername} value={this.state.username} />
+                    <InputField name="password" type="password" placeholder="Wachtwoord" className="form__input" onChange={this.onChangePassword} value={this.state.password} />
+
+                    <button className="button ___block ___large ___primary" type="submit">
+                        Inloggen
+                    </button>
 
                     <div className="buttons">
                         <a href="#" onClick={this.showRegister} className="form__link ___block-mobile">
@@ -106,6 +108,12 @@ class Login extends React.Component {
             </Modal>
         )
     }
+
+    renderHelpText(message) {
+        return (
+            <span className="help-block">{message}</span>
+        )
+    }
 }
 
 const LOGIN = gql`
@@ -114,8 +122,10 @@ const LOGIN = gql`
             viewer {
                 guid
                 loggedIn
-                name
-                username
+                user {
+                    name
+                    username
+                }
             }
         }
     }

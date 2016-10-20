@@ -5,7 +5,13 @@ export default class UserMobileMenu extends React.Component {
     render () {
         let menuItems = ""
 
-        if (this.props.viewer) {
+        if (!this.props.viewer) {
+            return (
+                <div></div>
+            )
+        }
+
+        if (this.props.viewer.loggedIn) {
             menuItems = (
                 <ul className="mobile-navigation__actions">
                     <li>

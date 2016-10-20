@@ -59,10 +59,10 @@ export default class ContentFilters extends React.Component {
         return (
             <div className="row">
                 <div className="col-sm-4 col-lg-3">
-                    <Select name="sector" options={sectorOptions} value={this.state.filter.sector} onChange={this.onChangeFilter} />
+                    <Select name="sector" options={sectorOptions} value={this.state.filter.sector} onChange={this.onChangeFilter} className={this.props.selectClassName} />
                 </div>
                 <div className="col-sm-4 col-lg-3">
-                    <Select name="category" options={categoryOptions} value={this.state.filter.category} onChange={this.onChangeFilter} />
+                    <Select name="category" options={categoryOptions} value={this.state.filter.category} onChange={this.onChangeFilter} className={this.props.selectClassName} />
                 </div>
                 {this.props.children}
             </div>

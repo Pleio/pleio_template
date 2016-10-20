@@ -68,7 +68,7 @@ export default class Select extends React.Component {
         }
 
         return (
-            <div className={classNames({"selector-container":true, "___mobile-margin-bottom":true})}>
+            <div className={classNames({"selector":true, "___mobile-margin-bottom":true}) + " " + this.props.className}>
                 <label htmlFor="sectorFilter" className="selector__label">Sector</label>
                 <div className={classNames({"selector": true, "___is-open": this.state.isOpen})}>
                     <div className="selector__select" tabIndex="0" onClick={this.onToggle}>

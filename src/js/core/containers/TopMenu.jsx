@@ -94,6 +94,7 @@ class TopMenu extends React.Component {
 const WithQuery = gql`
     query TopMenu {
         site {
+            guid
             menu {
                 guid
                 title

@@ -95,15 +95,11 @@ class InfiniteList extends React.Component {
         }
 
         return (
-            <div className="page-layout">
-                <section className="section ___grey ___grow">
-                    <div className="container" ref="infiniteScroll">
-                        <div className="row">
-                            {noItems}
-                            {children}
-                        </div>
-                    </div>
-                </section>
+            <div className="container" ref="infiniteScroll">
+                <div className="row">
+                    {noItems}
+                    {children}
+                </div>
             </div>
         )
     }

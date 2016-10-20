@@ -1,10 +1,9 @@
-import "babel-polyfill"
+import "../less/style.less"
+import "core-js/shim"
+
 import React from "react"
 import ReactDOM from "react-dom"
-import fetch from "isomorphic-fetch"
-import moment from "moment"
 import client from "./lib/client"
-import "moment/locale/nl";
 import Routes from "./Routes"
 
 import { ApolloProvider } from "react-apollo";
@@ -21,8 +20,6 @@ let store = createStore(combineReducers({
     currentLanguage: lang,
     modal: null
 }, compose(applyMiddleware(client.middleware()), window.devToolsExtension ? window.devToolsExtension() : f => f))
-
-moment.locale(lang)
 
 ReactDOM.render((
     <ApolloProvider client={client} store={store}>

@@ -33,7 +33,11 @@ class List extends React.Component {
                         <AddButton subtype="news" onClick={this.onClickAdd} />
                     </ContentFilters>
                 </ContentHeader>
-                <InfiniteList childClass={Card} title="Nieuws" subtype="news" offset={0} limit={20} tags={this.state.tags} />
+                <div className="page-layout">
+                    <section className="section ___grey ___grow">
+                        <InfiniteList childClass={Card} subtype="news" offset={0} limit={20} tags={this.state.tags} />
+                    </section>
+                </div>
                 <Add title="Nieuws toevoegen" />
             </div>
         )

@@ -1,21 +1,22 @@
 import React from "react"
-import Joi from "joi-browser"
 import classnames from "classnames"
 import { EditorState } from "draft-js"
-import InputField from "./Input"
+import InputField from "./InputField"
 import RichTextField from "./RichTextField"
 
 class Form extends React.Component {
     constructor(props) {
         super(props)
 
-        this.inputs = {}
+        this.wrapComponent = this.wrapComponent.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
+        this.clearValues = this.clearValues.bind(this)
+
         this.attachToForm = this.attachToForm.bind(this)
         this.detachFromForm = this.detachFromForm.bind(this)
-        this.wrapComponent = this.wrapComponent.bind(this)
-        this.getValues = this.getValues.bind(this)
-        this.refCounter = 0
+        this.onChange = this.onChange.bind(this)
+
+        this.inputs = {}
 
         this.state = {
             validationStarted: false
@@ -37,6 +38,19 @@ class Form extends React.Component {
         delete this.inputs[component.props.name]
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.values !== nextProps.values) {
+            this.setState({
+                values: nextProps.values
+            })
+        }
+    }
+
+    onChange(e) {
+        // child has updated it's state, so re-render the form component
+        this.forceUpdate()
+    }
+
     onSubmit(e) {
         e.preventDefault()
 
@@ -44,21 +58,31 @@ class Form extends React.Component {
             validationStarted: true
         })
 
-        let allValid = true;
-        Object.keys(this.inputs).forEach((name) => {
-            let { error, value } = this.inputs[name].isValid()
-            if (error !== null) {
-                allValid = false;
+        if (this.isValid()) {
+            if (this.props.onSubmit) {
+                this.props.onSubmit(e);
             }
-        })
 
-        if (allValid) {
-            this.props.onSubmit(e)
+            this.setState({
+                validationStarted: false
+            })
         }
     }
 
+    isValid() {
+        let valid = true
+
+        Object.keys(this.inputs).forEach((name) => {
+            if (!this.inputs[name].isValid()) {
+                valid = false
+            }
+        })
+
+        return valid
+    }
+
     getValues() {
-        let values = []
+        let values = {}
         Object.keys(this.inputs).forEach((name) => {
             values[name] = this.inputs[name].getValue()
         })
@@ -66,8 +90,13 @@ class Form extends React.Component {
         return values
     }
 
+    clearValues() {
+        Object.keys(this.inputs).forEach((name) => {
+            this.inputs[name].clearValue()
+        })
+    }
+
     render() {
-        let i = 0
         let children = React.Children.map(this.props.children, (child) => {
             switch (child.type) {
                 case InputField:
@@ -86,19 +115,25 @@ class Form extends React.Component {
     }
 
     wrapComponent(component) {
-        let error
-        if (this.state.validationStarted && !this.inputs[component.props.name].isValid()) {
-            error = (
+        let hasError, errorMessage, value
+        hasError = this.state.validationStarted && !this.inputs[component.props.name].isValid()
+
+        if (hasError) {
+            errorMessage = (
                 <span className="form__item-error-message">
                     Vul een correcte waarde in.
                 </span>
             )
         }
 
+        const clonedComponent = React.cloneElement(component, {
+            onChange: this.onChange
+        })
+
         return (
-            <label className={classnames({form__item: true, "form__item-error": this.state.validationStarted && !this.inputs[component.props.name].isValid()})}>
-                {component}
-                {error}
+            <label className={classnames({form__item: true, "form__item-error": hasError})}>
+                {clonedComponent}
+                {errorMessage}
             </label>
         )
     }

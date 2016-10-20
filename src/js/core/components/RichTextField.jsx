@@ -1,7 +1,9 @@
 import React from "react"
-import { Editor, EditorState, ContentState, RichUtils, convertFromRaw, convertToRaw } from "draft-js"
+import { Editor, EditorState, ContentState, RichUtils } from "draft-js"
 import classnames from "classnames"
-import Joi from "joi-browser"
+import Validator from "validatorjs"
+import { stateFromHTML } from "draft-js-import-html"
+import { stateToHTML } from "draft-js-export-html"
 
 const INLINE_STYLES = [
     {label: "B", style: "BOLD"},
@@ -29,7 +31,7 @@ class EditorButton extends React.Component {
 
     render() {
         return (
-            <span className={classnames({"rich-editor__button":true, "___is-active":this.props.isActive})} onMouseDown={this.onMouseDown}>
+            <span className={classnames({"rich-editor__button":true, "___is-active": this.props.isActive})} onMouseDown={this.onMouseDown}>
                 {this.props.children}
             </span>
         )
@@ -40,8 +42,10 @@ class RichTextField extends React.Component {
     constructor(props) {
         super(props)
 
+        let contentState = stateFromHTML(this.props.value || "")
+
         this.state = {
-            editorState: this.valueToEditorState(this.props.value)
+            editorState: EditorState.createWithContent(contentState)
         }
 
         this.focus = () => this.refs.editor.focus()
@@ -52,42 +56,66 @@ class RichTextField extends React.Component {
 
         this.toggleInlineStyle = this.toggleInlineStyle.bind(this)
         this.toggleBlockType = this.toggleBlockType.bind(this)
+
+        this.isValid = this.isValid.bind(this)
+        this.getValue = this.getValue.bind(this)
+        this.getTextValue = this.getTextValue.bind(this)
+        this.clearValue = this.clearValue.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.value === this.props.value) {
+            return
+        }
+
         this.setState({
-            editorState: this.valueToEditorState(nextProps.value)
+            editorState: EditorState.push(this.state.editorState, stateFromHTML(nextProps.value))
         })
     }
 
     componentWillMount() {
-        this.context.attachToForm(this)
+        if (this.context.attachToForm) {
+            this.context.attachToForm(this)
+        }
     }
 
     componentWillUnmount() {
-        this.context.detachFromForm(this)
-    }
-
-    valueToEditorState(inputValue) {
-        try {
-            const string = JSON.parse(this.props.value)
-            return EditorState.createWithContent(convertFromRaw(string))
-        } catch(e) {
-            const string = this.props.value || ""
-            const contentState = ContentState.createFromText(string)
-            return EditorState.createWithContent(contentState)
+        if (this.context.detachFromForm) {
+            this.context.detachFromForm(this)
         }
     }
 
     onChange(editorState) {
-        console.log('Changed editor state')
         this.setState({
             editorState
         })
 
         if (this.props.onChange) {
-            this.props.onChange(editorState)
+            this.props.onChange
         }
+    }
+
+    isValid() {
+        if (this.props.rules) {
+            let validation = new Validator({field: this.getTextValue()}, {field: this.props.rules})
+            return validation.passes()
+        }
+
+        return true
+    }
+
+    getValue() {
+        return stateToHTML(this.state.editorState.getCurrentContent())
+    }
+
+    getTextValue() {
+        return this.state.editorState.getCurrentContent().getPlainText()
+    }
+
+    clearValue() {
+        this.setState({
+            value: ""
+        })
     }
 
     handleKeyCommand(command) {
@@ -111,14 +139,6 @@ class RichTextField extends React.Component {
     onTab(e) {
         const maxDepth = 4;
         this.onChange(RichUtils.onTab(e, this.state.editorState, maxDepth))
-    }
-
-    getValue() {
-        return JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))
-    }
-
-    isValid() {
-        return Joi.validate(this.state.editorState.getCurrentContent().getPlainText(), this.props.validate)
     }
 
     render() {
@@ -149,11 +169,11 @@ class RichTextField extends React.Component {
                     <Editor
                         ref="editor"
                         handleKeyCommand={this.handleKeyCommand}
-                        editorState={this.state.editorState}
-                        onChange={this.onChange}
                         onTab={this.onTab}
                         placeholder={this.props.placeholder}
                         spellCheck={true}
+                        onChange={this.onChange}
+                        editorState={this.state.editorState}
                     />
                 </div>
             </div>

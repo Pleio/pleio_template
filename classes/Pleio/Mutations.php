@@ -154,9 +154,13 @@ class Mutations {
 
         $result = $entity->save();
         if ($result) {
+            $view = "river/object/{$input["subtype"]}/create";
+            add_to_river($view, 'create', elgg_get_logged_in_user_guid(), $entity->guid);
+
             return [
                 "guid" => $entity->guid
             ];
+
         }
 
         throw new Exception("could_not_save");

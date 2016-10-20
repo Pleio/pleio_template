@@ -27,6 +27,7 @@ class AccessSelect extends React.Component {
 const QUERY = gql`
     query AccessSelect {
         site {
+            guid
             defaultAccessId
             accessIds {
                 id
