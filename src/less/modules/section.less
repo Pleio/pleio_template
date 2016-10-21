@@ -23,11 +23,24 @@
     &.___no-vertical-padding {
         padding: 0;
     }
-    &.___add-padding-bottom {
-        padding-bottom: 5.2rem;
+    &.___padding-bottom {
+        padding-bottom: 4rem;
     }
     &.___grow {
         flex: 1 0 auto;
+    }
+    &.___center {
+        text-align: center;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        &.___padding-top-mobile {
+            padding-top: 4rem;
+        }
+    }
+
+    @media (min-width: @screen-sm) {
+        padding: 4rem 0 2rem 0;
     }
 }
 
@@ -47,6 +60,10 @@
     }
 }
 
+.section.___light-blue {
+    background-color: @color-tertiary--light;
+}
+
 .section.___background-image {
     background-size: cover;
     background-position: center center;
@@ -54,16 +71,29 @@
 
 .main__title {
     .font(title-extra-large);
+    font-weight: bold;
     color: @color-secondary;
     margin: 0 0 3rem 0;
+
+    @media ( max-width: @screen-xs-max ) {
+        .font(title-large);
+        margin: 0 0 1.5rem 0;
+    }
 
     &.___no-margin {
         margin: 0;
     }
 
-    @media ( max-width: @screen-xs-max ) {
-        .font(title-large);
-        margin: 0 0 1.5rem 0;
+    &.___less-margin-bottom {
+        margin-bottom: 2rem;
+
+        @media ( max-width: @screen-xs-max ) {
+            margin-bottom: 1rem;
+        }
+    }
+
+    &.___primary {
+        color: @color-primary;
     }
 
     &.___trending {
@@ -73,8 +103,52 @@
 
         .icon(trending);
         &:before {
+            display: flex; align-items: center; justify-content: center;
+            width: 3.6rem;
+            height: 3.6rem;
             margin-right: 1.5rem;
-            font-size: 3.6rem;
+            padding: 0 0.1rem 0.1rem 0;
+            font-size: 1.4rem;
+            background-color: @color-lightblue;
+            color: @color-white;
+            border-radius: 50%;
+
+            @media ( max-width: @screen-xs-max ) {
+                width: 2.4rem;
+                height: 2.4rem;
+                font-size: .9rem;
+            }
+        }
+    }
+
+    &.___info {
+        display: flex;
+        align-items: center;
+        padding: 0 5rem 0 0;
+
+        > div {
+            margin: 0 0 0 2rem;
+            padding: 0 0 0.5rem 0;
+            color: @color-grey--50;
+            cursor: pointer;
+            transition: color @trans-fast;
+
+            .icon(info);
+            &:before {
+                font-size: 2.4rem;
+            }
+
+            &:hover {
+                color: @color-primary;
+            }
+        }
+
+        @media ( max-width: @screen-xs-max ) {
+            padding: 0 3.6rem 0 0;
+
+            > div {
+                display: none;
+            }
         }
     }
 }

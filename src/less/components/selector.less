@@ -20,24 +20,8 @@
         }
     }
 
-    select {
-        position: absolute;
-        width: 100%;
-        opacity: 0;
-        z-index: -1;
-    }
-
-    &.___is-mobile {
-        select {
-            z-index: 1;
-            height: 5rem;
-            line-height: 3.2rem;
-
-            option {
-                font-size: @font-size--large;
-                height: 5rem;
-            }
-        }
+    &.___is-mobile-only {
+        display: none;
     }
 
     &.___margin-top {
@@ -52,35 +36,36 @@
         &.___margin-top-mobile {
             margin-top: 1rem;
         }
+
+        &.___margin-bottom-mobile {
+            margin-bottom: 1rem;
+        }
+
+        &.___no-margin-top-mobile {
+            margin-top: 0;
+        }
     }
 
-    
     &.___is-mobile-only {
         display: none;
-        
+
         @media ( max-width: @screen-xs-max ) {
             display: block;
             margin: 2rem 0;
         }
     }
 
-    @media ( max-width: @screen-xs-max ) {
-        &.___margin-bottom-mobile {
-            margin-bottom: 1rem;
-        }
+    select {
+        position: absolute;
+        width: 100%;
+        opacity: 0;
+        z-index: -1;
     }
 
-    @media ( min-width: @screen-sm ) {
-        &.___margin-top-tablet-plus {
-            margin-top: 2rem;
-        }
-
-        &.___margin-bottom-tablet-plus {
-            margin-bottom: 2rem;
-        }
-        
-        &.___is-mobile-only {
-            display: none;
+    &.___is-mobile {
+        select {
+            z-index: 1;
+            height: 100%;
         }
     }
 }
@@ -90,7 +75,7 @@
 }
 
 .selector__select {
-    padding: 0 3.5rem 0 2rem;
+    padding: 0 3rem 0 1.6rem;
     background-color: @color-white;
     color: @color-grey--80;
     line-height: 4.4rem;
@@ -101,28 +86,21 @@
     overflow: hidden;
     transition: color @trans-fast, border-color @trans-fast;
 
-    @media ( max-width: @screen-xs-max ) {
-        padding: 0 1.5rem;
-        line-height: 4rem;
-
-        .modal.___small & {
-            padding: 0 3.5rem 0 2rem;
-            line-height: 4.4rem;
-        }
-    }
-
     &:hover,
     &.___has-focus {
         color: @color-secondary;
         border-color: @color-secondary;
     }
 
+    &.___not-selected {
+        color: @color-grey--60;
+    }
+
     .icon(angle-down, after);
 
     &:after {
         position: absolute;
-        right: 2rem;
-        /* icon height */
+        right: 1.6rem;
         font-size: 0.6rem;
         color: @color-black;
         line-height: inherit;
@@ -131,11 +109,34 @@
     }
 
     @media ( max-width: @screen-xs-max ) {
-        padding: 0 3.5rem 0 1.5rem;
+        padding: 0 2.8rem 0 1.4rem;
         line-height: 3.8rem;
 
         &:after {
-            right: 1.5rem;
+            right: 1.4rem;
+        }
+
+        .modal & {
+            padding: 0 3rem 0 1.6rem;
+            line-height: 4.4rem;
+        }
+    }
+
+    .editor__toolbar & {
+        color: @color-grey--60;
+        border: none;
+
+        .icon(dropdown, after);
+
+        &:after {
+            position: absolute;
+            right: 1.6rem;
+            /* icon height */
+            font-size: 0.4rem;
+            color: @color-grey--60;
+            line-height: inherit;
+            pointer-events: none;
+            transition: color @trans-fast, transform @trans-fast;
         }
     }
 }
@@ -153,17 +154,44 @@
     opacity: 0;
     transform: translate(0, -0.5rem);
     visibility: hidden;
-    transition: opacity @trans-fast, visibility @trans-fast, transform @trans-fast;
+    transition: opacity @trans-fast, visibility @trans-fast, transform @trans-material-fast;
+
+    .___drop-up & {
+        transform: translate(0, 0.5rem);
+        display: flex;
+        flex-direction: column-reverse;
+        top: auto;
+        bottom: 0;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        padding: 0.5rem 0;
+
+        .modal & {
+            padding: 0.6rem 0;
+        }
+    }
+
+    .editor__toolbar & {
+        color: @color-grey--60;
+        border: none;
+    }
 }
 
 .selector__option {
-    padding: 0 2rem;
+    padding: 0 1.6rem;
     line-height: 3.2rem;
     cursor: pointer;
     transition: color @trans-fast;
 
     @media ( max-width: @screen-xs-max ) {
-        padding: 0 1.5rem;
+        padding: 0 1.4rem;
+        line-height: 2.8rem;
+
+        .modal & {
+            padding: 0 1.6rem;
+            line-height: 3.2rem;
+        }
     }
 
     &.___is-selected {
@@ -173,6 +201,8 @@
 
     &.___is-disabled {
         color: @color-grey--60;
+        cursor: default;
+
         &:hover {
             color: @color-grey--60;
         }
@@ -183,6 +213,6 @@
     }
 
     @media ( max-width: @screen-xs-max ) {
-        padding: 0 1.5rem;
+        padding: 0 1.4rem;
     }
 }

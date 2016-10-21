@@ -1,0 +1,12 @@
+// Multiline ellipsis using only CSS
+// Taken from http://codepen.io/martinwolf/pen/qlFdp
+.ellipsis(@line-height, @lines-to-show) {
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: @lines-to-show;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    max-height: @line-height * @lines-to-show;
+}

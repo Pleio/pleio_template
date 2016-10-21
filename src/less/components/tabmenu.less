@@ -1,13 +1,14 @@
 .tabmenu {
+    display: flex;
     margin: 4rem 0 0 0;
-    
+
     @media ( max-width: @screen-xs-max ) {
         display: none;
     }
 }
 
 .tabmenu__link {
-    display: inline-block;
+    display: block;
     color: @color-black;
     font-size: @font-size--base;
     line-height: @line-height--base;
@@ -31,8 +32,8 @@
     }
 }
 
-@media ( max-width: @screen-xs-max ) {
-    .tabmenu {
-        margin: 0;
+.tabmenu__dropdown {
+    @media ( min-width: @screen-sm ) {
+        display: none;
     }
 }

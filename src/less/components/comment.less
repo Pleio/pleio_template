@@ -140,7 +140,7 @@
 .comment__justify {
     position: relative;
     display: flex;
-    flex-grow: 1;
+    width: 100%;
 
     @media ( max-width: @screen-xs-max ) {
         display: flex;
@@ -149,6 +149,11 @@
 
     @media ( min-width: @screen-sm ) {
         justify-content: space-between;
+        align-items: center;
+
+        > div {
+            position: relative;
+        }
     }
 }
 
@@ -173,6 +178,7 @@
 
 .comment__edit {
     position: absolute;
+    top: 0;
     right: 0;
     .font(medium);
     color: @color-primary;

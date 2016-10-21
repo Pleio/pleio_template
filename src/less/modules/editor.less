@@ -1,0 +1,235 @@
+.editor {
+    border: 1px solid @color-grey--50;
+}
+
+.editor__toolbar {
+    display: flex; align-items: center;
+    flex-wrap: wrap;
+    border-bottom: 1px solid @color-grey--50;
+}
+
+.editor__tool-group {
+    flex-shrink: 0;
+    display: flex; align-items: center;
+    flex-wrap: wrap;
+
+    @media ( min-width: @screen-sm ) {
+        &:not(:last-child) {
+            border-right: 1px solid @color-grey--50;
+        }
+    }
+
+    &.___no-padding {
+        flex-grow: 1;
+        padding: 0;
+
+        @media ( max-width: @screen-xs-max ) {
+            display: none;
+        }
+    }
+}
+
+.editor__tool {
+    display: flex; align-items: center; justify-content: center;
+    width: 4rem;
+    height: 4.6rem;
+    color: @color-grey--60;
+    cursor: pointer;
+    transition: color @trans-fast;
+
+    &:first-child {
+        margin-left: .4rem;
+    }
+
+    &:last-child {
+        margin-right: .4rem;
+    }
+
+    &:hover {
+        color: @color-grey--80;
+    }
+
+    &.___is-active {
+        color: @color-primary;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        display: none;
+    }
+
+    &.___bold {
+        .icon(bold);
+        &:before {
+            font-size: 1.4rem;
+        }
+    }
+
+    &.___italic {
+        .icon(italic);
+        &:before {
+            font-size: 1.4rem;
+        }
+    }
+
+    &.___underlined {
+        .icon(underlined);
+        &:before {
+            margin: 0.1rem 0 0 0;
+            font-size: 1.6rem;
+        }
+    }
+
+    &.___ol {
+        .icon(ol);
+        &:before {
+            font-size: 1.6rem;
+        }
+    }
+
+    &.___ul {
+        .icon(ul);
+        &:before {
+            font-size: 1.47rem;
+        }
+    }
+
+    &.___hyperlink {
+        .icon(hyperlink);
+        &:before {
+            font-size: 1rem;
+        }
+    }
+
+    &.___image {
+        margin-left: auto;
+        .icon(camera);
+        &:before {
+            font-size: 1.7rem;
+        }
+    }
+
+    &.___quote {
+        .icon(quote);
+        &:before {
+            font-size: 1.3rem;
+        }
+    }
+
+    &.___indent-left {
+        .icon(indent-left);
+        &:before {
+            font-size: 1.5rem;
+        }
+    }
+
+    &.___indent-right {
+        .icon(indent-right);
+        &:before {
+            font-size: 1.5rem;
+        }
+    }
+
+    &.___code {
+        .icon(code);
+        &:before {
+            font-size: 1.1rem;
+        }
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        &.___bold,
+        &.___italic,
+        &.___ul,
+        &.___ol {
+            display: flex;
+        }
+    }
+}
+
+.editor__input {
+    padding: 1.4rem 1.6rem;
+
+    a {
+        color: @color-secondary;
+        border-bottom: 1px solid transparent;
+        transition: border-color @trans-fast;
+
+        &:hover {
+            border-color: @color-secondary;
+        }
+    }
+
+    .editor__link,
+    .editor__image {
+        position: relative;
+        display: inline-flex;
+    }
+
+    .editor__image {
+        padding: 1rem 0;
+    }
+}
+
+.editor__upload {
+    display: flex; align-items: center; justify-content: center;
+    height: 10rem;
+    margin: 0 0 1rem 0;
+    border: 0.2rem dashed @color-grey--50;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color @trans-fast, background-color @trans-fast;
+
+    &.___is-uploaded,
+    &:hover {
+        border-color: @color-secondary;
+    }
+
+    > span {
+        color: @color-primary;
+        transition: opacity @trans-fast;
+    }
+
+    &.___is-uploaded > span {
+        opacity: 0;
+    }
+}
+
+.editor__upload-progress {
+    position: absolute;
+    padding: 2rem 0 0 0;
+    opacity: 0;
+    transition: opacity @trans-fast;
+
+    .editor__upload.___is-uploaded & {
+        opacity: 1;
+    }
+
+    > span {
+        margin: 0.5rem 0 0 0;
+        display: block;
+        color: @color-grey--80;
+        text-align: center;
+    }
+}
+
+.editor__progress-bar {
+    position: relative;
+    width: 8rem;
+    height: 1rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background-color: @color-grey--50;
+
+    &:before {
+        position: absolute;
+        content: '';
+        background-color: @color-grey--80;
+        width: 70%;
+        height: 100%;
+    }
+}
+
+.editor__actions {
+    padding: 2rem;
+}

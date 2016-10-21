@@ -14,7 +14,6 @@
     }
 
     @media ( max-width: @screen-md-max ) {
-        transition: height @trans-normal;
         cursor: pointer;
 
         .read-more {
@@ -26,6 +25,10 @@
         .read-more__circle {
             order: 1;
             margin: 0 0 0 0.8rem;
+        }
+
+        &.___desktop-only {
+            display: none;
         }
     }
 
@@ -89,7 +92,15 @@
     @media ( max-width: @screen-md-max ) {
         height: 0;
         overflow: hidden;
-        transition: height @trans-normal;
+        opacity: 0;
+        transition: height @trans-material-normal, opacity @trans-normal;
+
+        .___is-open & {
+            opacity: 1;
+        }
+    }
+    @media ( min-width: @screen-lg ) {
+        height: auto !important;
     }
 }
 
@@ -115,6 +126,10 @@
     background-size: cover;
     border-radius: 50%;
     overflow: hidden;
+}
+
+.card-list-recommended__justify {
+    flex-shrink: 1;
 }
 
 .card-list-recommended__article {

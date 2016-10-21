@@ -8,13 +8,11 @@
     width: 100%; // IE10-11 COLUMN FIX
     box-shadow: @box-shadow;
 
-
-
     @media ( min-width: @screen-sm ) {
         display: flex;
         padding: 3rem 3rem 3rem 8rem;
 
-        &.___home {
+        &.___feed {
             display: block;
             padding: 3rem 3rem 2rem 8rem;
         }
@@ -44,17 +42,17 @@
     @media ( min-width: @screen-sm ) {
         padding: 0 2.5rem 0 0;
 
-        .card-topic.___home & {
+        .card-topic.___feed & {
             padding: 0;
         }
     }
 }
 
 .card-topic__title {
-    display: block;
     .font(title-small);
     font-weight: bold;
     color: @color-primary;
+    .ellipsis(@line-height--base, 2);
 
     @media ( max-width: @screen-xs-max ) {
         .font(base);
@@ -62,24 +60,8 @@
 
     @media ( min-width: @screen-sm ) {
         margin: 0 0 1rem 0;
+        .ellipsis(@line-height--title-small, 2);
     }
-    
-    max-height: @line-height--base * 2;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        word-wrap: break-word;
-        
-        @media ( min-width: @screen-sm ) {
-            max-height: @line-height--title-small * 2; 
-        }
-        
-        @media ( min-width: @screen-md ) {
-            max-height: @line-height--title-main * 3; 
-        }
 }
 
 .card-topic__meta {
@@ -111,13 +93,14 @@
 }
 
 .card-topic__content {
+    .ellipsis(@line-height--medium, 2);
+
     @media ( max-width: @screen-xs-max ) {
         display: none;
     }
-    
-    .multiline-ellipsis( @font-size--base, @line-height--base, 1 );
-    @media ( min-width: @screen-md ) {
-        .multiline-ellipsis( @font-size--base, @line-height--base, 2 );
+
+    @media ( min-width: @screen-sm ) {
+        .ellipsis(@line-height--base, 2);
     }
 }
 
@@ -127,14 +110,10 @@
     flex-shrink: 0;
 
     @media ( min-width: @screen-sm ) {
-        //flex-direction: column;
-        //width: 15rem;
-    }
-    
-    @media ( min-width: @screen-lg ) {
-        width: 20rem;
+        flex-direction: column;
+        width: 15rem;
 
-        .card-topic.___home & {
+        .card-topic.___feed & {
             flex-direction: row;
             justify-content: space-between;
             width: auto;
@@ -142,9 +121,29 @@
         }
     }
 
+    @media ( min-width: @screen-lg ) {
+        width: 20rem;
+
+        .card-topic.___feed & {
+
+        }
+    }
+
     @media ( max-width: @screen-xs-max ) {
-        .card-topic.___home & {
+        .card-topic.___feed & {
             margin: 1.5rem 0 0 0;
+        }
+
+        .count-bookmarks {
+            display: none;
+        }
+    }
+
+    .count-bookmarks span {
+        font-weight: normal;
+
+        .card-topic.___feed & {
+            font-weight: bold;
         }
     }
 }
@@ -164,84 +163,6 @@
         margin: 0 0.8rem 0 0;
         font-size: 1.3rem;
         text-align: center;
-    }
-}
-
-.card-topic__bookmark {
-    padding: 0 0 0 3.2rem;
-    font-weight: normal;
-    color: @color-grey--60;
-    .icon(bookmark-line);
-    .icon(bookmark, after);
-
-    @media ( max-width: @screen-xs-max ) {
-        display: none;
-    }
-
-    &:before,
-    &:after {
-        position: absolute;
-        width: 2.4rem;
-        left: 0;
-        top: 0.9rem;
-        font-size: 2.3rem;
-        text-align: center;
-        transition: opacity @trans-fast, color @trans-fast;
-
-        @media ( max-width: @screen-xs-max ) {
-            right: 0;
-            text-align: center;
-        }
-    }
-
-    &:after {
-        opacity: 0;
-    }
-
-    &:hover {
-        &:before {
-            opacity: 0;
-        }
-
-        &:after {
-            opacity: 1;
-        }
-    }
-
-    span {
-        transition: opacity @trans-fast;
-
-        @media ( max-width: @screen-xs-max ) {
-            display: none;
-        }
-
-        &.___save {
-            opacity: 1;
-        }
-
-        &.___saved {
-            position: absolute;
-            opacity: 0;
-        }
-    }
-
-    &.___is-saved {
-        &:before {
-            opacity: 0;
-        }
-
-        &:after {
-            color: @color-secondary;
-            opacity: 1;
-        }
-
-        .___save {
-            opacity: 0;
-        }
-
-        .___saved {
-            opacity: 1;
-        }
     }
 }
 
@@ -267,8 +188,3 @@
         order: -1;
     }
 }
-
-
-
-
-

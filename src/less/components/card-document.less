@@ -1,0 +1,82 @@
+.card-document {
+    position: relative;
+    background-color: @color-white;
+    padding: 2rem 2rem 2rem 7.5rem;
+    margin-bottom: 2rem;
+    text-decoration: none;
+    color: inherit;
+    width: 100%; // IE10-11 COLUMN FIX
+    box-shadow: @box-shadow;
+
+    @media ( min-width: @screen-sm ) {
+        padding: 3rem 3rem 3rem 8rem;
+    }
+}
+
+.card-document__format {
+    display: flex; align-items: center; justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    position: absolute;
+    top: 3rem;
+    left: 2.4rem;
+    background-color: @color-grey--50;
+    border-radius: 50%;
+    overflow: hidden;
+
+    .icon(doc);
+    &:before {
+        color: @color-white;
+        font-size: 2rem;
+    }
+
+    &.___pdf {
+        .icon(doc-pdf);
+        &:before {
+            color: @color-white;
+            font-size: 2rem;
+        }
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        top: 2rem;
+        left: 2rem;
+    }
+}
+
+.card-document__title {
+    .font(title-small);
+    font-weight: bold;
+    color: @color-primary;
+
+    @media ( max-width: @screen-xs-max ) {
+        .font(base);
+        .ellipsis(@line-height--base, 3);
+    }
+
+    @media ( min-width: @screen-sm ) {
+        margin: 0 0 1rem 0;
+        .ellipsis(@line-height--title-small, 2);
+    }
+}
+
+.card-document__download {
+    .icon(download);
+    &:before {
+        margin: 0 0.8rem 0.1rem 0;
+        font-size: 1.5rem;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        width: 3.6rem;
+        padding: 0;
+
+        span {
+            display: none;
+        }
+
+        &:before {
+            margin: 0 0 0.1rem 0;
+        }
+    }
+}

@@ -77,7 +77,12 @@
     @media ( max-width: @screen-xs-max ) {
         height: 0;
         overflow: hidden;
-        transition: height @trans-normal;
+        opacity: 0;
+        transition: height @trans-material-normal, opacity @trans-normal;
+
+        .___is-open & {
+            opacity: 1;
+        }
     }
     @media ( min-width: @screen-sm ) {
         height: auto!important;

@@ -76,9 +76,11 @@ class Item extends React.Component {
                                 <div className="content" dangerouslySetInnerHTML={{__html: entity.description}} />
                                 <div className="article-actions">
                                     <SocialShare />
-                                    <div className="article-actions__justify">
-                                        <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
-                                            Schrijf een reactie
+                                    <div className="article-actions__buttons">
+                                        <div className="article-actions__justify">
+                                            <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
+                                                Schrijf een reactie
+                                            </div>
                                         </div>
                                         <Bookmark entity={entity} />
                                     </div>

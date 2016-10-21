@@ -4,7 +4,7 @@
     .___fill {
         height: 100%; // fill to row height
     }
-    
+
     width: 100%;
 }
 
@@ -217,19 +217,19 @@
     @media ( max-width: @screen-xs-max ) {
         .___search-results & {
             min-height: 9rem;
-            
+
             .card-tile__title {
                 max-width: ~"calc(100% - 3rem)";
                 .font(medium);
             }
-            
+
             .read-more__circle {
                 margin: 0;
                 position: absolute;
                 right: 2rem;
                 bottom: 2rem;
             }
-            
+
             .read-more span {
                 display: none;
             }
@@ -557,7 +557,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    flex-grow: 1;
+    flex: 1 1 auto;
     width: 100%;
     padding: 2.5rem 3rem 3rem;
     z-index: 0;  // stay on top of grey background gradient
@@ -573,15 +573,8 @@
     }
 
     p {
-        max-height: @line-height--base * 4;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        word-wrap: break-word;
         margin-bottom: 0;
+        .ellipsis(@line-height--base, 4);
 
         @media ( max-width: @screen-xs-max ) {
             display: none;

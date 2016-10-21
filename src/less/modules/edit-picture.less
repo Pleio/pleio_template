@@ -43,9 +43,7 @@
 
 .edit-picture__preview {
     position: relative;
-    background: @color-grey--20 url('../../images/user.svg') no-repeat;
-    background-position: center bottom;
-    background-size: 73%;
+    background: @color-grey--20;
     border-radius: 50%;
     overflow: hidden;
     width: 14rem;
@@ -55,6 +53,23 @@
         width: 4rem;
         height: 4rem;
         margin: 0 0 0 2rem;
+
+        #new-group & {
+            width: 5rem;
+            height: 5rem;
+        }
+    }
+
+    #edit-picture & {
+        background: @color-grey--20 url('../../images/user.svg') no-repeat;
+        background-position: center bottom;
+        background-size: 73%;
+    }
+
+    #new-group & {
+        background: @color-grey--20 url('../../images/group.svg') no-repeat;
+        background-position: center;
+        background-size: 58%;
     }
 
     [data-image-uploader].___has-uploaden-image & {

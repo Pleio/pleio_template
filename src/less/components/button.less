@@ -48,6 +48,11 @@
         height: 3.6rem;
         line-height: 3.6rem;
 
+        .modal & {
+            height: 4rem;
+            line-height: 4rem;
+        }
+
         &.___pleio {
             display: none;
         }
@@ -99,6 +104,33 @@
     text-align: center;
 }
 
+// Square button
+.button.___square {
+    width: 4rem;
+    padding: 0;
+
+    @media ( max-width: @screen-xs-max ) {
+        width: 3.6rem;
+    }
+
+    &.___large {
+        width: 4.6rem;
+
+        @media ( max-width: @screen-xs-max ) {
+            width: 4rem;
+        }
+    }
+}
+
+// Full width button (mobile)
+.button.___block-mobile {
+    @media ( max-width: @screen-xs-max ) {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+}
+
 // Tall button
 .button.___large {
     height: 4.6rem;
@@ -108,7 +140,7 @@
         height: 4rem;
         line-height: 4rem;
 
-        .form & {
+        .modal & {
             height: 4.6rem;
             line-height: 4.6rem;
         }
@@ -153,19 +185,39 @@
         border-color: @color-secondary;
     }
 }
+
 .button.___underlined {
     border-bottom: 1px solid @color-grey--80;
 }
 
-.button__icon {
-    margin-right: 0.8rem;
-    font-size: 1.2rem;
-    position: relative;
-    top: -0.1rem;
+.button.___add {
+    .icon(plus);
+    &:before {
+        font-size: 0.8rem;
+    }
 
-    &.___base {
-        top: 0.1rem;
-        font-size: 1.7rem;
+    @media ( max-width: @screen-xs-max ) {
+        display: flex;
+        justify-content: center;
+        width: 2.6rem;
+        height: 2.6rem;
+        line-height: 2.6rem;
+        padding: 0;
+        border-radius: 50%;
+        font-size: 2.4rem;
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+
+        span {
+            display: none;
+        }
+    }
+
+    @media ( min-width: @screen-sm ) {
+        &:before {
+            margin: 0 0.5rem 0 0;
+        }
     }
 }
 
@@ -218,6 +270,35 @@
     }
 }
 
+.button.___options {
+    position: absolute;
+    top: 4rem;
+    right: 2rem;
+    background-color: @color-grey--50;
+    overflow: visible;
+
+    .icon(options);
+    &:before {
+        font-size: 0.6rem;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        &.___large.___square {
+            top: 2rem;
+            width: 2.6rem;
+            height: 2.6rem;
+        }
+
+        &:before {
+            font-size: 0.35rem;
+        }
+    }
+
+    @media ( min-width: @screen-lg ) {
+        display: none;
+    }
+}
+
 .button__text {
     position: relative;
     display: inline-flex;
@@ -245,6 +326,10 @@
 
         &:hover {
             color: @color-secondary;
+        }
+
+        @media ( max-width: @screen-xs-max ) {
+            margin: 2rem 0 0 0;
         }
     }
 
@@ -302,7 +387,6 @@
     display: inline-flex;
     align-items: center;
     height: 4rem;
-    padding: 0 1rem;
     color: @color-grey--80;
     cursor: pointer;
     transition: color @trans-fast;
@@ -313,9 +397,9 @@
         position: absolute;
         height: 1px;
         background-color: @color-grey--60;
-        left: 1rem;
-        right: 1rem;
-        bottom: 0.8rem;
+        left: 0;
+        right: 0;
+        bottom: 0.7rem;
         transition: background-color @trans-fast;
     }
 
@@ -337,10 +421,15 @@
 }
 
 .buttons {
+    position: relative;
     display: flex;
     align-items: center;
     margin: 2rem 0 0 0;
     flex-wrap: wrap;
+
+    &.___no-margin {
+        margin: 0;
+    }
 
     &.___margin-top {
         margin-top: 4rem;
@@ -356,6 +445,10 @@
 
     &.___margin-top-extra {
         margin-top: 6rem;
+
+        @media ( max-width: @screen-xs-max ) {
+            margin-top: 3rem;
+        }
     }
 
     &.___gutter {
@@ -368,8 +461,8 @@
         > *:not(:last-child) {
             margin-right: 2rem;
 
-            .modal & {
-                margin-right: 1rem;
+            @media ( max-width: @screen-xs-max ) {
+                margin-right: 1.5rem;
             }
         }
     }
@@ -384,5 +477,18 @@
 
     &.___end {
         justify-content: flex-end;
+    }
+
+    &.___hide-on-tablet {
+        @media ( max-width: @screen-md-max ) {
+            display: none;
+        }
+    }
+
+    &.___vertical-mobile {
+        @media ( max-width: @screen-xs-max ) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
     }
 }

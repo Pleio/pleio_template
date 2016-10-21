@@ -1,0 +1,115 @@
+.contextual {
+    position: absolute;
+    left: 50%;
+    display: inline-flex; align-items: center;
+    bottom: -3.6rem;
+    background-color: @color-white;
+    box-shadow: @box-shadow;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility @trans-fast, opacity @trans-fast, transform @trans-material-fast;
+    transform: translateX(-50%) translateY(-0.5rem);
+    -webkit-backface-visibility: hidden;
+    z-index: 1;
+
+    .editor__link:hover &,
+    .editor__image:hover & {
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.contextual__tool {
+    flex-shrink: 0;
+    display: flex; align-items: center;
+    height: 3.6rem;
+    padding: 0 1rem;
+    color: @color-grey--60;
+    cursor: pointer;
+    transition: color @trans-fast;
+
+    &:hover,
+    &.___show-options {
+        color: @color-grey--80;
+    }
+
+    &:not(:last-child) {
+        position: relative;
+        margin-right: 1px;
+
+        &:after {
+            position: absolute;
+            content: '';
+            top: 0.6rem;
+            bottom: 0.6rem;
+            right: -1px;
+            width: 1px;
+            background-color: @color-grey--50;
+        }
+    }
+
+    .icon-dropdown {
+        margin: 0 0 0.5rem 0.5rem;
+
+        &:before {
+            font-size: 0.4rem;
+        }
+    }
+
+    &.___edit {
+        .icon(pencil);
+        &:before {
+            font-size: 1.4rem;
+        }
+    }
+
+    &.___unlink {
+        .icon(unlink);
+        &:before {
+            font-size: 1.5rem;
+        }
+    }
+
+    &.___align {
+        .icon(align);
+        &:before {
+            font-size: 1.4rem;
+        }
+    }
+
+    &.___delete {
+        .icon(delete-fill);
+        &:before {
+            font-size: 1.5rem;
+        }
+    }
+
+    &.___link {
+        .icon(hyperlink);
+        &:before {
+            font-size: 0.9rem;
+        }
+    }
+
+    &.___inline {
+        .icon(image-inline);
+        &:before {
+            font-size: 1.6rem;
+        }
+    }
+
+    &.___info {
+        .icon(info-circle);
+        &:before {
+            font-size: 1.6rem;
+        }
+    }
+
+    &.___resize {
+        .icon(resize);
+        &:before {
+            font-size: 1.4rem;
+        }
+    }
+}

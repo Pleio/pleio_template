@@ -52,11 +52,6 @@
     }
 }
 
-.container-fluid {
-    padding-right: @outer-margin;
-    padding-left: @outer-margin;
-}
-
 .container {
     max-width: @container-width;
     padding-left: @outer-margin;
@@ -85,8 +80,6 @@
     flex: 1 1 auto;
 }
 
-
-
 .row.reverse {
     flex-direction: row-reverse;
 }
@@ -103,7 +96,8 @@
     max-width: @width11;
 
     @media (min-width: @screen-sm) {
-        position: relative;
+        // Is dit nodig?
+        // position: relative;
     }
 
     &.fill {

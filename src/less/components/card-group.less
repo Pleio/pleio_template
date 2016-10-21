@@ -1,0 +1,106 @@
+.card-group {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    position: relative;
+    background-color: @color-white;
+    padding: 1.5rem 1.5rem 1.5rem 6.5rem;
+    margin: 0 0 2rem 0;
+    width: 100%; // IE10-11 COLUMN FIX
+    box-shadow: @box-shadow;
+
+    &.___request {
+        padding: 1.5rem 1.5rem 2rem 6.5rem;
+    }
+
+    @media ( min-width: @screen-sm ) {
+        min-height: 17rem;
+        padding: 2.5rem 2.5rem 2.5rem 9rem;
+
+        &.___request {
+            padding: 2.5rem 2.5rem 3rem 9rem;
+        }
+    }
+}
+
+.card-group__picture {
+    position: absolute;
+    top: 2.4rem;
+    left: 2.5rem;
+    width: 5rem;
+    height: 5rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 50%;
+    overflow: hidden;
+
+    @media ( max-width: @screen-xs-max ) {
+        width: 4rem;
+        height: 4rem;
+        top: 1.7rem;
+        left: 1.7rem;
+    }
+}
+
+.card-group__title {
+    .font(title-small);
+    font-weight: bold;
+    color: @color-primary;
+
+    @media ( max-width: @screen-xs-max ) {
+        .font(base);
+        .ellipsis(@line-height--base, 3);
+    }
+
+    @media ( min-width: @screen-sm ) {
+        .ellipsis(@line-height--title-small, 2);
+    }
+}
+
+.card-group__accept {
+    span {
+        @media ( max-width: @screen-xs-max ) {
+            &:first-of-type {
+                display: none;
+            }
+        }
+
+        @media ( min-width: @screen-sm ) {
+            &:last-of-type {
+                display: none;
+            }
+        }
+    }
+}
+
+.card-group__bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 1.5rem 0 0 0;
+    color: @color-grey--60;
+
+    @media ( min-width: @screen-sm ) {
+        margin: 3rem 0 0 0;
+        font-weight: bold;
+    }
+}
+
+.card-group__secret {
+    display: flex;
+    align-items: center;
+    .icon(lock);
+
+    &:before {
+        margin: 0 0.5rem 0.2rem 0;
+        font-size: 1.1rem;
+    }
+
+    @media ( min-width: @screen-sm ) {
+        align-items: flex-start;
+
+        &:before {
+            margin: 0 0.7rem 0 0;
+            font-size: 1.9rem;
+        }
+    }
+}

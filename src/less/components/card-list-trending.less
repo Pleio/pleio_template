@@ -26,6 +26,10 @@
             order: 1;
             margin: 0 0 0 0.8rem;
         }
+
+        &.___desktop-only {
+            display: none;
+        }
     }
 
     @media ( min-width: @screen-lg ) {
@@ -91,25 +95,34 @@
     .icon(trending);
 
     &:before {
-        font-size: 3rem;
-        color: @color-lightblue;
+        display: flex; align-items: center; justify-content: center;
+        width: 3rem;
+        height: 3rem;
+        padding: 0 0.1rem 0.1rem 0;
+        font-size: 1.1rem;
+        background-color: @color-lightblue;
+        color: @color-white;
+        border-radius: 50%;
     }
 
     @media ( max-width: @screen-md-max ) {
         display: none;
     }
-
 }
 
 .card-list-trending__items {
     @media ( max-width: @screen-md-max ) {
         height: 0;
         overflow: hidden;
-        transition: height @trans-normal;
+        opacity: 0;
+        transition: height @trans-material-normal, opacity @trans-normal;
+
+        .___is-open & {
+            opacity: 1;
+        }
     }
 
     @media ( min-width: @screen-lg ) {
-        display: block;
         height: auto !important;
     }
 }

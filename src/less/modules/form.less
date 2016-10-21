@@ -1,5 +1,55 @@
 .form {
-    // .font(base); why?
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+        height: 4.6rem;
+        padding: 0 1.6rem;
+        border: 0.1rem solid @color-grey--50;
+        transition: border-color @trans-fast;
+
+        &:hover,
+        &:focus {
+            border-color: @color-secondary;
+        }
+
+        &.___error {
+            border-color: @color-error;
+        }
+
+        .editor & {
+            height: 4rem;
+        }
+
+        @media ( max-width: @screen-xs-max ) {
+            height: 4rem;
+            padding: 0 1.4rem;
+
+            .modal & {
+                height: 4.6rem;
+                padding: 0 1.6rem;
+            }
+        }
+    }
+
+    textarea {
+        display: block;
+        width: 100%;
+        height: 13.8rem;
+        padding: 1.1rem 1.6rem;
+        border: 0.1rem solid @color-grey--50;
+        transition: border-color @trans-fast;
+        resize: none;
+
+        &:hover,
+        &:focus {
+            border-color: @color-secondary;
+        }
+
+        @media ( max-width: @screen-xs-max ) {
+            padding: 1.1rem 1.4rem;
+        }
+    }
 
     .modal.___full & {
         max-width: 64.8rem;
@@ -7,13 +57,21 @@
     }
 }
 
-.form__group {
-    position: relative;
-    margin-top: 2rem;
-    &:first-child {
-        margin-top: 2rem;
-    }
-    .form__group--euro {}
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: @color-grey--60;
+}
+input::-moz-placeholder,
+textarea::-moz-placeholder { /* Firefox 19+ */
+    color: @color-grey--60;
+}
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder { /* IE 10+ */
+    color: @color-grey--60;
+}
+input:-moz-placeholder,
+textarea:-moz-placeholder { /* Firefox 18- */
+    color: @color-grey--60;
 }
 
 .form__item {
@@ -27,7 +85,7 @@
     @media ( max-width: @screen-xs-max ) {
         margin: 0 0 1rem 0;
 
-        .modal.___small & {
+        .modal & {
             margin: 0 0 2rem 0;
         }
     }
@@ -39,14 +97,11 @@
     }
 }
 
-.form__item .form__item-error-message {
+.form__error {
+    padding: 0.6rem 0 0 0;
     color: @color-error;
     font-size: @font-size--medium;
     line-height: @line-height--medium;
-}
-
-.form__item.form__item-error input {
-    border-color: @color-error;
 }
 
 .form__label {
@@ -79,228 +134,8 @@
 }
 
 .form__conditions {
-    margin: 1.2rem 0 4rem 0;
     padding: 0.5rem 1rem;
     background-color: @color-grey--20;
-}
-
-.form__input {
-    width: 100%;
-    height: 4.6rem;
-    padding: 0 1.4rem;
-    border: 0.1rem solid @color-grey--50;
-    transition: border-color @trans-fast;
-    &:hover,
-    &:focus {
-        border-color: @color-secondary;
-    }
-
-    @media ( max-width: @screen-xs-max ) {
-        height: 4rem;
-
-        .modal.___small & {
-            height: 4.6rem;
-            padding: 0 1.4rem;
-            font-size: @font-size--base;
-        }
-    }
-}
-
-.form__input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: @color-grey--60;
-}
-.form__input::-moz-placeholder { /* Firefox 19+ */
-    color: @color-grey--60;
-}
-.form__input:-ms-input-placeholder { /* IE 10+ */
-    color: @color-grey--60;
-}
-.form__input:-moz-placeholder { /* Firefox 18- */
-    color: @color-grey--60;
-}
-
-.form__label-text {
-    display: block;
-    padding: 0 0 0.38rem 0;
-    font-weight: bold;
-    line-height: @line-height--medium;
-
-    a {
-        color: @color-secondary;
-        text-decoration: none;
-    }
-}
-
-.form__label--medium-bottom-padding {
-    padding-bottom: 0.6rem;
-}
-
-.form__label--large-bottom-padding {
-    padding-bottom: 0.8rem;
-}
-
-.form__label-text--hidden {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-}
-
-.form__label-message {
-    display: block;
-    padding: 0.6rem 0 0 0;
-    color: @color-error;
-    font-size: @font-size--medium;
-    line-height: @line-height--extra-small;
-}
-
-.form__label-message--above-input {
-    padding-top: 0;
-    padding-bottom: 0.6rem;
-}
-
-.form__label-message--inline {
-    display: inline;
-    padding-top: 0;
-    padding-left: 0.5rem;
-}
-
-.form__label-message--problem {
-    color: @color-error;
-}
-
-.form__label-extra-info {
-    // Under the form element (such as a __input)
-    display: block;
-    padding: 0.75rem 0 0 0;
-    color: @color-grey--60;
     font-size: @font-size--medium;
     line-height: @line-height--medium;
-}
-
-.input() {
-    font-size: @font-size--base;
-    border: 0.1rem solid @color-grey--50;
-    padding: 1.2rem 2rem 1.1rem 2rem;
-    transition: @trans-fast;
-
-    &::placeholder {
-        font-size: 1.8rem;
-        line-height: 2.4rem;
-        color: @color-grey--60;
-    }
-    label.__problem & {
-        border-color: @color-error;
-    }
-    &.form__input--euro {
-        padding-left: 3rem;
-    }
-    &:hover,
-    &:focus,
-    &:active {
-        border-color: @color-secondary;
-    }
-    &.error {
-        border: 0.1rem solid @color-error;
-    }
-
-    @media ( max-width: @screen-xs-max ) {
-        padding: 1rem 2rem 1rem 1.5rem;
-        font-size: @font-size--medium;
-
-        &::placeholder {
-            font-size: @font-size--medium;
-        }
-    }
-}
-
-.form__input--fit {
-    padding: 0 0.5rem;
-    font-size: inherit;
-}
-
-.form__input--small-right-inset {
-    padding-right: 0.4rem;
-}
-
-.form-sign--euro {
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-    left: 2.4rem;
-}
-
-.form__actions--small-button-margin {
-    a,
-    button {
-        margin-left: 0.75rem;
-    }
-}
-
-.form__actions-block {
-    margin-left: 2rem;
-}
-
-.form__under-tinymce {
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
-}
-
-.form__element {
-    margin: 0 0 2rem 0;
-}
-
-.form__element--text {
-    font-size: @font-size--medium;
-}
-
-.form__element--small-padding {
-    margin: 0 0 1rem 0;
-}
-
-.form__element--no-padding {
-    margin: 0;
-}
-
-.form__background {
-    margin: 0 -1rem 1rem -1rem;
-    padding: 1rem 1.5rem 0.5rem 1.5rem;
-    font-size: @font-size--medium;
-    background: @color-secondary;
-}
-
-////
-//// FORM - TinyMCE
-////
-.form__tinymce-field {}
-
-.form__tinymce-field--no-bottom-padding {
-    > #mceu_6 {
-        padding-bottom: 0;
-    }
-}
-
-////
-//// FORM - Date
-//// Consists of three input fields
-////
-.form__date {
-
-}
-
-.form__date__input {
-    float: left;
-}
-
-.form__date__input--day {
-    width: 28%;
-}
-
-.form__date__input--month {
-    width: 32%;
-    padding: 0 0.5rem;
-}
-
-.form__date__input--year {
-    width: 40%;
 }

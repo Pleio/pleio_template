@@ -48,7 +48,7 @@
   right: 0;
   left: 0;
   line-height: 4.5rem;
-  background-color: @color-searchbar;
+  background-color: @color-tertiary--light;
   z-index: 1;
   opacity: 0;
   visibility: hidden;
@@ -72,8 +72,8 @@
 
 .navigation-search__icon {
   .icon(search);
-    padding: 0 0 0 2rem; 
-    
+    padding: 0 0 0 2rem;
+
   &:before {
     /* icon height */
     font-size: 1.6rem;
@@ -105,7 +105,7 @@
     font-size: 2.2rem;
     line-height: 2.2rem;
   }
-    
+
 }
 
 .navigation-search__close {
@@ -120,7 +120,7 @@
     &:hover {
         color: @color-tertiary;
     }
-    
+
     .icon(cross);
     &:before {
         font-size: 1.4rem;
@@ -145,4 +145,9 @@
             font-size: 0;
         }
     }
+}
+
+.mobile-navigation__actions .navigation-search {
+    margin-left:-1rem;
+    margin-right: -1rem;
 }

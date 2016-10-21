@@ -120,9 +120,9 @@ class Form extends React.Component {
 
         if (hasError) {
             errorMessage = (
-                <span className="form__item-error-message">
+                <div className="form__error">
                     Vul een correcte waarde in.
-                </span>
+                </div>
             )
         }
 
@@ -131,7 +131,7 @@ class Form extends React.Component {
         })
 
         return (
-            <label className={classnames({form__item: true, "form__item-error": hasError})}>
+            <label className={classnames({form__item: true, "__error": hasError})}>
                 {clonedComponent}
                 {errorMessage}
             </label>

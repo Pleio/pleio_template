@@ -1,0 +1,61 @@
+// Editable profile field
+.___is-editable {
+    display: inline-flex;
+
+    span {
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        transition: color @trans-fast;
+
+        .icon(pencil, after);
+        &:after {
+            margin: 0 0 .2rem .5rem;
+            opacity: 0;
+            font-size: 1.4rem;
+            color: @color-primary;
+            transition: opacity @trans-fast;
+        }
+    }
+
+    &.main__title {
+        width: 100%;
+
+        span:after {
+            margin: 0 0 0 1rem;
+            font-size: 2.2rem;
+        }
+
+        input {
+            width: 100%;
+        }
+    }
+
+    &.___is-editing span {
+        display: none;
+    }
+
+    &:not(.___is-editing):hover {
+        span {
+            color: @color-primary;
+
+            &:after {
+                opacity: 1;
+            }
+        }
+    }
+
+    input {
+        display: none;
+    }
+
+    &.___is-editing {
+        span {
+            display: none;
+        }
+
+        input {
+            display: inline;
+        }
+    }
+}

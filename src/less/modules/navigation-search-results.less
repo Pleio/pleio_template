@@ -1,6 +1,6 @@
 body.navigation-search-open {
-  height: 100%;
-  overflow: hidden;
+    height: 100%;
+    overflow: hidden;
 }
 
 .navigation-search-results {
@@ -9,7 +9,7 @@ body.navigation-search-open {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: @color-secondary--40;
+    background-color: @color-secondary--lighter;
     opacity: 0;
     visibility: hidden;
     transition: visibility @trans-fast, opacity @trans-fast;
@@ -27,12 +27,20 @@ body.navigation-search-open {
     @media (min-width: @screen-lg) {
         top: 16.2rem;
     }
-    
+
     &.___small-header {
         top: 4.5rem;
-        
+
         @media (min-width: @screen-sm) {
             top: 6rem;
+        }
+
+    }
+    body.___rijkshuisstijl & {
+        top: 11.4rem;
+
+        @media (min-width: @screen-sm) {
+            top: 16.2rem;
         }
     }
 }
@@ -40,7 +48,7 @@ body.navigation-search-open {
 .navigation-search-results__show-all {
     display: inline-block;
     position: relative;
-    color: @color-septenary;
+    color: @color-primary;
     margin: 0 0 3rem 0;
     padding: 0 0 0 1.3rem;
     text-decoration: none;
@@ -84,21 +92,21 @@ body.navigation-search-open {
             font-weight: bold;
             top: 0.5em;
             left: 0;
-            color: @color-septenary;
+            color: @color-primary;
         }
-        
+
         &:hover {
             color: @color-secondary;
         }
-        
+
         span {
-            color: @color-septenary;
+            color: @color-primary;
             margin-right: .5rem;
         }
     }
 }
 
 .navigation-search-results__date {
-    color: @color-septenary;
+    color: @color-primary;
     margin: 0 0.5rem 0 0;
 }

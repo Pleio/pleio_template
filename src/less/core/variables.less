@@ -6,7 +6,7 @@
 
 @color-secondary:                   #009ee3;
 @color-secondary--light:            #99d8f3;
-@color-secondary--40:               #f1f9fc;
+@color-secondary--lighter:          #f1f9fc;
 
 @color-tertiary:                    #8fcae7;
 @color-tertiary--light:             #ddeff8;
@@ -14,12 +14,9 @@
 
 @color-quaternary:                  #154273;
 
-@color-senary:                      #1AA0E0;
-
-@color-septenary:                   #01689b;
-
-@color-searchbar:                   #DDEFF8;
 @color-lightblue:                   #00c6ff;
+@color-navigation-hover:            fade(@color-tertiary--light, 50%);
+
 
 // Black & white
 @color-black:                       #000;
@@ -36,6 +33,7 @@
 
 @color-grey:                        #b4b4b4;
 
+
 // Categoriën
 @color-leren:                       #ffb612;
 @color-vernieuwing:                 #fa6e00;
@@ -45,13 +43,13 @@
 @color-overig:                      #009ee3;
 @color-klas:                        #8fcae7;
 
+
 // Social media colors
 @color-twitter:                     #55acee;
 @color-facebook:                    #3664a2;
 @color-google:                      #db4f3f;
 @color-linkedin:                    #0073b2;
 @color-facebook:                    #3664a2;
-
 
 @color-green:                       #7cb928;
 @color-error:                       #d52b1e;
@@ -135,6 +133,10 @@
         font-size: 3.6rem;
         line-height: 3.6rem + @line-height--addition;
     }
+    & when (@size = title-huge) {
+        font-size: 5rem;
+        line-height: 5rem + @line-height--addition;
+    }
 }
 
 
@@ -148,15 +150,15 @@
 // Box shadows
 // -------------------------------
 
-@box-shadow:                        0 2px 5px 0 rgba(0, 0, 0, 0.2);
-@box-shadow-inverted:               2px 0 5px 0 rgba(0, 0, 0, 0.2);
-@box-shadow-large:                  0 2px 10px 0 rgba(0, 0, 0, 0.25);
+@box-shadow:                        0 0.2rem 0.5rem 0 rgba(0, 0, 0, 0.2);
+@box-shadow-inverted:               0.2rem 0 0.5rem 0 rgba(0, 0, 0, 0.2);
+@box-shadow-large:                  0 0.2rem 1rem 0 rgba(0, 0, 0, 0.25);
 
 
 // Text shadows
 // -------------------------------
 
-@text-shadow:                       0 2px 5px rgba(0, 0, 0, 0.25);
+@text-shadow:                       0 0.2rem 0.5rem rgba(0, 0, 0, 0.25);
 
 
 // Z-indexes

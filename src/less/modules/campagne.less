@@ -1,0 +1,114 @@
+.campagne__intro {
+    max-width: 65rem;
+    margin: 0 auto;
+    color: @color-grey--80;
+    font-size: @font-size--title-small;
+    line-height: 3.1rem;
+    text-align: center;
+
+    @media (max-width: @screen-xs-max) {
+        margin: 2rem 0 0 0;
+        font-size: @font-size--base;
+        line-height: 2.4rem;
+    }
+}
+
+.campagne__justify {
+    width: 100%;
+}
+
+.campagne__paragraph {
+    font-size: @font-size--large;
+    line-height: 2.7rem;
+
+    .___light-blue & {
+        .font(title-small);
+        color: @color-secondary;
+
+        @media (max-width: @screen-xs-max) {
+            .font(base);
+        }
+    }
+
+    @media (max-width: @screen-xs-max) {
+        font-size: @font-size--base;
+        line-height: 2.3rem;
+    }
+}
+
+.campagne__image {
+    display: block;
+    width: 100%;
+    box-shadow: @box-shadow;
+
+    &.___no-shadow {
+        box-shadow: none;
+    }
+
+    &.___margin-top-mobile {
+        @media (max-width: @screen-xs-max) {
+            margin-top: 3rem;
+        }
+    }
+
+    &.___left {
+        border-top-right-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+        margin-left: -2rem;
+
+        @media (max-width: @screen-xs-max) {
+            margin-bottom: 3rem;
+        }
+    }
+
+    &.___right {
+        border-top-left-radius: 0.5rem;
+        border-bottom-left-radius: 0.5rem;
+        margin-left: 2rem;
+
+        @media (max-width: @screen-xs-max) {
+            margin-top: 3rem;
+        }
+    }
+
+    &.___tablet {
+        @media (max-width: @screen-xs-max), (min-width: @screen-lg) {
+            display: none;
+        }
+    }
+
+    &.___not-tablet {
+        @media (min-width: @screen-sm) and (max-width: @screen-md-max) {
+            display: none;
+        }
+    }
+}
+
+.campagne__image-title {
+    margin: 2rem 0 0 0;
+    .font(medium);
+    color: @color-grey--60;
+
+    @media (max-width: @screen-xs-max) {
+        margin: 1rem 0 1.5rem 0
+    }
+}
+
+.campagne__divider {
+    width: 8rem;
+    height: 1px;
+    margin: 6rem auto 4rem;
+    background-color: @color-grey--50;
+
+    @media (max-width: @screen-xs-max) {
+        margin: 2rem auto;
+    }
+}
+
+.campagne__spacer {
+    height: 6rem;
+
+    @media (max-width: @screen-xs-max) {
+        height: 1rem;
+    }
+}

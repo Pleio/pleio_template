@@ -1,0 +1,29 @@
+.top-navigation {
+    background-color: @color-grey--20;
+
+    @media (max-width: @screen-md-max) {
+        display: none;
+    }
+}
+
+.top-navigation__link {
+    line-height: 3rem;
+    display: inline-block;
+    margin-left: 2rem;
+    font-size: @font-size--small;
+    color: @color-grey--80;
+    text-decoration: none;
+    transition: color @trans-fast;
+
+    &.___is-active {
+        color: @color-black;
+    }
+
+    &:hover {
+        color: @color-black;
+    }
+
+    &:first-child {
+        margin-left: 0;
+    }
+}

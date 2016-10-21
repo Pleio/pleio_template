@@ -14,41 +14,22 @@ This file contains the styling for the main navigation.
     visibility: hidden;
     opacity: 0;
     transition: all @trans-normal;
-    background-color: rgba(0,0,0,0.15);
+    background-color: rgba(0, 0, 0, 0.15);
     z-index: 8;
 
     @media (max-width: @screen-md-max) {
-        .mobile-nav-open & {
+        body.mobile-nav-open & {
             visibility: visible;
             opacity: 1;
         }
     }
 }
 
-.skip-navigation__link {
-    display: none;
-}
-
-.navigation {
-    position: relative;
-    background-color: @color-primary;
-    user-select: none;
-
-    @media (max-width: @screen-md-max) {
-        > .container {
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
-    }
-}
-
-// This wrapper turns into the mobile navigation panel when screen < 1024px
+ // This wrapper turns into the mobile navigation panel when screen < 1024px
 .navigation__wrapper {
-
     .container {
         padding: 0;
     }
-
     // MOBILE
     @media (max-width: @screen-md-max) {
         position: fixed;
@@ -65,7 +46,7 @@ This file contains the styling for the main navigation.
         transition: transform @trans-normal, box-shadow @trans-normal;
         z-index: 9;
 
-        .mobile-nav-open & {
+        body.mobile-nav-open & {
             transform: translate(0, 0);
             box-shadow: @box-shadow;
         }
@@ -75,16 +56,13 @@ This file contains the styling for the main navigation.
 //
 // Links
 //
-
 .navigation__links {
     display: flex;
     position: relative;
-
     // MOBILE & TABLET
     @media (max-width: @screen-md-max) {
         display: block;
         transition: transform @trans-normal;
-
         .nav-level-one & {
             transform: translate(-100%, 0);
         }
@@ -98,118 +76,22 @@ This file contains the styling for the main navigation.
             transform: translate(-400%, 0);
         }
     }
-
     @media (min-width: @screen-lg) {
         float: left;
     }
 }
 
-//
-// Links
-//
-
-.navigation__link {
-    display: block;
-    position: relative;
-    text-decoration: none;
-    padding: 0 2rem;
-    transition: color @trans-fast, background-color @trans-fast;
-
-    // MOBILE & TABLET
-    @media (max-width: @screen-md-max) {
-        color: @color-black;
-        line-height: 3.2rem;
-
-        &:hover {
-            background-color: @color-tertiary--lighter;
-        }
-
-        &.___is-active:not(.___home) {
-            color: @color-secondary;
-        }
-    }
-
-    // DESKTOP
-    @media (min-width: @screen-lg) {
-        color: @color-white;
-        line-height: 6rem;
-
-        &:hover:not(.___is-active) {
-            color: @color-grey;
-        }
-
-        &.___is-active:not(.___home) {
-            background-color: @color-primary--light;
-        }
-
-        // Hide mobile navigation links (desktop)
-        &.___mobile {
-            display: none;
-        }
-    }
-}
-
-// Link - Highlight home on mobile
-.navigation__link.___home {
-
-    .icon(home);
-    &:before {
-        width: 100%;
-        font-size: 2.8rem;
-        color: @color-white;
-        transition: color @trans-fast;
-    }
-
-    // MOBILE & TABLET
-    @media (max-width: @screen-md-max) {
-        font-weight: bold;
-        line-height: 5.2rem;
-        margin: 0 0 1rem 0;
-        color: @color-black;
-
-        &:before {
-            display: none;
-        }
-    }
-
-    @media (min-width: @screen-lg) {
-        width: 6rem;
-        padding: 0;
-        color: transparent;
-        overflow: hidden;
-        text-align: center;
-        white-space: nowrap;
-
-        &:not(.___is-active):hover:before {
-            color: @color-grey;
-        }
-    }
-}
-
-.navigation__link.___pleio {
-    margin: 3.2rem 0 0 0;
-
-    @media (min-width: @screen-lg) {
-        display: none;
-    }
-}
-
 // Link - Show dropdown icon
 .navigation__link.___dropdown {
-
     .icon(angle-right, after);
-
     &:after {
         position: absolute;
         right: 2rem;
         line-height: inherit;
     }
-
     // DESKTOP
     @media (min-width: @screen-lg) {
-
         .icon(chevron-down, after);
-
         &:after {
             position: relative;
             vertical-align: top;
@@ -219,17 +101,27 @@ This file contains the styling for the main navigation.
             line-height: inherit;
             transition: transform @trans-fast;
         }
-
         .navigation__dropdown:hover & {
             background-color: red;
 
             &.___is-active {
                 background-color: @color-secondary;
             }
-
             &:after {
                 transform: scaleY(-1);
             }
+        }
+    }
+}
+
+.navigation__search-text {
+    display: none;
+    line-height: normal;
+    font-weight: bold;
+    margin: 0 0 0 0.4rem;
+    @media (min-width: @screen-sm) {
+        span {
+            display: inline;
         }
     }
 }
@@ -238,129 +130,105 @@ This file contains the styling for the main navigation.
     @media (max-width: @screen-md-max) {
         margin: 3.2rem 0 0 0;
     }
-
     @media (min-width: @screen-lg) {
         display: flex;
         float: right;
     }
 }
-
 .navigation__action {
     display: block;
     height: 100%;
     text-decoration: none;
     transition: background-color @trans-fast, color @trans-fast;
     cursor: pointer;
-
     @media (max-width: @screen-md-max) {
         padding: 0 2rem;
         color: @color-black;
         line-height: 3.2rem;
-
         &:hover {
             background-color: @color-tertiary--lighter;
         }
-
         &.___is-active:not(.___home) {
             color: @color-secondary;
         }
     }
-
     @media (min-width: @screen-lg) {
         padding: 0 1.2rem;
         color: @color-secondary--light;
         line-height: 6rem;
-
         &:hover {
             color: @color-grey;
         }
-    }
-
-    &.___bookmarks {
-        display: none;
-        .icon(bookmark);
-        &:before {
-            /* icon height */
-            font-size: 2.1rem;
-        }
-
-        &.___is-active {
+        .___absolute & {
             color: @color-white;
-        }
-
-        .navigation.___logged-in & {
-            display: block;
-        }
-
-        @media (max-width: @screen-md-max) {
-            &:before {
-                display: none;
-            }
-        }
-
-        @media (min-width: @screen-lg) {
-            span {
-                display: none;
-            }
-        }
-    }
-
-    &.___search {
-        .icon(search);
-
-        &:before {
-            /* icon height */
-            font-size: 2.1rem;
-        }
-
-        @media (max-width: @screen-md-max) {
-            display: none;
-        }
-    }
-
-    &.___account {
-        display: none;
-
-        .navigation.___logged-in & {
-            display: flex;
-            align-items: center;
-        }
-
-        @media (max-width: @screen-md-max) {
-            padding: 0 2rem;
-        }
-
-        @media (min-width: @screen-lg) {
-            padding: 1rem 0.8rem;
-
-            span {
-                display: none;
-            }
-        }
-    }
-
-    &.___login,
-    &.___register {
-        .navigation.___logged-in & {
-            display: none;
-        }
-
-        @media (min-width: @screen-lg) {
-            padding: 0;
-            color: @color-white;
-
             &:hover {
                 color: @color-grey;
             }
         }
     }
-
+    &.___bookmarks {
+        .icon(bookmark);
+        &:before {
+            /* icon height */
+            font-size: 2.1rem;
+        }
+        @media (max-width: @screen-md-max) {
+            &:before {
+                display: none;
+            }
+        }
+        @media (min-width: @screen-lg) {
+            &.___is-active {
+                color: @color-white;
+            }
+            span {
+                display: none;
+            }
+        }
+    }
+    &.___search {
+        .icon(search);
+        &:before {
+            /* icon height */
+            font-size: 2.1rem;
+        }
+        @media (max-width: @screen-md-max) {
+            display: none;
+        }
+    }
+    &.___account {
+        display: flex;
+        align-items: center;
+        @media (max-width: @screen-md-max) {
+            padding: 0 2rem;
+        }
+        @media (min-width: @screen-lg) {
+            padding: 1rem 0.8rem;
+            span {
+                display: none;
+            }
+        }
+    }
+    &.___login,
+    &.___register {
+        @media (min-width: @screen-lg) {
+            padding: 0;
+            color: @color-white;
+            &:hover {
+                color: @color-grey;
+            }
+        }
+    }
     &.___login {
         @media (min-width: @screen-lg) {
             &:after {
                 content: '/';
                 color: @color-secondary--light;
                 margin: 0 0.5rem;
+
+                .navigation.___absolute & {
+                    color: white;
+                }
             }
         }
     }
@@ -377,27 +245,249 @@ This file contains the styling for the main navigation.
         background-size: cover;
         box-shadow: inset 0 0 0 0.1rem transparent;
         transition: box-shadow @trans-fast;
-
         .navigation__action:hover & {
             box-shadow: inset 0 0 0 0.1rem @color-grey;
         }
     }
 }
 
-.navigation__search-text {
+body.___leraar {
+    .skip-navigation__link {
         display: none;
-        line-height: normal;
-        font-weight: bold;
-        margin: 0 0 0 0.4rem;
+    }
 
-    @media (min-width: @screen-sm) {
-        span {
-            display: inline;
+    .navigation {
+        position: relative;
+        user-select: none;
+        &:not(.___absolute) {
+            background-color: @color-primary;
+        }
+        &.___absolute {
+            position: absolute;
+            z-index: 9;
+            width: 100%;
+        }
+        @media (max-width: @screen-md-max) {
+            > .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+    }
+
+    .navigation__links {
+        @media (min-width: @screen-lg) {
+            float: left;
+        }
+    }
+    //
+    // Links
+    //
+    .navigation__link {
+        display: block;
+        position: relative;
+        text-decoration: none;
+        padding: 0 2rem;
+        transition: color @trans-fast, background-color @trans-fast;
+        // MOBILE & TABLET
+        @media (max-width: @screen-md-max) {
+            color: @color-black;
+            line-height: 3.2rem;
+            &:hover {
+                background-color: @color-tertiary--lighter;
+            }
+            &.___is-active:not(.___home) {
+                color: @color-secondary;
+            }
+        }
+        // DESKTOP
+        @media (min-width: @screen-lg) {
+            color: @color-white;
+            line-height: 6rem;
+            &:hover:not(.___is-active) {
+                color: @color-grey;
+            }
+            &.___is-active:not(.___home) {
+                background-color: @color-primary--light;
+            }
+            // Hide mobile navigation links (desktop)
+            &.___mobile {
+                display: none;
+            }
+        }
+    }
+    // Link - Highlight home on mobile
+    .navigation__link.___home {
+        .icon(home);
+        &:before {
+            width: 100%;
+            font-size: 2.8rem;
+            color: @color-white;
+            transition: color @trans-fast;
+        }
+        // MOBILE & TABLET
+        @media (max-width: @screen-md-max) {
+            font-weight: bold;
+            line-height: 5.2rem;
+            margin: 0 0 1rem 0;
+            color: @color-black;
+            &:before {
+                display: none;
+            }
+        }
+        @media (min-width: @screen-lg) {
+            width: 6rem;
+            padding: 0;
+            color: transparent;
+            overflow: hidden;
+            text-align: center;
+            white-space: nowrap;
+            &:not(.___is-active):hover:before {
+                color: @color-grey;
+            }
+        }
+    }
+    .navigation__link.___pleio {
+        margin: 3.2rem 0 0 0;
+        @media (min-width: @screen-lg) {
+            display: none;
         }
     }
 }
 
-.navigation__login,
-.navigation__register {
+body.___rijkshuisstijl {
+    .navigation {
+        position: relative;
+        background-color: @color-tertiary;
+        user-select: none;
+    }
 
+    .navigation__wrapper {
+        float: left;
+    }
+
+    .skip-navigation__link {
+        display: block;
+        position: absolute;
+        z-index: 1;
+        background-color: @color-tertiary;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        top: -6.5rem;
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+        &:focus {
+            opacity: 1;
+            width: auto;
+            overflow: auto;
+            padding: 1.1rem;
+        }
+    }
+
+    //
+    // Links
+    //
+    .navigation__link {
+        display: block;
+        position: relative;
+        color: @color-black;
+        text-decoration: none;
+        line-height: 3.2rem;
+        padding: 0 2rem;
+        transition: color @trans-fast, background-color @trans-fast;
+        // MOBILE & TABLET
+        @media (max-width: @screen-md-max) {
+            // There is no distinction between top and sub link states (mobile)
+            &.___is-active {
+                color: @color-quaternary;
+            }
+            &:hover {
+                background-color: @color-navigation-hover;
+            }
+        }
+        // DESKTOP
+        @media (min-width: @screen-lg) {
+            font-weight: bold;
+            line-height: 4.5rem;
+            &:hover {
+                background-color: @color-navigation-hover;
+            }
+            &.___is-active {
+                line-height: 4.5rem;
+                background-color: @color-tertiary--light;
+                .wide-dropdown-open & {
+                    background-color: transparent;
+                }
+            }
+            // Hide mobile navigation links (desktop)
+            &.___mobile {
+                display: none;
+            }
+        }
+    }
+    // Link - Highlight home on mobile
+    .navigation__link.___home {
+        // MOBILE & TABLET
+        @media (max-width: @screen-md-max) {
+            font-weight: bold;
+            line-height: 5.2rem;
+            margin: 0 0 1rem 0;
+            color: @color-black;
+        }
+    }
+    //
+    //
+    //
+    // SEARCH
+    //
+    //
+    .navigation__search {
+        float: right;
+        padding: 0 2rem;
+        color: @color-black;
+        text-decoration: none;
+        line-height: 4rem;
+        transition: background-color @trans-fast;
+        &:hover {
+            background-color: @color-navigation-hover;
+        }
+        .icon(search);
+        &:before {
+            position: relative;
+            top: -0.1rem;
+            line-height: normal;
+            /* icon height */
+            font-size: 1.2rem;
+        }
+        @media (min-width: @screen-lg) {
+            line-height: 4.5rem;
+        }
+    }
+    //
+    //
+    //
+    // INFOCART
+    //
+    //
+    .navigation__infocart {
+        float: right;
+        padding: 0 2rem;
+        color: @color-black;
+        font-weight: bold;
+        text-decoration: none;
+        text-transform: lowercase;
+        line-height: 4rem;
+        transition: background-color @trans-fast;
+        @media (min-width: @screen-lg) {
+            line-height: 4.5rem;
+        }
+        &:hover {
+            background-color: @color-navigation-hover;
+        }
+        &.___is-active {
+            background-color: @color-secondary;
+        }
+    }
 }

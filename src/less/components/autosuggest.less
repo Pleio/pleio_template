@@ -1,0 +1,60 @@
+.autosuggest {
+    position: relative;
+
+    &.___is-visible {
+        box-shadow: @box-shadow;
+    }
+}
+
+.autosuggest__input {
+    .autosuggest.___is-visible & {
+        border-color: white;
+        border-bottom: 1px solid @color-grey--20;
+
+        &:focus {
+            border-color: white;
+            border-bottom: 1px solid @color-grey--20;
+        }
+    }
+}
+
+.autosuggest__list {
+    position: absolute;
+    width: 100%;
+    background: white;
+    z-index: 1;
+    padding: 0.6rem 0;
+    max-height: (3.2rem * 5) + 1.2rem;
+    line-height: 3.2rem;
+    overflow-y: auto;
+    transition: opacity @trans-fast, visibility @trans-fast;
+    box-shadow: @box-shadow;
+    opacity: 0;
+    visibility: hidden;
+
+    .autosuggest.___is-visible & {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        padding: 0.5rem 0;
+        line-height: 2.8rem;
+        max-height: (2.8rem * 5) + 1rem;
+    }
+
+    > li {
+        display: block;
+        padding: 0 1.6rem;
+        transition: color @trans-fast;
+        cursor: pointer;
+
+        &:hover {
+            color: @color-secondary;
+        }
+
+        @media ( max-width: @screen-xs-max ) {
+            padding: 0 1.4rem;
+        }
+    }
+}

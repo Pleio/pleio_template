@@ -1,0 +1,71 @@
+.option-list {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 23rem;
+    padding: 0.8rem 0;
+    background-color: @color-white;
+    text-align: left;
+    box-shadow: @box-shadow;
+    z-index: 1;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility @trans-fast, opacity @trans-fast;
+
+    .___show-options & {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .contextual__tool & {
+        top: 3.6rem;
+        right: auto;
+        left: 0;
+        width: auto;
+        white-space: nowrap;
+    }
+
+    li {
+        display: flex; align-items: center;
+        padding: 0.4rem 2rem;
+        line-height: @line-height--base;
+        color: @color-black;
+        font-weight: normal;
+        transition: color @trans-fast;
+
+        .contextual__tool & {
+            padding: 0 1.5rem;
+            font-size: @font-size--medium;
+            line-height: 2.8rem;
+        }
+
+        &.___is-active,
+        &:hover {
+            color: @color-secondary;
+        }
+
+        &.___align-left {
+            .icon(align-left);
+            &:before {
+                font-size: 1.2rem;
+                margin: 0 0.8rem 0 0;
+            }
+        }
+
+        &.___align-center {
+            .icon(align-center);
+            &:before {
+                font-size: 1.2rem;
+                margin: 0 0.8rem 0 0;
+            }
+        }
+
+        &.___align-right {
+            .icon(align-right);
+            &:before {
+                font-size: 1.2rem;
+                margin: 0 0.8rem 0 0;
+            }
+        }
+    }
+}
