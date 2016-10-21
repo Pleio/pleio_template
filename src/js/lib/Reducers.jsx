@@ -1,6 +1,6 @@
 export const currentLanguage = (state = {}, action) => {
     switch (action.type) {
-        case 'CHANGE_LANG':
+        case "CHANGE_LANG":
             return action.lang
         default:
             return state
@@ -9,9 +9,11 @@ export const currentLanguage = (state = {}, action) => {
 
 export const modal = (state = {}, action) => {
     switch (action.type) {
-        case 'SHOW_MODAL':
+        case "SHOW_MODAL":
+            document.body.classList.add("modal__open")
             return action.name
-        case 'HIDE_MODAL':
+        case "HIDE_MODAL":
+            document.body.classList.remove("modal__open")
             return null
         default:
             return state

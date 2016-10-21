@@ -3,15 +3,23 @@ import React from 'react'
 export default class NotFound extends React.Component {
     render() {
         return (
-            <section className="section not-found">
+            <section className="section">
                 <div className="container">
-                    <h2 className="rhs-section__subtitle">
-                        Sorry, deze pagina is niet beschikbaar
-                    </h2>
-                    <p>
-                        De link waarop je hebt geklikt, is mogelijk buiten werking of de pagina is verwijderd.
-                    </p>
-                    <img src="/mod/pleio_template/src/images/404.svg" className="not-found__image" />
+                    <div className="row">
+                        <div className="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+                            <div className="http-error-page">
+                                <div className="http-error-page__title">
+                                    Sorry, deze pagina is niet beschikbaar
+                                </div>
+                                <div className="http-error-page__text">
+                                    De link waarop je hebt geklikt, is mogelijk buiten werking of de pagina is verwijderd.
+                                </div>
+                                <div className="http-error-page__icon">
+                                    <div className="icon-not-found"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         )

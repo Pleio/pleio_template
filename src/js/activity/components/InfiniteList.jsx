@@ -95,11 +95,9 @@ class InfiniteList extends React.Component {
         }
 
         return (
-            <div className="container" ref="infiniteScroll">
-                <div className="row">
+            <div ref="infiniteScroll" className={this.props.className}>
                     {noItems}
                     {children}
-                </div>
             </div>
         )
     }

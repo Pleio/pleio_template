@@ -14,30 +14,13 @@ class Login extends React.Component {
     constructor(props) {
         super(props)
 
-        this.onChangeUsername = this.onChangeUsername.bind(this)
-        this.onChangePassword = this.onChangePassword.bind(this)
-
         this.showRegister = this.showRegister.bind(this)
         this.showForgotPassword = this.showForgotPassword.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
 
         this.state = {
-            username: "",
-            password: "",
             errors: null
         }
-    }
-
-    onChangeUsername(e) {
-        this.setState({
-            username: e.target.value
-        })
-    }
-
-    onChangePassword(e) {
-        this.setState({
-            password: e.target.value
-        })
     }
 
     showRegister(e) {
@@ -57,13 +40,15 @@ class Login extends React.Component {
             errors: null
         })
 
+        let values = this.refs.form.getValues()
+
         this.props.mutate({
             variables: {
                 input: {
                     clientMutationId: 1,
-                    username: this.state.username,
-                    password: this.state.password,
-                    rememberMe: this.state.rememberMe
+                    username: values.username,
+                    password: values.password,
+                    rememberMe: false
                 }
             }
         }).then(({data}) => {
@@ -88,9 +73,9 @@ class Login extends React.Component {
         return (
             <Modal ref="modal" id="login" title="Welkom op Leraar.nl" small={true} isBlue={true}>
                 {errors}
-                <Form className="login" onSubmit={this.onSubmit}>
-                    <InputField name="username" type="text" placeholder="E-mailadres" className="form__input" onChange={this.onChangeUsername} value={this.state.username} />
-                    <InputField name="password" type="password" placeholder="Wachtwoord" className="form__input" onChange={this.onChangePassword} value={this.state.password} />
+                <Form ref="form" className="login" onSubmit={this.onSubmit}>
+                    <InputField name="username" type="text" placeholder="E-mailadres" className="form__input" rules="required" />
+                    <InputField name="password" type="password" placeholder="Wachtwoord" className="form__input" rules="required" />
 
                     <button className="button ___block ___large ___primary" type="submit">
                         Inloggen

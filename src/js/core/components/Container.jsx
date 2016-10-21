@@ -3,6 +3,7 @@ import TopMenu from "../containers/TopMenu"
 import Login from "../Login"
 import Register from "../Register"
 import ForgotPassword from "../ForgotPassword"
+import SearchOverlay from "../../search/components/SearchOverlay"
 
 export default class Container extends React.Component {
     render() {
@@ -17,6 +18,7 @@ export default class Container extends React.Component {
                 <Login />
                 <Register />
                 <ForgotPassword />
+                <SearchOverlay />
             </div>
         )
     }

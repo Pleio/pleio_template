@@ -5,10 +5,15 @@ import Lead from "./components/Lead"
 import ContentFilters from "../core/containers/ContentFilters"
 import UsersOnline from "../core/containers/UsersOnline"
 import Card from "./components/Card"
+import Recommended from "./components/Recommended"
+import Trending from "./components/Trending"
+import Initiative from "./components/Initiative"
 
 export default class Activity extends React.Component {
     constructor(props) {
         super(props)
+
+        this.onChangeFilter = (tags) => this.setState({ tags })
 
         this.state = {
             tags: []
@@ -23,12 +28,15 @@ export default class Activity extends React.Component {
                     <ContentFilters onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags} selectClassName="___margin-top ___margin-bottom">
                         <UsersOnline />
                     </ContentFilters>
-                    <div className="col-sm-12 col-lg-8">
-                        <ActivityList childClass={Card} tags={[]} offset={0} limit={50} />
-                    </div>
-                    <div className="col-sm-12 col-lg-4 last-lg top-lg">
-                        <div className="row fill">
+                    <div className="row">
+                        <div className="col-sm-12 col-lg-4 last-lg top-lg">
+                            <div className="row fill">
+                                <Recommended />
+                                <Trending />
+                                <Initiative />
+                            </div>
                         </div>
+                        <ActivityList childClass={Card} className="col-sm-12 col-lg-8" tags={this.state.tags} offset={0} limit={50} />
                     </div>
                 </div>
             </section>

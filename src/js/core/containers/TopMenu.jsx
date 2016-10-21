@@ -83,7 +83,7 @@ class TopMenu extends React.Component {
                         <div className="mobile-navigation__trigger" onClick={this.onMobileMenuToggle}>
                         </div>
                         <a href="/" className="mobile-navigation__home"></a>
-                        <UserMobileMenu viewer={this.props.data.viewer} k/>
+                        <UserMobileMenu viewer={this.props.data.viewer} toggleMenu={this.onMobileMenuToggle} />
                     </div>
                 </div>
             </nav>

@@ -8942,6 +8942,9 @@ html,
 body {
   overflow-y: initial;
 }
+.modal__open {
+  overflow: hidden;
+}
 .navigation__action.___bookmarks {
   display: block;
 }

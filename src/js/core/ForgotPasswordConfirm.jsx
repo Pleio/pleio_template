@@ -66,7 +66,7 @@ class ForgotPasswordConfirm extends React.Component {
             body = (
                 <form className="form login" onSubmit={this.onSubmit}>
                     <p>Klik op de knop om een nieuw wachtwoord per e-mail toegestuurd te krijgen.</p>
-                    <div className="form__actions ___end">
+                    <div className="buttons ___end">
                         <button className="button ___block ___large ___primary">
                             Aanvragen
                         </button>
@@ -77,7 +77,7 @@ class ForgotPasswordConfirm extends React.Component {
             body = (
                 <form className="form">
                     <p>Binnen enkele minuten ontvang je een e-mail met je nieuwe wachtwoord.</p>
-                    <div className="form__actions ___end ___margin-top">
+                    <div className="buttons ___end ___margin-top">
                         <div className="button__underline" onClick={this.showLogin}>
                             Terug naar inloggen
                         </div>
@@ -87,7 +87,7 @@ class ForgotPasswordConfirm extends React.Component {
         }
 
         return (
-            <Modal id="register" title="Wachtwoord vergeten?" steps={[2,2]} small={true} noParent={this.state.showMe}>
+            <Modal id="register" title="Wachtwoord vergeten?" steps={[2,2]} small={true} noParent={this.state.showMe} isBlue={true}>
                 {errors}
                 {body}
             </Modal>

@@ -18,7 +18,7 @@ $lang = get_current_language();
     <meta name="relative-path" content="">
     <link href="/mod/pleio_template/build/all.css?v=<?php echo $CONFIG->lastcache; ?>" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body class="___leraar">
     <div id="react-root" class="page-layout">
         <header class="page-layout__header">
             <?php echo elgg_view("page/elements/header"); ?>

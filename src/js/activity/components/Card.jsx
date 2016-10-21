@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router"
 
 export default class Card extends React.Component {
     constructor(props) {
@@ -23,13 +24,17 @@ export default class Card extends React.Component {
                 return this.renderBlog()
             case "question":
                 return this.renderQuestion()
+            default:
+                return (
+                    <div></div>
+                )
         }
     }
 
     renderNews() {
         return (
             <div className="card-tile-container">
-                <a href="nieuws-bericht.html" className="card-tile ___full-image ___small-card ___leren ___no-image">
+                <Link to={`/news/${this.props.object.guid}`} className="card-tile ___full-image ___small-card ___leren ___no-image">
                     <div className="card-tile__content">
                         <h3 className="card-tile__title">
                             {this.props.object.title}
@@ -39,7 +44,7 @@ export default class Card extends React.Component {
                             <span>Lees meer</span>
                         </div>
                     </div>
-                </a>
+                </Link>
             </div>
         )
     }

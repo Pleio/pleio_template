@@ -7,6 +7,8 @@ import gql from "graphql-tag"
 import Errors from "./components/Errors"
 import client from "../lib/client"
 import Modal from "./components/Modal"
+import Form from "./components/Form"
+import InputField from "./components/InputField"
 
 class Register extends React.Component {
     constructor(props) {
@@ -19,13 +21,6 @@ class Register extends React.Component {
         }
 
         this.gotoStep = (number) => (this.setState({step: number}))
-
-        this.changeName = (e) => this.setState({name: e.target.value})
-        this.changeEmail = (e) => this.setState({email: e.target.value})
-        this.changePassword = (e) => this.setState({password: e.target.value})
-        this.changePasswordAgain = (e) => this.setState({passwordAgain: e.target.value})
-        this.changeTerms = (e) => this.setState({terms: e.checked})
-        this.changeNewsletter = (e) => this.setState({newsletter: e.checked})
 
         this.showLogin = this.showLogin.bind(this)
         this.onRegister = this.onRegister.bind(this)
@@ -82,48 +77,37 @@ class Register extends React.Component {
             content = (
                 <div>
                     <p className="___small">Registreren is niet noodzakelijk indien je al een Pleio account hebt.</p>
-                    <form className="form login" onSubmit={(e) => {e.preventDefault(); this.gotoStep(2)}}>
-                        <label className="form__item">
-                            <div className="form__label">Voor- en achternaam*</div>
-                            <input type="text" required placeholder="Voor- en achternaam" className="form__input" value={this.state.name} onChange={this.changeName} />
-                        </label>
-                        <label className="form__item">
-                            <div className="form__label">E-mailadres*</div>
-                            <input type="email" required placeholder="E-mailadres" className="form__input" value={this.state.email} onChange={this.changeEmail} />
-                        </label>
-                        <label className="form__item">
-                            <div className="form__label">Wachtwoord*</div>
-                            <input type="password" required placeholder="Minimaal 6 karakters" className="form__input" value={this.state.password} onChange={this.changePassword} />
-                        </label>
-                        <label className="form__item">
-                            <div className="form__label">Wachtwoord verificatie*</div>
-                            <input type="password" required placeholder="Vul je wachtwoord nogmaals in" className="form__input" value={this.state.passwordAgain} onChange={this.changePasswordAgain} />
-                        </label>
+                    <Form className="form login" onSubmit={(e) => {e.preventDefault(); this.gotoStep(2)}}>
+                        <InputField type="text" name="name" placeholder="Voor- en achternaam" className="form__input" value={this.state.name} rules="required" autofocus />
+                        <InputField type="text" name="email" placeholder="E-mailadres" className="form__input" value={this.state.email} rules="required|email" />
+                        <InputField type="password" name="password" placeholder="Minimaal 8 karakters" className="form__input" value={this.state.password} rules="required|min:8" />
+                        <InputField type="password" name="passwordAgain" placeholder="Vul je wachtwoord nogmaals in" className="form__input" value={this.state.passwordAgain} rules="required|min:8" />
+
                         <div className="form__actions ___space-between">
                             <a href="#" onClick={this.showLogin} className="form__link">Inloggen</a>
                             <button className="button" type="submit">Volgende</button>
                         </div>
-                    </form>
+                    </Form>
                 </div>
             )
         } else {
             content = (
-                <form className="form login" onSubmit={this.onRegister}>
+                <Form className="form login" onSubmit={this.onRegister}>
                     <div className="form__conditions">
                         <div className="checkbox">
-                            <input id="condition-1" name="condition-1" type="checkbox" required value={this.state.terms} onChange={this.changeTerms} />
+                            <InputField id="condition-1" name="terms" type="checkbox" rules="required" />
                             <label htmlFor="condition-1">Ik ga akkoord met de Algemene Voorwaarden</label>
                         </div>
                         <div className="checkbox">
-                            <input id="condition-2" name="condition-2" type="checkbox" value={this.state.newsletter} onChange={this.changeNewsletter} />
+                            <InputField id="condition-2" name="condition-2" type="checkbox" />
                             <label htmlFor="condition-2">Ik wil de nieuwsbrief ontvangen</label>
                         </div>
                     </div>
                     <div className="form__actions ___end">
-                        <div href="#" onClick={() => gotoStep(1)} className="button__underline">Vorige</div>
+                        <div href="#" onClick={() => this.gotoStep(1)} className="button__underline">Vorige</div>
                         <button className="button ___primary" type="submit">Registreer</button>
                     </div>
-                </form>
+                </Form>
             )
         }
 
