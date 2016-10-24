@@ -297,9 +297,17 @@ class Resolver {
     }
 
     static function getViewer() {
+        $user = elgg_get_logged_in_user_entity();
+        if ($user) {
+            $tags = $user->tags;
+        } else {
+            $tags = [];
+        }
+
         return [
             "guid" => 0,
-            "loggedIn" => elgg_is_logged_in()
+            "loggedIn" => elgg_is_logged_in(),
+            "tags" => $tags
         ];
     }
 

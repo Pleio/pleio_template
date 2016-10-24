@@ -8,19 +8,33 @@ export default class Switch extends React.Component {
             checked: this.props.checked || false
         }
 
-        this.onClick = (e) => this.setState({checked: !this.state.checked})
+        this.onChange = this.onChange.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.checked !== this.props.checked) {
+            this.setState({
+                checked: nextProps.checked
+            })
+        }
+    }
+
+    onChange(e) {
+        const newState = !this.state.checked
+
         this.setState({
-            checked: nextProps.checked
+            checked: newState
         })
+
+        if (this.props.onChange) {
+            this.props.onChange(this.props.name, newState)
+        }
     }
 
     render() {
         return (
-            <div className="switch" onClick={this.onClick}>
-                <input tabIndex={0} type="checkbox" id={this.props.id} name={this.props.name} onChange={this.props.onChange} checked={this.state.checked} />
+            <div className="switch" onClick={this.onChange}>
+                <input ref="checkbox" tabIndex={0} type="checkbox" id={this.props.id} name={this.props.name} checked={this.state.checked} readOnly={true} />
                 <label htmlFor={this.props.id}>
                     {this.props.label}
                 </label>

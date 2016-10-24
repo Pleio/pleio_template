@@ -3,6 +3,8 @@ import classnames from "classnames"
 import { EditorState } from "draft-js"
 import InputField from "./InputField"
 import RichTextField from "./RichTextField"
+import SelectField from "./SelectField"
+import CheckField from "./CheckField"
 
 class Form extends React.Component {
     constructor(props) {
@@ -100,7 +102,9 @@ class Form extends React.Component {
         let children = React.Children.map(this.props.children, (child) => {
             switch (child.type) {
                 case InputField:
+                case SelectField:
                 case RichTextField:
+                case CheckField:
                     return this.wrapComponent(child)
                 default:
                     return child

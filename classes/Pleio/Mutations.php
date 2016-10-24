@@ -41,6 +41,7 @@ class Mutations {
         $name = $input['name'];
         $newsletter = $input['newsletter'];
         $terms = $input['terms'];
+        $tags = $input['tags'];
 
         $user = get_user_by_email($email);
         if ($user) {
@@ -57,6 +58,12 @@ class Mutations {
                 add_entity_relationship($new_user->guid, "subscribed", $site->guid);
             } else {
                 add_entity_relationship($new_user->guid, "blacklisted", $site->guid);
+            }
+
+            if ($tags) {
+                $ia = elgg_set_ignore_access(true);
+                $new_user->tags = filter_tags($tags);
+                elgg_set_ignore_access($ia);
             }
 
             if ($terms) {

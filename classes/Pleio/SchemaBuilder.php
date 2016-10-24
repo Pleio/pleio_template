@@ -240,6 +240,9 @@ class SchemaBuilder {
                 "loggedIn" => [
                     "type" => Type::nonNull(Type::boolean())
                 ],
+                "tags" => [
+                    "type" => Type::listOf(Type::string())
+                ],
                 "user" => [
                     "type" => $userType,
                     "resolve" => function($viewer) {
@@ -475,6 +478,9 @@ class SchemaBuilder {
                 ],
                 "terms" => [
                     "type" => Type::boolean()
+                ],
+                "tags" => [
+                    "type" => Type::listOf(Type::string())
                 ]
             ],
             "outputFields" => [

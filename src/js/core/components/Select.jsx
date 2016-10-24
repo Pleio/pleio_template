@@ -12,16 +12,15 @@ export default class Select extends React.Component {
 
         this.onSelect = this.onSelect.bind(this)
         this.onToggle = this.onToggle.bind(this)
+        this.isMobile = this.isMobile.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.state.value === nextProps.value) {
-            return;
+        if (nextProps.value !== this.props.value) {
+            this.setState({
+                value: this.props.value
+            })
         }
-
-        this.setState({
-            value: nextProps.value ? nextProps.value : nextProps.defaultValue
-        })
     }
 
     componentWillUpdate(nextProps, nextState) {
@@ -33,12 +32,15 @@ export default class Select extends React.Component {
     }
 
     onToggle(e) {
+        e.preventDefault()
         this.setState({
             isOpen: !this.state.isOpen
         })
     }
 
     onSelect(e, value) {
+        e.preventDefault()
+
         if (value) {
             this.setState({
                 value
@@ -50,37 +52,59 @@ export default class Select extends React.Component {
         })
     }
 
+    isMobile() {
+        let userAgent = (window.navigator.userAgent||window.navigator.vendor||window.opera),
+            isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(userAgent);
+
+        let mobileState = isMobile ? true : false;
+
+        return mobileState;
+    }
+
     render() {
         let options = {};
         if (this.props.options) {
             options = this.props.options;
         }
 
+        let selectOptions = Object.keys(options).map(option => (
+            <option key={option} value={option}>
+                {options[option]}
+            </option>
+        ))
+
         let ulOptions = Object.keys(options).map(option => (
-            <li key={option} className={classNames({"selector__option": true, "___is-selected": option == this.state.value})} onClick={(e) => this.onSelect(e, option)}>
+            <li key={option} className={classNames({ "selector__option": true, "___is-selected": option == this.state.value, "___is-disabled": option == "disabled" })} onClick={option != "disabled" ? (e) => this.onSelect(e, option) : null} >
                 {options[option]}
             </li>
         ))
 
         let selected = "Maak een keuze"
-        if (this.state.value !== null) {
+        if (typeof(this.state.value) !== "undefined") {
             selected = options[this.state.value]
         }
 
+        let placeholder
+        if (this.props.placeholder) {
+            placeholder = (
+                <li className="selector__option ___is-disabled">
+                    {this.props.placeholder}
+                </li>
+            )
+        }
+
         return (
-            <div className={classNames({"selector":true, "___mobile-margin-bottom":true}) + " " + this.props.className}>
-                <label htmlFor="sectorFilter" className="selector__label">Sector</label>
-                <div className={classNames({"selector": true, "___is-open": this.state.isOpen})}>
-                    <div className="selector__select" tabIndex="0" onClick={this.onToggle}>
-                        {selected}
-                    </div>
-                    <ul className="selector__options">
-                        <li className="selector__option ___is-disabled" data-value="" onClick={this.onSelect}>
-                            Maak een keuze
-                        </li>
-                        {ulOptions}
-                    </ul>
+            <div className={classNames({ "selector": true, [this.props.className]: true, "___is-open": this.state.isOpen, "___is-mobile": this.isMobile() })} onBlur={this.onToggle}>
+                <select readOnly value={ this.state.value || "disabled" }>
+                    {selectOptions}
+                </select>
+                <div className={classNames({ "selector__select": true, "___not-selected": (this.state.value ? false : true) })} tabIndex="0" onClick={this.onToggle}>
+                    {selected}
                 </div>
+                <ul className="selector__options">
+                    {placeholder}
+                    {ulOptions}
+                </ul>
             </div>
         )
     }
