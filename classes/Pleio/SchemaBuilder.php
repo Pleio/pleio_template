@@ -285,26 +285,33 @@ class SchemaBuilder {
             ]
         ]);
 
+        $activityTypeEnum = new EnumType([
+            "name" => "ActivityType",
+            "description" => "The type of activity",
+            "values" => [
+                "create" => [
+                    "value" => "create"
+                ],
+                "update" => [
+                    "value" => "update"
+                ]
+            ]
+        ]);
+
         $activityType = new ObjectType([
             "name" => "Activity",
             "fields" => [
                 "guid" => [
                     "type" => Type::nonNull(Type::string())
                 ],
-                "subject" => [
-                    "type" => Type::nonNull($userType),
-                    "resolve" => function($activity) {
-                        return Resolver::getUser($activity["subject_guid"]);
-                    }
+                "type" => [
+                    "type" => Type::nonNull($activityTypeEnum),
                 ],
                 "object" => [
                     "type" => Type::nonNull($objectType),
                     "resolve" => function($activity) {
                         return Resolver::getEntity(null, ["guid" => $activity["object_guid"]], null);
                     }
-                ],
-                "timeCreated" => [
-                    "type" => Type::string()
                 ]
             ]
         ]);
@@ -315,7 +322,7 @@ class SchemaBuilder {
                 "total" => [
                     "type" => Type::nonNull(Type::int())
                 ],
-                "entities" => [
+                "activities" => [
                     "type" => Type::listOf($activityType)
                 ]
             ]

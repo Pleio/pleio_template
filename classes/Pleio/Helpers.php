@@ -73,4 +73,21 @@ class Helpers {
             }
         }
     }
+
+    static function stringsToMetastrings($input) {
+        $metastrings = [];
+
+        if (!is_array($metastrings)) {
+            return $metastrings;
+        }
+
+        foreach ($input as $tag) {
+            $id = get_metastring_id($tag);
+            if ($id) {
+                $metastrings[] = $id;
+            }
+        }
+
+        return $metastrings;
+    }
 }

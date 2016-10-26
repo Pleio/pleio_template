@@ -133,6 +133,15 @@ class Mutations {
     }
 
     static function addEntity($input) {
+        $site = elgg_get_site_entity();
+        if (!$site->isUser()) {
+            if ($site->canJoin()) {
+                $site->addUser();
+            } else {
+                throw new Exception("not_member_of_site");
+            }
+        }
+
         if (!in_array($input["type"], array("group", "object"))) {
             throw new Exception("invalid_type");
         }

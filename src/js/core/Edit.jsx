@@ -11,6 +11,7 @@ import { stringToTags } from "../lib/helpers"
 import RichTextField from "./components/RichTextField"
 import Form from "./components/Form"
 import InputField from "./components/InputField"
+import SwitchField from "./components/SwitchField"
 
 class EditModal extends React.Component {
     constructor(props) {
@@ -58,6 +59,7 @@ class EditModal extends React.Component {
                     <InputField name="title" type="text" placeholder="Titel" className="form__input" value={this.props.entity.title} rules="required" autofocus />
                     <RichTextField name="description" placeholder="Beschrijving" value={this.props.entity.description} rules="required" />
                     <InputField name="tags" type="text" placeholder="Tags" className="form__input" value={this.props.entity.tags} />
+                    <SwitchField name="isFeatured" type="text" className="form__input" value={this.props.entity.isFeatured} />
                     <button className="button" type="submit">
                         Wijzigen
                     </button>

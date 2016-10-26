@@ -47,7 +47,7 @@ class InfiniteList extends React.Component {
             return;
         }
 
-        if (this.props.data.activities.entities.length >= this.props.data.activities.entities.total) {
+        if (this.props.data.activities.activities.length >= this.props.data.activities.activities.total) {
             return;
         }
 
@@ -69,7 +69,7 @@ class InfiniteList extends React.Component {
                 if (!fetchMoreResult.data) { return previousResult }
 
                 previousResult.activities = Object.assign({}, previousResult.activities, {
-                    entities: [...previousResult.activities.entities, ...fetchMoreResult.data.activities.entities]
+                    activities: [...previousResult.activities.activities, ...fetchMoreResult.data.activities.activities]
                 })
 
                 return previousResult;
@@ -84,13 +84,13 @@ class InfiniteList extends React.Component {
     render() {
         let children = [];
         if (this.props.data.activities) {
-            children = this.props.data.activities.entities.map((child, i) => (
+            children = this.props.data.activities.activities.map((child, i) => (
                 <this.props.childClass key={i} subtype={this.props.subtype} {...child} />
             ))
         }
 
         let noItems = ""
-        if (this.props.data.activities && this.props.data.activities.entities.length === 0) {
+        if (this.props.data.activities && this.props.data.activities.activities.length === 0) {
             noItems = "Er zijn geen items in deze categorie."
         }
 

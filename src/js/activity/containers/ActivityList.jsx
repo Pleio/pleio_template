@@ -7,20 +7,19 @@ const Query = gql`
     query InfiniteList($offset: Int!, $limit: Int!, $tags: [String!]) {
         activities(offset: $offset, limit: $limit, tags: $tags) {
             total
-            entities {
+            activities {
                 guid
-                timeCreated
-                subject {
-                    guid
-                    name
-                    icon
-                }
+                type
                 object {
                     guid
+                    owner {
+                        name
+                    }
                     ... on Object {
                         title
                         url
                         subtype
+                        tags
                     }
                 }
             }

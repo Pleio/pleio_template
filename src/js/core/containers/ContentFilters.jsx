@@ -28,27 +28,23 @@ export default class ContentFilters extends React.Component {
         super(props)
 
         this.state = {
-            filter: {
-                sector: "all",
-                category: "all"
-            }
+            sector: "all",
+            category: "all"
         }
 
         this.onChangeFilter = this.onChangeFilter.bind(this)
     }
 
     onChangeFilter(name, value) {
-        const newFilter = Object.assign({}, this.state.filter, {
+        let newFilter = Object.assign(this.state, {
             [name]: value
         })
 
-        this.setState({
-            filter: newFilter
-        })
+        this.setState(newFilter)
 
         const tagsArray = Object.keys(newFilter)
             .map(key => newFilter[key])
-            .filter((value) => value != "all")
+            .filter((value) => value !== "all")
 
         if (this.props.onChange) {
             this.props.onChange(tagsArray)
@@ -59,10 +55,10 @@ export default class ContentFilters extends React.Component {
         return (
             <div className="row">
                 <div className="col-sm-4 col-lg-3">
-                    <Select name="sector" options={sectorOptions} value={this.state.filter.sector} onChange={this.onChangeFilter} className={this.props.selectClassName} />
+                    <Select name="sector" options={sectorOptions} onChange={this.onChangeFilter} value={this.state.sector} className={this.props.selectClassName} />
                 </div>
                 <div className="col-sm-4 col-lg-3">
-                    <Select name="category" options={categoryOptions} value={this.state.filter.category} onChange={this.onChangeFilter} className={this.props.selectClassName} />
+                    <Select name="category" options={categoryOptions} onChange={this.onChangeFilter} value={this.state.category} className={this.props.selectClassName} />
                 </div>
                 {this.props.children}
             </div>

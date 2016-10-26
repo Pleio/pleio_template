@@ -7,7 +7,7 @@ export default class Select extends React.Component {
 
         this.state = {
             isOpen: false,
-            value: this.props.value ? this.props.value : this.props.defaultValue
+            value: this.props.value ? this.props.value : null
         }
 
         this.onSelect = this.onSelect.bind(this)
@@ -18,16 +18,8 @@ export default class Select extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.value !== this.props.value) {
             this.setState({
-                value: this.props.value
+                value: nextProps.value
             })
-        }
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        if (nextState.value !== null && nextState.value !== this.state.value) {
-            if (this.props.onChange) {
-                this.props.onChange(this.props.name, nextState.value)
-            }
         }
     }
 
@@ -41,24 +33,19 @@ export default class Select extends React.Component {
     onSelect(e, value) {
         e.preventDefault()
 
-        if (value) {
-            this.setState({
-                value
-            })
-        }
-
         this.setState({
             isOpen: false
         })
-    }
 
-    isMobile() {
-        let userAgent = (window.navigator.userAgent||window.navigator.vendor||window.opera),
-            isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(userAgent);
+        if (!value) {
+            return
+        }
 
-        let mobileState = isMobile ? true : false;
-
-        return mobileState;
+        if (this.props.onChange) {
+            this.props.onChange(this.props.name, value)
+        } else {
+            this.setState({ value })
+        }
     }
 
     render() {
@@ -74,7 +61,11 @@ export default class Select extends React.Component {
         ))
 
         let ulOptions = Object.keys(options).map(option => (
-            <li key={option} className={classNames({ "selector__option": true, "___is-selected": option == this.state.value, "___is-disabled": option == "disabled" })} onClick={option != "disabled" ? (e) => this.onSelect(e, option) : null} >
+            <li
+                key={option}
+                className={classNames({ "selector__option": true, "___is-selected": option == this.state.value, "___is-disabled": option == "disabled" })}
+                onClick={(e) => this.onSelect(e, option)}
+            >
                 {options[option]}
             </li>
         ))
@@ -107,5 +98,12 @@ export default class Select extends React.Component {
                 </ul>
             </div>
         )
+    }
+
+    isMobile() {
+        let userAgent = (window.navigator.userAgent||window.navigator.vendor||window.opera),
+            isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(userAgent);
+
+        return isMobile ? true : false;
     }
 }

@@ -1,5 +1,7 @@
 import React from "react"
 import { Link } from "react-router"
+import { getClassFromTags } from "../../lib/helpers"
+import classnames from "classnames"
 
 export default class Card extends React.Component {
     constructor(props) {
@@ -34,7 +36,7 @@ export default class Card extends React.Component {
     renderNews() {
         return (
             <div className="card-tile-container">
-                <Link to={`/news/${this.props.object.guid}`} className="card-tile ___full-image ___small-card ___leren ___no-image">
+                <Link to={`/news/${this.props.object.guid}`} className={classnames({"card-tile ___full-image ___small-card": true, "___no-image": (this.props.object.image ? false : true), [getClassFromTags(this.props.object.tags)]: true})}>
                     <div className="card-tile__content">
                         <h3 className="card-tile__title">
                             {this.props.object.title}
@@ -52,7 +54,7 @@ export default class Card extends React.Component {
     renderBlog() {
         return (
             <div className="card-blog-post">
-                <a href="#" title="Merel Beijersbergen" style="background-image: url(&quot;assets/content/john.png&quot;);" className="card-blog-post__picture"></a>
+                <a href="#" title="Merel Beijersbergen" style={{backgroundImage: "url(/mod/pleio_template/src/content/john.png)"}} className="card-blog-post__picture"></a>
                 <div className="card-blog-post__post">
                     <div className="card-blog-post__meta">
                         <a href="#" className="card-blog-post__user">Merel Beijersbergen</a>
@@ -60,7 +62,7 @@ export default class Card extends React.Component {
                         <a href="#" className="card-blog-post__subject">Inkomstenbelasting</a>
                         <div href="#" className="card-blog-post__date">14 september 2016</div>
                     </div>
-                    <a href="blog-bericht-afbeelding.html" style="background-image: url('assets/content/lead-1.jpg');" className="card-blog-post__image"></a>
+                    <a href="blog-bericht-afbeelding.html" style={{backgroundImage: "url(/mod/pleio_template/src/content/lead-1.jpg)"}} className="card-blog-post__image"></a>
                     <a href="blog-bericht-afbeelding.html" className="card-blog-post__title">
                         Alle Itatur? Oditium ipiciumet endissi tatiunt lore voloriam imenti ommoditia desti quam ipsun
                     </a>
@@ -79,7 +81,7 @@ export default class Card extends React.Component {
     renderQuestion() {
         return (
             <div className="card-topic ___feed">
-                <a href="#" title="Ester Verschut" style="background-image: url(&quot;assets/content/sarah.jpg&quot;);" className="card-topic__picture"></a>
+                <a href="#" title="Ester Verschut" style={{backgroundImage: "url(/mod/pleio_template/src/content/john.png)"}} className="card-topic__picture"></a>
                 <div className="card-topic__post">
                     <a href="forum-bericht.html" className="card-topic__title">
                         Beëindiging van een koop- en licentieovereenkomst

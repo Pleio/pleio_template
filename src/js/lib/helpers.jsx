@@ -21,3 +21,15 @@ export function getQueryVariable(variable) {
     }
     console.log('Query variable %s not found', variable);
 }
+
+export function getClassFromTags(inputTags) {
+    const classes = new Set(["leren", "vernieuwing", "arbeidsvoorwaarden", "wetten", "actualiteit", "overig", "klas"])
+    const intersect = inputTags.filter(x => classes.has(x))
+
+    if (intersect.length > 0) {
+        return "___" + intersect[0]
+    } else {
+        return "___" + "overig"
+    }
+
+}

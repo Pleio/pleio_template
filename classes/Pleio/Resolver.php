@@ -26,40 +26,70 @@ class Resolver {
         ];
     }
 
-    static function getActivities($query) {
-        $options = array(
-            "limit" => (int) $args["limit"],
-            "offset" => (int) $args["offset"],
-        );
+    static function getActivities($a, $args, $c) {
+        global $CONFIG;
 
-        $total = elgg_get_river(array_merge($options, array(
-            "count" => true
-        )));
+        $tags = $args["tags"];
 
-        $entities = array();
-        foreach (elgg_get_river($options) as $river) {
-            $subject = $river->getSubjectEntity();
-            $object = $river->getObjectEntity();
-            if (!$subject || !$object) {
+        $bools = [
+            ["term" => [ "type" => "object" ]],
+            ["term" => [ "site_guid" => $CONFIG->site_guid ]]
+        ];
+
+        foreach ($tags as $tag) {
+            $bools[] = ["term" => [ "tags" => $tag ]];
+        }
+
+        $user = elgg_get_logged_in_user_guid();
+        $ignore_access = elgg_check_access_overrides($user);
+        if ($ignore_access != true && !elgg_is_admin_logged_in()) {
+            $bools[] = ["terms" => [ "access_id" => get_access_array() ]];
+        }
+
+        $results = \ESInterface::get()->client->search([
+            "index" => $CONFIG->elasticsearch_index,
+            "body" => [
+                "query" => [
+                    "bool" => [
+                        "must" => $bools
+                    ]
+                ],
+                "from" => (int) $args["offset"],
+                "size" => (int) $args["limit"],
+                "sort" => [
+                    "time_created" => "desc"
+                ]
+            ]
+        ]);
+
+        $total = $results['hits']['total'];
+
+        $activities = array();
+        foreach ($results['hits']['hits'] as $hit) {
+            $object = get_entity($hit['_id']);
+
+            if (!$object) {
                 continue;
             }
 
-            $entities[] = array(
-                "guid" => "activity:" . $river->id,
-                "subject_guid" => $river->subject_guid,
-                "object_guid" => $river->object_guid,
-                "timeCreated" => date("c", $river->posted)
-            );
+            $subject = $object->getOwnerEntity();
+            if ($object && $subject) {
+                $activities[] = array(
+                    "guid" => "activity:" . $object->guid,
+                    "type" => "create",
+                    "object_guid" => $object->guid
+                );
+            }
         }
 
         return [
             "total" => $total,
-            "entities" => $entities
+            "activities" => $activities
         ];
     }
 
     static function getUsersOnline($site) {
-        return count(find_active_users());
+        return find_active_users(600, 10, 0, true);
     }
 
     static function getEntity($a, $args, $c) {
@@ -83,10 +113,12 @@ class Resolver {
         if ($entity instanceof \ElggUser) {
             return [
                 "guid" => $entity->guid,
+                "ownerGuid" => $entity->owner_guid,
                 "status" => 200,
                 "type" => $entity->type,
                 "username" => $entity->username,
                 "name" => $entity->name,
+                "url" => $entity->getURL(),
                 "icon" => $entity->getIconURL("large"),
                 "timeCreated" => $entity->time_created,
                 "timeUpdated" => $entity->time_updated,
@@ -97,10 +129,13 @@ class Resolver {
         if ($entity instanceof \ElggObject) {
             return [
                 "guid" => $guid,
+                "ownerGuid" => $entity->owner_guid,
                 "status" => 200,
                 "type" => $entity->type,
                 "subtype" => $entity->getSubtype(),
+                "featured" => $entity->isFeatured ? true : false,
                 "title" => $entity->title,
+                "url" => $entity->getURL(),
                 "description" => $entity->description,
                 "timeCreated" => date("c", $entity->time_created),
                 "timeUpdated" => date("c", $entity->time_updated),
@@ -247,6 +282,7 @@ class Resolver {
                 "guid" => $entity->guid,
                 "status" => 200,
                 "ownerGuid" => $entity->owner_guid,
+                "featured" => $entity->isFeatured ? true : false,
                 "title" => $entity->title,
                 "type" => $entity->type,
                 "description" => $entity->description,
