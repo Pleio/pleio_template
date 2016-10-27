@@ -23,41 +23,25 @@ html, body {
     z-index: 0;
 }
 
-.rich-editor__controls {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}
-
-.rich-editor__button {
-    padding: 1.4rem;
-    display: inline-block;
-    color: #999;
-    cursor: pointer;
-
-    &.___is-active {
-        color: black;
-        font-weight: bold;
-    }
-}
-
-.rich-editor__editor {
-    cursor: text;
-    min-height: 200px;
-    padding: 1.4rem 1.4rem;
-    border: 0.1rem solid @color-grey--50;
-    transition: border-color @trans-fast;
-
-    &.___no-margin {
-        margin: 0;
-    }
-
-    &:focus {
-        border-color: @color-secondary;
-    }
+.editor__input {
+    min-height: 300px;
 }
 
 .form__item.form__item-error  .rich-editor__editor {
     border-color: @color-error;
+}
+
+input.___is-hidden {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.selector__options {
+    z-index: 2;
 }

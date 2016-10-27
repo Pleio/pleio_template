@@ -2,6 +2,7 @@ import React from "react"
 import { Link } from "react-router"
 import { getClassFromTags } from "../../lib/helpers"
 import classnames from "classnames"
+import BlogCard from "../../blog/components/Card"
 
 export default class Card extends React.Component {
     constructor(props) {
@@ -13,13 +14,13 @@ export default class Card extends React.Component {
     }
 
     render() {
-        if (!this.props.object) {
+        if (!this.props.entity) {
             return (
                 <div></div>
             )
         }
 
-        switch (this.props.object.subtype) {
+        switch (this.props.entity.object.subtype) {
             case "news":
                 return this.renderNews()
             case "blog":
@@ -34,12 +35,14 @@ export default class Card extends React.Component {
     }
 
     renderNews() {
+        const { guid, image, title, tags } = this.props.entity.object
+
         return (
             <div className="card-tile-container">
-                <Link to={`/news/${this.props.object.guid}`} className={classnames({"card-tile ___full-image ___small-card": true, "___no-image": (this.props.object.image ? false : true), [getClassFromTags(this.props.object.tags)]: true})}>
+                <Link to={`/news/${guid}`} className={classnames({"card-tile ___full-image ___small-card": true, "___no-image": (image ? false : true), [getClassFromTags(tags)]: true})}>
                     <div className="card-tile__content">
                         <h3 className="card-tile__title">
-                            {this.props.object.title}
+                            {title}
                         </h3>
                         <div className="read-more">
                             <div className="read-more__circle"></div>
@@ -53,28 +56,7 @@ export default class Card extends React.Component {
 
     renderBlog() {
         return (
-            <div className="card-blog-post">
-                <a href="#" title="Merel Beijersbergen" style={{backgroundImage: "url(/mod/pleio_template/src/content/john.png)"}} className="card-blog-post__picture"></a>
-                <div className="card-blog-post__post">
-                    <div className="card-blog-post__meta">
-                        <a href="#" className="card-blog-post__user">Merel Beijersbergen</a>
-                        <span>&nbsp;over&nbsp;</span>
-                        <a href="#" className="card-blog-post__subject">Inkomstenbelasting</a>
-                        <div href="#" className="card-blog-post__date">14 september 2016</div>
-                    </div>
-                    <a href="blog-bericht-afbeelding.html" style={{backgroundImage: "url(/mod/pleio_template/src/content/lead-1.jpg)"}} className="card-blog-post__image"></a>
-                    <a href="blog-bericht-afbeelding.html" className="card-blog-post__title">
-                        Alle Itatur? Oditium ipiciumet endissi tatiunt lore voloriam imenti ommoditia desti quam ipsun
-                    </a>
-                    <div className="card-blog-post__content">
-                        DGA staat op de loonlijst en ontvangt vanuit zijn werkmaatschappij € 57.500,- bruto loon. De medewerker met het hoogste salaris in de werkmaatschappij verdient hoogste salaris in de werkmaatschappij verdient.
-                    </div>
-                </div>
-                <div className="card-blog-post__actions">
-                    <div data-toggle-like="" className="button__text ___likes"><span data-toggle-like="number">14</span>&nbsp;likes</div>
-                    <div title="Bewaar" data-toggle-bookmark="" className="button__text count-bookmarks"><span data-toggle-bookmark="number">12</span></div>
-                </div>
-            </div>
+            <BlogCard entity={this.props.entity.object} />
         )
     }
 

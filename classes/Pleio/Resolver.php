@@ -134,9 +134,11 @@ class Resolver {
                 "type" => $entity->type,
                 "subtype" => $entity->getSubtype(),
                 "featured" => $entity->isFeatured ? true : false,
+                "featuredImage" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
                 "title" => $entity->title,
                 "url" => $entity->getURL(),
                 "description" => $entity->description,
+                "excerpt" => elgg_get_excerpt($entity->description),
                 "timeCreated" => date("c", $entity->time_created),
                 "timeUpdated" => date("c", $entity->time_updated),
                 "canEdit" => $entity->canEdit(),
@@ -248,7 +250,7 @@ class Resolver {
         $subtype = $args["subtype"];
         $tags = $args["tags"];
 
-        if (!in_array($subtype, array("news"))) {
+        if (!in_array($subtype, array("blog", "news", "question"))) {
             $subtype = "news";
         }
 
@@ -283,9 +285,11 @@ class Resolver {
                 "status" => 200,
                 "ownerGuid" => $entity->owner_guid,
                 "featured" => $entity->isFeatured ? true : false,
+                "featuredImage" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
                 "title" => $entity->title,
                 "type" => $entity->type,
                 "description" => $entity->description,
+                "excerpt" => elgg_get_excerpt($entity->description),
                 "timeCreated" => date("c", $entity->time_created),
                 "timeUpdated" => date("c", $entity->time_updated),
                 "tags" => Helpers::renderTags($entity->tags)

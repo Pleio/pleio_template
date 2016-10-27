@@ -85,7 +85,7 @@ class InfiniteList extends React.Component {
         let children = [];
         if (this.props.data.activities) {
             children = this.props.data.activities.activities.map((child, i) => (
-                <this.props.childClass key={i} subtype={this.props.subtype} {...child} />
+                <this.props.childClass key={i} entity={child} />
             ))
         }
 

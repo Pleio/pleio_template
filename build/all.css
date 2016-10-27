@@ -7178,9 +7178,6 @@ body.___rijkshuisstijl .navigation__infocart.___is-active {
   padding: 5.2rem 2rem 4rem 2rem;
   background-color: #fff;
 }
-.___small .modal__box {
-  max-width: 40rem;
-}
 .___full .modal__box {
   max-width: 100%;
   padding: 0 0 4rem 0;
@@ -7195,13 +7192,8 @@ body.___rijkshuisstijl .navigation__infocart.___is-active {
       flex-direction: column;
   padding: 4rem 4rem 0 4rem;
 }
-@media (max-width: 679px) {
-  .modal__box {
-    max-width: 100%;
-  }
-  .___small .modal__box {
-    max-width: 100%;
-  }
+.___small .modal__box {
+  max-width: 40rem;
 }
 @media (min-width: 680px) {
   .modal__box {
@@ -7211,6 +7203,17 @@ body.___rijkshuisstijl .navigation__infocart.___is-active {
   }
   .___full .modal__box {
     padding: 0 0 4rem 0;
+  }
+  .___small .modal__box {
+    padding: 4rem;
+  }
+}
+@media (max-width: 679px) {
+  .modal__box {
+    max-width: 100%;
+  }
+  .___small .modal__box {
+    max-width: 100%;
   }
 }
 .modal__header {
@@ -11070,37 +11073,24 @@ body {
   position: absolute;
   z-index: 0;
 }
-.rich-editor__controls {
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-.rich-editor__button {
-  padding: 1.4rem;
-  display: inline-block;
-  color: #999;
-  cursor: pointer;
-}
-.rich-editor__button.___is-active {
-  color: black;
-  font-weight: bold;
-}
-.rich-editor__editor {
-  cursor: text;
-  min-height: 200px;
-  padding: 1.4rem 1.4rem;
-  border: 0.1rem solid #CCCCCC;
-  transition: border-color 0.2s ease;
-}
-.rich-editor__editor.___no-margin {
-  margin: 0;
-}
-.rich-editor__editor:focus {
-  border-color: #009ee3;
+.editor__input {
+  min-height: 300px;
 }
 .form__item.form__item-error .rich-editor__editor {
   border-color: #d52b1e;
+}
+input.___is-hidden {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.selector__options {
+  z-index: 2;
 }
 #__bs_notify__ {
   opacity: .15 !important;

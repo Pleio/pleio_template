@@ -88,8 +88,8 @@ class Item extends React.Component {
                             </article>
                             <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} />
                             <CommentList comments={entity.comments} />
-                            <Edit title="Nieuws wijzigen" entity={entity} />
-                            <Delete title="Nieuws verwijderen" entity={entity} />
+                            <Edit title="Nieuws wijzigen" entity={entity} subtype="news" />
+                            <Delete title="Nieuws verwijderen" entity={entity} subtype="news" />
                         </div>
                     </div>
                 </div>

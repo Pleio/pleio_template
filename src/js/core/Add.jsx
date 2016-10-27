@@ -11,6 +11,7 @@ import { stringToTags } from "../lib/helpers"
 import RichTextField from "./components/RichTextField"
 import Form from "./components/Form"
 import InputField from "./components/InputField"
+import FeaturedImageField from "./components/FeaturedImageField"
 
 class AddModal extends React.Component {
     constructor(props) {
@@ -32,16 +33,19 @@ class AddModal extends React.Component {
 
         let values = this.refs.form.getValues()
 
+        let input = {
+            clientMutationId: 1,
+            type: "object",
+            subtype: this.props.subtype,
+            title: values.title,
+            description: values.description,
+            featuredImage: values.featuredImage,
+            tags: stringToTags(values.tags)
+        }
+
         this.props.mutate({
             variables: {
-                input: {
-                    clientMutationId: 1,
-                    type: "object",
-                    subtype: "news",
-                    title: values.title,
-                    description: values.description,
-                    tags: stringToTags(values.tags)
-                }
+                input
             },
             refetchQueries: ["InfiniteList"]
         }).then(({data}) => {
@@ -54,15 +58,25 @@ class AddModal extends React.Component {
     }
 
     render() {
+        let featuredImage
+        if (this.props.featuredImage) {
+            featuredImage = (
+                <FeaturedImageField name="featuredImage" />
+            )
+        }
+
         return (
-            <Modal id="add" title={this.props.title}>
-                <Form ref="form" className="form" onSubmit={this.onSubmit}>
-                    <InputField name="title" type="text" placeholder="Titel" className="form__input" rules="required" autofocus />
-                    <RichTextField name="description" placeholder="Beschrijving" rules="required" />
-                    <InputField name="tags" ref="tags" type="text" placeholder="Tags" className="form__input" />
-                    <button className="button" type="submit">
-                        Toevoegen
-                    </button>
+            <Modal id="add" title={this.props.title} full={this.props.featuredImage ? true : false}>
+                <Form ref="form" onSubmit={this.onSubmit}>
+                    {featuredImage}
+                    <div className="form">
+                        <InputField name="title" type="text" placeholder="Titel" className="form__input" rules="required" autofocus />
+                        <RichTextField name="description" placeholder="Beschrijving" rules="required" />
+                        <InputField name="tags" ref="tags" type="text" placeholder="Tags" className="form__input" />
+                        <button className="button" type="submit">
+                            Toevoegen
+                        </button>
+                    </div>
                 </Form>
             </Modal>
         )

@@ -5,6 +5,8 @@ import classnames from "classnames"
 
 export default class Card extends React.Component {
     render() {
+        const { guid, title, tags } = this.props.entity
+
         let image
         if (this.props.image) {
             image = (
@@ -16,16 +18,15 @@ export default class Card extends React.Component {
             )
         }
 
-
         return (
             <div className="col-sm-6 col-lg-4">
                 <div className="container-card-title">
-                    <Link to={"/news/" + this.props.guid} className={classnames({"card-tile ___small-card": true, "___no-image": this.props.image, [getClassFromTags(this.props.tags)]: true})}>
+                    <Link to={"/news/" + guid} className={classnames({"card-tile ___small-card": true, "___no-image": image, [getClassFromTags(tags)]: true})}>
                         {image}
                         <div className="card-tile__content">
                             <div className="card-tile__content-justify">
                                 <h3 className="card-tile__title">
-                                    {this.props.title}
+                                    {title}
                                 </h3>
                             </div>
                             <div className="read-more">

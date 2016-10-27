@@ -12,14 +12,20 @@ const Query = gql`
                 type
                 object {
                     guid
-                    owner {
-                        name
-                    }
                     ... on Object {
+                        guid
                         title
                         url
+                        featuredImage
                         subtype
                         tags
+                        timeCreated
+                        owner {
+                            guid
+                            name
+                            icon
+                            url
+                        }
                     }
                 }
             }

@@ -159,6 +159,9 @@ class SchemaBuilder {
                 "description" => [
                     "type" => Type::string()
                 ],
+                "excerpt" => [
+                    "type" => Type::string()
+                ],
                 "url" => [
                     "type" => Type::string()
                 ],
@@ -169,6 +172,9 @@ class SchemaBuilder {
                     "type" => Type::string()
                 ],
                 "timeUpdated" => [
+                    "type" => Type::string()
+                ],
+                "featuredImage" => [
                     "type" => Type::string()
                 ],
                 "canEdit" => [
@@ -568,6 +574,9 @@ class SchemaBuilder {
                 ],
                 "description" => [
                     "type" => Type::nonNull(Type::string())
+                ],
+                "featuredImage" => [
+                    "type" => Type::string()
                 ],
                 "containerGuid" => [
                     "type" => Type::int()

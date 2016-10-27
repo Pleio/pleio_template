@@ -25,6 +25,7 @@ export default class Select extends React.Component {
 
     onToggle(e) {
         e.preventDefault()
+
         this.setState({
             isOpen: !this.state.isOpen
         })
@@ -85,7 +86,7 @@ export default class Select extends React.Component {
         }
 
         return (
-            <div className={classNames({ "selector": true, [this.props.className]: true, "___is-open": this.state.isOpen, "___is-mobile": this.isMobile() })} onBlur={this.onToggle}>
+            <div className={classNames({ "selector": true, [this.props.className]: true, "___is-open": this.state.isOpen, "___is-mobile": this.isMobile() })}>
                 <select readOnly value={ this.state.value || "disabled" }>
                     {selectOptions}
                 </select>

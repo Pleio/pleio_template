@@ -13,6 +13,7 @@ import Search from "./core/Search"
 import ActivityList from "./activity/List"
 
 import BlogList from "./blog/List"
+import BlogItem from "./blog/Item"
 
 import NewsList from "./news/List"
 import NewsItem from "./news/Item"
@@ -32,7 +33,10 @@ export default class Routes extends React.Component {
             <Router onUpdate={() => window.scrollTo(0, 0)} history={browserHistory}>
                 <Route path="/" component={Container}>
                     <IndexRoute component={ActivityList} />
-                    <Route path="/blog" component={BlogList} />
+                    <Route path="/blog">
+                        <IndexRoute component={BlogList} />
+                        <Route path="/blog/:guid" component={BlogItem} />
+                    </Route>
                     <Route path="/news">
                         <IndexRoute component={NewsList} />
                         <Route path="/news/:guid" component={NewsItem} />

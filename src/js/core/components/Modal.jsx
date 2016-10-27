@@ -49,6 +49,18 @@ class Modal extends React.Component {
                     </div>
                 </div>
             )
+        } else if (this.props.full) {
+            modal = (
+                <div className="modal__box">
+                    <div className="container relative">
+                        <h3 className="modal__title">
+                            {this.props.title}
+                        </h3>
+                        <div className="modal__close" onClick={this.onClose} />
+                    </div>
+                    {this.props.children}
+                </div>
+            )
         } else {
             modal = (
                 <div className="modal__wrapper">
@@ -66,7 +78,7 @@ class Modal extends React.Component {
         }
 
         return (
-            <div id={this.props.id} tabIndex="0" className={classNames({"modal":true, "___blue":this.props.isBlue, "___small": this.props.small, "___is-open": this.props.modal == this.props.id || this.props.noParent})}>
+            <div id={this.props.id} tabIndex="0" className={classNames({"modal":true, "___full":this.props.full, "___blue":this.props.isBlue, "___small": this.props.small, "___is-open": this.props.modal == this.props.id || this.props.noParent})}>
                 {modal}
             </div>
         )

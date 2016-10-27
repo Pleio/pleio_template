@@ -1,42 +1,52 @@
 import React from "react"
-import { Editor, EditorState, ContentState, RichUtils } from "draft-js"
+import { Editor, EditorState, ContentState, RichUtils, DefaultDraftBlockRenderMap, CompositeDecorator, Entity, Modifier } from "draft-js"
 import classnames from "classnames"
 import Validator from "validatorjs"
 import { stateFromHTML } from "draft-js-import-html"
 import { stateToHTML } from "draft-js-export-html"
+import Select from "./NewSelect"
+import Immutable from "immutable"
 
-const INLINE_STYLES = [
-    {label: "B", style: "BOLD"},
-    {label: "I", style: "ITALIC"},
-    {label: "U", style: "UNDERLINE"}
-];
+import LinkModal from "./RichText/LinkModal"
+import ImageModal from "./RichText/ImageModal"
 
-const BLOCK_TYPES = [
-    {label: "H1", style: "header-one"},
-    {label: "H2", style: "header-two"},
-    {label: "H3", style: "header-three"},
-    {label: "UL", style: "unordered-list-item"},
-    {label: "OL", style: "ordered-list-item"}
-];
-
-class EditorButton extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.onMouseDown = (e) => {
-            e.preventDefault()
-            this.props.onClick(e)
+const blockRenderMap = Immutable.Map({
+    "intro": {
+        element: "div",
+        style: {
+            fontWeight: "bold"
         }
     }
+})
 
-    render() {
-        return (
-            <span className={classnames({"rich-editor__button":true, "___is-active": this.props.isActive})} onMouseDown={this.onMouseDown}>
-                {this.props.children}
-            </span>
-        )
-    }
+function findLinkEntities(contentBlock, callback) {
+    contentBlock.findEntityRanges(
+        (character) => {
+            const entityKey = character.getEntity()
+            //return (entityKey !== null);
+            return false
+        },
+        callback
+    );
 }
+
+const decorator = new CompositeDecorator([
+    {
+        strategy: findLinkEntities,
+        component: (props) => {
+            const entity = Entity.get(props.entityKey)
+            const { href, target } = entity.getData()
+
+            return (
+                <a href={href} target={target}>
+                    {props.children}
+                </a>
+            )
+        }
+    }
+])
+
+const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap)
 
 class RichTextField extends React.Component {
     constructor(props) {
@@ -45,17 +55,24 @@ class RichTextField extends React.Component {
         let contentState = stateFromHTML(this.props.value || "")
 
         this.state = {
-            editorState: EditorState.createWithContent(contentState)
+            editorState: EditorState.createWithContent(contentState, decorator),
+            isSelectorOpen: false
         }
 
-        this.focus = () => this.refs.editor.focus()
+        this.focus = () => {
+            this.refs.editor.focus()
+        }
 
         this.onChange = this.onChange.bind(this)
         this.onTab = this.onTab.bind(this)
         this.handleKeyCommand = this.handleKeyCommand.bind(this)
 
+        this.changeTextSize = this.changeTextSize.bind(this)
         this.toggleInlineStyle = this.toggleInlineStyle.bind(this)
         this.toggleBlockType = this.toggleBlockType.bind(this)
+
+        this.submitLink = this.submitLink.bind(this)
+        this.submitImage= this.submitImage.bind(this)
 
         this.isValid = this.isValid.bind(this)
         this.getValue = this.getValue.bind(this)
@@ -114,7 +131,7 @@ class RichTextField extends React.Component {
 
     clearValue() {
         this.setState({
-            value: ""
+            editorState: EditorState.push(this.state.editorState, stateFromHTML(""))
         })
     }
 
@@ -126,6 +143,10 @@ class RichTextField extends React.Component {
         }
 
         return "not-handled";
+    }
+
+    changeTextSize(value) {
+        this.onChange(RichUtils.toggleBlockType(this.state.editorState, value))
     }
 
     toggleInlineStyle(inlineStyle) {
@@ -141,34 +162,116 @@ class RichTextField extends React.Component {
         this.onChange(RichUtils.onTab(e, this.state.editorState, maxDepth))
     }
 
+    submitLink(url, targetBlank) {
+        const { editorState } = this.state
+        const contentState = Modifier.applyEntity(
+            editorState.getCurrentContent(),
+            editorState.getSelection(),
+            Entity.create("LINK", "MUTABLE", {
+                href: url,
+                target: "_blank"
+            })
+        )
+
+        this.onChange(EditorState.push(this.state.editorState, contentState, "apply-entity"))
+    }
+
+    submitImage() {
+        // @todo
+    }
+
     render() {
         const { editorState } = this.state
 
         const currentInlineStyles = editorState.getCurrentInlineStyle()
-        const inlineStyles = INLINE_STYLES.map((type, i) => (
-            <EditorButton key={i} onClick={() => this.toggleInlineStyle(type.style)} isActive={currentInlineStyles.has(type.style)}>
-                {type.label}
-            </EditorButton>
-        ))
+        const currentBlockType = editorState.getCurrentContent().getBlockForKey(editorState.getSelection().getStartKey()).getType()
 
-        const selection = editorState.getSelection()
-        const blockType = editorState.getCurrentContent().getBlockForKey(selection.getStartKey()).getType()
-        const blockTypes = BLOCK_TYPES.map((type, i) => (
-            <EditorButton key={i} onClick={() => this.toggleBlockType(type.style)} isActive={type.style === blockType}>
-                {type.label}
-            </EditorButton>
-        ))
+        const textSizeValue = (currentBlockType === "unstyled" || currentBlockType === "intro" || currentBlockType === "header-two" || currentBlockType == "header-three") ? currentBlockType : "unstyled"
+        const textSize = (
+            <div className="editor__tool-group ___no-padding">
+                <Select options={{
+                        "unstyled": "Normale tekst",
+                        "intro": "Introtekst",
+                        "header-two": "Subkop 1",
+                        "header-three": "Subkop 2"
+                }} onChange={this.changeTextSize} value={textSizeValue} />
+            </div>
+        )
+
+        const inline = (
+            <div className="editor__tool-group">
+                <div onClick={(e) => this.toggleInlineStyle("BOLD")} className={classnames({
+                    "editor__tool": true,
+                    "___bold": true,
+                    "___is-active": currentInlineStyles.has("BOLD")
+                })} />
+                <div onClick={() => this.toggleInlineStyle("ITALIC")} className={classnames({
+                    "editor__tool": true,
+                    "___italic": true,
+                    "___is-active": currentInlineStyles.has("ITALIC")
+                })} />
+                <div onClick={() => this.toggleInlineStyle("UNDERLINE")} className={classnames({
+                    "editor__tool": true,
+                    "___underlined": true,
+                    "___is-active": currentInlineStyles.has("UNDERLINE")
+                })} />
+            </div>
+        )
+
+        const richMedia = (
+            <div className="editor__tool-group">
+                <div className="editor__tool ___hyperlink" onClick={() => this.refs.linkModal.toggle()} />
+                <div className="editor__tool ___image" onClick={() => this.refs.imageModal.toggle()} />
+            </div>
+        )
+
+        const quote = (
+            <div className="editor__tool-group">
+                <div onClick={() => this.toggleBlockType("blockquote")} className={classnames({
+                    "editor__tool": true,
+                    "___quote": true,
+                    "___is-active": (currentBlockType === "blockquote")
+                })} />
+            </div>
+        )
+
+        const lists = (
+            <div className="editor__tool-group">
+                <div onClick={() => this.toggleBlockType("ordered-list-item")} className={classnames({
+                    "editor__tool": true,
+                    "___ol": true,
+                    "___is-active": (currentBlockType === "ordered-list-item")
+                })} />
+                <div onClick={() => this.toggleBlockType("unordered-list-item")} className={classnames({
+                    "editor__tool": true,
+                    "___ul": true,
+                    "___is-active": (currentBlockType === "unordered-list-item")
+                })} />
+            </div>
+        )
+
+        const align = (
+            <div className="editor__tool-group">
+                <div className="editor__tool ___indent-left" />
+                <div className="editor__tool ___indent-right" />
+            </div>
+        )
 
         return (
-            <div>
-                <div className="rich-editor__controls">
-                    {inlineStyles}
-                    {blockTypes}
+            <div className="editor">
+                <div className="editor__toolbar">
+                    {textSize}
+                    {inline}
+                    {richMedia}
+                    {quote}
+                    {lists}
+                    {align}
                 </div>
-                <div className="rich-editor__editor" onClick={this.focus}>
+                <div className="editor__input" onClick={this.focus}>
                     <Editor
                         ref="editor"
                         handleKeyCommand={this.handleKeyCommand}
+                        blockRenderMap={extendedBlockRenderMap}
                         onTab={this.onTab}
                         placeholder={this.props.placeholder}
                         spellCheck={true}
@@ -176,6 +279,8 @@ class RichTextField extends React.Component {
                         editorState={this.state.editorState}
                     />
                 </div>
+                <LinkModal ref="linkModal" onSubmit={this.submitLink} />
+                <ImageModal ref="imageModal" onSubmit={this.submitImage} />
             </div>
         )
     }

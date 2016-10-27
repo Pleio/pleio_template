@@ -38,7 +38,7 @@ class List extends React.Component {
                         <InfiniteList childClass={Card} subtype="news" offset={0} limit={20} tags={this.state.tags} />
                     </section>
                 </div>
-                <Add title="Nieuws toevoegen" />
+                <Add title="Nieuws toevoegen" subtype="news" />
             </div>
         )
     }

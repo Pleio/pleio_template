@@ -10,8 +10,17 @@ const Query = gql`
             entities {
                 guid
                 ... on Object {
+                    guid
                     title
+                    excerpt
                     tags
+                    featuredImage
+                    timeCreated
+                    owner {
+                        guid
+                        name
+                        icon
+                    }
                 }
             }
         }

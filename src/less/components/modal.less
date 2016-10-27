@@ -107,10 +107,6 @@
     padding: 5.2rem 2rem 4rem 2rem;
     background-color: @color-white;
 
-    .___small & {
-        max-width: 40rem;
-    }
-
     .___full & {
         max-width: 100%;
         padding: 0 0 4rem 0;
@@ -125,12 +121,8 @@
         padding: 4rem 4rem 0 4rem;
     }
 
-    @media ( max-width: @screen-xs-max ) {
-        max-width: 100%;
-
-        .___small & {
-            max-width: 100%;
-        }
+    .___small & {
+        max-width: 40rem;
     }
 
     @media ( min-width: @screen-sm ) {
@@ -140,6 +132,18 @@
 
         .___full & {
             padding: 0 0 4rem 0;
+        }
+
+        .___small & {
+            padding: 4rem;
+        }
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        max-width: 100%;
+
+        .___small & {
+            max-width: 100%;
         }
     }
 }

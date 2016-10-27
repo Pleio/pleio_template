@@ -74,6 +74,20 @@ class Helpers {
         }
     }
 
+    static function saveToFeatured($filename, $owner) {
+        $filename = str_replace(".", "_", $filename);
+
+        $resized = get_resized_image_from_uploaded_file($filename, 1400, 396, false, true);
+        if ($resized) {
+            $file = new \ElggFile();
+            $file->owner_guid = $owner->guid;
+            $file->setFilename("featured/{$owner->guid}.jpg");
+            $file->open("write");
+            $file->write($resized);
+            $file->close();
+        }
+    }
+
     static function stringsToMetastrings($input) {
         $metastrings = [];
 

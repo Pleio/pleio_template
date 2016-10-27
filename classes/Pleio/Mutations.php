@@ -151,7 +151,7 @@ class Mutations {
                 $entity = new \ElggGroup();
                 $entity->name = $input["name"];
             case "object":
-                if (!in_array($input["subtype"], array("news", "comment"))) {
+                if (!in_array($input["subtype"], array("news", "blog", "question", "comment"))) {
                     throw new Exception("invalid_subtype");
                 }
 
@@ -169,17 +169,24 @@ class Mutations {
         }
 
         $result = $entity->save();
-        if ($result) {
-            $view = "river/object/{$input["subtype"]}/create";
-            add_to_river($view, 'create', elgg_get_logged_in_user_guid(), $entity->guid);
 
-            return [
-                "guid" => $entity->guid
-            ];
-
+        if (!$result) {
+            throw new Exception("could_not_save");
         }
 
-        throw new Exception("could_not_save");
+        if ($input["featuredImage"]) {
+            Helpers::saveToFeatured($input["featuredImage"], $entity);
+            $entity->featuredIcontime = time();
+            $result = $entity->save();
+        }
+
+        $view = "river/object/{$input["subtype"]}/create";
+        add_to_river($view, 'create', elgg_get_logged_in_user_guid(), $entity->guid);
+
+        return [
+            "guid" => $entity->guid
+        ];
+
     }
 
     static function editEntity($input) {

@@ -5,6 +5,7 @@ import InputField from "./InputField"
 import RichTextField from "./RichTextField"
 import SelectField from "./SelectField"
 import CheckField from "./CheckField"
+import FeaturedImageField from "./FeaturedImageField"
 
 class Form extends React.Component {
     constructor(props) {
@@ -99,7 +100,19 @@ class Form extends React.Component {
     }
 
     render() {
-        let children = React.Children.map(this.props.children, (child) => {
+        return (
+            <form className={this.props.className} onSubmit={this.onSubmit}>
+                {this.wrapChildren(this.props.children)}
+            </form>
+        )
+    }
+
+    wrapChildren(children) {
+        return React.Children.map(children, (child) => {
+            if (!child) {
+                return child
+            }
+
             switch (child.type) {
                 case InputField:
                 case SelectField:
@@ -107,15 +120,15 @@ class Form extends React.Component {
                 case CheckField:
                     return this.wrapComponent(child)
                 default:
+                    if (child && child.props && child.props.children) {
+                        return React.cloneElement(child, {
+                            children: this.wrapChildren(child.props.children)
+                        })
+                    }
+
                     return child
             }
         })
-
-        return (
-            <form className={"form " + this.props.className} onSubmit={this.onSubmit}>
-                {children}
-            </form>
-        )
     }
 
     wrapComponent(component) {

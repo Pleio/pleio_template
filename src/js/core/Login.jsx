@@ -73,7 +73,7 @@ class Login extends React.Component {
         return (
             <Modal ref="modal" id="login" title="Welkom op Leraar.nl" small={true} isBlue={true}>
                 {errors}
-                <Form ref="form" className="login" onSubmit={this.onSubmit}>
+                <Form ref="form" className="form login" onSubmit={this.onSubmit}>
                     <InputField name="username" type="text" placeholder="E-mailadres" className="form__input" rules="required" />
                     <InputField name="password" type="password" placeholder="Wachtwoord" className="form__input" rules="required" />
 
