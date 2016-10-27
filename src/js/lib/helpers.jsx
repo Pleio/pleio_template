@@ -23,7 +23,7 @@ export function getQueryVariable(variable) {
 }
 
 export function getClassFromTags(inputTags) {
-    const classes = new Set(["leren", "vernieuwing", "arbeidsvoorwaarden", "wetten", "actualiteit", "overig", "klas"])
+    const classes = new Set(["klas", "wetten", "arbeidsvoorwaarden", "leren", "actualiteit", "vernieuwing", "overig"])
     const intersect = inputTags.filter(x => classes.has(x))
 
     if (intersect.length > 0) {

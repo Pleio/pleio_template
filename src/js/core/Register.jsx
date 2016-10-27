@@ -13,26 +13,7 @@ import SelectField from "./components/SelectField"
 import SwitchesField from "./components/SwitchesField"
 import CheckField from "./components/CheckField"
 import ModalWithSlides from "./components/ModalWithSlides"
-
-const sectorOptions = {
-    "primair": "Primair onderwijs",
-    "voortgezet": "Voorgezet onderwijs",
-    "speciaal": "Speciaal onderwijs",
-    "mbo": "Mbo",
-    "hbo": "Hbo",
-    "wo": "WO",
-    "all": "Alle onderwijssectoren"
-}
-
-const categoryOptions = {
-    "loopbaan": "Loopbaan",
-    "contract-en-afspraken": "Contract & Afspraken",
-    "omgaan-met-crises": "Omgaan met crises",
-    "in-de-klas": "In de klas",
-    "wetten-en-regels": "Wetten en regels",
-    "toekomstvisies": "Toekomstvisies",
-    "overig": "Overig"
-}
+import { sectorOptions, categoryOptions } from "../lib/filters"
 
 class SlideOne extends React.Component {
     constructor(props) {

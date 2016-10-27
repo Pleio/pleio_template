@@ -1,27 +1,6 @@
 import React from "react"
 import Select from "../components/Select"
-
-const sectorOptions = {
-    "primair": "Primair onderwijs",
-    "voortgezet": "Voorgezet onderwijs",
-    "speciaal": "Speciaal onderwijs",
-    "mbo": "Mbo",
-    "hbo": "Hbo",
-    "wo": "WO",
-    "all": "Alle onderwijssectoren"
-}
-
-const categoryOptions = {
-    "loopbaan": "Loopbaan",
-    "contract-en-afspraken": "Contract & Afspraken",
-    "omgaan-met-crises": "Omgaan met crises",
-    "in-de-klas": "In de klas",
-    "wetten-en-regels": "Wetten en regels",
-    "toekomstvisies": "Toekomstvisies",
-    "overig": "Overig",
-    "mijn": "Mijn categorieën",
-    "all": "Alle categorieën"
-}
+import { sectorOptions, categoryOptions } from "../../lib/filters"
 
 export default class ContentFilters extends React.Component {
     constructor(props) {
