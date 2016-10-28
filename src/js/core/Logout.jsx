@@ -18,8 +18,7 @@ class Logout extends React.Component {
             }
         }).then(({data}) => {
             if (data.logout.viewer.loggedIn === false) {
-                browserHistory.push("/")
-                client.resetStore()
+                window.location.href = '/'
             }
         })
     }

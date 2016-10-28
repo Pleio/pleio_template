@@ -8,7 +8,7 @@ export default class ContentHeader extends React.Component {
 
     render() {
         return (
-            <section className={"section " + this.props.className}>
+            <section className={"section " + (this.props.className ? this.props.className : "")}>
                 <div className="container">
                     {this.props.children}
                 </div>

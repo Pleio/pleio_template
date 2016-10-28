@@ -3,8 +3,8 @@ import { graphql } from "react-apollo"
 import { connect } from "react-redux"
 import gql from "graphql-tag"
 import CommentList from "../core/components/CommentList"
-import Edit from "../core/Edit"
-import Delete from "../core/Delete"
+import EditModal from "../core/Edit"
+import DeleteModal from "../core/Delete"
 import { showModal } from "../lib/actions"
 import AddComment from "../core/containers/AddComment"
 import SocialShare from "../core/components/SocialShare"
@@ -43,16 +43,11 @@ class Item extends React.Component {
             )
         }
 
-        let manage = ""
+        let edit = ""
         if (entity.canEdit) {
-            manage = (
-                <div className="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 end-lg">
-                    <div className="button" onClick={this.onEdit}>
-                        <span>Wijzigen</span>
-                    </div>
-                    <div className="button" onClick={this.onDelete}>
-                        <span>Verwijderen</span>
-                    </div>
+            edit = (
+                <div className="button__text article-action ___edit-post" onClick={this.onEdit}>
+                    Bewerken
                 </div>
             );
         }
@@ -61,7 +56,6 @@ class Item extends React.Component {
             <section className="section">
                 <div className="container">
                     <div className="row">
-                        {manage}
                         <div className="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
                             <article className="article">
                                 <h3 className="article__title">{entity.title}</h3>
@@ -81,6 +75,7 @@ class Item extends React.Component {
                                             <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
                                                 Schrijf een reactie
                                             </div>
+                                            {edit}
                                         </div>
                                         <Bookmark entity={entity} />
                                     </div>
@@ -88,8 +83,8 @@ class Item extends React.Component {
                             </article>
                             <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} />
                             <CommentList comments={entity.comments} />
-                            <Edit title="Nieuws wijzigen" entity={entity} subtype="news" />
-                            <Delete title="Nieuws verwijderen" entity={entity} subtype="news" />
+                            <EditModal title="Nieuws wijzigen" entity={entity} subtype="news" />
+                            <DeleteModal title="Nieuws verwijderen" entity={entity} subtype="news" />
                         </div>
                     </div>
                 </div>

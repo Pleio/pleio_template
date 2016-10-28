@@ -87,7 +87,7 @@ export default class Select extends React.Component {
 
         return (
             <div className={classNames({ "selector": true, [this.props.className]: true, "___is-open": this.state.isOpen, "___is-mobile": this.isMobile() })}>
-                <select readOnly value={ this.state.value || "disabled" }>
+                <select onChange={(e) => this.onSelect(e, e.target.value)} value={ this.state.value || "disabled" } readOnly>
                     {selectOptions}
                 </select>
                 <div className={classNames({ "selector__select": true, "___not-selected": (this.state.value ? false : true) })} tabIndex="0" onClick={this.onToggle}>

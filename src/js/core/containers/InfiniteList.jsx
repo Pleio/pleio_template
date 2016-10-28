@@ -13,9 +13,14 @@ const Query = gql`
                     guid
                     title
                     excerpt
+                    votes
+                    hasVoted
+                    isBookmarked
                     tags
                     featuredImage
                     timeCreated
+                    views
+                    commentCount
                     owner {
                         guid
                         name

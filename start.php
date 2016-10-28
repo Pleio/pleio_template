@@ -16,10 +16,11 @@ function pleio_template_init() {
 
     elgg_register_plugin_hook_handler("index", "system", "pleio_template_index_handler");
 
+    elgg_register_page_handler("campagne", "pleio_template_page_handler");
     elgg_register_page_handler("activity", "pleio_template_page_handler");
     elgg_register_page_handler("blog", "pleio_template_page_handler");
     elgg_register_page_handler("news", "pleio_template_page_handler");
-    elgg_register_page_handler("forum", "pleio_template_page_handler");
+    elgg_register_page_handler("questions", "pleio_template_page_handler");
     elgg_register_page_handler("profile", "pleio_template_page_handler");
 
     elgg_register_page_handler("login", "pleio_template_page_handler");

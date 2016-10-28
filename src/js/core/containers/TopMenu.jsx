@@ -4,15 +4,27 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import UserMenu from "./UserMenu"
 import UserMobileMenu from "./UserMobileMenu"
+import classnames from "classnames"
 
 class TopMenu extends React.Component {
     constructor(props) {
         super(props)
 
-        this.onMobileMenuToggle = (e) => {
-            document.body.classList.toggle('mobile-nav-open')
-            document.body.classList.toggle('mega-nav-open')
+        this.state = {
+            submenuIsOpen: false
         }
+
+        this.toggleSubmenu = (e) => this.setState({submenuIsOpen: !this.state.submenuIsOpen})
+    }
+
+    toggleMobileMenu(e) {
+        document.body.classList.toggle("mobile-nav-open")
+        document.body.classList.toggle("mega-nav-open")
+    }
+
+    closeMobileMenu(e) {
+        document.body.classList.remove("mobile-nav-open")
+        document.body.classList.remove("mega-nav-open")
     }
 
     render() {
@@ -22,7 +34,7 @@ class TopMenu extends React.Component {
                 if (item.js) {
                     return (
                         <li key={item.guid}>
-                            <Link to={item.link} title={item.title} className="navigation__link" activeClassName="___is-active">
+                            <Link to={item.link} onClick={this.closeMobileMenu} title={item.title} className="navigation__link" activeClassName="___is-active">
                                 {item.title}
                             </Link>
                         </li>
@@ -30,7 +42,7 @@ class TopMenu extends React.Component {
                 } else {
                     return (
                         <li key={item.guid}>
-                            <a href={item.link} title={item.title} className="navigation__link">
+                            <a href={item.link} onClick={this.closeMobileMenu} title={item.title} className="navigation__link">
                                 {item.title}
                             </a>
                         </li>
@@ -40,10 +52,10 @@ class TopMenu extends React.Component {
         }
 
         return (
-            <nav className="navigation">
+            <nav className={"navigation " + (this.props.className || "")}>
                 <div className="container">
                     <div className="navigation__wrapper">
-                        <div className="mobile-navigation__close" onClick={this.onMobileMenuToggle}>
+                        <div className="mobile-navigation__close" onClick={this.toggleMobileMenu}>
                             <span className="icon icon-cross"></span>
                         </div>
                         <div className="mobile-navigation__search">
@@ -57,12 +69,13 @@ class TopMenu extends React.Component {
                         </a>
                         <ul className="navigation__links">
                             <li>
-                                <Link to="/" title="Home" className="navigation__link ___home" activeClassName="___is-active">Home</Link>
+                                <Link to="/" onClick={this.closeMobileMenu} title="Home" className="navigation__link ___home" activeClassName="___is-active">Home</Link>
                             </li>
                             {menuItems}
-                            <li className="navigation__dropdown ___mobile"><a href="#" title="Meer" className="navigation__link ___dropdown">Meer</a>
-                                <div className="submenu ___dropdown">
-                                    <div data-nav-back className="submenu__back">Terug</div>
+                            <li className="navigation__dropdown ___mobile">
+                                <a href="#" title="Meer" className="navigation__link ___dropdown" onClick={this.toggleSubmenu}>Meer</a>
+                                <div className={classnames({"submenu ___dropdown":true, "___open": this.state.submenuIsOpen})}>
+                                    <div className="submenu__back" onClick={this.toggleSubmenu}>Terug</div>
                                     <ul className="submenu__list">
                                         <li className="submenu__list-subject submenu__list-item">
                                             <a href="#" title="Over">Over</a>
@@ -80,10 +93,10 @@ class TopMenu extends React.Component {
                         </a>
                     </div>
                     <div className="mobile-navigation__bar">
-                        <div className="mobile-navigation__trigger" onClick={this.onMobileMenuToggle}>
+                        <div className="mobile-navigation__trigger" onClick={this.toggleMobileMenu}>
                         </div>
                         <a href="/" className="mobile-navigation__home"></a>
-                        <UserMobileMenu viewer={this.props.data.viewer} toggleMenu={this.onMobileMenuToggle} />
+                        <UserMobileMenu viewer={this.props.data.viewer} />
                     </div>
                 </div>
             </nav>

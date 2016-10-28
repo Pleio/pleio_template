@@ -192,6 +192,24 @@ class SchemaBuilder {
                         return Resolver::isBookmarked($object);
                     }
                 ],
+                "hasVoted" => [
+                    "type" => Type::boolean(),
+                    "resolve" => function($object) {
+                        return Resolver::hasVoted($object);
+                    }
+                ],
+                "votes" => [
+                    "type" => Type::int(),
+                    "resolve" => function($object) {
+                        return Resolver::getVotes($object);
+                    }
+                ],
+                "views" => [
+                    "type" => Type::int(),
+                    "resolve" => function($object) {
+                        return Resolver::getViews($object);
+                    }
+                ],
                 "owner" => [
                     "type" => $userType,
                     "resolve" => function($object) {
@@ -204,6 +222,12 @@ class SchemaBuilder {
                     },
                     "resolve" => function($object) {
                         return Resolver::getComments($object);
+                    }
+                ],
+                "commentCount" => [
+                    "type" => Type::int(),
+                    "resolve" => function($object) {
+                        return Resolver::countComments($object);
                     }
                 ]
             ]
@@ -670,6 +694,29 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::bookmark"
         ]);
 
+        $voteMutation = Relay::mutationWithClientMutationId([
+            "name" => "vote",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::nonNull((Type::string())),
+                    "description" => "The guid of the entity to vote on."
+                ],
+                "score" => [
+                    "type" => Type::nonNull(Type::int()),
+                    "description" => "1 for upvote, -1 for downvote, 0 for deleting."
+                ]
+            ],
+            "outputFields" => [
+                "object" => [
+                    "type" => Type::nonNull($objectType),
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::vote"
+        ]);
+
         $editProfileMutation = Relay::mutationWithClientMutationId([
             "name" => "editProfile",
             "inputFields" => [
@@ -705,6 +752,7 @@ class SchemaBuilder {
                     "deleteEntity" => $deleteEntityMutation,
                     "subscribeNewsletter" => $subscribeNewsletterMutation,
                     "bookmark" => $bookmarkMutation,
+                    "vote" => $voteMutation,
                     "editProfile" => $editProfileMutation
             ]
         ]);

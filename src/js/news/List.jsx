@@ -1,7 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
 import { showModal } from "../lib/actions"
-
 import ContentHeader from "../core/components/ContentHeader"
 import InfiniteList from "../core/containers/InfiniteList"
 import Card from "../core/components/Card"
@@ -33,11 +32,9 @@ class List extends React.Component {
                         <AddButton subtype="news" onClick={this.onClickAdd} />
                     </ContentFilters>
                 </ContentHeader>
-                <div className="page-layout">
-                    <section className="section ___grey ___grow">
-                        <InfiniteList childClass={Card} subtype="news" offset={0} limit={20} tags={this.state.tags} />
-                    </section>
-                </div>
+                <section className="section ___grey ___grow">
+                    <InfiniteList childClass={Card} subtype="news" offset={0} limit={20} tags={this.state.tags} />
+                </section>
                 <Add title="Nieuws toevoegen" subtype="news" />
             </div>
         )

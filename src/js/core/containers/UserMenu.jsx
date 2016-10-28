@@ -32,7 +32,7 @@ class UserMenu extends React.Component {
                         </Link>
                     </li>
                     <li>
-                        <a href="#" onClick={() => document.body.classList.toggle("navigation-search-open")} title="Zoeken" className="navigation__action ___search"></a>
+                        <a onClick={() => document.body.classList.toggle("navigation-search-open")} title="Zoeken" className="navigation__action ___search"></a>
                         <NavigationSearch />
                     </li>
                     <li>
@@ -47,16 +47,16 @@ class UserMenu extends React.Component {
             return (
                 <ul className="navigation__actions">
                     <li>
-                        <a href="#" onClick={() => document.body.classList.toggle("navigation-search-open")} title="Zoeken" className="navigation__action ___search"></a>
+                        <a onClick={() => document.body.classList.toggle("navigation-search-open")} title="Zoeken" className="navigation__action ___search"></a>
                         <NavigationSearch />
                     </li>
                     <li>
-                        <a href="#" onClick={() => this.showModal('login')} title="Inloggen" className="navigation__action ___login">
+                        <a onClick={() => this.showModal('login')} title="Inloggen" className="navigation__action ___login">
                             Inloggen
                         </a>
                     </li>
                     <li>
-                        <a href="#" onClick={() => this.showModal('register')} title="Registeren" className="navigation__action ___register">
+                        <a onClick={() => this.showModal('register')} title="Registeren" className="navigation__action ___register">
                             Registeren
                         </a>
                     </li>

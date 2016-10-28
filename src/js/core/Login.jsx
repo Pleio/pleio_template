@@ -53,8 +53,7 @@ class Login extends React.Component {
             }
         }).then(({data}) => {
             if (data.login.viewer.loggedIn === true) {
-                client.resetStore()
-                this.props.dispatch(hideModal())
+                location.reload();
             }
         }).catch((errors) => {
             this.setState({

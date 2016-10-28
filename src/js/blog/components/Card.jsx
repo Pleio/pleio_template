@@ -3,6 +3,8 @@ import { Link } from "react-router"
 import { getClassFromTags } from "../../lib/helpers"
 import classnames from "classnames"
 import showDate from "../../lib/showDate"
+import Likes from "../../core/components/Likes"
+import Bookmark from "../../bookmarks/components/Bookmark"
 
 export default class Card extends React.Component {
     render() {
@@ -46,9 +48,8 @@ export default class Card extends React.Component {
                 </div>
 
                 <div className="card-blog-post__actions">
-                    <div data-toggle-like="" className="button__text ___likes">
-                        <span data-toggle-like="number">14</span>&nbsp;likes
-                    </div>
+                    <Likes entity={this.props.entity} />
+                    <Bookmark entity={this.props.entity} />
                 </div>
             </div>
        )

@@ -4,8 +4,7 @@ export const sectorOptions = {
     "speciaal": "Speciaal onderwijs",
     "mbo": "Mbo",
     "hbo": "Hbo",
-    "wo": "WO",
-    "all": "Alle onderwijssectoren"
+    "wo": "WO"
 }
 
 export const categoryOptions = {
@@ -15,7 +14,5 @@ export const categoryOptions = {
     "leren": "Blijven leren",
     "actualiteit": "Actualiteit",
     "vernieuwing": "Vernieuwing",
-    "overig": "Overig",
-    "mijn": "Mijn categorieën",
-    "all": "Alle categorieën"
+    "overig": "Overig"
 }

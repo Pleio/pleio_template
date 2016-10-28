@@ -2,6 +2,7 @@ import React from "react"
 import { Router, Route, IndexRoute, browserHistory } from "react-router"
 import { connect } from "react-redux"
 
+import AbsoluteContainer from "./core/components/AbsoluteContainer"
 import Container from "./core/components/Container"
 
 import NotFound from "./core/NotFound"
@@ -9,6 +10,8 @@ import ForgotPasswordConfirm from "./core/ForgotPasswordConfirm"
 import Login from "./core/Login"
 import Logout from "./core/Logout"
 import Search from "./core/Search"
+
+import Campagne from "./pages/Campagne"
 
 import ActivityList from "./activity/List"
 
@@ -18,7 +21,9 @@ import BlogItem from "./blog/Item"
 import NewsList from "./news/List"
 import NewsItem from "./news/Item"
 
+import QuestionsIndex from "./questions/Index"
 import QuestionsList from "./questions/List"
+import QuestionsItem from "./questions/Item"
 
 import BookmarksList from "./bookmarks/List"
 
@@ -41,17 +46,26 @@ export default class Routes extends React.Component {
                         <IndexRoute component={NewsList} />
                         <Route path="/news/:guid" component={NewsItem} />
                     </Route>
-                    <Route path="/forum" component={QuestionsList} />
+                    <Route path="/questions">
+                        <IndexRoute component={QuestionsIndex} />
+                        <Route path="/questions/all" component={QuestionsList} />
+                        <Route path="/questions/:guid" component={QuestionsItem} />
+                    </Route>
                     <Route path="/bookmarks" component={BookmarksList} />
                     <Route path="/search" component={Search} />
                     <Route path="/resetpassword" component={ForgotPasswordConfirm} />
-                    <Route path="/login" component={Login} />
-                    <Route path="/logout" component={Logout} />
                     <Route path="/profile/:username" component={ProfileWrapper}>
                         <IndexRoute component={Profile} />
                         <Route path="account" component={Account} />
                         <Route path="settings" component={Settings} />
                     </Route>
+                </Route>
+                <Route path="/" component={AbsoluteContainer}>
+                    <Route path="/campagne" component={Campagne} />
+                </Route>
+                <Route path="/login" component={Login} />
+                <Route path="/logout" component={Logout} />
+                <Route path="/" component={Container}>
                     <Route path="*" component={NotFound} />
                 </Route>
             </Router>

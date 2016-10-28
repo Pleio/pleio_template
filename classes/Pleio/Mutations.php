@@ -270,6 +270,51 @@ class Mutations {
         throw new Exception("could_not_save");
     }
 
+    static function vote($input) {
+        $entity = get_entity((int) $input["guid"]);
+        $score = (int) $input["score"];
+
+        if (!$entity) {
+            throw new Exception("could_not_find");
+        }
+
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            throw new Exception("not_logged_in");
+        }
+
+        $past_vote = elgg_get_annotations(array(
+            "guid" => $entity->guid,
+            "annotation_name" => "vote",
+            "annotation_owner_guid" => $user->guid
+        ));
+
+        if ($past_vote) {
+            $past_vote = $past_vote[0];
+            $past_value = (int) $past_vote->value;
+        }
+
+        if ($past_value === $score) {
+            throw new Exception("already_voted");
+        }
+
+        if ($score === 1 || $score === -1) {
+            $result = $entity->annotate("vote", $score, $entity->access_id);
+        } else {
+            if ($past_vote) {
+                $result = $past_vote->delete();
+            }
+        }
+
+        if ($result) {
+            return [
+                "guid" => $entity->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
+    }
+
     static function editProfile($input) {
         $entity = get_entity(((int) $input["guid"]));
         if (!$entity) {

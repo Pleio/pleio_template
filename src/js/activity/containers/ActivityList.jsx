@@ -20,6 +20,9 @@ const Query = gql`
                         subtype
                         tags
                         timeCreated
+                        isBookmarked
+                        hasVoted
+                        votes
                         owner {
                             guid
                             name

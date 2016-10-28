@@ -1,6 +1,7 @@
 import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
+import classnames from "classnames"
 
 class UsersOnline extends React.Component {
     render() {
@@ -14,7 +15,7 @@ class UsersOnline extends React.Component {
 
         return (
             <div className="col-sm-4 col-lg-3 col-lg-offset-3 end-lg middle-lg">
-                <div className="users-online ___grey">
+                <div className={classnames({"users-online":true, "___grey":this.props.isGrey})}>
                     <span>
                         {site.usersOnline} {site.usersOnline == 1 ? "leraar" : "leraren"} online
                     </span>

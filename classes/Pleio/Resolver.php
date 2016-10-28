@@ -19,7 +19,7 @@ class Resolver {
             "menu" => [
                 ["guid" => "menu:" . 1, "title" => "Blog", "link" => "/blog", "js" => true],
                 ["guid" => "menu:" . 2, "title" => "Nieuws", "link" => "/news", "js" => true],
-                ["guid" => "menu:" . 3, "title" => "Forum", "link" => "/forum", "js" => true]
+                ["guid" => "menu:" . 3, "title" => "Forum", "link" => "/questions", "js" => true]
             ],
             "accessIds" => $accessIds,
             "defaultAccessId" => get_default_access()
@@ -146,6 +146,17 @@ class Resolver {
                 "tags" => Helpers::renderTags($entity->tags)
             ];
         }
+    }
+
+    static function countComments($object) {
+        $options = array(
+            "type" => "object",
+            "subtype" => "comment",
+            "container_guid" => (int) $object["guid"],
+            "count" => true
+        );
+
+        return elgg_get_entities($options);
     }
 
     static function getComments($object) {
@@ -349,6 +360,54 @@ class Resolver {
             "loggedIn" => elgg_is_logged_in(),
             "tags" => $tags
         ];
+    }
+
+    static function getViews($entity) {
+        $dbprefix = elgg_get_config("dbprefix");
+        $guid = (int) $entity["guid"];
+        $result = get_data_row("SELECT views FROM {$dbprefix}entity_views WHERE guid={$guid}");
+
+        if ($result) {
+            return $result->views;
+        }
+
+        return 0;
+    }
+
+    static function getVotes($entity) {
+        $result = elgg_get_annotations(array(
+            "guid" => (int) $entity["guid"],
+            "annotation_name" => "vote",
+            "annotation_calculation" => "sum",
+            "limit" => false
+        ));
+
+        if ($result) {
+            return (int) $result;
+        }
+
+        return 0;
+    }
+
+    static function hasVoted($entity) {
+        if (!elgg_is_logged_in()) {
+            return false;
+        }
+
+        $user = elgg_get_logged_in_user_entity();
+
+        $past_vote = elgg_get_annotations(array(
+            "guid" => (int) $entity["guid"],
+            "annotation_name" => "vote",
+            "annotation_owner_guid" => (int) $user->guid,
+            "limit" => 1
+        ));
+
+        if ($past_vote) {
+            return true;
+        }
+
+        return false;
     }
 
     static function getBookmarks($a, $args, $c) {
