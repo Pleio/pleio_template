@@ -1,6 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { search } from "../../lib/actions"
+import { browserHistory } from "react-router"
 
 let autocompleteTimer
 
@@ -13,6 +14,7 @@ class NavigationSearch extends React.Component {
         }
 
         this.onChange = this.onChange.bind(this)
+        this.onSubmit = this.onSubmit.bind(this)
     }
 
 
@@ -34,8 +36,10 @@ class NavigationSearch extends React.Component {
         this.props.dispatch(search(this.state.q))
     }
 
-    onSubmit() {
-
+    onSubmit(e) {
+        e.preventDefault()
+        browserHistory.push(`/search?type=object&subtype=blog&q=${this.state.q}`)
+        document.body.classList.remove("navigation-search-open")
     }
 
     onClose() {
@@ -46,11 +50,11 @@ class NavigationSearch extends React.Component {
         return (
             <form onSubmit={this.onSubmit} className="navigation-search">
                 <div className="container">
-                    <label htmlFor="search">Zoeken</label><span className="navigation-search__icon"></span>
-                    <input id="search" name="q" type="text" maxLength="60" autoComplete="off" className="navigation-search__input" onChange={this.onChange} value={this.state.q} />
-                    <a className="navigation-search__close" onClick={this.onClose}>
-                        Sluiten
-                    </a>
+                        <label htmlFor="search">Zoeken</label><span className="navigation-search__icon"></span>
+                        <input id="search" name="q" type="text" maxLength="60" autoComplete="off" className="navigation-search__input" onChange={this.onChange} value={this.state.q} />
+                        <a className="navigation-search__close" onClick={this.onClose}>
+                            Sluiten
+                        </a>
                 </div>
             </form>
         )
