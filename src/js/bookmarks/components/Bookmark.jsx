@@ -34,7 +34,8 @@ class Bookmark extends React.Component {
                     guid: this.props.entity.guid,
                     isAdding: isAdding
                 }
-            }
+            },
+            refetchQueries: ["BookmarkList"]
         })
 
         this.setState({

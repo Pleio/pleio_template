@@ -8,7 +8,7 @@ class FeaturedImageField extends React.Component {
 
         this.state = {
             image: null,
-            imagePreviewUrl: null
+            imagePreviewUrl: this.props.value || null
         }
 
         this.triggerFileSelect = this.triggerFileSelect.bind(this)
@@ -58,7 +58,7 @@ class FeaturedImageField extends React.Component {
 
     clearValue() {
         this.setState({
-            image: null,
+            image: false,
             imagePreviewUrl: null
         })
     }
@@ -79,7 +79,7 @@ class FeaturedImageField extends React.Component {
         }
 
         return (
-            <div className={classnames({"upload-image": true, "___is-uploaded": this.state.image ? true : false})}>
+            <div className={classnames({"upload-image": true, "___is-uploaded": this.state.imagePreviewUrl ? true : false})}>
                 <input type="file" ref="image" name="image" onChange={this.changeImage} className="___is-hidden" accept="image/*" />
                 {content}
                 <div className="upload-image__actions">

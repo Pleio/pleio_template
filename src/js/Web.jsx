@@ -8,17 +8,19 @@ import Routes from "./Routes"
 
 import { ApolloProvider } from "react-apollo";
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
-import { currentLanguage, modal } from "./lib/reducers"
+import { currentLanguage, modal, search } from "./lib/reducers"
 
 const lang = "nl"
 
 let store = createStore(combineReducers({
     currentLanguage,
     modal,
+    search,
     apollo: client.reducer()
 }), {
     currentLanguage: lang,
-    modal: null
+    modal: null,
+    search: ""
 }, compose(applyMiddleware(client.middleware()), window.devToolsExtension ? window.devToolsExtension() : f => f))
 
 ReactDOM.render((

@@ -133,7 +133,8 @@ class Resolver {
                 "status" => 200,
                 "type" => $entity->type,
                 "subtype" => $entity->getSubtype(),
-                "featured" => $entity->isFeatured ? true : false,
+                "source" => $entity->source,
+                "isFeatured" => $entity->isFeatured ? true : false,
                 "featuredImage" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
                 "title" => $entity->title,
                 "url" => $entity->getURL(),
@@ -295,7 +296,7 @@ class Resolver {
                 "guid" => $entity->guid,
                 "status" => 200,
                 "ownerGuid" => $entity->owner_guid,
-                "featured" => $entity->isFeatured ? true : false,
+                "isFeatured" => $entity->isFeatured ? true : false,
                 "featuredImage" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
                 "title" => $entity->title,
                 "type" => $entity->type,
@@ -330,23 +331,42 @@ class Resolver {
     }
 
     static function search($a, $args, $c) {
-        $searchResult = \ESInterface::get()->search($args['q']);
+        $es = \ESInterface::get();
 
         $results = array();
-        foreach ($searchResult['hits'] as $hit) {
-            $results[] = array(
+        $es_results = $es->search($args["q"], null, $args["type"], $args["subtype"], $args["limit"], $args["offset"]);
+        foreach ($es_results['hits'] as $hit) {
+            $results[] = [
                 "guid" => $hit->guid,
-                "title" => $hit->title,
-                "name" => $hit->name,
+                "ownerGuid" => $hit->owner_guid,
+                "status" => 200,
                 "type" => $hit->type,
                 "subtype" => $hit->getSubtype(),
-                "timeCreated" => $hit->timeCreated,
-                "url" => $hit->getURL()
-            );
+                "isFeatured" => $hit->isFeatured ? true : false,
+                "featuredImage" => $hit->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$hit->guid}&lastcache={$hit->featuredIcontime}" : "",
+                "title" => $hit->title,
+                "url" => $hit->getURL(),
+                "description" => $hit->description,
+                "excerpt" => elgg_get_excerpt($hit->description),
+                "timeCreated" => date("c", $hit->time_created),
+                "timeUpdated" => date("c", $hit->time_updated),
+                "canEdit" => $hit->canEdit(),
+                "accessId" => $hit->access_id,
+                "tags" => Helpers::renderTags($hit->tags)
+            ];
+        }
+
+        $searchTotals = [];
+        $totals = $es->search($args["q"], null, $args["type"], ["blog","news","question"]);
+        foreach ($totals["count_per_subtype"] as $subtype => $total) {
+            $searchTotals[] = [
+                "subtype" => $subtype,
+                "total" => $total
+            ];
         }
 
         return [
-            "total" => $searchResult['count'],
+            "totals" => $searchTotals,
             "results" => $results
         ];
     }
@@ -416,6 +436,8 @@ class Resolver {
 
     static function getBookmarks($a, $args, $c) {
         $user = elgg_get_logged_in_user_entity();
+        $tags = $args["tags"];
+        $subtype = $args["subtype"];
 
         if ($user) {
             $options = [
@@ -425,13 +447,35 @@ class Resolver {
                 "limit" => (int) $args["limit"]
             ];
 
+            if ($subtype && in_array($subtype, ["news", "question", "blog"])) {
+                $options["type"] = "object";
+                $options["subtype"] = $subtype;
+            }
+
+            // @todo: Elgg will generate a query that will definately not scale for large amounts of items.
+            // Think we will need a seperate table to speed up tag matching
+            if ($tags) {
+                $options["metadata_name_value_pairs"] = [];
+                foreach ($tags as $tag) {
+                    $options["metadata_name_value_pairs"][] = [
+                        "name" => "tags",
+                        "value" => $tag
+                    ];
+                }
+            }
+
             $total = elgg_get_entities_from_relationship(array_merge($options, ["count" => true]));
+
+            $entities = [];
             foreach (elgg_get_entities_from_relationship($options) as $entity) {
                 $entities[] = [
                     "guid" => $entity->guid,
                     "ownerGuid" => $entity->owner_guid,
                     "title" => $entity->title,
                     "type" => $entity->type,
+                    "subtype" => $entity->getSubtype(),
+                    "isFeatured" => $entity->isFeatured ? true : false,
+                    "featuredImage" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
                     "description" => $entity->description,
                     "timeCreated" => date("c", $entity->time_created),
                     "timeUpdated" => date("c", $entity->time_updated),

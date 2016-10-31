@@ -4,14 +4,15 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
 const Query = gql`
-    query InfiniteList($offset: Int!, $limit: Int!, $tags: [String!], $subtype: String!) {
-        entities(offset: $offset, limit: $limit, tags: $tags, subtype: $subtype) {
+    query BookmarkList($offset: Int!, $limit: Int!, $tags: [String], $subtype: String) {
+        bookmarks(offset: $offset, limit: $limit, tags: $tags, subtype: $subtype) {
             total
             entities {
                 guid
                 ... on Object {
                     guid
                     title
+                    subtype
                     excerpt
                     votes
                     hasVoted

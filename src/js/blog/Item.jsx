@@ -100,7 +100,7 @@ class Item extends React.Component {
                                 </article>
                                 <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} />
                                 <CommentList comments={entity.comments} />
-                                <Edit title="Blog wijzigen" entity={entity} subtype="blog" />
+                                <Edit title="Blog wijzigen" entity={entity} subtype="blog" featuredImage={true} />
                                 <Delete title="Blog verwijderen" entity={entity} subtype="blog" />
                             </div>
                         </div>

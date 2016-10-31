@@ -21,10 +21,12 @@ const Query = gql`
                         tags
                         timeCreated
                         isBookmarked
+                        commentCount
                         hasVoted
                         votes
                         owner {
                             guid
+                            username
                             name
                             icon
                             url

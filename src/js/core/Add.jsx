@@ -12,6 +12,7 @@ import RichTextField from "./components/RichTextField"
 import Form from "./components/Form"
 import InputField from "./components/InputField"
 import FeaturedImageField from "./components/FeaturedImageField"
+import SwitchField from "./components/SwitchField"
 
 class AddModal extends React.Component {
     constructor(props) {
@@ -43,6 +44,12 @@ class AddModal extends React.Component {
             tags: stringToTags(values.tags)
         }
 
+        switch (this.props.subtype) {
+            case "news":
+                input["source"] = values.source
+                input["isFeatured"] = values.isFeatured
+        }
+
         this.props.mutate({
             variables: {
                 input
@@ -65,6 +72,17 @@ class AddModal extends React.Component {
             )
         }
 
+        let extraFields
+        switch (this.props.subtype) {
+            case "news":
+                extraFields = (
+                    <div>
+                        <InputField name="source" type="text" placeholder="Bron" className="form__input" />
+                        <SwitchField name="isFeatured" type="text" className="form__input" label="Dit bericht is uitgelicht" />
+                    </div>
+                )
+        }
+
         return (
             <Modal id="add" title={this.props.title} full={this.props.featuredImage ? true : false}>
                 <Form ref="form" onSubmit={this.onSubmit}>
@@ -73,6 +91,7 @@ class AddModal extends React.Component {
                         <InputField name="title" type="text" placeholder="Titel" className="form__input" rules="required" autofocus />
                         <RichTextField name="description" placeholder="Beschrijving" rules="required" />
                         <InputField name="tags" ref="tags" type="text" placeholder="Tags" className="form__input" />
+                        {extraFields}
                         <button className="button" type="submit">
                             Toevoegen
                         </button>

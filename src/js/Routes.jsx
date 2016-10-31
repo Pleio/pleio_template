@@ -9,7 +9,6 @@ import NotFound from "./core/NotFound"
 import ForgotPasswordConfirm from "./core/ForgotPasswordConfirm"
 import Login from "./core/Login"
 import Logout from "./core/Logout"
-import Search from "./core/Search"
 
 import Campagne from "./pages/Campagne"
 
@@ -26,6 +25,8 @@ import QuestionsList from "./questions/List"
 import QuestionsItem from "./questions/Item"
 
 import BookmarksList from "./bookmarks/List"
+
+import SearchResults from "./search/Results"
 
 import ProfileWrapper from "./profile/components/Wrapper"
 import Profile from "./profile/Profile"
@@ -52,7 +53,7 @@ export default class Routes extends React.Component {
                         <Route path="/questions/:guid" component={QuestionsItem} />
                     </Route>
                     <Route path="/bookmarks" component={BookmarksList} />
-                    <Route path="/search" component={Search} />
+                    <Route path="/search" component={SearchResults} />
                     <Route path="/resetpassword" component={ForgotPasswordConfirm} />
                     <Route path="/profile/:username" component={ProfileWrapper}>
                         <IndexRoute component={Profile} />

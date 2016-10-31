@@ -19,3 +19,12 @@ export const modal = (state = {}, action) => {
             return state
     }
 }
+
+export const search = (state = {}, action) => {
+    switch (action.type) {
+        case "SEARCH":
+            return action.q
+        default:
+            return state
+    }
+}

@@ -52,43 +52,65 @@ class Item extends React.Component {
             );
         }
 
-        return (
-            <section className="section">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-                            <article className="article">
-                                <h3 className="article__title">{entity.title}</h3>
-                                <div className="article-meta">
-                                    <div className="article-meta__date">
-                                        {showDate(entity.timeCreated)}
-                                    </div>
-                                    <div className="article-meta__source">
-                                        Bron:&nbsp;<a href="#">Ministerie van Onderwijs, Cultuur en Wetenschap</a>
-                                    </div>
-                                </div>
-                                <div className="content" dangerouslySetInnerHTML={{__html: entity.description}} />
-                                <div className="article-actions">
-                                    <SocialShare />
-                                    <div className="article-actions__buttons">
-                                        <div className="article-actions__justify">
-                                            <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
-                                                Schrijf een reactie
-                                            </div>
-                                            {edit}
-                                        </div>
-                                        <Bookmark entity={entity} />
-                                    </div>
-                                </div>
-                            </article>
-                            <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} />
-                            <CommentList comments={entity.comments} />
-                            <EditModal title="Nieuws wijzigen" entity={entity} subtype="news" />
-                            <DeleteModal title="Nieuws verwijderen" entity={entity} subtype="news" />
-                        </div>
+        let featuredImage = ""
+        if (entity.featuredImage) {
+            featuredImage = (
+                <div style={{backgroundImage: "url(" + entity.featuredImage + ")"}} className="lead ___content">
+                    <div className="lead__justify">
+                    <div className="container">
+                    </div>
                     </div>
                 </div>
-            </section>
+            )
+        }
+
+        let source
+        if (entity.source) {
+            source = (
+                <div className="article-meta__source">
+                    Bron:&nbsp;<a href="#">{entity.source}</a>
+                </div>
+            )
+        }
+
+        return (
+            <div>
+                {featuredImage}
+                <section className="section">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+                                <article className="article">
+                                    <h3 className="article__title">{entity.title}</h3>
+                                    <div className="article-meta">
+                                        <div className="article-meta__date">
+                                            {showDate(entity.timeCreated)}
+                                        </div>
+                                        {source}
+                                    </div>
+                                    <div className="content" dangerouslySetInnerHTML={{__html: entity.description}} />
+                                    <div className="article-actions">
+                                        <SocialShare />
+                                        <div className="article-actions__buttons">
+                                            <div className="article-actions__justify">
+                                                <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
+                                                    Schrijf een reactie
+                                                </div>
+                                                {edit}
+                                            </div>
+                                            <Bookmark entity={entity} />
+                                        </div>
+                                    </div>
+                                </article>
+                                <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} />
+                                <CommentList comments={entity.comments} />
+                                <EditModal title="Nieuws wijzigen" entity={entity} subtype="news" featuredImage={true} />
+                                <DeleteModal title="Nieuws verwijderen" entity={entity} subtype="news" />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         )
     }
 }
@@ -112,6 +134,9 @@ const QUERY = gql`
                 description
                 accessId
                 timeCreated
+                source
+                isFeatured
+                featuredImage
                 canEdit
                 tags
                 isBookmarked

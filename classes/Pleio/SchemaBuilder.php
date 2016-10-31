@@ -174,6 +174,12 @@ class SchemaBuilder {
                 "timeUpdated" => [
                     "type" => Type::string()
                 ],
+                "source" => [
+                    "type" => Type::string()
+                ],
+                "isFeatured" => [
+                    "type" => Type::boolean()
+                ],
                 "featuredImage" => [
                     "type" => Type::string()
                 ],
@@ -233,11 +239,23 @@ class SchemaBuilder {
             ]
         ]);
 
+        $searchTotalType = new ObjectType([
+            "name" => "SearchTotal",
+            "fields" => [
+                "subtype" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "total" => [
+                    "type" => Type::nonNull(Type::int())
+                ]
+            ]
+        ]);
+
         $searchListType = new ObjectType([
             "name" => "SearchList",
             "fields" => [
-                "total" => [
-                    "type" => Type::nonNull(Type::int())
+                "totals" => [
+                    "type" => Type::listOf($searchTotalType)
                 ],
                 "results" => [
                     "type" => Type::listOf($entityInterface)
@@ -281,18 +299,6 @@ class SchemaBuilder {
                             return Resolver::getUser($entity->guid);
                         }
                     }
-                ],
-                "bookmarks" => [
-                    "type" => $entityListType,
-                    "args" => [
-                        "offset" => [
-                            "type" => Type::int()
-                        ],
-                        "limit" => [
-                            "type" => Type::int()
-                        ],
-                    ],
-                    "resolve" => "Pleio\Resolver::getBookmarks"
                 ]
             ]
         ]);
@@ -463,6 +469,24 @@ class SchemaBuilder {
                     ],
                     "resolve" => "Pleio\Resolver::getActivities"
                 ],
+                "bookmarks" => [
+                    "type" => $entityListType,
+                    "args" => [
+                        "offset" => [
+                            "type" => Type::int()
+                        ],
+                        "limit" => [
+                            "type" => Type::int()
+                        ],
+                        "subtype" => [
+                            "type" => Type::string()
+                        ],
+                        "tags" => [
+                            "type" => Type::listOf(Type::string())
+                        ]
+                    ],
+                    "resolve" => "Pleio\Resolver::getBookmarks"
+                ],
                 "site" => [
                     "type" => $siteType,
                     "resolve" => "Pleio\Resolver::getSite"
@@ -605,7 +629,13 @@ class SchemaBuilder {
                 "description" => [
                     "type" => Type::nonNull(Type::string())
                 ],
+                "isFeatured" => [
+                    "type" => Type::boolean()
+                ],
                 "featuredImage" => [
+                    "type" => Type::string()
+                ],
+                "source" => [
                     "type" => Type::string()
                 ],
                 "containerGuid" => [
@@ -640,6 +670,15 @@ class SchemaBuilder {
                 ],
                 "description" => [
                     "type" => Type::nonNull(Type::string())
+                ],
+                "isFeatured" => [
+                    "type" => Type::boolean()
+                ],
+                "featuredImage" => [
+                    "type" => Type::string()
+                ],
+                "source" => [
+                    "type" => Type::string()
                 ],
                 "accessId" => [
                     "type" => Type::int()

@@ -2,6 +2,8 @@ import React from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router"
 import { showModal } from "../../lib/actions"
+import { graphql } from "react-apollo"
+import gql from "graphql-tag"
 
 class Lead extends React.Component {
     constructor(props) {
@@ -45,6 +47,12 @@ class Lead extends React.Component {
             style.height = 0;
         }
 
+        if (!this.props.data.viewer || this.props.data.viewer.loggedIn) {
+            return (
+                <div></div>
+            )
+        }
+
         return (
             <div style={style} className="lead ___home" ref="lead">
                 <div className="lead__close" onClick={this.onClose}>
@@ -74,4 +82,14 @@ class Lead extends React.Component {
     }
 }
 
-export default connect()(Lead)
+const Query = gql`
+    query Lead {
+        viewer {
+            guid
+            loggedIn
+        }
+    }
+`
+
+const withQuery = graphql(Query)
+export default connect()(withQuery(Lead))

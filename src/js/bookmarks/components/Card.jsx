@@ -22,7 +22,7 @@ export default class Card extends React.Component {
             )
         }
 
-        switch (this.props.entity.object.subtype) {
+        switch (this.props.entity.subtype) {
             case "news":
                 return this.renderNews()
             case "blog":
@@ -41,19 +41,19 @@ export default class Card extends React.Component {
         const { object } = activity
 
         return (
-            <NewsCard entity={this.props.entity.object} inActivityFeed={true} />
+            <NewsCard entity={this.props.entity} inActivityFeed={true} />
         )
     }
 
     renderBlog() {
         return (
-            <BlogCard entity={this.props.entity.object} inActivityFeed={true} />
+            <BlogCard entity={this.props.entity} inActivityFeed={true} />
         )
     }
 
     renderQuestion() {
         return (
-            <QuestionCard entity={this.props.entity.object} inActivityFeed={true} />
+            <QuestionCard entity={this.props.entity} inActivityFeed={true} />
         )
     }
 }

@@ -5,6 +5,7 @@ import InputField from "./InputField"
 import RichTextField from "./RichTextField"
 import SelectField from "./SelectField"
 import CheckField from "./CheckField"
+import SwitchField from "./SwitchField"
 import FeaturedImageField from "./FeaturedImageField"
 
 class Form extends React.Component {
@@ -117,6 +118,7 @@ class Form extends React.Component {
                 case InputField:
                 case SelectField:
                 case RichTextField:
+                case SwitchField:
                 case CheckField:
                     return this.wrapComponent(child)
                 default:

@@ -10,3 +10,10 @@ export const hideModal = () => {
         type: 'HIDE_MODAL'
     }
 }
+
+export const search = (q) => {
+    return {
+        type: 'SEARCH',
+        q
+    }
+}

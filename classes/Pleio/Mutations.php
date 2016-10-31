@@ -174,9 +174,20 @@ class Mutations {
             throw new Exception("could_not_save");
         }
 
-        if ($input["featuredImage"]) {
-            Helpers::saveToFeatured($input["featuredImage"], $entity);
-            $entity->featuredIcontime = time();
+        if (in_array($input["subtype"], ["news", "blog"])) {
+            if (isset($input["isFeatured"])) {
+                $entity->isFeatured = $input["isFeatured"];
+            }
+
+            if ($input["featuredImage"]) {
+                Helpers::saveToFeatured($input["featuredImage"], $entity);
+                $entity->featuredIcontime = time();
+            }
+
+            if ($input["source"]) {
+                $entity->source = $input["source"];
+            }
+
             $result = $entity->save();
         }
 
@@ -193,6 +204,10 @@ class Mutations {
         $entity = get_entity((int) $input["guid"]);
         if (!$entity) {
             throw new Exception("could_not_find");
+        }
+
+        if (!$entity->canEdit()) {
+            throw new Exception("could_not_save");
         }
 
         if (!in_array($entity->type, array("group", "object"))) {
@@ -215,6 +230,28 @@ class Mutations {
         }
 
         $result = $entity->save();
+
+        if (in_array($entity->getSubtype(), ["blog", "news"])) {
+            if (isset($input["isFeatured"])) {
+                $entity->isFeatured = $input["isFeatured"];
+            }
+
+            if ($input["featuredImage"]) {
+                if ($input["featuredImage"] === "false") {
+                    unset($entity->featuredIcontime);
+                } else {
+                    Helpers::saveToFeatured($input["featuredImage"], $entity);
+                    $entity->featuredIcontime = time();
+                }
+            }
+
+            if ($input["source"]) {
+                $entity->source = $input["source"];
+            }
+
+            $result &= $entity->save();
+        }
+
         if ($result) {
             return [
                 "guid" => $entity->guid
