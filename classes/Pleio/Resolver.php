@@ -336,7 +336,11 @@ class Resolver {
         foreach ($searchResult['hits'] as $hit) {
             $results[] = array(
                 "guid" => $hit->guid,
-                "title" => $hit->title ? $hit->title : $hit->name,
+                "title" => $hit->title,
+                "name" => $hit->name,
+                "type" => $hit->type,
+                "subtype" => $hit->getSubtype(),
+                "timeCreated" => $hit->timeCreated,
                 "url" => $hit->getURL()
             );
         }

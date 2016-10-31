@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import gql from "graphql-tag"
 import ProfilePicture from "./ProfilePicture"
 import { showModal } from "../lib/actions"
+import NotFound from "../core/NotFound"
 
 class Profile extends React.Component {
     constructor(props) {
@@ -25,6 +26,13 @@ class Profile extends React.Component {
                 <div className="page-layout"></div>
             )
         }
+
+        if (entity.status ===404) {
+            return (
+                <NotFound />
+            )
+        }
+
 
         let pictureStyles = {
             background: "url('" + this.props.data.entity.icon + "') no-repeat",
@@ -134,6 +142,7 @@ const query = gql`
     query ProfileWrapper($username: String!) {
         entity(username: $username) {
             guid
+            status
             ... on User {
                 canEdit
                 icon

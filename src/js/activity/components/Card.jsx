@@ -3,6 +3,7 @@ import { Link } from "react-router"
 import { getClassFromTags } from "../../lib/helpers"
 import classnames from "classnames"
 import BlogCard from "../../blog/components/Card"
+import QuestionCard from '../../questions/components/Card'
 
 export default class Card extends React.Component {
     constructor(props) {
@@ -35,14 +36,15 @@ export default class Card extends React.Component {
     }
 
     renderNews() {
-        const { guid, image, title, tags } = this.props.entity.object
+        const activity = this.props.entity
+        const { object } = activity
 
         return (
             <div className="card-tile-container">
-                <Link to={`/news/${guid}`} className={classnames({"card-tile ___full-image ___small-card": true, "___no-image": (image ? false : true), [getClassFromTags(tags)]: true})}>
+                <Link to={`/news/${object.guid}`} className={classnames({"card-tile ___full-image ___small-card": true, "___no-image": (object.image ? false : true), [getClassFromTags(object.tags)]: true})}>
                     <div className="card-tile__content">
                         <h3 className="card-tile__title">
-                            {title}
+                            {object.title}
                         </h3>
                         <div className="read-more">
                             <div className="read-more__circle"></div>
@@ -62,27 +64,7 @@ export default class Card extends React.Component {
 
     renderQuestion() {
         return (
-            <div className="card-topic ___feed">
-                <a href="#" title="Ester Verschut" style={{backgroundImage: "url(/mod/pleio_template/src/content/john.png)"}} className="card-topic__picture"></a>
-                <div className="card-topic__post">
-                    <a href="forum-bericht.html" className="card-topic__title">
-                        Beëindiging van een koop- en licentieovereenkomst
-                    </a>
-                    <div className="card-topic__meta">
-                        <span>Gesteld door:&nbsp;</span><a href="#" className="card-topic__user">Ester Verschut</a>&nbsp;5 min geleden<span>&nbsp;in&nbsp;</span>
-                        <a href="#" className="card-topic__subject">Kwaliteit</a>
-                    </div>
-                    <div className="card-topic__content">
-                        DGA staat op de loonlijst en ontvangt vanuit zijn werkmaatschappij € 57.500,- bruto loon. De medewerker met het hoogste salaris in de werkmaatschappij verdient hoogste salaris in de werkmaatschappij verdient.
-                    </div>
-                </div>
-                <div className="card-topic__actions">
-                    <a href="forum-bericht.html" className="card-topic__comments">16 antwoorden</a>
-                    <div title="Bewaar" data-toggle-bookmark="" className="button__text count-bookmarks">
-                        <span data-toggle-bookmark="number">12</span>
-                    </div>
-                </div>
-            </div>
+            <QuestionCard entity={this.props.entity.object} inFeed={true} />
         )
     }
 }

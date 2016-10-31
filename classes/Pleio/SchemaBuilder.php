@@ -409,6 +409,12 @@ class SchemaBuilder {
                         "q" => [
                             "type" => Type::nonNull(Type::string()),
                         ],
+                        "type" => [
+                            "type" => $typeEnum
+                        ],
+                        "subtype" => [
+                            "type" => Type::string()
+                        ],
                         "offset" => [
                             "type" => Type::int()
                         ],
