@@ -444,7 +444,8 @@ class Resolver {
                 "relationship_guid" => $user->guid,
                 "relationship" => "bookmarked",
                 "offset" => (int) $args["offset"],
-                "limit" => (int) $args["limit"]
+                "limit" => (int) $args["limit"],
+                "order_by" => "r.id DESC"
             ];
 
             if ($subtype && in_array($subtype, ["news", "question", "blog"])) {
