@@ -46,7 +46,7 @@ class Likes extends React.Component {
 
     render() {
         return (
-            <div className={classnames({"button__text ___likes": true, "___is-liked": this.state.isLiked})} onClick={this.onToggle}>
+            <div className={classnames({"button__text ___likes": true, "___margin-top": this.props.marginTop, "___is-liked": this.state.isLiked})} onClick={this.onToggle}>
                 <span>{this.state.likes}</span>&nbsp;{this.state.likes == 1 ? "like" : "likes"}
             </div>
         )

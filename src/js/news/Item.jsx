@@ -102,7 +102,7 @@ class Item extends React.Component {
                                         </div>
                                     </div>
                                 </article>
-                                <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} />
+                                <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["NewsItem"]} />
                                 <CommentList comments={entity.comments} />
                                 <EditModal title="Nieuws wijzigen" entity={entity} subtype="news" featuredImage={true} />
                                 <DeleteModal title="Nieuws verwijderen" entity={entity} subtype="news" />

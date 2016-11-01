@@ -14,12 +14,10 @@ class UsersOnline extends React.Component {
         }
 
         return (
-            <div className="col-sm-4 col-lg-3 col-lg-offset-3 end-lg middle-lg">
-                <div className={classnames({"users-online":true, "___grey":this.props.isGrey})}>
-                    <span>
-                        {site.usersOnline} {site.usersOnline == 1 ? "leraar" : "leraren"} online
-                    </span>
-                </div>
+            <div className={classnames({"users-online":true, "___grey":this.props.isGrey})}>
+                <span>
+                    {site.usersOnline} {site.usersOnline == 1 ? "leraar" : "leraren"} online
+                </span>
             </div>
         )
     }

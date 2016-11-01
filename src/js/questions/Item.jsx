@@ -98,8 +98,8 @@ class Item extends React.Component {
                                         </div>
                                     </div>
                                 </article>
-                                <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} />
-                                <CommentList comments={entity.comments} />
+                                <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["QuestionsItem"]} />
+                                <CommentList comments={entity.comments} canVote={true} />
                                 <Edit title="Vraag wijzigen" entity={entity} subtype="question" />
                                 <Delete title="Vraag verwijderen" entity={entity} subtype="question" />
                             </div>
@@ -144,6 +144,8 @@ const QUERY = gql`
                     guid
                     description
                     timeCreated
+                    hasVoted
+                    votes
                     owner {
                         name
                         icon

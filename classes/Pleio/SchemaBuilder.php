@@ -75,6 +75,21 @@ class SchemaBuilder {
             ]
         ]);
 
+        $statsItem = new ObjectType([
+            "name" => "StatsItem",
+            "fields" => [
+                "key" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "name" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "value" => [
+                    "type" => Type::string()
+                ]
+            ]
+        ]);
+
         $userType = new ObjectType([
             "name" => "User",
             "interfaces" => [$entityInterface],
@@ -91,11 +106,38 @@ class SchemaBuilder {
                 "name" => [
                     "type" => Type::string()
                 ],
+                "email" => [
+                    "type" => Type::string(),
+                    "resolve" => function($user) {
+                        return Resolver::getEmail($user);
+                    }
+                ],
+                "getsNotificationOnReply" => [
+                    "type" => Type::boolean(),
+                    "resolve" => function($user) {
+                        return Resolver::getsNotificationOnReply($user);
+                    }
+                ],
+                "getsNewsletter" => [
+                    "type" => Type::boolean(),
+                    "resolve" => function($user) {
+                        return Resolver::getsNewsletter($user);
+                    }
+                ],
                 "profile" => [
                     "type" => Type::listOf($profileItem),
                     "resolve" => function($user) {
                         return Resolver::getProfile($user);
                     }
+                ],
+                "stats" => [
+                    "type" => Type::listOf($statsItem),
+                    "resolve" => function($user) {
+                        return Resolver::getStats($user);
+                    }
+                ],
+                "tags" => [
+                    "type" => Type::listOf(Type::string())
                 ],
                 "icon" => [
                     "type" => Type::string()
@@ -762,8 +804,32 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::vote"
         ]);
 
-        $editProfileMutation = Relay::mutationWithClientMutationId([
-            "name" => "editProfile",
+        $editProfileFieldMutation = Relay::mutationWithClientMutationId([
+            "name" => "editProfileField",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::string()
+                ],
+                "key" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "value" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+            ],
+            "outputFields" => [
+                "user" => [
+                    "type" => $userType,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::editProfileField"
+        ]);
+
+        $editAvatarMutation = Relay::mutationWithClientMutationId([
+            "name" => "editAvatar",
             "inputFields" => [
                 "guid" => [
                     "type" => Type::string()
@@ -771,6 +837,27 @@ class SchemaBuilder {
                 "avatar" => [
                     "type" => Type::string(),
                     "description" => "The string pointer to the file object."
+                ],
+            ],
+            "outputFields" => [
+                "user" => [
+                    "type" => $userType,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::editAvatar"
+        ]);
+
+        $editInterestsMutation = Relay::mutationWithClientMutationId([
+            "name" => "editInterests",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::string()
+                ],
+                "tags" => [
+                    "type" => Type::listOf(Type::string())
                 ]
             ],
             "outputFields" => [
@@ -781,7 +868,76 @@ class SchemaBuilder {
                     }
                 ]
             ],
-            "mutateAndGetPayload" => "Pleio\Mutations::editProfile"
+            "mutateAndGetPayload" => "Pleio\Mutations::editInterests"
+        ]);
+
+        $editNotificationsMutation = Relay::mutationWithClientMutationId([
+            "name" => "editNotifications",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::string()
+                ],
+                "notificationOnReply" => [
+                    "type" => Type::boolean()
+                ],
+                "newsletter" => [
+                    "type" => Type::boolean()
+                ]
+            ],
+            "outputFields" => [
+                "user" => [
+                    "type" => $userType,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::editNotifications"
+        ]);
+
+        $editEmailMutation = Relay::mutationWithClientMutationId([
+            "name" => "editEmail",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::string()
+                ],
+                "email" => [
+                    "type" => Type::string()
+                ]
+            ],
+            "outputFields" => [
+                "user" => [
+                    "type" => $userType,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::editEmail"
+        ]);
+
+        $editPasswordMutation = Relay::mutationWithClientMutationId([
+            "name" => "editPassword",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::string()
+                ],
+                "oldPassword" => [
+                    "type" => Type::string()
+                ],
+                "newPassword" => [
+                    "type" => Type::string()
+                ]
+            ],
+            "outputFields" => [
+                "user" => [
+                    "type" => $userType,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::editPassword"
         ]);
 
         $mutationType = new ObjectType([
@@ -796,9 +952,14 @@ class SchemaBuilder {
                     "editEntity" => $editEntityMutation,
                     "deleteEntity" => $deleteEntityMutation,
                     "subscribeNewsletter" => $subscribeNewsletterMutation,
+                    "editInterests" => $editInterestsMutation,
+                    "editNotifications" => $editNotificationsMutation,
+                    "editEmail" => $editEmailMutation,
+                    "editPassword" => $editPasswordMutation,
                     "bookmark" => $bookmarkMutation,
                     "vote" => $voteMutation,
-                    "editProfile" => $editProfileMutation
+                    "editAvatar" => $editAvatarMutation,
+                    "editProfileField" => $editProfileFieldMutation
             ]
         ]);
 

@@ -89,7 +89,23 @@ class Resolver {
     }
 
     static function getUsersOnline($site) {
-        return find_active_users(600, 10, 0, true);
+        global $CONFIG;
+
+        $time = time() - 600;
+        $site = elgg_get_site_entity();
+
+        return elgg_get_entities(array(
+            "type" => "user",
+            "count" => true,
+            "joins" => [
+                    "join {$CONFIG->dbprefix}users_entity u on e.guid = u.guid",
+                    "join {$CONFIG->dbprefix}entity_relationships r ON e.guid = r.guid_one AND relationship = 'member_of_site'"
+            ],
+            "wheres" => [
+                "u.last_action >= {$time}",
+                "r.guid_two = {$site->guid}"
+            ]
+        ));
     }
 
     static function getEntity($a, $args, $c) {
@@ -122,7 +138,8 @@ class Resolver {
                 "icon" => $entity->getIconURL("large"),
                 "timeCreated" => $entity->time_created,
                 "timeUpdated" => $entity->time_updated,
-                "canEdit" => $entity->canEdit()
+                "canEdit" => $entity->canEdit(),
+                "tags" => Helpers::renderTags($entity->tags)
             ];
         }
 
@@ -204,6 +221,33 @@ class Resolver {
         ];
     }
 
+    static function getStats($user) {
+        $user = get_entity($user["guid"]);
+        if (!$user || !$user instanceof \ElggUser) {
+            return [];
+        }
+
+        $items = [
+            [
+                "key" => "answers",
+                "name" => "Antwoorden",
+                "value" => $user->countObjects("comment")
+            ],
+            [
+                "key" => "upvotes",
+                "name" => "Stemmen omhoog",
+                "value" => Helpers::countAnnotations($user, "vote", 1)
+            ],
+            [
+                "key" => "downvotes",
+                "name" => "Stemmen omlaag",
+                "value" => Helpers::countAnnotations($user, "vote", -1)
+            ]
+        ];
+
+        return $items;
+    }
+
     static function getProfile($user) {
         $user = get_entity($user["guid"]);
         if (!$user || !$user instanceof \ElggUser) {
@@ -213,8 +257,11 @@ class Resolver {
         $defaultItems = [
             [ "key" => "phone", "name" => "Telefoonnummer" ],
             [ "key" => "mobile", "name" => "Mobiel nummer" ],
-            [ "key" => "email", "name" => "E-mailadres" ],
-            [ "key" => "site", "name" => "Website" ]
+            [ "key" => "emailaddress", "name" => "E-mailadres" ],
+            [ "key" => "site", "name" => "Website" ],
+            [ "key" => "sector", "name" => "Onderwijssector" ],
+            [ "key" => "school", "name" => "School" ],
+            [ "key" => "description", "name" => "Over mij" ]
         ];
 
         $result = [];
@@ -222,7 +269,7 @@ class Resolver {
             $result[] = [
                 "key" => $item["key"],
                 "name" => $item["name"],
-                "value" => $user->$item["key"]
+                "value" => $user->$item["key"] ? $user->$item["key"] : ""
             ];
         }
 
@@ -315,6 +362,46 @@ class Resolver {
             "canWrite" => $site->canWriteToContainer(0, "object", $subtype),
             "entities" => $entities
         ];
+    }
+
+    static function getsNotificationOnReply($user) {
+        $user = get_entity($user["guid"]);
+        if (!$user || !$user instanceof \ElggUser) {
+            return false;
+        }
+
+        if (!$user->canEdit()) {
+            return false;
+        }
+
+        return $user->getPrivateSetting("notificationOnReply") ? true : false;
+    }
+
+    static function getsNewsletter($user) {
+        $user = get_entity($user["guid"]);
+        if (!$user || !$user instanceof \ElggUser) {
+            return false;
+        }
+
+        if (!$user->canEdit()) {
+            return false;
+        }
+
+        $site = elgg_get_site_entity();
+        return check_entity_relationship($user->guid, \NewsletterSubscription::SUBSCRIPTION, $site->guid);
+    }
+
+    static function getEmail($user) {
+        $user = get_entity($user["guid"]);
+        if (!$user || !$user instanceof \ElggUser) {
+            return "";
+        }
+
+        if (!$user->canEdit()) {
+            return "";
+        }
+
+        return $user->email;
     }
 
     static function isBookmarked($object) {

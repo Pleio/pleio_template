@@ -54,7 +54,7 @@ class Helpers {
 
         $files = array();
         foreach ($icon_sizes as $name => $size_info) {
-            $resized = get_resized_image_from_uploaded_file($filename, $size_info["w"], $size_info["h"], $size_info["square"], $size_info["upscale"]);
+            $resized = get_resized_image_from_uploaded_file($filename, $size_info["w"], $size_info["h"], $size_info["square"], true);
 
             if ($resized) {
                 $file = new \ElggFile();
@@ -103,5 +103,31 @@ class Helpers {
         }
 
         return $metastrings;
+    }
+
+    static function countAnnotations(ElggUser $owner, $name, $value = null) {
+        $options = array(
+            "annotation_name" => $name,
+            "annotation_owner_guid" => $owner->guid,
+            "count" => true
+        );
+
+        if ($value) {
+            $options["annnotation_value"] = $value;
+        }
+
+        return elgg_get_annotations($options);
+    }
+
+    static function sendPasswordChangeMessage(ElggUser $user) {
+        $site = elgg_get_site_entity();
+        $subject = elgg_echo("security_tools:notify_user:password:subject");
+        $message = elgg_echo("security_tools:notify_user:password:message", array(
+            $user->name,
+            $site->name,
+            $site->url
+        ));
+
+        notify_user($user->guid, $site->guid, $subject, $message, null, "email");
     }
 }

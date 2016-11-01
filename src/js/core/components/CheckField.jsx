@@ -8,7 +8,7 @@ class InputField extends React.Component {
         this.onChange = this.onChange.bind(this)
 
         this.state = {
-            checked: false
+            checked: this.props.checked || false
         }
     }
 
@@ -69,7 +69,7 @@ class InputField extends React.Component {
                     id={this.props.id}
                     ref="checkbox"
                     name={this.props.name}
-                    type={this.props.type}
+                    type="checkbox"
                     className={this.props.className}
                     placeholder={this.props.placeholder}
                     checked={this.state.checked}

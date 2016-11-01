@@ -21,4 +21,8 @@
         <type>plugin</type>
         <name>newsletter</name>
     </requires>
+    <requires>
+        <type>plugin</type>
+        <name>security_tools</name>
+    </requires>
 </plugin_manifest>

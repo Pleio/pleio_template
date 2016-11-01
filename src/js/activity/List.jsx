@@ -26,7 +26,9 @@ export default class Activity extends React.Component {
                 <div className="container">
                     <Lead title="Leraar.nl" image="/mod/pleio_template/src/content/lead-1.jpg" />
                     <ContentFilters onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} selectClassName="___margin-top ___margin-bottom">
-                        <UsersOnline isGrey={true} />
+                        <div className="col-sm-4 col-lg-3 col-lg-offset-3 end-lg middle-lg">
+                            <UsersOnline isGrey={true} />
+                        </div>
                     </ContentFilters>
                     <div className="row">
                         <div className="col-sm-12 col-lg-4 last-lg top-lg">

@@ -154,8 +154,8 @@ class ProfilePicture extends React.Component {
 }
 
 const Query = gql`
-    mutation editProfile($input: editProfileInput!) {
-        editProfile(input: $input) {
+    mutation editAvatar($input: editAvatarInput!) {
+        editAvatar(input: $input) {
             user {
                 guid
                 icon

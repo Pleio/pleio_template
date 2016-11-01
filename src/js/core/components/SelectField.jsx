@@ -40,7 +40,7 @@ class SelectField extends React.Component {
         })
 
         if (this.props.onChange) {
-            this.props.onChange(e)
+            this.props.onChange(e, value)
         }
     }
 

@@ -5,6 +5,8 @@ import gql from "graphql-tag"
 import ProfilePicture from "./ProfilePicture"
 import { showModal } from "../lib/actions"
 import NotFound from "../core/NotFound"
+import ProfileField from "./components/ProfileField"
+import ProfileScore from "./components/ProfileScore"
 
 class Profile extends React.Component {
     constructor(props) {
@@ -48,19 +50,23 @@ class Profile extends React.Component {
             }
         })
 
-        let contactData = ['phone', 'mobile', 'email', 'site'].map((key, i) => (
-            <li key={i}>
-                <label>{profileByKey[key].name}</label>
-                <span>{profileByKey[key].value}</span>
-            </li>
+        const contactData = ['phone', 'mobile', 'emailaddress', 'site'].map((key, i) => (
+            <ProfileField key={i} entity={entity} canEdit={entity.canEdit} dataKey={key} name={profileByKey[key].name} value={profileByKey[key].value} />
         ))
 
-        let editProfile
+        const siteProfile = ['sector', 'school'].map((key, i) => (
+            <ProfileField key={i} entity={entity} canEdit={entity.canEdit} dataKey={key} name={profileByKey[key].name} value={profileByKey[key].value} />
+        ))
+
+        let editProfile, profileScore
         if (entity.canEdit) {
             editProfile = (
                 <div className="card-profile__edit-picture" onClick={this.editPicture}>
                     Profielfoto bewerken
                 </div>
+            )
+            profileScore = (
+                <ProfileScore entity={entity} />
             )
         }
 
@@ -83,9 +89,7 @@ class Profile extends React.Component {
                                         </ul>
                                     </div>
                                     <div className="col-sm-12 col-lg-4">
-                                        <div className="card-profile__status">
-                                            <span>Redelijk profiel</span>
-                                        </div>
+                                        {profileScore}
                                         <ul className="card-profile__social">
                                             <li>
                                                 <label>Likes:</label>
@@ -116,17 +120,9 @@ class Profile extends React.Component {
                             </div>
                             <div className="col-sm-8 col-lg-6">
                                 <ul className="card-profile__details">
-                                    <li>
-                                        <label>Onderwijssector</label><span>Primair onderwijs</span>
-                                    </li>
-                                    <li>
-                                        <label>School</label><span>Montessorischool Eindhoven</span>
-                                    </li>
+                                    {siteProfile}
                                 </ul>
-                                <div className="card-profile__about"><strong>Over mij</strong>
-                                    <p>Nonsendit volupti im rem et volupta quatemo luptate dolupta niendae sanduci quuntet quo berem autem haritat iumquam qui cum quis reprorior sitem remos eius accusanis esequid mod molori res as alique voluptus modita qui bearum cupta doloribearum a conseque ommodic idissum esed quiande verferis etur rem doluptae atur, nullaceatur?</p>
-                                    <p>Ut as magnimus quas link quiatqui quis et officim veles autaestis aces quam, utemporepro qui doluptatis dust vid quiande idem vendandia nusaeperiti utem dolorem que cor aut as voluptatis aliatem quis modi quaspid ellupta erundis mi, od ex esequaturia voloribus aut repro verior sedi bea quiam remporessit, utas num quia dolupta consereium vel ium id ut magnatus reribus.</p>
-                                </div>
+                                <ProfileField entity={entity} canEdit={entity.canEdit} dataKey="description" name={profileByKey.description.name} value={profileByKey.description.value} />
                             </div>
                             <div className="col-lg-3"></div>
                         </div>
@@ -139,7 +135,7 @@ class Profile extends React.Component {
 }
 
 const query = gql`
-    query ProfileWrapper($username: String!) {
+    query Profile($username: String!) {
         entity(username: $username) {
             guid
             status
@@ -147,6 +143,11 @@ const query = gql`
                 canEdit
                 icon
                 profile {
+                    key
+                    name
+                    value
+                }
+                stats {
                     key
                     name
                     value

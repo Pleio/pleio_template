@@ -10,14 +10,14 @@ class SwitchesField extends React.Component {
         this.onChange = this.onChange.bind(this)
 
         this.state = {
-            checked: []
+            checked: this.props.values || []
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.checked !== this.props.checked) {
+        if (nextProps.values !== this.props.values) {
             this.setState({
-                checked: nextProps.checked
+                checked: nextProps.values || []
             })
         }
     }
@@ -48,7 +48,7 @@ class SwitchesField extends React.Component {
         })
 
         if (this.props.onChange) {
-            this.props.onChange(e)
+            this.props.onChange(name, checked)
         }
     }
 
@@ -74,6 +74,7 @@ class SwitchesField extends React.Component {
                     name={tag}
                     label={this.props.options[tag]}
                     onChange={this.onChange}
+                    checked={this.state.checked.includes(tag)}
                 />
             )
         })

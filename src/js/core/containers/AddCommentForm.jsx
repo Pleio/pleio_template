@@ -30,7 +30,7 @@ class AddCommentForm extends React.Component {
                     containerGuid: this.props.object.guid
                 }
             },
-            refetchQueries: ["NewsItem"]
+            refetchQueries: this.props.refetchQueries
         }).then(({data}) => {
             if (this.props.onSuccess) {
                 this.props.onSuccess()

@@ -10,6 +10,7 @@ import AddComment from "../core/containers/AddComment"
 import SocialShare from "../core/components/SocialShare"
 import Bookmark from "../bookmarks/components/Bookmark"
 import NotFound from "../core/NotFound"
+import Likes from "../core/components/Likes"
 import showDate from "../lib/showDate"
 
 class Item extends React.Component {
@@ -85,6 +86,7 @@ class Item extends React.Component {
                                     </div>
                                     <h3 className="article__title">{entity.title}</h3>
                                     <div className="content" dangerouslySetInnerHTML={{__html: entity.description}} />
+                                    <Likes entity={entity} marginTop={true} />
                                     <div className="article-actions">
                                         <SocialShare />
                                         <div className="article-actions__buttons">
@@ -98,7 +100,7 @@ class Item extends React.Component {
                                         </div>
                                     </div>
                                 </article>
-                                <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} />
+                                <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["BlogItem"]} />
                                 <CommentList comments={entity.comments} />
                                 <Edit title="Blog wijzigen" entity={entity} subtype="blog" featuredImage={true} />
                                 <Delete title="Blog verwijderen" entity={entity} subtype="blog" />
@@ -133,6 +135,8 @@ const QUERY = gql`
                 featuredImage
                 canEdit
                 tags
+                votes
+                hasVoted
                 isBookmarked
                 owner {
                     guid

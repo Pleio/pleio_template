@@ -320,6 +320,10 @@ class Mutations {
             throw new Exception("not_logged_in");
         }
 
+        if (!in_array($score, [-1, 1])) {
+            throw new Exception("invalid_value");
+        }
+
         $past_vote = elgg_get_annotations(array(
             "guid" => $entity->guid,
             "annotation_name" => "vote",
@@ -333,14 +337,10 @@ class Mutations {
 
         if ($past_value === $score) {
             throw new Exception("already_voted");
-        }
-
-        if ($score === 1 || $score === -1) {
-            $result = $entity->annotate("vote", $score, $entity->access_id);
+        } elseif ($past_vote) {
+            $result = $past_vote->delete();
         } else {
-            if ($past_vote) {
-                $result = $past_vote->delete();
-            }
+            $result = $entity->annotate("vote", $score, $entity->access_id);
         }
 
         if ($result) {
@@ -352,7 +352,206 @@ class Mutations {
         throw new Exception("could_not_save");
     }
 
-    static function editProfile($input) {
+    static function editProfileField($input) {
+        $entity = get_entity(((int) $input["guid"]));
+        if (!$entity) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$entity->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        if (!$entity instanceof \ElggUser) {
+            throw new Exception("not_a_user");
+        }
+
+        $key = $input["key"];
+        $value = $input["value"];
+
+        if (!in_array($key, ["name", "phone", "mobile", "emailaddress", "site", "sector", "school", "description"])) {
+            throw new Exception("invalid_key");
+        }
+
+        if ($value) {
+            if ($key == "name") {
+                $entity->$key = $value;
+                $result = $entity->save();
+            } else {
+                $result = create_metadata($entity->guid, $key, $value, "", $entity->guid, get_default_access(), false);
+            }
+        } else {
+            $entity->deleteMetadata($key);
+            $result = true;
+        }
+
+        if ($result) {
+            return [
+                "guid" => $entity->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
+    }
+
+    static function editInterests($input) {
+        $entity = get_entity(((int) $input["guid"]));
+        if (!$entity) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$entity->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        if (!$entity instanceof \ElggUser) {
+            throw new Exception("not_a_user");
+        }
+
+        $entity->tags = filter_tags($input["tags"]);
+        $result = $entity->save();
+
+        if ($result) {
+            return [
+                "guid" => $entity->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
+    }
+
+    static function editNotifications($input) {
+        $entity = get_entity(((int) $input["guid"]));
+        if (!$entity) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$entity->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        if (!$entity instanceof \ElggUser) {
+            throw new Exception("not_a_user");
+        }
+
+        $site = elgg_get_site_entity();
+        $notificationOnReply = (bool) $input["notificationOnReply"];
+        $newsletter = (bool) $input["newsletter"];
+
+        if ($newsletter) {
+            $result &= newsletter_subscribe_user($entity, $site);
+        } else {
+            $result &= newsletter_unsubscribe_user($entity, $site);
+        }
+
+        if ($notificationOnReply) {
+            $entity->setPrivateSetting("notificationOnReply", "yes");
+        } else {
+            $entity->removePrivateSetting("notificationOnReply");
+        }
+
+        $result = $entity->save();
+
+        if ($result) {
+            return [
+                "guid" => $entity->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
+    }
+
+    static function editEmail($input) {
+        $entity = get_entity(((int) $input["guid"]));
+        if (!$entity) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$entity->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        if (!$entity instanceof \ElggUser) {
+            throw new Exception("not_a_user");
+        }
+
+        $email = trim($input["email"]);
+        if (!is_email_address($email)) {
+            throw new Exception("invalid_email");
+        }
+
+        if (get_user_by_email($email)) {
+            throw new Exception("email_already_in_use");
+        }
+
+        set_input("guid", $entity->guid);
+        set_input("email", $email);
+        security_tools_prepare_email_change();
+
+        return [
+            "guid" => $entity->guid
+        ];
+
+        throw new Exception("could_not_save");
+    }
+
+    static function editPassword($input) {
+        $user = get_entity(((int) $input["guid"]));
+        $oldPassword = $input["oldPassword"];
+        $newPassword = $input["newPassword"];
+
+        if (!$user) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$user->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        if (!$user instanceof \ElggUser) {
+            throw new Exception("not_a_user");
+        }
+
+        $credentials = array(
+            "username" => $user->username,
+            "password" => $oldPassword
+        );
+
+        try {
+            pam_auth_userpass($credentials);
+        } catch (Exception $e) {
+            throw new Exception("invalid_old_password");
+        }
+
+        if (!validate_password($newPassword)) {
+            throw new Exception("invalid_new_password");
+        }
+
+        $user->setPassword($newPassword);
+        $user->code = "";
+
+        if ($user->guid == elgg_get_logged_in_user_guid() && !empty($_COOKIE['elggperm'])) {
+            // regenerate remember me code so no other user could
+            // use it to authenticate later
+            $code = _elgg_generate_remember_me_token();
+            $_SESSION['code'] = $code;
+            $user->code = md5($code);
+            setcookie("elggperm", $code, (time() + (86400 * 30)), "/");
+        }
+
+        $result = $user->save();
+        if ($result) {
+            Helpers::sendPasswordChangeMessage($user);
+
+            return [
+                "guid" => $entity->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
+    }
+
+    static function editAvatar($input) {
         $entity = get_entity(((int) $input["guid"]));
         if (!$entity) {
             throw new Exception("could_not_find");
