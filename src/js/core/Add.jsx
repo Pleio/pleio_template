@@ -54,7 +54,7 @@ class AddModal extends React.Component {
             variables: {
                 input
             },
-            refetchQueries: ["InfiniteList"]
+            refetchQueries: this.props.refetchQueries
         }).then(({data}) => {
             this.props.dispatch(hideModal())
         }).catch((errors) => {

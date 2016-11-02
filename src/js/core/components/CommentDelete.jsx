@@ -1,19 +1,23 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { connect } from "react-redux"
-import { hideModal } from "../lib/actions"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
-import Errors from "./components/Errors"
-import Modal from "./components/Modal"
-import AccessSelect from "./containers/AccessSelect"
+import classnames from "classnames"
 
-class DeleteModal extends React.Component {
+class CommentDelete extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = Object.assign({}, {errors: []}, this.props.entity)
+        this.state = {
+            isOpen: false
+        }
+
         this.onSubmit = this.onSubmit.bind(this)
+        this.toggle = this.toggle.bind(this)
+    }
+
+    toggle() {
+        this.setState({ isOpen: !this.state.isOpen })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -31,17 +35,18 @@ class DeleteModal extends React.Component {
             variables: {
                 input: {
                     clientMutationId: 1,
-                    guid: this.state.guid
+                    guid: this.props.entity.guid
                 }
             },
             refetchQueries: this.props.refetchQueries
         }).then(({data}) => {
-            this.props.dispatch(hideModal())
+            location.reload()
         })
     }
 
     render() {
         let title = ""
+
         if (this.props.entity) {
             if (this.props.entity.title) {
                 title = this.props.entity.title
@@ -53,17 +58,24 @@ class DeleteModal extends React.Component {
         }
 
         return (
-            <Modal id="delete" title={this.props.title}>
-                <form className="form" onSubmit={this.onSubmit}>
-                    <p>Weet je zeker dat je het item {title} wil verwijderen?</p>
-                    <button className="button">Verwijder</button>
-                </form>
-            </Modal>
+            <div id={this.props.id} tabIndex="0" className={classnames({"modal ___small":true, "___is-open": this.state.isOpen})}>
+                <div className="modal__wrapper">
+                    <div className="modal__background" />
+                    <div className="modal__box">
+                        <div className="modal__close" onClick={this.toggle} />
+                        <h3 className="modal__title">
+                            Antwoord verwijderen
+                        </h3>
+                        <p>Weet je zeker dat je het item {title} wil verwijderen?</p>
+                        <button className="button" onClick={this.onSubmit}>Verwijder</button>
+                    </div>
+                </div>
+            </div>
         )
     }
 }
 
-const DELETE = gql`
+const Mutation = gql`
     mutation deleteEntity($input: deleteEntityInput!) {
         deleteEntity(input: $input) {
             entity {
@@ -75,6 +87,8 @@ const DELETE = gql`
         }
     }
 `
-const withDelete = graphql(DELETE)
+const withMutation = graphql(Mutation, {
+    withRef: 'true'
+})
 
-export default connect()(withDelete(DeleteModal))
+export default withMutation(CommentDelete)

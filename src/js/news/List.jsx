@@ -35,7 +35,7 @@ class List extends React.Component {
                 <section className="section ___grey ___grow">
                     <InfiniteList childClass={Card} subtype="news" offset={0} limit={20} tags={this.state.tags} />
                 </section>
-                <Add title="Nieuws toevoegen" subtype="news" featuredImage={true} />
+                <Add title="Nieuws toevoegen" subtype="news" featuredImage={true} refetchQueries={["InfiniteList"]} />
             </div>
         )
     }

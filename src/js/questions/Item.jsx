@@ -101,7 +101,7 @@ class Item extends React.Component {
                                 <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["QuestionsItem"]} />
                                 <CommentList comments={entity.comments} canVote={true} />
                                 <Edit title="Vraag wijzigen" entity={entity} subtype="question" />
-                                <Delete title="Vraag verwijderen" entity={entity} subtype="question" />
+                                <Delete title="Vraag verwijderen" entity={entity} subtype="question" refetchQueries={["InfiniteList", "QuestionTopicCard"]} />
                             </div>
                         </div>
                     </div>
@@ -143,6 +143,7 @@ const QUERY = gql`
                 comments {
                     guid
                     description
+                    canEdit
                     timeCreated
                     hasVoted
                     votes

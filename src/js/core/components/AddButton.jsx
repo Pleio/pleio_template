@@ -10,9 +10,7 @@ export default class AddButton extends React.Component {
 
         return (
             <div className="col-sm-4 col-lg-3 col-lg-offset-3 end-lg">
-                <button className="button ___large ___add" onClick={this.props.onClick}>
-                    <span>Voeg toe</span>
-                </button>
+                <div className="button ___large ___add" onClick={this.props.onClick}><span>Voeg toe</span></div>
             </div>
         )
     }

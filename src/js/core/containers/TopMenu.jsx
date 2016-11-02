@@ -5,16 +5,20 @@ import gql from "graphql-tag"
 import UserMenu from "./UserMenu"
 import UserMobileMenu from "./UserMobileMenu"
 import classnames from "classnames"
+import { browserHistory } from "react-router"
 
 class TopMenu extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            submenuIsOpen: false
+            submenuIsOpen: false,
+            q: ""
         }
 
+        this.changeSearchField = (e) => this.setState({q: e.target.value})
         this.toggleSubmenu = (e) => this.setState({submenuIsOpen: !this.state.submenuIsOpen})
+        this.onSearch = this.onSearch.bind(this)
     }
 
     toggleMobileMenu(e) {
@@ -25,6 +29,16 @@ class TopMenu extends React.Component {
     closeMobileMenu(e) {
         document.body.classList.remove("mobile-nav-open")
         document.body.classList.remove("mega-nav-open")
+    }
+
+    onSearch(e) {
+        e.preventDefault()
+        browserHistory.push(`/search?type=object&subtype=blog&q=${this.state.q}`)
+        this.closeMobileMenu()
+
+        this.setState({
+            q: ""
+        })
     }
 
     render() {
@@ -52,16 +66,16 @@ class TopMenu extends React.Component {
         }
 
         return (
-            <nav className={"navigation " + (this.props.className || "")}>
+            <nav className={"navigation " + (this.props.className || "") + " " + classnames({"nav-level-one": this.state.submenuIsOpen})}>
                 <div className="container">
                     <div className="navigation__wrapper">
                         <div className="mobile-navigation__close" onClick={this.toggleMobileMenu}>
                             <span className="icon icon-cross"></span>
                         </div>
                         <div className="mobile-navigation__search">
-                            <form action="#">
+                            <form onSubmit={this.onSearch}>
                                 <label htmlFor="mobile-navigation-search">Zoeken</label>
-                                <input id="mobile-navigation-search" placeholder="Zoeken" name="searchQuery" />
+                                <input id="mobile-navigation-search" placeholder="Zoeken" name="q" onChange={this.changeSearchField} value={this.state.q} />
                             </form>
                         </div>
                         <a href="#skip-navigation" title="Volg deze link om de navigatie over te slaan" className="skip-navigation__link">
@@ -77,7 +91,7 @@ class TopMenu extends React.Component {
                                 <div className={classnames({"submenu ___dropdown":true, "___open": this.state.submenuIsOpen})}>
                                     <div className="submenu__back" onClick={this.toggleSubmenu}>Terug</div>
                                     <ul className="submenu__list">
-                                        <li className="submenu__list-subject submenu__list-item">
+                                        <li className="submenu__list-item">
                                             <a href="#" title="Over">Over</a>
                                             <a href="#" title="Spelregels">Spelregels</a>
                                             <a href="#" title="Algemene voorwaarden">Algemene voorwaarden</a>
@@ -87,16 +101,15 @@ class TopMenu extends React.Component {
                                 </div>
                             </li>
                         </ul>
-                        <UserMenu viewer={this.props.data.viewer} />
+                        <UserMenu onClick={this.closeMobileMenu} viewer={this.props.data.viewer} />
                         <a href="https://www.pleio.nl" title="Pleio" className="navigation__link ___pleio">
                             Pleio
                         </a>
                     </div>
                     <div className="mobile-navigation__bar">
-                        <div className="mobile-navigation__trigger" onClick={this.toggleMobileMenu}>
-                        </div>
-                        <a href="/" className="mobile-navigation__home"></a>
-                        <UserMobileMenu viewer={this.props.data.viewer} />
+                        <div className="mobile-navigation__trigger" onClick={this.toggleMobileMenu} />
+                        <Link to="/" onClick={this.closeMobileMenu} className="mobile-navigation__home" />
+                        <UserMobileMenu onClick={this.closeMobileMenu} viewer={this.props.data.viewer} />
                     </div>
                 </div>
             </nav>

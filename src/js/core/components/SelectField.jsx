@@ -1,7 +1,7 @@
 import React from "react"
 import classnames from "classnames"
 import Validator from "validatorjs"
-import Select from "./Select"
+import Select from "./NewSelect"
 
 class SelectField extends React.Component {
     constructor(props) {
@@ -34,13 +34,13 @@ class SelectField extends React.Component {
         }
     }
 
-    onChange(e, value) {
+    onChange(value) {
         this.setState({
             value: value
         })
 
         if (this.props.onChange) {
-            this.props.onChange(e, value)
+            this.props.onChange(value)
         }
     }
 
@@ -69,6 +69,7 @@ class SelectField extends React.Component {
                 name={this.props.name}
                 options={this.props.options}
                 className={this.props.className}
+                value={this.state.value}
                 onChange={this.onChange}
             />
         )

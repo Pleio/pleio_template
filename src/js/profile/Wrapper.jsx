@@ -53,6 +53,7 @@ const query = gql`
         entity(username: $username) {
             guid
             ... on User {
+                guid
                 name
                 canEdit
                 icon

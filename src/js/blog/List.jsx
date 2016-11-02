@@ -41,7 +41,7 @@ class List extends React.Component {
                         </div>
                     </div>
                 </section>
-                <Add title="Blog toevoegen" subtype="blog" featuredImage={true} />
+                <Add title="Blog toevoegen" subtype="blog" featuredImage={true} refetchQueries={["InfiniteList"]} />
             </div>
         )
     }

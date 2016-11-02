@@ -33,6 +33,8 @@ import Profile from "./profile/Profile"
 import Account from "./profile/Account"
 import Settings from "./profile/Settings"
 
+import Test from "./Test"
+
 export default class Routes extends React.Component {
     render() {
         return (
@@ -53,6 +55,7 @@ export default class Routes extends React.Component {
                         <Route path="/questions/:guid" component={QuestionsItem} />
                     </Route>
                     <Route path="/bookmarks" component={BookmarksList} />
+                    <Route path="/test" component={Test} />
                     <Route path="/search" component={SearchResults} />
                     <Route path="/resetpassword" component={ForgotPasswordConfirm} />
                     <Route path="/profile/:username" component={ProfileWrapper}>

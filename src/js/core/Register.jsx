@@ -52,7 +52,7 @@ class SlideTwo extends React.Component {
             return (
                 <Form ref="form" className="form login" onSubmit={this.props.onRegister}>
                     <Errors errors={this.props.errors} />
-                    <SelectField name="sector" label="Je onderwijssector" options={sectorOptions} rules="required" />
+                    <SelectField name="sector" label="Je onderwijssector" options={sectorOptions} rules="required" placeholder="Maak een keuze" />
                     <SwitchesField name="category" label="Je interesses" options={categoryOptions} />
                     <div className="form__conditions">
                         <CheckField id="terms" name="terms" type="checkbox" label="Ik ga akkoord met de Algemene Voorwaarden*" rules="required" />

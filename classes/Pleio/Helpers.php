@@ -88,6 +88,24 @@ class Helpers {
         }
     }
 
+    static function saveToImage($filename, $owner) {
+        $filename = str_replace(".", "_", $filename);
+        $time = time();
+
+        $resized = get_resized_image_from_uploaded_file($filename, 1200, 1200, false, true);
+        if ($resized) {
+            $file = new \ElggFile();
+            $file->owner_guid = $owner->guid;
+            $file->setFilename("image/{$time}.jpg");
+            $file->open("write");
+            $file->write($resized);
+            $file->close();
+
+            $file->save();
+            return $file;
+        }
+    }
+
     static function stringsToMetastrings($input) {
         $metastrings = [];
 
@@ -105,7 +123,7 @@ class Helpers {
         return $metastrings;
     }
 
-    static function countAnnotations(ElggUser $owner, $name, $value = null) {
+    static function countAnnotations(\ElggUser $owner, $name, $value = null) {
         $options = array(
             "annotation_name" => $name,
             "annotation_owner_guid" => $owner->guid,
@@ -119,7 +137,7 @@ class Helpers {
         return elgg_get_annotations($options);
     }
 
-    static function sendPasswordChangeMessage(ElggUser $user) {
+    static function sendPasswordChangeMessage(\ElggUser $user) {
         $site = elgg_get_site_entity();
         $subject = elgg_echo("security_tools:notify_user:password:subject");
         $message = elgg_echo("security_tools:notify_user:password:message", array(
@@ -129,5 +147,58 @@ class Helpers {
         ));
 
         notify_user($user->guid, $site->guid, $subject, $message, null, "email");
+    }
+
+    static function getEntitiesFromTags($subtype, $tags, $offset = 0, $limit = 20) {
+        global $CONFIG;
+
+        $bools = [
+            ["term" => [ "type" => "object" ]],
+            ["term" => [ "subtype" => get_subtype_id("object", $subtype) ]],
+            ["term" => [ "site_guid" => $CONFIG->site_guid ]]
+        ];
+
+        $user = elgg_get_logged_in_user_guid();
+
+        $ignore_access = elgg_check_access_overrides($user);
+        if ($ignore_access != true && !elgg_is_admin_logged_in()) {
+            $bools[] = ["terms" => [ "access_id" => get_access_array() ]];
+        }
+
+        if ($tags && is_array($tags) && count($tags) > 0) {
+            $bools[] = ["terms" => [ "tags" => $tags ]];
+        }
+
+        $results = \ESInterface::get()->client->search([
+            "index" => $CONFIG->elasticsearch_index,
+            "body" => [
+                "query" => [
+                    "bool" => [
+                        "must" => $bools
+                    ]
+                ],
+                "from" => (int) $offset,
+                "size" => (int) $limit,
+                "sort" => [
+                    "time_created" => "desc"
+                ]
+            ]
+        ]);
+
+        $total = $results['hits']['total'];
+
+        $entities = [];
+
+        foreach ($results["hits"]["hits"] as $hit) {
+            $entity = get_entity($hit["_id"]);
+            if ($entity) {
+                $entities[] = get_entity($hit["_id"]);
+            }
+        }
+
+        return [
+            "total" => $total,
+            "entities" => $entities
+        ];
     }
 }

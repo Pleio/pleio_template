@@ -107,6 +107,7 @@ const LOGIN = gql`
                 guid
                 loggedIn
                 user {
+                    guid
                     name
                     username
                 }

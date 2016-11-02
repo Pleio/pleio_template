@@ -34,7 +34,7 @@ class Likes extends React.Component {
                 input: {
                     clientMutationId: "1",
                     guid: this.props.entity.guid,
-                    score: isAdding ? 1 : 0
+                    score: isAdding ? 1 : -1
                 }
             }
         })

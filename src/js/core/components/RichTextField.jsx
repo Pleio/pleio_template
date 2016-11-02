@@ -1,52 +1,67 @@
 import React from "react"
-import { Editor, EditorState, ContentState, RichUtils, DefaultDraftBlockRenderMap, CompositeDecorator, Entity, Modifier } from "draft-js"
-import classnames from "classnames"
-import Validator from "validatorjs"
+import { Editor, EditorState, ContentState, RichUtils, DefaultDraftBlockRenderMap, CompositeDecorator, Entity, Modifier, convertToRaw } from "draft-js"
 import { stateFromHTML } from "draft-js-import-html"
 import { stateToHTML } from "draft-js-export-html"
+import classnames from "classnames"
+import Validator from "validatorjs"
 import Select from "./NewSelect"
 import Immutable from "immutable"
 
 import LinkModal from "./RichText/LinkModal"
 import ImageModal from "./RichText/ImageModal"
 
-const blockRenderMap = Immutable.Map({
-    "intro": {
-        element: "div",
-        style: {
-            fontWeight: "bold"
-        }
-    }
-})
-
 function findLinkEntities(contentBlock, callback) {
     contentBlock.findEntityRanges(
         (character) => {
             const entityKey = character.getEntity()
-            //return (entityKey !== null);
-            return false
+
+            return (
+                entityKey !== null &&
+                Entity.get(entityKey).getType() === "LINK"
+            );
         },
         callback
-    );
+    )
+}
+
+function findImageEntities(contentBlock, callback) {
+    contentBlock.findEntityRanges(
+        (character) => {
+            const entityKey = character.getEntity()
+
+            return (
+                entityKey !== null &&
+                Entity.get(entityKey).getType() === "IMAGE"
+            );
+        },
+        callback
+    )
 }
 
 const decorator = new CompositeDecorator([
     {
         strategy: findLinkEntities,
         component: (props) => {
-            const entity = Entity.get(props.entityKey)
-            const { href, target } = entity.getData()
+            const { url, target } = Entity.get(props.entityKey).getData()
 
             return (
-                <a href={href} target={target}>
+                <a href={url} target={target}>
                     {props.children}
                 </a>
             )
         }
+    },
+    {
+        strategy: findImageEntities,
+        component: (props) => {
+            const { src, width } = Entity.get(props.entityKey).getData()
+
+            return (
+                <img src={src} width={width} height={width} />
+            )
+        }
     }
 ])
-
-const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap)
 
 class RichTextField extends React.Component {
     constructor(props) {
@@ -108,7 +123,7 @@ class RichTextField extends React.Component {
         })
 
         if (this.props.onChange) {
-            this.props.onChange
+            this.props.onChange()
         }
     }
 
@@ -162,22 +177,32 @@ class RichTextField extends React.Component {
         this.onChange(RichUtils.onTab(e, this.state.editorState, maxDepth))
     }
 
-    submitLink(url, targetBlank) {
+    submitLink(url, isTargetBlank) {
         const { editorState } = this.state
         const contentState = Modifier.applyEntity(
             editorState.getCurrentContent(),
             editorState.getSelection(),
             Entity.create("LINK", "MUTABLE", {
-                href: url,
-                target: "_blank"
+                url,
+                target: isTargetBlank ? "_blank" : null
             })
         )
 
         this.onChange(EditorState.push(this.state.editorState, contentState, "apply-entity"))
     }
 
-    submitImage() {
-        // @todo
+    submitImage(src, width, height) {
+        const { editorState } = this.state
+        const contentState = Modifier.applyEntity(
+            editorState.getCurrentContent(),
+            editorState.getSelection(),
+            Entity.create("IMAGE", "MUTABLE", {
+                src,
+                width
+            })
+        )
+
+        this.onChange(EditorState.push(this.state.editorState, contentState, "apply-entity"))
     }
 
     render() {
@@ -271,7 +296,6 @@ class RichTextField extends React.Component {
                     <Editor
                         ref="editor"
                         handleKeyCommand={this.handleKeyCommand}
-                        blockRenderMap={extendedBlockRenderMap}
                         onTab={this.onTab}
                         placeholder={this.props.placeholder}
                         spellCheck={true}

@@ -13,13 +13,28 @@ export default class LinkModal extends React.Component {
 
         this.toggle = () => this.setState({ isOpen: !this.state.isOpen })
         this.changeUrl = (e) => this.setState({ url: e.target.value })
-        this.changeTarget = (e) => this.setState({ isTargetBlank: e.target.checked })
-
+        this.changeTarget = (e) => this.setState({ isTargetBlank: !this.state.isTargetBlank })
+        this.onKeyPress = this.onKeyPress.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
+    }
+
+    onKeyPress(e) {
+        const keyCode = e.keyCode ? e.keyCode : e.which
+        if (keyCode !== 13) { // Enter button
+            return;
+        }
+
+        e.preventDefault()
+        this.onSubmit(e)
     }
 
     onSubmit(e) {
         this.toggle()
+
+        this.setState({
+            url: "",
+            isTargetBlank: false
+        })
 
         if (this.props.onSubmit) {
             this.props.onSubmit(this.state.url, this.state.isTargetBlank)
@@ -32,24 +47,24 @@ export default class LinkModal extends React.Component {
                 <div className="modal__wrapper">
                     <div className="modal__background"></div>
                     <div className="modal__box">
-                    <div className="modal__close" onClick={this.toggle}></div>
-                    <h3 className="modal__title">
-                        Hyperlink toevoegen
-                    </h3>
-                    <div className="form">
-                        <label className="form__item">
-                            <input type="text" name="url" placeholder="Url" onChange={this.changeUrl} value={this.state.url} />
-                        </label>
-                        <div className="checkbox">
-                            <input name="condition-hyperlink" type="checkbox" onChange={this.chnageTarget} checked={this.state.isTargetBlank} />
-                            <label htmlFor="condition-hyperlink">Openen in nieuw tabblad</label>
-                        </div>
-                            <div className="buttons ___end">
-                                <div data-modal-toggle="#editor-hyperlink" className="button" onClick={this.onSubmit}>
-                                    Invoegen
-                                </div>
+                        <div className="modal__close" onClick={this.toggle}></div>
+                        <h3 className="modal__title">
+                            Hyperlink toevoegen
+                        </h3>
+                        <div className="form">
+                            <label className="form__item">
+                                <input type="text" name="url" placeholder="Url" onKeyPress={this.onKeyPress} onChange={this.changeUrl} value={this.state.url} />
+                            </label>
+                            <div className="checkbox" onClick={this.changeTarget}>
+                                <input readOnly name="condition-hyperlink" type="checkbox" checked={this.state.isTargetBlank} />
+                                <label htmlFor="condition-hyperlink">Openen in nieuw tabblad</label>
                             </div>
-                    </div>
+                                <div className="buttons ___end">
+                                    <div className="button" onClick={this.onSubmit}>
+                                        Invoegen
+                                    </div>
+                                </div>
+                        </div>
                     </div>
                 </div>
             </div>

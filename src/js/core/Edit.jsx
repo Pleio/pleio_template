@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { connect } from "react-redux"
-import { hideModal } from "../lib/actions"
+import { showModal, hideModal } from "../lib/actions"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Errors from "./components/Errors"
@@ -22,7 +22,13 @@ class EditModal extends React.Component {
             errors: []
         }
 
+        this.onDelete = this.onDelete.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
+    }
+
+    onDelete(e) {
+        e.preventDefault()
+        this.props.dispatch(showModal("delete"))
     }
 
     onSubmit(e) {
@@ -89,9 +95,14 @@ class EditModal extends React.Component {
                         <RichTextField name="description" placeholder="Beschrijving" value={this.props.entity.description} rules="required" />
                         <InputField name="tags" type="text" placeholder="Tags" className="form__input" value={this.props.entity.tags} />
                         {extraFields}
-                        <button className="button" type="submit">
-                            Wijzigen
-                        </button>
+                        <div className="buttons ___space-between">
+                            <button className="button" type="submit">
+                                Wijzigen
+                            </button>
+                            <button className="button ___link" onClick={this.onDelete}>
+                                Verwijderen
+                            </button>
+                        </div>
                     </div>
                 </Form>
             </Modal>

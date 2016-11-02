@@ -61,7 +61,7 @@ class Index extends React.Component {
                         </div>
                     </div>
                 </section>
-                <Add title="Een vraag stellen" subtype="question" />
+                <Add title="Stel een vraag" subtype="question" refetchQueries={["InfiniteList", "QuestionTopicCard"]} />
             </div>
         )
     }

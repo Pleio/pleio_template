@@ -60,6 +60,18 @@ class SchemaBuilder {
             ]
         ]);
 
+        $fileType = new ObjectType([
+            "name" => "File",
+            "fields" => [
+                "guid" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "url" => [
+                    "type" => Type::nonNull(Type::string())
+                ]
+            ]
+        ]);
+
         $profileItem = new ObjectType([
             "name" => "ProfileItem",
             "fields" => [
@@ -940,6 +952,24 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::editPassword"
         ]);
 
+        $addImageMutation = Relay::mutationWithClientMutationId([
+            "name" => "addImage",
+            "inputFields" => [
+                "image" => [
+                    "type" => Type::string()
+                ]
+            ],
+            "outputFields" => [
+                "file" => [
+                    "type" => $fileType,
+                    "resolve" => function($file) {
+                        return Resolver::getFile(null, $file, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::addImage"
+        ]);
+
         $mutationType = new ObjectType([
             "name" => "Mutation",
             "fields" => [
@@ -959,7 +989,8 @@ class SchemaBuilder {
                     "bookmark" => $bookmarkMutation,
                     "vote" => $voteMutation,
                     "editAvatar" => $editAvatarMutation,
-                    "editProfileField" => $editProfileFieldMutation
+                    "editProfileField" => $editProfileFieldMutation,
+                    "addImage" => $addImageMutation
             ]
         ]);
 

@@ -36,8 +36,19 @@ class Resolver {
             ["term" => [ "site_guid" => $CONFIG->site_guid ]]
         ];
 
-        foreach ($tags as $tag) {
-            $bools[] = ["term" => [ "tags" => $tag ]];
+        if ($tags == ["mine"]) {
+            $user = elgg_get_logged_in_user_entity();
+            if ($user && $user->tags) {
+                if (is_array($user->tags)) {
+                    $tags = $user->tags;
+                } else {
+                    $tags = [$user->tags];
+                }
+            }
+        }
+
+        if (count($tags) > 0) {
+            $bools[] = ["terms" => [ "tags" => $tags ]];
         }
 
         $user = elgg_get_logged_in_user_guid();
@@ -195,6 +206,7 @@ class Resolver {
                 "guid" => $entity->guid,
                 "ownerGuid" => $entity->owner_guid,
                 "description" => $entity->description,
+                "canEdit" => $entity->canEdit(),
                 "timeCreated" => date("c", $entity->time_created),
                 "timeUpdated" => date("c", $entity->time_updated)
             ];
@@ -313,32 +325,43 @@ class Resolver {
             $subtype = "news";
         }
 
-        $options = array(
-            "type" => "object",
-            "subtype" => $subtype,
-            "limit" => (int) $args["limit"],
-            "offset" => (int) $args["offset"],
-            "order_by" => "e.guid DESC"
-        );
-
-        // @todo: Elgg will generate a query that will definately not scale for large amounts of items.
-        // Think we will need a seperate table to speed up tag matching
-        if ($tags) {
-            $options["metadata_name_value_pairs"] = [];
-            foreach ($tags as $tag) {
-                $options["metadata_name_value_pairs"][] = [
-                    "name" => "tags",
-                    "value" => $tag
-                ];
+        if ($tags == ["mine"]) {
+            $user = elgg_get_logged_in_user_entity();
+            if ($user && $user->tags) {
+                if (is_array($user->tags)) {
+                    $tags = $user->tags;
+                } else {
+                    $tags = [$user->tags];
+                }
             }
+
+            $result = Helpers::getEntitiesFromTags($subtype, $tags, (int) $args["offset"], (int) $args["limit"]);
+        } else {
+            $options = [
+                "type" => "object",
+                "subtype" => $subtype,
+                "offset" => (int) $args["offset"],
+                "limit" => (int) $args["limit"]
+            ];
+
+            if ($tags) {
+                $options["metadata_name_value_pairs"] = [];
+                foreach ($tags as $tag) {
+                    $options["metadata_name_value_pairs"][] = [
+                        "name" => "tags",
+                        "value" => $tag
+                    ];
+                }
+            }
+
+            $result = [
+                "total" => elgg_get_entities_from_metadata(array_merge($options, ["count" => true])),
+                "entities" => elgg_get_entities_from_metadata($options)
+            ];
         }
 
-        $total = elgg_get_entities_from_metadata(array_merge($options, array(
-            "count" => true
-        )));
-
         $entities = array();
-        foreach (elgg_get_entities_from_metadata($options) as $entity) {
+        foreach ($result["entities"] as $entity) {
             $entities[] = array(
                 "guid" => $entity->guid,
                 "status" => 200,
@@ -358,7 +381,7 @@ class Resolver {
         $site = elgg_get_site_entity();
 
         return [
-            "total" => $total,
+            "total" => $result["total"],
             "canWrite" => $site->canWriteToContainer(0, "object", $subtype),
             "entities" => $entities
         ];
@@ -455,6 +478,16 @@ class Resolver {
         return [
             "totals" => $searchTotals,
             "results" => $results
+        ];
+    }
+
+    static function getFile($a, $args, $c) {
+        $guid = (int) $args["guid"];
+        $file = get_entity($guid);
+
+        return [
+            "guid" => $file->guid,
+            "url" => "/file/download/" . $file->guid
         ];
     }
 

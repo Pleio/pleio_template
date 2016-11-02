@@ -105,7 +105,7 @@ class Item extends React.Component {
                                 <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["NewsItem"]} />
                                 <CommentList comments={entity.comments} />
                                 <EditModal title="Nieuws wijzigen" entity={entity} subtype="news" featuredImage={true} />
-                                <DeleteModal title="Nieuws verwijderen" entity={entity} subtype="news" />
+                                <DeleteModal title="Nieuws verwijderen" entity={entity} subtype="news" refetchQueries={["InfiniteList"]} />
                             </div>
                         </div>
                     </div>
@@ -144,6 +144,7 @@ const QUERY = gql`
                     guid
                     description
                     timeCreated
+                    canEdit
                     owner {
                         name
                         icon

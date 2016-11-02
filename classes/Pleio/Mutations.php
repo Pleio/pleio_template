@@ -83,7 +83,7 @@ class Mutations {
                 // @todo this is a generic messages. We could have plugins
                 // throw a RegistrationException, but that is very odd
                 // for the plugin hooks system.
-                throw new RegistrationException(elgg_echo('registerbad'));
+                throw new \RegistrationException(elgg_echo('registerbad'));
             }
 
         } else {
@@ -568,6 +568,23 @@ class Mutations {
         if ($result) {
             return [
                 "guid" => $entity->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
+    }
+
+    static function addImage($input) {
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            throw new Exception("could_not_save");
+        }
+
+        $result = Helpers::saveToImage($input["image"], $user);
+
+        if ($result) {
+            return [
+                "guid" => $result->guid
             ];
         }
 

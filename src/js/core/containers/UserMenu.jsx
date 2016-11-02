@@ -27,7 +27,7 @@ class UserMenu extends React.Component {
             return (
                 <ul className="navigation__actions">
                     <li>
-                        <Link to="/bookmarks" title="Bookmarks" className="navigation__action ___bookmarks">
+                        <Link to="/bookmarks" onClick={this.props.onClick} title="Bookmarks" className="navigation__action ___bookmarks">
                             <span>Bookmarks</span>
                         </Link>
                     </li>
@@ -36,7 +36,7 @@ class UserMenu extends React.Component {
                         <NavigationSearch />
                     </li>
                     <li>
-                        <Link to={"/profile/" + this.props.viewer.user.username} title="Account" className="navigation__action ___account">
+                        <Link to={"/profile/" + this.props.viewer.user.username} onClick={this.props.onClick} title="Account" className="navigation__action ___account">
                             <div style={{backgroundImage: "url('" + this.props.viewer.user.icon + "')"}} className="navigation__picture"></div>
                             <span>{this.props.viewer.user.name}</span>
                         </Link>
@@ -51,12 +51,12 @@ class UserMenu extends React.Component {
                         <NavigationSearch />
                     </li>
                     <li>
-                        <a onClick={() => this.showModal('login')} title="Inloggen" className="navigation__action ___login">
+                        <a onClick={() => {this.props.onClick(); this.showModal('login');}} title="Inloggen" className="navigation__action ___login">
                             Inloggen
                         </a>
                     </li>
                     <li>
-                        <a onClick={() => this.showModal('register')} title="Registeren" className="navigation__action ___register">
+                        <a onClick={() => {this.props.onClick(); this.showModal('register');}} title="Registeren" className="navigation__action ___register">
                             Registeren
                         </a>
                     </li>
