@@ -24,8 +24,8 @@ export default class Activity extends React.Component {
         return (
             <section className="section ___less-padding-top">
                 <div className="container">
-                    <Lead title="Leraar.nl" image="/mod/pleio_template/src/content/lead-1.jpg" />
-                    <ContentFilters onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} selectClassName="___margin-top ___margin-bottom">
+                    <Lead title="Leraar.nl" image="/mod/pleio_template/src/images/lead-home.jpg" />
+                    <ContentFilters page="activity" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter}>
                         <div className="col-sm-4 col-lg-3 col-lg-offset-3 end-lg middle-lg">
                             <UsersOnline isGrey={true} />
                         </div>

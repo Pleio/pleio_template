@@ -13,6 +13,7 @@ import Form from "./components/Form"
 import InputField from "./components/InputField"
 import FeaturedImageField from "./components/FeaturedImageField"
 import SwitchField from "./components/SwitchField"
+import { convertToRaw } from "draft-js"
 
 class EditModal extends React.Component {
     constructor(props) {
@@ -43,7 +44,8 @@ class EditModal extends React.Component {
             clientMutationId: 1,
             guid: this.props.entity.guid,
             title: values.title,
-            description: values.description,
+            description: values.description.getPlainText(),
+            richDescription: JSON.stringify(convertToRaw(values.description)),
             featuredImage: values.featuredImage,
             tags: stringToTags(values.tags)
         }
@@ -90,18 +92,20 @@ class EditModal extends React.Component {
             <Modal id="edit" title={this.props.title} full={this.props.featuredImage ? true : false}>
                 <Form ref="form" onSubmit={this.onSubmit}>
                     {featuredImage}
-                    <div className="form">
-                        <InputField name="title" type="text" placeholder="Titel" className="form__input" value={this.props.entity.title} rules="required" autofocus />
-                        <RichTextField name="description" placeholder="Beschrijving" value={this.props.entity.description} rules="required" />
-                        <InputField name="tags" type="text" placeholder="Tags" className="form__input" value={this.props.entity.tags} />
-                        {extraFields}
-                        <div className="buttons ___space-between">
-                            <button className="button" type="submit">
-                                Wijzigen
-                            </button>
-                            <button className="button ___link" onClick={this.onDelete}>
-                                Verwijderen
-                            </button>
+                    <div className="container">
+                        <div className="form">
+                            <InputField name="title" type="text" placeholder="Titel" className="form__input" value={this.props.entity.title} rules="required" autofocus />
+                            <RichTextField name="description" placeholder="Beschrijving" value={this.props.entity.description} richValue={this.props.entity.richDescription} rules="required" />
+                            <InputField name="tags" type="text" placeholder="Tags" className="form__input" value={this.props.entity.tags} />
+                            {extraFields}
+                            <div className="buttons ___space-between">
+                                <button className="button" type="submit">
+                                    Wijzigen
+                                </button>
+                                <button className="button ___link" onClick={this.onDelete}>
+                                    Verwijderen
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </Form>
@@ -118,6 +122,7 @@ const EDIT = gql`
                 ... on Object {
                     title
                     description
+                    richDescription
                     accessId
                     source
                     isFeatured

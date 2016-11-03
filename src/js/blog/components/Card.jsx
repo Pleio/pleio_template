@@ -19,12 +19,12 @@ export default class Card extends React.Component {
 
         return (
             <div className="card-blog-post">
-                <a href="#" title="Merel Beijersbergen" style={{backgroundImage: "url(" + owner.icon + ")"}} className="card-blog-post__picture"></a>
+                <Link to={`/profile/${owner.username}`} title={owner.name} style={{backgroundImage: "url(" + owner.icon + ")"}} className="card-blog-post__picture"></Link>
                 <div className="card-blog-post__post">
                     <div className="card-blog-post__meta">
-                        <a href="#" className="card-blog-post__user">
+                        <Link to={`/profile/${owner.username}`} className="card-blog-post__user">
                             {owner.name}
-                        </a>
+                        </Link>
 
                         { tags.length > 0 ? ( <span>&nbsp;over&nbsp;</span> ) : "" }
                         <a href="#" className="card-blog-post__subject">

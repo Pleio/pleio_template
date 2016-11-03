@@ -21,6 +21,7 @@ const Query = gql`
                         tags
                         timeCreated
                         isBookmarked
+                        canBookmark
                         commentCount
                         hasVoted
                         votes

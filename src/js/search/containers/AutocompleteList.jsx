@@ -30,10 +30,10 @@ class AutocompleteList extends React.Component {
             )
         }
 
-        let results
+        let entities
 
-        if (search.results) {
-            results = search.results.map((item, i) => (
+        if (search.entities) {
+            entities = search.entities.map((item, i) => (
                 <li key={i}>
                     <Link to={this.generateLink(item)} onClick={this.closeSearch}>
                         <span>{showShortDate(item.timeCreated)}</span>{item.title}
@@ -48,7 +48,7 @@ class AutocompleteList extends React.Component {
                     {this.props.title}
                 </h4>
                 <ul className="navigation-search-results__list">
-                    {results}
+                    {entities}
                 </ul>
                 <Link to={`/search?type=object&subtype=${this.props.subtype}&q=${this.props.q}`} onClick={this.closeSearch} title="Bekijk alle resultaten" className="navigation-search-results__show-all">
                     Bekijk alle resultaten
@@ -61,7 +61,7 @@ class AutocompleteList extends React.Component {
 const Query = gql`
     query AutocompleteList($q: String!, $type: Type, $subtype: String) {
         search(q: $q, limit: 5, type: $type, subtype: $subtype) {
-            results {
+            entities {
                 guid
                 ... on Object {
                     guid

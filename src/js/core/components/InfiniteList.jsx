@@ -47,7 +47,7 @@ class InfiniteList extends React.Component {
             return;
         }
 
-        if (this.props.data.entities.entities.length >= this.props.data.entities.entities.total) {
+        if (this.props.data.entities.entities.length >= this.props.data.entities.total) {
             return;
         }
 

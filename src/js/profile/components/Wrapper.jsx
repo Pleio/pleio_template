@@ -5,6 +5,7 @@ import ContentHeader from "../../core/components/ContentHeader"
 import TabMenu from "../../core/components/TabMenu"
 import { Link } from "react-router"
 import ProfileField from "./ProfileField"
+import classnames from "classnames"
 
 class Wrapper extends React.Component {
     render() {
@@ -25,6 +26,13 @@ class Wrapper extends React.Component {
             {title: "Account", link: baseLink + "/account"}
         ]
 
+        let menu
+        if (entity.canEdit) {
+            menu = (
+                <TabMenu options={options} />
+            )
+        }
+
         let logout
         if (viewer.loggedIn) {
             logout = (
@@ -36,7 +44,7 @@ class Wrapper extends React.Component {
 
         return (
             <div className="page-layout">
-                <ContentHeader className="___no-padding-bottom">
+                <ContentHeader className={classnames({"___no-padding-bottom":entity.canEdit})}>
                     <div className="row">
                         <div className="col-sm-6 middle-sm">
                             <ProfileField type="h3" entity={entity} canEdit={entity.canEdit} dataKey="name" name="Naam" value={entity.name} />
@@ -48,7 +56,7 @@ class Wrapper extends React.Component {
                             {logout}
                         </div>
                     </div>
-                    <TabMenu options={options} />
+                    {menu}
                 </ContentHeader>
                 {this.props.children}
             </div>

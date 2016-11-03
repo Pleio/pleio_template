@@ -1,4 +1,5 @@
 import React from "react"
+import Header from "./Header"
 
 class InfiniteList extends React.Component {
     constructor(props) {
@@ -6,6 +7,7 @@ class InfiniteList extends React.Component {
 
         this.onScroll = this.onScroll.bind(this)
         this.fetchMore = this.fetchMore.bind(this)
+        this.refetch = this.refetch.bind(this)
 
         this.state = {
             offset: 0
@@ -42,11 +44,11 @@ class InfiniteList extends React.Component {
             return;
         }
 
-        if (!this.props.data.bookmarks) {
+        if (!this.props.data.search) {
             return;
         }
 
-        if (this.props.data.bookmarks.entities.length >= this.props.data.bookmarks.total) {
+        if (this.props.data.search.entities.length >= this.props.data.search.total) {
             return;
         }
 
@@ -67,8 +69,8 @@ class InfiniteList extends React.Component {
             updateQuery: (previousResult, { fetchMoreResult }) => {
                 if (!fetchMoreResult.data) { return previousResult }
 
-                previousResult.entities = Object.assign({}, previousResult.bookmarks, {
-                    entities: [...previousResult.bookmarks.entities, ...fetchMoreResult.data.bookmarks.entities]
+                previousResult.search = Object.assign({}, previousResult.search, {
+                    entities: [...previousResult.search.entities, ...fetchMoreResult.data.search.entities]
                 })
 
                 return previousResult;
@@ -76,23 +78,42 @@ class InfiniteList extends React.Component {
         })
     }
 
+    refetch() {
+        this.setState({offset: 0})
+    }
+
     render() {
         let children = [];
-        if (this.props.data.bookmarks) {
-            children = this.props.data.bookmarks.entities.map((child, i) => (
-                <this.props.childClass key={i} subtype={this.props.subtype} entity={child} />
+        if (this.props.data.search) {
+            children = this.props.data.search.entities.map((child, i) => (
+                <this.props.childClass key={i} entity={child} />
             ))
         }
 
         let noItems = ""
-        if (this.props.data.bookmarks && this.props.data.bookmarks.entities.length === 0) {
+        if (this.props.data.search && this.props.data.search.entities.length === 0) {
             noItems = "Er zijn geen items in deze categorie."
         }
 
+        let totals = []
+        if (this.props.data.search) {
+            totals = this.props.data.search.totals
+        }
+
+
         return (
-            <div ref="infiniteScroll">
-                {noItems}
-                {children}
+            <div className="page-layout">
+                <Header q={this.props.q} type={this.props.type} subtype={this.props.subtype} totals={totals} />
+                <section className="section ___grey ___grow">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-sm-12 col-lg-8" ref="infiniteScroll">
+                                {noItems}
+                                {children}
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
         )
     }

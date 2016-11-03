@@ -57,15 +57,16 @@ class ProfilePicture extends React.Component {
         clearTimeout(this.scheduleCrop)
         this.scheduleCrop = setTimeout(() => {
             this.setState({
-                croppedProfilePicture: this.cropper.getCroppedCanvas().toDataURL()
+                croppedProfilePicture: this.cropper.getCroppedCanvas().toDataURL("image/jpeg", 0.6)
             })
         }, 100)
     }
 
     onSubmit(e) {
         e.preventDefault()
+        const croppedCanvas = this.cropper.getCroppedCanvas()
 
-        this.cropper.getCroppedCanvas().toBlob((blob) => {
+        const callback = (blob) => {
             let file = new File([blob], "avatar.png");
 
             this.props.mutate({
@@ -77,14 +78,21 @@ class ProfilePicture extends React.Component {
                     }
                 }
             }).then(({data}) => {
-                //this.props.dispatch(hideModal())
+                location.reload()
             }).catch((errors) => {
                 this.setState({
                     errors: errors
                 })
             })
+        }
 
-        })
+
+        if (typeof croppedCanvas.msToBlob === "function") {
+            let blob = croppedCanvas.msToBlob()
+            callback(blob)
+        } else {
+            croppedCanvas.toBlob(callback)
+        }
     }
 
     render() {
@@ -96,9 +104,9 @@ class ProfilePicture extends React.Component {
             )
         } else {
             cropper = (
-                <div className="edit-picture__upload">
+                <div className="edit-picture__upload" onClick={this.startFilePicker}>
                     + Foto uploaden
-                    <input ref="profilePicture" name="profilePicture" type="file" onChange={this.onChange} />
+                    <input ref="profilePicture" name="profilePicture" type="file" onChange={this.onChange} className="___is-hidden" />
                 </div>
             )
         }

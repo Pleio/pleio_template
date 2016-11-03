@@ -38,6 +38,10 @@ class FeaturedImageField extends React.Component {
         let reader = new FileReader();
         let file = e.target.files[0]
 
+        if (!file) {
+            return
+        }
+
         reader.onloadend = () => {
             this.setState({
                 image: file,
@@ -71,7 +75,7 @@ class FeaturedImageField extends React.Component {
             )
         } else {
             content = (
-                <div className="upload-image__placeholder">
+                <div className="upload-image__placeholder" onClick={this.triggerFileSelect}>
                     <div className="upload-image__title">Upload een afbeelding</div>
                     <div className="upload-image__dimensions">(1.400 x 396 pixels)</div>
                 </div>
@@ -80,7 +84,7 @@ class FeaturedImageField extends React.Component {
 
         return (
             <div className={classnames({"upload-image": true, "___is-uploaded": this.state.imagePreviewUrl ? true : false})}>
-                <input type="file" ref="image" name="image" onChange={this.changeImage} className="___is-hidden" accept="image/*" />
+                <input type="file" ref="image" name="image" onChange={this.changeImage} accept="image/*" className="___is-hidden" />
                 {content}
                 <div className="upload-image__actions">
                     <div className="button ___primary upload-image__edit" onClick={this.triggerFileSelect}>

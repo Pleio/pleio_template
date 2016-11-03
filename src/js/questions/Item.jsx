@@ -1,6 +1,7 @@
 import React from "react"
 import { graphql } from "react-apollo"
 import { connect } from "react-redux"
+import { Link } from "react-router"
 import gql from "graphql-tag"
 import CommentList from "../core/components/CommentList"
 import Edit from "../core/Edit"
@@ -11,6 +12,7 @@ import SocialShare from "../core/components/SocialShare"
 import Bookmark from "../bookmarks/components/Bookmark"
 import NotFound from "../core/NotFound"
 import showDate from "../lib/showDate"
+import RichTextView from "../core/components/RichTextView"
 
 class Item extends React.Component {
     constructor(props) {
@@ -64,6 +66,21 @@ class Item extends React.Component {
             )
         }
 
+        let actions
+        if (entity.canComment) {
+            actions = (
+                <div className="article-actions__buttons">
+                    <div className="article-actions__justify">
+                        <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
+                            Schrijf een reactie
+                        </div>
+                        {edit}
+                    </div>
+                    <Bookmark entity={entity} />
+                </div>
+            )
+        }
+
         return (
             <div>
                 {featuredImage}
@@ -73,29 +90,21 @@ class Item extends React.Component {
                             <div className="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
                                 <article className="article">
                                     <div className="article-author ___margin-bottom">
-                                        <a href="#" style={{backgroundImage: "url(" + entity.owner.icon + ")"}} className="article-author__picture"></a>
+                                        <Link to={`/profile/${entity.owner.username}`} style={{backgroundImage: "url(" + entity.owner.icon + ")"}} className="article-author__picture"></Link>
                                         <div className="article-author__justify">
-                                            <a href="#" className="article-author__name">
+                                            <Link to={`/profile/${entity.owner.username}`} className="article-author__name">
                                                 {entity.owner.name}
-                                            </a>
+                                            </Link>
                                             <div className="article-author__date">
                                                 {showDate(entity.timeCreated)}
                                             </div>
                                         </div>
                                     </div>
                                     <h3 className="article__title">{entity.title}</h3>
-                                    <div className="content" dangerouslySetInnerHTML={{__html: entity.description}} />
+                                    <RichTextView richValue={entity.richDescription} value={entity.description} />
                                     <div className="article-actions">
                                         <SocialShare />
-                                        <div className="article-actions__buttons">
-                                            <div className="article-actions__justify">
-                                                <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
-                                                    Schrijf een reactie
-                                                </div>
-                                                {edit}
-                                            </div>
-                                            <Bookmark entity={entity} />
-                                        </div>
+                                        {actions}
                                     </div>
                                 </article>
                                 <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["QuestionsItem"]} />
@@ -128,14 +137,18 @@ const QUERY = gql`
             ... on Object {
                 title
                 description
+                richDescription
                 accessId
                 timeCreated
                 featuredImage
                 canEdit
                 tags
                 isBookmarked
+                canBookmark
+                canComment
                 owner {
                     guid
+                    username
                     name
                     icon
                     url
@@ -146,8 +159,11 @@ const QUERY = gql`
                     canEdit
                     timeCreated
                     hasVoted
+                    canVote
                     votes
                     owner {
+                        guid
+                        username
                         name
                         icon
                         url

@@ -23,7 +23,7 @@ class Mutations {
         try {
             login($user, $rememberMe);
             unset($_SESSION['last_forward_from']);
-        } catch (LoginException $e) {
+        } catch (\LoginException $e) {
             register_error($e->getMessage());
         }
     }
@@ -160,7 +160,12 @@ class Mutations {
                 $entity->subtype = $input["subtype"];
             default:
                 $entity->description = $input["description"];
-                $entity->access_id = (int) $input["accessId"] || get_default_access();
+
+                if ($input["richDescription"]) {
+                    $entity->richDescription = $input["richDescription"];
+                }
+
+                $entity->access_id = $input["accessId"] ? (int) $input["accessId"] : get_default_access();
                 $entity->tags = $input["tags"];
 
                 if ((int) $input["containerGuid"]) {
@@ -221,6 +226,10 @@ class Mutations {
                 $entity->title = $input["title"];
             default:
                 $entity->description = $input["description"];
+
+                if ($input["richDescription"]) {
+                    $entity->richDescription = $input["richDescription"];
+                }
 
                 if ((int) $input["accessId"]) {
                     $entity->access_id = (int) $input["accessId"];
@@ -519,7 +528,7 @@ class Mutations {
 
         try {
             pam_auth_userpass($credentials);
-        } catch (Exception $e) {
+        } catch (\LoginException $e) {
             throw new Exception("invalid_old_password");
         }
 

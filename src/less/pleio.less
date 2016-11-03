@@ -33,16 +33,25 @@ html, body {
 
 input.___is-hidden {
     position: absolute;
-    width: 100%;
+    opacity: 0;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    cursor: pointer;
-    z-index: 1;
+    width: 0;
+    height: 0;
 }
 
 .selector__options {
     z-index: 2;
+}
+
+.contextual {
+    &.___is-visible {
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.editor__image {
+    z-index: 1;
 }

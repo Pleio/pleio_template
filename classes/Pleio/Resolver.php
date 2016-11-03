@@ -155,6 +155,8 @@ class Resolver {
         }
 
         if ($entity instanceof \ElggObject) {
+            Helpers::addView($entity);
+
             return [
                 "guid" => $guid,
                 "ownerGuid" => $entity->owner_guid,
@@ -167,6 +169,7 @@ class Resolver {
                 "title" => $entity->title,
                 "url" => $entity->getURL(),
                 "description" => $entity->description,
+                "richDescription" => $entity->richDescription,
                 "excerpt" => elgg_get_excerpt($entity->description),
                 "timeCreated" => date("c", $entity->time_created),
                 "timeUpdated" => date("c", $entity->time_updated),
@@ -239,21 +242,42 @@ class Resolver {
             return [];
         }
 
+        $answers = elgg_get_entities([
+            "type" => "object",
+            "subtype" => "comment",
+            "owner_guid" => $user->guid,
+            "count" => true
+        ]);
+
+        $upvotes = elgg_get_annotations([
+            "annotation_name" => "vote",
+            "annotation_value" => 1,
+            "annotation_owner_guid" => $user->guid,
+            "count" => true
+        ]);
+
+        $downvotes = elgg_get_annotations([
+            "annotation_name" => "vote",
+            "annotation_value" => -1,
+            "annotation_owner_guid" => $user->guid,
+            "count" => true
+        ]);
+
         $items = [
             [
                 "key" => "answers",
                 "name" => "Antwoorden",
-                "value" => $user->countObjects("comment")
+                "value" => $answers
             ],
             [
                 "key" => "upvotes",
                 "name" => "Stemmen omhoog",
-                "value" => Helpers::countAnnotations($user, "vote", 1)
+                "value" => $upvotes
             ],
             [
                 "key" => "downvotes",
                 "name" => "Stemmen omlaag",
-                "value" => Helpers::countAnnotations($user, "vote", -1)
+                "value" => $downvotes
             ]
         ];
 
@@ -440,6 +464,30 @@ class Resolver {
         return false;
     }
 
+    static function canBookmark($object) {
+        if (elgg_is_logged_in()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    static function canComment($object) {
+        if (elgg_is_logged_in()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    static function canVote($object) {
+        if (elgg_is_logged_in()) {
+            return true;
+        }
+
+        return false;
+    }
+
     static function search($a, $args, $c) {
         $es = \ESInterface::get();
 
@@ -468,6 +516,7 @@ class Resolver {
 
         $searchTotals = [];
         $totals = $es->search($args["q"], null, $args["type"], ["blog","news","question"]);
+
         foreach ($totals["count_per_subtype"] as $subtype => $total) {
             $searchTotals[] = [
                 "subtype" => $subtype,
@@ -476,8 +525,9 @@ class Resolver {
         }
 
         return [
+            "total" => $es_results["count"],
             "totals" => $searchTotals,
-            "results" => $results
+            "entities" => $results
         ];
     }
 

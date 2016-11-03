@@ -213,6 +213,9 @@ class SchemaBuilder {
                 "description" => [
                     "type" => Type::string()
                 ],
+                "richDescription" => [
+                    "type" => Type::string()
+                ],
                 "excerpt" => [
                     "type" => Type::string()
                 ],
@@ -241,7 +244,16 @@ class SchemaBuilder {
                     "type" => Type::boolean()
                 ],
                 "canComment" => [
-                    "type" => Type::boolean()
+                    "type" => Type::boolean(),
+                    "resolve" => function($object) {
+                        return Resolver::canComment($object);
+                    }
+                ],
+                "canVote" => [
+                    "type" => Type::boolean(),
+                    "resolve" => function($object) {
+                        return Resolver::canVote($object);
+                    }
                 ],
                 "accessId" => [
                     "type" => Type::int()
@@ -250,6 +262,12 @@ class SchemaBuilder {
                     "type" => Type::boolean(),
                     "resolve" => function($object) {
                         return Resolver::isBookmarked($object);
+                    }
+                ],
+                "canBookmark" => [
+                    "type" => Type::boolean(),
+                    "resolve" => function($object) {
+                        return Resolver::canBookmark($object);
                     }
                 ],
                 "hasVoted" => [
@@ -308,10 +326,13 @@ class SchemaBuilder {
         $searchListType = new ObjectType([
             "name" => "SearchList",
             "fields" => [
+                "total" => [
+                    "type" => Type::nonNull(Type::int())
+                ],
                 "totals" => [
                     "type" => Type::listOf($searchTotalType)
                 ],
-                "results" => [
+                "entities" => [
                     "type" => Type::listOf($entityInterface)
                 ]
             ]
@@ -683,6 +704,9 @@ class SchemaBuilder {
                 "description" => [
                     "type" => Type::nonNull(Type::string())
                 ],
+                "richDescription" => [
+                    "type" => Type::string()
+                ],
                 "isFeatured" => [
                     "type" => Type::boolean()
                 ],
@@ -724,6 +748,9 @@ class SchemaBuilder {
                 ],
                 "description" => [
                     "type" => Type::nonNull(Type::string())
+                ],
+                "richDescription" => [
+                    "type" => Type::string()
                 ],
                 "isFeatured" => [
                     "type" => Type::boolean()

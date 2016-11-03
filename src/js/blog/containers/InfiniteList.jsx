@@ -16,6 +16,7 @@ const Query = gql`
                     votes
                     hasVoted
                     isBookmarked
+                    canBookmark
                     tags
                     isFeatured
                     featuredImage
@@ -24,6 +25,7 @@ const Query = gql`
                     commentCount
                     owner {
                         guid
+                        username
                         name
                         icon
                     }

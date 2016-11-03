@@ -70,6 +70,11 @@ class Profile extends React.Component {
             )
         }
 
+        const stats = {}
+        entity.stats.forEach((stat) => {
+            stats[stat.key] = stat.value
+        })
+
         return (
             <section className="section ___grey ___grow">
                 <div className="container">
@@ -92,20 +97,16 @@ class Profile extends React.Component {
                                         {profileScore}
                                         <ul className="card-profile__social">
                                             <li>
-                                                <label>Likes:</label>
-                                                <span>0</span>
-                                            </li>
-                                            <li>
                                                 <label>Antwoorden:</label>
-                                                <span>0</span>
+                                                <span>{stats.answers || 0}</span>
                                             </li>
                                             <li>
                                                 <label>Stemmen omhoog:</label>
-                                                <span>0</span>
+                                                <span>{stats.upvotes || 0}</span>
                                             </li>
                                             <li>
                                                 <label>Stemmen omlaag:</label>
-                                                <span>0</span>
+                                                <span>{stats.downvotes || 0}</span>
                                             </li>
                                         </ul>
                                     </div>

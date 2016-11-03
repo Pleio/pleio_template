@@ -6,18 +6,51 @@ import UsersOnline from "../core/containers/UsersOnline"
 import { sectorOptions, categoryOptions } from "../lib/filters"
 import TopicCard from "./containers/TopicCard"
 import Add from "../core/Add"
+import { browserHistory } from "react-router"
+import { graphql } from "react-apollo"
+import gql from "graphql-tag"
 
 class Index extends React.Component {
     constructor(props) {
         super(props)
+
+        this.state = {
+            q: ""
+        }
+
+        this.onChange = (e) => this.setState({q: e.target.value})
         this.onClickAdd = (e) => this.props.dispatch(showModal("add"))
+        this.onSubmit = this.onSubmit.bind(this)
+    }
+
+    onSubmit(e) {
+        e.preventDefault()
+        browserHistory.push(`/search?q=${this.state.q}&subtype=question`)
+
+        this.setState({
+            q: ""
+        })
     }
 
     render() {
+        let { entities } = this.props.data
+
         const categories = Object.keys(categoryOptions).map((key, i) => (
                 <TopicCard key={i} title={categoryOptions[key]} tags={[key]} />
             )
         )
+
+        let addQuestion
+        if (entities && entities.canWrite) {
+            addQuestion = (
+                <div>
+                    <span className="forum__search-separate">of</span>
+                    <button className="button ___large forum__ask-a-question" onClick={this.onClickAdd}>
+                        Een vraag stellen
+                    </button>
+                </div>
+            )
+        }
 
         return (
             <div className="page-layout">
@@ -30,15 +63,12 @@ class Index extends React.Component {
                                 <UsersOnline />
                             </div>
                             <div className="forum__search">
-                                <form action="zoekresultaten-forum.html" className="forum__search-form">
+                                <form onSubmit={this.onSubmit} className="forum__search-form">
                                 <div className="search-bar">
-                                    <input placeholder="Zoeken binnen het forum" />
+                                    <input name="q" onChange={this.onChange} placeholder="Zoeken binnen het forum" value={this.state.q} />
                                     <div className="search-bar__button"></div>
                                 </div>
-                                </form><span className="forum__search-separate">of</span>
-                                <button className="button ___large forum__ask-a-question" onClick={this.onClickAdd}>
-                                    Een vraag stellen
-                                </button>
+                                </form>{addQuestion}
                             </div>
                         </div>
                     </div>
@@ -67,4 +97,14 @@ class Index extends React.Component {
     }
 }
 
-export default connect()(Index)
+const Query = gql`
+    query QuestionIndex {
+        entities(subtype:"question", offset: 0, limit: 1) {
+            canWrite
+        }
+    }
+`;
+
+
+const withQuery = graphql(Query)
+export default connect()(withQuery(Index))

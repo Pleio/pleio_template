@@ -9,11 +9,16 @@ class AddImage extends React.Component {
         super(props)
 
         this.onChange = this.onChange.bind(this)
+        this.triggerFileSelect = this.triggerFileSelect.bind(this)
 
         this.state = {
             uploading: false,
             errors: []
         }
+    }
+
+    triggerFileSelect(e) {
+        this.refs.file.click()
     }
 
     onChange(e) {
@@ -58,8 +63,8 @@ class AddImage extends React.Component {
             )
         } else {
             return (
-                <div className="editor__upload">
-                    <input type="file" name="image" onChange={this.onChange} className="___is-hidden" accept="image/*" style={{width:"384px"}} />
+                <div className="editor__upload" onClick={this.triggerFileSelect}>
+                    <input ref="file" type="file" name="image" onChange={this.onChange} className="___is-hidden" accept="image/*" />
                     <span>+ Afbeelding uploaden</span>
                 </div>
             )

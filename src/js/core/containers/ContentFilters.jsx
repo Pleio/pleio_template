@@ -40,13 +40,25 @@ export default class ContentFilters extends React.Component {
     }
 
     render() {
+        let sectorClass, categoryClass
+        switch (this.props.page) {
+            case "activity":
+                sectorClass = "selector ___margin-top ___margin-bottom ___margin-bottom-mobile"
+                categoryClass = "selector ___margin-top ___margin-bottom ___no-margin-top-mobile"
+                break
+            default:
+                sectorClass = "selector ___margin-bottom-mobile"
+                categoryClass = "selector"
+                break
+        }
+
         return (
             <div className="row">
                 <div className="col-sm-4 col-lg-3">
-                    <Select name="sector" options={extendedSectorOptions} onChange={this.onChangeFilter} value={this.state.sector} className="selector ___margin-top ___margin-bottom ___margin-bottom-mobile" />
+                    <Select name="sector" options={extendedSectorOptions} onChange={this.onChangeFilter} value={this.state.sector} className={sectorClass} />
                 </div>
                 <div className="col-sm-4 col-lg-3">
-                    <Select name="category" options={extendedCategoryOptions} onChange={this.onChangeFilter} value={this.state.category} className="selector ___margin-top ___margin-bottom ___no-margin-top-mobile" />
+                    <Select name="category" options={extendedCategoryOptions} onChange={this.onChangeFilter} value={this.state.category} className={categoryClass} />
                 </div>
                 {this.props.children}
             </div>

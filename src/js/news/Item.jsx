@@ -11,6 +11,7 @@ import SocialShare from "../core/components/SocialShare"
 import Bookmark from "../bookmarks/components/Bookmark"
 import NotFound from "../core/NotFound"
 import showDate from "../lib/showDate"
+import RichTextView from "../core/components/RichTextView"
 
 class Item extends React.Component {
     constructor(props) {
@@ -73,6 +74,21 @@ class Item extends React.Component {
             )
         }
 
+        let actions
+        if (viewer.loggedIn) {
+            actions = (
+                <div className="article-actions__buttons">
+                    <div className="article-actions__justify">
+                        <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
+                            Schrijf een reactie
+                        </div>
+                        {edit}
+                    </div>
+                    <Bookmark entity={entity} />
+                </div>
+            )
+        }
+
         return (
             <div>
                 {featuredImage}
@@ -88,18 +104,10 @@ class Item extends React.Component {
                                         </div>
                                         {source}
                                     </div>
-                                    <div className="content" dangerouslySetInnerHTML={{__html: entity.description}} />
+                                    <RichTextView richValue={entity.richDescription} value={entity.description} />
                                     <div className="article-actions">
                                         <SocialShare />
-                                        <div className="article-actions__buttons">
-                                            <div className="article-actions__justify">
-                                                <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
-                                                    Schrijf een reactie
-                                                </div>
-                                                {edit}
-                                            </div>
-                                            <Bookmark entity={entity} />
-                                        </div>
+                                        {actions}
                                     </div>
                                 </article>
                                 <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["NewsItem"]} />
@@ -119,6 +127,7 @@ const QUERY = gql`
     query NewsItem($guid: String!) {
         viewer {
             guid
+            loggedIn
             user {
                 guid
                 name
@@ -132,6 +141,7 @@ const QUERY = gql`
             ... on Object {
                 title
                 description
+                richDescription
                 accessId
                 timeCreated
                 source
@@ -140,12 +150,14 @@ const QUERY = gql`
                 canEdit
                 tags
                 isBookmarked
+                canBookmark
                 comments {
                     guid
                     description
                     timeCreated
                     canEdit
                     owner {
+                        guid
                         name
                         icon
                         url

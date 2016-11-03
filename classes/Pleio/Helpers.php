@@ -149,6 +149,41 @@ class Helpers {
         notify_user($user->guid, $site->guid, $subject, $message, null, "email");
     }
 
+    static function addView(\ElggEntity $entity) {
+        if (isset($_SERVER["HTTP_USER_AGENT"]) && preg_match('/bot|crawl|slurp|spider/i', $_SERVER["HTTP_USER_AGENT"])) {
+            return true;
+        }
+
+        $user = elgg_get_logged_in_user_entity();
+        if ($user && $user->guid == $entity->guid) {
+            return true;
+        }
+
+        if (is_memcache_available()) {
+            $cache = new \ElggMemcache('entity_view_counter');
+            $key = "view_" . session_id() . "_" . $entity->guid;
+            if ($cache->load($key)) {
+                    return true;
+            }
+        }
+
+        $guid = (int) $entity->guid;
+        $type = sanitise_string($entity->type);
+        $subtype = (int) $entity->subtype;
+
+        insert_data("
+            INSERT INTO elgg_entity_views (guid, type, subtype, container_guid, site_guid, views)
+            VALUES ({$guid}, '{$type}', {$subtype}, {$entity->container_guid}, {$entity->site_guid}, 1)
+            ON DUPLICATE KEY UPDATE views = views + 1;
+        ");
+
+        if (is_memcache_available()) {
+            $cache = new \ElggMemcache('entity_view_counter');
+            $key = "view_" . session_id() . "_" . $entity->guid;
+            $cache->save($key, 1);
+        }
+    }
+
     static function getEntitiesFromTags($subtype, $tags, $offset = 0, $limit = 20) {
         global $CONFIG;
 

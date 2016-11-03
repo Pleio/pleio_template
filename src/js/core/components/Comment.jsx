@@ -24,7 +24,7 @@ export default class Comment extends React.Component {
             )
         }
 
-        if (this.props.canVote) {
+        if (this.props.entity.canVote) {
             vote = (
                 <CommentVote entity={this.props.entity} />
             )

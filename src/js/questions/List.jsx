@@ -27,7 +27,7 @@ class List extends React.Component {
                     <h3 className="main__title">
                         Forum
                     </h3>
-                    <ContentFilters onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags}>
+                    <ContentFilters page="questions" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags}>
                         <AddButton subtype="news" onClick={this.onClickAdd} />
                     </ContentFilters>
                 </ContentHeader>

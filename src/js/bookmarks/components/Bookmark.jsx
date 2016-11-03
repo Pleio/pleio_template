@@ -44,6 +44,12 @@ class Bookmark extends React.Component {
     }
 
     render() {
+        if (!this.props.entity.canBookmark) {
+            return (
+                <div></div>
+            )
+        }
+
         return (
             <div title="Bewaar" onClick={this.onToggle} className={classNames({"button__text count-bookmarks": true, "___is-saved": this.state.isBookmarked})}>
                 <span className="___saved">Bewaard</span>

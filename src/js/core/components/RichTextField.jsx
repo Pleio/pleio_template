@@ -1,11 +1,14 @@
 import React from "react"
-import { Editor, EditorState, ContentState, RichUtils, DefaultDraftBlockRenderMap, CompositeDecorator, Entity, Modifier, convertToRaw } from "draft-js"
+import { Editor, EditorState, ContentState, RichUtils, AtomicBlockUtils, DefaultDraftBlockRenderMap, CompositeDecorator, Entity, Modifier, convertToRaw, convertFromRaw } from "draft-js"
 import { stateFromHTML } from "draft-js-import-html"
 import { stateToHTML } from "draft-js-export-html"
 import classnames from "classnames"
 import Validator from "validatorjs"
 import Select from "./NewSelect"
 import Immutable from "immutable"
+
+import AtomicBlock from "./RichText/AtomicBlock"
+import IntroBlock from "./RichText/IntroBlock"
 
 import LinkModal from "./RichText/LinkModal"
 import ImageModal from "./RichText/ImageModal"
@@ -24,20 +27,6 @@ function findLinkEntities(contentBlock, callback) {
     )
 }
 
-function findImageEntities(contentBlock, callback) {
-    contentBlock.findEntityRanges(
-        (character) => {
-            const entityKey = character.getEntity()
-
-            return (
-                entityKey !== null &&
-                Entity.get(entityKey).getType() === "IMAGE"
-            );
-        },
-        callback
-    )
-}
-
 const decorator = new CompositeDecorator([
     {
         strategy: findLinkEntities,
@@ -50,27 +39,34 @@ const decorator = new CompositeDecorator([
                 </a>
             )
         }
-    },
-    {
-        strategy: findImageEntities,
-        component: (props) => {
-            const { src, width } = Entity.get(props.entityKey).getData()
-
-            return (
-                <img src={src} width={width} height={width} />
-            )
-        }
     }
 ])
+
+const blockRenderMap = Immutable.Map({
+    "paragraph": {
+        element: "p"
+    },
+    "intro": {
+        element: "div"
+    }
+})
+
+const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap)
 
 class RichTextField extends React.Component {
     constructor(props) {
         super(props)
 
-        let contentState = stateFromHTML(this.props.value || "")
+        let contentState
+        if (this.props.richValue) {
+            contentState = convertFromRaw(JSON.parse(this.props.richValue))
+        } else {
+            contentState = ContentState.createFromText(this.props.value || "")
+        }
 
         this.state = {
             editorState: EditorState.createWithContent(contentState, decorator),
+            textAlignment: "left",
             isSelectorOpen: false
         }
 
@@ -85,9 +81,11 @@ class RichTextField extends React.Component {
         this.changeTextSize = this.changeTextSize.bind(this)
         this.toggleInlineStyle = this.toggleInlineStyle.bind(this)
         this.toggleBlockType = this.toggleBlockType.bind(this)
+        this.changeAlignment = this.changeAlignment.bind(this)
+        this.blockRendererFn = this.blockRendererFn.bind(this)
 
         this.submitLink = this.submitLink.bind(this)
-        this.submitImage= this.submitImage.bind(this)
+        this.submitImage = this.submitImage.bind(this)
 
         this.isValid = this.isValid.bind(this)
         this.getValue = this.getValue.bind(this)
@@ -100,8 +98,15 @@ class RichTextField extends React.Component {
             return
         }
 
+        let contentState
+        if (nextProps.richValue) {
+            contentState = convertFromRaw(JSON.parse(nextProps.richValue))
+        } else {
+            contentState = ContentState.createFromText(nextProps.value || "")
+        }
+
         this.setState({
-            editorState: EditorState.push(this.state.editorState, stateFromHTML(nextProps.value))
+            editorState: EditorState.createWithContent(contentState, decorator)
         })
     }
 
@@ -127,6 +132,37 @@ class RichTextField extends React.Component {
         }
     }
 
+    blockRendererFn(contentBlock) {
+        const type = contentBlock.getType()
+        switch(type) {
+            case "atomic":
+                return {
+                    component: AtomicBlock,
+                    editable: false,
+                    props: {
+                        isEditor: true,
+                        editorState: this.state.editorState,
+                        onChange: this.onChange
+                    }
+                }
+            default:
+                return null
+        }
+    }
+
+    blockStyleFn(block) {
+        switch (block.getType()) {
+            case "intro":
+                return "article-intro"
+            case "left":
+                return "align-left"
+            case "right":
+                return "align-right"
+            default:
+                return null
+        }
+    }
+
     isValid() {
         if (this.props.rules) {
             let validation = new Validator({field: this.getTextValue()}, {field: this.props.rules})
@@ -137,7 +173,7 @@ class RichTextField extends React.Component {
     }
 
     getValue() {
-        return stateToHTML(this.state.editorState.getCurrentContent())
+        return this.state.editorState.getCurrentContent()
     }
 
     getTextValue() {
@@ -145,8 +181,10 @@ class RichTextField extends React.Component {
     }
 
     clearValue() {
+        let contentState = ContentState.createFromText(nextProps.value || "")
+
         this.setState({
-            editorState: EditorState.push(this.state.editorState, stateFromHTML(""))
+            editorState: EditorState.createWithContent(contentState, decorator)
         })
     }
 
@@ -172,6 +210,10 @@ class RichTextField extends React.Component {
         this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType))
     }
 
+    changeAlignment(direction) {
+        this.setState({textAlignment: direction})
+    }
+
     onTab(e) {
         const maxDepth = 4;
         this.onChange(RichUtils.onTab(e, this.state.editorState, maxDepth))
@@ -193,16 +235,14 @@ class RichTextField extends React.Component {
 
     submitImage(src, width, height) {
         const { editorState } = this.state
-        const contentState = Modifier.applyEntity(
-            editorState.getCurrentContent(),
-            editorState.getSelection(),
-            Entity.create("IMAGE", "MUTABLE", {
-                src,
-                width
-            })
-        )
+        const entityKey = Entity.create("IMAGE", "IMMUTABLE", {
+            src,
+            width,
+            height
+        })
 
-        this.onChange(EditorState.push(this.state.editorState, contentState, "apply-entity"))
+        const newEditorState = AtomicBlockUtils.insertAtomicBlock(this.state.editorState, entityKey, " ")
+        this.onChange(newEditorState)
     }
 
     render() {
@@ -211,11 +251,12 @@ class RichTextField extends React.Component {
         const currentInlineStyles = editorState.getCurrentInlineStyle()
         const currentBlockType = editorState.getCurrentContent().getBlockForKey(editorState.getSelection().getStartKey()).getType()
 
-        const textSizeValue = (currentBlockType === "unstyled" || currentBlockType === "intro" || currentBlockType === "header-two" || currentBlockType == "header-three") ? currentBlockType : "unstyled"
+        const textSizeValue = (currentBlockType === "unstyled" || currentBlockType === "intro" || currentBlockType === "paragraph" || currentBlockType === "header-two" || currentBlockType == "header-three") ? currentBlockType : "unstyled"
         const textSize = (
             <div className="editor__tool-group ___no-padding">
                 <Select options={{
                         "unstyled": "Normale tekst",
+                        "paragraph": "Paragraaf",
                         "intro": "Introtekst",
                         "header-two": "Subkop 1",
                         "header-three": "Subkop 2"
@@ -277,8 +318,8 @@ class RichTextField extends React.Component {
 
         const align = (
             <div className="editor__tool-group">
-                <div className="editor__tool ___indent-left" />
-                <div className="editor__tool ___indent-right" />
+                <div className="editor__tool ___indent-left" onClick={() => this.changeAlignment("left")} />
+                <div className="editor__tool ___indent-right" onClick={() => this.changeAlignment("right")} />
             </div>
         )
 
@@ -292,15 +333,20 @@ class RichTextField extends React.Component {
                     {lists}
                     {align}
                 </div>
-                <div className="editor__input" onClick={this.focus}>
+                <div className="content editor__input" onClick={this.focus}>
                     <Editor
                         ref="editor"
                         handleKeyCommand={this.handleKeyCommand}
                         onTab={this.onTab}
+                        textAlignment={this.state.textAlignment}
                         placeholder={this.props.placeholder}
+                        blockRenderMap={extendedBlockRenderMap}
+                        blockStyleFn={this.blockStyleFn}
+                        blockRendererFn={this.blockRendererFn}
                         spellCheck={true}
                         onChange={this.onChange}
                         editorState={this.state.editorState}
+                        readOnly={this.props.readOnly}
                     />
                 </div>
                 <LinkModal ref="linkModal" onSubmit={this.submitLink} />

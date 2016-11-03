@@ -17,6 +17,7 @@ const Query = gql`
                     votes
                     hasVoted
                     isBookmarked
+                    canBookmark
                     tags
                     isFeatured
                     featuredImage

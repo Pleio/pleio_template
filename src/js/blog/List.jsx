@@ -29,7 +29,7 @@ class List extends React.Component {
                     <h3 className="main__title">
                         Blog
                     </h3>
-                    <ContentFilters onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags}>
+                    <ContentFilters page="blog" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags}>
                         <AddButton subtype="blog" onClick={this.onClickAdd} />
                     </ContentFilters>
                 </ContentHeader>
