@@ -59,6 +59,7 @@ class Helpers {
             if ($resized) {
                 $file = new \ElggFile();
                 $file->owner_guid = $owner->guid;
+                $file->access_id = get_default_access();
                 $file->setFilename("profile/{$owner->guid}{$name}.jpg");
                 $file->open("write");
                 $file->write($resized);
@@ -81,6 +82,7 @@ class Helpers {
         if ($resized) {
             $file = new \ElggFile();
             $file->owner_guid = $owner->guid;
+            $file->access_id = get_default_access();
             $file->setFilename("featured/{$owner->guid}.jpg");
             $file->open("write");
             $file->write($resized);
@@ -96,6 +98,7 @@ class Helpers {
         if ($resized) {
             $file = new \ElggFile();
             $file->owner_guid = $owner->guid;
+            $file->access_id = get_default_access();
             $file->setFilename("image/{$time}.jpg");
             $file->open("write");
             $file->write($resized);
