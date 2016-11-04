@@ -387,7 +387,7 @@ class Mutations {
                 $entity->$key = $value;
                 $result = $entity->save();
             } else {
-                $result = create_metadata($entity->guid, $key, $value, "", $entity->guid, get_default_access(), false);
+                $result = create_metadata($entity->guid, $key, $value, "", 0, get_default_access(), false);
             }
         } else {
             $entity->deleteMetadata($key);

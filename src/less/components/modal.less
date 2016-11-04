@@ -46,6 +46,11 @@
     transition: transform @trans-material-normal;
     transform: translate(0, 0);
 
+    .modal.___full > & {
+        display: block;
+
+    }
+
     &[data-modal-slides="2"] {
         width: 200%;
 
@@ -72,10 +77,16 @@
         min-height: 100%;
         padding: 16rem 0 4rem 0;
 
-        .modal.___middle & {
+        .modal.___middle > & {
             height: 100%;
             align-items: center;
             padding: 6rem 0 12rem;
+        }
+
+        .modal.___full > & {
+            position: static;
+            min-height: 0;
+            padding: 0;
         }
     }
 }
@@ -90,7 +101,7 @@
     background-color: rgba(0, 0, 0, 0.15);
     cursor: pointer;
 
-    .___blue & {
+    .modal.___blue > .modal__wrapper > & {
         background-color: fade(@color-primary, 90%);
     }
 
@@ -107,22 +118,30 @@
     padding: 5.2rem 2rem 4rem 2rem;
     background-color: @color-white;
 
-    .___full & {
+    .modal.___small > .modal__wrapper > & {
+        max-width: 40rem;
+    }
+
+    .modal.___full > .modal__wrapper > & {
         max-width: 100%;
         padding: 0 0 4rem 0;
         background-color: none;
         box-shadow: none;
     }
 
-    .___square & {
+    .modal.___square > .modal__wrapper > & {
         height: 56rem;
         display: flex;
         flex-direction: column;
         padding: 4rem 4rem 0 4rem;
     }
 
-    .___small & {
-        max-width: 40rem;
+    @media ( max-width: @screen-xs-max ) {
+        max-width: 100%;
+
+        .modal.___small > .modal__wrapper > & {
+            max-width: 100%;
+        }
     }
 
     @media ( min-width: @screen-sm ) {
@@ -130,20 +149,8 @@
         box-shadow: @box-shadow;
         z-index: 1;
 
-        .___full & {
+        .modal.___full > .modal__wrapper > & {
             padding: 0 0 4rem 0;
-        }
-
-        .___small & {
-            padding: 4rem;
-        }
-    }
-
-    @media ( max-width: @screen-xs-max ) {
-        max-width: 100%;
-
-        .___small & {
-            max-width: 100%;
         }
     }
 }
@@ -176,12 +183,12 @@
         font-size: 1.4rem;
     }
 
-    .___small & {
+    .modal.___small > .modal__wrapper > .modal__box > & {
         top: 0.7rem;
         right: 0.7rem;
     }
 
-    .___blue & {
+    .modal.___blue > .modal__wrapper > .modal__box > & {
         top: 0;
         right: 0;
         padding: 2.1rem;
@@ -205,12 +212,12 @@
             font-size: 1.2rem;
         }
 
-        .___small & {
+        .modal.___small > .modal__wrapper > .modal__box > & {
             top: 0;
             right: 0;
         }
 
-        .___blue & {
+        .modal.___blue > .modal__wrapper > .modal__box > & {
             padding: 2rem;
             color: @color-grey--60;
 
@@ -229,7 +236,7 @@
         right: 2rem;
         top: 2rem;
 
-        .___full & {
+        .modal.___full > .modal__wrapper > .modal__box > & {
             right: 0;
             top: 2rem;
         }
@@ -242,7 +249,7 @@
     color: @color-secondary;
     margin: 0 0 3rem 0;
 
-    .modal.___small & {
+    .modal.___small > .modal__wrapper > .modal__box > & {
         .font(title-large);
     }
 
@@ -250,7 +257,8 @@
         font-weight: normal;
     }
 
-    .___full & {
+    .modal.___full > .modal__wrapper > .modal__box > .modal__header > .container > &,
+    .modal.___full > .modal__wrapper > .modal__box > .container > & {
         margin: 5.2rem 0 1rem 0;
     }
 
@@ -260,7 +268,8 @@
     }
 
     @media (min-width: @screen-sm) {
-        .___full & {
+        .modal.___full > .modal__wrapper > .modal__box > .modal__header > .container > &,
+        .modal.___full > .modal__wrapper > .modal__box > .container > & {
             margin: 3rem 0;
         }
     }

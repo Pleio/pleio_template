@@ -55,9 +55,20 @@ class ProfileField extends React.Component {
     }
 
     submitField() {
+        // do not save an empty h3 field
+        if (this.props.type == "h3" && !this.state.value) {
+            return
+        }
+
         this.setState({
             isEditing: false
         })
+
+        if (this.isMutating) {
+            return
+        }
+
+        this.isMutating = true
 
         this.props.mutate({
             variables: {
@@ -68,6 +79,8 @@ class ProfileField extends React.Component {
                     value: this.state.value
                 }
             }
+        }).then((data) => {
+            this.isMutating = false
         })
     }
 
@@ -83,19 +96,29 @@ class ProfileField extends React.Component {
     }
 
     renderTextField() {
-        let input
-        if (this.props.canEdit) {
-            input = (
-                <input type="text" ref="input" onChange={this.onChange} onKeyPress={this.onKeyPress} onBlur={this.onBlur} value={this.state.value} />
+        if (!this.props.canEdit) {
+            return (
+                <li>
+                    <label>{this.props.name}</label>
+                    <span>{this.props.value}</span>
+                </li>
+            )
+        }
+
+        let fillNow
+        if (!this.state.value && !this.state.isEditing) {
+            fillNow = (
+                <div className="card-profile__fill">Meteen invullen</div>
             )
         }
 
         return (
             <li>
                 <label>{this.props.name}</label>
-                <span className={classnames({"___is-editable": this.props.canEdit , "___is-editing": this.state.isEditing})}>
-                    <span onClick={this.onClick}>{this.state.value}</span>
-                    {input}
+                <span className={classnames({"___is-editable-field": true, "___is-editing": this.state.isEditing, "___is-empty": !this.state.value})} onClick={this.onClick}>
+                    <span className="editable-field">{this.state.value || "..."}</span>
+                    {fillNow}
+                    <input type="text" ref="input" onChange={this.onChange} onKeyPress={this.onKeyPress} onBlur={this.onBlur} value={this.state.value} />
                 </span>
             </li>
         )
@@ -110,16 +133,54 @@ class ProfileField extends React.Component {
         }
 
         return (
-            <h3 className={classnames({"main__title ___no-margin": true, "___is-editable": this.props.canEdit , "___is-editing": this.state.isEditing})}>
-                <span onClick={this.onClick}>{this.state.value}</span>
+            <h3 className={classnames({"main__title ___no-margin": true, "___is-editable-field": this.props.canEdit , "___is-editing": this.state.isEditing})}>
+                <div className="editable-field" onClick={this.onClick}>{this.state.value}</div>
                 {input}
             </h3>
         )
     }
 
     renderTextArea() {
+        let className
+        if (this.props.className) {
+            className = this.props.className
+        }
+
+        if (!this.props.canEdit) {
+            return (
+                <div className={className}>
+                    <ul>
+                        <li><strong>{this.props.name}</strong></li>
+                        <li><div>{this.props.value}</div></li>
+                    </ul>
+                </div>
+            )
+        }
+
+        let fillNow
+        if (!this.state.value && !this.state.isEditing) {
+            fillNow = (
+                <div className="card-profile__fill">Meteen invullen</div>
+            )
+        }
+
+        className += " " + classnames({"___is-editable-field": true, "___is-editing": this.state.isEditing})
+
         return (
-            <div></div>
+            <div className={className}>
+                <ul>
+                    <li><strong>{this.props.name}</strong></li>
+                    <li>
+                        <span className={classnames({"___is-editable-field": true, "___is-editing": this.state.isEditing, "___is-empty": !this.state.value})} onClick={this.onClick}>
+                            <span className="editable-field">{this.state.value || "..."}</span>
+                            {fillNow}
+                            <div className="editor">
+                                <textarea ref="input" onChange={this.onChange} onBlur={this.onBlur} value={this.state.value} className="comment-add__content" />
+                            </div>
+                        </span>
+                    </li>
+                </ul>
+            </div>
         )
     }
 }

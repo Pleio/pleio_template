@@ -1,8 +1,6 @@
 // Editable profile field
-.___is-editable {
-    display: inline-flex;
-
-    span {
+.___is-editable-field {
+    .editable-field {
         display: inline-flex;
         align-items: center;
         cursor: pointer;
@@ -18,10 +16,14 @@
         }
     }
 
+    .editor {
+        display: none;
+    }
+
     &.main__title {
         width: 100%;
 
-        span:after {
+        .editable-field:after {
             margin: 0 0 0 1rem;
             font-size: 2.2rem;
         }
@@ -31,12 +33,18 @@
         }
     }
 
-    &.___is-editing span {
-        display: none;
+    &.___is-editing {
+        .editable-field {
+            display: none;
+        }
+
+        .editor {
+            display: block;
+        }
     }
 
     &:not(.___is-editing):hover {
-        span {
+        .editable-field {
             color: @color-primary;
 
             &:after {
@@ -50,7 +58,7 @@
     }
 
     &.___is-editing {
-        span {
+        .editable-field {
             display: none;
         }
 
@@ -59,3 +67,54 @@
         }
     }
 }
+
+// Empty profile field
+.___is-empty {
+    display: inline-flex;
+
+    &.___is-editing span {
+        display: none;
+    }
+
+    .card-profile__fill {
+        display: inline-flex;
+        align-items: center;
+        color: @color-secondary;
+        display: none;
+
+        .icon(pencil, after);
+        &:after {
+            margin: 0 0 .2rem .5rem;
+            font-size: 1.4rem;
+            color: @color-primary;
+            transition: opacity @trans-fast;
+        }
+    }
+
+    &:not(.___is-filled) {
+        cursor: pointer;
+
+        span {
+            color: @color-grey--50;
+        }
+
+        &:hover {
+            span {
+                display: none;
+            }
+
+            .card-profile__fill {
+                display: block;
+            }
+        }
+    }
+
+    &.___is-filled {
+        .card-profile__fill {
+            display: none;
+        }
+    }
+}
+
+
+

@@ -170,7 +170,7 @@
     transition: opacity @trans-fast;
 
     @media ( min-width: @screen-sm ) {
-        .comment-container .comment:hover & {
+        .comment-container.___is-editable .comment:hover & {
             opacity: 0;
         }
     }
@@ -182,8 +182,10 @@
     right: 0;
     .font(medium);
     color: @color-primary;
-
-    transition: opacity @trans-fast;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity @trans-fast, visibility @trans-fast;
 
     .icon(pencil);
     &:before {
@@ -191,17 +193,20 @@
         margin: 0 0.5rem 0.2rem 0;
     }
 
-    @media ( min-width: @screen-sm ) {
-        opacity: 0;
-
-        .comment:hover & {
+    @media ( max-width: @screen-xs-max ) {
+        .comment-container.___is-editable & {
             opacity: 1;
+            visibility: visible;
+        }
+        span {
+            display: none;
         }
     }
 
-    @media ( max-width: @screen-xs-max ) {
-        span {
-            display: none;
+    @media ( min-width: @screen-sm ) {
+        .comment-container.___is-editable .comment:hover & {
+            opacity: 1;
+            visibility: visible;
         }
     }
 }
@@ -209,7 +214,7 @@
 .comment__body {
     transition: color @trans-fast;
 
-    .comment-container .comment:hover & {
+    .comment-container.___is-editable .comment:hover & {
         color: @color-primary;
     }
 

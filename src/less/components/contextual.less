@@ -1,6 +1,5 @@
 .contextual {
     position: absolute;
-    left: 50%;
     display: inline-flex; align-items: center;
     bottom: -3.6rem;
     background-color: @color-white;
@@ -8,7 +7,7 @@
     visibility: hidden;
     opacity: 0;
     transition: visibility @trans-fast, opacity @trans-fast, transform @trans-material-fast;
-    transform: translateX(-50%) translateY(-0.5rem);
+    transform: translateY(-0.5rem);
     -webkit-backface-visibility: hidden;
     z-index: 1;
 
@@ -16,7 +15,7 @@
     .editor__image:hover & {
         visibility: visible;
         opacity: 1;
-        transform: translateX(-50%) translateY(0);
+        transform: translateY(0);
     }
 }
 
