@@ -1,6 +1,6 @@
 export const sectorOptions = {
     "Primair onderwijs": "Primair onderwijs",
-    "Voorgezet onderwijs": "Voorgezet onderwijs",
+    "Voortgezet onderwijs": "Voortgezet onderwijs",
     "Speciaal onderwijs": "Speciaal onderwijs",
     "Mbo": "Mbo",
     "Hbo": "Hbo",

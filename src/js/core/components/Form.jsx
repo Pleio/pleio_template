@@ -2,6 +2,7 @@ import React from "react"
 import classnames from "classnames"
 import { EditorState } from "draft-js"
 import InputField from "./InputField"
+import TagsField from "./TagsField"
 import RichTextField from "./RichTextField"
 import SelectField from "./SelectField"
 import CheckField from "./CheckField"
@@ -118,6 +119,7 @@ class Form extends React.Component {
                 case InputField:
                 case SelectField:
                 case RichTextField:
+                case TagsField:
                 case SwitchField:
                 case CheckField:
                     return this.wrapComponent(child)

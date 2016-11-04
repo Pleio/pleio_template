@@ -40,7 +40,7 @@ export default class Comment extends React.Component {
             )
         } else {
             return (
-                <div className="comment-container">
+                <div className={classnames({"comment-container": true, " ___is-editable": this.props.entity.canEdit})}>
                     <div className={classnames({comment: true, "___can-edit": this.props.entity.canEdit})}>
                         {vote}
                         <div className="comment__top">

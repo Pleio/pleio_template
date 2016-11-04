@@ -89,6 +89,8 @@ export default class RichTextView extends React.Component {
             } catch (e) {
                 contentState = ContentState.createFromText(this.props.value)
             }
+        } else {
+            contentState = ContentState.createFromText(this.props.value)
         }
 
         const editorState = EditorState.createWithContent(contentState, decorator)

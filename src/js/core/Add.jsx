@@ -11,6 +11,7 @@ import { stringToTags } from "../lib/helpers"
 import RichTextField from "./components/RichTextField"
 import Form from "./components/Form"
 import InputField from "./components/InputField"
+import TagsField from "./components/TagsField"
 import FeaturedImageField from "./components/FeaturedImageField"
 import SwitchField from "./components/SwitchField"
 import { convertToRaw } from "draft-js"
@@ -93,11 +94,13 @@ class AddModal extends React.Component {
                         <div className="form">
                             <InputField name="title" type="text" placeholder="Titel" className="form__input" rules="required" autofocus />
                             <RichTextField name="description" placeholder="Beschrijving" rules="required" />
-                            <InputField name="tags" ref="tags" type="text" placeholder="Tags" className="form__input" />
                             {extraFields}
-                            <button className="button" type="submit">
-                                Toevoegen
-                            </button>
+                            <TagsField name="tags" type="text" className="form__input" />
+                            <div className="buttons">
+                                <button className="button" type="submit">
+                                    Toevoegen
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </Form>

@@ -11,6 +11,7 @@ import { stringToTags } from "../lib/helpers"
 import RichTextField from "./components/RichTextField"
 import Form from "./components/Form"
 import InputField from "./components/InputField"
+import TagsField from "./components/TagsField"
 import FeaturedImageField from "./components/FeaturedImageField"
 import SwitchField from "./components/SwitchField"
 import { convertToRaw } from "draft-js"
@@ -40,6 +41,7 @@ class EditModal extends React.Component {
         })
 
         let values = this.refs.form.getValues()
+
         let input = {
             clientMutationId: 1,
             guid: this.props.entity.guid,
@@ -47,7 +49,7 @@ class EditModal extends React.Component {
             description: values.description.getPlainText(),
             richDescription: JSON.stringify(convertToRaw(values.description)),
             featuredImage: values.featuredImage,
-            tags: stringToTags(values.tags)
+            tags: values.tags
         }
 
         switch (this.props.subtype) {
@@ -96,8 +98,8 @@ class EditModal extends React.Component {
                         <div className="form">
                             <InputField name="title" type="text" placeholder="Titel" className="form__input" value={this.props.entity.title} rules="required" autofocus />
                             <RichTextField name="description" placeholder="Beschrijving" value={this.props.entity.description} richValue={this.props.entity.richDescription} rules="required" />
-                            <InputField name="tags" type="text" placeholder="Tags" className="form__input" value={this.props.entity.tags} />
                             {extraFields}
+                            <TagsField name="tags" type="text" className="form__input" value={this.props.entity.tags} />
                             <div className="buttons ___space-between">
                                 <button className="button" type="submit">
                                     Wijzigen
