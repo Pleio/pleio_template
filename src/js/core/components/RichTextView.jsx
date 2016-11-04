@@ -102,6 +102,7 @@ export default class RichTextView extends React.Component {
                     blockStyleFn={this.blockStyleFn}
                     blockRendererFn={this.blockRendererFn}
                 />
+                <div style={{clear:"both"}} />
             </div>
         )
     }

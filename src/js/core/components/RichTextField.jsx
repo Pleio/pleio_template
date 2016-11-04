@@ -67,7 +67,8 @@ class RichTextField extends React.Component {
         this.state = {
             editorState: EditorState.createWithContent(contentState, decorator),
             textAlignment: "left",
-            isSelectorOpen: false
+            isSelectorOpen: false,
+            readOnly: false
         }
 
         this.focus = () => {
@@ -77,6 +78,7 @@ class RichTextField extends React.Component {
         this.onChange = this.onChange.bind(this)
         this.onTab = this.onTab.bind(this)
         this.handleKeyCommand = this.handleKeyCommand.bind(this)
+        this.makeReadOnly = (isReadOnly) => this.setState({readOnly: isReadOnly})
 
         this.changeTextSize = this.changeTextSize.bind(this)
         this.toggleInlineStyle = this.toggleInlineStyle.bind(this)
@@ -91,6 +93,7 @@ class RichTextField extends React.Component {
         this.getValue = this.getValue.bind(this)
         this.getTextValue = this.getTextValue.bind(this)
         this.clearValue = this.clearValue.bind(this)
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -141,6 +144,7 @@ class RichTextField extends React.Component {
                     editable: false,
                     props: {
                         isEditor: true,
+                        makeReadOnly: this.makeReadOnly,
                         editorState: this.state.editorState,
                         onChange: this.onChange
                     }
@@ -235,10 +239,12 @@ class RichTextField extends React.Component {
 
     submitImage(src, width, height) {
         const { editorState } = this.state
-        const entityKey = Entity.create("IMAGE", "IMMUTABLE", {
+        const entityKey = Entity.create("IMAGE", "MUTABLE", {
             src,
             width,
-            height
+            height,
+            float: "left",
+            display: "block"
         })
 
         const newEditorState = AtomicBlockUtils.insertAtomicBlock(this.state.editorState, entityKey, " ")
@@ -346,8 +352,9 @@ class RichTextField extends React.Component {
                         spellCheck={true}
                         onChange={this.onChange}
                         editorState={this.state.editorState}
-                        readOnly={this.props.readOnly}
+                        readOnly={this.state.readOnly}
                     />
+                    <div style={{clear:"both"}} />
                 </div>
                 <LinkModal ref="linkModal" onSubmit={this.submitLink} />
                 <ImageModal ref="imageModal" onSubmit={this.submitImage} />

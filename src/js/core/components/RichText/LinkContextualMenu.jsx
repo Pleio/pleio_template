@@ -1,7 +1,7 @@
 import React from "react"
 import classnames from "classnames"
 
-export default class ImageContextualMenu extends React.Component {
+export default class LinkContextualMenu extends React.Component {
     constructor(props) {
         super(props)
 
@@ -36,7 +36,6 @@ export default class ImageContextualMenu extends React.Component {
                     <div className="icon-dropdown"></div>
                     <ul className="option-list">
                         <li className={classnames({"___align-left": true, "___is-active": this.props.align === "left"})} onClick={() => this.onChangeAlign("left")}>Links</li>
-                        <li className={classnames({"___align-center": true, "___is-active": this.props.align === "center"})} onClick={() => this.onChangeAlign("center")}>Midden</li>
                         <li className={classnames({"___align-right": true, "___is-active": this.props.align === "right"})} onClick={() => this.onChangeAlign("right")}>Rechts</li>
                     </ul>
                 </div>
@@ -44,12 +43,12 @@ export default class ImageContextualMenu extends React.Component {
                 <div onClick={this.toggleInlineOptions} className={classnames({"contextual__tool ___inline": true, "___show-options": this.state.showInlineOptions})}>
                     <div className="icon-dropdown"></div>
                     <ul className="option-list">
-                        <li className={classnames({"___is-active": this.props.display === "inline-block"})} onClick={() => this.onChangeDisplay("inline-block")}>Inline</li>
-                        <li className={classnames({"___is-active": this.props.display === "block"})} onClick={() => this.onChangeDisplay("block")}>Tekst onderbreken</li>
+                        <li onClick={() => this.onChangeDisplay("inline-block")}>Inline</li>
+                        <li onClick={() => this.onChangeDisplay("block")}>Tekst onderbreken</li>
                     </ul>
                 </div>
-                <div className="contextual__tool ___info" onClick={() => this.props.onClickInfo()} />
-                <div className="contextual__tool ___resize" onClick={() => this.props.onClickResize()} />
+                <div className="contextual__tool ___info"></div>
+                <div className="contextual__tool ___resize"></div>
             </div>
         )
     }

@@ -51,14 +51,16 @@ class Modal extends React.Component {
             )
         } else if (this.props.full) {
             modal = (
-                <div className="modal__box">
-                    <div className="container relative">
-                        <h3 className="modal__title">
-                            {this.props.title}
-                        </h3>
-                        <div className="modal__close" onClick={this.onClose} />
+                <div className="modal__wrapper">
+                    <div className="modal__box">
+                        <div className="container relative">
+                            <h3 className="modal__title">
+                                {this.props.title}
+                            </h3>
+                            <div className="modal__close" onClick={this.onClose} />
+                        </div>
+                        {this.props.children}
                     </div>
-                    {this.props.children}
                 </div>
             )
         } else {
