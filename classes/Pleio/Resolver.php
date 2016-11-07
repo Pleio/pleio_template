@@ -4,6 +4,13 @@ namespace Pleio;
 class Resolver {
     static function getSite($a, $args, $c) {
         $site = elgg_get_site_entity();
+        $user = elgg_get_logged_in_user_entity();
+
+        if ($user && !$site->isUser()) {
+            if ($site->canJoin()) {
+                $site->addUser();
+            }
+        }
 
         $accessIds = [];
         foreach (get_write_access_array() as $id => $description) {

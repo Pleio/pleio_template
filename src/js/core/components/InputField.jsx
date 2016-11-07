@@ -6,6 +6,7 @@ class InputField extends React.Component {
     constructor(props) {
         super(props)
 
+        this.onInput = this.onInput.bind(this)
         this.onChange = this.onChange.bind(this)
 
         this.state = {
@@ -31,6 +32,14 @@ class InputField extends React.Component {
         if (this.context.detachFromForm) {
             this.context.detachFromForm(this)
         }
+    }
+
+    onInput(e) {
+        if (!this.props.name === "username" && !this.props.name === "password") {
+            return
+        }
+
+        this.onChange(e)
     }
 
     onChange(e) {
@@ -70,6 +79,7 @@ class InputField extends React.Component {
                 className={this.props.className}
                 placeholder={this.props.placeholder}
                 onChange={this.onChange}
+                onInput={this.onInput}
                 value={this.state.value}
             />
         )
