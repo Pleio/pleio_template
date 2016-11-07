@@ -515,25 +515,12 @@ class Resolver {
             );
         }
 
-        $site = elgg_get_site_entity();
+        $user = elgg_get_logged_in_user_entity();
 
-        switch ($args["subtype"]) {
-            case "blog":
-                $canWrite = true;
-                break;
-            case "question":
-                $canWrite = true;
-                break;
-            case "news":
-                if (elgg_is_admin_logged_in()) {
-                    $canWrite = true;
-                } else {
-                    $canWrite = false;
-                }
-                break;
-            default:
-                $canWrite = false;
-                break;
+        if ($user) {
+            $canWrite = $user->canWriteToContainer(0, "object", $args["subtype"]);
+        } else {
+            $canWrite = false;
         }
 
         return [
