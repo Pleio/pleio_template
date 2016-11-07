@@ -1,10 +1,11 @@
 import React from "react"
 import { connect } from "react-redux"
 import { showModal } from "../lib/actions"
-
 import ContentHeader from "../core/components/ContentHeader"
 import InfiniteList from "./containers/InfiniteList"
 import Card from "./components/Card"
+import Trending from "../activity/components/Trending"
+import Top from "../core/components/Top"
 import ContentFilters from "../core/containers/ContentFilters"
 import AddButton from "../core/containers/AddButton"
 import Add from "../core/Add"
@@ -36,7 +37,12 @@ class List extends React.Component {
                 <section className="section ___grey ___grow">
                     <div className="container">
                         <div className="row">
-                            <div className="col-sm-12 col-lg-4 last-lg top-lg" />
+                            <div className="col-sm-12 col-lg-4 last-lg top-lg">
+                                <div className="row fill">
+                                    <Top />
+                                    <Trending />
+                                </div>
+                            </div>
                             <InfiniteList childClass={Card} subtype="blog" offset={0} limit={20} tags={this.state.tags} />
                         </div>
                     </div>

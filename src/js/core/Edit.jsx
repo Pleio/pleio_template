@@ -56,6 +56,9 @@ class EditModal extends React.Component {
             case "news":
                 input["source"] = values.source
                 input["isFeatured"] = values.isFeatured
+            case "blog":
+                input["isRecommended"] = values.isRecommended
+                break
         }
 
         this.props.mutate({
@@ -64,6 +67,7 @@ class EditModal extends React.Component {
             }
         }).then(({data}) => {
             this.props.dispatch(hideModal())
+            location.reload()
         }).catch((errors) => {
             this.setState({
                 errors: errors
@@ -72,6 +76,8 @@ class EditModal extends React.Component {
     }
 
     render() {
+        let { viewer } = this.props.data
+
         let featuredImage
         if (this.props.featuredImage) {
             featuredImage = (
@@ -88,6 +94,16 @@ class EditModal extends React.Component {
                         <SwitchField name="isFeatured" type="text" className="form__input" value={this.props.entity.isFeatured} label="Dit bericht is uitgelicht" />
                     </div>
                 )
+                break
+            case "blog":
+                if (viewer && viewer.isAdmin) {
+                    extraFields = (
+                        <div>
+                            <SwitchField name="isRecommended" type="text" className="form__input" value={this.props.entity.isRecommended} label="Deze blog is aanbevolen" />
+                        </div>
+                    )
+                }
+                break
         }
 
         return (
@@ -116,7 +132,16 @@ class EditModal extends React.Component {
     }
 }
 
-const EDIT = gql`
+const Query = gql`
+    query addEntity {
+        viewer {
+            guid
+            isAdmin
+        }
+    }
+`
+
+const Mutation = gql`
     mutation editEntity($input: editEntityInput!) {
         editEntity(input: $input) {
             entity {
@@ -128,6 +153,7 @@ const EDIT = gql`
                     accessId
                     source
                     isFeatured
+                    isRecommended
                     featuredImage
                     tags
                 }
@@ -135,6 +161,8 @@ const EDIT = gql`
         }
     }
 `
-const withEdit = graphql(EDIT)
 
-export default connect()(withEdit(EditModal))
+const withQuery = graphql(Query)
+const withMutation = graphql(Mutation)
+
+export default connect()(withMutation(withQuery(EditModal)))

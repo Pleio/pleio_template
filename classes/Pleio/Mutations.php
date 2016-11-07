@@ -43,7 +43,10 @@ class Mutations {
         $terms = $input['terms'];
         $tags = $input['tags'];
 
+        $ia = access_show_hidden_entities(true);
         $user = get_user_by_email($email);
+        access_show_hidden_entities($ia);
+
         if ($user) {
             throw new Exception("already_registered");
         }
@@ -55,9 +58,7 @@ class Mutations {
             $site = elgg_get_site_entity();
 
             if ($newsletter) {
-                add_entity_relationship($new_user->guid, "subscribed", $site->guid);
-            } else {
-                add_entity_relationship($new_user->guid, "blacklisted", $site->guid);
+                newsletter_subscribe_user($new_user, $site);
             }
 
             if ($tags) {
@@ -168,6 +169,14 @@ class Mutations {
                 $entity->access_id = $input["accessId"] ? (int) $input["accessId"] : get_default_access();
                 $entity->tags = $input["tags"];
 
+                if (elgg_is_admin_logged_in()) {
+                    if (isset($input["isRecommended"])) {
+                        $entity->isRecommended = $input["isRecommended"];
+                    } else {
+                        unset($entity->isRecommended);
+                    }
+                }
+
                 if ((int) $input["containerGuid"]) {
                     $entity->container_guid = (int) $input["containerGuid"];
                 }
@@ -233,6 +242,12 @@ class Mutations {
 
                 if ((int) $input["accessId"]) {
                     $entity->access_id = (int) $input["accessId"];
+                }
+
+                if (elgg_is_admin_logged_in()) {
+                    if (isset($input["isRecommended"])) {
+                        $entity->isRecommended = $input["isRecommended"];
+                    }
                 }
 
                 $entity->tags = $input["tags"];

@@ -22,7 +22,7 @@ class AccountPassword extends React.Component {
 
         if (values.newPassword !== values.newPasswordAgain) {
             this.setState({
-                errors: {message: "De nieuw ingevulde wachtwoorden komen niet overeen."}
+                errors: {message: "passwords_not_the_same"}
             })
             return;
         }
@@ -49,7 +49,6 @@ class AccountPassword extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         let content, errors
 
         if (this.state.success) {

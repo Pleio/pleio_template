@@ -22,10 +22,18 @@ export default class Accordeon extends React.Component {
     }
 
     render() {
+        let icon
+        if (this.props.className === "card-list-trending") {
+            icon = (
+                <div className="card-list-trending__icon" />
+            )
+        }
+
         return (
             <div className={this.props.className + " " + classnames({"___is-open": this.state.isOpen})}>
                 <div className={this.props.className + "__title"} onClick={this.toggleOpen}>
                     {this.props.title}
+                    {icon}
                 </div>
                 <div ref="items" className={this.props.className + "__items"} style={this.calculateHeight() ? {height: this.calculateHeight()} : {}}>
                     <div>

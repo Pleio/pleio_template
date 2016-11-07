@@ -30,11 +30,7 @@ class Resolver {
         global $CONFIG;
 
         $tags = $args["tags"];
-
-        $bools = [
-            ["term" => [ "type" => "object" ]],
-            ["term" => [ "site_guid" => $CONFIG->site_guid ]]
-        ];
+        $subtype = $args["subtype"];
 
         if ($tags == ["mine"]) {
             $user = elgg_get_logged_in_user_entity();
@@ -45,44 +41,34 @@ class Resolver {
                     $tags = [$user->tags];
                 }
             }
-        }
 
-        if (count($tags) > 0) {
-            $bools[] = ["terms" => [ "tags" => $tags ]];
-        }
+            $result = Helpers::getEntitiesFromTags($subtype, $tags, (int) $args["offset"], (int) $args["limit"]);
+        } else {
+            $options = [
+                "type" => "object",
+                "subtype" => $subtype,
+                "offset" => (int) $args["offset"],
+                "limit" => (int) $args["limit"]
+            ];
 
-        $user = elgg_get_logged_in_user_guid();
-        $ignore_access = elgg_check_access_overrides($user);
-        if ($ignore_access != true && !elgg_is_admin_logged_in()) {
-            $bools[] = ["terms" => [ "access_id" => get_access_array() ]];
-        }
-
-        $results = \ESInterface::get()->client->search([
-            "index" => $CONFIG->elasticsearch_index,
-            "body" => [
-                "query" => [
-                    "bool" => [
-                        "must" => $bools
-                    ]
-                ],
-                "from" => (int) $args["offset"],
-                "size" => (int) $args["limit"],
-                "sort" => [
-                    "time_created" => "desc"
-                ]
-            ]
-        ]);
-
-        $total = $results['hits']['total'];
-
-        $activities = array();
-        foreach ($results['hits']['hits'] as $hit) {
-            $object = get_entity($hit['_id']);
-
-            if (!$object) {
-                continue;
+            if ($tags) {
+                $options["metadata_name_value_pairs"] = [];
+                foreach ($tags as $tag) {
+                    $options["metadata_name_value_pairs"][] = [
+                        "name" => "tags",
+                        "value" => $tag
+                    ];
+                }
             }
 
+            $result = [
+                "total" => elgg_get_entities_from_metadata(array_merge($options, ["count" => true])),
+                "entities" => elgg_get_entities_from_metadata($options)
+            ];
+        }
+
+        $activities = array();
+        foreach ($result["entities"] as $object) {
             $subject = $object->getOwnerEntity();
             if ($object && $subject) {
                 $activities[] = array(
@@ -94,9 +80,135 @@ class Resolver {
         }
 
         return [
-            "total" => $total,
+            "total" => $result["total"],
             "activities" => $activities
         ];
+    }
+
+    static function getRecommended($a, $args, $c) {
+        $options = [
+            "type" => "object",
+            "metadata_name" => "isRecommended",
+            "offset" => (int) $args["offset"],
+            "limit" => (int) $args["limit"]
+        ];
+
+        $entities = [];
+        foreach (elgg_get_entities_from_metadata($options) as $entity) {
+            $entities[] = [
+                "guid" => $entity->guid,
+                "type" => $entity->type,
+                "subtype" => $entity->getSubtype(),
+                "title" => $entity->title,
+                "description" => $entity->description,
+                "ownerGuid" => $entity->owner_guid,
+                "url" => $entity->getUrl(),
+                "timeCreated" => $entity->time_created,
+                "timeUpdated" => $entity->time_updated
+            ];
+        }
+
+        return [
+            "total" => elgg_get_entities_from_metadata(array_merge($options, ["count" => true])),
+            "entities" => $entities
+        ];
+    }
+
+    static function getTrending($a, $args, $c) {
+        $options = array(
+            "annotation_name" => "vote",
+            "annotation_value" => 1,
+            "order_by" => "n_table.time_created desc",
+            "limit" => 250
+        );
+
+        $tagLikes = [];
+        $annotations = elgg_get_annotations($options);
+        foreach ($annotations as $annotation) {
+            $tags = $annotation->getEntity()->tags;
+            if (!$tags) {
+                continue;
+            }
+
+            if (!is_array($tags)) {
+                $tags = [$tags];
+            }
+
+            foreach ($tags as $tag) {
+                if ($tagLikes[$tag]) {
+                    $tagLikes[$tag] += 1;
+                } else {
+                    $tagLikes[$tag] = 1;
+                }
+            }
+        }
+
+        arsort($tagLikes);
+        $tagLikes = array_slice($tagLikes, 0, 3);
+
+        $return = [];
+        foreach ($tagLikes as $tag => $likes) {
+            $return[] = [
+                "tag" => $tag,
+                "likes" => $likes
+            ];
+        }
+
+        return $return;
+    }
+
+    static function getTop($a, $args, $c) {
+        $options = array(
+            "annotation_name" => "vote",
+            "annotation_value" => 1,
+            "order_by" => "n_table.time_created desc",
+            "limit" => 250
+        );
+
+        $topUsers = [];
+        $annotations = elgg_get_annotations($options);
+        foreach ($annotations as $annotation) {
+            $ownerGuid = $annotation->getEntity()->owner_guid;
+            if (!$ownerGuid || $ownerGuid == 0) {
+                continue;
+            }
+
+            if ($topUsers[$ownerGuid]) {
+                $topUsers[$ownerGuid] += 1;
+            } else {
+                $topUsers[$ownerGuid] = 1;
+            }
+        }
+
+        arsort($topUsers);
+
+        $topUsers = array_slice($topUsers, 0, 3, true);
+
+        $return = [];
+        foreach ($topUsers as $userGuid => $likes) {
+            $entity = get_entity($userGuid);
+
+            if (!$entity) {
+                continue;
+            }
+
+            $user = [
+                "guid" => $entity->guid,
+                "type" => $entity->type,
+                "name" => $entity->name,
+                "icon" => $entity->getIconURL(),
+                "username" => $entity->username
+            ];
+
+            if ($user) {
+                $return[] = [
+                    "user" => $user,
+                    "likes" => $likes
+                ];
+            }
+        }
+
+        return $return;
     }
 
     static function getUsersOnline($site) {
@@ -342,13 +454,13 @@ class Resolver {
     }
 
     static function getEntities($a, $args, $c) {
-        $subtype = $args["subtype"];
-        $tags = $args["tags"];
-
-        if (!in_array($subtype, array("blog", "news", "question"))) {
-            $subtype = "news";
+        if (!$args["subtype"] || $args["subtype"] == "all") {
+            $subtypes = ["blog", "news", "question"];
+        } else {
+            $subtypes = $args["subtype"];
         }
 
+        $tags = $args["tags"];
         if ($tags == ["mine"]) {
             $user = elgg_get_logged_in_user_entity();
             if ($user && $user->tags) {
@@ -363,7 +475,7 @@ class Resolver {
         } else {
             $options = [
                 "type" => "object",
-                "subtype" => $subtype,
+                "subtypes" => $subtypes,
                 "offset" => (int) $args["offset"],
                 "limit" => (int) $args["limit"]
             ];
@@ -394,6 +506,7 @@ class Resolver {
                 "featuredImage" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
                 "title" => $entity->title,
                 "type" => $entity->type,
+                "subtype" => $entity->getSubtype(),
                 "description" => $entity->description,
                 "excerpt" => elgg_get_excerpt($entity->description),
                 "timeCreated" => date("c", $entity->time_created),
@@ -404,9 +517,28 @@ class Resolver {
 
         $site = elgg_get_site_entity();
 
+        switch ($args["subtype"]) {
+            case "blog":
+                $canWrite = true;
+                break;
+            case "question":
+                $canWrite = true;
+                break;
+            case "news":
+                if (elgg_is_admin_logged_in()) {
+                    $canWrite = true;
+                } else {
+                    $canWrite = false;
+                }
+                break;
+            default:
+                $canWrite = false;
+                break;
+        }
+
         return [
             "total" => $result["total"],
-            "canWrite" => $site->canWriteToContainer(0, "object", $subtype),
+            "canWrite" => $canWrite,
             "entities" => $entities
         ];
     }
@@ -462,6 +594,11 @@ class Resolver {
         }
 
         return false;
+    }
+
+    static function isRecommended($object) {
+        $object = get_entity($object["guid"]);
+        return $object->isRecommended ? true : false;
     }
 
     static function canBookmark($object) {
@@ -552,6 +689,7 @@ class Resolver {
         return [
             "guid" => 0,
             "loggedIn" => elgg_is_logged_in(),
+            "isAdmin" => $user ? $user->isAdmin() : false,
             "tags" => $tags
         ];
     }

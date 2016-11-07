@@ -18,14 +18,34 @@ import { sectorOptions, categoryOptions } from "../lib/filters"
 class SlideOne extends React.Component {
     constructor(props) {
         super(props)
+
         this.getForm = () => this.refs.form
+        this.onSubmit = this.onSubmit.bind(this)
+
+        this.state = {
+            errors: []
+        }
+    }
+
+    onSubmit(e) {
+        e.preventDefault()
+
+        const values = this.refs.form.getValues()
+        if (values.password === values.passwordAgain) {
+            this.props.nextSlide()
+        } else {
+            this.setState({
+                errors: { message: "passwords_not_the_same" }
+            })
+        }
     }
 
     render() {
         return (
             <div>
                 <p className="___small">Registreren is niet noodzakelijk indien je al een Pleio account hebt.</p>
-                <Form ref="form" className="form login" onSubmit={(e) => {e.preventDefault(); this.props.nextSlide()}}>
+                <Form ref="form" className="form login" onSubmit={this.onSubmit}>
+                    <Errors errors={this.state.errors} />
                     <InputField type="text" name="name" placeholder="Voor- en achternaam" className="form__input" rules="required" autofocus />
                     <InputField type="text" name="email" placeholder="E-mailadres" className="form__input" rules="required|email" />
                     <InputField type="password" name="password" placeholder="Minimaal 8 karakters" className="form__input" rules="required|min:8" />

@@ -32,7 +32,8 @@ class InfiniteList extends React.Component {
     }
 
     onScroll(e) {
-        let currentOffset = document.body.scrollTop + window.innerHeight;
+        let scrollTop = document.body.scrollTop ? document.body.scrollTop : (document.documentElement.scrollTop)
+        let currentOffset = scrollTop + window.innerHeight;
         let containerOffset = this.refs["infiniteScroll"].offsetHeight + this.refs["infiniteScroll"].offsetTop;
 
         if (this.props.data.loading) {

@@ -23,13 +23,51 @@ export function getQueryVariable(variable) {
 }
 
 export function getClassFromTags(inputTags) {
-    const classes = new Set(["klas", "wetten", "arbeidsvoorwaarden", "leren", "actualiteit", "vernieuwing", "overig"])
-    const intersect = inputTags.filter(x => classes.has(x))
+    const translate = {
+        "In de klas": "klas",
+        "Wetten en regels": "wetten",
+        "Arbeidsvoorwaarden": "arbeidsvoorwaarden",
+        "Blijven leren": "leren",
+        "Actualiteit": "actualiteit",
+        "Vernieuwing": "vernieuwing",
+        "Overig": "overig"
+    };
 
-    if (intersect.length > 0) {
-        return "___" + intersect[0]
+    let cssTag
+    inputTags.forEach((tag) => {
+        if (translate[tag]) {
+            cssTag = translate[tag]
+        }
+    })
+
+    if (cssTag) {
+        return "___" + cssTag
     } else {
         return "___" + "overig"
     }
 
+}
+
+export function displayTags(tags) {
+    return tags.join(", ")
+}
+
+export function getUrl(entity) {
+    switch (entity.subtype) {
+        case "news":
+            return `/news/${entity.guid}`
+        case "blog":
+            return `/blog/${entity.guid}`
+        case "question":
+            return `/question/${entity.guid}`
+        default:
+            return `#`
+    }
+}
+
+export function isMobile() {
+    let userAgent = (window.navigator.userAgent||window.navigator.vendor||window.opera),
+        isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(userAgent);
+
+    return isMobile ? true : false;
 }

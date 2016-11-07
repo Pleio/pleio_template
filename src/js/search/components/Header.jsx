@@ -1,5 +1,6 @@
 import React from "react"
 import { Link, browserHistory } from "react-router"
+import TabMenu from "../../core/components/TabMenu"
 import classnames from "classnames"
 
 const subtypes = [{title:"Blog", subtype:"blog"}, {title:"Forum", subtype:"question"}, {title:"Nieuws", subtype:"news"}]
@@ -37,11 +38,14 @@ export default class Header extends React.Component {
             total += subTotal.total
         })
 
-        const tabMenu = subtypes.map((subtype, i) => (
-            <Link key={i} to={`/search?type=object&subtype=${subtype.subtype}&q=${this.state.q}`} className={classnames({"tabmenu__link": true, "___is-active": (this.props.subtype === subtype.subtype)})}>
-                {subtype.title} ({searchTotals[subtype.subtype] || 0})
-            </Link>
-        ))
+        let options = []
+        subtypes.forEach((subtype) => {
+            const total = searchTotals[subtype.subtype] || 0
+            options.push({
+                link: `/search?type=object&subtype=${subtype.subtype}&q=${this.state.q}`,
+                title: `${subtype.title} (${total})`
+            })
+        })
 
         return (
             <section className="section ___no-padding-bottom">
@@ -61,9 +65,7 @@ export default class Header extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="tabmenu">
-                        {tabMenu}
-                    </div>
+                    <TabMenu options={options} />
 
                     <div className="row">
                         <div className="col-sm-4 col-lg-3">

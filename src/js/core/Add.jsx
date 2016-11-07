@@ -51,6 +51,10 @@ class AddModal extends React.Component {
             case "news":
                 input["source"] = values.source
                 input["isFeatured"] = values.isFeatured
+                break
+            case "blog":
+                input["isRecommended"] = values.isRecommended
+                break
         }
 
         this.props.mutate({
@@ -60,6 +64,7 @@ class AddModal extends React.Component {
             refetchQueries: this.props.refetchQueries
         }).then(({data}) => {
             this.props.dispatch(hideModal())
+            location.reload()
         }).catch((errors) => {
             this.setState({
                 errors: errors
@@ -68,6 +73,8 @@ class AddModal extends React.Component {
     }
 
     render() {
+        let { viewer } = this.props.data
+
         let featuredImage
         if (this.props.featuredImage) {
             featuredImage = (
@@ -84,6 +91,16 @@ class AddModal extends React.Component {
                         <SwitchField name="isFeatured" type="text" className="form__input" label="Dit bericht is uitgelicht" />
                     </div>
                 )
+                break
+            case "blog":
+                if (viewer && viewer.isAdmin) {
+                    extraFields = (
+                        <div>
+                            <SwitchField name="isRecommended" type="text" className="form__input" label="Deze blog is aanbevolen" />
+                        </div>
+                    )
+                }
+                break
         }
 
         return (
@@ -109,7 +126,16 @@ class AddModal extends React.Component {
     }
 }
 
-const ADD = gql`
+const Query = gql`
+    query addEntity {
+        viewer {
+            guid
+            isAdmin
+        }
+    }
+`
+
+const Mutation = gql`
     mutation addEntity($input: addEntityInput!) {
         addEntity(input: $input) {
             entity {
@@ -118,5 +144,7 @@ const ADD = gql`
         }
     }
 `
-const withAdd = graphql(ADD)
-export default connect()(withAdd(AddModal))
+const withQuery = graphql(Query)
+const withMutation = graphql(Mutation)
+
+export default connect()(withMutation(withQuery(AddModal)))

@@ -69,6 +69,7 @@ class SelectField extends React.Component {
                 name={this.props.name}
                 options={this.props.options}
                 className={this.props.className}
+                placeholder={this.props.placeholder}
                 value={this.state.value}
                 onChange={this.onChange}
             />

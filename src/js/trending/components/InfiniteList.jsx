@@ -6,7 +6,6 @@ class InfiniteList extends React.Component {
 
         this.onScroll = this.onScroll.bind(this)
         this.fetchMore = this.fetchMore.bind(this)
-        this.refetch = this.refetch.bind(this)
 
         this.state = {
             offset: 0
@@ -78,10 +77,6 @@ class InfiniteList extends React.Component {
         })
     }
 
-    refetch() {
-        this.setState({offset: 0})
-    }
-
     render() {
         let children = [];
         if (this.props.data.entities) {
@@ -96,11 +91,9 @@ class InfiniteList extends React.Component {
         }
 
         return (
-            <div className="container" ref="infiniteScroll">
-                <div className="row">
-                    {noItems}
-                    {children}
-                </div>
+            <div ref="infiniteScroll">
+                {noItems}
+                {children}
             </div>
         )
     }

@@ -204,6 +204,7 @@ class RichTextField extends React.Component {
 
     changeTextSize(value) {
         this.onChange(RichUtils.toggleBlockType(this.state.editorState, value))
+        setTimeout(() => this.focus(), 1)
     }
 
     toggleInlineStyle(inlineStyle) {
@@ -235,6 +236,7 @@ class RichTextField extends React.Component {
         )
 
         this.onChange(EditorState.push(this.state.editorState, contentState, "apply-entity"))
+        setTimeout(() => this.focus(), 0)
     }
 
     submitImage(src, width, height) {
@@ -249,6 +251,7 @@ class RichTextField extends React.Component {
 
         const newEditorState = AtomicBlockUtils.insertAtomicBlock(this.state.editorState, entityKey, " ")
         this.onChange(newEditorState)
+        setTimeout(() => this.focus(), 0)
     }
 
     render() {
@@ -272,17 +275,17 @@ class RichTextField extends React.Component {
 
         const inline = (
             <div className="editor__tool-group">
-                <div onClick={(e) => this.toggleInlineStyle("BOLD")} className={classnames({
+                <div onMouseDown={(e) => { e.preventDefault(); this.toggleInlineStyle("BOLD"); }} className={classnames({
                     "editor__tool": true,
                     "___bold": true,
                     "___is-active": currentInlineStyles.has("BOLD")
                 })} />
-                <div onClick={() => this.toggleInlineStyle("ITALIC")} className={classnames({
+                <div onMouseDown={(e) => { e.preventDefault(); this.toggleInlineStyle("ITALIC"); }} className={classnames({
                     "editor__tool": true,
                     "___italic": true,
                     "___is-active": currentInlineStyles.has("ITALIC")
                 })} />
-                <div onClick={() => this.toggleInlineStyle("UNDERLINE")} className={classnames({
+                <div onMouseDown={(e) => { e.preventDefault(); this.toggleInlineStyle("UNDERLINE"); }} className={classnames({
                     "editor__tool": true,
                     "___underlined": true,
                     "___is-active": currentInlineStyles.has("UNDERLINE")
@@ -299,7 +302,7 @@ class RichTextField extends React.Component {
 
         const quote = (
             <div className="editor__tool-group">
-                <div onClick={() => this.toggleBlockType("blockquote")} className={classnames({
+                <div onMouseDown={(e) => { e.preventDefault(); this.toggleBlockType("blockquote"); }} className={classnames({
                     "editor__tool": true,
                     "___quote": true,
                     "___is-active": (currentBlockType === "blockquote")
@@ -309,12 +312,12 @@ class RichTextField extends React.Component {
 
         const lists = (
             <div className="editor__tool-group">
-                <div onClick={() => this.toggleBlockType("ordered-list-item")} className={classnames({
+                <div onMouseDown={(e) => { e.preventDefault(); this.toggleBlockType("ordered-list-item"); }} className={classnames({
                     "editor__tool": true,
                     "___ol": true,
                     "___is-active": (currentBlockType === "ordered-list-item")
                 })} />
-                <div onClick={() => this.toggleBlockType("unordered-list-item")} className={classnames({
+                <div onMouseDown={(e) => { e.preventDefault(); this.toggleBlockType("unordered-list-item"); }} className={classnames({
                     "editor__tool": true,
                     "___ul": true,
                     "___is-active": (currentBlockType === "unordered-list-item")

@@ -187,14 +187,22 @@ class Helpers {
         }
     }
 
-    static function getEntitiesFromTags($subtype, $tags, $offset = 0, $limit = 20) {
+    static function getEntitiesFromTags($subtypes, $tags, $offset = 0, $limit = 20) {
         global $CONFIG;
 
         $bools = [
             ["term" => [ "type" => "object" ]],
-            ["term" => [ "subtype" => get_subtype_id("object", $subtype) ]],
             ["term" => [ "site_guid" => $CONFIG->site_guid ]]
         ];
+
+        if ($subtypes) {
+            if (is_array($subtypes)) {
+                $get_subtype_id = function($subtype) { return get_subtype_id("object", $subtype); };
+                $bools[] = ["terms" => [ "subtype" => array_map($get_subtype_id, $subtypes)]];
+            } else {
+                $bools[] = ["term" => [ "subtype" => get_subtype_id("object", $subtypes) ]];
+            }
+        }
 
         $user = elgg_get_logged_in_user_guid();
 
@@ -204,7 +212,7 @@ class Helpers {
         }
 
         if ($tags && is_array($tags) && count($tags) > 0) {
-            $bools[] = ["terms" => [ "tags" => $tags ]];
+            $bools[] = ["terms" => [ "tags" => array_map("strtolower", $tags) ]];
         }
 
         $results = \ESInterface::get()->client->search([

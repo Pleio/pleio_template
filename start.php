@@ -24,6 +24,7 @@ function pleio_template_init() {
     elgg_register_page_handler("profile", "pleio_template_page_handler");
     elgg_register_page_handler("search", "pleio_template_page_handler");
     elgg_register_page_handler("bookmarks", "pleio_template_page_handler");
+    elgg_register_page_handler("trending", "pleio_template_page_handler");
 
     elgg_register_page_handler("login", "pleio_template_page_handler");
     elgg_register_page_handler("register", "pleio_template_page_handler");

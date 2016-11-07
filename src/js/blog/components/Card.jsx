@@ -5,6 +5,7 @@ import classnames from "classnames"
 import showDate from "../../lib/showDate"
 import Likes from "../../core/components/Likes"
 import Bookmark from "../../bookmarks/components/Bookmark"
+import { displayTags } from "../../lib/helpers"
 
 export default class Card extends React.Component {
     render() {
@@ -27,9 +28,9 @@ export default class Card extends React.Component {
                         </Link>
 
                         { tags.length > 0 ? ( <span>&nbsp;over&nbsp;</span> ) : "" }
-                        <a href="#" className="card-blog-post__subject">
-                            {tags}
-                        </a>
+                        <Link to={`/blog/${guid}`} className="card-blog-post__subject">
+                            {displayTags(tags)}
+                        </Link>
 
                         <div href="#" className="card-blog-post__date">
                             {showDate(timeCreated)}

@@ -24,6 +24,8 @@ import QuestionsIndex from "./questions/Index"
 import QuestionsList from "./questions/List"
 import QuestionsItem from "./questions/Item"
 
+import TrendingList from "./trending/List"
+
 import BookmarksList from "./bookmarks/List"
 
 import SearchResults from "./search/Results"
@@ -55,6 +57,7 @@ export default class Routes extends React.Component {
                         <Route path="/questions/:guid" component={QuestionsItem} />
                     </Route>
                     <Route path="/bookmarks" component={BookmarksList} />
+                    <Route path="/trending/:tag" component={TrendingList} />
                     <Route path="/test" component={Test} />
                     <Route path="/search" component={SearchResults} />
                     <Route path="/resetpassword" component={ForgotPasswordConfirm} />

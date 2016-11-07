@@ -237,6 +237,12 @@ class SchemaBuilder {
                 "isFeatured" => [
                     "type" => Type::boolean()
                 ],
+                "isRecommended" => [
+                    "type" => Type::boolean(),
+                    "resolve" => function($object) {
+                        return Resolver::isRecommended($object);
+                    }
+                ],
                 "featuredImage" => [
                     "type" => Type::string()
                 ],
@@ -363,6 +369,9 @@ class SchemaBuilder {
                 "loggedIn" => [
                     "type" => Type::nonNull(Type::boolean())
                 ],
+                "isAdmin" => [
+                    "type" => Type::nonNull(Type::boolean())
+                ],
                 "tags" => [
                     "type" => Type::listOf(Type::string())
                 ],
@@ -439,6 +448,30 @@ class SchemaBuilder {
             ]
         ]);
 
+        $topType = new ObjectType([
+            "name" => "TopList",
+            "fields" => [
+                "user" => [
+                    "type" => $userType
+                ],
+                "likes" => [
+                    "type" => Type::int()
+                ]
+            ]
+        ]);
+
+        $trendingType = new ObjectType([
+            "name" => "TrendingList",
+            "fields" => [
+                "tag" => [
+                    "type" => Type::string()
+                ],
+                "likes" => [
+                    "type" => Type::int()
+                ]
+            ]
+        ]);
+
         $siteType = new ObjectType([
             "name" => "Site",
             "description" => "The current site",
@@ -504,6 +537,26 @@ class SchemaBuilder {
                         ]
                     ],
                     "resolve" => "Pleio\Resolver::search"
+                ],
+                "recommended" => [
+                    "type" => $entityListType,
+                    "args" => [
+                        "offset" => [
+                            "type" => Type::int()
+                        ],
+                        "limit" => [
+                            "type" => Type::int()
+                        ]
+                    ],
+                    "resolve" => "Pleio\Resolver::getRecommended"
+                ],
+                "trending" => [
+                    "type" => Type::listOf($trendingType),
+                    "resolve" => "Pleio\Resolver::getTrending"
+                ],
+                "top" => [
+                    "type" => Type::listOf($topType),
+                    "resolve" => "Pleio\Resolver::getTop"
                 ],
                 "entities" => [
                     "type" => $entityListType,
@@ -707,6 +760,9 @@ class SchemaBuilder {
                 "richDescription" => [
                     "type" => Type::string()
                 ],
+                "isRecommended" => [
+                    "type" => Type::boolean()
+                ],
                 "isFeatured" => [
                     "type" => Type::boolean()
                 ],
@@ -751,6 +807,9 @@ class SchemaBuilder {
                 ],
                 "richDescription" => [
                     "type" => Type::string()
+                ],
+                "isRecommended" => [
+                    "type" => Type::boolean()
                 ],
                 "isFeatured" => [
                     "type" => Type::boolean()

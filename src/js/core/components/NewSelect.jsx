@@ -1,5 +1,6 @@
 import React from "react"
 import classnames from "classnames"
+import { isMobile } from "../../lib/helpers"
 
 export default class Select extends React.Component {
     constructor(props) {
@@ -18,7 +19,9 @@ export default class Select extends React.Component {
     }
 
     chooseOption(e, value) {
-        this.toggle(e)
+        this.setState({
+            isOpen: false
+        })
 
         if (this.props.onChange) {
             this.props.onChange(value)
@@ -28,19 +31,52 @@ export default class Select extends React.Component {
     }
 
     render() {
-        const value = this.props.value ? this.props.options[this.props.value] : this.props.options[Object.keys(this.props.options)[0]]
+        const value = this.props.value ? this.props.options[this.props.value] : null
+
+        const selectOptions = Object.keys(this.props.options).map((value, i) => (
+            <option key={i} value={value}>{this.props.options[value]}</option>
+        ))
+
         const options = Object.keys(this.props.options).map((value, i) => (
             <li key={i} onClick={(e) => this.chooseOption(e, value)} className={classnames({"selector__option": true, "___is-open": (this.props.value == value)})}>
                 {this.props.options[value]}
             </li>
         ))
 
+        let selectPlaceholder, placeholder
+        if (this.props.placeholder) {
+            selectPlaceholder = (
+                <option disabled>{this.props.placeholder}</option>
+            )
+            placeholder = (
+                <li className="selector__option ___is-disabled">{this.props.placeholder}</li>
+            )
+        }
+
+
+        let select
+        if (isMobile()) {
+            select = (
+                <select onChange={(e) => this.chooseOption(e, e.target.value)} value={this.props.value}>
+                    {selectPlaceholder}
+                    {selectOptions}
+                </select>
+            )
+        }
+
+        let className = classnames({"selector": true, "___is-open": this.state.isOpen, "___is-mobile": isMobile()})
+        if (this.props.className) {
+            className += " " + this.props.className
+        }
+
         return (
-            <div className={classnames({"selector": true, "___is-open": this.state.isOpen})}>
-                <div tabIndex="0" className="selector__select" onClick={this.toggle}>
-                    {value}
+            <div className={className}>
+                {select}
+                <div tabIndex="0" className={classnames({"selector__select":true, "___not-selected":!this.props.value})} onClick={this.toggle}>
+                    {value || (this.props.placeholder || "Maak een keuze")}
                 </div>
                 <ul className="selector__options">
+                    {placeholder}
                     {options}
                 </ul>
             </div>

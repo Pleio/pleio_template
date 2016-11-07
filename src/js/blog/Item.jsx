@@ -144,6 +144,7 @@ const QUERY = gql`
                 accessId
                 timeCreated
                 featuredImage
+                isRecommended
                 canEdit
                 tags
                 votes
