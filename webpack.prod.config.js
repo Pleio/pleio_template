@@ -4,7 +4,19 @@ var autoprefixer = require("autoprefixer");
 
 module.exports = {
     entry: {
-        all: "./src/js/Web.jsx"
+        all: [
+            "./src/js/Web.jsx"
+        ],
+        vendor: [
+            "core-js",
+            "react",
+            "react-dom",
+            "apollo-client",
+            "graphql-tag",
+            "react-apollo",
+            "draft-js",
+            "react-router"
+        ]
     },
     output: {
         path: "./build",
@@ -33,22 +45,18 @@ module.exports = {
         ]
 
     },
+    devtool: "source-map",
     postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
     plugins: [
+        new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
         new ExtractTextPlugin("[name].css"),
         new webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify('production')
             }
         }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-                screw_ie8: true
-            },
-            comments: false
-        }),
-        new webpack.optimize.DedupePlugin()
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
     ],
     resolve: {
         extensions: ['', '.js', '.jsx']

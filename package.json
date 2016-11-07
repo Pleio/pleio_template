@@ -55,7 +55,7 @@
   "scripts": {
     "test": "jest",
     "watch": "webpack --watch",
-    "build": "webpack --config webpack.prod.config.js --progress -p"
+    "build": "webpack --config webpack.prod.config.js --progress"
   },
   "pre-commit": [
     "build"

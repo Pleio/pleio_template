@@ -1,6 +1,6 @@
 var webpack = require("webpack");
-var autoprefixer = require("autoprefixer");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var autoprefixer = require("autoprefixer");
 
 module.exports = {
     entry: {
@@ -44,8 +44,8 @@ module.exports = {
             }
         ]
     },
-    postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
     devtool: "eval",
+    postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
     plugins: [
         new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
         new ExtractTextPlugin("[name].css")
