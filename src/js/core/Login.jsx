@@ -80,7 +80,7 @@ class Login extends React.Component {
                         Inloggen
                     </button>
 
-                    <div className="buttons">
+                    <div className="buttons ___vertical-mobile">
                         <a href="#" onClick={this.showRegister} className="form__link ___block-mobile">
                             Registreren
                         </a>

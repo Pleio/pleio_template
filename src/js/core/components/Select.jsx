@@ -11,6 +11,7 @@ export default class Select extends React.Component {
         }
 
         this.onSelect = this.onSelect.bind(this)
+        this.onBlur = this.onBlur.bind(this)
         this.onToggle = this.onToggle.bind(this)
         this.isMobile = this.isMobile.bind(this)
     }
@@ -28,6 +29,12 @@ export default class Select extends React.Component {
 
         this.setState({
             isOpen: !this.state.isOpen
+        })
+    }
+
+    onBlur(e) {
+        this.setState({
+            isOpen: false
         })
     }
 
@@ -90,7 +97,7 @@ export default class Select extends React.Component {
                 <select onChange={(e) => this.onSelect(e, e.target.value)} value={ this.state.value || "disabled" } readOnly>
                     {selectOptions}
                 </select>
-                <div className={classNames({ "selector__select": true, "___not-selected": (this.state.value ? false : true) })} tabIndex="0" onClick={this.onToggle}>
+                <div className={classNames({ "selector__select": true, "___not-selected": (this.state.value ? false : true) })} tabIndex="0" onClick={this.onToggle} onBlur={this.onBlur}>
                     {selected}
                 </div>
                 <ul className="selector__options">

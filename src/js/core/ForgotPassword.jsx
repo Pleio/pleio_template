@@ -65,7 +65,7 @@ class ForgotPassword extends React.Component {
                 <Form ref="form" className="form login" onSubmit={this.onSubmit}>
                     <InputField name="username" type="text" placeholder="Gebruikersnaam of e-mail" className="form__input" rules="required" />
                     <div className="buttons ___end">
-                        <button type="submit" className="button ___block ___large ___primary">
+                        <button type="submit" className="button ___large ___primary">
                             Aanvragen
                         </button>
                     </div>

@@ -10,8 +10,15 @@ export default class Select extends React.Component {
             isOpen: false
         }
 
+        this.onBlur = this.onBlur.bind(this)
         this.toggle = this.toggle.bind(this)
         this.chooseOption = this.chooseOption.bind(this)
+    }
+
+    onBlur(e) {
+        this.setState({
+            isOpen: false
+        })
     }
 
     toggle(e) {
@@ -72,7 +79,7 @@ export default class Select extends React.Component {
         return (
             <div className={className}>
                 {select}
-                <div tabIndex="0" className={classnames({"selector__select":true, "___not-selected":!this.props.value})} onClick={this.toggle}>
+                <div tabIndex="0" className={classnames({"selector__select":true, "___not-selected":!this.props.value})} onClick={this.toggle} onBlur={this.onBlur}>
                     {value || (this.props.placeholder || "Maak een keuze")}
                 </div>
                 <ul className="selector__options">

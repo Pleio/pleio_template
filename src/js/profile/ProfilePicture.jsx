@@ -4,7 +4,7 @@ import Form from "../core/components/Form"
 import { graphql } from "react-apollo"
 import { connect } from "react-redux"
 import gql from "graphql-tag"
-import Cropper from "react-cropper"
+//import Cropper from "react-cropper"
 
 class ProfilePicture extends React.Component {
     constructor(props) {
@@ -135,15 +135,15 @@ class ProfilePicture extends React.Component {
                                 <div className="form__label">
                                     Voorbeelden
                                 </div>
-                                <div className="edit-picture__previews">
-                                    <div className="edit-picture__preview">
-                                        {largeCroppedImage}
-                                    </div>
-                                    <div className="edit-picture__preview ___small">
-                                        {smallCroppedImage}
-                                    </div>
-                                </div>
                             </label>
+                            <div className="edit-picture__previews">
+                                <div className="edit-picture__preview">
+                                    {largeCroppedImage}
+                                </div>
+                                <div className="edit-picture__preview ___small">
+                                    {smallCroppedImage}
+                                </div>
+                            </div>
                         </div>
                     </div>
 
