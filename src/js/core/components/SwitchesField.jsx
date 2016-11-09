@@ -80,7 +80,7 @@ class SwitchesField extends React.Component {
         })
 
         return (
-            <div>{switches}</div>
+            <div className="form__item">{switches}</div>
         )
     }
 }

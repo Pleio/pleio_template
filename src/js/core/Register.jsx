@@ -46,10 +46,10 @@ class SlideOne extends React.Component {
                 <p className="___small">Registreren is niet noodzakelijk indien je al een Pleio account hebt.</p>
                 <Form ref="form" className="form login" onSubmit={this.onSubmit}>
                     <Errors errors={this.state.errors} />
-                    <InputField type="text" name="name" placeholder="Voor- en achternaam" className="form__input" rules="required" autofocus />
-                    <InputField type="text" name="email" placeholder="E-mailadres" className="form__input" rules="required|email" />
-                    <InputField type="password" name="password" placeholder="Minimaal 8 karakters" className="form__input" rules="required|min:8" />
-                    <InputField type="password" name="passwordAgain" placeholder="Vul je wachtwoord nogmaals in" className="form__input" rules="required|min:8" />
+                    <InputField type="text" name="name" label="Voor- en achternaam" placeholder="Voor- en achternaam" className="form__input" rules="required" autofocus />
+                    <InputField type="text" name="email" label="E-mailadres" placeholder="E-mailadres" className="form__input" rules="required|email" />
+                    <InputField type="password" name="password" label="Wachtwoord" placeholder="Minimaal 8 karakters" className="form__input" rules="required|min:8" />
+                    <InputField type="password" name="passwordAgain" label="Wachtwoord verificatie" placeholder="Vul je wachtwoord nogmaals in" className="form__input" rules="required|min:8" />
 
                     <div className="buttons ___space-between ___margin-top">
                         <a href="#" onClick={this.props.showLogin} className="form__link">Inloggen</a>

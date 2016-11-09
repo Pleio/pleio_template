@@ -4,7 +4,7 @@ import Form from "../core/components/Form"
 import { graphql } from "react-apollo"
 import { connect } from "react-redux"
 import gql from "graphql-tag"
-//import Cropper from "react-cropper"
+import Cropper from "react-cropper"
 
 class ProfilePicture extends React.Component {
     constructor(props) {
@@ -100,7 +100,7 @@ class ProfilePicture extends React.Component {
 
         if (this.state.profilePicture) {
             cropper = (
-                <Cropper ref={cropper => {this.cropper = cropper}} src={this.state.profilePicture} aspectRatio={1/1} guides={true} style={{width:"377px", height:"342px"}} crop={this.onCrop} />
+                <Cropper ref={cropper => {this.cropper = cropper}} src={this.state.profilePicture} aspectRatio={1/1} guides={true} style={{width:"377px", height:"377px"}} crop={this.onCrop} />
             )
         } else {
             cropper = (
@@ -113,10 +113,10 @@ class ProfilePicture extends React.Component {
 
         if (this.state.croppedProfilePicture) {
             largeCroppedImage = (
-                <img src={this.state.croppedProfilePicture} width="168" height="168" />
+                <img src={this.state.croppedProfilePicture} style={{maxWidth:"100%", maxHeight:"100%", width:"140px", height:"140px"}} />
             )
             smallCroppedImage = (
-                <img src={this.state.croppedProfilePicture} width="48" height="48" />
+                <img src={this.state.croppedProfilePicture} style={{maxWidth:"100%", maxHeight:"100%", width:"40px", height:"40px"}}/>
             )
         }
 
