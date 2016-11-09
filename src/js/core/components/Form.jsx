@@ -136,7 +136,7 @@ class Form extends React.Component {
     }
 
     wrapComponent(component) {
-        let hasError, errorMessage, value
+        let hasError, errorMessage, label, value
         hasError = this.state.validationStarted && !this.inputs[component.props.name].isValid()
 
         if (hasError) {
@@ -147,12 +147,19 @@ class Form extends React.Component {
             )
         }
 
+        if ((component.type == InputField || component.type == SelectField) && component.props.label) {
+            label = (
+                <div className="form__label">{component.props.label}</div>
+            )
+        }
+
         const clonedComponent = React.cloneElement(component, {
             onChange: this.onChange
         })
 
         return (
             <label className={classnames({form__item: true, "__error": hasError})}>
+                {label}
                 {clonedComponent}
                 {errorMessage}
             </label>

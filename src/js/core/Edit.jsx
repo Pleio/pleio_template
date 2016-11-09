@@ -7,14 +7,17 @@ import gql from "graphql-tag"
 import Errors from "./components/Errors"
 import Modal from "./components/Modal"
 import AccessSelect from "./containers/AccessSelect"
-import { stringToTags } from "../lib/helpers"
+import { getValueFromTags } from "../lib/helpers"
 import RichTextField from "./components/RichTextField"
 import Form from "./components/Form"
 import InputField from "./components/InputField"
 import TagsField from "./components/TagsField"
 import FeaturedImageField from "./components/FeaturedImageField"
 import SwitchField from "./components/SwitchField"
+import SelectField from "./components/SelectField"
+import { sectorOptions, categoryOptions } from "../lib/filters"
 import { convertToRaw } from "draft-js"
+import { Set } from "immutable"
 
 class EditModal extends React.Component {
     constructor(props) {
@@ -49,7 +52,7 @@ class EditModal extends React.Component {
             description: values.description.getPlainText(),
             richDescription: JSON.stringify(convertToRaw(values.description)),
             featuredImage: values.featuredImage,
-            tags: values.tags
+            tags: new Set().merge([values.category]).merge([values.sector]).merge(values.tags).toJS()
         }
 
         switch (this.props.subtype) {
@@ -115,7 +118,9 @@ class EditModal extends React.Component {
                             <InputField name="title" type="text" placeholder="Titel" className="form__input" value={this.props.entity.title} rules="required" autofocus />
                             <RichTextField name="description" placeholder="Beschrijving" value={this.props.entity.description} richValue={this.props.entity.richDescription} rules="required" />
                             {extraFields}
-                            <TagsField name="tags" type="text" className="form__input" value={this.props.entity.tags} />
+                            <SelectField label="Categorie" name="category" className="form__input" options={categoryOptions} rules="required" value={getValueFromTags(this.props.entity.tags, Object.keys(categoryOptions))} />
+                            <SelectField label="Onderwijssector" name="sector" className="form__input" options={sectorOptions} rules="required" value={getValueFromTags(this.props.entity.tags, Object.keys(sectorOptions))} />
+                            <TagsField name="tags" type="text" className="form__input" value={new Set(this.props.entity.tags).subtract(Object.keys(sectorOptions)).subtract(Object.keys(categoryOptions)).toJS()} />
                             <div className="buttons ___space-between">
                                 <button className="button" type="submit">
                                     Wijzigen

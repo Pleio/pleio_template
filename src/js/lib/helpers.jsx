@@ -1,14 +1,4 @@
-export function stringToTags(tagString) {
-    if (Array.isArray(tagString)) {
-        return tagString
-    }
-
-    if (tagString == null) {
-        return
-    }
-
-    return tagString.split(",").map((tag) => tag.trim())
-}
+import { Set } from "immutable"
 
 export function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
@@ -45,7 +35,23 @@ export function getClassFromTags(inputTags) {
     } else {
         return "___" + "overig"
     }
+}
 
+export function getValueFromTags(inputTags, possibleOptions) {
+    if (!inputTags) {
+        return
+    }
+
+    const options = new Set(possibleOptions)
+
+    let value = null
+    inputTags.forEach((tag) => {
+        if (options.contains(tag)) {
+            value = tag
+        }
+    })
+
+    return value
 }
 
 export function displayTags(tags) {
