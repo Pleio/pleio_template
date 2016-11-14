@@ -22,7 +22,7 @@ class Resolver {
 
         return [
             "guid" => $site->guid,
-            "title" => $site->title,
+            "name" => $site->name,
             "menu" => [
                 ["guid" => "menu:" . 1, "title" => "Blog", "link" => "/blog", "js" => true],
                 ["guid" => "menu:" . 2, "title" => "Nieuws", "link" => "/news", "js" => true],
@@ -109,7 +109,7 @@ class Resolver {
                 "title" => $entity->title,
                 "description" => $entity->description,
                 "ownerGuid" => $entity->owner_guid,
-                "url" => $entity->getUrl(),
+                "url" => Helpers::getURL($entity),
                 "timeCreated" => $entity->time_created,
                 "timeUpdated" => $entity->time_updated
             ];
@@ -264,7 +264,7 @@ class Resolver {
                 "type" => $entity->type,
                 "username" => $entity->username,
                 "name" => $entity->name,
-                "url" => $entity->getURL(),
+                "url" => Helpers::getURL($entity),
                 "icon" => $entity->getIconURL("large"),
                 "timeCreated" => $entity->time_created,
                 "timeUpdated" => $entity->time_updated,
@@ -286,7 +286,7 @@ class Resolver {
                 "isFeatured" => $entity->isFeatured ? true : false,
                 "featuredImage" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
                 "title" => $entity->title,
-                "url" => $entity->getURL(),
+                "url" => Helpers::getURL($entity),
                 "description" => $entity->description,
                 "richDescription" => $entity->richDescription,
                 "excerpt" => elgg_get_excerpt($entity->description),
@@ -351,7 +351,7 @@ class Resolver {
             "username" => $user->username,
             "name" => $user->name,
             "icon" => $user->getIconURL("large"),
-            "url" => $user->getURL()
+            "url" => Helpers::getURL($user)
         ];
     }
 
@@ -386,17 +386,17 @@ class Resolver {
             [
                 "key" => "answers",
                 "name" => "Antwoorden",
-                "value" => $answers
+                "value" => $answers ? $answers : 0
             ],
             [
                 "key" => "upvotes",
                 "name" => "Stemmen omhoog",
-                "value" => $upvotes
+                "value" => $upvotes ? $upvotes : 0
             ],
             [
                 "key" => "downvotes",
                 "name" => "Stemmen omlaag",
-                "value" => $downvotes
+                "value" => $downvotes ? $downvotes : 0
             ]
         ];
 
@@ -513,6 +513,7 @@ class Resolver {
                 "featuredImage" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
                 "title" => $entity->title,
                 "type" => $entity->type,
+                "url" => Helpers::getURL($entity),
                 "subtype" => $entity->getSubtype(),
                 "description" => $entity->description,
                 "excerpt" => elgg_get_excerpt($entity->description),
@@ -634,7 +635,7 @@ class Resolver {
                 "isFeatured" => $hit->isFeatured ? true : false,
                 "featuredImage" => $hit->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$hit->guid}&lastcache={$hit->featuredIcontime}" : "",
                 "title" => $hit->title,
-                "url" => $hit->getURL(),
+                "url" => Helpers::getURL($hit),
                 "description" => $hit->description,
                 "excerpt" => elgg_get_excerpt($hit->description),
                 "timeCreated" => date("c", $hit->time_created),

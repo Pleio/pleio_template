@@ -9,6 +9,7 @@ import Top from "../core/components/Top"
 import ContentFilters from "../core/containers/ContentFilters"
 import AddButton from "../core/containers/AddButton"
 import Add from "../core/Add"
+import Document from "../core/components/Document"
 
 class List extends React.Component {
     constructor(props) {
@@ -26,6 +27,7 @@ class List extends React.Component {
     render() {
         return (
             <div className="page-layout">
+                <Document title="Blogs" />
                 <ContentHeader>
                     <h3 className="main__title">
                         Blog

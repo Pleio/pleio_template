@@ -4,6 +4,7 @@
   "private": true,
   "devDependencies": {
     "autoprefixer": "^6.5.1",
+    "babel-preset-latest": "^6.16.0",
     "css-loader": "^0.25.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
@@ -17,6 +18,7 @@
   },
   "dependencies": {
     "apollo-client": "^0.5.0",
+    "babel-cli": "^6.18.0",
     "babel-core": "^6.8.0",
     "babel-jest": "^15.0.0",
     "babel-loader": "^6.2.4",
@@ -26,10 +28,12 @@
     "babel-preset-stage-0": "^6.5.0",
     "classnames": "^2.2.5",
     "core-js": "^2.4.1",
+    "dnode": "^1.2.2",
     "draft-js": "^0.9.1",
     "draft-js-export-html": "^0.5.0",
     "draft-js-import-html": "^0.3.0",
     "graphql-tag": "^0.1.11",
+    "isomorphic-form-data": "0.0.1",
     "jest": "^15.1.1",
     "jsx-loader": "^0.13.2",
     "object-path": "^0.11.2",
@@ -56,7 +60,11 @@
   "scripts": {
     "test": "jest",
     "watch": "webpack --watch",
-    "build": "webpack --config webpack.prod.config.js --progress"
+    "build": "webpack --config webpack.prod.config.js --progress",
+    "watch-server": "babel src/js --out-dir .babel --watch",
+    "build-server": "babel src/js --out-dir .babel",
+    "lint": "jshint .",
+    "validate": "npm ls"
   },
   "pre-commit": [
     "build"

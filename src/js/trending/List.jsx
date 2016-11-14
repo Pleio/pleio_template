@@ -2,9 +2,9 @@ import React from "react"
 import ContentHeader from "../core/components/ContentHeader"
 import TrendingList from "./containers/TrendingList"
 import ContentFilters from "./containers/ContentFilters"
-
 import Card from "./components/Card"
 import Trending from "../activity/components/Trending"
+import Document from "../core/components/Document"
 
 export default class List extends React.Component {
     constructor(props) {
@@ -20,6 +20,7 @@ export default class List extends React.Component {
     render() {
         return (
             <div className="page-layout">
+                <Document title={this.props.params.tag} />
                 <section className="section">
                     <div className="container">
                         <h3 className="main__title ___trending">

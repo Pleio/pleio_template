@@ -12,6 +12,7 @@ import Bookmark from "../bookmarks/components/Bookmark"
 import NotFound from "../core/NotFound"
 import showDate from "../lib/showDate"
 import RichTextView from "../core/components/RichTextView"
+import Document from "../core/components/Document"
 
 class Item extends React.Component {
     constructor(props) {
@@ -91,6 +92,7 @@ class Item extends React.Component {
 
         return (
             <div>
+                <Document title={entity.title} />
                 {featuredImage}
                 <section className="section">
                     <div className="container">

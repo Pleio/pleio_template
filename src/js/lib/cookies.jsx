@@ -9,6 +9,10 @@ export function createCookie(name,value,days) {
 }
 
 export function readCookie(name) {
+    if (typeof document === "undefined") {
+        return null;
+    }
+
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
     for(var i=0;i < ca.length;i++) {

@@ -479,7 +479,7 @@ class SchemaBuilder {
                 "guid" => [
                     "type" => Type::nonNull(Type::string())
                 ],
-                "title" => [
+                "name" => [
                     "type" => Type::nonNull(Type::string())
                 ],
                 "menu" => [

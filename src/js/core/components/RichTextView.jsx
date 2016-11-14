@@ -48,8 +48,15 @@ const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap)
 export default class RichTextView extends React.Component {
     constructor(props) {
         super(props)
+
+        this.state = {
+            inBrowser: false
+        }
     }
 
+    componentDidMount() {
+        this.setState({inBrowser: true})
+    }
 
     blockRendererFn(contentBlock) {
         const type = contentBlock.getType()
@@ -91,6 +98,15 @@ export default class RichTextView extends React.Component {
             }
         } else {
             contentState = ContentState.createFromText(this.props.value)
+        }
+
+        // do not render editor on server-side because it's output is non-deterministic
+        // and will cause React to re-render.
+        if (!this.state.inBrowser) {
+            const content = contentState.getPlainText()
+            return (
+                <div className="content">{content}</div>
+            )
         }
 
         const editorState = EditorState.createWithContent(contentState, decorator)

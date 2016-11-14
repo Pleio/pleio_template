@@ -152,7 +152,7 @@ class Mutations {
                 $entity = new \ElggGroup();
                 $entity->name = $input["name"];
             case "object":
-                if (!in_array($input["subtype"], array("news", "blog", "question", "comment"))) {
+                if (!in_array($input["subtype"], array("news", "blog", "question", "comment","page"))) {
                     throw new Exception("invalid_subtype");
                 }
 
@@ -188,7 +188,7 @@ class Mutations {
             throw new Exception("could_not_save");
         }
 
-        if (in_array($input["subtype"], ["news", "blog"])) {
+        if (in_array($input["subtype"], ["news", "blog", "page"])) {
             if (isset($input["isFeatured"])) {
                 $entity->isFeatured = $input["isFeatured"];
             }
@@ -255,7 +255,7 @@ class Mutations {
 
         $result = $entity->save();
 
-        if (in_array($entity->getSubtype(), ["blog", "news"])) {
+        if (in_array($entity->getSubtype(), ["blog", "news", "page"])) {
             if (isset($input["isFeatured"])) {
                 $entity->isFeatured = $input["isFeatured"];
             }

@@ -5,6 +5,7 @@ import ContentHeader from "../core/components/ContentHeader"
 import ContentFilters from "../core/containers/ContentFilters"
 import InfiniteList from "../core/containers/InfiniteList"
 import AddButton from "../core/containers/AddButton"
+import Document from "../core/components/Document"
 import Card from "./components/Card"
 import Add from "../core/Add"
 
@@ -23,6 +24,7 @@ class List extends React.Component {
     render() {
         return (
             <div className="page-layout">
+                <Document title="Forum" />
                 <ContentHeader>
                     <h3 className="main__title">
                         Forum

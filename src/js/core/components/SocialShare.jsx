@@ -7,7 +7,7 @@ export default class SocialShare extends React.Component {
 
         this.state = {
             isOpen: false,
-            url: window ? window.location.href : ""
+            url: ""
         }
 
         this.toggleState = (e) => this.setState({isOpen: !this.state.isOpen})
@@ -15,7 +15,7 @@ export default class SocialShare extends React.Component {
 
     componentDidMount() {
         // force re-rendering as server-side rendering is not aware of window.location.href
-        if (!this.state.url && window) {
+        if (!this.state.url && (typeof window !== undefined)) {
             this.setState({
                 url: window.location.href
             })

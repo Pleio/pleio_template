@@ -14,6 +14,7 @@ import Likes from "../core/components/Likes"
 import showDate from "../lib/showDate"
 import { Link } from "react-router"
 import RichTextView from "../core/components/RichTextView"
+import Document from "../core/components/Document"
 
 class Item extends React.Component {
     constructor(props) {
@@ -85,6 +86,7 @@ class Item extends React.Component {
         return (
             <div>
                 {featuredImage}
+                <Document title={entity.title} />
                 <section className="section">
                     <div className="container">
                         <div className="row">

@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react"
+import Document from "./components/Document"
 
 export default class NotFound extends React.Component {
     render() {
         return (
             <section className="section">
+                <Document title="Pagina is niet beschikbaar" />
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">

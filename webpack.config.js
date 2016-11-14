@@ -1,22 +1,11 @@
 var webpack = require("webpack");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var autoprefixer = require("autoprefixer");
-var HappyPack = require("happypack");
 
 module.exports = {
     entry: {
-        all: [
+        web: [
             "./src/js/Web.jsx"
-        ],
-        vendor: [
-            "core-js",
-            "react",
-            "react-dom",
-            "apollo-client",
-            "graphql-tag",
-            "react-apollo",
-            "draft-js",
-            "react-router"
         ]
     },
     output: {
@@ -29,7 +18,7 @@ module.exports = {
         loaders: [
             {
                 test: /\.jsx$/,
-                loaders: ["happypack/loader"]
+                loaders: ["babel?presets[]=es2015,presets[]=stage-0,presets[]=react"]
             },
             {
                 test: /\.css$/,
@@ -48,8 +37,6 @@ module.exports = {
     devtool: "eval",
     postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
     plugins: [
-        new HappyPack({ loaders: [ "babel?presets[]=es2015,presets[]=stage-0,presets[]=react" ] }),
-        new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
         new ExtractTextPlugin("[name].css")
     ],
     resolve: {

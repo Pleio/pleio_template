@@ -4,7 +4,7 @@ import Form from "../core/components/Form"
 import { graphql } from "react-apollo"
 import { connect } from "react-redux"
 import gql from "graphql-tag"
-import Cropper from "react-cropper"
+//import Cropper from "react-cropper"
 
 class ProfilePicture extends React.Component {
     constructor(props) {

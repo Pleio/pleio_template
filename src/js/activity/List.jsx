@@ -8,6 +8,7 @@ import Card from "./components/Card"
 import Recommended from "./components/Recommended"
 import Trending from "./components/Trending"
 import Initiative from "./components/Initiative"
+import Document from "../core/components/Document"
 
 export default class Activity extends React.Component {
     constructor(props) {
@@ -23,6 +24,7 @@ export default class Activity extends React.Component {
     render() {
         return (
             <section className="section ___less-padding-top">
+                <Document title="Activiteiten" />
                 <div className="container">
                     <Lead title="Leraar.nl" image="/mod/pleio_template/src/images/lead-home.jpg" />
                     <ContentFilters page="activity" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter}>

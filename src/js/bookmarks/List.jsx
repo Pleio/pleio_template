@@ -2,10 +2,10 @@ import React from "react"
 import ContentHeader from "../core/components/ContentHeader"
 import BookmarkList from "./containers/BookmarkList"
 import ContentFilters from "./containers/ContentFilters"
-
 import Card from "./components/Card"
 import Recommended from "../activity/components/Recommended"
 import Trending from "../activity/components/Trending"
+import Document from "../core/components/Document"
 
 export default class List extends React.Component {
     constructor(props) {
@@ -23,6 +23,7 @@ export default class List extends React.Component {
     render() {
         return (
             <div className="page-layout">
+                <Document title="Bewaard" />
                 <section className="section">
                     <div className="container">
                         <h3 className="main__title">

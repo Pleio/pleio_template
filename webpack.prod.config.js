@@ -4,18 +4,8 @@ var autoprefixer = require("autoprefixer");
 
 module.exports = {
     entry: {
-        all: [
+        web: [
             "./src/js/Web.jsx"
-        ],
-        vendor: [
-            "core-js",
-            "react",
-            "react-dom",
-            "apollo-client",
-            "graphql-tag",
-            "react-apollo",
-            "draft-js",
-            "react-router"
         ]
     },
     output: {
@@ -48,7 +38,6 @@ module.exports = {
     devtool: "source-map",
     postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
         new ExtractTextPlugin("[name].css"),
         new webpack.DefinePlugin({
             'process.env': {

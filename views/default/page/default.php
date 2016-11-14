@@ -1,6 +1,7 @@
 <?php
 header("Content-type: text/html; charset=utf-8");
 $lang = get_current_language();
+$store = elgg_extract("store", $vars);
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang; ?>">
@@ -15,20 +16,15 @@ $lang = get_current_language();
     <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
     <meta name="version" content="1.0.0">
     <meta name="relative-path" content="">
-    <link href="/mod/pleio_template/build/all.css?v=<?php echo $CONFIG->lastcache; ?>" rel="stylesheet" type="text/css">
+    <link href="/mod/pleio_template/build/web.css?v=<?php echo $CONFIG->lastcache; ?>" rel="stylesheet" type="text/css">
 </head>
 <body class="___leraar">
-    <div id="react-root" class="page-layout">
-        <header class="page-layout__header">
-            <?php echo elgg_view("page/elements/header"); ?>
-        </header>
-
-        <main id="skip-navigation" class="page-layout__main ___no-padding">
-            <?php echo elgg_extract('body', $vars, ''); ?>
-        </main>
-    </div>
-    <div data-mobile-nav-trigger class="navigation-overlay"></div>
-    <script src="/mod/pleio_template/build/vendor.bundle.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
-    <script src="/mod/pleio_template/build/all.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
+    <div id="react-root" class="page-layout"><?php echo elgg_extract('body', $vars, ''); ?></div>
+    <?php if ($store): ?>
+        <script>
+            window.__STORE__ = <?php echo json_encode($store); ?>;
+        </script>
+    <?php endif; ?>
+    <script src="/mod/pleio_template/build/web.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
 </body>
 </html>

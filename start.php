@@ -15,6 +15,7 @@ function pleio_template_init() {
     elgg_register_js("pleio_template", "/mod/pleio_template/build/all.js");
 
     elgg_register_plugin_hook_handler("index", "system", "pleio_template_index_handler");
+    elgg_register_plugin_hook_handler("container_permissions_check", "object", "pleio_template_container_permissions_check_hook");
 
     elgg_register_page_handler("campagne", "pleio_template_page_handler");
     elgg_register_page_handler("activity", "pleio_template_page_handler");
@@ -22,6 +23,7 @@ function pleio_template_init() {
     elgg_register_page_handler("news", "pleio_template_page_handler");
     elgg_register_page_handler("questions", "pleio_template_page_handler");
     elgg_register_page_handler("profile", "pleio_template_page_handler");
+    elgg_register_page_handler("page", "pleio_template_page_handler");
     elgg_register_page_handler("search", "pleio_template_page_handler");
     elgg_register_page_handler("bookmarks", "pleio_template_page_handler");
     elgg_register_page_handler("trending", "pleio_template_page_handler");
@@ -43,9 +45,26 @@ function pleio_template_init() {
 
 elgg_register_event_handler("init", "system", "pleio_template_init");
 
-function pleio_template_index_handler($hook, $type, $return_value, $return_value) {
+function pleio_template_index_handler($hook, $type, $return_value, $params) {
     include("pages/react.php");
     return true;
+}
+
+function pleio_template_container_permissions_check_hook($hook, $type, $return_value, $params) {
+    $user = elgg_extract("user", $params);
+    $container = elgg_extract("container", $params);
+    $subtype = elgg_extract("subtype", $params);
+
+    if (!$user) {
+        return $return_value;
+    }
+
+    if (!in_array($subtype, ["page", "news"])) {
+        return $return_value;
+    }
+
+    // only allow admins to create pages and news
+    return $user->isAdmin();
 }
 
 function pleio_template_page_handler($page) {
@@ -55,11 +74,6 @@ function pleio_template_page_handler($page) {
 
 function pleio_template_graphql() {
     include("pages/graphql.php");
-    return true;
-}
-
-function pleio_template_upload() {
-    include("pages/upload.php");
     return true;
 }
 

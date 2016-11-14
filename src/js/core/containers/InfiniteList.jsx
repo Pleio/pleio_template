@@ -12,6 +12,7 @@ const Query = gql`
                 ... on Object {
                     guid
                     title
+                    url
                     excerpt
                     votes
                     hasVoted

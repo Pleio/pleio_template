@@ -22,7 +22,7 @@ export default class Card extends React.Component {
                                             </h3>
                                         </div>
                                         <div className="read-more">
-                                            <div className="read-more-circle"></div>
+                                            <div className="read-more__circle" />
                                             <span>Lees meer</span>
                                         </div>
                                     </div>
@@ -55,7 +55,7 @@ export default class Card extends React.Component {
                                         </h3>
                                     </div>
                                     <div className="read-more">
-                                        <div className="read-more-circle"></div>
+                                        <div className="read-more__circle" />
                                         <span>Lees meer</span>
                                     </div>
                                 </div>

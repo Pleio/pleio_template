@@ -48,6 +48,35 @@ class Helpers {
         }
     }
 
+    static function getURL($entity) {
+        switch ($entity->type) {
+            case "group":
+                return "/groups/{$entity->guid}/{$entity->name}";
+            case "user":
+                return "/profile/{$entity->username}";
+            case "object":
+                $friendlytitle = elgg_get_friendly_title($entity->title);
+                switch ($entity->getSubtype()) {
+                    case "news":
+                        $root = "news";
+                        break;
+                    case "question":
+                        $root = "questions";
+                        break;
+                    case "blog":
+                        $root = "blogs";
+                        break;
+                    case "page":
+                        $root = "page";
+                        break;
+                    default:
+                        $root = $entity->getSubtype();
+                }
+
+                return "/{$root}/view/{$entity->guid}/$friendlytitle";
+        }
+    }
+
     static function saveToIcon($filename, $owner) {
         $filename = str_replace(".", "_", $filename);
         $icon_sizes = elgg_get_config("icon_sizes");

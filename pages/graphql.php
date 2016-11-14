@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] !== "POST") {
     exit();
 }
 
-if ($_SERVER['HTTP_X_CSRF_TOKEN'] && $_SERVER['HTTP_X_CSRF_TOKEN'] !== $_COOKIE['CSRF_TOKEN']) {
+if (isset($_SERVER['HTTP_X_CSRF_TOKEN']) && $_SERVER['HTTP_X_CSRF_TOKEN'] !== $_COOKIE['CSRF_TOKEN']) {
     echo json_encode(["error" => "CSRF Token is invalid."]);
     exit();
 }

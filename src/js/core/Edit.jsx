@@ -155,6 +155,7 @@ const Mutation = gql`
                     title
                     description
                     richDescription
+                    url
                     accessId
                     source
                     isFeatured

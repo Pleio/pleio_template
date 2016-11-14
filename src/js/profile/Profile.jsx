@@ -5,6 +5,7 @@ import gql from "graphql-tag"
 import ProfilePicture from "./ProfilePicture"
 import { showModal } from "../lib/actions"
 import NotFound from "../core/NotFound"
+import Document from "../core/components/Document"
 import ProfileField from "./components/ProfileField"
 import ProfileScore from "./components/ProfileScore"
 
@@ -77,6 +78,7 @@ class Profile extends React.Component {
 
         return (
             <section className="section ___grey ___grow">
+                <Document title={entity.name} />
                 <div className="container">
                     <div className="card-profile">
                         <div className="row">
@@ -141,6 +143,7 @@ const query = gql`
             guid
             status
             ... on User {
+                name
                 canEdit
                 icon
                 profile {

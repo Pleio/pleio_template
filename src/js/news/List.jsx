@@ -6,6 +6,7 @@ import InfiniteList from "../core/containers/InfiniteList"
 import Card from "./components/Card"
 import ContentFilters from "../core/containers/ContentFilters"
 import AddButton from "../core/containers/AddButton"
+import Document from "../core/components/Document"
 import Add from "../core/Add"
 
 class List extends React.Component {
@@ -24,6 +25,7 @@ class List extends React.Component {
     render() {
         return (
             <div className="page-layout">
+                <Document title="Nieuws" />
                 <ContentHeader>
                     <h3 className="main__title">
                         Nieuws

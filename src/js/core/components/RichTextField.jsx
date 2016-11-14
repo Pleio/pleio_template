@@ -68,6 +68,7 @@ class RichTextField extends React.Component {
             editorState: EditorState.createWithContent(contentState, decorator),
             textAlignment: "left",
             isSelectorOpen: false,
+            inBrowser: false,
             readOnly: false
         }
 
@@ -123,6 +124,10 @@ class RichTextField extends React.Component {
         if (this.context.detachFromForm) {
             this.context.detachFromForm(this)
         }
+    }
+
+    componentDidMount() {
+        this.setState({inBrowser: true})
     }
 
     onChange(editorState) {
@@ -331,6 +336,14 @@ class RichTextField extends React.Component {
                 <div className="editor__tool ___indent-right" onClick={() => this.changeAlignment("right")} />
             </div>
         )
+
+        // do not render editor on server-side because it's output is non-deterministic
+        // and will cause React to re-render.
+        if (!this.state.inBrowser) {
+            return (
+                <div></div>
+            )
+        }
 
         return (
             <div className="editor">

@@ -1,4 +1,4 @@
-export Errors = {
+export const Errors = {
     could_not_register: 'Could not register, please check the input.',
     could_not_login: 'Could not login, please check username and password.',
     unknown_error: 'An unknown error occured.',
