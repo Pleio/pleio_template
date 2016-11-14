@@ -64,7 +64,7 @@ class Helpers {
                         $root = "questions";
                         break;
                     case "blog":
-                        $root = "blogs";
+                        $root = "blog";
                         break;
                     case "page":
                         $root = "page";

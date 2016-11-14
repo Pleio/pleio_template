@@ -17,16 +17,17 @@ export default class Comment extends React.Component {
 
     render() {
         let vote, editButton, editWrapper
+        let { entity } = this.props
 
-        if (this.props.entity.canEdit) {
+        if (entity.canEdit) {
             editButton = (
                 <div className="comment__edit" onClick={this.toggleEdit}><span>Wijzig</span></div>
             )
         }
 
-        if (this.props.entity.canVote) {
+        if (entity.canVote) {
             vote = (
-                <CommentVote entity={this.props.entity} />
+                <CommentVote entity={entity} />
             )
         }
 
@@ -34,33 +35,33 @@ export default class Comment extends React.Component {
             return (
                 <div className="comment-container">
                     <div className="comment-edit__wrapper ___is-open" style={{maxHeight:"100%"}}>
-                        <CommentEdit entity={this.props.entity} toggleEdit={this.toggleEdit} />
+                        <CommentEdit entity={entity} toggleEdit={this.toggleEdit} />
                     </div>
                 </div>
             )
         } else {
             return (
-                <div className={classnames({"comment-container": true, " ___is-editable": this.props.entity.canEdit})}>
-                    <div className={classnames({comment: true, "___can-edit": this.props.entity.canEdit})}>
+                <div className={classnames({"comment-container": true, " ___is-editable": entity.canEdit})}>
+                    <div className={classnames({comment: true, "___can-edit": entity.canEdit})}>
                         {vote}
                         <div className="comment__top">
-                            <a href={this.props.entity.owner.url}
+                            <a href={entity.owner.url}
                                title="Bekijk profiel"
-                               style={{"backgroundImage": "url(" + this.props.entity.owner.icon + ")"}}
+                               style={{"backgroundImage": "url(" + entity.owner.icon + ")"}}
                                className="comment__picture">
                             </a>
                             <div className="comment__justify">
-                                <a href={this.props.entity.owner.url} title="Bekijk profiel" className="comment__name">
-                                    {this.props.entity.owner.name}
+                                <a href={entity.owner.url} title="Bekijk profiel" className="comment__name">
+                                    {entity.owner.name}
                                 </a>
                                 <div>
-                                    <div className="comment__date">{showDate(this.props.entity.timeCreated)}</div>
+                                    <div className="comment__date">{showDate(entity.timeCreated)}</div>
                                     {editButton}
                                 </div>
                             </div>
                         </div>
                         <div className="comment__body">
-                            {this.props.entity.description}
+                            {entity.description}
                         </div>
                     </div>
                 </div>

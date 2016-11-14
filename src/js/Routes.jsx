@@ -64,7 +64,7 @@ const newsRoutes = {
     component: Container,
     indexRoute: { component: NewsList },
     childRoutes: [
-        { path: ":guid", component: NewsItem }
+        { path: "view/:guid/:slug", component: NewsItem }
     ]
 }
 
@@ -82,7 +82,7 @@ const blogRoutes = {
     component: Container,
     indexRoute: { component: BlogList },
     childRoutes: [
-        { path: ":guid", component: BlogItem }
+        { path: "view/:guid/:slug", component: BlogItem }
     ]
 }
 
@@ -92,7 +92,7 @@ const questionsRoutes = {
     indexRoute: { component: QuestionsIndex },
     childRoutes: [
         { path: "all", component: QuestionsList },
-        { path: ":guid", component: QuestionsItem }
+        { path: "view/:guid/:slug", component: QuestionsItem }
     ]
 }
 

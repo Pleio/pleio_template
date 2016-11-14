@@ -58,19 +58,6 @@ export function displayTags(tags) {
     return tags.join(", ")
 }
 
-export function getUrl(entity) {
-    switch (entity.subtype) {
-        case "news":
-            return `/news/${entity.guid}`
-        case "blog":
-            return `/blog/${entity.guid}`
-        case "question":
-            return `/question/${entity.guid}`
-        default:
-            return `#`
-    }
-}
-
 export function isMobile() {
     return false;
 

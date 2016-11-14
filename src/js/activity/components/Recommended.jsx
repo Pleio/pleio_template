@@ -4,7 +4,6 @@ import Accordeon from "../../core/components/Accordeon"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { Link } from "react-router"
-import { getUrl } from "../../lib/helpers"
 
 class Recommended extends React.Component {
     constructor(props) {
@@ -36,7 +35,7 @@ class Recommended extends React.Component {
         }
 
         const items = recommended.entities.map((entity, i) => (
-            <Link key={i} to={getUrl(entity)} className="card-list-recommended__item">
+            <Link key={i} to={entity.url} className="card-list-recommended__item">
                 <div style={{backgroundImage: "url(" + entity.owner.icon + ")"}} className="card-list-recommended__picture" />
                 <div className="card-list-recommended__justify">
                     <div className="card-list-recommended__article">{entity.title}</div>

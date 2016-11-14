@@ -778,6 +778,7 @@ class Resolver {
                     "title" => $entity->title,
                     "type" => $entity->type,
                     "subtype" => $entity->getSubtype(),
+                    "url" => Helpers::getURL($entity),
                     "isFeatured" => $entity->isFeatured ? true : false,
                     "featuredImage" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
                     "description" => $entity->description,

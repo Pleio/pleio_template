@@ -15,7 +15,7 @@ class Top extends React.Component {
         }
 
         const items = top.map((item, i) => (
-            <Link key={i} to={`/profile/${item.user.username}`} className="card-list-bloggers__item">
+            <Link key={i} to={item.user.url} className="card-list-bloggers__item">
                 <div style={{backgroundImage: "url(" + item.user.icon + ")"}} className="card-list-bloggers__picture" />
                 <div>
                     <div className="card-list-bloggers__name">{item.user.name}</div>
@@ -40,6 +40,7 @@ const Query = gql`
             user {
                 guid
                 username
+                url
                 name
                 icon
             }

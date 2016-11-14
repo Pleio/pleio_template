@@ -9,37 +9,37 @@ import { displayTags } from "../../lib/helpers"
 
 export default class Card extends React.Component {
     render() {
-        const { guid, featuredImage, title, excerpt, timeCreated, tags, owner } = this.props.entity
+        const { guid, featuredImage, title, excerpt, timeCreated, url, tags, owner } = this.props.entity
 
         let featured
         if (featuredImage) {
             featured = (
-                <Link to={`/blog/${guid}`} style={{backgroundImage: "url(" + featuredImage + ")"}} className="card-blog-post__image" />
+                <Link to={url} style={{backgroundImage: "url(" + featuredImage + ")"}} className="card-blog-post__image" />
             )
         }
 
         return (
             <div className="card-blog-post">
-                <Link to={`/profile/${owner.username}`} title={owner.name} style={{backgroundImage: "url(" + owner.icon + ")"}} className="card-blog-post__picture"></Link>
+                <Link to={owner.url} title={owner.name} style={{backgroundImage: "url(" + owner.icon + ")"}} className="card-blog-post__picture"></Link>
                 <div className="card-blog-post__post">
                     <div className="card-blog-post__meta">
-                        <Link to={`/profile/${owner.username}`} className="card-blog-post__user">
+                        <Link to={owner.url} className="card-blog-post__user">
                             {owner.name}
                         </Link>
 
                         { tags.length > 0 ? ( <span>&nbsp;over&nbsp;</span> ) : "" }
-                        <Link to={`/blog/${guid}`} className="card-blog-post__subject">
+                        <Link to={url} className="card-blog-post__subject">
                             {displayTags(tags)}
                         </Link>
 
-                        <div href="#" className="card-blog-post__date">
+                        <div className="card-blog-post__date">
                             {showDate(timeCreated)}
                         </div>
                     </div>
 
                     {featured}
 
-                    <Link to={`/blog/${guid}`} className="card-blog-post__title">
+                    <Link to={url} className="card-blog-post__title">
                         {title}
                     </Link>
 

@@ -93,9 +93,9 @@ class Item extends React.Component {
                             <div className="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
                                 <article className="article">
                                     <div className="article-author ___margin-bottom">
-                                        <Link to={`/profile/${entity.owner.username}`} style={{backgroundImage: "url(" + entity.owner.icon + ")"}} className="article-author__picture"></Link>
+                                        <Link to={entity.owner.url} style={{backgroundImage: "url(" + entity.owner.icon + ")"}} className="article-author__picture"></Link>
                                         <div className="article-author__justify">
-                                            <Link to={`/profile/${entity.owner.username}`} className="article-author__name">
+                                            <Link to={entity.owner.url} className="article-author__name">
                                                 {entity.owner.name}
                                             </Link>
                                             <div className="article-author__date">
@@ -149,6 +149,7 @@ const QUERY = gql`
                 isRecommended
                 canEdit
                 tags
+                url
                 votes
                 hasVoted
                 isBookmarked

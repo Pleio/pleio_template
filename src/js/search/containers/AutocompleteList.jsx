@@ -6,17 +6,6 @@ import { showShortDate } from "../../lib/showDate"
 
 class AutocompleteList extends React.Component {
 
-    generateLink(item) {
-        switch (item.subtype) {
-            case "blog":
-                return `/blog/${item.guid}`
-            case "news":
-                return `/news/${item.guid}`
-            case "question":
-                return `/questions/${item.guid}`
-        }
-    }
-
     closeSearch() {
         document.body.classList.remove("navigation-search-open")
     }
@@ -35,7 +24,7 @@ class AutocompleteList extends React.Component {
         if (search.entities) {
             entities = search.entities.map((item, i) => (
                 <li key={i}>
-                    <Link to={this.generateLink(item)} onClick={this.closeSearch}>
+                    <Link to={item.url} onClick={this.closeSearch}>
                         <span>{showShortDate(item.timeCreated)}</span>{item.title}
                     </Link>
                 </li>
@@ -68,6 +57,7 @@ const Query = gql`
                     title
                     subtype
                     timeCreated
+                    url
                 }
             }
         }

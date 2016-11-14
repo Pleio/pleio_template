@@ -13,6 +13,7 @@ const Query = gql`
                     guid
                     title
                     excerpt
+                    url
                     votes
                     hasVoted
                     isBookmarked
@@ -28,6 +29,7 @@ const Query = gql`
                         username
                         name
                         icon
+                        url
                     }
                 }
             }

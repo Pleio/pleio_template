@@ -16,7 +16,7 @@ class TopicCard extends React.Component {
         }
 
         const items = entities.entities.map((entity, i) => (
-            <Link key={i} to={`/questions/${entity.guid}`} className="card-list-topics__item">
+            <Link key={i} to={entity.url} className="card-list-topics__item">
                 <div className="card-list-topics__date">
                     {showShortDate(entity.timeCreated)}
                 </div>
@@ -54,6 +54,7 @@ const Query = gql`
                     title
                     timeCreated
                     commentCount
+                    url
                 }
             }
         }

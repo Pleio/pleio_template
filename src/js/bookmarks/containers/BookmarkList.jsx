@@ -13,6 +13,7 @@ const Query = gql`
                     guid
                     title
                     subtype
+                    url
                     excerpt
                     votes
                     hasVoted
@@ -28,6 +29,7 @@ const Query = gql`
                         guid
                         name
                         icon
+                        url
                     }
                 }
             }

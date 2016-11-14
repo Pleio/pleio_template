@@ -28,6 +28,7 @@ const Query = gql`
                         guid
                         username
                         name
+                        url
                         icon
                     }
                 }

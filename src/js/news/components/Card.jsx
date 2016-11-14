@@ -6,14 +6,14 @@ import classnames from "classnames"
 export default class Card extends React.Component {
     render() {
         const { inActivityFeed } = this.props
-        const { guid, title, tags, isFeatured, featuredImage } = this.props.entity
+        const { guid, title, url, tags, isFeatured, featuredImage } = this.props.entity
 
         if (!inActivityFeed) {
             if (isFeatured && featuredImage) {
                 return (
                     <div className={isFeatured ? "col-sm-12 col-lg-8" : "col-sm-6 col-lg-4"}>
                         <div className="container-card-title">
-                            <Link to={"/news/" + guid} className={classnames({"card-tile ___small-card ___full-image ___featured": true, [getClassFromTags(tags)]: true})}>
+                            <Link to={url} className={classnames({"card-tile ___small-card ___full-image ___featured": true, [getClassFromTags(tags)]: true})}>
                                 <div className="card-tile__image" style={{backgroundImage: `url('${featuredImage}')`}}>
                                     <div className="card-tile__content">
                                         <div className="card-tile__content-justify">
@@ -46,7 +46,7 @@ export default class Card extends React.Component {
                 return (
                     <div className="col-sm-6 col-lg-4">
                         <div className="container-card-title">
-                            <Link to={"/news/" + guid} className={classnames({"card-tile ___small-card": true, "___no-image": (featuredImage ? false : true), [getClassFromTags(tags)]: true})}>
+                            <Link to={url} className={classnames({"card-tile ___small-card": true, "___no-image": (featuredImage ? false : true), [getClassFromTags(tags)]: true})}>
                                 {image}
                                 <div className="card-tile__content">
                                     <div className="card-tile__content-justify">
@@ -68,7 +68,7 @@ export default class Card extends React.Component {
             if (featuredImage) {
                 return (
                     <div className="card-tile-container">
-                        <Link to={`/news/${guid}`} className={classnames({"card-tile ___full-image ___small-card": true, "___no-image": (featuredImage ? false : true), [getClassFromTags(tags)]: true})}>
+                        <Link to={url} className={classnames({"card-tile ___full-image ___small-card": true, "___no-image": (featuredImage ? false : true), [getClassFromTags(tags)]: true})}>
                             <div className="card-tile__image" style={{backgroundImage: `url('${featuredImage}')`}}>
                                 <div className="card-tile__content">
                                     <h3 className="card-tile__title">
@@ -86,7 +86,7 @@ export default class Card extends React.Component {
             } else {
                 return (
                     <div className="card-tile-container">
-                        <Link to={`/news/${guid}`} className={classnames({"card-tile ___full-image ___small-card": true, "___no-image": (featuredImage ? false : true), [getClassFromTags(tags)]: true})}>
+                        <Link to={url} className={classnames({"card-tile ___full-image ___small-card": true, "___no-image": (featuredImage ? false : true), [getClassFromTags(tags)]: true})}>
                             <div className="card-tile__content">
                                 <h3 className="card-tile__title">
                                     {title}
