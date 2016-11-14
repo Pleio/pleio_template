@@ -6,6 +6,7 @@ import UsersOnline from "../core/containers/UsersOnline"
 import { sectorOptions, categoryOptions } from "../lib/filters"
 import TopicCard from "./containers/TopicCard"
 import Add from "../core/Add"
+import Document from "../core/components/Document"
 import { browserHistory } from "react-router"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
@@ -54,6 +55,7 @@ class Index extends React.Component {
 
         return (
             <div className="page-layout">
+                <Document title="Forum" />
                 <div className="lead ___forum">
                     <div style={{backgroundImage: "url(/mod/pleio_template/src/images/lead-forum.jpg)"}} className="lead__background"></div>
                     <div className="container">

@@ -89,8 +89,9 @@ const blogRoutes = {
 const questionsRoutes = {
     path: "/questions",
     component: Container,
-    indexRoute: { component: QuestionsList },
+    indexRoute: { component: QuestionsIndex },
     childRoutes: [
+        { path: "all", component: QuestionsList },
         { path: ":guid", component: QuestionsItem }
     ]
 }
