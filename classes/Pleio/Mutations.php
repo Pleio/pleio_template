@@ -614,4 +614,95 @@ class Mutations {
 
         throw new Exception("could_not_save");
     }
+
+    static function addPage($input) {
+        $entity = new ElggObject();
+        $entity->subtype = "page";
+        $entity->title = $input["title"];
+
+        $result = $entity->save();
+
+        if ($result) {
+            return [
+                "guid" => $entity->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
+    }
+
+    static function editPage($input) {
+        $entity = get_entity((int) $input["guid"]);
+        if (!$entity) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$entity->canEdit()) {
+            throw new Eception("could_not_save");
+        }
+
+        $entity->title = $input["title"];
+        $result = $entity->save();
+
+        if ($result) {
+            return [
+                "guid" => $entity->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
+    }
+
+    static function addWidget($input) {
+        $page = get_entity((int) $input["pageGuid"]);
+        if (!$page) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$page->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        $entity = new \ElggObject();
+        $entity->subtype = "page_widget";
+        $entity->title = $input["title"];
+        $entity->container_guid = $page->guid;
+        $entity->access_id = get_default_access();
+        $result = $entity->save();
+
+        $entity->widget_type = $input["type"];
+        $result &= $entity->save();
+
+        if ($result) {
+            return [
+                "guid" => $page->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
+    }
+
+    static function editWidget($input) {
+        $entity = get_entity((int) $input["guid"]);
+        if (!$entity) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$entity->canEdit()) {
+            throw new Eception("could_not_save");
+        }
+
+        $entity->title = $input["title"];
+        $entity->row = (int) $input["row"];
+        $entity->col = (int) $input["col"];
+        $result = $entity->save();
+
+        if ($result) {
+            return [
+                "guid" => $page->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
+    }
 }

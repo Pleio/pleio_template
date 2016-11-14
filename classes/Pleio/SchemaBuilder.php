@@ -3,6 +3,7 @@ namespace Pleio;
 
 use GraphQL\Type\Definition\EnumType;
 use GraphQL\Type\Definition\InterfaceType;
+use GraphQL\Type\Definition\InputObjectType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Schema;
@@ -22,6 +23,9 @@ class SchemaBuilder {
                 ],
                 "object" => [
                     "value" => "object"
+                ],
+                "page" => [
+                    "value" => "page"
                 ]
             ]
         ]);
@@ -36,14 +40,19 @@ class SchemaBuilder {
                     "type" => Type::int()
                 ]
             ],
-            "resolveType" => function($object) use (&$userType, &$objectType, &$groupType) {
+            "resolveType" => function($object) use (&$userType, &$objectType, &$groupType, &$pageType) {
                 switch ($object["type"]) {
                     case "user":
                         return $userType;
-                    case "object":
-                        return $objectType;
                     case "group":
                         return $groupType;
+                    case "object":
+                        switch ($object["subtype"]) {
+                            case "page":
+                                return $pageType;
+                            default:
+                                return $objectType;
+                        }
                 }
             }
         ]);
@@ -98,6 +107,67 @@ class SchemaBuilder {
                 ],
                 "value" => [
                     "type" => Type::string()
+                ]
+            ]
+        ]);
+
+        $widgetSetting = new ObjectType([
+            "name" => "WidgetSetting",
+            "fields" => [
+                "key" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "value" => [
+                    "type" => Type::string()
+                ]
+            ]
+        ]);
+
+        $widgetItem = new ObjectType([
+            "name" => "Widget",
+            "fields" => [
+                "guid" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "type" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "row" => [
+                    "type" => Type::nonNull(Type::int())
+                ],
+                "settings" => [
+                    "type" => Type::listOf($widgetSetting)
+                ]
+            ]
+        ]);
+
+        $pageType = new ObjectType([
+            "name" => "Page",
+            "interfaces" => [$entityInterface],
+            "fields" => [
+                "guid" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "status" => [
+                    "type" => Type::int()
+                ],
+                "canEdit" => [
+                    "type" => Type::nonNull(Type::boolean())
+                ],
+                "title" => [
+                    "type" => Type::string()
+                ],
+                "url" => [
+                    "type" => Type::string()
+                ],
+                "timeCreated" => [
+                    "type" => Type::string()
+                ],
+                "timeUpdated" => [
+                    "type" => Type::string()
+                ],
+                "widgets" => [
+                    "type" => Type::listOf($widgetItem)
                 ]
             ]
         ]);
@@ -838,6 +908,121 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::editEntity"
         ]);
 
+        $addPageMutation = Relay::mutationWithClientMutationId([
+            "name" => "addPage",
+            "inputFields" => [
+                "title" => [
+                    "type" => Type::string()
+                ],
+                "accessId" => [
+                    "type" => Type::int()
+                ],
+                "tags" => [
+                    "type" => Type::listOf(Type::string())
+                ]
+            ],
+            "outputFields" => [
+                "entity" => [
+                    "type" => $entityInterface,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::addPage"
+        ]);
+
+        $editPageMutation = Relay::mutationWithClientMutationId([
+            "name" => "editPage",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "title" => [
+                    "type" => Type::string()
+                ],
+                "accessId" => [
+                    "type" => Type::int()
+                ],
+                "tags" => [
+                    "type" => Type::listOf(Type::string())
+                ]
+            ],
+            "outputFields" => [
+                "entity" => [
+                    "type" => $entityInterface,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::addPage"
+        ]);
+
+        $widgetSettingInput = new InputObjectType([
+            "name" => "WidgetSettingInput",
+            "fields" => [
+                "key" => [
+                    "type" => Type::string()
+                ],
+                "value" => [
+                    "type" => Type::string()
+                ]
+            ]
+        ]);
+
+        $addWidgetMutation = Relay::mutationWithClientMutationId([
+            "name" => "addWidget",
+            "inputFields" => [
+                "pageGuid" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "type" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "settings" => [
+                    "type" => Type::listOf($widgetSettingInput)
+                ]
+            ],
+            "outputFields" => [
+                "entity" => [
+                    "type" => $entityInterface,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::addWidget"
+        ]);
+
+        $editWidgetMutation = Relay::mutationWithClientMutationId([
+            "name" => "editWidget",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "row" => [
+                    "type" => Type::nonNull(Type::int())
+                ],
+                "col" => [
+                    "type" => Type::nonNull(Type::int())
+                ],
+                "settings" => [
+                    "type" => Type::listOf($widgetSettingInput)
+                ]
+            ],
+            "outputFields" => [
+                "entity" => [
+                    "type" => $entityInterface,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::editWidget"
+        ]);
+
+
         $deleteEntityMutation = Relay::mutationWithClientMutationId([
             "name" => "deleteEntity",
             "inputFields" => [
@@ -1067,6 +1252,10 @@ class SchemaBuilder {
                     "addEntity" => $addEntityMutation,
                     "editEntity" => $editEntityMutation,
                     "deleteEntity" => $deleteEntityMutation,
+                    "addPage" => $addPageMutation,
+                    "editPage" => $editPageMutation,
+                    "addWidget" => $addWidgetMutation,
+                    "editWidget" => $editWidgetMutation,
                     "subscribeNewsletter" => $subscribeNewsletterMutation,
                     "editInterests" => $editInterestsMutation,
                     "editNotifications" => $editNotificationsMutation,

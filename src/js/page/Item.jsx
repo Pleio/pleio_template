@@ -6,28 +6,57 @@ import CommentList from "../core/components/CommentList"
 import EditModal from "../core/Edit"
 import DeleteModal from "../core/Delete"
 import { showModal } from "../lib/actions"
-import AddComment from "../core/containers/AddComment"
-import SocialShare from "../core/components/SocialShare"
 import Bookmark from "../bookmarks/components/Bookmark"
 import NotFound from "../core/NotFound"
 import showDate from "../lib/showDate"
 import RichTextView from "../core/components/RichTextView"
 import Document from "../core/components/Document"
+import AddWidgetModal from "./components/AddWidgetModal"
+import Widget from "./components/Widget"
 
 class Item extends React.Component {
     constructor(props) {
         super(props)
 
-        this.onEdit = () => this.props.dispatch(showModal("edit"))
-        this.onDelete = () => this.props.dispatch(showModal("delete"))
-        this.toggleAddComment = () => this.setState({showAddComment: !this.state.showAddComment})
-        this.closeAddComment = () => this.setState({showAddComment: false})
+        this.onAddWidget = () => this.props.dispatch(showModal("addWidget"))
+        this.onAddRow = this.onAddRow.bind(this)
 
         this.state = {
-            showAddComment: false
+            rows: this.processRows(this.props.data.entity)
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            rows: this.processRows(nextProps.data.entity)
+        })
+    }
+
+    onAddRow() {
+        const length = Object.keys(this.state.rows).length
+        this.setState({
+            rows: Object.assign({}, this.state.rows, {
+                [length+1]: []
+            })
+        })
+    }
+
+    processRows(entity) {
+        if (!entity) {
+            return []
+        }
+
+        let entitiesByRow = {}
+        entity.widgets.forEach((widget) => {
+            if (entitiesByRow[widget.row]) {
+                entitiesByRow[widget.row].push(widget)
+            } else {
+                entitiesByRow[widget.row] = [widget]
+            }
+        })
+
+        return entitiesByRow
+    }
 
     render() {
         let { entity, viewer } = this.props.data
@@ -45,104 +74,55 @@ class Item extends React.Component {
             )
         }
 
-        let edit = ""
+        let add
         if (entity.canEdit) {
-            edit = (
-                <div className="button__text article-action ___edit-post" onClick={this.onEdit}>
-                    Bewerken
-                </div>
-            );
-        }
-
-        let featuredImage = ""
-        if (entity.featuredImage) {
-            featuredImage = (
-                <div style={{backgroundImage: "url(" + entity.featuredImage + ")"}} className="lead ___content">
-                    <div className="lead__justify">
-                    <div className="container">
-                    </div>
+            add = (
+                <div className="widget__add">
+                    <div className="button ___large ___add" onClick={this.onAddWidget}>
+                        <span>Widget toevoegen</span>
                     </div>
                 </div>
             )
         }
 
-        let actions
-        if (viewer.loggedIn) {
-            actions = (
-                <div className="article-actions__buttons">
-                    <div className="article-actions__justify">
-                        {edit}
-                    </div>
+        const rows = Object.keys(this.state.rows).map((row, i) => {
+            const content = this.state.rows[row].map((widget, j) => (
+                <Widget key={j} entity={widget} />
+            ))
+
+            return (
+                <div key={i} className="row">
+                    {content}
                 </div>
             )
-        }
+        })
 
         return (
             <div>
-                {featuredImage}
-                <section className="section">
-                    <Document title={entity.title} />
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-                                <article className="article">
-                                    <h3 className="article__title">{entity.title}</h3>
-                                    <RichTextView richValue={entity.richDescription} value={entity.description} />
-                                    <div className="article-actions">
-                                        {actions}
-                                    </div>
-                                </article>
-                                <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["NewsItem"]} />
-                                <CommentList comments={entity.comments} />
-                                <EditModal title="Pagina wijzigen" entity={entity} subtype="news" featuredImage={true} />
-                                <DeleteModal title="Pagina verwijderen" entity={entity} subtype="news" refetchQueries={["InfiniteList"]} />
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <Document title={entity.title} />
+                    {add}
+                    {rows}
+                <AddWidgetModal entity={entity} />
             </div>
         )
     }
 }
 
-const QUERY = gql`
-    query NewsItem($guid: String!) {
-        viewer {
-            guid
-            loggedIn
-            user {
-                guid
-                name
-                icon
-                url
-            }
-        }
+const Query = gql`
+    query PageItem($guid: String!) {
         entity(guid: $guid) {
             guid
             status
-            ... on Object {
+            ... on Page {
                 title
-                description
-                richDescription
-                accessId
-                timeCreated
-                source
-                isFeatured
-                featuredImage
                 canEdit
-                tags
-                isBookmarked
-                canBookmark
-                comments {
+                widgets {
                     guid
-                    description
-                    timeCreated
-                    canEdit
-                    owner {
-                        guid
-                        name
-                        icon
-                        url
+                    type
+                    row
+                    settings {
+                        key
+                        value
                     }
                 }
             }
@@ -150,7 +130,7 @@ const QUERY = gql`
     }
 `;
 
-export default connect()(graphql(QUERY, {
+export default connect()(graphql(Query, {
     options: (ownProps) => {
         return {
             variables: {

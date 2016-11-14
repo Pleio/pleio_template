@@ -257,45 +257,20 @@ class Resolver {
         }
 
         if ($entity instanceof \ElggUser) {
-            return [
-                "guid" => $entity->guid,
-                "ownerGuid" => $entity->owner_guid,
-                "status" => 200,
-                "type" => $entity->type,
-                "username" => $entity->username,
-                "name" => $entity->name,
-                "url" => Helpers::getURL($entity),
-                "icon" => $entity->getIconURL("large"),
-                "timeCreated" => $entity->time_created,
-                "timeUpdated" => $entity->time_updated,
-                "canEdit" => $entity->canEdit(),
-                "tags" => Helpers::renderTags($entity->tags)
-            ];
+            return Mapper::getUser($entity);
         }
 
         if ($entity instanceof \ElggObject) {
             Helpers::addView($entity);
 
-            return [
-                "guid" => $guid,
-                "ownerGuid" => $entity->owner_guid,
-                "status" => 200,
-                "type" => $entity->type,
-                "subtype" => $entity->getSubtype(),
-                "source" => $entity->source,
-                "isFeatured" => $entity->isFeatured ? true : false,
-                "featuredImage" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
-                "title" => $entity->title,
-                "url" => Helpers::getURL($entity),
-                "description" => $entity->description,
-                "richDescription" => $entity->richDescription,
-                "excerpt" => elgg_get_excerpt($entity->description),
-                "timeCreated" => date("c", $entity->time_created),
-                "timeUpdated" => date("c", $entity->time_updated),
-                "canEdit" => $entity->canEdit(),
-                "accessId" => $entity->access_id,
-                "tags" => Helpers::renderTags($entity->tags)
-            ];
+            $subtype = $entity->getSubtype();
+            switch ($subtype) {
+                case "page":
+                    $return = Mapper::getPage($entity);
+                    return Mapper::getPage($entity);
+                default:
+                    return Mapper::getObject($entity);
+            }
         }
     }
 
@@ -335,6 +310,21 @@ class Resolver {
         }
 
         return $comments;
+    }
+
+    static function getWidgets($entity) {
+        $options = array(
+            "type" => "object",
+            "subtype" => "page_widget",
+            "container_guid" => (int) $entity->guid
+        );
+
+        $widgets = [];
+        foreach (elgg_get_entities($options) as $widget) {
+            $widgets[] = Mapper::getWidget($widget);
+        }
+
+        return $widgets;
     }
 
     static function getUser($guid) {

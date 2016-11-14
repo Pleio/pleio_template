@@ -18,16 +18,9 @@ export default class Card extends React.Component {
         return (
             <div className="card-blog-post">
                 <div className="card-blog-post__post">
-
-                    {featured}
-
                     <Link to={url} className="card-blog-post__title">
                         {title}
                     </Link>
-
-                    <div className="card-blog-post__content">
-                        {excerpt}
-                    </div>
                 </div>
             </div>
         )

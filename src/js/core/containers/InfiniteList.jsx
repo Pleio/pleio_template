@@ -9,6 +9,12 @@ const Query = gql`
             total
             entities {
                 guid
+                ... on Page {
+                    guid
+                    title
+                    url
+                    timeCreated
+                }
                 ... on Object {
                     guid
                     title
