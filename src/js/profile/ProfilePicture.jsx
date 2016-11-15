@@ -4,7 +4,7 @@ import Form from "../core/components/Form"
 import { graphql } from "react-apollo"
 import { connect } from "react-redux"
 import gql from "graphql-tag"
-//import Cropper from "react-cropper"
+import Cropper from "react-cropper"
 
 class ProfilePicture extends React.Component {
     constructor(props) {
@@ -64,10 +64,14 @@ class ProfilePicture extends React.Component {
 
     onSubmit(e) {
         e.preventDefault()
-        const croppedCanvas = this.cropper.getCroppedCanvas()
 
         const callback = (blob) => {
-            let file = new File([blob], "avatar.png");
+            let file
+            if (blob) {
+                file = new File([blob], "avatar.png");
+            } else {
+                file = null
+            }
 
             this.props.mutate({
                 variables: {
@@ -86,12 +90,17 @@ class ProfilePicture extends React.Component {
             })
         }
 
-
-        if (typeof croppedCanvas.msToBlob === "function") {
-            let blob = croppedCanvas.msToBlob()
-            callback(blob)
+        if (this.cropper) {
+            const croppedCanvas = this.cropper.getCroppedCanvas()
+            if (typeof croppedCanvas.msToBlob === "function") {
+                let blob = croppedCanvas.msToBlob()
+                callback(blob)
+            } else {
+                croppedCanvas.toBlob(callback)
+            }
         } else {
-            croppedCanvas.toBlob(callback)
+            // no picture selected
+            callback(null)
         }
     }
 
@@ -137,10 +146,10 @@ class ProfilePicture extends React.Component {
                                 </div>
                             </label>
                             <div className="edit-picture__previews">
-                                <div className="edit-picture__preview">
+                                <div className="edit-picture__preview" style={{background: "url(/mod/pleio_template/src/images/user.png) center center / cover no-repeat"}}>
                                     {largeCroppedImage}
                                 </div>
-                                <div className="edit-picture__preview ___small">
+                                <div className="edit-picture__preview ___small" style={{background: "url(/mod/pleio_template/src/images/user.png) center center / cover no-repeat"}}>
                                     {smallCroppedImage}
                                 </div>
                             </div>

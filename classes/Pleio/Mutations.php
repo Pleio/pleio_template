@@ -585,9 +585,13 @@ class Mutations {
             throw new Exception("could_not_save");
         }
 
-        Helpers::saveToIcon($input["avatar"], $entity);
+        if ($input["avatar"]) {
+            Helpers::saveToIcon($input["avatar"], $entity);
+            $entity->icontime = time();
+        } else {
+            unset($entity->icontime);
+        }
 
-        $entity->icontime = time();
         $result = $entity->save();
         if ($result) {
             return [

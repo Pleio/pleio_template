@@ -33,6 +33,9 @@ function pleio_template_init() {
     elgg_register_page_handler("graphql", "pleio_template_graphql");
     elgg_register_page_handler("upload", "pleio_template_upload");
 
+    elgg_unregister_plugin_hook_handler("entity:icon:url", "user", "profile_override_avatar_url");
+    elgg_register_plugin_hook_handler("entity:icon:url", "user", "pleio_template_user_icon_url");
+
     if (!isset($_COOKIE["CSRF_TOKEN"])) {
         $token = md5(openssl_random_pseudo_bytes(32));
         $domain = ini_get("session.cookie_domain");
@@ -62,6 +65,46 @@ function pleio_template_container_permissions_check_hook($hook, $type, $return_v
 
     // only allow admins to create pages and news
     return $user->isAdmin();
+}
+
+function pleio_template_user_icon_url($hook, $type, $return_value, $params) {
+    // if someone already set this, quit
+    if ($return_value) {
+        return null;
+    }
+
+    $user = $params['entity'];
+    $size = $params['size'];
+
+    if (!elgg_instanceof($user, 'user')) {
+        return null;
+    }
+
+    $user_guid = $user->getGUID();
+    $icon_time = $user->icontime;
+
+    if (!$icon_time) {
+        return "/mod/pleio_template/src/images/user.png";
+    }
+
+    if ($user->isBanned()) {
+        return null;
+    }
+
+    $filehandler = new ElggFile();
+    $filehandler->owner_guid = $user_guid;
+    $filehandler->setFilename("profile/{$user_guid}{$size}.jpg");
+
+    try {
+        if ($filehandler->exists()) {
+            $join_date = $user->getTimeCreated();
+            return "mod/profile/icondirect.php?lastcache=$icon_time&joindate=$join_date&guid=$user_guid&size=$size";
+        }
+    } catch (InvalidParameterException $e) {
+        return "/mod/pleio_template/src/images/user.png";
+    }
+
+    return null;
 }
 
 function pleio_template_page_handler($page) {
