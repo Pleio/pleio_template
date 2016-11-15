@@ -5,10 +5,8 @@ import Validator from "validatorjs"
 class InputField extends React.Component {
     constructor(props) {
         super(props)
-
-        this.onInput = this.onInput.bind(this)
         this.onChange = this.onChange.bind(this)
-
+        this.forceUpdate = this.forceUpdate.bind(this)
         this.state = {
             value: this.props.value || ""
         }
@@ -34,14 +32,6 @@ class InputField extends React.Component {
         }
     }
 
-    onInput(e) {
-        if (!this.props.name === "username" && !this.props.name === "password") {
-            return
-        }
-
-        this.onChange(e)
-    }
-
     onChange(e) {
         this.setState({
             value: e.target.value
@@ -61,6 +51,12 @@ class InputField extends React.Component {
         return true
     }
 
+    forceUpdate() {
+        this.setState({
+            value: this.refs.field.value
+        })
+    }
+
     getValue() {
         return this.state.value
     }
@@ -74,12 +70,12 @@ class InputField extends React.Component {
     render() {
         return (
             <input
+                ref="field"
                 name={this.props.name}
                 type={this.props.type}
                 className={this.props.className}
                 placeholder={this.props.placeholder}
                 onChange={this.onChange}
-                onInput={this.onInput}
                 value={this.state.value}
             />
         )

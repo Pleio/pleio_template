@@ -34,8 +34,6 @@ class Login extends React.Component {
     }
 
     onSubmit(e) {
-        e.preventDefault()
-
         this.setState({
             errors: null
         })

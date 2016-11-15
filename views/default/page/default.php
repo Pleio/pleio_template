@@ -25,6 +25,7 @@ $store = elgg_extract("store", $vars);
             window.__STORE__ = <?php echo json_encode($store); ?>;
         </script>
     <?php endif; ?>
+    <script src="/mod/pleio_template/build/vendor.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
     <script src="/mod/pleio_template/build/web.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
 </body>
 </html>

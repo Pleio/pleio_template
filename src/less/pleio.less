@@ -1,14 +1,6 @@
 @import "draft-style";
 @import "cropper";
 
-html, body {
-    overflow-y: initial;
-}
-
-.modal__open {
-    overflow: hidden;
-}
-
 .navigation__action.___bookmarks {
     display: block;
 }
@@ -89,9 +81,9 @@ figure {
     user-select: none;
 }
 
-html,
-body {
-    overflow-y: initial;
+body.modal__open {
+    position: fixed;
+    overflow: hidden;
 }
 
 .messages {

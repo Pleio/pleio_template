@@ -7,6 +7,7 @@ import Modal from "../../core/components/Modal"
 import Form from "../../core/components/Form"
 import Errors from "../../core/components/Errors"
 import SelectField from "../../core/components/SelectField"
+import TextSettings from "./widgets/TextSettings"
 
 const widgetOptions = {
     "Leader": "Volledige afbeelding",
@@ -34,7 +35,7 @@ class AddWidgetModal extends React.Component {
             errors: []
         })
 
-        let values = this.refs.form.getValues()
+        const values = this.refs.form.getValues()
 
         this.props.mutate({
             variables: {
@@ -42,7 +43,6 @@ class AddWidgetModal extends React.Component {
                     clientMutationId: 1,
                     pageGuid: this.props.entity.guid,
                     type: values.type,
-                    title: values.title,
                     settings: []
                 }
             }
@@ -62,7 +62,7 @@ class AddWidgetModal extends React.Component {
                 <Form ref="form" onSubmit={this.onSubmit}>
                     <SelectField label="Type" name="type" className="form__input" options={widgetOptions} rules="required" />
                     <div className="buttons">
-                        <button className="button" type="submit">
+                        <button className="button" onClick={this.onSubmit}>
                             Toevoegen
                         </button>
                     </div>

@@ -11,9 +11,6 @@ function pleio_template_autoloader($class) {
 define("PLEIO_TEMPLATE_LESS", dirname(__FILE__) . "/src/less/");
 
 function pleio_template_init() {
-    elgg_register_css("pleio_template", "/css/pleio_template.css");
-    elgg_register_js("pleio_template", "/mod/pleio_template/build/all.js");
-
     elgg_register_plugin_hook_handler("index", "system", "pleio_template_index_handler");
     elgg_register_plugin_hook_handler("container_permissions_check", "object", "pleio_template_container_permissions_check_hook");
 

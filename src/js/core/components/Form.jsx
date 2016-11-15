@@ -64,9 +64,19 @@ class Form extends React.Component {
         })
 
         if (this.isValid()) {
-            if (this.props.onSubmit) {
-                this.props.onSubmit(e);
-            }
+            // trigger onChange event on every input to work around browser bugs
+            // dispatching different events for auto-fill and so on...
+            Object.keys(this.inputs).forEach((name) => {
+                if (this.inputs[name].forceUpdate) {
+                    this.inputs[name].forceUpdate()
+                }
+            })
+
+            setTimeout(() => {
+                if (this.props.onSubmit) {
+                    this.props.onSubmit(e);
+                }
+            }, 10)
 
             this.setState({
                 validationStarted: false
