@@ -66,7 +66,7 @@ class ModalWithSlides extends React.Component {
             <div id={this.props.id} tabIndex="0" className={classnames({"modal":true, "___blue":this.props.isBlue, "___small": this.props.small, "___is-open": this.props.modal == this.props.id || this.props.noParent})}>
                 <div className="modal__close" onClick={this.onClose}></div>
                 <div data-modal-slides={numberSlides} className={classnames({"modal__wrapper":true, "___slide-2":this.state.slide === 2})}>
-                    <div className="modal__background"></div>
+                    <div className="modal__background" onClick={this.onClose}></div>
                     {children}
                 </div>
             </div>

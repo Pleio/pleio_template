@@ -39,7 +39,7 @@ class Modal extends React.Component {
             modal = (
                 <div className="modal__wrapper">
                     <div className="modal__close" onClick={this.onClose} />
-                    <div className="modal__background" />
+                    <div className="modal__background" onClick={this.onClose} />
                     <div className="modal__box">
                         <h3 className="modal__title">
                             {this.props.title}
@@ -66,7 +66,7 @@ class Modal extends React.Component {
         } else {
             modal = (
                 <div className="modal__wrapper">
-                    <div className="modal__background" />
+                    <div className="modal__background" onClick={this.onClose} />
                     <div className="modal__box">
                         <div className="modal__close" onClick={this.onClose} />
                         <h3 className="modal__title">
