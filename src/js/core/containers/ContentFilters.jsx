@@ -43,12 +43,12 @@ export default class ContentFilters extends React.Component {
         let sectorClass, categoryClass
         switch (this.props.page) {
             case "activity":
-                sectorClass = "selector ___margin-top ___margin-bottom ___margin-bottom-mobile"
-                categoryClass = "selector ___margin-top ___margin-bottom ___no-margin-top-mobile"
+                sectorClass = "selector ___margin-top ___margin-bottom ___margin-bottom-mobile ___filter"
+                categoryClass = "selector ___margin-top ___margin-bottom ___no-margin-top-mobile ___filter"
                 break
             default:
-                sectorClass = "selector ___margin-bottom-mobile"
-                categoryClass = "selector"
+                sectorClass = "selector ___margin-bottom-mobile ___filter"
+                categoryClass = "selector ___filter"
                 break
         }
 

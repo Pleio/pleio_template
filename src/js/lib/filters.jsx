@@ -13,6 +13,6 @@ export const categoryOptions = {
     "Arbeidsvoorwaarden": "Arbeidsvoorwaarden",
     "Blijven leren": "Blijven leren",
     "Actualiteit": "Actualiteit",
-    "Vernieuwing": "Vernieuwing",
+    "Onderwijsvernieuwing": "Onderwijsvernieuwing",
     "Overig": "Overig"
 }

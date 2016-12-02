@@ -66,14 +66,14 @@ class Lead extends React.Component {
                             {this.props.subtitle}
                         </h2>
                         <div className="buttons ___margin-top ___gutter ___center">
-                            <div className="button ___large" onClick={this.openRegister}>
-                                Aan de slag
-                            </div>
                             <Link to='/campagne'>
                                 <div className="button ___large">
                                     Over Leraar.nl
                                 </div>
                             </Link>
+                            <div className="button ___large" onClick={this.openRegister}>
+                                Aan de slag
+                            </div>
                         </div>
                     </div>
                 </div>

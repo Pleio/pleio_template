@@ -12,6 +12,19 @@
         background-color: @color-tertiary--light;
     }
 
+    &.___is-uploaded {
+        cursor: move; /* fallback if grab cursor is unsupported */
+        cursor: grab;
+        cursor: -moz-grab;
+        cursor: -webkit-grab;
+
+        &:active {
+            cursor: grabbing;
+            cursor: -moz-grabbing;
+            cursor: -webkit-grabbing;
+        }
+    }
+
     @media ( max-width: @screen-xs-max ) {
         height: 13rem;
     }

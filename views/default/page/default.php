@@ -19,7 +19,7 @@ $store = elgg_extract("store", $vars);
     <link href="/mod/pleio_template/build/web.css?v=<?php echo $CONFIG->lastcache; ?>" rel="stylesheet" type="text/css">
 </head>
 <body class="___leraar">
-    <div id="react-root" class="page-layout"><?php echo elgg_extract('body', $vars, ''); ?></div>
+    <div id="react-root"><?php echo elgg_extract('body', $vars, ''); ?></div>
     <?php if ($store): ?>
         <script>
             window.__STORE__ = <?php echo json_encode($store); ?>;

@@ -15,13 +15,23 @@ This file contains the styling for the main navigation.
     opacity: 0;
     transition: all @trans-normal;
     background-color: rgba(0, 0, 0, 0.15);
-    z-index: 8;
+    z-index: 10;
 
     @media (max-width: @screen-md-max) {
         body.mobile-nav-open & {
             visibility: visible;
             opacity: 1;
         }
+    }
+}
+
+.navigation {
+    body.___leraar.___campagne & {
+        position: absolute;
+    }
+
+    body.___leraar:not(.___campagne) & {
+        background-color: @color-primary;
     }
 }
 
@@ -44,7 +54,6 @@ This file contains the styling for the main navigation.
         background-color: @color-white;
         transform: translate(-100%, 0);
         transition: transform @trans-normal, box-shadow @trans-normal;
-        z-index: 9;
 
         body.mobile-nav-open & {
             transform: translate(0, 0);
@@ -159,7 +168,7 @@ This file contains the styling for the main navigation.
         &:hover {
             color: @color-grey;
         }
-        .___absolute & {
+        body.___campagne & {
             color: @color-white;
             &:hover {
                 color: @color-grey;
@@ -226,7 +235,7 @@ This file contains the styling for the main navigation.
                 color: @color-secondary--light;
                 margin: 0 0.5rem;
 
-                .navigation.___absolute & {
+                body.___campagne & {
                     color: white;
                 }
             }
@@ -257,22 +266,22 @@ body.___leraar {
     }
 
     .navigation {
-        position: relative;
+        position: fixed;
+        top: 0;
+        width: 100%;
         user-select: none;
-        &:not(.___absolute) {
-            background-color: @color-primary;
-        }
-        &.___absolute {
-            position: absolute;
-            z-index: 9;
-            width: 100%;
-        }
+        z-index: 11;
+
         @media (max-width: @screen-md-max) {
             > .container {
                 padding-left: 1rem;
                 padding-right: 1rem;
             }
         }
+    }
+
+    .navigation__wrapper {
+        z-index: 1;
     }
 
     .navigation__links {

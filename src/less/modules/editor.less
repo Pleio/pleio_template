@@ -1,11 +1,23 @@
 .editor {
     border: 1px solid @color-grey--50;
+
+    &.___is-sticky {
+        padding-top: 4.6rem;
+    }
 }
 
 .editor__toolbar {
     display: flex; align-items: center;
     flex-wrap: wrap;
+    background-color: white;
     border-bottom: 1px solid @color-grey--50;
+    z-index: 1;
+
+    .editor.___is-sticky & {
+        position: absolute;
+        width: 64.6rem;
+        max-width: ~"calc(100% - 4rem - 2px)";
+    }
 }
 
 .editor__tool-group {
@@ -232,4 +244,8 @@
 
 .editor__actions {
     padding: 2rem;
+}
+
+.editor__input {
+    cursor: text;
 }
