@@ -54,7 +54,7 @@ class Index extends React.Component {
         }
 
         return (
-            <div className="page-layout">
+            <div className="page-container">
                 <Document title="Forum" />
                 <div className="lead ___forum">
                     <div style={{backgroundImage: "url(/mod/pleio_template/src/images/lead-forum.jpg)"}} className="lead__background"></div>

@@ -19,7 +19,7 @@ export default class List extends React.Component {
 
     render() {
         return (
-            <div className="page-layout">
+            <div className="page-container">
                 <Document title={this.props.params.tag} />
                 <section className="section">
                     <div className="container">

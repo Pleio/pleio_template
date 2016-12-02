@@ -26,7 +26,7 @@ class Profile extends React.Component {
         if (!entity) {
             // Loading...
             return (
-                <div className="page-layout"></div>
+                <div className="page-container"></div>
             )
         }
 
@@ -51,7 +51,7 @@ class Profile extends React.Component {
             }
         })
 
-        const contactData = ['phone', 'mobile', 'emailaddress', 'site'].map((key, i) => (
+        const contactData = ['emailaddress', 'site', 'phone', 'mobile'].map((key, i) => (
             <ProfileField key={i} entity={entity} canEdit={entity.canEdit} dataKey={key} name={profileByKey[key].name} value={profileByKey[key].value} />
         ))
 

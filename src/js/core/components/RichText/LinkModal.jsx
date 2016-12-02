@@ -7,15 +7,22 @@ export default class LinkModal extends React.Component {
 
         this.state = {
             isOpen: false,
-            url: "",
+            url: "http://",
             isTargetBlank: false
         }
 
-        this.toggle = () => this.setState({ isOpen: !this.state.isOpen })
         this.changeUrl = (e) => this.setState({ url: e.target.value })
         this.changeTarget = (e) => this.setState({ isTargetBlank: !this.state.isTargetBlank })
         this.onKeyPress = this.onKeyPress.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
+        this.toggle = this.toggle.bind(this)
+    }
+
+    toggle() {
+        this.setState({ isOpen: !this.state.isOpen })
+        setTimeout(() => {
+            this.refs.url.focus()
+        }, 100)
     }
 
     onKeyPress(e) {
@@ -32,7 +39,7 @@ export default class LinkModal extends React.Component {
         this.toggle()
 
         this.setState({
-            url: "",
+            url: "http://",
             isTargetBlank: false
         })
 
@@ -53,7 +60,7 @@ export default class LinkModal extends React.Component {
                         </h3>
                         <div className="form">
                             <label className="form__item">
-                                <input type="text" name="url" placeholder="Url" onKeyPress={this.onKeyPress} onChange={this.changeUrl} value={this.state.url} />
+                                <input ref="url" type="text" name="url" placeholder="Url" onKeyPress={this.onKeyPress} onChange={this.changeUrl} value={this.state.url} />
                             </label>
                             <div className="checkbox" onClick={this.changeTarget}>
                                 <input readOnly name="condition-hyperlink" type="checkbox" checked={this.state.isTargetBlank} />

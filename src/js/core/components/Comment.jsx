@@ -25,11 +25,12 @@ export default class Comment extends React.Component {
             )
         }
 
-        if (entity.canVote) {
+        // disable voting for now
+        /*if (entity.canVote) {
             vote = (
                 <CommentVote entity={entity} />
             )
-        }
+        }*/
 
         if (this.state.editing) {
             return (

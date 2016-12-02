@@ -24,7 +24,7 @@ class List extends React.Component {
 
     render() {
         return (
-            <div className="page-layout">
+            <div className="page-container">
                 <Document title="Pagina's" />
                 <ContentHeader>
                     <h3 className="main__title">

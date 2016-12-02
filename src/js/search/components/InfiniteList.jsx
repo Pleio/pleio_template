@@ -103,7 +103,7 @@ class InfiniteList extends React.Component {
 
 
         return (
-            <div className="page-layout">
+            <div className="page-container">
                 <Header q={this.props.q} type={this.props.type} subtype={this.props.subtype} totals={totals} />
                 <section className="section ___grey ___grow">
                     <div className="container">

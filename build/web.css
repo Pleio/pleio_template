@@ -11380,6 +11380,9 @@ body.modal__open {
   margin: 50px;
   padding: 10px;
 }
+.page-container {
+  height: 100vh;
+}
 #__bs_notify__ {
   opacity: .15 !important;
   pointer-events: none;

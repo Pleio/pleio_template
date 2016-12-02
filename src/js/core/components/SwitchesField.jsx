@@ -79,8 +79,18 @@ class SwitchesField extends React.Component {
             )
         })
 
+        let label
+        if (this.props.label) {
+            label = (
+                <div className="form__label">{this.props.label}</div>
+            )
+        }
+
         return (
-            <div className="form__item">{switches}</div>
+            <div className="form__item">
+                {label}
+                {switches}
+            </div>
         )
     }
 }

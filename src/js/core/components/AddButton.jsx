@@ -8,9 +8,11 @@ export default class AddButton extends React.Component {
             )
         }
 
+        const title = this.props.title ? this.props.title : "Voeg toe"
+
         return (
             <div className="col-sm-4 col-lg-3 col-lg-offset-3 end-lg">
-                <div className="button ___large ___add" onClick={this.props.onClick}><span>Voeg toe</span></div>
+                <div className="button ___large ___add" onClick={this.props.onClick}><span>{title}</span></div>
             </div>
         )
     }

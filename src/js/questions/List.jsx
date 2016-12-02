@@ -23,7 +23,7 @@ class List extends React.Component {
 
     render() {
         return (
-            <div className="page-layout">
+            <div className="page-container">
                 <Document title="Forum" />
                 <ContentHeader>
                     <h3 className="main__title">

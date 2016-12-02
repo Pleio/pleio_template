@@ -26,14 +26,14 @@ class List extends React.Component {
 
     render() {
         return (
-            <div className="page-layout">
+            <div className="page-container">
                 <Document title="Blog" />
                 <ContentHeader>
                     <h3 className="main__title">
                         Blog
                     </h3>
                     <ContentFilters page="blog" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags}>
-                        <AddButton subtype="blog" onClick={this.onClickAdd} />
+                        <AddButton title="Schrijf een verhaal" subtype="blog" onClick={this.onClickAdd} />
                     </ContentFilters>
                 </ContentHeader>
                 <section className="section ___grey ___grow">
@@ -49,7 +49,7 @@ class List extends React.Component {
                         </div>
                     </div>
                 </section>
-                <Add title="Blog toevoegen" subtype="blog" featuredImage={true} refetchQueries={["InfiniteList"]} />
+                <Add title="Schrijf een verhaal" subtype="blog" featuredImage={true} refetchQueries={["InfiniteList"]} />
             </div>
         )
     }

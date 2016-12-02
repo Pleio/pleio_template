@@ -112,8 +112,16 @@ class TagsField extends React.Component {
             </div>
         ))
 
+        let label
+        if (this.props.label) {
+            label = (
+                <label className="form__label">{this.props.label}</label>
+            )
+        }
+
         return (
             <div>
+                {label}
                 <div className={classnames({"autosuggest": true, "___is-visible": (hits.size > 0)})}>
                     <input
                         ref="input"

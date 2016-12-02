@@ -116,10 +116,10 @@ class AddModal extends React.Component {
                             {extraFields}
                             <SelectField label="Categorie" name="category" className="form__input" options={categoryOptions} rules="required" />
                             <SelectField label="Onderwijssector" name="sector" className="form__input" options={sectorOptions} rules="required" />
-                            <TagsField name="tags" type="text" className="form__input" />
-                            <div className="buttons">
+                            <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" />
+                            <div className="buttons ___end ___margin-top">
                                 <button className="button" type="submit">
-                                    Toevoegen
+                                    Publiceer
                                 </button>
                             </div>
                         </div>
