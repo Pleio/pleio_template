@@ -54,6 +54,23 @@ export function getValueFromTags(inputTags, possibleOptions) {
     return value
 }
 
+export function getValuesFromTags(inputTags, possibleOptions) {
+    if (!inputTags) {
+        return []
+    }
+
+    const options = new Set(possibleOptions)
+
+    let value = []
+    inputTags.forEach((tag) => {
+        if (options.contains(tag)) {
+            value.push(tag)
+        }
+    })
+
+    return value
+}
+
 export function displayTags(tags) {
     return tags.join(", ")
 }

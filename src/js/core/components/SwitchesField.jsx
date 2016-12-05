@@ -2,6 +2,7 @@ import React from "react"
 import classnames from "classnames"
 import Validator from "validatorjs"
 import Switch from "./Switch"
+import { Set } from "immutable"
 
 class SwitchesField extends React.Component {
     constructor(props) {
@@ -15,7 +16,7 @@ class SwitchesField extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.values !== this.props.values) {
+        if (!(new Set(nextProps.values).equals(new Set(this.props.values)))) {
             this.setState({
                 checked: nextProps.values || []
             })

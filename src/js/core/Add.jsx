@@ -13,6 +13,7 @@ import InputField from "./components/InputField"
 import TagsField from "./components/TagsField"
 import FeaturedImageField from "./components/FeaturedImageField"
 import SwitchField from "./components/SwitchField"
+import SwitchesField from "./components/SwitchesField"
 import SelectField from "./components/SelectField"
 import { sectorOptions, categoryOptions } from "../lib/filters"
 import { convertToRaw } from "draft-js"
@@ -46,7 +47,7 @@ class AddModal extends React.Component {
             description: values.description.getPlainText(),
             richDescription: JSON.stringify(convertToRaw(values.description)),
             featuredImage: values.featuredImage,
-            tags: new Set().merge([values.category]).merge([values.sector]).merge(values.tags).toJS()
+            tags: new Set().merge([values.category]).merge(values.sector).merge(values.tags).toJS()
         }
 
         switch (this.props.subtype) {
@@ -115,7 +116,7 @@ class AddModal extends React.Component {
                             <RichTextField name="description" placeholder="Beschrijving" rules="required" />
                             {extraFields}
                             <SelectField label="Categorie" name="category" className="form__input" options={categoryOptions} rules="required" />
-                            <SelectField label="Onderwijssector" name="sector" className="form__input" options={sectorOptions} rules="required" />
+                            <SwitchesField label="Onderwijssector" name="sector" className="form__input" options={sectorOptions} rules="required" />
                             <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" />
                             <div className="buttons ___end ___margin-top">
                                 <button className="button" type="submit">
