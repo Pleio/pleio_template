@@ -11,7 +11,7 @@ import AtomicBlock from "./RichText/AtomicBlock"
 import IntroBlock from "./RichText/IntroBlock"
 
 import LinkModal from "./RichText/LinkModal"
-import ImageModal from "./RichText/ImageModal"
+import MediaModal from "./RichText/MediaModal"
 
 function findLinkEntities(contentBlock, callback) {
     contentBlock.findEntityRanges(
@@ -88,7 +88,7 @@ class RichTextField extends React.Component {
         this.blockRendererFn = this.blockRendererFn.bind(this)
 
         this.submitLink = this.submitLink.bind(this)
-        this.submitImage = this.submitImage.bind(this)
+        this.submitMedia = this.submitMedia.bind(this)
 
         this.isValid = this.isValid.bind(this)
         this.getValue = this.getValue.bind(this)
@@ -231,20 +231,34 @@ class RichTextField extends React.Component {
 
     submitLink(url, isTargetBlank) {
         const { editorState } = this.state
-        const contentState = Modifier.applyEntity(
-            editorState.getCurrentContent(),
-            editorState.getSelection(),
-            Entity.create("LINK", "MUTABLE", {
+
+        const entity = Entity.create("LINK", "MUTABLE", {
+            url,
+            target: isTargetBlank ? "_blank" : null
+        })
+
+        let contentState
+        if (editorState.getSelection().getAnchorOffset() === editorState.getSelection().getFocusOffset()) {
+            contentState = Modifier.insertText(
+                editorState.getCurrentContent(),
+                editorState.getSelection(),
                 url,
-                target: isTargetBlank ? "_blank" : null
-            })
-        )
+                null,
+                entity
+            )
+        } else {
+            contentState = Modifier.applyEntity(
+                editorState.getCurrentContent(),
+                editorState.getSelection(),
+                entity
+            )
+        }
 
         this.onChange(EditorState.push(this.state.editorState, contentState, "apply-entity"))
         setTimeout(() => this.focus(), 0)
     }
 
-    submitImage(src, width, height) {
+    submitMedia(src, width, height) {
         const { editorState } = this.state
         const entityKey = Entity.create("IMAGE", "MUTABLE", {
             src,
@@ -301,7 +315,7 @@ class RichTextField extends React.Component {
         const richMedia = (
             <div className="editor__tool-group">
                 <div className="editor__tool ___hyperlink" onClick={() => this.refs.linkModal.toggle()} />
-                <div className="editor__tool ___image" onClick={() => this.refs.imageModal.toggle()} />
+                <div className="editor__tool ___image" onClick={() => this.refs.mediaModal.toggle()} />
             </div>
         )
 
@@ -373,7 +387,7 @@ class RichTextField extends React.Component {
                     <div style={{clear:"both"}} />
                 </div>
                 <LinkModal ref="linkModal" onSubmit={this.submitLink} />
-                <ImageModal ref="imageModal" onSubmit={this.submitImage} />
+                <MediaModal ref="mediaModal" onSubmit={this.submitMedia} />
             </div>
         )
     }

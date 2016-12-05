@@ -120,7 +120,7 @@ class EditModal extends React.Component {
                             <RichTextField name="description" placeholder="Beschrijving" value={this.props.entity.description} richValue={this.props.entity.richDescription} rules="required" />
                             {extraFields}
                             <SelectField label="Categorie" name="category" className="form__input" options={categoryOptions} rules="required" value={getValueFromTags(this.props.entity.tags, Object.keys(categoryOptions))} />
-                            <SwitchesField label="Onderwijssector" name="sector" className="form__input" options={sectorOptions} rules="required" values={getValuesFromTags(this.props.entity.tags, Object.keys(sectorOptions))} />
+                            <SwitchesField label="Onderwijssector" name="sector" className="form__input" options={sectorOptions} rules="required" value={getValuesFromTags(this.props.entity.tags, Object.keys(sectorOptions))} />
                             <TagsField name="tags" type="text" className="form__input" value={new Set(this.props.entity.tags).subtract(Object.keys(sectorOptions)).subtract(Object.keys(categoryOptions)).toJS()} />
                             <div className="buttons ___space-between">
                                 <button className="button" type="submit">

@@ -5,6 +5,7 @@ import ImageContextualMenu from "./ImageContextualMenu"
 import classnames from "classnames"
 import ImageContextualInfoModal from "./ImageContextualInfoModal"
 import ImageContextualResizeModal from "./ImageContextualResizeModal"
+import { parseURL } from "../../../lib/helpers"
 
 export default class AtomicBlock extends React.Component {
     constructor(props) {
@@ -171,11 +172,24 @@ export default class AtomicBlock extends React.Component {
             imageStyle.height = height + "px"
         }
 
+        const regex = /youtube.com\/watch\?v=(.*)/.exec(src)
+
+        let content
+        if (regex) {
+            content = (
+                <iframe width={width} height={height} src={`https://www.youtube.com/embed/${regex[1]}`} frameBorder="0" style={imageStyle} allowFullScreen />
+            )
+        } else {
+            content = (
+                <img src={src} alt={alt} style={imageStyle} />
+            )
+        }
+
         if (isEditor) {
             return (
                 <div className="editor__image" onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut} style={divStyle}>
                     <div style={imageContainerStyle}>
-                        <img src={src} alt={alt} style={imageStyle} />
+                        {content}
                         <ImageContextualMenu
                             align={align}
                             display={display}
@@ -195,7 +209,7 @@ export default class AtomicBlock extends React.Component {
             return (
                 <div style={divStyle}>
                     <div style={imageContainerStyle}>
-                        <img src={data.src} alt={data.alt} style={imageStyle} />
+                        {content}
                     </div>
                 </div>
             )

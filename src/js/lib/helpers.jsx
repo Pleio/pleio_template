@@ -71,6 +71,12 @@ export function getValuesFromTags(inputTags, possibleOptions) {
     return value
 }
 
+export function parseURL(url) {
+    var parser = document.createElement("a");
+    parser.href = url;
+    return parser;
+}
+
 export function displayTags(tags) {
     return tags.join(", ")
 }

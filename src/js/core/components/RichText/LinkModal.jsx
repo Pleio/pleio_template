@@ -7,7 +7,7 @@ export default class LinkModal extends React.Component {
 
         this.state = {
             isOpen: false,
-            url: "http://",
+            url: "https://",
             isTargetBlank: false
         }
 
@@ -39,7 +39,7 @@ export default class LinkModal extends React.Component {
         this.toggle()
 
         this.setState({
-            url: "http://",
+            url: "https://",
             isTargetBlank: false
         })
 
