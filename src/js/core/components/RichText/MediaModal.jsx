@@ -14,11 +14,34 @@ export default class MediaModal extends React.Component {
             url: ""
         }
 
+        this.onKeyPress = this.onKeyPress.bind(this)
         this.onChangeUrl = (e) => this.setState({ url: e.target.value })
         this.toggle = () => this.setState({ isOpen: !this.state.isOpen })
-        this.toggleTab = (tab) => this.setState({tab})
+        this.toggleTab = this.toggleTab.bind(this)
         this.onAddImage = this.onAddImage.bind(this)
         this.onAddUrl = this.onAddUrl.bind(this)
+    }
+
+    toggleTab(tab) {
+        this.setState({
+            tab
+        })
+
+        if (tab === "link") {
+            setTimeout(() => {
+                this.refs.url.focus()
+            }, 100)
+        }
+    }
+
+    onKeyPress(e) {
+        const keyCode = e.keyCode ? e.keyCode : e.which
+        if (keyCode !== 13) { // Enter button
+            return;
+        }
+
+        e.preventDefault()
+        this.onAddUrl(e)
     }
 
     onAddImage(url) {
@@ -60,7 +83,7 @@ export default class MediaModal extends React.Component {
                                     </div>
                                     <div className="mini-tabmenu__slide">
                                         <label className="form__item">
-                                            <input type="text" ref="url" placeholder="Link" onChange={this.onChangeUrl} value={this.state.url} />
+                                            <input type="text" ref="url" placeholder="Link"  onKeyPress={this.onKeyPress} onChange={this.onChangeUrl} value={this.state.url} />
                                         </label>
                                     </div>
                                 </div>

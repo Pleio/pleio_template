@@ -12,6 +12,7 @@ export default class ImageContextualInfoModal extends React.Component {
 
         this.toggle = (e) => this.setState({isOpen: !this.state.isOpen})
         this.changeText = (e) => this.setState({text: e.target.value})
+        this.onKeyPress = this.onKeyPress.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
         this.onClose = this.onClose.bind(this)
     }
@@ -22,6 +23,16 @@ export default class ImageContextualInfoModal extends React.Component {
                 text: nextProps.text
             })
         }
+    }
+
+    onKeyPress(e) {
+        const keyCode = e.keyCode ? e.keyCode : e.which
+        if (keyCode !== 13) { // Enter button
+            return;
+        }
+
+        e.preventDefault()
+        this.onSubmit(e)
     }
 
     onSubmit(e) {
@@ -50,7 +61,7 @@ export default class ImageContextualInfoModal extends React.Component {
                                 <h3 className="modal__title">Alternatieve tekst</h3>
                                 <div className="form">
                                     <label className="form__item">
-                                        <input type="text" placeholder="Omschrijving van afbeelding" onChange={this.changeText} value={this.state.text} />
+                                        <input type="text" placeholder="Omschrijving van afbeelding" onKeyPress={this.onKeyPress} onChange={this.changeText} value={this.state.text} />
                                     </label>
                                     <div className="buttons ___end">
                                         <div className="button" onClick={this.onSubmit}>Bijwerken</div>

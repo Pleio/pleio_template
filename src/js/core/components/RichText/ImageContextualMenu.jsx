@@ -31,7 +31,7 @@ export default class ImageContextualMenu extends React.Component {
 
     render() {
         return (
-            <div className={classnames({"contextual": true, "___is-visible":this.props.isVisible})}>
+            <div className={classnames({"contextual": true, "___is-visible":this.props.isVisible})} style={{left: this.props.left}}>
                 <div onClick={this.toggleAlignOptions} className={classnames({"contextual__tool ___align": true, "___show-options": this.state.showAlignOptions})}>
                     <div className="icon-dropdown"></div>
                     <ul className="option-list">

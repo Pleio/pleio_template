@@ -14,13 +14,13 @@ export default class LikeAndShare extends React.Component {
 
     }
     componentDidMount() {
-        window.addEventListener("scroll", this.onScroll)
-        window.addEventListener("touchmove", this.onScroll)
+        document.addEventListener("scroll", this.onScroll)
+        document.addEventListener("touchmove", this.onScroll)
     }
 
     componentWillUnmount() {
-        window.removeEventListener("scroll", this.onScroll)
-        window.removeEventListener("touchmove", this.onScroll)
+        document.removeEventListener("scroll", this.onScroll)
+        document.removeEventListener("touchmove", this.onScroll)
     }
 
     onScroll(e) {

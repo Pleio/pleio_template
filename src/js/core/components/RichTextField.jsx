@@ -69,6 +69,8 @@ class RichTextField extends React.Component {
             textAlignment: "left",
             isSelectorOpen: false,
             inBrowser: false,
+            isSticky: false,
+            stickyPosition: 0,
             readOnly: false
         }
 
@@ -77,6 +79,7 @@ class RichTextField extends React.Component {
         }
 
         this.onChange = this.onChange.bind(this)
+        this.onScroll = this.onScroll.bind(this)
         this.onTab = this.onTab.bind(this)
         this.handleKeyCommand = this.handleKeyCommand.bind(this)
         this.makeReadOnly = (isReadOnly) => this.setState({readOnly: isReadOnly})
@@ -120,14 +123,47 @@ class RichTextField extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.setState({inBrowser: true})
+    }
+
     componentWillUnmount() {
         if (this.context.detachFromForm) {
             this.context.detachFromForm(this)
         }
     }
 
-    componentDidMount() {
-        this.setState({inBrowser: true})
+    onScroll(e) {
+        const rect = this.refs.container.getBoundingClientRect()
+
+        let makeSticky
+        if (rect.top < 0 && rect.bottom > 0) {
+            makeSticky = true
+        } else {
+            makeSticky = false
+        }
+
+        if (makeSticky) {
+            this.setState({
+                stickyPosition: e.target.scrollTop
+            })
+        } else {
+            if (this.state.stickyPosition !== 0) {
+                this.setState({
+                    stickyPosition: 0
+                })
+            }
+        }
+
+        if (!this.state.isSticky && makeSticky) {
+            this.setState({
+                isSticky: true
+            })
+        } else if (this.state.isSticky && !makeSticky) {
+            this.setState({
+                isSticky: false
+            })
+        }
     }
 
     onChange(editorState) {
@@ -360,8 +396,8 @@ class RichTextField extends React.Component {
         }
 
         return (
-            <div className="editor">
-                <div className="editor__toolbar">
+            <div ref="container" className={classnames({"editor": true, "___is-sticky": this.state.isSticky})} onScroll={this.onScroll}>
+                <div className="editor__toolbar" style={{"top": this.state.stickyPosition, "zIndex": 10}}>
                     {textSize}
                     {inline}
                     {richMedia}

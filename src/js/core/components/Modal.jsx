@@ -9,7 +9,24 @@ class Modal extends React.Component {
     constructor(props) {
         super(props)
 
+        this.onScroll = this.onScroll.bind(this)
         this.onClose = this.onClose.bind(this)
+    }
+
+    componentDidMount() {
+        this.refs.modal.addEventListener("scroll", this.onScroll)
+    }
+
+    componentWillUnmount() {
+        this.refs.modal.removeEventListener("scroll", this.onScroll)
+    }
+
+    onScroll(e) {
+        if (!this.props.onScroll) {
+            return
+        }
+
+        this.props.onScroll(e)
     }
 
     onClose(e) {
@@ -80,7 +97,7 @@ class Modal extends React.Component {
         }
 
         return (
-            <div id={this.props.id} tabIndex="0" className={classNames({"modal":true, "___full":this.props.full, "___blue":this.props.isBlue, "___small": this.props.small, "___is-open": this.props.modal == this.props.id || this.props.noParent})}>
+            <div id={this.props.id} ref="modal" tabIndex="0" className={classNames({"modal":true, "___full":this.props.full, "___blue":this.props.isBlue, "___small": this.props.small, "___is-open": this.props.modal == this.props.id || this.props.noParent})}>
                 {modal}
             </div>
         )
