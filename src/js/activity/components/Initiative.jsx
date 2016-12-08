@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router"
 
 export default class Initiative extends React.Component {
     render() {
@@ -15,10 +16,10 @@ export default class Initiative extends React.Component {
                     </a>
                 </div>
                 <div className="footer">
-                    <a href="#" title="Over" className="footer__link">Over</a>
-                    <a href="#" title="Spelregels" className="footer__link">Spelregels</a>
-                    <a href="#" title="Algemene voorwaarden" className="footer__link">Algemene voorwaarden</a>
-                    <a href="#" title="Privacy" className="footer__link">Privacy</a>
+                    <Link to="/campagne" title="Over" className="footer__link">Over</Link>
+                    <Link to="/pages/terms" title="Spelregels" className="footer__link">Spelregels</Link>
+                    <Link to="/pages/privacy" title="Privacy" className="footer__link">Privacy</Link>
+                    <Link to="/pages/contact" title="Contact" className="footer__link">Contact</Link>
                 </div>
             </div>
         )

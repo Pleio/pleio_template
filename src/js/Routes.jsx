@@ -9,6 +9,10 @@ import ForgotPasswordConfirm from "./core/ForgotPasswordConfirm"
 import Login from "./core/Login"
 import Logout from "./core/Logout"
 
+import Privacy from "./core/Privacy"
+import Terms from "./core/Terms"
+import Contact from "./core/Contact"
+
 import Campagne from "./pages/Campagne"
 
 import ActivityList from "./activity/List"
@@ -43,6 +47,9 @@ const routes = {
     indexRoute: { component: ActivityList },
     childRoutes: [
         { path: "/activity", component: ActivityList },
+        { path: "/pages/privacy", component: Privacy },
+        { path: "/pages/terms", component: Terms },
+        { path: "/pages/contact", component: Contact },
         { path: "/bookmarks", component: BookmarksList },
         { path: "/trending/:tag", component: TrendingList },
         { path: "/search", component: SearchResults },
