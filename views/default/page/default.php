@@ -27,5 +27,6 @@ $store = elgg_extract("store", $vars);
     <?php endif; ?>
     <script src="/mod/pleio_template/build/vendor.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
     <script src="/mod/pleio_template/build/web.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
+    <?php echo elgg_view("page/elements/analytics"); ?>
 </body>
 </html>
