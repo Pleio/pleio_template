@@ -55,7 +55,6 @@ class Modal extends React.Component {
         if (this.props.small) {
             modal = (
                 <div className="modal__wrapper">
-                    <div className="modal__close" onClick={this.onClose} />
                     <div className="modal__background" onClick={this.onClose} />
                     <div className="modal__box">
                         <h3 className="modal__title">
@@ -74,7 +73,6 @@ class Modal extends React.Component {
                             <h3 className="modal__title">
                                 {this.props.title}
                             </h3>
-                            <div className="modal__close" onClick={this.onClose} />
                         </div>
                         {this.props.children}
                     </div>
@@ -85,7 +83,6 @@ class Modal extends React.Component {
                 <div className="modal__wrapper">
                     <div className="modal__background" onClick={this.onClose} />
                     <div className="modal__box">
-                        <div className="modal__close" onClick={this.onClose} />
                         <h3 className="modal__title">
                             {this.props.title}
                             &nbsp;{steps}
@@ -98,6 +95,7 @@ class Modal extends React.Component {
 
         return (
             <div id={this.props.id} ref="modal" tabIndex="0" className={classNames({"modal":true, "___full":this.props.full, "___blue":this.props.isBlue, "___small": this.props.small, "___is-open": this.props.modal == this.props.id || this.props.noParent})}>
+                <div className="modal__close" onClick={this.onClose} />
                 {modal}
             </div>
         )
