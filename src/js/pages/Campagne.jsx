@@ -36,7 +36,7 @@ class Campagne extends React.Component {
 
                 <section className="section">
                     <div className="container">
-                        <div className="campagne__intro">Welkom op Leraar.nl, een professionele community waar leraren op de hoogte blijven van de laatste ontwikkelingen in hun vak, praktische handvatten krijgen aangereikt én in contact komen met vakgenoten en beleidsmakers.</div>
+                        <div className="campagne__intro">Welkom op leraar.nl. Hier kun je ervaringen delen uit de praktijk, informatie vinden over actuele zaken omtrent je vak en kun je vragen stellen en oplossingen aanreiken aan vakgenoten.</div>
                     </div>
                 </section>
 
