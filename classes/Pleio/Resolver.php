@@ -76,6 +76,7 @@ class Resolver {
 
         $activities = array();
         foreach ($result["entities"] as $object) {
+            $object = get_entity($object->guid);
             $subject = $object->getOwnerEntity();
             if ($object && $subject) {
                 $activities[] = array(

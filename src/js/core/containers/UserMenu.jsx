@@ -27,8 +27,8 @@ class UserMenu extends React.Component {
             return (
                 <ul className="navigation__actions">
                     <li>
-                        <Link to="/bookmarks" onClick={this.props.onClick} title="Bookmarks" className="navigation__action ___bookmarks">
-                            <span>Bookmarks</span>
+                        <Link to="/bookmarks" onClick={this.props.onClick} title="Bewaard" className="navigation__action ___bookmarks">
+                            <span>Bewaard</span>
                         </Link>
                     </li>
                     <li>
