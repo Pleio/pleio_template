@@ -1,6 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { hideModal } from "../../lib/actions"
+import { logErrors } from "../../lib/helpers"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Modal from "../../core/components/Modal"
@@ -50,6 +51,7 @@ class AddWidgetModal extends React.Component {
             this.props.dispatch(hideModal())
             this.refs.form.clearValues()
         }).catch((errors) => {
+            logErrors(errors)
             this.setState({
                 errors: errors
             })

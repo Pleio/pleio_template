@@ -12,6 +12,12 @@ export function getQueryVariable(variable) {
     console.log('Query variable %s not found', variable);
 }
 
+export function logErrors(errors) {
+    if (typeof Raven !== "undefined") {
+        Raven.captureException(errors)
+    }
+}
+
 export function getClassFromTags(inputTags) {
     const translate = {
         "In de klas": "klas",

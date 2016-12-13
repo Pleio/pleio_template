@@ -1,6 +1,7 @@
 import React from "react"
 import classNames from "classnames"
 import { graphql } from "react-apollo"
+import { logErrors } from "../../lib/helpers"
 import gql from "graphql-tag"
 
 class AddCommentForm extends React.Component {
@@ -38,6 +39,7 @@ class AddCommentForm extends React.Component {
 
             this.setState({description: ""})
         }).catch((errors) => {
+            logErrors(errors)
             this.setState({
                 errors: errors
             })

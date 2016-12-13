@@ -2,6 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { connect } from "react-redux"
 import { showModal, hideModal } from "../lib/actions"
+import { logErrors } from "../lib/helpers"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Errors from "./components/Errors"
@@ -74,6 +75,7 @@ class EditModal extends React.Component {
             this.props.dispatch(hideModal())
             location.reload()
         }).catch((errors) => {
+            logErrors(errors)
             this.setState({
                 errors: errors
             })

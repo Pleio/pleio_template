@@ -13,3 +13,11 @@
         "value" => $vars["plugin"]->piwik
     ]); ?>
 </div>
+
+<div>
+    <label><?php echo elgg_echo("pleio_template:sentry"); ?></label>
+    <?php echo elgg_view("input/text", [
+        "name" => "params[sentry]",
+        "value" => $vars["plugin"]->sentry
+    ]); ?>
+</div>

@@ -1,6 +1,7 @@
 import React from "react"
 import Modal from "../core/components/Modal"
 import Form from "../core/components/Form"
+import { logErrors } from "../lib/helpers"
 import { graphql } from "react-apollo"
 import { connect } from "react-redux"
 import gql from "graphql-tag"
@@ -84,6 +85,7 @@ class ProfilePicture extends React.Component {
             }).then(({data}) => {
                 location.reload()
             }).catch((errors) => {
+                logErrors(errors)
                 this.setState({
                     errors: errors
                 })

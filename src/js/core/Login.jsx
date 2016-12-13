@@ -4,6 +4,7 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Errors from "./components/Errors"
 import client from "../lib/client"
+import { logErrors } from "../lib/helpers"
 import Modal from "./components/Modal"
 import { connect } from "react-redux"
 import Form from "./components/Form"
@@ -54,6 +55,7 @@ class Login extends React.Component {
                 location.reload();
             }
         }).catch((errors) => {
+            logErrors(errors)
             this.setState({
                 errors: errors
             })

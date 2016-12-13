@@ -2,6 +2,7 @@ import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import CommentDelete from "./CommentDelete"
+import { logErrors } from "../../lib/helpers"
 
 class CommentEdit extends React.Component {
     constructor(props) {
@@ -59,6 +60,7 @@ class CommentEdit extends React.Component {
                 this.props.toggleEdit()
             }
         }).catch((errors) => {
+            logErrors(errors)
             this.setState({
                 errors: errors
             })

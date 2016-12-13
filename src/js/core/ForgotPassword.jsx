@@ -2,6 +2,7 @@ import React from "react"
 import Modal from "./components/Modal"
 import { connect } from "react-redux"
 import { showModal } from "../lib/actions"
+import { logErrors } from "../lib/helpers"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Form from "./components/Form"
@@ -47,6 +48,7 @@ class ForgotPassword extends React.Component {
                 username: ""
             })
         }).catch((errors) => {
+            logErrors(errors)
             this.setState({
                 errors: errors
             })

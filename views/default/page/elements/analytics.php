@@ -1,7 +1,9 @@
 <?php
 $google_analytics = elgg_get_plugin_setting("google_analytics", "pleio_template");
 $piwik = elgg_get_plugin_setting("piwik", "pleio_template");
+$sentry = elgg_get_plugin_setting("sentry", "pleio_template");
 ?>
+
 <?php if ($google_analytics): ?>
     <!-- Google Analytics -->
     <script>
@@ -32,4 +34,13 @@ $piwik = elgg_get_plugin_setting("piwik", "pleio_template");
     </script>
     <noscript><p><img src="//stats.pleio.nl/piwik.php?idsite=<?php echo $piwik; ?>" style="border:0;" alt="" /></p></noscript>
     <!-- End Piwik Code -->
+<?php endif; ?>
+
+<?php if ($sentry): ?>
+    <!-- Sentry -->
+    <script src="https://cdn.ravenjs.com/3.9.1/raven.min.js"></script>
+    <script type="text/javascript">
+    Raven.config("<?php echo $sentry; ?>").install()
+    </script>
+    <!-- End Sentry Code -->
 <?php endif; ?>
