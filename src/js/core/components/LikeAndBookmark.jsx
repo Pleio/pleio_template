@@ -2,7 +2,7 @@ import React from "react"
 import Likes from "./Likes"
 import Bookmark from "../../bookmarks/components/Bookmark"
 
-export default class LikeAndShare extends React.Component {
+export default class LikeAndBookmark extends React.Component {
     constructor(props) {
         super(props)
 
@@ -53,10 +53,24 @@ export default class LikeAndShare extends React.Component {
             )
         }
 
+        let like
+        if (this.props.like) {
+            like = (
+                <Likes entity={this.props.entity} />
+            )
+        }
+
+        let bookmark
+        if (this.props.bookmark) {
+            bookmark = (
+                <Bookmark entity={this.props.entity} />
+            )
+        }
+
         return (
             <div ref="likeAndBookmark" className="article__like-and-bookmark" style={{paddingTop: this.state.paddingTop}}>
-                <Likes entity={this.props.entity} />
-                <Bookmark entity={this.props.entity} />
+                {like}
+                {bookmark}
             </div>
         )
     }

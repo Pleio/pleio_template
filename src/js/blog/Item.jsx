@@ -11,7 +11,7 @@ import SocialShare from "../core/components/SocialShare"
 import NotFound from "../core/NotFound"
 import showDate from "../lib/showDate"
 import { Link } from "react-router"
-import LikeAndShare from "../core/components/LikeAndShare"
+import LikeAndBookmark from "../core/components/LikeAndBookmark"
 import RichTextView from "../core/components/RichTextView"
 import Document from "../core/components/Document"
 
@@ -103,7 +103,7 @@ class Item extends React.Component {
                                     </div>
                                     <h3 className="article__title">{entity.title}</h3>
                                     <RichTextView richValue={entity.richDescription} value={entity.description} />
-                                    <LikeAndShare viewer={viewer} entity={entity} />
+                                    <LikeAndBookmark like={true} bookmark={true} viewer={viewer} entity={entity} />
                                     <div className="article-actions">
                                         <SocialShare />
                                         {actions}

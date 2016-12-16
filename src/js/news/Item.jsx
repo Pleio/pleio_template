@@ -8,10 +8,10 @@ import DeleteModal from "../core/Delete"
 import { showModal } from "../lib/actions"
 import AddComment from "../core/containers/AddComment"
 import SocialShare from "../core/components/SocialShare"
-import Bookmark from "../bookmarks/components/Bookmark"
 import NotFound from "../core/NotFound"
 import showDate from "../lib/showDate"
 import RichTextView from "../core/components/RichTextView"
+import LikeAndBookmark from "../core/components/LikeAndBookmark"
 import Document from "../core/components/Document"
 
 class Item extends React.Component {
@@ -85,7 +85,6 @@ class Item extends React.Component {
                         </div>
                         {edit}
                     </div>
-                    <Bookmark entity={entity} />
                 </div>
             )
         }
@@ -107,6 +106,7 @@ class Item extends React.Component {
                                         {source}
                                     </div>
                                     <RichTextView richValue={entity.richDescription} value={entity.description} />
+                                    <LikeAndBookmark like={false} bookmark={true} viewer={viewer} entity={entity} />
                                     <div className="article-actions">
                                         <SocialShare />
                                         {actions}
