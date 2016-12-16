@@ -17,7 +17,7 @@
     "webpack": "^1.13.2"
   },
   "dependencies": {
-    "apollo-client": "^0.5.0",
+    "apollo-client": "^0.5.9",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.8.0",
     "babel-jest": "^15.0.0",
@@ -32,7 +32,7 @@
     "draft-js": "^0.9.1",
     "draft-js-export-html": "^0.5.0",
     "draft-js-import-html": "^0.3.0",
-    "graphql-tag": "^0.1.11",
+    "graphql-tag": "^1.1.2",
     "isomorphic-form-data": "0.0.1",
     "jest": "^15.1.1",
     "jsx-loader": "^0.13.2",
