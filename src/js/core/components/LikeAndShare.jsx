@@ -25,12 +25,17 @@ export default class LikeAndShare extends React.Component {
 
     onScroll(e) {
         const headerHeight = 60
-        const offsetTop = this.refs.likeAndBookmark.getBoundingClientRect().top
         const scrolled = document.body.scrollTop
 
         if (window.innerWidth < 1023) {
             return
         }
+
+        if (typeof this.refs.likeAndBookmark === "undefined") {
+            return
+        }
+
+        const offsetTop = this.refs.likeAndBookmark.getBoundingClientRect().top
 
         if (scrolled < offsetTop - headerHeight) {
             return

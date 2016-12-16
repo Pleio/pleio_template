@@ -142,9 +142,6 @@ class Register extends React.Component {
             this.setState({
                 success: true
             })
-
-            this.refs.slideOne.getForm().clearValues()
-            this.refs.slideTwo.getForm().clearValues()
         }).catch((errors) => {
             logErrors(errors)
             this.setState({
