@@ -133,3 +133,13 @@ body.modal__open {
 .video-modal {
     z-index: 12;
 }
+
+.modal__close {
+    .modal.___blue > & {
+        color: @color-grey--60;
+
+        @media ( min-width: @screen-sm ) {
+            color: @color-white;
+        }
+    }
+}

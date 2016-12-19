@@ -119,7 +119,13 @@ export default class AtomicBlock extends React.Component {
         this.setState({showMenu: false})
     }
 
-    get
+    getAspectRatio() {
+        if (typeof this.refs.media !== "undefined" && this.refs.media.naturalWidth && this.refs.media.naturalHeight) {
+            return this.refs.media.naturalWidth / this.refs.media.naturalHeight
+        }
+
+        return null
+    }
 
     renderImage(data) {
         const { isEditor } = this.props.blockProps
@@ -203,7 +209,7 @@ export default class AtomicBlock extends React.Component {
                         />
                     </div>
                     <ImageContextualInfoModal ref="infoModal" alt={alt} onSubmit={this.onSubmitInfo} onClose={this.onCloseModal} />
-                    <ImageContextualResizeModal ref="resizeModal" width={width} height={height} onSubmit={this.onSubmitResize} onClose={this.onCloseModal} />
+                    <ImageContextualResizeModal ref="resizeModal" width={width} height={height} aspectRatio={this.getAspectRatio()} onSubmit={this.onSubmitResize} onClose={this.onCloseModal} />
                 </div>
             )
         } else {

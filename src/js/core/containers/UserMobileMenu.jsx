@@ -37,14 +37,14 @@ export default class UserMobileMenu extends React.Component {
                         <NavigationSearch />
                     </li>
                     <li>
-                        <Link to="/login" onClick={this.props.onClick} title="Inloggen" className="mobile-navigation__action ___login" activeClassName="___is_active">
+                        <a href="#" onClick={this.props.onClick} title="Inloggen" className="mobile-navigation__action ___login">
                             Inloggen
-                        </Link>
+                        </a>
                     </li>
                     <li>
-                        <Link to="/register" onClick={this.props.onClick} title="Registreren" className="mobile-navigation__action ___register" activeClassName="___is_active">
+                        <a href="#" onClick={this.props.onClick} title="Registreren" className="mobile-navigation__action ___register">
                             Registreren
-                        </Link>
+                        </a>
                     </li>
                 </ul>
             )

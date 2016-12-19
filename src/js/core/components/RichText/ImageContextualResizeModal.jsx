@@ -12,11 +12,44 @@ export default class ImageContextualResizeModal extends React.Component {
         }
 
         this.toggle = (e) => this.setState({isOpen: !this.state.isOpen})
-        this.changeWidth = (e) => this.setState({width: e.target.value})
-        this.changeHeight = (e) => this.setState({height: e.target.value})
+        this.changeWidth = this.changeWidth.bind(this)
+        this.changeHeight = this.changeHeight.bind(this)
         this.onKeyPress = this.onKeyPress.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
         this.onClose = this.onClose.bind(this)
+
+    }
+
+    changeWidth(e) {
+        if (this.props.aspectRatio) {
+            const width = e.target.value
+            const height = Math.round(e.target.value / this.props.aspectRatio)
+
+            this.setState({
+                width: isNaN(width) ? "" : width,
+                height: isNaN(height) ? "" : height,
+            })
+        } else {
+            this.setState({
+                width: e.target.value
+            })
+        }
+    }
+
+    changeHeight(e) {
+        if (this.props.aspectRatio) {
+            const width = Math.round(this.props.aspectRatio * e.target.value)
+            const height = e.target.value
+
+            this.setState({
+                width: isNaN(width) ? "" : width,
+                height: isNaN(height) ? "" : height
+            })
+        } else {
+            this.setState({
+                height: e.target.value
+            })
+        }
     }
 
     componentWillReceiveProps(nextProps) {
