@@ -9,6 +9,10 @@ class Helpers {
         $hidden = access_get_show_hidden_status();
         access_show_hidden_entities(true);
 
+        while (strlen($username) < 4) {
+            $username .= "0";
+        }
+
         if (get_user_by_username($username)) {
             $i = 1;
 
