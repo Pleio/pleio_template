@@ -69,9 +69,9 @@ class ProfilePicture extends React.Component {
         const callback = (blob) => {
             let file
             if (blob) {
-                file = new File([blob], "avatar.png");
+                file = blob;
             } else {
-                file = null
+                file = null;
             }
 
             this.props.mutate({
