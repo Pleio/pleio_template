@@ -1,6 +1,6 @@
 import React from "react"
 import showDate from "../../lib/showDate"
-import CommentVote from "./CommentVote"
+import Likes from "./Likes"
 import CommentEdit from "./CommentEdit"
 import classnames from "classnames"
 
@@ -25,12 +25,11 @@ export default class Comment extends React.Component {
             )
         }
 
-        // disable voting for now
-        /*if (entity.canVote) {
+        if (entity.canVote) {
             vote = (
-                <CommentVote entity={entity} />
+                <Likes entity={entity} />
             )
-        }*/
+        }
 
         if (this.state.editing) {
             return (
@@ -44,7 +43,6 @@ export default class Comment extends React.Component {
             return (
                 <div className={classnames({"comment-container": true, " ___is-editable": entity.canEdit})}>
                     <div className={classnames({comment: true, "___can-edit": entity.canEdit})}>
-                        {vote}
                         <div className="comment__top">
                             <a href={entity.owner.url}
                                title="Bekijk profiel"
@@ -64,6 +62,7 @@ export default class Comment extends React.Component {
                         <div className="comment__body">
                             {entity.description}
                         </div>
+                        {vote}
                     </div>
                 </div>
             )

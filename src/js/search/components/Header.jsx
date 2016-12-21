@@ -27,7 +27,7 @@ export default class Header extends React.Component {
 
     onSubmit(e) {
         e.preventDefault()
-        browserHistory.push(`/search?type=object&subtype=${this.props.subtype}&q=${this.state.q}`)
+        browserHistory.push(`/search?q=${this.state.q}`)
     }
 
     render() {
@@ -38,9 +38,17 @@ export default class Header extends React.Component {
             total += subTotal.total
         })
 
-        let options = []
+        let options = [{
+            link: `/search?q=${this.state.q}`,
+            title: `Alles (${total})`
+        }]
+
         subtypes.forEach((subtype) => {
-            const total = searchTotals[subtype.subtype] || 0
+            const total = searchTotals[subtype.subtype]
+            if (!total) {
+                return
+            }
+
             options.push({
                 link: `/search?type=object&subtype=${subtype.subtype}&q=${this.state.q}`,
                 title: `${subtype.title} (${total})`

@@ -33,7 +33,7 @@ class TopMenu extends React.Component {
 
     onSearch(e) {
         e.preventDefault()
-        browserHistory.push(`/search?type=object&subtype=blog&q=${this.state.q}`)
+        browserHistory.push(`/search?q=${this.state.q}`)
         this.closeMobileMenu()
 
         this.setState({

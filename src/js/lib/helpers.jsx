@@ -88,8 +88,6 @@ export function displayTags(tags) {
 }
 
 export function isMobile() {
-    return false;
-
     let userAgent = (window.navigator.userAgent||window.navigator.vendor||window.opera),
         isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(userAgent);
 

@@ -26,7 +26,7 @@ class Index extends React.Component {
 
     onSubmit(e) {
         e.preventDefault()
-        browserHistory.push(`/search?q=${this.state.q}&subtype=question`)
+        browserHistory.push(`/search?q=${this.state.q}&type=object&subtype=question`)
 
         this.setState({
             q: ""
