@@ -280,4 +280,38 @@ class Helpers {
             "entities" => $entities
         ];
     }
+
+    static function isUser() {
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            return false;
+        }
+        // method exposed in subsite_manager
+
+
+        if (method_exists($site, "isUser")) {
+            return $site->isUser();
+        }
+        
+        return check_entity_relationship($user->guid, "member_of_site", $site->guid);
+    }
+
+    static function canJoin() {
+        // method exposed in subsite_manager
+        if (method_exists($site, "canJoin")) {
+            return $site->canJoin();
+        }
+        
+        return elgg_get_config("allow_registration");
+    }
+
+    static function addUser() {
+        $user_guid = elgg_get_logged_in_user_guid();
+        if ($user_guid) {
+            $site = elgg_get_site_entity();
+            return $site->addUser($user_guid);
+        }
+
+        return false;
+    }
 }

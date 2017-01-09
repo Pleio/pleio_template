@@ -47,6 +47,10 @@ function pleio_template_init() {
 elgg_register_event_handler("init", "system", "pleio_template_init");
 
 function pleio_template_index_handler($hook, $type, $return_value, $params) {
+    if ($return_value) {
+        return;
+    }
+
     include("pages/react.php");
     return true;
 }

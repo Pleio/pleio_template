@@ -6,9 +6,9 @@ class Resolver {
         $site = elgg_get_site_entity();
         $user = elgg_get_logged_in_user_entity();
 
-        if ($user && !$site->isUser()) {
-            if ($site->canJoin()) {
-                $site->addUser();
+        if ($user && Helpers::isUser()) {
+            if (Helpers::canJoin()) {
+                Helpers::addUser();
             }
         }
 

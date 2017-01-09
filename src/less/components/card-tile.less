@@ -199,6 +199,7 @@
     .card-tile__title {
         color: @color-white;
         text-shadow: @text-shadow;
+        word-wrap: break-word;
 
         &:hover {
             color: @color-white;
@@ -562,6 +563,7 @@
     padding: 2.5rem 3rem 3rem;
     z-index: 0;  // stay on top of grey background gradient
     position: relative;
+    overflow: hidden; // forces word break
 
     @media ( max-width: @screen-xs-max ) {
         position: absolute;

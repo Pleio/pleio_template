@@ -135,9 +135,9 @@ class Mutations {
 
     static function addEntity($input) {
         $site = elgg_get_site_entity();
-        if (!$site->isUser()) {
-            if ($site->canJoin()) {
-                $site->addUser();
+        if (!Helpers::isUser()) {
+            if (Helpers::canJoin()) {
+                Helpers::addUser();
             } else {
                 throw new Exception("not_member_of_site");
             }
