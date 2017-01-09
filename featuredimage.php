@@ -58,6 +58,10 @@ if ($mysql_dblink) {
 
     $path = date('Y/m/d/', $time_created) . $guid;
 
+    if (!$data_root) {
+        $data_root = $CONFIG->dataroot;
+    }
+
     $filename = "$data_root$path/featured/{$guid}.jpg";
     $filesize = @filesize($filename);
     if ($filesize) {
