@@ -7,6 +7,7 @@ import { graphql } from "react-apollo"
 import { connect } from "react-redux"
 import gql from "graphql-tag"
 import { showModal } from "../lib/actions"
+import { logErrors } from "../lib/helpers"
 import { browserHistory } from "react-router"
 
 class ForgotPasswordConfirm extends React.Component {
@@ -49,6 +50,7 @@ class ForgotPasswordConfirm extends React.Component {
                 success: true
             })
         }).catch((errors) => {
+            logErrors(errors)
             this.setState({
                 errors: errors
             })

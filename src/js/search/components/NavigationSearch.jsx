@@ -17,6 +17,9 @@ class NavigationSearch extends React.Component {
         this.onSubmit = this.onSubmit.bind(this)
     }
 
+    focus() {
+        this.refs.q.focus()
+    }
 
     onChange(e) {
         this.setState({
@@ -38,7 +41,7 @@ class NavigationSearch extends React.Component {
 
     onSubmit(e) {
         e.preventDefault()
-        browserHistory.push(`/search?type=object&subtype=blog&q=${this.state.q}`)
+        browserHistory.push(`/search?q=${this.state.q}`)
         document.body.classList.remove("navigation-search-open")
     }
 
@@ -51,7 +54,7 @@ class NavigationSearch extends React.Component {
             <form onSubmit={this.onSubmit} className="navigation-search">
                 <div className="container">
                         <label htmlFor="search">Zoeken</label><span className="navigation-search__icon"></span>
-                        <input id="search" name="q" type="text" maxLength="60" autoComplete="off" className="navigation-search__input" onChange={this.onChange} value={this.state.q} />
+                        <input ref="q" name="q" type="text" maxLength="60" autoComplete="off" className="navigation-search__input" onChange={this.onChange} value={this.state.q} />
                         <a className="navigation-search__close" onClick={this.onClose}>
                             Sluiten
                         </a>
@@ -61,4 +64,4 @@ class NavigationSearch extends React.Component {
     }
 }
 
-export default connect()(NavigationSearch)
+export default connect(null, null, null, { withRef: true })(NavigationSearch)

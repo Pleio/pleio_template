@@ -12,10 +12,44 @@ export default class ImageContextualResizeModal extends React.Component {
         }
 
         this.toggle = (e) => this.setState({isOpen: !this.state.isOpen})
-        this.changeWidth = (e) => this.setState({width: e.target.value})
-        this.changeHeight = (e) => this.setState({height: e.target.value})
+        this.changeWidth = this.changeWidth.bind(this)
+        this.changeHeight = this.changeHeight.bind(this)
+        this.onKeyPress = this.onKeyPress.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
         this.onClose = this.onClose.bind(this)
+
+    }
+
+    changeWidth(e) {
+        if (this.props.aspectRatio) {
+            const width = e.target.value
+            const height = Math.round(e.target.value / this.props.aspectRatio)
+
+            this.setState({
+                width: isNaN(width) ? "" : width,
+                height: isNaN(height) ? "" : height,
+            })
+        } else {
+            this.setState({
+                width: e.target.value
+            })
+        }
+    }
+
+    changeHeight(e) {
+        if (this.props.aspectRatio) {
+            const width = Math.round(this.props.aspectRatio * e.target.value)
+            const height = e.target.value
+
+            this.setState({
+                width: isNaN(width) ? "" : width,
+                height: isNaN(height) ? "" : height
+            })
+        } else {
+            this.setState({
+                height: e.target.value
+            })
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -25,6 +59,16 @@ export default class ImageContextualResizeModal extends React.Component {
                 height: nextProps.height
             })
         }
+    }
+
+    onKeyPress(e) {
+        const keyCode = e.keyCode ? e.keyCode : e.which
+        if (keyCode !== 13) { // Enter button
+            return;
+        }
+
+        e.preventDefault()
+        this.onSubmit(e)
     }
 
     onSubmit(e) {
@@ -55,12 +99,12 @@ export default class ImageContextualResizeModal extends React.Component {
                                     <div className="row">
                                         <div className="col-sm-6">
                                             <div className="form__item">
-                                                <input type="text" placeholder="Breedte" onChange={this.changeWidth} value={this.state.width} />
+                                                <input type="text" placeholder="Breedte" onKeyPress={this.onKeyPress} onChange={this.changeWidth} value={this.state.width} />
                                             </div>
                                         </div>
                                         <div className="col-sm-6">
                                             <div className="form__item">
-                                                <input type="text" placeholder="Hoogte" onChange={this.changeHeight} value={this.state.height} />
+                                                <input type="text" placeholder="Hoogte" onKeyPress={this.onKeyPress} onChange={this.changeHeight} value={this.state.height} />
                                             </div>
                                         </div>
                                     </div>

@@ -2,6 +2,7 @@ import React from "react"
 import Form from "../../core/components/Form"
 import InputField from "../../core/components/InputField"
 import Errors from "../../core/components/Errors"
+import { logErrors } from "../../lib/helpers"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
@@ -42,6 +43,7 @@ class AccountPassword extends React.Component {
                 errors: []
             })
         }).catch((errors) => {
+            logErrors(errors)
             this.setState({
                 errors: errors
             })

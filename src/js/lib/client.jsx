@@ -10,7 +10,7 @@ const createNetworkInterface = (url) => {
             const formData = new FormData()
 
             for(let { node, path } of new RecursiveIterator(request.variables)) {
-                if (typeof File !== "undefined" && node instanceof File) {
+                if (typeof Blob !== "undefined" && node instanceof Blob) {
                     const id = Math.random().toString(36);
                     formData.append(id, node);
                     objectPath.set(request.variables, path.join("."), id);

@@ -2,6 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { connect } from "react-redux"
 import { hideModal } from "../lib/actions"
+import { logErrors } from "../lib/helpers"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Errors from "./components/Errors"
@@ -27,6 +28,7 @@ class AddModal extends React.Component {
             errors: []
         }
 
+        this.onScroll = this.onScroll.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
     }
 
@@ -69,10 +71,17 @@ class AddModal extends React.Component {
             this.props.dispatch(hideModal())
             location.reload()
         }).catch((errors) => {
+            logErrors(errors)
             this.setState({
                 errors: errors
             })
         })
+    }
+
+    onScroll(e) {
+        if (this.refs.richText) {
+            this.refs.richText.onScroll(e)
+        }
     }
 
     render() {
@@ -107,13 +116,13 @@ class AddModal extends React.Component {
         }
 
         return (
-            <Modal id="add" title={this.props.title} full={this.props.featuredImage ? true : false}>
+            <Modal id="add" title={this.props.title} full={this.props.featuredImage ? true : false} onScroll={this.onScroll}>
                 <Form ref="form" onSubmit={this.onSubmit}>
                     {featuredImage}
                     <div className="container">
                         <div className="form">
                             <InputField name="title" type="text" placeholder="Titel" className="form__input" rules="required" autofocus />
-                            <RichTextField name="description" placeholder="Beschrijving" rules="required" />
+                            <RichTextField ref="richText" name="description" placeholder="Beschrijving" rules="required" />
                             {extraFields}
                             <SelectField label="Categorie" name="category" className="form__input" options={categoryOptions} rules="required" />
                             <SwitchesField label="Onderwijssector" name="sector" className="form__input" options={sectorOptions} rules="required" />

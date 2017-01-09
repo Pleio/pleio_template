@@ -1,6 +1,7 @@
 import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
+import { logErrors } from "../../../lib/helpers"
 import Errors from "../Errors"
 import classnames from "classnames"
 
@@ -46,6 +47,7 @@ class AddImage extends React.Component {
                 errors: []
             })
         }).catch((errors) => {
+            logErrors(errors)
             this.setState({
                 errors: errors
             })

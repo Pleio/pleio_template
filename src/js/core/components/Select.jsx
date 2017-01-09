@@ -1,5 +1,6 @@
-import React from 'react'
-import classNames from 'classnames'
+import React from "react"
+import classNames from "classnames"
+import { isMobile } from "../../lib/helpers"
 
 export default class Select extends React.Component {
     constructor(props) {
@@ -13,7 +14,6 @@ export default class Select extends React.Component {
         this.onSelect = this.onSelect.bind(this)
         this.onBlur = this.onBlur.bind(this)
         this.onToggle = this.onToggle.bind(this)
-        this.isMobile = this.isMobile.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -93,7 +93,7 @@ export default class Select extends React.Component {
         }
 
         return (
-            <div className={classNames({ "selector": true, [this.props.className]: true, "___is-open": this.state.isOpen, "___is-mobile": this.isMobile() })}>
+            <div className={classNames({ "selector": true, [this.props.className]: true, "___is-open": this.state.isOpen, "___is-mobile": isMobile() })}>
                 <select onChange={(e) => this.onSelect(e, e.target.value)} value={ this.state.value || "disabled" } readOnly>
                     {selectOptions}
                 </select>
@@ -106,14 +106,5 @@ export default class Select extends React.Component {
                 </ul>
             </div>
         )
-    }
-
-    isMobile() {
-        return false;
-
-        let userAgent = (window.navigator.userAgent||window.navigator.vendor||window.opera),
-            isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(userAgent);
-
-        return isMobile ? true : false;
     }
 }

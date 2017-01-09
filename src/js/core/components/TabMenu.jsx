@@ -1,6 +1,7 @@
 import React from "react"
 import { Link, browserHistory } from "react-router"
 import Select from "./NewSelect"
+import classnames from "classnames"
 
 class TabMenu extends React.Component {
     constructor(props) {
@@ -16,21 +17,20 @@ class TabMenu extends React.Component {
     render() {
         const { router } = this.context
 
-        let content = this.props.options.map((item, i) => (
-            <Link key={i} to={item.link} onlyActiveOnIndex={true} activeClassName="___is-active" className="tabmenu__link">
-                {item.title}
-            </Link>
-        ))
-
-        let selectOptions = []
         let selected = null
-
+        let selectOptions = []
         this.props.options.forEach((item, i) => {
             selectOptions[item.link] = item.title
             if (this.context.router.isActive(item.link, true)) {
                 selected = item.link
             }
         })
+
+        let content = this.props.options.map((item, i) => (
+            <Link key={i} to={item.link} className={classnames({"tabmenu__link": true, "___is-active": item.link === selected})}>
+                {item.title}
+            </Link>
+        ))
 
         return (
             <div>

@@ -34,6 +34,17 @@
         font-size: @font-size--base;
         line-height: 2.3rem;
     }
+
+    a  {
+        border-bottom: 1px solid transparent;
+        color: @color-secondary;
+        text-decoration: none;
+        transition: color @trans-fast, border-color @trans-fast;
+
+        &:hover {
+            border-color: @color-secondary;
+        }
+    }
 }
 
 .campagne__image {
@@ -85,7 +96,7 @@
 }
 
 .campagne__image-title {
-    margin: 2rem 0 0 0;
+    margin: 2rem 0 3rem 0;
     .font(medium);
     color: @color-grey--60;
 

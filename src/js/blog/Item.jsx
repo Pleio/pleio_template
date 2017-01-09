@@ -8,11 +8,10 @@ import Delete from "../core/Delete"
 import { showModal } from "../lib/actions"
 import AddComment from "../core/containers/AddComment"
 import SocialShare from "../core/components/SocialShare"
-import Bookmark from "../bookmarks/components/Bookmark"
 import NotFound from "../core/NotFound"
-import Likes from "../core/components/Likes"
 import showDate from "../lib/showDate"
 import { Link } from "react-router"
+import LikeAndBookmark from "../core/components/LikeAndBookmark"
 import RichTextView from "../core/components/RichTextView"
 import Document from "../core/components/Document"
 
@@ -47,15 +46,6 @@ class Item extends React.Component {
             )
         }
 
-        let edit
-        if (entity.canEdit) {
-            edit = (
-                <div className="button__text article-action ___edit-post" onClick={this.onEdit}>
-                    Bewerken
-                </div>
-            );
-        }
-
         let featuredImage = ""
         if (entity.featuredImage) {
             featuredImage = (
@@ -68,6 +58,15 @@ class Item extends React.Component {
             )
         }
 
+        let edit
+        if (entity.canEdit) {
+            edit = (
+                <div className="button__text article-action ___edit-post" onClick={this.onEdit}>
+                    Bewerken
+                </div>
+            );
+        }
+
         let actions
         if (viewer.loggedIn) {
             actions = (
@@ -78,7 +77,6 @@ class Item extends React.Component {
                         </div>
                         {edit}
                     </div>
-                    <Bookmark entity={entity} />
                 </div>
             )
         }
@@ -105,7 +103,7 @@ class Item extends React.Component {
                                     </div>
                                     <h3 className="article__title">{entity.title}</h3>
                                     <RichTextView richValue={entity.richDescription} value={entity.description} />
-                                    <Likes entity={entity} marginTop={true} />
+                                    <LikeAndBookmark like={true} bookmark={true} viewer={viewer} entity={entity} />
                                     <div className="article-actions">
                                         <SocialShare />
                                         {actions}

@@ -33,7 +33,7 @@ class TopMenu extends React.Component {
 
     onSearch(e) {
         e.preventDefault()
-        browserHistory.push(`/search?type=object&subtype=blog&q=${this.state.q}`)
+        browserHistory.push(`/search?q=${this.state.q}`)
         this.closeMobileMenu()
 
         this.setState({
@@ -92,10 +92,10 @@ class TopMenu extends React.Component {
                                     <div className="submenu__back" onClick={this.toggleSubmenu}>Terug</div>
                                     <ul className="submenu__list">
                                         <li className="submenu__list-item">
-                                            <a href="#" title="Over">Over</a>
-                                            <a href="#" title="Spelregels">Spelregels</a>
-                                            <a href="#" title="Algemene voorwaarden">Algemene voorwaarden</a>
-                                            <a href="#" title="Privacy">Privacy</a>
+                                            <Link to="/campagne" onClick={this.closeMobileMenu} title="Over" activeClassName="___is-active">Over</Link>
+                                            <Link to="/pages/terms" onClick={this.closeMobileMenu} title="Spelregels" activeClassName="___is-active">Spelregels</Link>
+                                            <Link to="/pages/privacy" onClick={this.closeMobileMenu} title="Privacy" activeClassName="___is-active">Privacy</Link>
+                                            <Link to="/pages/contact" onClick={this.closeMobileMenu} title="Contact" activeClassName="___is-active">Contact</Link>
                                         </li>
                                     </ul>
                                 </div>

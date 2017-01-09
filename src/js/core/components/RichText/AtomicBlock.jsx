@@ -119,7 +119,13 @@ export default class AtomicBlock extends React.Component {
         this.setState({showMenu: false})
     }
 
-    get
+    getAspectRatio() {
+        if (typeof this.refs.media !== "undefined" && this.refs.media.naturalWidth && this.refs.media.naturalHeight) {
+            return this.refs.media.naturalWidth / this.refs.media.naturalHeight
+        }
+
+        return null
+    }
 
     renderImage(data) {
         const { isEditor } = this.props.blockProps
@@ -177,11 +183,11 @@ export default class AtomicBlock extends React.Component {
         let content
         if (regex) {
             content = (
-                <iframe width={width} height={height} src={`https://www.youtube.com/embed/${regex[1]}`} frameBorder="0" style={imageStyle} allowFullScreen />
+                <iframe ref="media" width={width} height={height} src={`https://www.youtube.com/embed/${regex[1]}`} frameBorder="0" style={imageStyle} allowFullScreen />
             )
         } else {
             content = (
-                <img src={src} alt={alt} style={imageStyle} />
+                <img ref="media" src={src} alt={alt} style={imageStyle} />
             )
         }
 
@@ -191,6 +197,7 @@ export default class AtomicBlock extends React.Component {
                     <div style={imageContainerStyle}>
                         {content}
                         <ImageContextualMenu
+                            left={this.refs.media ? this.refs.media.offsetLeft : 0}
                             align={align}
                             display={display}
                             isVisible={this.state.showMenu}
@@ -202,7 +209,7 @@ export default class AtomicBlock extends React.Component {
                         />
                     </div>
                     <ImageContextualInfoModal ref="infoModal" alt={alt} onSubmit={this.onSubmitInfo} onClose={this.onCloseModal} />
-                    <ImageContextualResizeModal ref="resizeModal" width={width} height={height} onSubmit={this.onSubmitResize} onClose={this.onCloseModal} />
+                    <ImageContextualResizeModal ref="resizeModal" width={width} height={height} aspectRatio={this.getAspectRatio()} onSubmit={this.onSubmitResize} onClose={this.onCloseModal} />
                 </div>
             )
         } else {

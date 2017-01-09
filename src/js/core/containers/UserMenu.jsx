@@ -9,9 +9,17 @@ class UserMenu extends React.Component {
     constructor(props) {
         super(props)
 
+        this.toggleSearch = this.toggleSearch.bind(this)
         this.showModal = (id) => {
             this.props.dispatch(showModal(id))
         }
+    }
+
+    toggleSearch() {
+        document.body.classList.toggle("navigation-search-open")
+        setTimeout(() => {
+            this.refs.search.getWrappedInstance().focus()
+        }, 100)
     }
 
     render() {
@@ -27,13 +35,13 @@ class UserMenu extends React.Component {
             return (
                 <ul className="navigation__actions">
                     <li>
-                        <Link to="/bookmarks" onClick={this.props.onClick} title="Bookmarks" className="navigation__action ___bookmarks">
-                            <span>Bookmarks</span>
+                        <Link to="/bookmarks" onClick={this.props.onClick} title="Bewaard" className="navigation__action ___bookmarks">
+                            <span>Bewaard</span>
                         </Link>
                     </li>
                     <li>
-                        <a onClick={() => document.body.classList.toggle("navigation-search-open")} title="Zoeken" className="navigation__action ___search"></a>
-                        <NavigationSearch />
+                        <a onClick={this.toggleSearch} title="Zoeken" className="navigation__action ___search"></a>
+                        <NavigationSearch ref="search" />
                     </li>
                     <li>
                         <Link to={"/profile/" + this.props.viewer.user.username} onClick={this.props.onClick} title="Account" className="navigation__action ___account">
@@ -47,8 +55,8 @@ class UserMenu extends React.Component {
             return (
                 <ul className="navigation__actions">
                     <li>
-                        <a onClick={() => document.body.classList.toggle("navigation-search-open")} title="Zoeken" className="navigation__action ___search"></a>
-                        <NavigationSearch />
+                        <a onClick={this.toggleSearch} title="Zoeken" className="navigation__action ___search"></a>
+                        <NavigationSearch ref="search" />
                     </li>
                     <li>
                         <a onClick={() => {this.props.onClick(); this.showModal('login');}} title="Inloggen" className="navigation__action ___login">

@@ -12,6 +12,12 @@ export function getQueryVariable(variable) {
     console.log('Query variable %s not found', variable);
 }
 
+export function logErrors(errors) {
+    if (typeof Raven !== "undefined") {
+        Raven.captureException(errors)
+    }
+}
+
 export function getClassFromTags(inputTags) {
     const translate = {
         "In de klas": "klas",
@@ -82,8 +88,6 @@ export function displayTags(tags) {
 }
 
 export function isMobile() {
-    return false;
-
     let userAgent = (window.navigator.userAgent||window.navigator.vendor||window.opera),
         isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(userAgent);
 

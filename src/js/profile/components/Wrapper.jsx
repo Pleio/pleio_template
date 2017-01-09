@@ -22,7 +22,7 @@ class Wrapper extends React.Component {
 
         let options = [
             {title: "Profiel", link: baseLink},
-            {title: "Instellingen", link: baseLink + "/settings"},
+            {title: "Interesses", link: baseLink + "/settings"},
             {title: "Account", link: baseLink + "/account"}
         ]
 

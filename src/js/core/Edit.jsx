@@ -2,6 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { connect } from "react-redux"
 import { showModal, hideModal } from "../lib/actions"
+import { logErrors } from "../lib/helpers"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Errors from "./components/Errors"
@@ -28,6 +29,7 @@ class EditModal extends React.Component {
             errors: []
         }
 
+        this.onScroll = this.onScroll.bind(this)
         this.onDelete = this.onDelete.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
     }
@@ -73,10 +75,17 @@ class EditModal extends React.Component {
             this.props.dispatch(hideModal())
             location.reload()
         }).catch((errors) => {
+            logErrors(errors)
             this.setState({
                 errors: errors
             })
         })
+    }
+
+    onScroll(e) {
+        if (this.refs.richText) {
+            this.refs.richText.onScroll(e)
+        }
     }
 
     render() {
@@ -111,16 +120,16 @@ class EditModal extends React.Component {
         }
 
         return (
-            <Modal id="edit" title={this.props.title} full={this.props.featuredImage ? true : false}>
+            <Modal id="edit" title={this.props.title} full={this.props.featuredImage ? true : false} onScroll={this.onScroll}>
                 <Form ref="form" onSubmit={this.onSubmit}>
                     {featuredImage}
                     <div className="container">
                         <div className="form">
                             <InputField name="title" type="text" placeholder="Titel" className="form__input" value={this.props.entity.title} rules="required" autofocus />
-                            <RichTextField name="description" placeholder="Beschrijving" value={this.props.entity.description} richValue={this.props.entity.richDescription} rules="required" />
+                            <RichTextField ref="richText" name="description" placeholder="Beschrijving" value={this.props.entity.description} richValue={this.props.entity.richDescription} rules="required" />
                             {extraFields}
                             <SelectField label="Categorie" name="category" className="form__input" options={categoryOptions} rules="required" value={getValueFromTags(this.props.entity.tags, Object.keys(categoryOptions))} />
-                            <SwitchesField label="Onderwijssector" name="sector" className="form__input" options={sectorOptions} rules="required" value={getValuesFromTags(this.props.entity.tags, Object.keys(sectorOptions))} />
+                            <SwitchesField label="Onderwijssector" name="sector" className="form__input" options={sectorOptions} rules="required" values={getValuesFromTags(this.props.entity.tags, Object.keys(sectorOptions))} />
                             <TagsField name="tags" type="text" className="form__input" value={new Set(this.props.entity.tags).subtract(Object.keys(sectorOptions)).subtract(Object.keys(categoryOptions)).toJS()} />
                             <div className="buttons ___space-between">
                                 <button className="button" type="submit">
