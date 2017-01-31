@@ -21,14 +21,6 @@ class TagsField extends React.Component {
         this.removeTag = this.removeTag.bind(this)
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.value !== this.props.value) {
-            this.setState({
-                value: new Set(nextProps.value)
-            })
-        }
-    }
-
     componentWillMount() {
         if (this.context.attachToForm) {
             this.context.attachToForm(this)

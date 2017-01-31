@@ -35,13 +35,10 @@ class EditModal extends React.Component {
     }
 
     onDelete(e) {
-        e.preventDefault()
         this.props.dispatch(showModal("delete"))
     }
 
     onSubmit(e) {
-        e.preventDefault()
-
         this.setState({
             errors: []
         })
@@ -73,7 +70,7 @@ class EditModal extends React.Component {
             }
         }).then(({data}) => {
             this.props.dispatch(hideModal())
-            location.reload()
+            //location.reload()
         }).catch((errors) => {
             logErrors(errors)
             this.setState({
