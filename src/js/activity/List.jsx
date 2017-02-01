@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import ActivityList from "./containers/ActivityList"
 import ContentHeader from "../core/components/ContentHeader"
 import Lead from "./components/Lead"

@@ -1,45 +1,73 @@
 var webpack = require("webpack");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var autoprefixer = require("autoprefixer");
+var path = require("path");
 
 module.exports = {
     entry: {
-        web: ["./src/js/Web.jsx"],
-        vendor: ["core-js", "react", "react-dom", "draft-js", "apollo-client", "react-apollo", "graphql-tag", "redux", "validatorjs"]
+        web: [
+            "react-hot-loader/patch",
+            "webpack-dev-server/client?http://localhost:9001",
+            "webpack/hot/only-dev-server",
+            "./src/js/Web.jsx"
+        ]
     },
     output: {
-        path: "./build",
-        publicPath: "/mod/pleio_template/build/",
+        path: path.join(__dirname, "build"),
+        publicPath: "http://localhost:9001/mod/pleio_template/build/",
         filename: "[name].js",
         chunkFilename: "[id].js"
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.jsx$/,
-                loaders: ["babel?presets[]=es2015,presets[]=stage-0,presets[]=react"]
+                use: ["babel-loader"],
+                exclude: /node_modules/
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract("style-loader", "css-loader!postcss-loader")
+                use: ExtractTextPlugin.extract({
+                    fallbackLoader: "style-loader",
+                    loader: ["css-loader", "postcss-loader"]
+                })
             },
             {
                 test: /\.less$/,
-                loader: ExtractTextPlugin.extract("style-loader", "css-loader!postcss-loader!less-loader")
+                use: ExtractTextPlugin.extract({
+                    fallbackLoader: "style-loader",
+                    loader: ["css-loader", "postcss-loader", "less-loader"]
+                })
             },
             {
                 test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-                loader: "file-loader"
+                use: "file-loader"
             }
         ]
     },
-    devtool: "eval",
-    postcss: [ autoprefixer({ browsers: ["last 2 versions"] }) ],
+    devServer: {
+        publicPath: "http://localhost:9001/mod/pleio_template/build/",
+        hot: true,
+        port: 9001
+    },
+    devtool: "cheap-eval-source-map",
     plugins: [
         new ExtractTextPlugin("[name].css"),
-        new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.js")
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                postcss: [ autoprefixer({ browsers: ["last 2 versions"] }) ]
+            }
+        }),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin(),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "vendor",
+            minChunks: function(module) {
+                return module.context && module.context.indexOf('node_modules') !== -1;
+            }
+        })
     ],
     resolve: {
-        extensions: ["", ".js", ".jsx"]
+        extensions: [".js", ".jsx"]
     }
 }
