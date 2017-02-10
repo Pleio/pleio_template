@@ -13,6 +13,7 @@ define("PLEIO_TEMPLATE_LESS", dirname(__FILE__) . "/src/less/");
 function pleio_template_init() {
     elgg_register_plugin_hook_handler("index", "system", "pleio_template_index_handler");
     elgg_register_plugin_hook_handler("container_permissions_check", "object", "pleio_template_container_permissions_check_hook");
+    elgg_register_plugin_hook_handler("action", "plugins/settings/save", "pleio_template_plugins_settings_save");
 
     elgg_register_page_handler("campagne", "pleio_template_page_handler");
     elgg_register_page_handler("activity", "pleio_template_page_handler");
@@ -70,6 +71,41 @@ function pleio_template_container_permissions_check_hook($hook, $type, $return_v
 
     // only allow admins to create pages and news
     return $user->isAdmin();
+}
+
+function pleio_template_plugins_settings_save($hook, $type, $return_value, $params) {
+    $plugin_id = get_input("plugin_id");
+
+    if ($plugin_id !== "pleio_template") {
+        return $return_value;
+    }
+
+    $name = get_input("name");
+    $values = get_input("values");
+
+    $filters = [];
+    foreach ($name as $i => $name) {
+        $filters[] = [
+            "name" => $name,
+            "values" => $values[$i]
+        ];
+    }
+
+    $footerTitle = get_input("footerTitle");
+    $footerLink = get_input("footerLink");
+
+    $footer = [];
+    foreach ($footerLink as $i => $link) {
+        $footer[] = [
+            "title" => $footerTitle[$i],
+            "link" => $footerLink[$i]
+        ];
+    }
+
+    $params = get_input("params");
+    $params["filters"] = serialize($filters);
+    $params["footer"] = serialize($footer);
+    set_input("params", $params);
 }
 
 function pleio_template_user_icon_url($hook, $type, $return_value, $params) {

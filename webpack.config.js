@@ -10,6 +10,9 @@ module.exports = {
             "webpack-dev-server/client?http://localhost:9001",
             "webpack/hot/only-dev-server",
             "./src/js/Web.jsx"
+        ],
+        admin: [
+            "./src/js/Admin.jsx"
         ]
     },
     output: {

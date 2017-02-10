@@ -7,6 +7,9 @@ module.exports = {
     entry: {
         web: [
             "./src/js/Web.jsx"
+        ],
+        admin: [
+            "./src/js/Admin.jsx"
         ]
     },
     output: {

@@ -42,27 +42,50 @@ class TopMenu extends React.Component {
     }
 
     render() {
-        let menuItems = "";
-        if (this.props.data.site) {
-            menuItems = this.props.data.site.menu.map((item) => {
-                if (item.js) {
-                    return (
-                        <li key={item.guid}>
-                            <Link to={item.link} onClick={this.closeMobileMenu} title={item.title} className="navigation__link" activeClassName="___is-active">
-                                {item.title}
-                            </Link>
-                        </li>
-                    )
-                } else {
-                    return (
-                        <li key={item.guid}>
-                            <a href={item.link} onClick={this.closeMobileMenu} title={item.title} className="navigation__link">
-                                {item.title}
-                            </a>
-                        </li>
-                    )
-                }
-            })
+        const { site } = this.props.data
+        let menuItems, home, mobileHome
+
+        if (!site) {
+            return (
+                <div></div>
+            )
+        }
+
+        menuItems = site.menu.map((item) => {
+            if (item.js) {
+                return (
+                    <li key={item.guid}>
+                        <Link to={item.link} onClick={this.closeMobileMenu} title={item.title} className="navigation__link" activeClassName="___is-active">
+                            {item.title}
+                        </Link>
+                    </li>
+                )
+            } else {
+                return (
+                    <li key={item.guid}>
+                        <a href={item.link} onClick={this.closeMobileMenu} title={item.title} className="navigation__link">
+                            {item.title}
+                        </a>
+                    </li>
+                )
+            }
+        })
+
+        if (site.showLogo) {
+            home = (
+                <li>
+                    <Link to="/" onClick={this.closeMobileMenu} title="Home" className="navigation__link ___home" activeClassName="___is-active">Home</Link>
+                </li>
+            )
+            mobileHome = (
+                <Link to="/" onClick={this.closeMobileMenu} className="mobile-navigation__home" />
+            )
+        } else {
+            home = (
+                <li>
+                    <Link to="/" onClick={this.closeMobileMenu} title="Home" className="navigation__link" activeClassName="___is-active">Home</Link>
+                </li>
+            )
         }
 
         return (
@@ -82,9 +105,7 @@ class TopMenu extends React.Component {
                             Rechtstreeks naar content
                         </a>
                         <ul className="navigation__links">
-                            <li>
-                                <Link to="/" onClick={this.closeMobileMenu} title="Home" className="navigation__link ___home" activeClassName="___is-active">Home</Link>
-                            </li>
+                            {home}
                             {menuItems}
                             <li className="navigation__dropdown ___mobile">
                                 <a href="#" title="Meer" className="navigation__link ___dropdown" onClick={this.toggleSubmenu}>Meer</a>
@@ -108,7 +129,7 @@ class TopMenu extends React.Component {
                     </div>
                     <div className="mobile-navigation__bar">
                         <div className="mobile-navigation__trigger" onClick={this.toggleMobileMenu} />
-                        <Link to="/" onClick={this.closeMobileMenu} className="mobile-navigation__home" />
+                        {mobileHome}
                         <UserMobileMenu onClick={this.closeMobileMenu} viewer={this.props.data.viewer} />
                     </div>
                 </div>
@@ -121,6 +142,7 @@ const WithQuery = gql`
     query TopMenu {
         site {
             guid
+            showLogo
             menu {
                 guid
                 title

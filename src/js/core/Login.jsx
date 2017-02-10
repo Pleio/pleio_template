@@ -64,13 +64,21 @@ class Login extends React.Component {
     }
 
     render() {
-        let errors;
+        const { site } = this.props.data
+        let title, errors
+
+        if (site) {
+            title = `Welkom op ${site.name}`
+        } else {
+            title = "Welkom"
+        }
+
         if (this.state.errors) {
             errors = ( <Errors errors={this.state.errors} /> );
         }
 
         return (
-            <Modal ref="modal" id="login" title="Welkom op Leraar.nl" small={true} isBlue={true}>
+            <Modal ref="modal" id="login" title={title} small={true} isBlue={true}>
                 {errors}
                 <Form ref="form" className="form login" onSubmit={this.onSubmit}>
                     <InputField name="username" type="text" placeholder="E-mailadres" className="form__input" rules="required" />
@@ -100,8 +108,17 @@ class Login extends React.Component {
     }
 }
 
-const LOGIN = gql`
-    mutation login($input: loginInput!) {
+const Query = gql`
+    query Login {
+        site {
+            guid
+            name
+        }
+    }
+`
+
+const Mutation = gql`
+    mutation Login($input: loginInput!) {
         login(input: $input) {
             viewer {
                 guid
@@ -115,5 +132,4 @@ const LOGIN = gql`
         }
     }
 `
-const withLogin = graphql(LOGIN)
-export default connect()(withLogin(Login))
+export default connect()(graphql(Query)(graphql(Mutation)(Login)))

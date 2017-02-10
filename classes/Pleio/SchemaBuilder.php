@@ -475,6 +475,18 @@ class SchemaBuilder {
             ]
         ]);
 
+        $filterType = new ObjectType([
+            "name" => "Filter",
+            "fields" => [
+                "name" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "values" => [
+                    "type" => Type::listOf(Type::string())
+                ]
+            ]
+        ]);
+
         $activityTypeEnum = new EnumType([
             "name" => "ActivityType",
             "description" => "The type of activity",
@@ -555,8 +567,23 @@ class SchemaBuilder {
                 "menu" => [
                     "type" => Type::listOf($menuItemType)
                 ],
+                "footer" => [
+                    "type" => Type::listOf($menuItemType)  
+                ],
                 "accessIds" => [
                     "type" => Type::listOf($accessIdType)
+                ],
+                "showLogo" => [
+                    "type" => Type::nonNull(Type::boolean())
+                ],
+                "showLeader" => [
+                    "type" => Type::nonNull(Type::boolean())
+                ],
+                "showInitiative" => [
+                    "type" => Type::nonNull(Type::boolean())
+                ],
+                "filters" => [
+                    "type" => Type::nonNull(Type::listOf($filterType))
                 ],
                 "usersOnline" => [
                     "type" => Type::nonNull(Type::int()),

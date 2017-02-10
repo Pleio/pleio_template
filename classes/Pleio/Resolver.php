@@ -6,6 +6,13 @@ class Resolver {
         $site = elgg_get_site_entity();
         $user = elgg_get_logged_in_user_entity();
 
+        $showLogo = (elgg_get_plugin_setting("show_logo", "pleio_template") === "yes") ? true : false;
+        $showLeader = (elgg_get_plugin_setting("show_leader", "pleio_template") === "yes") ? true : false;
+        $showInitiativeWidget = (elgg_get_plugin_setting("show_initiative_widget", "pleio_template") === "yes") ? true : false;
+
+        $filters = unserialize(elgg_get_plugin_setting("filters", "pleio_template"));
+        $footer = unserialize(elgg_get_plugin_setting("footer", "pleio_template"));
+
         if ($user && Helpers::isUser()) {
             if (Helpers::canJoin()) {
                 Helpers::addUser();
@@ -28,7 +35,12 @@ class Resolver {
                 ["guid" => "menu:" . 2, "title" => "Nieuws", "link" => "/news", "js" => true],
                 ["guid" => "menu:" . 3, "title" => "Forum", "link" => "/questions", "js" => true]
             ],
+            "footer" => $footer,
+            "showLogo" => $showLogo,
+            "showLeader" => $showLeader,
+            "showInitiativeWidget" => $showInitiativeWidget,
             "accessIds" => $accessIds,
+            "filters" => $filters,
             "defaultAccessId" => get_default_access()
         ];
     }
