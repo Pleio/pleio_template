@@ -49,7 +49,6 @@ class Resolver {
         global $CONFIG;
 
         $tags = $args["tags"];
-        $subtype = $args["subtype"];
 
         if ($tags == ["mine"]) {
             $user = elgg_get_logged_in_user_entity();
@@ -61,11 +60,11 @@ class Resolver {
                 }
             }
 
-            $result = Helpers::getEntitiesFromTags($subtype, $tags, (int) $args["offset"], (int) $args["limit"]);
+            $result = Helpers::getEntitiesFromTags(["news", "blog", "question"], $tags, (int) $args["offset"], (int) $args["limit"]);
         } else {
             $options = [
                 "type" => "object",
-                "subtype" => $subtype,
+                "subtype" => ["news", "blog", "question"],
                 "offset" => (int) $args["offset"],
                 "limit" => (int) $args["limit"]
             ];
