@@ -57,19 +57,21 @@ class Mutations {
             $new_user = get_entity($guid);
             $site = elgg_get_site_entity();
 
-            if ($newsletter) {
-                newsletter_subscribe_user($new_user, $site);
-            }
+            $ia = elgg_set_ignore_access(true);
 
             if ($tags) {
-                $ia = elgg_set_ignore_access(true);
                 $new_user->tags = filter_tags($tags);
-                elgg_set_ignore_access($ia);
+            }
+
+            if ($newsletter) {
+                add_entity_relationship($guid, "subscribed", $site->guid);
             }
 
             if ($terms) {
                 $new_user->setPrivateSetting("general_terms_accepted", time());
             }
+
+            elgg_set_ignore_access($ia);
 
             $params = array(
                 'user' => $new_user,

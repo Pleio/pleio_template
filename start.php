@@ -35,6 +35,9 @@ function pleio_template_init() {
     elgg_register_page_handler("graphql", "pleio_template_graphql");
     elgg_register_page_handler("upload", "pleio_template_upload");
 
+    elgg_unregister_plugin_hook_handler("register", "user", "newsletter_register_user_handler");
+    elgg_unregister_event_handler("create", "member_of_site", "newsletter_join_site_event_handler");
+
     elgg_unregister_plugin_hook_handler("entity:icon:url", "user", "profile_override_avatar_url");
     elgg_register_plugin_hook_handler("entity:icon:url", "user", "pleio_template_user_icon_url");
 
