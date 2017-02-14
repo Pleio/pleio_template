@@ -8,6 +8,7 @@ import { logErrors } from "../lib/helpers"
 import Modal from "./components/Modal"
 import { connect } from "react-redux"
 import Form from "./components/Form"
+import { Link } from "react-router"
 import InputField from "./components/InputField"
 import { showModal, hideModal } from "../lib/actions"
 
@@ -15,23 +16,11 @@ class Login extends React.Component {
     constructor(props) {
         super(props)
 
-        this.showRegister = this.showRegister.bind(this)
-        this.showForgotPassword = this.showForgotPassword.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
 
         this.state = {
             errors: null
         }
-    }
-
-    showRegister(e) {
-        e.preventDefault()
-        this.props.dispatch(showModal("register"))
-    }
-
-    showForgotPassword(e) {
-        e.preventDefault()
-        this.props.dispatch(showModal("forgotPassword"))
     }
 
     onSubmit(e) {
@@ -52,7 +41,7 @@ class Login extends React.Component {
             }
         }).then(({data}) => {
             if (data.login.viewer.loggedIn === true) {
-                location.reload();
+                window.location.href = '/'
             }
         }).catch((errors) => {
             logErrors(errors)
@@ -78,7 +67,7 @@ class Login extends React.Component {
         }
 
         return (
-            <Modal ref="modal" id="login" title={title} small={true} isBlue={true}>
+            <Modal ref="modal" id="login" title={title} small={true} isBlue={true} noParent={true}>
                 {errors}
                 <Form ref="form" className="form login" onSubmit={this.onSubmit}>
                     <InputField name="username" type="text" placeholder="E-mailadres" className="form__input" rules="required" />
@@ -89,12 +78,12 @@ class Login extends React.Component {
                     </button>
 
                     <div className="buttons ___vertical-mobile">
-                        <a href="#" onClick={this.showRegister} className="form__link ___block-mobile">
+                        <Link to="/register" className="form__link ___block-mobile">
                             Registreren
-                        </a>
-                        <a href="#" onClick={this.showForgotPassword} className="form__link ___block-mobile">
+                        </Link>
+                        <Link to="/forgotpassword" className="form__link ___block-mobile">
                             Wachtwoord vergeten?
-                        </a>
+                        </Link>
                     </div>
                 </Form>
             </Modal>

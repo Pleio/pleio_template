@@ -84,11 +84,12 @@ class ContentFiltersInputField extends React.Component {
 
     render() {
         const { site } = this.props.data
-        if (!site) {
+        if (!site || !site.filters || site.filters.length === 0) {
             return (
                 <div />
             )
         }
+
         const filters = site.filters.map((filter, i) => (
             <div key={i} className="col-sm-8 col-lg-6">
                 <div className="form__item">
@@ -98,9 +99,19 @@ class ContentFiltersInputField extends React.Component {
             </div>
         ))
 
+        let label
+        if (this.props.label) {
+            label = (
+                <p>{this.props.label}</p>
+            )
+        }
+
         return (
-            <div className="row">
-                {filters}
+            <div>
+                {label}
+                <div className="row">
+                    {filters}
+                </div>
             </div>
         )
     }

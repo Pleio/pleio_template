@@ -3,6 +3,7 @@ import ReactDOM from "react-dom"
 import { connect } from "react-redux"
 import { showModal, hideModal } from "../lib/actions"
 import { graphql } from "react-apollo"
+import { Link } from "react-router"
 import gql from "graphql-tag"
 import Errors from "./components/Errors"
 import client from "../lib/client"
@@ -51,7 +52,7 @@ class SlideOne extends React.Component {
                     <InputField type="password" name="passwordAgain" label="Wachtwoord verificatie" placeholder="Vul je wachtwoord nogmaals in" className="form__input" rules="required|min:8" />
 
                     <div className="buttons ___space-between ___margin-top">
-                        <a href="#" onClick={this.props.showLogin} className="form__link">Inloggen</a>
+                        <Link to="/login" className="form__link">Inloggen</Link>
                         <button className="button" type="submit">Volgende</button>
                     </div>
                 </Form>
@@ -67,29 +68,28 @@ class SlideTwo extends React.Component {
     }
 
     render() {
-        if (!this.props.success) {
-            return (
-                <Form ref="form" className="form login" onSubmit={this.props.onRegister}>
-                    <Errors errors={this.props.errors} />
-                    <p>Vul hier je interesses in.</p>
-                    <ContentFiltersInputField name="filters" />
-                    <div className="form__conditions">
-                        <CheckField id="terms" name="terms" type="checkbox" label="Ik ga akkoord met de Algemene Voorwaarden*" rules="required" />
-                        <CheckField id="newsletter" name="newsletter" type="checkbox" label="Ik wil de nieuwsbrief ontvangen" />
-                    </div>
-                    <div className="buttons ___margin-top ___end ___gutter">
-                        <div href="#" onClick={() => this.props.previousSlide()} className="button__underline">Vorige</div>
-                        <button className="button ___primary" type="submit">Registreer</button>
-                    </div>
-                </Form>
-            )
-        } else {
+        if (this.props.success) {
             return (
                 <div>
                     We hebben een unieke activatielink naar jouw e-mailadres gestuurd. Volg deze activatielink om direct in te loggen.
                 </div>
             )
         }
+
+        return (
+            <Form ref="form" className="form login" onSubmit={this.props.onRegister}>
+                <Errors errors={this.props.errors} />
+                <ContentFiltersInputField name="filters" label="Vul hier je interesses in" />
+                <div className="form__conditions">
+                    <CheckField id="terms" name="terms" type="checkbox" label="Ik ga akkoord met de Algemene Voorwaarden*" rules="required" />
+                    <CheckField id="newsletter" name="newsletter" type="checkbox" label="Ik wil de nieuwsbrief ontvangen" />
+                </div>
+                <div className="buttons ___margin-top ___end ___gutter">
+                    <div href="#" onClick={() => this.props.previousSlide()} className="button__underline">Vorige</div>
+                    <button className="button ___primary" type="submit">Registreer</button>
+                </div>
+            </Form>
+        )
     }
 }
 
@@ -102,12 +102,7 @@ class Register extends React.Component {
             success: false
         }
 
-        this.showLogin = this.showLogin.bind(this)
         this.onRegister = this.onRegister.bind(this)
-    }
-
-    showLogin(e) {
-        this.props.dispatch(showModal('login'))
     }
 
     onRegister(e) {
@@ -149,8 +144,8 @@ class Register extends React.Component {
         let content = ""
 
         return (
-            <ModalWithSlides id="register" title="Registreren" steps={[1,2]} small={true} isBlue={true}>
-                <SlideOne ref="slideOne" showLogin={this.showLogin} />
+            <ModalWithSlides id="register" title="Registreren" steps={[1,2]} small={true} isBlue={true} noParent={true}>
+                <SlideOne ref="slideOne" />
                 <SlideTwo ref="slideTwo" onRegister={this.onRegister} errors={this.state.errors} success={this.state.success} />
             </ModalWithSlides>
         )

@@ -59,14 +59,14 @@ class UserMenu extends React.Component {
                         <NavigationSearch ref="search" />
                     </li>
                     <li>
-                        <a onClick={() => {this.props.onClick(); this.showModal('login');}} title="Inloggen" className="navigation__action ___login">
+                        <Link to="/login" title="Inloggen" className="navigation__action ___login">
                             Inloggen
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a onClick={() => {this.props.onClick(); this.showModal('register');}} title="Registeren" className="navigation__action ___register">
+                        <Link to="/register" title="Registeren" className="navigation__action ___register">
                             Registeren
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             )

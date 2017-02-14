@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { showModal } from "../lib/actions"
 import { logErrors } from "../lib/helpers"
 import { graphql } from "react-apollo"
+import { Link } from "react-router"
 import gql from "graphql-tag"
 import Form from "./components/Form"
 import InputField from "./components/InputField"
@@ -12,22 +13,11 @@ class ForgotPassword extends React.Component {
 
     constructor(props) {
         super(props)
-        this.showLogin = this.showLogin.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
 
         this.state = {
             success: false
         }
-    }
-
-    showLogin(e) {
-        e.preventDefault()
-
-        this.setState({
-            success: false
-        })
-
-        this.props.dispatch(showModal("login"))
     }
 
     onSubmit(e) {
@@ -78,16 +68,18 @@ class ForgotPassword extends React.Component {
                 <form className="form">
                     <p>Binnen enkele minuten ontvang je een e-mail met een link naar een unieke verificatiepagina. Klik op de link in het bericht en een nieuw wachtwoord zal naar je worden opgestuurd</p>
                     <div className="buttons ___end ___margin-top">
-                        <div className="button__underline" onClick={this.showLogin}>
-                            Terug naar inloggen
-                        </div>
+                        <Link to="/login">
+                            <div className="button__underline">
+                                Terug naar inloggen
+                            </div>
+                        </Link>
                     </div>
                 </form>
             )
         }
 
         return (
-            <Modal ref="modal" id="forgotPassword" title="Wachtwoord vergeten?" steps={[1,2]} small={true} isBlue={true}>
+            <Modal ref="modal" id="forgotPassword" title="Wachtwoord vergeten?" steps={[1,2]} small={true} isBlue={true} noParent={true}>
                 {errors}
                 {body}
             </Modal>

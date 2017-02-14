@@ -8,30 +8,18 @@ import { connect } from "react-redux"
 import gql from "graphql-tag"
 import { showModal } from "../lib/actions"
 import { logErrors } from "../lib/helpers"
-import { browserHistory } from "react-router"
+import { Link, browserHistory } from "react-router"
 
 class ForgotPasswordConfirm extends React.Component {
     constructor(props) {
         super(props)
 
         this.onSubmit = this.onSubmit.bind(this)
-        this.showLogin = this.showLogin.bind(this)
 
         this.state = {
             success: false,
             showMe: true
         }
-    }
-
-    showLogin(e) {
-        e.preventDefault()
-
-        this.setState({
-            success: false,
-            showMe: false
-        })
-
-        this.props.dispatch(showModal("login"))
     }
 
     onSubmit(e) {
@@ -80,9 +68,11 @@ class ForgotPasswordConfirm extends React.Component {
                 <form className="form">
                     <p>Binnen enkele minuten ontvang je een e-mail met je nieuwe wachtwoord.</p>
                     <div className="buttons ___end ___margin-top">
-                        <div className="button__underline" onClick={this.showLogin}>
-                            Terug naar inloggen
-                        </div>
+                        <Link to="/login">
+                            <div className="button__underline">
+                                Terug naar inloggen
+                            </div>
+                        </Link>
                     </div>
                 </form>
             )

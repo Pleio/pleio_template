@@ -5,9 +5,11 @@ import Container from "./core/components/Container"
 import AbsoluteContainer from "./core/components/AbsoluteContainer"
 
 import NotFound from "./core/NotFound"
-import ForgotPasswordConfirm from "./core/ForgotPasswordConfirm"
 import Login from "./core/Login"
 import Logout from "./core/Logout"
+import Register from "./core/Register"
+import ForgotPassword from "./core/ForgotPassword"
+import ForgotPasswordConfirm from "./core/ForgotPasswordConfirm"
 
 import Privacy from "./core/Privacy"
 import Terms from "./core/Terms"
@@ -53,8 +55,11 @@ const routes = {
         { path: "/bookmarks", component: BookmarksList },
         { path: "/trending/:tag", component: TrendingList },
         { path: "/search", component: SearchResults },
-        { path: "/resetpassword", component: ForgotPasswordConfirm },
-        { path: "/logout", component: Logout }
+        { path: "/login", component: Login },
+        { path: "/logout", component: Logout },
+        { path: "/register", component: Register },
+        { path: "/forgotpassword", component: ForgotPassword },
+        { path: "/resetpassword", component: ForgotPasswordConfirm }
     ]
 }
 
