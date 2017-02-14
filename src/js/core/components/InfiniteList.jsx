@@ -1,4 +1,7 @@
 import React from "react"
+import { getAttribute } from "../../lib/helpers"
+
+let isFetchingMore = false
 
 class InfiniteList extends React.Component {
     constructor(props) {
@@ -9,7 +12,8 @@ class InfiniteList extends React.Component {
         this.refetch = this.refetch.bind(this)
 
         this.state = {
-            offset: 0
+            offset: 0,
+            loading: false
         }
     }
 
@@ -31,27 +35,60 @@ class InfiniteList extends React.Component {
         }
     }
 
+    getRootFieldName() {
+        const { data } = this.props
+
+        if (data.entities) {
+            return "entities"
+        }
+        
+        if (data.activities) {
+            return "activities"
+        }
+        
+        if (data.bookmarks) {
+            return "bookmarks"
+        }
+
+        if (data.search) {
+            return "search"
+        }
+    }
+
     onScroll(e) {
+        if (!this.refs.infiniteScroll) {
+            // the infinite scroll component is not rendered yet
+            return
+        }
+
         let scrollTop = document.body.scrollTop ? document.body.scrollTop : (document.documentElement.scrollTop)
         let currentOffset = scrollTop + window.innerHeight;
-        let containerOffset = this.refs["infiniteScroll"].offsetHeight + this.refs["infiniteScroll"].offsetTop;
+        let containerOffset = this.refs.infiniteScroll.offsetHeight + this.refs.infiniteScroll.offsetTop;
 
         if (this.props.data.loading) {
-            return;
+            // the infinite scroll component is rendering the first items
+            return
         }
 
         if (currentOffset < containerOffset) {
-            return;
+            return
         }
 
-        if (!this.props.data.entities) {
-            return;
+        const rootFieldName = this.getRootFieldName()
+
+        if (!this.props.data[rootFieldName]) {
+            return
         }
 
-        if (this.props.data.entities.entities.length >= this.props.data.entities.total) {
-            return;
+        if (this.props.data[rootFieldName].edges.length >= this.props.data[rootFieldName].total) {
+            return
         }
 
+        if (isFetchingMore) {
+            return
+        }
+
+        isFetchingMore = true
         this.fetchMore()
     }
 
@@ -59,6 +96,7 @@ class InfiniteList extends React.Component {
         let offset = this.state.offset + this.props.limit
 
         this.setState({
+            loading: true,
             offset
         })
 
@@ -67,13 +105,22 @@ class InfiniteList extends React.Component {
                 offset
             },
             updateQuery: (previousResult, { fetchMoreResult }) => {
-                if (!fetchMoreResult.data) { return previousResult }
+                isFetchingMore = false
 
-                previousResult.entities = Object.assign({}, previousResult.entities, {
-                    entities: [...previousResult.entities.entities, ...fetchMoreResult.data.entities.entities]
+                const { data } = fetchMoreResult
+                if (!data) { return previousResult }
+
+                const rootFieldName = this.getRootFieldName(data)
+
+                this.setState({
+                    loading: false
                 })
 
-                return previousResult;
+                return Object.assign({}, previousResult, {
+                    [rootFieldName]: Object.assign({}, previousResult[rootFieldName], {
+                        edges: [...previousResult[rootFieldName].edges, ...fetchMoreResult.data[rootFieldName].edges]
+                    })
+                });
             }
         })
     }
@@ -83,23 +130,41 @@ class InfiniteList extends React.Component {
     }
 
     render() {
-        let children = [];
-        if (this.props.data.entities) {
-            children = this.props.data.entities.entities.map((child, i) => (
-                <this.props.childClass key={i} subtype={this.props.subtype} entity={child} />
-            ))
+        const rootFieldName = this.getRootFieldName()
+        const { data } = this.props
+
+        if (!data[rootFieldName]) {
+            return (
+                <div />
+            )
         }
 
-        let noItems = ""
-        if (this.props.data.entities && this.props.data.entities.entities.length === 0) {
-            noItems = "Er zijn geen items in deze categorie."
+        if (data[rootFieldName] && data[rootFieldName].edges.length === 0) {
+            return (
+                <div className={getAttribute("containerClassName", this.props, "container")} ref="infiniteScroll">
+                    Er zijn geen items in deze categorie.
+                </div>
+            )
         }
+
+        let loading
+        if (this.state.loading) {
+            loading = (
+                <div className="infinite-scroll__spinner">
+                    <img src="/mod/pleio_template/src/images/spinner.svg" />
+                </div>
+            )
+        }
+
+        const items = data[rootFieldName].edges.map((item, i) => (
+            <this.props.childClass key={i} subtype={this.props.subtype} entity={item} />
+        ))
 
         return (
-            <div className="container" ref="infiniteScroll">
-                <div className="row">
-                    {noItems}
-                    {children}
+            <div className={getAttribute("containerClassName", this.props, "container")} ref="infiniteScroll">
+                <div className={getAttribute("rowClassName", this.props, "row")}>
+                    {items}
+                    {loading}
                 </div>
             </div>
         )

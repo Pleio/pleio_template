@@ -3,7 +3,6 @@ import { connect } from "react-redux"
 import { showModal } from "../lib/actions"
 import ContentHeader from "../core/components/ContentHeader"
 import UsersOnline from "../core/containers/UsersOnline"
-import { sectorOptions, categoryOptions } from "../lib/filters"
 import TopicCard from "./containers/TopicCard"
 import Add from "../core/Add"
 import Document from "../core/components/Document"
@@ -34,12 +33,25 @@ class Index extends React.Component {
     }
 
     render() {
-        let { entities } = this.props.data
+        let { site, entities } = this.props.data
+        let categories, categoriesSection
 
-        const categories = Object.keys(categoryOptions).map((key, i) => (
-                <TopicCard key={i} title={categoryOptions[key]} tags={[key]} />
+        if (site && site.filters && site.filters.length > 0) {
+            categories = site.filters[site.filters.length - 1].values.map((tag, i) => (
+                <TopicCard key={i} title={tag} tags={[tag]} />                
+            ))
+
+            categoriesSection = (
+                <section className="section ___grey ___grow">
+                    <div className="container">
+                        <h3 className="section__title">Categorieën</h3>
+                        <div className="row">
+                            {categories}
+                        </div>
+                    </div>
+                </section>
             )
-        )
+        }
 
         let addQuestion
         if (entities && entities.canWrite) {
@@ -85,14 +97,7 @@ class Index extends React.Component {
                     </div>
                 </section>
 
-                <section className="section ___grey ___grow">
-                    <div className="container">
-                        <h3 className="section__title">Categorieën</h3>
-                        <div className="row">
-                            {categories}
-                        </div>
-                    </div>
-                </section>
+                {categoriesSection}
                 <Add title="Stel een vraag" subtype="question" refetchQueries={["InfiniteList", "QuestionTopicCard"]} />
             </div>
         )
@@ -103,6 +108,13 @@ const Query = gql`
     query QuestionIndex {
         entities(subtype:"question", offset: 0, limit: 1) {
             canWrite
+        }
+        site {
+            guid
+            filters {
+                name
+                values
+            }
         }
     }
 `;

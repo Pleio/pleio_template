@@ -10,13 +10,11 @@ import Modal from "./components/Modal"
 import AccessSelect from "./containers/AccessSelect"
 import RichTextField from "./components/RichTextField"
 import Form from "./components/Form"
+import ContentFiltersInputField from "./components/ContentFiltersInputField"
 import InputField from "./components/InputField"
 import TagsField from "./components/TagsField"
 import FeaturedImageField from "./components/FeaturedImageField"
 import SwitchField from "./components/SwitchField"
-import SwitchesField from "./components/SwitchesField"
-import SelectField from "./components/SelectField"
-import { sectorOptions, categoryOptions } from "../lib/filters"
 import { convertToRaw } from "draft-js"
 import { Set } from "immutable"
 
@@ -33,13 +31,11 @@ class AddModal extends React.Component {
     }
 
     onSubmit(e) {
-        e.preventDefault()
-
         this.setState({
             errors: []
         })
 
-        let values = this.refs.form.getValues()
+        const values = this.refs.form.getValues()
 
         let input = {
             clientMutationId: 1,
@@ -49,7 +45,7 @@ class AddModal extends React.Component {
             description: values.description.getPlainText(),
             richDescription: JSON.stringify(convertToRaw(values.description)),
             featuredImage: values.featuredImage,
-            tags: new Set().merge([values.category]).merge(values.sector).merge(values.tags).toJS()
+            tags: new Set().merge(values.filters).merge(values.tags).toJS()
         }
 
         switch (this.props.subtype) {
@@ -124,8 +120,7 @@ class AddModal extends React.Component {
                             <InputField name="title" type="text" placeholder="Titel" className="form__input" rules="required" autofocus />
                             <RichTextField ref="richText" name="description" placeholder="Beschrijving" rules="required" />
                             {extraFields}
-                            <SelectField label="Categorie" name="category" className="form__input" options={categoryOptions} rules="required" />
-                            <SwitchesField label="Onderwijssector" name="sector" className="form__input" options={sectorOptions} rules="required" />
+                            <ContentFiltersInputField name="filters" className="form__input" />
                             <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" />
                             <div className="buttons ___end ___margin-top">
                                 <button className="button" type="submit">

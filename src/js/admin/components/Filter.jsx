@@ -36,7 +36,7 @@ export default class Filter extends React.Component {
     render() {
         const values = this.state.values.map((value, i) => (
             <li key={i}>
-                <input type="text" name={"values[" + this.props.id + "][]"} value={value} onChange={(e) => this.changeValue(i, e)} />
+                <input type="text" name={"filterValues[" + this.props.id + "][]"} value={value} onChange={(e) => this.changeValue(i, e)} />
                 <span className="elgg-icon elgg-icon-delete" title="Verwijder" onClick={() => this.removeValue(i)}></span>
             </li>
         ))
@@ -44,7 +44,7 @@ export default class Filter extends React.Component {
         return (
             <div className="elgg-module elgg-module-inline">
                 <div className="elgg-head">
-                    <input type="text" name={"name[" + this.props.id + "]"} onChange={this.props.onChangeFilter} value={this.props.name} />
+                    <input type="text" name={"filterName[" + this.props.id + "]"} onChange={this.props.onChangeFilter} value={this.props.name} />
                     <div className="elgg-menu-title">
                         <button className="elgg-button elgg-button-submit" onClick={this.addValue}>Waarde toevoegen</button>
                         <button className="elgg-button elgg-button-submit" onClick={this.props.onRemove}>Filter verwijderen</button>

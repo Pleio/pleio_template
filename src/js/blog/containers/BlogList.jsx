@@ -4,17 +4,16 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
 const Query = gql`
-    query BookmarkList($offset: Int!, $limit: Int!, $tags: [String], $subtype: String) {
-        bookmarks(offset: $offset, limit: $limit, tags: $tags, subtype: $subtype) {
+    query BlogList($offset: Int!, $limit: Int!, $tags: [String!], $subtype: String!) {
+        entities(offset: $offset, limit: $limit, tags: $tags, subtype: $subtype) {
             total
             edges {
                 guid
                 ... on Object {
                     guid
                     title
-                    subtype
-                    url
                     excerpt
+                    url
                     votes
                     hasVoted
                     isBookmarked
@@ -27,6 +26,7 @@ const Query = gql`
                     commentCount
                     owner {
                         guid
+                        username
                         name
                         icon
                         url

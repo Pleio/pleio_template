@@ -2,16 +2,18 @@ import React from "react"
 import classnames from "classnames"
 import Validator from "validatorjs"
 import { Set } from "immutable"
+import { graphql } from "react-apollo"
+import gql from "graphql-tag"
 import { sectorOptions, categoryOptions } from "../../lib/filters"
 
-const suggestions = new Set(Object.keys(sectorOptions)).concat(new Set(Object.keys(categoryOptions)))
+const suggestions = Set()
 
 class TagsField extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            value: new Set(this.props.value),
+            value: Set(this.props.value),
             inputValue: ""
         }
 
@@ -78,8 +80,22 @@ class TagsField extends React.Component {
         return true
     }
 
+    getIgnoredTags() {
+        const { site } = this.props.data
+        let returnValue = Set()
+
+        if (site) {
+            site.filters.forEach((filter) => {
+                returnValue = returnValue.merge(filter.values)
+            })
+        }
+
+        return returnValue
+    }
+
     getValue() {
-        return this.state.value.toJS()
+        const value = this.state.value.subtract(this.getIgnoredTags())
+        return value.toJS()
     }
 
     clearValue() {
@@ -97,7 +113,9 @@ class TagsField extends React.Component {
             <li key={i} onClick={() => this.addTag(hit)}>{hit}</li>
         ))
 
-        const showTags = this.state.value.map((tag, i) => (
+        const value = this.state.value.subtract(this.getIgnoredTags())
+
+        const showTags = value.map((tag, i) => (
             <div key={i} className="tag">
                 {tag}
                 <div className="tag__remove" onClick={() => this.removeTag(tag)} />
@@ -141,4 +159,16 @@ TagsField.contextTypes = {
     detachFromForm: React.PropTypes.func
 }
 
-export default TagsField
+const Query = gql`
+    query tagsField {
+        site {
+            guid
+            filters {
+                name
+                values
+            }
+        }
+    }
+`
+
+export default graphql(Query)(TagsField)

@@ -22,10 +22,12 @@ export default class Select extends React.Component {
     }
 
     toggle(e) {
+        e.preventDefault()
         this.setState({ isOpen: !this.state.isOpen })
     }
 
     chooseOption(e, value) {
+        e.preventDefault()
         this.setState({
             isOpen: false
         })

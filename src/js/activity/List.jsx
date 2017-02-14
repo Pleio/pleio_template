@@ -46,7 +46,7 @@ class Activity extends React.Component {
                 <div className="container">
                     {leader}
                     <ContentFilters onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} selectClassName="___margin-top ___margin-bottom ___margin-bottom-mobile ___filter">
-                        <div className="col-sm-4 col-lg-3 col-lg-offset-3 end-lg middle-lg">
+                        <div className="right-lg">
                             <UsersOnline isGrey={true} />
                         </div>
                     </ContentFilters>
@@ -59,7 +59,9 @@ class Activity extends React.Component {
                                 <Footer />
                             </div>
                         </div>
-                        <ActivityList childClass={Card} className="col-sm-12 col-lg-8" tags={this.state.tags} offset={0} limit={50} />
+                        <div className="col-sm-12 col-lg-8">
+                            <ActivityList childClass={Card} containerClassName="" rowClassName="" tags={this.state.tags} offset={0} limit={20} />
+                        </div>
                     </div>
                 </div>
             </section>

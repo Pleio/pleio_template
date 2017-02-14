@@ -1,19 +1,19 @@
 import React from "react"
-import InfiniteList from "../components/InfiniteList"
+import InfiniteList from "../../core/components/InfiniteList"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
 const Query = gql`
-    query InfiniteList($offset: Int!, $limit: Int!, $tags: [String!], $subtype: String!) {
+    query QuestionList($offset: Int!, $limit: Int!, $tags: [String!], $subtype: String!) {
         entities(offset: $offset, limit: $limit, tags: $tags, subtype: $subtype) {
             total
-            entities {
+            edges {
                 guid
                 ... on Object {
                     guid
                     title
-                    excerpt
                     url
+                    excerpt
                     votes
                     hasVoted
                     isBookmarked
@@ -28,8 +28,8 @@ const Query = gql`
                         guid
                         username
                         name
-                        icon
                         url
+                        icon
                     }
                 }
             }

@@ -11402,6 +11402,17 @@ body.modal__open {
     color: #fff;
   }
 }
+.infinite-scroll__spinner {
+  width: 100%;
+  margin: 1.5em;
+  text-align: center;
+}
+.right-lg {
+  margin-left: auto;
+}
+.users-online {
+  margin: 2rem;
+}
 #__bs_notify__ {
   opacity: .15 !important;
   pointer-events: none;

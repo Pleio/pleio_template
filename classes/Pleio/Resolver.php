@@ -100,7 +100,7 @@ class Resolver {
 
         return [
             "total" => $result["total"],
-            "activities" => $activities
+            "edges" => $activities
         ];
     }
 
@@ -536,7 +536,7 @@ class Resolver {
         return [
             "total" => $result["total"],
             "canWrite" => $canWrite,
-            "entities" => $entities
+            "edges" => $entities
         ];
     }
 
@@ -661,7 +661,7 @@ class Resolver {
         return [
             "total" => $es_results["count"],
             "totals" => $searchTotals,
-            "entities" => $results
+            "edges" => $results
         ];
     }
 
@@ -796,7 +796,7 @@ class Resolver {
 
         return [
             "total" => $total,
-            "entities" => $entities
+            "edges" => $entities
         ];
     }
 }

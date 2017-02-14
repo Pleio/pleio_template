@@ -408,7 +408,7 @@ class SchemaBuilder {
                 "totals" => [
                     "type" => Type::listOf($searchTotalType)
                 ],
-                "entities" => [
+                "edges" => [
                     "type" => Type::listOf($entityInterface)
                 ]
             ]
@@ -423,7 +423,7 @@ class SchemaBuilder {
                 "canWrite" => [
                     "type" => Type::nonNull(Type::boolean())
                 ],
-                "entities" => [
+                "edges" => [
                     "type" => Type::listOf($entityInterface)
                 ]
             ]
@@ -524,7 +524,7 @@ class SchemaBuilder {
                 "total" => [
                     "type" => Type::nonNull(Type::int())
                 ],
-                "activities" => [
+                "edges" => [
                     "type" => Type::listOf($activityType)
                 ]
             ]

@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { showModal } from "../lib/actions"
 import ContentHeader from "../core/components/ContentHeader"
-import InfiniteList from "./containers/InfiniteList"
+import BlogList from "./containers/BlogList"
 import Card from "./components/Card"
 import Trending from "../activity/components/Trending"
 import Top from "../core/components/Top"
@@ -45,7 +45,9 @@ class List extends React.Component {
                                     <Trending />
                                 </div>
                             </div>
-                            <InfiniteList childClass={Card} subtype="blog" offset={0} limit={20} tags={this.state.tags} />
+                            <div className="col-sm-12 col-lg-8">
+                                <BlogList childClass={Card} subtype="blog" offset={0} limit={20} tags={this.state.tags} />
+                            </div>
                         </div>
                     </div>
                 </section>

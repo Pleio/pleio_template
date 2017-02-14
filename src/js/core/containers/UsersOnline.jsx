@@ -16,7 +16,7 @@ class UsersOnline extends React.Component {
         return (
             <div className={classnames({"users-online":true, "___grey":this.props.isGrey})}>
                 <span>
-                    {site.usersOnline} {site.usersOnline == 1 ? "leraar" : "leraren"} online
+                    {site.usersOnline} {site.usersOnline == 1 ? "persoon" : "personen"} online
                 </span>
             </div>
         )

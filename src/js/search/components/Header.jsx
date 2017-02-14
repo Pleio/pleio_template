@@ -3,7 +3,11 @@ import { Link, browserHistory } from "react-router"
 import TabMenu from "../../core/components/TabMenu"
 import classnames from "classnames"
 
-const subtypes = [{title:"Blog", subtype:"blog"}, {title:"Forum", subtype:"question"}, {title:"Nieuws", subtype:"news"}]
+const subtypes = [
+    {title:"Blog", subtype:"blog"},
+    {title:"Forum", subtype:"question"},
+    {title:"Nieuws", subtype:"news"}
+]
 
 export default class Header extends React.Component {
     constructor(props) {
@@ -31,9 +35,18 @@ export default class Header extends React.Component {
     }
 
     render() {
+        const { search } = this.props.data
+
+        if (!search) {
+            return (
+                <div />
+            )
+        }
+
         let searchTotals = {}
         let total = 0
-        this.props.totals.map((subTotal) => {
+
+        search.totals.map((subTotal) => {
             searchTotals[subTotal.subtype] = subTotal.total
             total += subTotal.total
         })

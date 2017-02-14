@@ -14,7 +14,7 @@ import SelectField from "./components/SelectField"
 import SwitchesField from "./components/SwitchesField"
 import CheckField from "./components/CheckField"
 import ModalWithSlides from "./components/ModalWithSlides"
-import { sectorOptions, categoryOptions } from "../lib/filters"
+import ContentFiltersInputField from "./components/ContentFiltersInputField"
 
 class SlideOne extends React.Component {
     constructor(props) {
@@ -29,8 +29,6 @@ class SlideOne extends React.Component {
     }
 
     onSubmit(e) {
-        e.preventDefault()
-
         const values = this.refs.form.getValues()
         if (values.password === values.passwordAgain) {
             this.props.nextSlide()
@@ -73,8 +71,8 @@ class SlideTwo extends React.Component {
             return (
                 <Form ref="form" className="form login" onSubmit={this.props.onRegister}>
                     <Errors errors={this.props.errors} />
-                    <SelectField name="sector" label="Je onderwijssector" options={sectorOptions} rules="required" placeholder="Maak een keuze" />
-                    <SwitchesField name="category" label="Je interesses" options={categoryOptions} />
+                    <p>Vul hier je interesses in.</p>
+                    <ContentFiltersInputField name="filters" />
                     <div className="form__conditions">
                         <CheckField id="terms" name="terms" type="checkbox" label="Ik ga akkoord met de Algemene Voorwaarden*" rules="required" />
                         <CheckField id="newsletter" name="newsletter" type="checkbox" label="Ik wil de nieuwsbrief ontvangen" />
@@ -109,13 +107,10 @@ class Register extends React.Component {
     }
 
     showLogin(e) {
-        e.preventDefault()
         this.props.dispatch(showModal('login'))
     }
 
     onRegister(e) {
-        e.preventDefault()
-
         this.setState({
             errors: []
         })
@@ -135,7 +130,7 @@ class Register extends React.Component {
                     password: values.password,
                     newsletter: values.newsletter,
                     terms: values.terms,
-                    tags: [ ...values.category, values.sector ]
+                    tags: values.filters
                 }
             }
         }).then(({data}) => {

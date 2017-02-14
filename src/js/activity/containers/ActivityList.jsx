@@ -1,5 +1,5 @@
-import React from 'react'
-import InfiniteList from "../components/InfiniteList"
+import React from "react"
+import InfiniteList from "../../core/components/InfiniteList"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
@@ -7,7 +7,7 @@ const Query = gql`
     query InfiniteList($offset: Int!, $limit: Int!, $tags: [String!]) {
         activities(offset: $offset, limit: $limit, tags: $tags) {
             total
-            activities {
+            edges {
                 guid
                 type
                 object {
@@ -39,5 +39,4 @@ const Query = gql`
     }
 `
 
-const withQuery = graphql(Query)
-export default withQuery(InfiniteList)
+export default graphql(Query)(InfiniteList)

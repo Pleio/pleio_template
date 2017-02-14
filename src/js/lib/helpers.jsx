@@ -93,3 +93,21 @@ export function isMobile() {
 
     return isMobile ? true : false;
 }
+
+export function getAttribute(name, object, defaultValue) {
+    if (typeof object[name] !== "undefined") {
+        return object[name]
+    }
+
+    return defaultValue
+}
+
+export function arrayToObject(array) {
+    let returnValue = {}
+
+    array.forEach((item) => {
+        returnValue[item] = item
+    })
+
+    return returnValue
+}

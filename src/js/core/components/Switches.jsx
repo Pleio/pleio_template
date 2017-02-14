@@ -1,6 +1,7 @@
 import React from "react"
 import classnames from "classnames"
 import Switch from "./Switch"
+import { Set } from "immutable"
 
 export default class Switches extends React.Component {
     constructor(props) {
@@ -16,14 +17,16 @@ export default class Switches extends React.Component {
     }
 
     render() {
-        let switches = Object.keys(this.props.options).map((tag, i) => {
+        const value = Set(this.props.value)
+
+        let switches = this.props.options.map((tag, i) => {
             return (
                 <Switch
                     key={i}
                     name={tag}
-                    label={this.props.options[tag]}
+                    label={tag}
                     onChange={this.onChange}
-                    checked={this.props.values.includes(tag)}
+                    checked={value.includes(tag)}
                 />
             )
         })

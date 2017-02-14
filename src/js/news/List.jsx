@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { showModal } from "../lib/actions"
 import ContentHeader from "../core/components/ContentHeader"
-import InfiniteList from "../core/containers/InfiniteList"
+import NewsList from "./containers/NewsList"
 import Card from "./components/Card"
 import ContentFilters from "../core/containers/ContentFilters"
 import AddButton from "../core/containers/AddButton"
@@ -35,7 +35,7 @@ class List extends React.Component {
                     </ContentFilters>
                 </ContentHeader>
                 <section className="section ___grey ___grow">
-                    <InfiniteList childClass={Card} subtype="news" offset={0} limit={20} tags={this.state.tags} />
+                    <NewsList childClass={Card} subtype="news" offset={0} limit={20} tags={this.state.tags} />
                 </section>
                 <Add title="Nieuws toevoegen" subtype="news" featuredImage={true} refetchQueries={["InfiniteList"]} />
             </div>

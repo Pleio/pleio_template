@@ -60,7 +60,15 @@ class Filters extends React.Component {
     render() {
         const filters = this.state.filters.map((filter, i) => {
             return (
-                <Filter key={i} id={i} name={filter.name} values={filter.values} onChangeFilter={(e) => this.changeFilter(i, e)} onRemove={(e) => this.removeFilter(i, e)} />
+                <Filter
+                    key={i} 
+                    id={i}
+                    name={filter.name} 
+                    required={filter.required}
+                    values={filter.values}
+                    onChangeFilter={(e) => this.changeFilter(i, e)}
+                    onRemove={(e) => this.removeFilter(i, e)} 
+                />
             )
         })
 

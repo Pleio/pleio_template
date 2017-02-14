@@ -12,6 +12,7 @@ import { getValueFromTags, getValuesFromTags } from "../lib/helpers"
 import RichTextField from "./components/RichTextField"
 import Form from "./components/Form"
 import InputField from "./components/InputField"
+import ContentFiltersInputField from "./components/ContentFiltersInputField"
 import TagsField from "./components/TagsField"
 import FeaturedImageField from "./components/FeaturedImageField"
 import SwitchField from "./components/SwitchField"
@@ -52,7 +53,7 @@ class EditModal extends React.Component {
             description: values.description.getPlainText(),
             richDescription: JSON.stringify(convertToRaw(values.description)),
             featuredImage: values.featuredImage,
-            tags: new Set().merge([values.category]).merge(values.sector).merge(values.tags).toJS()
+            tags: new Set().merge(values.filters).merge(values.tags).toJS()
         }
 
         switch (this.props.subtype) {
@@ -70,7 +71,6 @@ class EditModal extends React.Component {
             }
         }).then(({data}) => {
             this.props.dispatch(hideModal())
-            //location.reload()
         }).catch((errors) => {
             logErrors(errors)
             this.setState({
@@ -125,9 +125,8 @@ class EditModal extends React.Component {
                             <InputField name="title" type="text" placeholder="Titel" className="form__input" value={this.props.entity.title} rules="required" autofocus />
                             <RichTextField ref="richText" name="description" placeholder="Beschrijving" value={this.props.entity.description} richValue={this.props.entity.richDescription} rules="required" />
                             {extraFields}
-                            <SelectField label="Categorie" name="category" className="form__input" options={categoryOptions} rules="required" value={getValueFromTags(this.props.entity.tags, Object.keys(categoryOptions))} />
-                            <SwitchesField label="Onderwijssector" name="sector" className="form__input" options={sectorOptions} rules="required" values={getValuesFromTags(this.props.entity.tags, Object.keys(sectorOptions))} />
-                            <TagsField name="tags" type="text" className="form__input" value={new Set(this.props.entity.tags).subtract(Object.keys(sectorOptions)).subtract(Object.keys(categoryOptions)).toJS()} />
+                            <ContentFiltersInputField name="filters" className="form__input" value={this.props.entity.tags} />
+                            <TagsField name="tags" type="text" className="form__input" value={this.props.entity.tags} />
                             <div className="buttons ___space-between">
                                 <button className="button" type="submit">
                                     Wijzigen

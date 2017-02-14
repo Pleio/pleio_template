@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { showModal } from "../lib/actions"
 import ContentHeader from "../core/components/ContentHeader"
 import ContentFilters from "../core/containers/ContentFilters"
-import InfiniteList from "../core/containers/InfiniteList"
+import QuestionList from "./containers/QuestionList"
 import AddButton from "../core/containers/AddButton"
 import Document from "../core/components/Document"
 import Card from "./components/Card"
@@ -34,7 +34,7 @@ class List extends React.Component {
                     </ContentFilters>
                 </ContentHeader>
                 <section className="section ___grey ___grow">
-                    <InfiniteList childClass={Card} subtype="question" offset={0} limit={20} tags={this.state.tags} />
+                    <QuestionList childClass={Card} subtype="question" offset={0} limit={20} tags={this.state.tags} />
                 </section>
                 <Add title="Stel een vraag" subtype="question" refetchQueries={["InfiniteList", "QuestionTopicCard"]} />
             </div>

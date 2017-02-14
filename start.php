@@ -83,13 +83,15 @@ function pleio_template_plugins_settings_save($hook, $type, $return_value, $para
         return $return_value;
     }
 
-    $name = get_input("name");
-    $values = get_input("values");
+    $name = get_input("filterName");
+    $values = get_input("filterValues");
+    $required = get_input("filterRequired");
 
     $filters = [];
     foreach ($name as $i => $name) {
         $filters[] = [
             "name" => $name,
+            "required" => ($required[$i] === "yes") ? true : false,
             "values" => $values[$i]
         ];
     }

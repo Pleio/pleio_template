@@ -7,6 +7,7 @@ import RichTextField from "./RichTextField"
 import SelectField from "./SelectField"
 import CheckField from "./CheckField"
 import SwitchField from "./SwitchField"
+import ContentFiltersInputField from "./ContentFiltersInputField"
 import FeaturedImageField from "./FeaturedImageField"
 
 class Form extends React.Component {
@@ -54,6 +55,10 @@ class Form extends React.Component {
     onChange(e) {
         // child has updated it's state, so re-render the form component
         this.forceUpdate()
+
+        if (this.props.onChange) {
+            this.props.onChange(e)
+        }
     }
 
     onSubmit(e) {
@@ -129,6 +134,7 @@ class Form extends React.Component {
                 case InputField:
                 case SelectField:
                 case RichTextField:
+                case ContentFiltersInputField:
                 case TagsField:
                 case SwitchField:
                 case CheckField:

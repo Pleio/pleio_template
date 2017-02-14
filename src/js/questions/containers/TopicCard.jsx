@@ -15,7 +15,7 @@ class TopicCard extends React.Component {
             )
         }
 
-        const items = entities.entities.map((entity, i) => (
+        const items = entities.edges.map((entity, i) => (
             <Link key={i} to={entity.url} className="card-list-topics__item">
                 <div className="card-list-topics__date">
                     {showShortDate(entity.timeCreated)}
@@ -48,7 +48,7 @@ class TopicCard extends React.Component {
 const Query = gql`
     query QuestionTopicCard($tags: [String!]) {
         entities(subtype:"question", offset: 0, limit: 5, tags: $tags) {
-            entities {
+            edges {
                 guid
                 ... on Object {
                     title

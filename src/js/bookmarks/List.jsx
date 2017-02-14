@@ -42,7 +42,7 @@ export default class List extends React.Component {
                                 </div>
                             </div>
                             <div className="col-sm-12 col-lg-8">
-                                <BookmarkList childClass={Card} className="col-sm-12 col-lg-8" subtype={this.state.subtype} tags={this.state.tags} offset={0} limit={50} />
+                                <BookmarkList childClass={Card} className="col-sm-12 col-lg-8" subtype={this.state.subtype} tags={this.state.tags} offset={0} limit={20} />
                             </div>
                         </div>
                     </div>
