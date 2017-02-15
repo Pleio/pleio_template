@@ -15,7 +15,6 @@ class Lead extends React.Component {
         }
 
         this.onClose = this.onClose.bind(this)
-        this.openRegister = this.openRegister.bind(this)
     }
 
     onClose(e) {
@@ -67,7 +66,7 @@ class Lead extends React.Component {
                                 </div>
                             </Link>
                             <Link to="/register">
-                                <div className="button ___large" onClick={this.openRegister}>
+                                <div className="button ___large">
                                     Aan de slag
                                 </div>
                             </Link>
