@@ -41,7 +41,7 @@ class Activity extends React.Component {
         }
 
         return (
-            <section className="section ___less-padding-top">
+            <section className="section">
                 <Document title="Activiteiten" />
                 <div className="container">
                     {leader}

@@ -15,9 +15,6 @@ export default class AbsoluteContainer extends React.Component {
                 <main id="skip-navigation" className="page-layout__main ___no-padding">
                     {this.props.children}
                 </main>
-                <Login />
-                <Register />
-                <ForgotPassword />
                 <SearchOverlay />
             </div>
         )

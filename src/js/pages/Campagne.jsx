@@ -3,17 +3,11 @@ import Document from "../core/components/Document"
 import VideoModal from "../core/components/VideoModal"
 import { connect } from "react-redux"
 import { showModal } from "../lib/actions"
+import { Link } from "react-router"
 
 class Campagne extends React.Component {
     constructor(props) {
         super(props)
-
-        this.showRegister = this.showRegister.bind(this)
-    }
-
-    showRegister(e) {
-        e.preventDefault()
-        this.props.dispatch(showModal("register"))
     }
 
     render() {
@@ -61,7 +55,11 @@ class Campagne extends React.Component {
 
                 <section className="section">
                     <div className="container">
-                        <div className="buttons ___center ___margin-top"><a href="#" target="_blank" className="button" onClick={this.showRegister}>Aanmelden voor community</a></div>
+                        <div className="buttons ___center ___margin-top">
+                            <Link to="/register" className="button">
+                                Aanmelden voor community
+                            </Link>
+                        </div>
                     </div>
                 </section>
 
@@ -123,7 +121,11 @@ class Campagne extends React.Component {
                     <div className="container">
                         <h3 className="main__title ___primary ___less-margin-bottom">Toegang tot de testversie?</h3>
                         <p className="campagne__paragraph">Schrijf je in en maak deel uit van de community</p>
-                        <div className="buttons ___margin-top-extra ___center"><a href="#" className="button ___large" onClick={this.showRegister}>Aanmelden voor de community</a></div>
+                        <div className="buttons ___margin-top-extra ___center">
+                            <Link to="/register" className="button ___large">
+                                Aanmelden voor de community
+                            </Link>
+                        </div>
                     </div>
                 </section>
                 <VideoModal ref="videoModal" type="vimeo" id="194009767" />
