@@ -11,7 +11,14 @@ class Resolver {
         $showInitiativeWidget = (elgg_get_plugin_setting("show_initiative_widget", "pleio_template") === "yes") ? true : false;
 
         $filters = unserialize(elgg_get_plugin_setting("filters", "pleio_template"));
+        if (!$filters) {
+            $filters = [];
+        }
+
         $footer = unserialize(elgg_get_plugin_setting("footer", "pleio_template"));
+        if (!$footer) {
+            $footer = [];
+        }
 
         if ($user && Helpers::isUser()) {
             if (Helpers::canJoin()) {
@@ -108,6 +115,7 @@ class Resolver {
         $options = [
             "type" => "object",
             "metadata_name" => "isRecommended",
+            "metadata_value" => "1",
             "offset" => (int) $args["offset"],
             "limit" => (int) $args["limit"]
         ];
@@ -129,7 +137,7 @@ class Resolver {
 
         return [
             "total" => elgg_get_entities_from_metadata(array_merge($options, ["count" => true])),
-            "entities" => $entities
+            "edges" => $entities
         ];
     }
 
@@ -595,7 +603,7 @@ class Resolver {
 
     static function isRecommended($object) {
         $object = get_entity($object["guid"]);
-        return $object->isRecommended ? true : false;
+        return $object->isRecommended && ($object->isRecommended == 1) ? true : false;
     }
 
     static function canBookmark($object) {

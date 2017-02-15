@@ -36,6 +36,7 @@ class EditModal extends React.Component {
     }
 
     onDelete(e) {
+        e.preventDefault()
         this.props.dispatch(showModal("delete"))
     }
 

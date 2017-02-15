@@ -174,8 +174,6 @@ class Mutations {
                 if (elgg_is_admin_logged_in()) {
                     if (isset($input["isRecommended"])) {
                         $entity->isRecommended = $input["isRecommended"];
-                    } else {
-                        unset($entity->isRecommended);
                     }
                 }
 
@@ -248,7 +246,11 @@ class Mutations {
 
                 if (elgg_is_admin_logged_in()) {
                     if (isset($input["isRecommended"])) {
-                        $entity->isRecommended = $input["isRecommended"];
+                        if ($input["isRecommended"]) {
+                            $entity->isRecommended = $input["isRecommended"];
+                        } else {
+                            unset($entity->isRecommended);
+                        }
                     }
                 }
 

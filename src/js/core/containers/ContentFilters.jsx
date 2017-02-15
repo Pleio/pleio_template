@@ -25,8 +25,8 @@ class ContentFilters extends React.Component {
             filters
         })
 
-        const selectedTags = Object.keys(filters).map((i) => site.filters[i].values[filters[i]])
-        this.props.onChange(selectedTags.filter((i) => i != null))
+        const selectedTags = Object.keys(filters).map((i) => filters[i]).filter((i) => i !== "all")
+        this.props.onChange(selectedTags)
     }
 
     render() {
@@ -39,11 +39,21 @@ class ContentFilters extends React.Component {
         }
 
         const filters = site.filters.map((filter, i) => {
-            const options = List(filter.values).push(`Alle ${filter.name}`).toJS()
+            let options = {}
+
+            filter.values.forEach((value) => {
+                options[value] = value
+            })
+
+            if (i === (site.filters.length - 1)) {
+                options["mine"] = `Mijn ${filter.name}`
+            }
+
+            options["all"] = `Alle ${filter.name}`
 
             return (
                 <div key={i} className="col-sm-4 col-lg-3">
-                    <Select name={filter.name} placeholder={filter.name} className={this.props.selectClassName} options={options} onChange={(value) => this.onChangeFilter(i, value)} value={this.state.filters[i]} />
+                    <Select name={filter.name} className={this.props.selectClassName} options={options} onChange={(value) => this.onChangeFilter(i, value)} value={this.state.filters[i] || "all"} />
                 </div>
             )
         })
