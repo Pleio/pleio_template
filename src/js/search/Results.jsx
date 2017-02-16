@@ -13,7 +13,7 @@ export default class Results extends React.Component {
                 <Document title="Zoeken" />
                 <Header q={query.q} type={query.type} subtype={query.subtype} />
                 <section className="section ___grey ___grow">
-                    <ResultList childClass={Card} q={query.q} type={query.type} subtype={query.subtype} offset={query.offset || 0} limit={query.limit || 20} />
+                    <ResultList childClass={Card} q={query.q} type={query.type} subtype={query.subtype} offset={query.offset || 0} limit={query.limit || 10} />
                 </section>
             </div>
         )

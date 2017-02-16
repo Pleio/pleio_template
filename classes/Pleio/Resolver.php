@@ -634,8 +634,25 @@ class Resolver {
         $es = \ESInterface::get();
 
         $results = array();
-        $es_results = $es->search($args["q"], null, $args["type"], $args["subtype"], $args["limit"], $args["offset"]);
-        foreach ($es_results['hits'] as $hit) {
+
+        if (!$args["type"]) {
+            $args["type"] = "object";
+        }
+
+        if (!$args["subtype"] || !in_array($args["subtype"], ["blog","news","question"])) {
+            $args["subtype"] = ["blog","news","question"];
+        }
+
+        $es_results = $es->search(
+            $args["q"],
+            null,
+            $args["type"],
+            $args["subtype"],
+            $args["limit"],
+            $args["offset"]
+        );
+
+        foreach ($es_results["hits"] as $hit) {
             $results[] = [
                 "guid" => $hit->guid,
                 "ownerGuid" => $hit->owner_guid,
