@@ -150,9 +150,6 @@ class Mutations {
         }
 
         switch ($input["type"]) {
-            case "group":
-                $entity = new \ElggGroup();
-                $entity->name = $input["name"];
             case "object":
                 if (!in_array($input["subtype"], array("news", "blog", "question", "comment","page"))) {
                     throw new Exception("invalid_subtype");
@@ -708,6 +705,34 @@ class Mutations {
         if ($result) {
             return [
                 "guid" => $page->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
+    }
+
+    static function addGroup($input) {
+        $group = new \ElggGroup();
+        $user = elgg_get_logged_in_user_entity();
+
+        if ($input["avatar"]) {
+            Helpers::saveToIcon($input["avatar"], $entity);
+            $group->icontime = time();
+        } else {
+            unset($group->icontime);
+        }
+
+        $group->name = $input["name"];
+        $group->membership = $input["isClosed"] ? ACCESS_PRIVATE : ACCESS_PUBLIC;
+        $group->description = $input["description"];
+        $group->tags = $input["tags"];
+        $result = $group->save();
+
+        if ($result) {
+            $group->join($user);
+
+            return [
+                "guid" => $group->guid
             ];
         }
 

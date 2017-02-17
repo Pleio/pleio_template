@@ -28,6 +28,10 @@ import NewsItem from "./news/Item"
 import PageList from "./page/List"
 import PageItem from "./page/Item"
 
+import GroupList from "./group/List"
+import GroupAdd from "./group/Add"
+import GroupItem from "./group/Item"
+
 import QuestionsIndex from "./questions/Index"
 import QuestionsList from "./questions/List"
 import QuestionsItem from "./questions/Item"
@@ -108,6 +112,17 @@ const questionsRoutes = {
     ]
 }
 
+const groupRoutes = {
+    path: "/groups",
+    component: Container,
+    indexRoute: { component: GroupList },
+    childRoutes: [
+        { path: "all", component: GroupList },
+        { path: "add", component: GroupAdd },
+        { path: "view/:guid/:slug", component: GroupItem }
+    ]
+}
+
 const profileRoutes = {
     path: "/profile",
     component: Container,
@@ -131,7 +146,7 @@ const notFoundRoutes = {
 }
 
 const rootRoute = {
-    childRoutes: [ routes, absoluteRoutes, pageRoutes, newsRoutes, blogRoutes, questionsRoutes, profileRoutes, notFoundRoutes ]
+    childRoutes: [ routes, absoluteRoutes, pageRoutes, newsRoutes, blogRoutes, questionsRoutes, profileRoutes, groupRoutes, notFoundRoutes ]
 }
 
 export default rootRoute

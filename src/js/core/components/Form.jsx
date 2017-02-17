@@ -3,6 +3,7 @@ import classnames from "classnames"
 import { EditorState } from "draft-js"
 import InputField from "./InputField"
 import TagsField from "./TagsField"
+import TextField from "./TextField"
 import RichTextField from "./RichTextField"
 import SelectField from "./SelectField"
 import CheckField from "./CheckField"
@@ -133,6 +134,7 @@ class Form extends React.Component {
             switch (child.type) {
                 case InputField:
                 case SelectField:
+                case TextField:
                 case RichTextField:
                 case ContentFiltersInputField:
                 case TagsField:
@@ -163,7 +165,7 @@ class Form extends React.Component {
             )
         }
 
-        if ((component.type == InputField || component.type == SelectField) && component.props.label) {
+        if ((component.type == InputField || component.type == SelectField || component.type == TextField) && component.props.label) {
             label = (
                 <div className="form__label">{component.props.label}</div>
             )

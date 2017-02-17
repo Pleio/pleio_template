@@ -233,6 +233,18 @@ class SchemaBuilder {
             ]
         ]);
 
+        $userListType = new ObjectType([
+            "name" => "UserList",
+            "fields" => [
+                "total" => [
+                    "type" => Type::nonNull(Type::int())
+                ],
+                "edges" => [
+                    "type" => Type::listOf($userType)
+                ]
+            ]
+        ]);
+
         $groupType = new ObjectType([
             "name" => "Group",
             "interfaces" => [$entityInterface],
@@ -246,7 +258,13 @@ class SchemaBuilder {
                 "name" => [
                     "type" => Type::string()
                 ],
+                "description" => [
+                    "type" => Type::string()
+                ],
                 "icon" => [
+                    "type" => Type::string()
+                ],
+                "url" => [
                     "type" => Type::string()
                 ],
                 "canEdit" => [
@@ -255,11 +273,29 @@ class SchemaBuilder {
                 "isClosed" => [
                     "type" => Type::boolean()
                 ],
-                "canJoin" => [
+                "hasInvitation" => [
+                    "type" => Type::boolean()
+                ],
+                "isMember" => [
                     "type" => Type::boolean()
                 ],
                 "defaultAccessId" => [
                     "type" => Type::int()
+                ],
+                "members" => [
+                    "type" => $userListType,
+                    "args" => [
+                        "q" => [
+                            "type" => Type::string()
+                        ],
+                        "offset" => [
+                            "type" => Type::int()
+                        ],
+                        "limit" => [
+                            "type" => Type::int()
+                        ]
+                    ],
+                    "resolve" => "Pleio\Resolver::getMembers"
                 ]
             ]
         ]);
@@ -1268,6 +1304,26 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::addImage"
         ]);
 
+        $addGroupMutation = Relay::mutationWithClientMutationId([
+            "name" => "addGroup",
+            "inputFields" => [
+                "name" => [ "type" => Type::string() ],
+                "icon" => [ "type" => Type::string() ],
+                "isClosed" => [ "type" => Type::boolean() ],
+                "description" => [ "type" => Type::string() ],
+                "tags" => [ "type" => Type::listOf(Type::string()) ]
+            ],
+            "outputFields" => [
+                "group" => [
+                    "type" => $groupType,
+                    "resolve" => function($group) {
+                        return Resolver::getEntity(null, $group, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::addGroup"
+        ]);
+
         $mutationType = new ObjectType([
             "name" => "Mutation",
             "fields" => [
@@ -1292,7 +1348,8 @@ class SchemaBuilder {
                     "vote" => $voteMutation,
                     "editAvatar" => $editAvatarMutation,
                     "editProfileField" => $editProfileFieldMutation,
-                    "addImage" => $addImageMutation
+                    "addImage" => $addImageMutation,
+                    "addGroup" => $addGroupMutation
             ]
         ]);
 

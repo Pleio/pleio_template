@@ -20,6 +20,25 @@ class Mapper {
         ];
     }
 
+    static function getGroup($entity) {
+        return [
+            "guid" => $entity->guid,
+            "status" => 200,
+            "type" => $entity->type,
+            "name" => $entity->name,
+            "isClosed" => ($entity->membership === ACCESS_PRIVATE) ? true : false,
+            "isMember" => $entity->isMember(),
+            "hasInvitation" => false,
+            "description" => $entity->description,
+            "url" => Helpers::getURL($entity),
+            "icon" => $entity->getIconURL("large"),
+            "timeCreated" => $entity->time_created,
+            "timeUpdated" => $entity->time_updated,
+            "canEdit" => $entity->canEdit(),
+            "tags" => Helpers::renderTags($entity->tags)
+        ];
+    }
+
     static function getObject($entity) {
         return [
             "guid" => $entity->guid,

@@ -2,53 +2,22 @@ import React from "react"
 import { connect } from "react-redux"
 import classNames from "classnames"
 import { hideModal } from "../../lib/actions"
-import { browserHistory } from "react-router"
 
-class Modal extends React.Component {
-
+export default class Modal extends React.Component {
     constructor(props) {
         super(props)
 
-        this.onScroll = this.onScroll.bind(this)
-        this.onClose = this.onClose.bind(this)
+        this.toggle = this.toggle.bind(this)
 
         this.state = {
             isOpen: false
         }
     }
 
-    componentDidMount() {
-        this.refs.modal.addEventListener("scroll", this.onScroll)
-    }
-
-    componentWillUnmount() {
-        this.refs.modal.removeEventListener("scroll", this.onScroll)
-    }
-
     toggle() {
         this.setState({
             isOpen: !this.state.isOpen
         })
-    }
-
-    onScroll(e) {
-        if (!this.props.onScroll) {
-            return
-        }
-
-        this.props.onScroll(e)
-    }
-
-    onClose(e) {
-        if (e) {
-            e.preventDefault()
-        }
-
-        if (this.props.noParent) {
-            browserHistory.push("/")
-        } else {
-            this.props.dispatch(hideModal())
-        }
     }
 
     render() {
@@ -73,7 +42,7 @@ class Modal extends React.Component {
         if (this.props.small) {
             modal = (
                 <div className="modal__wrapper">
-                    <div className="modal__background" onClick={this.onClose} />
+                    <div className="modal__background" onClick={this.toggle} />
                     <div className="modal__box">
                         {title}
                         {this.props.children}
@@ -94,7 +63,7 @@ class Modal extends React.Component {
         } else {
             modal = (
                 <div className="modal__wrapper">
-                    <div className="modal__background" onClick={this.onClose} />
+                    <div className="modal__background" onClick={this.toggle} />
                     <div className="modal__box">
                         {title}
                         {this.props.children}
@@ -104,18 +73,10 @@ class Modal extends React.Component {
         }
 
         return (
-            <div id={this.props.id} ref="modal" tabIndex="0" className={classNames({"modal":true, "___full":this.props.full, "___blue":this.props.isBlue, "___small": this.props.small, "___is-open": (this.props.id && this.props.modal == this.props.id) || this.props.noParent })}>
-                <div className="modal__close" onClick={this.onClose} />
+            <div id={this.props.id} ref="modal" tabIndex="0" className={classNames({"modal":true, "___full":this.props.full, "___blue":this.props.isBlue, "___small": this.props.small, "___is-open": this.state.isOpen })}>
+                <div className="modal__close" onClick={this.toggle} />
                 {modal}
             </div>
         )
     }
 }
-
-const stateToProps = (state) => {
-    return {
-        modal: state.modal
-    }
-}
-
-export default connect(stateToProps)(Modal)

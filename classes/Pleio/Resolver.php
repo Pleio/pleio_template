@@ -40,7 +40,8 @@ class Resolver {
             "menu" => [
                 ["guid" => "menu:" . 1, "title" => "Blog", "link" => "/blog", "js" => true],
                 ["guid" => "menu:" . 2, "title" => "Nieuws", "link" => "/news", "js" => true],
-                ["guid" => "menu:" . 3, "title" => "Forum", "link" => "/questions", "js" => true]
+                ["guid" => "menu:" . 3, "title" => "Forum", "link" => "/questions", "js" => true],
+                ["guid" => "menu:" . 4, "title" => "Groepen", "link" => "/groups", "js" => true]
             ],
             "footer" => $footer,
             "showLogo" => $showLogo,
@@ -276,6 +277,10 @@ class Resolver {
             ];
         }
 
+        if ($entity instanceof \ElggGroup) {
+            return Mapper::getGroup($entity);
+        }
+
         if ($entity instanceof \ElggUser) {
             return Mapper::getUser($entity);
         }
@@ -303,6 +308,24 @@ class Resolver {
         );
 
         return elgg_get_entities($options);
+    }
+
+    static function getMembers($a, $args, $c) {
+        $group = get_entity($a["guid"]);
+        
+        $offset = $args["offset"] || 0;
+        $limit = $args["limit"] || 10;
+
+        $members = [];
+        foreach ($group->getMembers($limit, $offset) as $member) {
+            $members[] = Mapper::getUser($member);
+        }
+
+        return [
+            "total" => $group->getMembers($limit, $offset, true),
+            "canWrite" => false,
+            "edges" => $members
+        ];
     }
 
     static function getComments($object) {
@@ -471,10 +494,18 @@ class Resolver {
     }
 
     static function getEntities($a, $args, $c) {
-        if (!$args["subtype"] || $args["subtype"] == "all") {
-            $subtypes = ["blog", "news", "question"];
+        if (!$args["type"] || !in_array($args["type"], ["group", "object"])) {
+            $type = "object";
         } else {
-            $subtypes = $args["subtype"];
+            $type = $args["type"];
+        }
+
+        if ($type == "object") {
+            if (!$args["subtype"] || $args["subtype"] == "all") {
+                $subtypes = ["blog", "news", "question"];
+            } else {
+                $subtypes = $args["subtype"];
+            }
         }
 
         $tags = $args["tags"];
@@ -491,7 +522,7 @@ class Resolver {
             $result = Helpers::getEntitiesFromTags($subtype, $tags, (int) $args["offset"], (int) $args["limit"]);
         } else {
             $options = [
-                "type" => "object",
+                "type" => $type,
                 "subtypes" => $subtypes,
                 "offset" => (int) $args["offset"],
                 "limit" => (int) $args["limit"]
@@ -515,22 +546,17 @@ class Resolver {
 
         $entities = array();
         foreach ($result["entities"] as $entity) {
-            $entities[] = array(
-                "guid" => $entity->guid,
-                "status" => 200,
-                "ownerGuid" => $entity->owner_guid,
-                "isFeatured" => $entity->isFeatured ? true : false,
-                "featuredImage" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
-                "title" => $entity->title,
-                "type" => $entity->type,
-                "url" => Helpers::getURL($entity),
-                "subtype" => $entity->getSubtype(),
-                "description" => $entity->description,
-                "excerpt" => elgg_get_excerpt($entity->description),
-                "timeCreated" => date("c", $entity->time_created),
-                "timeUpdated" => date("c", $entity->time_updated),
-                "tags" => Helpers::renderTags($entity->tags)
-            );
+            switch ($entity->type) {
+                case "object":
+                    $entities[] = Mapper::getObject($entity);
+                    break;
+                case "group":
+                    $entities[] = Mapper::getGroup($entity);
+                    break;
+                case "user":
+                    $entities[] = Mapper::getUser($entity);
+                    break;
+            }
         }
 
         $user = elgg_get_logged_in_user_entity();

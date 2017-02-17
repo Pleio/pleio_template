@@ -55,7 +55,7 @@ class Helpers {
     static function getURL($entity) {
         switch ($entity->type) {
             case "group":
-                return "/groups/{$entity->guid}/{$entity->name}";
+                return "/groups/view/{$entity->guid}/{$entity->name}";
             case "user":
                 return "/profile/{$entity->username}";
             case "object":
