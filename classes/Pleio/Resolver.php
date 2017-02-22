@@ -40,8 +40,7 @@ class Resolver {
             "menu" => [
                 ["guid" => "menu:" . 1, "title" => "Blog", "link" => "/blog", "js" => true],
                 ["guid" => "menu:" . 2, "title" => "Nieuws", "link" => "/news", "js" => true],
-                ["guid" => "menu:" . 3, "title" => "Forum", "link" => "/questions", "js" => true],
-                ["guid" => "menu:" . 4, "title" => "Groepen", "link" => "/groups", "js" => true]
+                ["guid" => "menu:" . 3, "title" => "Forum", "link" => "/questions", "js" => true]
             ],
             "footer" => $footer,
             "showLogo" => $showLogo,
