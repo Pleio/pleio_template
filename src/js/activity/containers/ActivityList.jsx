@@ -16,6 +16,7 @@ const Query = gql`
                         guid
                         title
                         url
+                        excerpt
                         featuredImage
                         subtype
                         tags
