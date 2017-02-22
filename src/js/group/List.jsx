@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from "react-router"
 import ContentHeader from "../core/components/ContentHeader"
+import Document from "../core/components/Document"
 import AddButton from "../core/containers/AddButton"
 import GroupsList from "./containers/GroupsList"
 import Card from "./components/Card"
@@ -9,6 +10,7 @@ export default class List extends React.Component {
     render() {
         return (
             <div className="page-container">
+                <Document title="Groepen" />
                 <ContentHeader>
                     <div className="row">
                         <div className="col-sm-6">

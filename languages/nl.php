@@ -9,7 +9,7 @@ $dutch = array(
     "pleio_template:footer" => "Footer",
     "pleio_template:show_logo" => "Toon logo",
     "pleio_template:show_leader" => "Toon leader",
-    "pleio_template:show_initiative_widget" => "Toon initiatief widget"
+    "pleio_template:show_initiative" => "Toon initiatief widget"
 );
 
 add_translation("nl", $dutch);

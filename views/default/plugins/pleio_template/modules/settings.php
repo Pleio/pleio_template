@@ -23,10 +23,10 @@
 </div>
 
 <div>
-    <label><?php echo elgg_echo("pleio_template:show_initiative_widget"); ?></label>
+    <label><?php echo elgg_echo("pleio_template:show_initiative"); ?></label>
     <?php echo elgg_view("input/dropdown", [
-        "name" => "params[show_initiative_widget]",
-        "value" => $vars["plugin"]->show_initiative_widget,
+        "name" => "params[show_initiative]",
+        "value" => $vars["plugin"]->show_initiative,
         "options_values" => [
             "no" => elgg_echo("option:no"),
             "yes" => elgg_echo("option:yes")

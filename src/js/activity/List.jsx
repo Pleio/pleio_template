@@ -26,7 +26,7 @@ class Activity extends React.Component {
 
     render() {
         const { site } = this.props.data
-        let leader, initiativeWidget
+        let leader, initiative
 
         if (site && site.showLeader) {
             leader = (
@@ -34,18 +34,19 @@ class Activity extends React.Component {
             )
         }
 
-        if (site && site.showInitiativeWidget) {
-            initiativeWidget = (
+        console.log(site)
+        if (site && site.showInitiative) {
+            initiative = (
                 <Initiative />
             )
         }
 
         return (
-            <section className="section">
+            <section className="section ___less-padding-top">
                 <Document title="Activiteiten" />
                 <div className="container">
                     {leader}
-                    <ContentFilters onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} selectClassName="___margin-top ___margin-bottom ___margin-bottom-mobile ___filter">
+                    <ContentFilters onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} selectClassName="selector ___margin-bottom ___margin-bottom-mobile ___filter">
                         <div className="right-lg">
                             <UsersOnline isGrey={true} />
                         </div>
@@ -55,7 +56,7 @@ class Activity extends React.Component {
                             <div className="row fill">
                                 <Recommended />
                                 <Trending />
-                                {initiativeWidget}
+                                {initiative}
                                 <Footer />
                             </div>
                         </div>
@@ -74,6 +75,7 @@ const Query = gql`
         site {
             guid
             showLeader
+            showInitiative
         }
     }
 `

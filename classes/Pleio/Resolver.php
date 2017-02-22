@@ -8,7 +8,7 @@ class Resolver {
 
         $showLogo = (elgg_get_plugin_setting("show_logo", "pleio_template") === "yes") ? true : false;
         $showLeader = (elgg_get_plugin_setting("show_leader", "pleio_template") === "yes") ? true : false;
-        $showInitiativeWidget = (elgg_get_plugin_setting("show_initiative_widget", "pleio_template") === "yes") ? true : false;
+        $showInitiative = (elgg_get_plugin_setting("show_initiative", "pleio_template") === "yes") ? true : false;
 
         $filters = unserialize(elgg_get_plugin_setting("filters", "pleio_template"));
         if (!$filters) {
@@ -46,7 +46,7 @@ class Resolver {
             "footer" => $footer,
             "showLogo" => $showLogo,
             "showLeader" => $showLeader,
-            "showInitiativeWidget" => $showInitiativeWidget,
+            "showInitiative" => $showInitiative,
             "accessIds" => $accessIds,
             "filters" => $filters,
             "defaultAccessId" => get_default_access()

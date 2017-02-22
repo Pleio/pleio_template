@@ -9,7 +9,7 @@ $english = array(
     "pleio_template:footer" => "Footer",
     "pleio_template:show_logo" => "Show logo",
     "pleio_template:show_leader" => "Show leader",
-    "pleio_template:show_initiative_widget" => "Show initiative widget"
+    "pleio_template:show_initiative" => "Show initiative widget"
 );
 
 add_translation("en", $english);
