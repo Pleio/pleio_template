@@ -34,7 +34,6 @@ class Activity extends React.Component {
             )
         }
 
-        console.log(site)
         if (site && site.showInitiative) {
             initiative = (
                 <Initiative />

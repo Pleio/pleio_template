@@ -75,20 +75,6 @@ class Item extends React.Component {
             )
         }
 
-        let actions
-        if (viewer.loggedIn) {
-            actions = (
-                <div className="article-actions__buttons">
-                    <div className="article-actions__justify">
-                        <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
-                            Schrijf een reactie
-                        </div>
-                        {edit}
-                    </div>
-                </div>
-            )
-        }
-
         return (
             <div>
                 <Document title={entity.title} />
@@ -109,11 +95,8 @@ class Item extends React.Component {
                                     <LikeAndBookmark like={false} bookmark={true} viewer={viewer} entity={entity} />
                                     <div className="article-actions">
                                         <SocialShare />
-                                        {actions}
                                     </div>
                                 </article>
-                                <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["NewsItem"]} />
-                                <CommentList comments={entity.comments} />
                                 <EditModal title="Nieuws wijzigen" entity={entity} subtype="news" featuredImage={true} />
                                 <DeleteModal title="Nieuws verwijderen" entity={entity} subtype="news" refetchQueries={["InfiniteList"]} />
                             </div>
@@ -153,18 +136,6 @@ const QUERY = gql`
                 tags
                 isBookmarked
                 canBookmark
-                comments {
-                    guid
-                    description
-                    timeCreated
-                    canEdit
-                    owner {
-                        guid
-                        name
-                        icon
-                        url
-                    }
-                }
             }
         }
     }
