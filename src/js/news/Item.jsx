@@ -31,6 +31,7 @@ class Item extends React.Component {
 
     render() {
         let { entity, viewer } = this.props.data
+        let edit, featuredImage, source
 
         if (!entity) {
             // Loading...
@@ -45,16 +46,16 @@ class Item extends React.Component {
             )
         }
 
-        let edit = ""
         if (entity.canEdit) {
             edit = (
-                <div className="button__text article-action ___edit-post" onClick={this.onEdit}>
-                    Bewerken
+                <div className="article-actions__justify">
+                    <div className="button__text article-action ___edit-post" onClick={this.onEdit}>
+                        Bewerken
+                    </div>
                 </div>
-            );
+            )
         }
 
-        let featuredImage = ""
         if (entity.featuredImage) {
             featuredImage = (
                 <div style={{backgroundImage: "url(" + entity.featuredImage + ")"}} className="lead ___content">
@@ -66,7 +67,6 @@ class Item extends React.Component {
             )
         }
 
-        let source
         if (entity.source) {
             source = (
                 <div className="article-meta__source">
@@ -95,6 +95,7 @@ class Item extends React.Component {
                                     <LikeAndBookmark like={false} bookmark={true} viewer={viewer} entity={entity} />
                                     <div className="article-actions">
                                         <SocialShare />
+                                        {edit}
                                     </div>
                                 </article>
                                 <EditModal title="Nieuws wijzigen" entity={entity} subtype="news" featuredImage={true} />
