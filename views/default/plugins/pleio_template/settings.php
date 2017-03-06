@@ -9,6 +9,12 @@ echo elgg_view_module(
 
 echo elgg_view_module(
     "inline",
+    elgg_echo("pleio_template:menu"),
+    elgg_view("plugins/pleio_template/modules/menu", ["plugin" => $plugin])
+);
+
+echo elgg_view_module(
+    "inline",
     elgg_echo("pleio_template:filters"),
     elgg_view("plugins/pleio_template/modules/filters", ["plugin" => $plugin])
 );

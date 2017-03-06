@@ -51,24 +51,14 @@ class TopMenu extends React.Component {
             )
         }
 
-        menuItems = site.menu.map((item) => {
-            if (item.js) {
-                return (
-                    <li key={item.guid}>
-                        <Link to={item.link} onClick={this.closeMobileMenu} title={item.title} className="navigation__link" activeClassName="___is-active">
-                            {item.title}
-                        </Link>
-                    </li>
-                )
-            } else {
-                return (
-                    <li key={item.guid}>
-                        <a href={item.link} onClick={this.closeMobileMenu} title={item.title} className="navigation__link">
-                            {item.title}
-                        </a>
-                    </li>
-                )
-            }
+        menuItems = site.menu.map((item, i) => {
+            return (
+                <li key={i}>
+                    <Link to={item.link} onClick={this.closeMobileMenu} title={item.title} className="navigation__link" activeClassName="___is-active">
+                        {item.title}
+                    </Link>
+                </li>
+            )
         })
 
         if (site.showLogo) {
@@ -144,10 +134,8 @@ const WithQuery = gql`
             guid
             showLogo
             menu {
-                guid
                 title
                 link
-                js
             }
         }
         viewer {

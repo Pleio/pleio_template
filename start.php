@@ -88,6 +88,17 @@ function pleio_template_plugins_settings_save($hook, $type, $return_value, $para
     $values = get_input("filterValues");
     $required = get_input("filterRequired");
 
+    $menuTitle = get_input("menuTitle");
+    $menuLink = get_input("menuLink");
+
+    $menu = [];
+    foreach ($menuLink as $i => $link) {
+        $menu[] = [
+            "title" => $menuTitle[$i],
+            "link" => $menuLink[$i]
+        ];
+    }
+
     $filters = [];
     foreach ($name as $i => $name) {
         $filters[] = [
@@ -109,6 +120,7 @@ function pleio_template_plugins_settings_save($hook, $type, $return_value, $para
     }
 
     $params = get_input("params");
+    $params["menu"] = serialize($menu);
     $params["filters"] = serialize($filters);
     $params["footer"] = serialize($footer);
     set_input("params", $params);

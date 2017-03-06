@@ -496,17 +496,11 @@ class SchemaBuilder {
         $menuItemType = new ObjectType([
             "name" => "MenuItem",
             "fields" => [
-                "guid" => [
-                    "type" => Type::nonNull(Type::string())
-                ],
                 "title" => [
                     "type" => Type::nonNull(Type::string())
                 ],
                 "link" => [
                     "type" => Type::nonNull(Type::string())
-                ],
-                "js" => [
-                    "type" => Type::nonNull(Type::boolean())
                 ]
             ]
         ]);

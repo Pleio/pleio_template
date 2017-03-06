@@ -10,6 +10,11 @@ class Resolver {
         $showLeader = (elgg_get_plugin_setting("show_leader", "pleio_template") === "yes") ? true : false;
         $showInitiative = (elgg_get_plugin_setting("show_initiative", "pleio_template") === "yes") ? true : false;
 
+        $menu = unserialize(elgg_get_plugin_setting("menu", "pleio_template"));
+        if (!$menu) {
+            $menu = [];
+        }
+
         $filters = unserialize(elgg_get_plugin_setting("filters", "pleio_template"));
         if (!$filters) {
             $filters = [];
@@ -37,11 +42,7 @@ class Resolver {
         return [
             "guid" => $site->guid,
             "name" => $site->name,
-            "menu" => [
-                ["guid" => "menu:" . 1, "title" => "Blog", "link" => "/blog", "js" => true],
-                ["guid" => "menu:" . 2, "title" => "Nieuws", "link" => "/news", "js" => true],
-                ["guid" => "menu:" . 3, "title" => "Forum", "link" => "/questions", "js" => true]
-            ],
+            "menu" => $menu,
             "footer" => $footer,
             "showLogo" => $showLogo,
             "showLeader" => $showLeader,
