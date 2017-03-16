@@ -14,6 +14,7 @@ import InputField from "../core/components/InputField"
 import TagsField from "../core/components/TagsField"
 import SelectField from "../core/components/SelectField"
 import SwitchField from "../core/components/SwitchField"
+import IconField from "../core/components/IconField"
 import { convertToRaw } from "draft-js"
 import { Set } from "immutable"
 
@@ -71,6 +72,7 @@ class Add extends React.Component {
                     <div className="container">
                         <div className="form">
                             <InputField label="Naam" name="name" type="text" placeholder="Voeg een korte duidelijke naam toe" className="form__input" rules="required" autofocus />
+                            <IconField />
                             <SelectField label="Lidmaatschap" name="membership" type="text" className="form__input" options={{open: "Open", "closed": "Besloten"}} value="open" />
                             <TextField label="Beschrijving" name="description" type="text" placeholder="Vertel wat over de groep" className="form__input" rules="required" />
                             <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" />

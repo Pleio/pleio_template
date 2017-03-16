@@ -31,6 +31,9 @@ import PageItem from "./page/Item"
 import GroupList from "./group/List"
 import GroupAdd from "./group/Add"
 import GroupItem from "./group/Item"
+import GroupBlogItem from "./group/GroupBlogItem"
+import GroupForumItem from "./group/GroupForumItem"
+import GroupFilesItem from "./group/GroupFilesItem"
 
 import QuestionsIndex from "./questions/Index"
 import QuestionsList from "./questions/List"
@@ -119,7 +122,10 @@ const groupRoutes = {
     childRoutes: [
         { path: "all", component: GroupList },
         { path: "add", component: GroupAdd },
-        { path: "view/:guid/:slug", component: GroupItem }
+        { path: "view/:guid/:slug", component: GroupItem },
+        { path: "view/:guid/:slug/blog", component: GroupBlogItem },
+        { path: "view/:guid/:slug/questions", component: GroupForumItem },
+        { path: "view/:guid/:slug/files", component: GroupFilesItem }
     ]
 }
 

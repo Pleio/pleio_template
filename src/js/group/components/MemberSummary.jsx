@@ -6,7 +6,7 @@ export default class MemberSummary extends React.Component {
         const { entity } = this.props
 
         const members = entity.members.edges.map((member, i) => (
-            <Link key={i} to="" className="card-list-members__item">
+            <Link key={i} to={member.url} className="card-list-members__item">
                 <div style={{backgroundImage: `url('${member.icon}')`}} className="card-list-members__picture" />
                 <div className="card-list-members__name">{member.name}</div>
             </Link>

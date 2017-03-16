@@ -51,7 +51,7 @@ class Item extends React.Component {
                                 <MemberSummary entity={entity} /> 
                             </div>
                             <div className="col-sm-12 col-lg-8">
-                                Info
+                                Bestanden
                             </div>
                         </div>
                     </div>
