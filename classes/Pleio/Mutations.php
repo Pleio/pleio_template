@@ -166,7 +166,7 @@ class Mutations {
                 }
 
                 $entity->access_id = $input["accessId"] ? (int) $input["accessId"] : get_default_access();
-                $entity->tags = $input["tags"];
+                $entity->tags = filter_tags($input["tags"]);
 
                 if (elgg_is_admin_logged_in()) {
                     if (isset($input["isRecommended"])) {
@@ -251,7 +251,7 @@ class Mutations {
                     }
                 }
 
-                $entity->tags = $input["tags"];
+                $entity->tags = filter_tags($input["tags"]);
         }
 
         $result = $entity->save();
@@ -725,7 +725,7 @@ class Mutations {
         $group->name = $input["name"];
         $group->membership = $input["isClosed"] ? ACCESS_PRIVATE : ACCESS_PUBLIC;
         $group->description = $input["description"];
-        $group->tags = $input["tags"];
+        $group->tags = filter_tags($input["tags"]);
         $result = $group->save();
 
         if ($result) {
@@ -737,5 +737,81 @@ class Mutations {
         }
 
         throw new Exception("could_not_save");
+    }
+
+    static function editGroup($input) {
+        $group = get_entity((int) $input["guid"]);
+        if (!$group) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$group->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        if ($input["avatar"]) {
+            Helpers::saveToIcon($input["avatar"], $group);
+            $group->icontime = time();
+        } else {
+            unset($group->icontime);
+        }
+
+        $group->name = $input["name"];
+        $group->membership = $input["isClosed"] ? ACCESS_PRIVATE : ACCESS_PUBLIC;
+        $group->description = $input["description"];
+        $group->tags = filter_tags($input["tags"]);
+        $result = $group->save();
+
+        if ($result) {
+            return [
+                "guid" => $group->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
+    }
+
+    static function joinGroup($input) {
+        $group = get_entity((int) $input["guid"]);
+        if (!$group) {
+            throw new Exception("could_not_find");
+        }
+
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            throw new Exception("not_logged_in");
+        }
+
+        if ($group->isPublicMembership()) {
+            groups_join_group($group, $user);
+        } else {
+            add_entity_relationship($user->guid, "membership_request", $group->guid);
+            Helpers::sendGroupMembershipRequestNotification($group, $user);
+        }
+
+        return [
+            "guid" => $group->guid
+        ];
+    }
+
+    static function leaveGroup($input) {
+        $group = get_entity((int) $input["guid"]);
+        if (!$group) {
+            throw new Exception("could_not_find");
+        }
+
+        $user = elgg_get_logged_in_user_entity();
+        if ($group->owner_guid == $user->guid) {
+            throw new Exception("could_not_leave");
+        }
+
+        $group->leave($user);
+
+        remove_entity_relationship($user->guid, "membership_request", $group->guid);
+        remove_entity_relationship($user->guid, "invited", $group->guid);
+
+        return [
+            "guid" => $group->guid
+        ];
     }
 }

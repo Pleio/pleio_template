@@ -314,4 +314,44 @@ class Helpers {
 
         return false;
     }
+
+    static function getGroupMembership(\ElggGroup $group) {
+        $user = elgg_get_logged_in_user_entity();
+
+        if ($group->isMember()) {
+            return "joined";
+        }
+
+        $request = check_entity_relationship($user->guid, "membership_request", $group->guid);
+        if ($request) {
+            return "requested";
+        }
+
+        $invite = check_entity_relationship($user->guid, "invited", $group->guid);
+        if ($invite) {
+            return "invited";
+        }
+
+        return "not_joined";
+    }
+
+    static function sendGroupMembershipRequestNotification(\ElggGroup $group, \ElggUser $user) {
+        global $CONFIG;
+
+        $url = "{$CONFIG->url}groups/requests/$group->guid";
+        $subject = elgg_echo('groups:request:subject', array(
+            $user->name,
+            $group->name,
+        ));
+
+        $body = elgg_echo('groups:request:body', array(
+            $group->getOwnerEntity()->name,
+            $user->name,
+            $group->name,
+            $user->getURL(),
+            $url,
+        ));
+        
+        return notify_user($group->owner_guid, $user->guid, $subject, $body);
+    }
 }

@@ -245,6 +245,25 @@ class SchemaBuilder {
             ]
         ]);
 
+        $membershipEnum = new EnumType([
+            "name" => "Membership",
+            "description" => "The type of membership.",
+            "values" => [
+                "not_joined" => [
+                    "value" => "not_joined"
+                ],
+                "requested" => [
+                    "value" => "requested"
+                ],
+                "invited" => [
+                    "value" => "invited"
+                ],
+                "joined" => [
+                    "value" => "joined"
+                ],
+            ]
+        ]);
+
         $groupType = new ObjectType([
             "name" => "Group",
             "interfaces" => [$entityInterface],
@@ -273,14 +292,14 @@ class SchemaBuilder {
                 "isClosed" => [
                     "type" => Type::boolean()
                 ],
-                "hasInvitation" => [
-                    "type" => Type::boolean()
-                ],
-                "isMember" => [
-                    "type" => Type::boolean()
+                "membership" => [
+                    "type" => $membershipEnum
                 ],
                 "defaultAccessId" => [
                     "type" => Type::int()
+                ],
+                "tags" => [
+                    "type" => Type::listOf(Type::string())
                 ],
                 "members" => [
                     "type" => $userListType,
@@ -1318,6 +1337,70 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::addGroup"
         ]);
 
+        $editGroupMutation = Relay::mutationWithClientMutationId([
+            "name" => "editGroup",
+            "inputFields" => [
+                "guid" => [ "type" => Type::string() ],
+                "name" => [ "type" => Type::string() ],
+                "icon" => [ "type" => Type::string() ],
+                "isClosed" => [
+                    "type" => Type::boolean(),
+                    "description" => "True when membership has to be requested by the user, False when every user can join the group."
+                ],
+                "description" => [ "type" => Type::string() ],
+                "tags" => [ "type" => Type::listOf(Type::string()) ]
+            ],
+            "outputFields" => [
+                "group" => [
+                    "type" => $groupType,
+                    "resolve" => function($group) {
+                        return Resolver::getEntity(null, $group, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::editGroup"
+        ]);
+
+        $joinGroupMutation = Relay::mutationWithClientMutationId([
+            "name" => "joinGroup",
+            "description" => "Join a group. In the case of a closed group a membership request will be send, in the case of an open group the user will be joined immediately.",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::string(),
+                    "description" => "The guid of the group to join."
+                ]
+            ],
+            "outputFields" => [
+                "group" => [
+                    "type" => $groupType,
+                    "resolve" => function($group) {
+                        return Resolver::getEntity(null, $group, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::joinGroup"
+        ]);
+
+        $leaveGroupMutation = Relay::mutationWithClientMutationId([
+            "name" => "leaveGroup",
+            "description" => "Leave a group.",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::string(),
+                    "description" => "The guid of the group to leave."
+                ],
+            ],
+            "outputFields" => [
+                "group" => [
+                    "type" => $groupType,
+                    "resolve" => function($group) {
+                        return Resolver::getEntity(null, $group, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::leaveGroup"
+        ]);
+
         $mutationType = new ObjectType([
             "name" => "Mutation",
             "fields" => [
@@ -1343,7 +1426,10 @@ class SchemaBuilder {
                     "editAvatar" => $editAvatarMutation,
                     "editProfileField" => $editProfileFieldMutation,
                     "addImage" => $addImageMutation,
-                    "addGroup" => $addGroupMutation
+                    "addGroup" => $addGroupMutation,
+                    "editGroup" => $editGroupMutation,
+                    "joinGroup" => $joinGroupMutation,
+                    "leaveGroup" => $leaveGroupMutation
             ]
         ]);
 
