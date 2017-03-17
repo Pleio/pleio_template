@@ -30,6 +30,7 @@ import PageItem from "./page/Item"
 
 import GroupList from "./group/List"
 import GroupAdd from "./group/Add"
+import GroupEdit from "./group/Edit"
 import GroupItem from "./group/Item"
 import GroupBlogItem from "./group/GroupBlogItem"
 import GroupForumItem from "./group/GroupForumItem"
@@ -122,6 +123,7 @@ const groupRoutes = {
     childRoutes: [
         { path: "all", component: GroupList },
         { path: "add", component: GroupAdd },
+        { path: "edit/:guid", component: GroupEdit },
         { path: "view/:guid/:slug", component: GroupItem },
         { path: "view/:guid/:slug/blog", component: GroupBlogItem },
         { path: "view/:guid/:slug/questions", component: GroupForumItem },

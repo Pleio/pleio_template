@@ -14,7 +14,7 @@ export default class MemberSummary extends React.Component {
 
         return (
             <div className="card-list-members">
-                <div className="card-list-members__title">{entity.members.total} {(entity.members.total === 1) ? "lid" : "leden"}</div>
+                <div className="card-list-members__title">{entity.members.total}{(entity.members.total === 1) ? " lid" : " leden"}</div>
                 <div className="card-list-members__items">
                     <div>
                         {members}

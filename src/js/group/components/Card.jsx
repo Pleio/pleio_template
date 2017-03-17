@@ -24,7 +24,7 @@ export default class Card extends React.Component {
                             {entity.name}
                         </div>
                         <div className="card-group__bottom">
-                            <div className="card-group__members">{entity.members.total} {(entity.members.total === 1) ? "lid" : "leden"}</div>
+                            <div className="card-group__members">{entity.members.total}{(entity.members.total === 1) ? " lid" : " leden"}</div>
                             {closed}
                         </div>
                 </Link>
@@ -32,4 +32,3 @@ export default class Card extends React.Component {
         )
     }
 }
-

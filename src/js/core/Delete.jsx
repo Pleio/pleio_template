@@ -8,7 +8,7 @@ import Errors from "./components/Errors"
 import Modal from "./components/Modal"
 import AccessSelect from "./containers/AccessSelect"
 
-class DeleteModal extends React.Component {
+class DeleteForm extends React.Component {
     constructor(props) {
         super(props)
 
@@ -36,7 +36,7 @@ class DeleteModal extends React.Component {
             },
             refetchQueries: this.props.refetchQueries
         }).then(({data}) => {
-            this.props.dispatch(hideModal())
+            window.location.href = "/groups"
         })
     }
 
@@ -45,25 +45,21 @@ class DeleteModal extends React.Component {
         if (this.props.entity) {
             if (this.props.entity.title) {
                 title = this.props.entity.title
-            }
-
-            if (this.props.entity.name) {
-                name = this.props.entity.name
+            } else if (this.props.entity.name) {
+                title = this.props.entity.name
             }
         }
-
+        console.log(this.props.entity)
         return (
-            <Modal id="delete" title={this.props.title}>
-                <form className="form" onSubmit={this.onSubmit}>
-                    <p>Weet je zeker dat je het item {title} wil verwijderen?</p>
-                    <button className="button">Verwijder</button>
-                </form>
-            </Modal>
+            <form className="form" onSubmit={this.onSubmit}>
+                <p>Weet je zeker dat je het item {title} wil verwijderen?</p>
+                <button className="button">Verwijder</button>
+            </form>
         )
     }
 }
 
-const DELETE = gql`
+const Mutation = gql`
     mutation deleteEntity($input: deleteEntityInput!) {
         deleteEntity(input: $input) {
             entity {
@@ -75,6 +71,23 @@ const DELETE = gql`
         }
     }
 `
-const withDelete = graphql(DELETE)
+const DeleteFormWithMutation = graphql(Mutation)(DeleteForm)
 
-export default connect()(withDelete(DeleteModal))
+export default class DeleteModal extends React.Component {
+    constructor(props) {
+        super(props)
+        this.toggle = this.toggle.bind(this)
+    }
+
+    toggle() {
+        this.refs.deleteModal.toggle()
+    }
+
+    render() {
+        return (
+            <Modal ref="deleteModal" id="delete" title={this.props.title}>
+                <DeleteFormWithMutation entity={this.props.entity} refetchQueries={this.props.refetchQueries} />
+            </Modal>
+        )
+    }
+}

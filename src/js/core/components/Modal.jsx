@@ -47,7 +47,7 @@ class Modal extends React.Component {
         if (this.props.noParent) {
             browserHistory.push("/")
         } else {
-            this.props.dispatch(hideModal())
+            this.refs.modal.toggle()
         }
     }
 
@@ -104,7 +104,7 @@ class Modal extends React.Component {
         }
 
         return (
-            <div id={this.props.id} ref="modal" tabIndex="0" className={classNames({"modal":true, "___full":this.props.full, "___blue":this.props.isBlue, "___small": this.props.small, "___is-open": (this.props.id && this.props.modal == this.props.id) || this.props.noParent })}>
+            <div id={this.props.id} ref="modal" tabIndex="0" className={classNames({"modal":true, "___full":this.props.full, "___blue":this.props.isBlue, "___small": this.props.small, "___is-open": this.state.isOpen || this.props.noParent })}>
                 <div className="modal__close" onClick={this.onClose} />
                 {modal}
             </div>
@@ -112,10 +112,4 @@ class Modal extends React.Component {
     }
 }
 
-const stateToProps = (state) => {
-    return {
-        modal: state.modal
-    }
-}
-
-export default connect(stateToProps)(Modal)
+export default Modal
