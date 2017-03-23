@@ -726,6 +726,7 @@ class Mutations {
         $group->membership = $input["isClosed"] ? ACCESS_PRIVATE : ACCESS_PUBLIC;
         $group->description = $input["description"];
         $group->tags = filter_tags($input["tags"]);
+        $group->access_id = get_default_access();
         $result = $group->save();
 
         if ($result) {
