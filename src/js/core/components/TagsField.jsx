@@ -105,8 +105,12 @@ class TagsField extends React.Component {
         })
     }
 
+    escapeString(input) {
+        return input.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+    }
+
     render() {
-        const regex = new RegExp(this.state.inputValue, 'i')
+        const regex = new RegExp(this.escapeString(this.state.inputValue), 'i')
         const hits = this.state.inputValue ? suggestions.filter((item) => (item.search(regex) > -1)) : new Set()
 
         const showSuggestions = hits.map((hit, i) => (
