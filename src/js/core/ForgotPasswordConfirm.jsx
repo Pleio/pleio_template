@@ -4,7 +4,6 @@ import Modal from "./components/Modal"
 import { getQueryVariable } from "../lib/helpers"
 import Errors from "./components/Errors"
 import { graphql } from "react-apollo"
-import { connect } from "react-redux"
 import gql from "graphql-tag"
 import { showModal } from "../lib/actions"
 import { logErrors } from "../lib/helpers"
@@ -95,5 +94,5 @@ const Query = gql`
         }
     }
 `
-const withQuery = graphql(Query)
-export default connect()(withQuery(ForgotPasswordConfirm))
+
+export default graphql(Query)(ForgotPasswordConfirm)

@@ -1,5 +1,4 @@
 import React from "react"
-import { connect } from "react-redux"
 import { Link } from "react-router"
 import { showModal } from "../../lib/actions"
 import { graphql } from "react-apollo"
@@ -88,4 +87,4 @@ const Query = gql`
 `
 
 const withQuery = graphql(Query)
-export default connect()(withQuery(Lead))
+export default withQuery(Lead)

@@ -79,7 +79,6 @@ class RichTextField extends React.Component {
         }
 
         this.onChange = this.onChange.bind(this)
-        this.onScroll = this.onScroll.bind(this)
         this.onTab = this.onTab.bind(this)
         this.handleKeyCommand = this.handleKeyCommand.bind(this)
         this.makeReadOnly = (isReadOnly) => this.setState({readOnly: isReadOnly})
@@ -89,6 +88,7 @@ class RichTextField extends React.Component {
         this.toggleBlockType = this.toggleBlockType.bind(this)
         this.changeAlignment = this.changeAlignment.bind(this)
         this.blockRendererFn = this.blockRendererFn.bind(this)
+        this.updateStickyToolbar = this.updateStickyToolbar.bind(this)
 
         this.submitLink = this.submitLink.bind(this)
         this.submitMedia = this.submitMedia.bind(this)
@@ -124,16 +124,20 @@ class RichTextField extends React.Component {
     }
 
     componentDidMount() {
+        window.addEventListener("updateStickyToolbar", this.updateStickyToolbar)
+
         this.setState({inBrowser: true})
     }
 
     componentWillUnmount() {
+        window.removeEventListener("updateStickyToolbar", this.updateStickyToolbar)
+
         if (this.context.detachFromForm) {
             this.context.detachFromForm(this)
         }
     }
 
-    onScroll(e) {
+    updateStickyToolbar(e) {
         const rect = this.refs.container.getBoundingClientRect()
 
         let makeSticky
@@ -396,7 +400,7 @@ class RichTextField extends React.Component {
         }
 
         return (
-            <div ref="container" className={classnames({"editor": true, "___is-sticky": this.state.isSticky})} onScroll={this.onScroll}>
+            <div ref="container" className={classnames({"editor": true, "___is-sticky": this.state.isSticky})}>
                 <div className="editor__toolbar" style={{"top": this.state.stickyPosition, "zIndex": 10}}>
                     {textSize}
                     {inline}

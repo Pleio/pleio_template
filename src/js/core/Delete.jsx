@@ -1,6 +1,5 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { connect } from "react-redux"
 import { hideModal } from "../lib/actions"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
@@ -36,7 +35,9 @@ class DeleteForm extends React.Component {
             },
             refetchQueries: this.props.refetchQueries
         }).then(({data}) => {
-            window.location.href = "/groups"
+            if (this.props.afterDelete) {
+                this.props.afterDelete()
+            }
         })
     }
 
@@ -49,7 +50,6 @@ class DeleteForm extends React.Component {
                 title = this.props.entity.name
             }
         }
-        console.log(this.props.entity)
         return (
             <form className="form" onSubmit={this.onSubmit}>
                 <p>Weet je zeker dat je het item {title} wil verwijderen?</p>
@@ -64,9 +64,6 @@ const Mutation = gql`
         deleteEntity(input: $input) {
             entity {
                 guid
-                ... on Object {
-                    status
-                }
             }
         }
     }
@@ -86,7 +83,7 @@ export default class DeleteModal extends React.Component {
     render() {
         return (
             <Modal ref="deleteModal" id="delete" title={this.props.title}>
-                <DeleteFormWithMutation entity={this.props.entity} refetchQueries={this.props.refetchQueries} />
+                <DeleteFormWithMutation entity={this.props.entity} refetchQueries={this.props.refetchQueries} afterDelete={this.props.afterDelete} />
             </Modal>
         )
     }

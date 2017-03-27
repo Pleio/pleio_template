@@ -21,9 +21,13 @@ import ActivityList from "./activity/List"
 
 import BlogList from "./blog/List"
 import BlogItem from "./blog/Item"
+import BlogAdd from "./blog/Add"
+import BlogEdit from "./blog/Edit"
 
 import NewsList from "./news/List"
 import NewsItem from "./news/Item"
+import NewsAdd from "./news/Add"
+import NewsEdit from "./news/Edit"
 
 import PageList from "./page/List"
 import PageItem from "./page/Item"
@@ -37,6 +41,8 @@ import GroupForumItem from "./group/GroupForumItem"
 import GroupFilesItem from "./group/GroupFilesItem"
 
 import QuestionsIndex from "./questions/Index"
+import QuestionsAdd from "./questions/Add.jsx"
+import QuestionsEdit from "./questions/Edit.jsx"
 import QuestionsList from "./questions/List"
 import QuestionsItem from "./questions/Item"
 
@@ -84,6 +90,8 @@ const newsRoutes = {
     component: Container,
     indexRoute: { component: NewsList },
     childRoutes: [
+        { path: "add", component: NewsAdd},
+        { path: "edit/:guid", component: NewsEdit },
         { path: "view/:guid/:slug", component: NewsItem }
     ]
 }
@@ -102,6 +110,8 @@ const blogRoutes = {
     component: Container,
     indexRoute: { component: BlogList },
     childRoutes: [
+        { path: "add", component: BlogAdd },
+        { path: "edit/:guid", component: BlogEdit },
         { path: "view/:guid/:slug", component: BlogItem }
     ]
 }
@@ -112,6 +122,8 @@ const questionsRoutes = {
     indexRoute: { component: QuestionsIndex },
     childRoutes: [
         { path: "all", component: QuestionsList },
+        { path: "add", component: QuestionsAdd },
+        { path: "edit/:guid", component: QuestionsEdit },
         { path: "view/:guid/:slug", component: QuestionsItem }
     ]
 }

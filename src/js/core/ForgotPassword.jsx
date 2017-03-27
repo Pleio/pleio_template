@@ -1,6 +1,5 @@
 import React from "react"
 import Modal from "./components/Modal"
-import { connect } from "react-redux"
 import { showModal } from "../lib/actions"
 import { logErrors } from "../lib/helpers"
 import { graphql } from "react-apollo"
@@ -21,8 +20,6 @@ class ForgotPassword extends React.Component {
     }
 
     onSubmit(e) {
-        e.preventDefault()
-
         let values = this.refs.form.getValues()
 
         this.props.mutate({
@@ -94,5 +91,5 @@ const Query = gql`
         }
     }
 `
-const withQuery = graphql(Query)
-export default connect()(withQuery(ForgotPassword))
+
+export default graphql(Query)(ForgotPassword)

@@ -1,6 +1,5 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import { connect } from "react-redux"
 import { Link } from "react-router"
 import gql from "graphql-tag"
 import CommentList from "../core/components/CommentList"
@@ -19,8 +18,6 @@ class Item extends React.Component {
     constructor(props) {
         super(props)
 
-        this.onEdit = () => this.props.dispatch(showModal("edit"))
-        this.onDelete = () => this.props.dispatch(showModal("delete"))
         this.toggleAddComment = () => this.setState({showAddComment: !this.state.showAddComment})
         this.closeAddComment = () => this.setState({showAddComment: false})
 
@@ -49,9 +46,11 @@ class Item extends React.Component {
         let edit = ""
         if (entity.canEdit) {
             edit = (
-                <div className="button__text article-action ___edit-post" onClick={this.onEdit}>
-                    Bewerken
-                </div>
+                <Link to={`/questions/edit/${entity.guid}`}>
+                    <div className="button__text article-action ___edit-post" onClick={this.onEdit}>
+                        Bewerken
+                    </div>
+                </Link>
             );
         }
 
@@ -111,8 +110,6 @@ class Item extends React.Component {
                                 </article>
                                 <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["QuestionsItem"]} />
                                 <CommentList comments={entity.comments} canVote={true} />
-                                <Edit title="Vraag wijzigen" entity={entity} subtype="question" />
-                                <Delete title="Vraag verwijderen" entity={entity} subtype="question" refetchQueries={["InfiniteList", "QuestionTopicCard"]} />
                             </div>
                         </div>
                     </div>
@@ -122,7 +119,7 @@ class Item extends React.Component {
     }
 }
 
-const QUERY = gql`
+const Query = gql`
     query QuestionsItem($guid: String!) {
         viewer {
             guid
@@ -177,7 +174,7 @@ const QUERY = gql`
     }
 `;
 
-export default connect()(graphql(QUERY, {
+const Settings = {
     options: (ownProps) => {
         return {
             variables: {
@@ -185,4 +182,6 @@ export default connect()(graphql(QUERY, {
             }
         }
     }
-})(Item));
+}
+
+export default graphql(Query, Settings)(Item)

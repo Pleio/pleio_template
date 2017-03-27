@@ -1,6 +1,5 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { connect } from "react-redux"
 import { hideModal } from "../lib/actions"
 import { logErrors } from "../lib/helpers"
 import { graphql } from "react-apollo"
@@ -18,7 +17,7 @@ import SwitchField from "./components/SwitchField"
 import { convertToRaw } from "draft-js"
 import { Set } from "immutable"
 
-class AddModal extends React.Component {
+class Add extends React.Component {
     constructor(props) {
         super(props)
 
@@ -64,8 +63,9 @@ class AddModal extends React.Component {
             },
             refetchQueries: this.props.refetchQueries
         }).then(({data}) => {
-            this.props.dispatch(hideModal())
-            location.reload()
+            if (this.props.afterAdd) {
+                this.props.afterAdd()
+            }
         }).catch((errors) => {
             logErrors(errors)
             this.setState({
@@ -112,25 +112,23 @@ class AddModal extends React.Component {
         }
 
         return (
-            <Modal id="add" title={this.props.title} full={this.props.featuredImage ? true : false} onScroll={this.onScroll}>
-                <Form ref="form" onSubmit={this.onSubmit}>
-                    {featuredImage}
-                    <div className="container">
-                        <div className="form">
-                            <InputField name="title" type="text" placeholder="Titel" className="form__input" rules="required" autofocus />
-                            <RichTextField ref="richText" name="description" placeholder="Beschrijving" rules="required" />
-                            {extraFields}
-                            <ContentFiltersInputField name="filters" className="form__input" />
-                            <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" />
-                            <div className="buttons ___end ___margin-top">
-                                <button className="button" type="submit">
-                                    Publiceer
-                                </button>
-                            </div>
+            <Form ref="form" onSubmit={this.onSubmit}>
+                {featuredImage}
+                <div className="container">
+                    <div className="form">
+                        <InputField name="title" type="text" placeholder="Titel" className="form__input" rules="required" autofocus />
+                        <RichTextField ref="richText" name="description" placeholder="Beschrijving" rules="required" />
+                        {extraFields}
+                        <ContentFiltersInputField name="filters" className="form__input" />
+                        <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" />
+                        <div className="buttons ___end ___margin-top">
+                            <button className="button" type="submit">
+                                Publiceer
+                            </button>
                         </div>
                     </div>
-                </Form>
-            </Modal>
+                </div>
+            </Form>
         )
     }
 }
@@ -153,7 +151,5 @@ const Mutation = gql`
         }
     }
 `
-const withQuery = graphql(Query)
-const withMutation = graphql(Mutation)
 
-export default connect()(withMutation(withQuery(AddModal)))
+export default graphql(Mutation)(graphql(Query)(Add))

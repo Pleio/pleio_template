@@ -1,6 +1,5 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import { connect } from "react-redux"
 import { Link } from "react-router"
 import gql from "graphql-tag"
 import { showModal } from "../lib/actions"
@@ -134,7 +133,7 @@ const Query = gql`
     }
 `
 
-export default connect()(graphql(Query, {
+const Settings = {
     options: (ownProps) => {
         return {
             variables: {
@@ -142,4 +141,6 @@ export default connect()(graphql(Query, {
             }
         }
     }
-})(Item));
+}
+
+export default graphql(Query, Settings)(Item)

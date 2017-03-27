@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import { connect } from "react-redux"
+import { Link } from "react-router"
 import gql from "graphql-tag"
 import CommentList from "../core/components/CommentList"
 import EditModal from "../core/Edit"
@@ -49,9 +49,11 @@ class Item extends React.Component {
         if (entity.canEdit) {
             edit = (
                 <div className="article-actions__justify">
-                    <div className="button__text article-action ___edit-post" onClick={this.onEdit}>
-                        Bewerken
-                    </div>
+                    <Link to={`/news/edit/${entity.guid}`}>
+                        <div className="button__text article-action ___edit-post">
+                            Bewerken
+                        </div>
+                    </Link>
                 </div>
             )
         }
@@ -98,8 +100,6 @@ class Item extends React.Component {
                                         {edit}
                                     </div>
                                 </article>
-                                <EditModal title="Nieuws wijzigen" entity={entity} subtype="news" featuredImage={true} />
-                                <DeleteModal title="Nieuws verwijderen" entity={entity} subtype="news" refetchQueries={["InfiniteList"]} />
                             </div>
                         </div>
                     </div>
@@ -109,7 +109,7 @@ class Item extends React.Component {
     }
 }
 
-const QUERY = gql`
+const Query = gql`
     query NewsItem($guid: String!) {
         viewer {
             guid
@@ -140,9 +140,9 @@ const QUERY = gql`
             }
         }
     }
-`;
+`
 
-export default connect()(graphql(QUERY, {
+const Settings = {
     options: (ownProps) => {
         return {
             variables: {
@@ -150,4 +150,6 @@ export default connect()(graphql(QUERY, {
             }
         }
     }
-})(Item));
+}
+
+export default graphql(Query, Settings)(Item)

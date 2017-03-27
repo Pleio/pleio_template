@@ -1,13 +1,12 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import { connect } from "react-redux"
 import gql from "graphql-tag"
 import ProfilePicture from "./ProfilePicture"
-import { showModal } from "../lib/actions"
 import NotFound from "../core/NotFound"
 import Document from "../core/components/Document"
 import ProfileField from "./components/ProfileField"
 import ProfileScore from "./components/ProfileScore"
+import Modal from "../core/components/Modal"
 
 class Profile extends React.Component {
     constructor(props) {
@@ -17,7 +16,7 @@ class Profile extends React.Component {
     }
 
     editPicture(e) {
-        this.props.dispatch(showModal("profile-picture"))
+        this.refs.profilePictureModal.toggle()
     }
 
     render() {
@@ -131,13 +130,15 @@ class Profile extends React.Component {
                         </div>
                     </div>
                 </div>
-                <ProfilePicture entity={entity} />
+                <Modal ref="profilePictureModal" title="Bewerk profielfoto">
+                    <ProfilePicture entity={entity} />
+                </Modal>
             </section>
         )
     }
 }
 
-const query = gql`
+const Query = gql`
     query Profile($username: String!) {
         entity(username: $username) {
             guid
@@ -159,9 +160,9 @@ const query = gql`
             }
         }
     }
-`;
+`
 
-export default connect()(graphql(query, {
+const Settings =  {
     options: (ownProps) => {
         return {
             variables: {
@@ -169,4 +170,6 @@ export default connect()(graphql(query, {
             }
         }
     }
-})(Profile))
+}
+
+export default graphql(Query, Settings)(Profile)

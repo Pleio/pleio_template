@@ -1,7 +1,5 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { connect } from "react-redux"
-import { hideModal } from "../lib/actions"
 import { logErrors } from "../lib/helpers"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"

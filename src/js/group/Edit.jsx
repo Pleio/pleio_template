@@ -1,9 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { connect } from "react-redux"
 import { logErrors } from "../lib/helpers"
 import { graphql } from "react-apollo"
-import { showModal, hideModal } from "../lib/actions"
 import gql from "graphql-tag"
 import Errors from "../core/components/Errors"
 import Modal from "../core/components/Modal"
@@ -155,7 +153,7 @@ const Mutation = gql`
     }
 `
 
-export default connect()(graphql(Mutation)(graphql(Query, {
+const Settings = {
     options: (ownProps) => {
         return {
             variables: {
@@ -163,4 +161,6 @@ export default connect()(graphql(Mutation)(graphql(Query, {
             }
         }
     }
-})(Edit)));
+}
+
+export default graphql(Mutation)(graphql(Query, Settings)(Edit))

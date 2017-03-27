@@ -1,12 +1,10 @@
 import React from "react"
-import { connect } from "react-redux"
-import { showModal } from "../lib/actions"
 import ContentHeader from "../core/components/ContentHeader"
 import UsersOnline from "../core/containers/UsersOnline"
 import TopicCard from "./containers/TopicCard"
 import Add from "../core/Add"
 import Document from "../core/components/Document"
-import { browserHistory } from "react-router"
+import { Link, browserHistory } from "react-router"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
@@ -19,7 +17,6 @@ class Index extends React.Component {
         }
 
         this.onChange = (e) => this.setState({q: e.target.value})
-        this.onClickAdd = (e) => this.props.dispatch(showModal("add"))
         this.onSubmit = this.onSubmit.bind(this)
     }
 
@@ -58,9 +55,11 @@ class Index extends React.Component {
             addQuestion = (
                 <div>
                     <span className="forum__search-separate">of</span>
-                    <button className="button ___large forum__ask-a-question" onClick={this.onClickAdd}>
-                        Een vraag stellen
-                    </button>
+                    <Link to="/questions/add">
+                        <button className="button ___large forum__ask-a-question">
+                            Een vraag stellen
+                        </button>
+                    </Link>
                 </div>
             )
         }
@@ -98,7 +97,6 @@ class Index extends React.Component {
                 </section>
 
                 {categoriesSection}
-                <Add title="Stel een vraag" subtype="question" refetchQueries={["InfiniteList", "QuestionTopicCard"]} />
             </div>
         )
     }
@@ -120,5 +118,4 @@ const Query = gql`
 `;
 
 
-const withQuery = graphql(Query)
-export default connect()(withQuery(Index))
+export default graphql(Query)(Index)

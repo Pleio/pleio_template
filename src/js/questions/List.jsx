@@ -1,20 +1,17 @@
 import React from "react"
-import { connect } from "react-redux"
-import { showModal } from "../lib/actions"
+import { Link } from "react-router"
 import ContentHeader from "../core/components/ContentHeader"
 import ContentFilters from "../core/containers/ContentFilters"
 import QuestionList from "./containers/QuestionList"
 import AddButton from "../core/containers/AddButton"
 import Document from "../core/components/Document"
 import Card from "./components/Card"
-import Add from "../core/Add"
 
 class List extends React.Component {
     constructor(props) {
         super(props)
 
         this.onChangeFilter = (tags) => this.setState({ tags })
-        this.onClickAdd = (e) => this.props.dispatch(showModal('add'))
 
         this.state = {
             tags: []
@@ -30,16 +27,17 @@ class List extends React.Component {
                         Forum
                     </h3>
                     <ContentFilters page="questions" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags} selectClassName="selector ___margin-bottom-mobile ___filter">
-                        <AddButton subtype="news" onClick={this.onClickAdd} />
+                        <Link to="/questions/add" className="right-lg">
+                            <AddButton subtype="question" />
+                        </Link>
                     </ContentFilters>
                 </ContentHeader>
                 <section className="section ___grey ___grow">
                     <QuestionList childClass={Card} subtype="question" offset={0} limit={20} tags={this.state.tags} />
                 </section>
-                <Add title="Stel een vraag" subtype="question" refetchQueries={["InfiniteList", "QuestionTopicCard"]} />
             </div>
         )
     }
 }
 
-export default connect()(List)
+export default List

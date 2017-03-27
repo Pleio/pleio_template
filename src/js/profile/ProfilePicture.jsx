@@ -1,9 +1,7 @@
 import React from "react"
-import Modal from "../core/components/Modal"
 import Form from "../core/components/Form"
 import { logErrors } from "../lib/helpers"
 import { graphql } from "react-apollo"
-import { connect } from "react-redux"
 import gql from "graphql-tag"
 import Cropper from "react-cropper"
 
@@ -64,8 +62,6 @@ class ProfilePicture extends React.Component {
     }
 
     onSubmit(e) {
-        e.preventDefault()
-
         const callback = (blob) => {
             let file
             if (blob) {
@@ -132,42 +128,40 @@ class ProfilePicture extends React.Component {
         }
 
         return (
-            <Modal ref="modal" id="profile-picture" title="Bewerk profielfoto">
-                <Form onSubmit={this.onSubmit}>
-                    <div className="row">
-                        <div className="col-sm-6">
-                            <label className="form__item">
-                                <div className="form__label">Foto bijsnijden</div>
-                            </label>
-                            {cropper}
-                        </div>
-                        <div className="col-sm-5 col-sm-offset-1">
-                            <label className="form__item">
-                                <div className="form__label">
-                                    Voorbeelden
-                                </div>
-                            </label>
-                            <div className="edit-picture__previews">
-                                <div className="edit-picture__preview" style={{background: "url(/mod/pleio_template/src/images/user.png) center center / cover no-repeat"}}>
-                                    {largeCroppedImage}
-                                </div>
-                                <div className="edit-picture__preview ___small" style={{background: "url(/mod/pleio_template/src/images/user.png) center center / cover no-repeat"}}>
-                                    {smallCroppedImage}
-                                </div>
+            <Form onSubmit={this.onSubmit}>
+                <div className="row">
+                    <div className="col-sm-6">
+                        <label className="form__item">
+                            <div className="form__label">Foto bijsnijden</div>
+                        </label>
+                        {cropper}
+                    </div>
+                    <div className="col-sm-5 col-sm-offset-1">
+                        <label className="form__item">
+                            <div className="form__label">
+                                Voorbeelden
+                            </div>
+                        </label>
+                        <div className="edit-picture__previews">
+                            <div className="edit-picture__preview" style={{background: "url(/mod/pleio_template/src/images/user.png) center center / cover no-repeat"}}>
+                                {largeCroppedImage}
+                            </div>
+                            <div className="edit-picture__preview ___small" style={{background: "url(/mod/pleio_template/src/images/user.png) center center / cover no-repeat"}}>
+                                {smallCroppedImage}
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div className="buttons ___end ___gutter ___margin-top">
-                        <button className="button ___grey" onClick={this.onClear}>
-                            Foto verwijderen
-                        </button>
-                        <button className="button ___primary" type="submit">
-                            Opslaan
-                        </button>
-                    </div>
-                </Form>
-            </Modal>
+                <div className="buttons ___end ___gutter ___margin-top">
+                    <button className="button ___grey" onClick={this.onClear}>
+                        Foto verwijderen
+                    </button>
+                    <button className="button ___primary" type="submit">
+                        Opslaan
+                    </button>
+                </div>
+            </Form>
         )
     }
 }
@@ -182,5 +176,5 @@ const Query = gql`
         }
     }
 `
-const withQuery = graphql(Query)
-export default connect()(withQuery(ProfilePicture))
+
+export default graphql(Query)(ProfilePicture)

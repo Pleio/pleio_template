@@ -1,7 +1,5 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import { connect } from "react-redux"
-import { showModal } from "../../lib/actions"
 import { Link } from "react-router"
 import NavigationSearch from "../../search/components/NavigationSearch"
 
@@ -10,9 +8,6 @@ class UserMenu extends React.Component {
         super(props)
 
         this.toggleSearch = this.toggleSearch.bind(this)
-        this.showModal = (id) => {
-            this.props.dispatch(showModal(id))
-        }
     }
 
     toggleSearch() {
@@ -74,10 +69,4 @@ class UserMenu extends React.Component {
     }
 }
 
-const stateToProps = (state) => {
-    return {
-        modal: state.modal
-    }
-}
-
-export default connect(stateToProps)(UserMenu)
+export default UserMenu

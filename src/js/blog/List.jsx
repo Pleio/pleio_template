@@ -1,5 +1,5 @@
 import React from "react"
-import { connect } from "react-redux"
+import { Link } from "react-router"
 import { showModal } from "../lib/actions"
 import ContentHeader from "../core/components/ContentHeader"
 import BlogList from "./containers/BlogList"
@@ -8,7 +8,6 @@ import Trending from "../activity/components/Trending"
 import Top from "../core/components/Top"
 import ContentFilters from "../core/containers/ContentFilters"
 import AddButton from "../core/containers/AddButton"
-import Add from "../core/Add"
 import Document from "../core/components/Document"
 
 class List extends React.Component {
@@ -17,7 +16,6 @@ class List extends React.Component {
 
         this.onChangeCanWrite = (canWrite) => this.setState({canWrite})
         this.onChangeFilter = (tags) => this.setState({ tags })
-        this.onClickAdd = (e) => this.props.dispatch(showModal("add"))
 
         this.state = {
             tags: []
@@ -33,7 +31,9 @@ class List extends React.Component {
                         Blog
                     </h3>
                     <ContentFilters page="blog" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags} selectClassName="selector ___margin-bottom-mobile ___filter">
-                        <AddButton title="Schrijf een verhaal" subtype="blog" onClick={this.onClickAdd} />
+                        <Link to="/blog/add" className="right-lg">
+                            <AddButton title="Schrijf een verhaal" subtype="blog" />
+                        </Link>
                     </ContentFilters>
                 </ContentHeader>
                 <section className="section ___grey ___grow">
@@ -51,10 +51,9 @@ class List extends React.Component {
                         </div>
                     </div>
                 </section>
-                <Add title="Schrijf een verhaal" subtype="blog" featuredImage={true} refetchQueries={["InfiniteList"]} />
             </div>
         )
     }
 }
 
-export default connect()(List)
+export default List

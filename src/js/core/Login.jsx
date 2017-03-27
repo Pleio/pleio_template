@@ -6,7 +6,6 @@ import Errors from "./components/Errors"
 import client from "../lib/client"
 import { logErrors } from "../lib/helpers"
 import Modal from "./components/Modal"
-import { connect } from "react-redux"
 import Form from "./components/Form"
 import { Link } from "react-router"
 import InputField from "./components/InputField"
@@ -121,4 +120,4 @@ const Mutation = gql`
         }
     }
 `
-export default connect()(graphql(Query)(graphql(Mutation)(Login)))
+export default graphql(Query)(graphql(Mutation)(Login))

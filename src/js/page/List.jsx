@@ -1,5 +1,4 @@
 import React from "react"
-import { connect } from "react-redux"
 import { showModal } from "../lib/actions"
 import ContentHeader from "../core/components/ContentHeader"
 import PageList from "./containers/PageList"
@@ -9,13 +8,12 @@ import AddButton from "../core/containers/AddButton"
 import Add from "../core/Add"
 import Document from "../core/components/Document"
 
-class List extends React.Component {
+export default class List extends React.Component {
     constructor(props) {
         super(props)
 
         this.onChangeCanWrite = (canWrite) => this.setState({canWrite})
         this.onChangeFilter = (tags) => this.setState({ tags })
-        this.onClickAdd = (e) => this.props.dispatch(showModal('add'))
 
         this.state = {
             tags: []
@@ -42,5 +40,3 @@ class List extends React.Component {
         )
     }
 }
-
-export default connect()(List)

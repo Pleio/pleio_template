@@ -1,11 +1,11 @@
 import React from "react"
-import { connect } from "react-redux"
 import classNames from "classnames"
 import { hideModal } from "../../lib/actions"
 import { browserHistory } from "react-router"
 
-class Modal extends React.Component {
+let now = new Date().getTime()
 
+class Modal extends React.Component {
     constructor(props) {
         super(props)
 
@@ -25,18 +25,25 @@ class Modal extends React.Component {
         this.refs.modal.removeEventListener("scroll", this.onScroll)
     }
 
+    onScroll(e) {
+        if ((new Date().getTime() - now) < 100) {
+            return
+        } else {
+            now = new Date().getTime()
+        }
+
+        if (!this.state.isOpen && !this.props.noParent) {
+            return
+        }
+
+        const event = new Event("updateStickyToolbar")
+        window.dispatchEvent(event)
+    }
+
     toggle() {
         this.setState({
             isOpen: !this.state.isOpen
         })
-    }
-
-    onScroll(e) {
-        if (!this.props.onScroll) {
-            return
-        }
-
-        this.props.onScroll(e)
     }
 
     onClose(e) {
@@ -44,10 +51,14 @@ class Modal extends React.Component {
             e.preventDefault()
         }
 
-        if (this.props.noParent) {
-            browserHistory.push("/")
+        if (this.props.onClose) {
+            this.props.onClose()
         } else {
-            this.refs.modal.toggle()
+            if (this.props.noParent) {
+                browserHistory.push("/")
+            } else {
+                this.toggle()
+            }
         }
     }
 

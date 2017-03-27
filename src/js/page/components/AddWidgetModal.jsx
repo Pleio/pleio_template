@@ -1,6 +1,4 @@
 import React from "react"
-import { connect } from "react-redux"
-import { hideModal } from "../../lib/actions"
 import { logErrors } from "../../lib/helpers"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
@@ -48,7 +46,6 @@ class AddWidgetModal extends React.Component {
                 }
             }
         }).then(({data}) => {
-            this.props.dispatch(hideModal())
             this.refs.form.clearValues()
         }).catch((errors) => {
             logErrors(errors)
@@ -94,5 +91,4 @@ const Mutation = gql`
         }
     }
 `
-const withMutation = graphql(Mutation)
-export default connect()(withMutation(AddWidgetModal))
+export default graphql(Mutation)(AddWidgetModal)

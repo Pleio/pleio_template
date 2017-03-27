@@ -1,11 +1,9 @@
 import React from "react"
 import Document from "../core/components/Document"
 import VideoModal from "../core/components/VideoModal"
-import { connect } from "react-redux"
-import { showModal } from "../lib/actions"
 import { Link } from "react-router"
 
-class Campagne extends React.Component {
+export default class Campagne extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -133,5 +131,3 @@ class Campagne extends React.Component {
         )
     }
 }
-
-export default connect()(Campagne)

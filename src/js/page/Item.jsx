@@ -1,6 +1,5 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import { connect } from "react-redux"
 import gql from "graphql-tag"
 import CommentList from "../core/components/CommentList"
 import EditModal from "../core/Edit"
@@ -128,9 +127,9 @@ const Query = gql`
             }
         }
     }
-`;
+`
 
-export default connect()(graphql(Query, {
+const Settings = {
     options: (ownProps) => {
         return {
             variables: {
@@ -138,4 +137,6 @@ export default connect()(graphql(Query, {
             }
         }
     }
-})(Item));
+}
+
+export default graphql(Query, Settings)(Item)

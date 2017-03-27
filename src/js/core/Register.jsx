@@ -1,7 +1,5 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { connect } from "react-redux"
-import { showModal, hideModal } from "../lib/actions"
 import { graphql } from "react-apollo"
 import { Link } from "react-router"
 import gql from "graphql-tag"
@@ -152,7 +150,7 @@ class Register extends React.Component {
     }
 }
 
-const REGISTER = gql`
+const Mutation = gql`
     mutation register($input: registerInput!) {
         register(input: $input) {
             viewer {
@@ -162,5 +160,5 @@ const REGISTER = gql`
         }
     }
 `
-const withRegister = graphql(REGISTER)
-export default connect()(withRegister(Register))
+
+export default graphql(Mutation)(Register)
