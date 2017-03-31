@@ -746,7 +746,7 @@ class Mutations {
             throw new Exception("could_not_find");
         }
 
-        if (!$group->canEdit()) {
+        if (!$group->canEdit() || !$group instanceof \ElggGroup) {
             throw new Exception("could_not_save");
         }
 
@@ -774,7 +774,7 @@ class Mutations {
 
     static function joinGroup($input) {
         $group = get_entity((int) $input["guid"]);
-        if (!$group) {
+        if (!$group || !$group instanceof \ElggGroup) {
             throw new Exception("could_not_find");
         }
 
@@ -797,7 +797,7 @@ class Mutations {
 
     static function leaveGroup($input) {
         $group = get_entity((int) $input["guid"]);
-        if (!$group) {
+        if (!$group || !$group instanceof \ElggGroup) {
             throw new Exception("could_not_find");
         }
 
@@ -814,5 +814,36 @@ class Mutations {
         return [
             "guid" => $group->guid
         ];
+    }
+
+    static function inviteToGroup($input) {
+        $group = get_entity((int) $input["guid"]);
+        if (!$group || !$group instanceof \ElggGroup) {
+            throw new Exception("could_not_find_group");
+        }
+
+        $userGuidOrEmail = $input["userGuidOrEmail"];
+        if (strpos($userGuidOrEmail, "@") !== false) {
+            $email = $userGuidOrEmail;
+        } else {
+            $user = get_entity((int) $userGuidOrEmail);
+            if (!$user || !$user instanceof \ElggUser) {
+                throw new Exception("could_not_find_user");
+            }
+        }
+
+        if (!$group->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        $result = group_tools_invite_email($group, $email);
+
+        if ($result) {
+            return [
+                "guid" => $group->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
     }
 }

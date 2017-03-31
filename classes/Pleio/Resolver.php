@@ -328,6 +328,40 @@ class Resolver {
         ];
     }
 
+    static function getInvite($a, $args, $c) {
+        $site = elgg_get_site_entity();
+
+        $offset = $args["offset"] || 0;
+        $limit = $args["limit"] || 10;
+
+        $group = get_entity($a["guid"]);
+        
+        $options = [
+            "type" => "user",
+            "site_guids" => false,
+            "relationship" => "member_of_site",
+            "relationship_guid" => $site->guid,
+            "inverse_relationship" => true
+        ];
+
+        $total = elgg_get_entities_from_relationship(array_merge($options, ["count" => true]));
+        $users = elgg_get_entities_from_relationship($options);
+
+        $invite = [];
+        foreach ($users as $user) {
+            $invite[] = [
+                "invited" => check_entity_relationship($group->guid, "invited", $user->guid),
+                "user" => Mapper::getUser($user)
+            ];
+        }
+
+        return [
+            "total" => $total,
+            "canWrite" => false,
+            "edges" => $invite
+        ];
+    }
+
     static function getComments($object) {
         $options = array(
             "type" => "object",

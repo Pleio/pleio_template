@@ -245,6 +245,30 @@ class SchemaBuilder {
             ]
         ]);
 
+        $inviteType = new ObjectType([
+            "name" => "Invite",
+            "fields" => [
+                "invited" => [
+                    "type" => Type::nonNull(Type::boolean())
+                ],
+                "user" => [
+                    "type" => Type::nonNull($userType)
+                ]
+            ]
+        ]);
+
+        $inviteListType = new ObjectType([
+            "name" => "InviteList",
+            "fields" => [
+                "total" => [
+                    "type" => Type::nonNull(Type::int())
+                ],
+                "edges" => [
+                    "type" => Type::listOf($inviteType)
+                ]
+            ]
+        ]);
+
         $membershipEnum = new EnumType([
             "name" => "Membership",
             "description" => "The type of membership.",
@@ -315,6 +339,21 @@ class SchemaBuilder {
                         ]
                     ],
                     "resolve" => "Pleio\Resolver::getMembers"
+                ],
+                "invite" => [
+                    "type" => $inviteListType,
+                    "args" => [
+                        "q" => [
+                            "type" => Type::string()
+                        ],
+                        "offset" => [
+                            "type" => Type::int()
+                        ],
+                        "limit" => [
+                            "type" => Type::int()
+                        ]
+                    ],
+                    "resolve" => "Pleio\Resolver::getInvite"
                 ]
             ]
         ]);
@@ -1401,6 +1440,30 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::leaveGroup"
         ]);
 
+        $inviteToGroupMutation = Relay::mutationWithClientMutationId([
+            "name" => "inviteToGroup",
+            "description" => "Create an invitation to join a group.",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::string(),
+                    "description" => "The guid of the group to invite to."
+                ],
+                "userGuidOrEmail" => [
+                    "type" => Type::string(),
+                    "description" => "The guid or e-mail address of the user to invite."
+                ]
+            ],
+            "outputFields" => [
+                "group" => [
+                    "type" => $groupType,
+                    "resolve" => function($group) {
+                        return Resolver::getEntity(null, $group, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::inviteToGroup"
+        ]);
+
         $mutationType = new ObjectType([
             "name" => "Mutation",
             "fields" => [
@@ -1429,7 +1492,8 @@ class SchemaBuilder {
                     "addGroup" => $addGroupMutation,
                     "editGroup" => $editGroupMutation,
                     "joinGroup" => $joinGroupMutation,
-                    "leaveGroup" => $leaveGroupMutation
+                    "leaveGroup" => $leaveGroupMutation,
+                    "inviteToGroup" => $inviteToGroupMutation
             ]
         ]);
 
