@@ -7,15 +7,14 @@ import Document from "../core/components/Document"
 import TabMenu from "../core/components/TabMenu"
 import ContentHeader from "../core/components/ContentHeader"
 import NotFound from "../core/NotFound"
-import EditModal from "./components/MoreInfoModal"
+import MoreInfoModal from "./components/MoreInfoModal"
+import InviteModal from "./components/InviteModal"
 import MemberSummary from "./components/MemberSummary"
 
 
 class Item extends React.Component {
     constructor(props) {
         super(props)
-
-        /*this.onEdit = () => this.props.dispatch(showModal("edit"))*/
     }
 
 
@@ -36,14 +35,19 @@ class Item extends React.Component {
             )
         }
 
-        let edit
+        let editOptions
         if (entity.canEdit) {
-            edit = (
-                    <Link to={`/groups/edit/${entity.guid}`} >
-                        <div className="button ___large ___add">
-                            <span>Groep bewerken</span>
+            editOptions = (
+                    <div className="col-sm-6 end-sm">
+                        <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
+                            <Link to={`/groups/edit/${entity.guid}`} >
+                                <div className="button ___large ___add">
+                                    <span>Groep bewerken</span>
+                                </div>
+                            </Link>
+                            <div onClick={() => this.refs.inviteModal.toggle()} >Leden beheren</div>
                         </div>
-                    </Link>
+                    </div>
             )
         }
 
@@ -64,19 +68,10 @@ class Item extends React.Component {
                         <div className="col-sm-6">
                             <h3 className="main__title ___info">
                                 {entity.name}
-                                <div onClick={() => this.refs.editGroup.toggle()} />
+                                <div onClick={() => this.refs.moreInfoModal.toggle()} />
                             </h3>
                         </div>
-                        <div className="col-sm-6 end-sm">
-                            <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
-                                {edit}
-                                <Link to="/groups/invite">
-                                    <div className="button ___large ___add">
-                                        <span>Leden uitnodigen</span>
-                                    </div>
-                                </Link>
-                            </div>
-                        </div>
+                        {editOptions}
                     </div>
                     <TabMenu options={menuOptions} />
                 </ContentHeader>
@@ -92,11 +87,14 @@ class Item extends React.Component {
                         </div>
                     </div>
                 </section>
-                <EditModal ref="editGroup" entity={entity} />
+                <MoreInfoModal ref="moreInfoModal" onKeyDown={this.handleKeyPress} entity={entity} />
+                <InviteModal ref="inviteModal" entity={entity} />
             </div>
         )
     }
 }
+
+// Duo to CSS rules, InviteModal has te be at the bottom.
 
 const Query = gql`
     query GroupItem($guid: String!) {

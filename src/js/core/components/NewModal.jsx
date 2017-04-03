@@ -20,6 +20,7 @@ export default class Modal extends React.Component {
     }
 
     render() {
+
         let steps, title, modal
         if (this.props.steps) {
             steps = (
