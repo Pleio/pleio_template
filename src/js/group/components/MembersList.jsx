@@ -47,6 +47,7 @@ const Query = gql`
             edges {
                 guid
                 username
+                url
                 name
                 icon
             }

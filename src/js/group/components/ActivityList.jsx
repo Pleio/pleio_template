@@ -4,8 +4,8 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
 const Query = gql`
-    query InfiniteList($offset: Int!, $limit: Int!, $tags: [String!]) {
-        activities(offset: $offset, limit: $limit, tags: $tags) {
+    query InfiniteList($containerGuid: Int, $offset: Int!, $limit: Int!, $tags: [String!]) {
+        activities(containerGuid: $containerGuid, offset: $offset, limit: $limit, tags: $tags) {
             total
             edges {
                 guid

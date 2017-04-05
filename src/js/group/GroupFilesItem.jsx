@@ -37,9 +37,6 @@ class Item extends React.Component {
                             </h3>
                         </div>
                         <div className="col-sm-6 end-sm">
-                            <div className="button ___large ___add">
-                                <span>Leden uitnodigen</span>
-                            </div>
                         </div>
                     </div>
                     <Menu params={this.props.params} />

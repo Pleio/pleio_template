@@ -770,6 +770,9 @@ class SchemaBuilder {
                 "activities" => [
                     "type" => $activityListType,
                     "args" => [
+                        "containerGuid" => [
+                            "type" => Type::int()
+                        ],
                         "offset" => [
                             "type" => Type::int()
                         ],

@@ -12,6 +12,7 @@ import InviteModal from "./components/InviteModal"
 import MembersSummary from "./components/MembersSummary"
 import ActivityList from "./components/ActivityList"
 import Menu from "./components/Menu"
+import JoinGroupButton from "./components/JoinGroupButton"
 
 class Item extends React.Component {
     constructor(props) {
@@ -36,21 +37,28 @@ class Item extends React.Component {
             )
         }
 
-        let editOptions
+        let join, edit, invite
+        if (!entity.isClosed && entity.membership === "not_joined") {
+            join = (
+                <JoinGroupButton entity={entity} />
+            )
+        }
+
         if (entity.canEdit) {
-            editOptions = (
-                    <div className="col-sm-6 end-sm">
-                        <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
-                            <Link to={`/groups/edit/${entity.guid}`} >
-                                <div className="button ___large ___line">
-                                    <span>Groep bewerken</span>
-                                </div>
-                            </Link>
-                            <div className="button ___large" onClick={() => this.refs.inviteModal.toggle()}>
-                                Leden uitnodigen
-                            </div>
-                        </div>
+            edit = (
+                <Link to={`/groups/edit/${entity.guid}`} >
+                    <div className="button ___large ___line">
+                        <span>Groep bewerken</span>
                     </div>
+                </Link>
+            )
+        }
+
+        if (entity.canEdit) {
+            invite = (
+                <div className="button ___large" onClick={() => this.refs.inviteModal.toggle()}>
+                    Leden uitnodigen
+                </div>
             )
         }
 
@@ -65,7 +73,13 @@ class Item extends React.Component {
                                 <div onClick={() => this.refs.moreInfoModal.toggle()} />
                             </h3>
                         </div>
-                        {editOptions}
+                        <div className="col-sm-6 end-sm">
+                            <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
+                                {join}
+                                {edit}
+                                {invite}
+                            </div>
+                        </div>
                     </div>
                     <Menu params={this.props.params} />
                 </ContentHeader>
@@ -76,7 +90,7 @@ class Item extends React.Component {
                                 <MembersSummary entity={entity} /> 
                             </div>
                             <div className="col-sm-12 col-lg-8">
-                                <ActivityList childClass={Card} offset={0} limit={20} tags={[]} />
+                                <ActivityList containerGuid={entity.guid} childClass={Card} offset={0} limit={20} tags={[]} />
                             </div>
                         </div>
                     </div>
@@ -109,6 +123,7 @@ const Query = gql`
                 icon
                 isClosed
                 canEdit
+                membership
                 members(limit: 5) {
                     total
                     edges {

@@ -77,6 +77,10 @@ class Resolver {
                 "limit" => (int) $args["limit"]
             ];
 
+            if ($args["containerGuid"]) {
+                $options["container_guid"] = (int) $args["containerGuid"];
+            }
+
             if ($tags) {
                 $options["metadata_name_value_pairs"] = [];
                 foreach ($tags as $tag) {
@@ -313,8 +317,8 @@ class Resolver {
     static function getMembers($a, $args, $c) {
         $group = get_entity($a["guid"]);
         
-        $offset = $args["offset"] || 0;
-        $limit = $args["limit"] || 10;
+        $offset = $args["offset"] ? $args["offset"] : 0;
+        $limit = $args["limit"] ? $args["limit"] : 10;
 
         $members = [];
         foreach ($group->getMembers($limit, $offset) as $member) {
@@ -590,6 +594,10 @@ class Resolver {
                         "value" => $tag
                     ];
                 }
+            }
+
+            if ($args["containerGuid"]) {
+                $options["container_guid"] = (int) $args["containerGuid"];
             }
 
             $result = [

@@ -4,8 +4,8 @@ import gql from "graphql-tag"
 import AddButton from "../components/AddButton"
 
 const Query = gql`
-    query AddButton($subtype: String!) {
-        entities(subtype: $subtype) {
+    query AddButton($containerGuid: Int, $subtype: String!) {
+        entities(containerGuid: $containerGuid, subtype: $subtype) {
             canWrite
         }
     }

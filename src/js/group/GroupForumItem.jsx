@@ -1,5 +1,7 @@
 import React from "react"
 import { graphql } from "react-apollo"
+import { Link } from "react-router"
+import AddButton from "../core/containers/AddButton"
 import gql from "graphql-tag"
 import Document from "../core/components/Document"
 import ContentHeader from "../core/components/ContentHeader"
@@ -7,6 +9,8 @@ import NotFound from "../core/NotFound"
 import MoreInfoModal from "./components/MoreInfoModal"
 import MemberSummary from "./components/MembersSummary"
 import Menu from "./components/Menu"
+import QuestionList from "../questions/containers/QuestionList"
+import Card from "../questions/components/Card"
 
 class Item extends React.Component {
     render() {
@@ -37,8 +41,10 @@ class Item extends React.Component {
                             </h3>
                         </div>
                         <div className="col-sm-6 end-sm">
-                            <div className="button ___large ___add">
-                                <span>Leden uitnodigen</span>
+                            <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
+                                <Link to="/questions/add" className="right-lg">
+                                    <AddButton subtype="question" title="Stel een vraag" containerGuid={entity.guid} />
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -51,7 +57,7 @@ class Item extends React.Component {
                                 <MemberSummary entity={entity} /> 
                             </div>
                             <div className="col-sm-12 col-lg-8">
-                                Forum
+                                <QuestionList containerGuid={entity.guid} childClass={Card} subtype="question" offset={0} limit={20} tags={[]} />
                             </div>
                         </div>
                     </div>

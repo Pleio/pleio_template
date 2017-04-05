@@ -14,6 +14,7 @@ const Query = gql`
                     name
                     description
                     isClosed
+                    membership
                     members {
                         total
                     }

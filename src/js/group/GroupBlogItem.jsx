@@ -1,7 +1,11 @@
 import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
+import { Link } from "react-router"
+import AddButton from "../core/containers/AddButton"
 import Document from "../core/components/Document"
+import Card from "../blog/components/Card"
+import BlogList from "../blog/containers/BlogList"
 import ContentHeader from "../core/components/ContentHeader"
 import NotFound from "../core/NotFound"
 import MoreInfoModal from "./components/MoreInfoModal"
@@ -37,8 +41,10 @@ class Item extends React.Component {
                             </h3>
                         </div>
                         <div className="col-sm-6 end-sm">
-                            <div className="button ___large ___add">
-                                <span>Leden uitnodigen</span>
+                            <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
+                                <Link to="/blog/add" className="right-lg">
+                                    <AddButton subtype="blog" title="Schrijf een verhaal" containerGuid={entity.guid} />
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -51,7 +57,7 @@ class Item extends React.Component {
                                 <MemberSummary entity={entity} /> 
                             </div>
                             <div className="col-sm-12 col-lg-8">
-                                Blog
+                                <BlogList childClass={Card} subtype="blog" offset={0} limit={20} tags={[]} containerGuid={entity.guid} />
                             </div>
                         </div>
                     </div>
