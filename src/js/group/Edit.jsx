@@ -17,6 +17,7 @@ import { convertToRaw } from "draft-js"
 import { Link } from "react-router"
 import NotFound from "../core/NotFound"
 import DeleteModal from "../core/Delete"
+import { browserHistory } from "react-router"
 import { Set } from "immutable"
 
 class Edit extends React.Component {
@@ -27,8 +28,18 @@ class Edit extends React.Component {
             errors: []
         }
 
+        this.onClose = this.onClose.bind(this)
         this.onDelete = this.onDelete.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
+    }
+
+    afterDelete() {
+        window.location.href = '/groups'
+    }
+
+    onClose() {
+        const { entity } = this.props.data
+        browserHistory.push(entity.url)
     }
 
     onDelete(e) {
@@ -37,18 +48,21 @@ class Edit extends React.Component {
     }
 
     onSubmit(e) {
-        e.preventDefault();
+        const { entity } = this.props.data
+
         this.setState({
             errors: []
         })
 
         const values = this.refs.form.getValues()
+
         let input = {
             clientMutationId: 1,
-            guid: this.props.data.entity.guid,
+            guid: entity.guid,
             name: values.name,
             description: values.description,
             isClosed: (values.membership === "closed") ? true : false,
+            icon: values.icon,
             tags: values.tags
         }
 
@@ -58,13 +72,12 @@ class Edit extends React.Component {
             },
             refetchQueries: this.props.refetchQueries
         }).then(({data}) => {
-            window.location.href = "/groups"
+            window.location.href = entity.url
         }).catch((errors) => {
             logErrors(errors)
             this.setState({
                 errors: errors
             })
-            console.log(errors)
         })
     }
 
@@ -93,18 +106,18 @@ class Edit extends React.Component {
 
         let membership = (entity.isClosed) ? "closed" : "open"
         return (
-            <Modal id="add" title="Bewerk groep" full={true} noParent={true}>
+            <Modal id="add" title="Bewerk groep" full={true} noParent={true} onClose={this.onClose}>
                 {errors}
                 <Form ref="form" onSubmit={this.onSubmit}>
                     <div className="container">
                         <div className="form">
                             <InputField value={entity.name} label="Naam" name="name" type="text" placeholder="Voeg een korte duidelijke naam toe" className="form__input" rules="required" autofocus />
-                            <IconField />                            
+                            <IconField name="icon" value={entity.icon} />                            
                             <SelectField label="Lidmaatschap" name="membership" type="text" className="form__input" options={{open: "Open", "closed": "Besloten"}} value={membership} />
                             <TextField label="Beschrijving" name="description" type="text" placeholder="Vertel wat over de groep" className="form__input" rules="required" value={entity.description} />
                             <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" value={entity.tags}/>
 
-                            <div className="buttons ___end ___margin-top">
+                            <div className="buttons ___space-between">
                                 <button className="button" type="submit" name="update">
                                     Bijwerken
                                 </button>
@@ -115,7 +128,7 @@ class Edit extends React.Component {
                         </div>
                     </div>
                 </Form>
-                <DeleteModal ref="deleteModal" title="Groep verwijderen" entity={entity} subtype="group" refetchQueries={["GroupsList"]} />
+                <DeleteModal ref="deleteModal" title="Groep verwijderen" entity={entity} subtype="group" afterDelete={this.afterDelete} />
             </Modal>
         )
     }
@@ -132,6 +145,7 @@ const Query = gql`
                 icon
                 isClosed
                 canEdit
+                url
                 tags
             }
         }

@@ -2,9 +2,9 @@ import React from "react"
 import Modal from "../../core/components/NewModal"
 import Form from "../../core/components/Form"
 import InputField from "../../core/components/InputField"
-import InviteList from "../components/InviteList"
+import MembersList from "../components/MembersList"
 
-export default class InviteModal extends React.Component {
+export default class MembersModal extends React.Component {
     constructor(props) {
         super(props)
 
@@ -28,14 +28,10 @@ export default class InviteModal extends React.Component {
         const { entity } = this.props
 
         return (
-            <Modal ref="modal" title="Leden uitnodigen">
+            <Modal ref="modal" title="Leden">
                 <div className="group-info">
                     <div className="group-info__content">
-                        <div className="search-bar ___margin-bottom">
-                            <input type="text" name="q" onChange={this.onChange} placeholder="Zoek een lid..." autoComplete="off" />
-                            <div className="search-bar__button" />
-                        </div>
-                        <InviteList entity={entity} q={this.state.q} />
+                        <MembersList entity={entity} />
                     </div>
                 </div>
             </Modal>

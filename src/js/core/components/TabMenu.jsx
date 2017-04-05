@@ -26,6 +26,10 @@ class TabMenu extends React.Component {
             }
         })
 
+        if (!selected) {
+            selected = this.props.options[0].link
+        }
+
         let content = this.props.options.map((item, i) => (
             <Link key={i} to={item.link} className={classnames({"tabmenu__link": true, "___is-active": item.link === selected})}>
                 {item.title}

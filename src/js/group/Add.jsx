@@ -13,6 +13,7 @@ import TagsField from "../core/components/TagsField"
 import SelectField from "../core/components/SelectField"
 import SwitchField from "../core/components/SwitchField"
 import IconField from "../core/components/IconField"
+import { browserHistory } from "react-router"
 import { convertToRaw } from "draft-js"
 import { Set } from "immutable"
 
@@ -27,6 +28,10 @@ class Add extends React.Component {
         this.onSubmit = this.onSubmit.bind(this)
     }
 
+    onClose() {
+        browserHistory.push("/groups")
+    }
+
     onSubmit(e) {
         this.setState({
             errors: []
@@ -38,6 +43,7 @@ class Add extends React.Component {
             clientMutationId: 1,
             name: values.name,
             description: values.description,
+            icon: values.icon,
             isClosed: (values.membership === "closed") ? true : false,
             tags: values.tags
         }
@@ -64,13 +70,13 @@ class Add extends React.Component {
         }
 
         return (
-            <Modal id="add" title="Nieuwe groep" full={true} noParent={true}>
+            <Modal id="add" title="Nieuwe groep" full={true} noParent={true} onClose={this.onClose}>
                 {errors}
                 <Form ref="form" onSubmit={this.onSubmit}>
                     <div className="container">
                         <div className="form">
                             <InputField label="Naam" name="name" type="text" placeholder="Voeg een korte duidelijke naam toe" className="form__input" rules="required" autofocus />
-                            <IconField />
+                            <IconField name="icon" />
                             <SelectField label="Lidmaatschap" name="membership" type="text" className="form__input" options={{open: "Open", "closed": "Besloten"}} value="open" />
                             <TextField label="Beschrijving" name="description" type="text" placeholder="Vertel wat over de groep" className="form__input" rules="required" />
                             <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" />

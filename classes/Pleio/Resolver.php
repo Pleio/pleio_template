@@ -329,6 +329,7 @@ class Resolver {
     }
 
     static function getInvite($a, $args, $c) {
+        $dbprefix = elgg_get_config("dbprefix");
         $site = elgg_get_site_entity();
 
         $offset = $args["offset"] || 0;
@@ -343,6 +344,12 @@ class Resolver {
             "relationship_guid" => $site->guid,
             "inverse_relationship" => true
         ];
+
+        if ($args["q"]) {
+            $q = sanitize_string($args["q"]);
+            $options["joins"] = "JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid";
+            $options["wheres"] = "ue.name LIKE '{$q}%'";
+        }
 
         $total = elgg_get_entities_from_relationship(array_merge($options, ["count" => true]));
         $users = elgg_get_entities_from_relationship($options);
@@ -472,6 +479,8 @@ class Resolver {
 
     static function getProfile($user) {
         $user = get_entity($user["guid"]);
+        $site = elgg_get_site_entity();
+
         if (!$user || !$user instanceof \ElggUser) {
             return [];
         }
@@ -486,12 +495,23 @@ class Resolver {
             [ "key" => "description", "name" => "Over mij" ]
         ];
 
+        $raw_results = elgg_get_metadata([
+            "guid" => $user->guid,
+            "site_guids" => $site->guid,
+            "metadata_names" => ["phone", "mobile", "emailaddress", "site", "sector", "school", "description"]
+        ]);
+
+        $profile = [];
+        foreach ($raw_results as $result) {
+            $profile[$result["name"]] = $result["value"];
+        }
+
         $result = [];
         foreach ($defaultItems as $item) {
             $result[] = [
                 "key" => $item["key"],
                 "name" => $item["name"],
-                "value" => $user->$item["key"] ? $user->$item["key"] : ""
+                "value" => $profile[$item["key"]]
             ];
         }
 

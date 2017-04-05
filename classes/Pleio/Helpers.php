@@ -81,9 +81,23 @@ class Helpers {
         }
     }
 
-    static function saveToIcon($filename, $owner) {
+    static function saveToIcon($filename, $entity) {
         $filename = str_replace(".", "_", $filename);
         $icon_sizes = elgg_get_config("icon_sizes");
+
+        $class = get_class($entity);
+        switch($class) {
+            case "ElggGroup":
+                $owner_guid = $entity->owner_guid;
+                $target_filename = "groups/{$entity->guid}";
+                break;
+            case "ElggUser":                
+                $owner_guid = $entity->guid;
+                $target_filename = "profile/{$entity->guid}";
+                break;
+            default:
+                throw new Exception("Could not save an icon for this type of entity.");
+        }
 
         $files = array();
         foreach ($icon_sizes as $name => $size_info) {
@@ -91,9 +105,9 @@ class Helpers {
 
             if ($resized) {
                 $file = new \ElggFile();
-                $file->owner_guid = $owner->guid;
+                $file->owner_guid = $owner_guid;
                 $file->access_id = get_default_access();
-                $file->setFilename("profile/{$owner->guid}{$name}.jpg");
+                $file->setFilename("{$target_filename}{$name}.jpg");
                 $file->open("write");
                 $file->write($resized);
                 $file->close();

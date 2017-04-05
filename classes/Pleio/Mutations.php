@@ -378,6 +378,7 @@ class Mutations {
     }
 
     static function editProfileField($input) {
+        $site = elgg_get_site_entity();
         $entity = get_entity(((int) $input["guid"]));
         if (!$entity) {
             throw new Exception("could_not_find");
@@ -403,7 +404,7 @@ class Mutations {
                 $entity->$key = $value;
                 $result = $entity->save();
             } else {
-                $result = create_metadata($entity->guid, $key, $value, "", 0, get_default_access(), false);
+                $result = create_metadata($entity->guid, $key, $value, "", 0, get_default_access(), false, $site->guid);
             }
         } else {
             $entity->deleteMetadata($key);
@@ -715,8 +716,8 @@ class Mutations {
         $group = new \ElggGroup();
         $user = elgg_get_logged_in_user_entity();
 
-        if ($input["avatar"]) {
-            Helpers::saveToIcon($input["avatar"], $entity);
+        if ($input["icon"]) {
+            Helpers::saveToIcon($input["icon"], $entity);
             $group->icontime = time();
         } else {
             unset($group->icontime);
@@ -750,8 +751,8 @@ class Mutations {
             throw new Exception("could_not_save");
         }
 
-        if ($input["avatar"]) {
-            Helpers::saveToIcon($input["avatar"], $group);
+        if ($input["icon"]) {
+            Helpers::saveToIcon($input["icon"], $group);
             $group->icontime = time();
         } else {
             unset($group->icontime);
@@ -830,6 +831,8 @@ class Mutations {
             if (!$user || !$user instanceof \ElggUser) {
                 throw new Exception("could_not_find_user");
             }
+
+            $email = $user->email;
         }
 
         if (!$group->canEdit()) {
@@ -838,7 +841,7 @@ class Mutations {
 
         $result = group_tools_invite_email($group, $email);
 
-        if ($result) {
+        if ($result !== false) {
             return [
                 "guid" => $group->guid
             ];

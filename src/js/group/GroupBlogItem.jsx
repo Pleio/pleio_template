@@ -5,7 +5,7 @@ import Document from "../core/components/Document"
 import ContentHeader from "../core/components/ContentHeader"
 import NotFound from "../core/NotFound"
 import MoreInfoModal from "./components/MoreInfoModal"
-import MemberSummary from "./components/MemberSummary"
+import MemberSummary from "./components/MembersSummary"
 import Menu from "./components/Menu"
 
 class Item extends React.Component {
@@ -82,7 +82,6 @@ const Query = gql`
                 description
                 icon
                 isClosed
-                isMember
                 members(limit: 5) {
                     total
                     edges {
@@ -97,7 +96,7 @@ const Query = gql`
     }
 `
 
-export default graphql(Query, {
+const Settings = {
     options: (ownProps) => {
         return {
             variables: {
@@ -105,4 +104,6 @@ export default graphql(Query, {
             }
         }
     }
-})(Item)
+}
+
+export default graphql(Query, Settings)(Item)

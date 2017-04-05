@@ -1,12 +1,12 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import { Link } from "react-router"
 import gql from "graphql-tag"
 import Modal from "../../core/components/NewModal"
 import Form from "../../core/components/Form"
-import MemberItem from "./MemberItem"
+import InputField from "../../core/components/InputField"
+import InviteItem from "./InviteItem"
 
-class MembersList extends React.Component {
+class InviteList extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -22,16 +22,14 @@ class MembersList extends React.Component {
             )
         }
 
-        const members = entity.members.edges.map((member, i) => (
-            <div key={i} className="col-sm-6">
-                <MemberItem member={member} />
-            </div>
+        const List = entity.invite.edges.map((invite, i) => (
+            <InviteItem key={i} group={entity} user={invite.user} invited={invite.invited} />
         ))
 
         return (
             <div className="list-members">
                 <div className="row">
-                    {members}
+                    {List}
                 </div>
             </div>
         )
@@ -39,16 +37,19 @@ class MembersList extends React.Component {
 }
 
 const Query = gql`
-    query MembersList($guid: String!){
+    query InviteList($guid: String!, $q: String){
       entity(guid: $guid) {
         guid
         ... on Group {
-          members {
+          invite(q: $q) {
             edges {
-                guid
-                username
-                name
-                icon
+                invited
+                user {
+                    guid
+                    username
+                    name
+                    icon
+                }
             }
           }
         }
@@ -67,4 +68,4 @@ const Settings = {
     }
 }
 
-export default graphql(Query, Settings)(MembersList)
+export default graphql(Query, Settings)(InviteList)
