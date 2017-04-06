@@ -652,6 +652,9 @@ class SchemaBuilder {
                 "name" => [
                     "type" => Type::nonNull(Type::string())
                 ],
+                "theme" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
                 "menu" => [
                     "type" => Type::listOf($menuItemType)
                 ],
@@ -660,6 +663,9 @@ class SchemaBuilder {
                 ],
                 "accessIds" => [
                     "type" => Type::listOf($accessIdType)
+                ],
+                "logo" => [
+                    "type" => Type::nonNull(Type::string())
                 ],
                 "showLogo" => [
                     "type" => Type::nonNull(Type::boolean())

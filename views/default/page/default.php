@@ -1,6 +1,7 @@
 <?php
 header("Content-type: text/html; charset=utf-8");
 $lang = get_current_language();
+
 $store = elgg_extract("store", $vars);
 
 if (webpack_dev_server_is_available()) {
@@ -10,6 +11,8 @@ if (webpack_dev_server_is_available()) {
 }
 
 $path .= "mod/pleio_template/build/";
+
+$theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
 
 ?>
 <!DOCTYPE html>
@@ -27,7 +30,7 @@ $path .= "mod/pleio_template/build/";
     <meta name="relative-path" content="">
     <link href="<?php echo $path; ?>web.css?v=<?php echo $CONFIG->lastcache; ?>" rel="stylesheet" type="text/css">
 </head>
-<body class="___leraar">
+<body class="___<?php echo $theme; ?>">
     <div id="react-root" class="page-container"><?php echo elgg_extract('body', $vars, ''); ?></div>
     <?php if ($store): ?>
         <script>

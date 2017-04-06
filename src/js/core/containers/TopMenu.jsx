@@ -1,13 +1,11 @@
 import React from "react"
 import { Link } from "react-router"
-import { graphql } from "react-apollo"
-import gql from "graphql-tag"
 import UserMenu from "./UserMenu"
 import UserMobileMenu from "./UserMobileMenu"
 import classnames from "classnames"
 import { browserHistory } from "react-router"
 
-class TopMenu extends React.Component {
+export default class TopMenu extends React.Component {
     constructor(props) {
         super(props)
 
@@ -43,7 +41,7 @@ class TopMenu extends React.Component {
 
     render() {
         const { site } = this.props.data
-        let menuItems, home, mobileHome
+        let menuItems, footerItems, home, mobileHome, userMenu, pleio
 
         if (!site) {
             return (
@@ -51,15 +49,17 @@ class TopMenu extends React.Component {
             )
         }
 
-        menuItems = site.menu.map((item, i) => {
-            return (
-                <li key={i}>
-                    <Link to={item.link} onClick={this.closeMobileMenu} title={item.title} className="navigation__link" activeClassName="___is-active">
-                        {item.title}
-                    </Link>
-                </li>
-            )
-        })
+        menuItems = site.menu.map((item, i) => (
+            <li key={i}>
+                <Link to={item.link} onClick={this.closeMobileMenu} title={item.title} className="navigation__link" activeClassName="___is-active">
+                    {item.title}
+                </Link>
+            </li>
+        ))
+
+        footerItems = site.footer.map((item, i) => (
+            <Link key={i} to={item.link} onClick={this.closeMobileMenu} title={item.title} activeClassName="___is-active">{item.title}</Link>
+        ))
 
         if (site.showLogo) {
             home = (
@@ -75,6 +75,17 @@ class TopMenu extends React.Component {
                 <li>
                     <Link to="/" onClick={this.closeMobileMenu} title="Home" className="navigation__link" activeClassName="___is-active">Home</Link>
                 </li>
+            )
+        }
+
+        if (site.theme === "leraar") {
+            userMenu = (
+                <UserMenu onClick={this.closeMobileMenu} viewer={this.props.data.viewer} />
+            )
+            pleio = (
+                <a href="https://www.pleio.nl" title="Pleio" className="navigation__link ___pleio">
+                    Pleio
+                </a>
             )
         }
 
@@ -103,19 +114,14 @@ class TopMenu extends React.Component {
                                     <div className="submenu__back" onClick={this.toggleSubmenu}>Terug</div>
                                     <ul className="submenu__list">
                                         <li className="submenu__list-item">
-                                            <Link to="/campagne" onClick={this.closeMobileMenu} title="Over" activeClassName="___is-active">Over</Link>
-                                            <Link to="/pages/terms" onClick={this.closeMobileMenu} title="Spelregels" activeClassName="___is-active">Spelregels</Link>
-                                            <Link to="/pages/privacy" onClick={this.closeMobileMenu} title="Privacy" activeClassName="___is-active">Privacy</Link>
-                                            <Link to="/pages/contact" onClick={this.closeMobileMenu} title="Contact" activeClassName="___is-active">Contact</Link>
+                                            {footerItems}
                                         </li>
                                     </ul>
                                 </div>
                             </li>
                         </ul>
-                        <UserMenu onClick={this.closeMobileMenu} viewer={this.props.data.viewer} />
-                        <a href="https://www.pleio.nl" title="Pleio" className="navigation__link ___pleio">
-                            Pleio
-                        </a>
+                        {userMenu}
+                        {pleio}
                     </div>
                     <div className="mobile-navigation__bar">
                         <div className="mobile-navigation__trigger" onClick={this.toggleMobileMenu} />
@@ -127,28 +133,3 @@ class TopMenu extends React.Component {
         )
     }
 }
-
-const WithQuery = gql`
-    query TopMenu {
-        site {
-            guid
-            showLogo
-            menu {
-                title
-                link
-            }
-        }
-        viewer {
-            guid
-            loggedIn
-            user {
-                guid
-                username
-                name
-                icon
-            }
-        }
-    }
-`;
-
-export default graphql(WithQuery)(TopMenu);

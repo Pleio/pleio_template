@@ -3,6 +3,12 @@ $plugin = $vars["entity"];
 
 echo elgg_view_module(
     "inline",
+    elgg_echo("pleio_template:logo"),
+    elgg_view("plugins/pleio_template/modules/logo", ["plugin" => $plugin])
+);
+
+echo elgg_view_module(
+    "inline",
     elgg_echo("pleio_template:settings"),
     elgg_view("plugins/pleio_template/modules/settings", ["plugin" => $plugin])
 );

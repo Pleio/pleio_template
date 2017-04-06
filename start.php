@@ -42,6 +42,8 @@ function pleio_template_init() {
     elgg_unregister_plugin_hook_handler("entity:icon:url", "user", "profile_override_avatar_url");
     elgg_register_plugin_hook_handler("entity:icon:url", "user", "pleio_template_user_icon_url");
 
+    elgg_extend_view("css/admin", "pleio_template/css/admin");
+
     if (!isset($_COOKIE["CSRF_TOKEN"])) {
         $token = md5(openssl_random_pseudo_bytes(32));
         $domain = ini_get("session.cookie_domain");
@@ -78,6 +80,7 @@ function pleio_template_container_permissions_check_hook($hook, $type, $return_v
 }
 
 function pleio_template_plugins_settings_save($hook, $type, $return_value, $params) {
+    $site = elgg_get_site_entity();
     $plugin_id = get_input("plugin_id");
 
     if ($plugin_id !== "pleio_template") {
@@ -124,6 +127,28 @@ function pleio_template_plugins_settings_save($hook, $type, $return_value, $para
     $params["filters"] = serialize($filters);
     $params["footer"] = serialize($footer);
     set_input("params", $params);
+
+    $file = new \ElggFile();
+    $file->owner_guid = $site->guid;
+    $file->access_id = ACCESS_PUBLIC;
+    $file->setFilename("pleio_template/{$site->guid}_logo.jpg");
+    
+    $logo = get_resized_image_from_uploaded_file("logo", 404, 231, false, true);
+    $remove_logo = get_input("remove_logo");
+
+    if ($logo) {
+        $file->open("write");
+        $file->write($logo);
+        $file->close();
+
+        $site->logotime = time();
+        $site->save();
+    } elseif ($remove_logo === "1") {
+        $file->delete();
+        
+        unset($site->logotime);
+        $site->save();
+    }
 }
 
 function pleio_template_user_icon_url($hook, $type, $return_value, $params) {

@@ -1,4 +1,16 @@
 <div>
+    <label><?php echo elgg_echo("pleio_template:theme"); ?></label>
+    <?php echo elgg_view("input/dropdown", [
+        "name" => "params[theme]",
+        "value" => $vars["plugin"]->theme,
+        "options_values" => [
+            "leraar" => elgg_echo("pleio_template:minimalistic"),
+            "rijkshuisstijl" => elgg_echo("pleio_template:rijkshuisstijl")
+        ]
+    ]); ?>
+</div>
+
+<div>
     <label><?php echo elgg_echo("pleio_template:show_logo"); ?></label>
     <?php echo elgg_view("input/dropdown", [
         "name" => "params[show_logo]",

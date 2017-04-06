@@ -20,6 +20,8 @@ class Resolver {
             $filters = [];
         }
 
+        $theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
+
         $footer = unserialize(elgg_get_plugin_setting("footer", "pleio_template"));
         if (!$footer) {
             $footer = [];
@@ -43,7 +45,9 @@ class Resolver {
             "guid" => $site->guid,
             "name" => $site->name,
             "menu" => $menu,
+            "theme" => $theme,
             "footer" => $footer,
+            "logo" => "/mod/pleio_template/logo.php?lastcache={$site->logotime}",
             "showLogo" => $showLogo,
             "showLeader" => $showLeader,
             "showInitiative" => $showInitiative,
