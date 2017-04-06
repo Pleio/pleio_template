@@ -30,7 +30,7 @@ class Activity extends React.Component {
 
         if (site && site.showLeader) {
             leader = (
-                <Lead title="Leraar.nl" image="/mod/pleio_template/src/images/lead-home.jpg" />
+                <Lead title="Leraar.nl" image="/mod/pleio_template/src/images/lead-home2.png" />
             )
         }
 
