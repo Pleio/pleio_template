@@ -2,7 +2,6 @@ import React from "react"
 import { Router, Route, IndexRoute, browserHistory } from "react-router"
 
 import Container from "./core/components/Container"
-import AbsoluteContainer from "./core/components/AbsoluteContainer"
 
 import NotFound from "./core/NotFound"
 import Login from "./core/Login"
@@ -62,6 +61,7 @@ const routes = {
     component: Container,
     indexRoute: { component: ActivityList },
     childRoutes: [
+        { path: "/campagne", component: Campagne },
         { path: "/activity", component: ActivityList },
         { path: "/pages/privacy", component: Privacy },
         { path: "/pages/terms", component: Terms },
@@ -74,14 +74,6 @@ const routes = {
         { path: "/register", component: Register },
         { path: "/forgotpassword", component: ForgotPassword },
         { path: "/resetpassword", component: ForgotPasswordConfirm }
-    ]
-}
-
-const absoluteRoutes = {
-    path: "/",
-    component: AbsoluteContainer,
-    childRoutes: [
-        { path: "campagne", component: Campagne }
     ]
 }
 
@@ -166,7 +158,7 @@ const notFoundRoutes = {
 }
 
 const rootRoute = {
-    childRoutes: [ routes, absoluteRoutes, pageRoutes, newsRoutes, blogRoutes, questionsRoutes, profileRoutes, groupRoutes, notFoundRoutes ]
+    childRoutes: [ routes, pageRoutes, newsRoutes, blogRoutes, questionsRoutes, profileRoutes, groupRoutes, notFoundRoutes ]
 }
 
 export default rootRoute
