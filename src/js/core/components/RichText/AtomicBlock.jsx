@@ -1,6 +1,5 @@
 import React from "react"
 import { Entity, EditorState, Modifier, SelectionState } from "draft-js"
-import { Resizable } from "react-resizable"
 import ImageContextualMenu from "./ImageContextualMenu"
 import classnames from "classnames"
 import ImageContextualInfoModal from "./ImageContextualInfoModal"

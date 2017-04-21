@@ -1,4 +1,4 @@
-import { print as printGraphQL } from "graphql-tag/printer"
+import { print as printGraphQL } from "graphql/language/printer"
 import ApolloClient from "apollo-client"
 import RecursiveIterator from "recursive-iterator"
 import objectPath from "object-path"
