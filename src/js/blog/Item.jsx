@@ -9,7 +9,7 @@ import AddComment from "../core/containers/AddComment"
 import SocialShare from "../core/components/SocialShare"
 import NotFound from "../core/NotFound"
 import showDate from "../lib/showDate"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import LikeAndBookmark from "../core/components/LikeAndBookmark"
 import RichTextView from "../core/components/RichTextView"
 import Document from "../core/components/Document"
@@ -178,7 +178,7 @@ const Settings = {
     options: (ownProps) => {
         return {
             variables: {
-                guid: ownProps.params.guid
+                guid: ownProps.match.params.guid
             }
         }
     }

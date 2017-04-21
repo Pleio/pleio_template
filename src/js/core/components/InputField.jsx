@@ -1,6 +1,7 @@
 import React from "react"
 import classnames from "classnames"
 import Validator from "validatorjs"
+import PropTypes from "prop-types"
 
 class InputField extends React.Component {
     constructor(props) {
@@ -83,8 +84,8 @@ class InputField extends React.Component {
 }
 
 InputField.contextTypes = {
-    attachToForm: React.PropTypes.func,
-    detachFromForm: React.PropTypes.func
+    attachToForm: PropTypes.func,
+    detachFromForm: PropTypes.func
 }
 
 export default InputField

@@ -1,6 +1,7 @@
 import React from "react"
 import classnames from "classnames"
 import Validator from "validatorjs"
+import PropTypes from "prop-types"
 
 class FileField extends React.Component {
     constructor(props) {
@@ -70,8 +71,8 @@ class FileField extends React.Component {
 }
 
 FileField.contextTypes = {
-    attachToForm: React.PropTypes.func,
-    detachFromForm: React.PropTypes.func
+    attachToForm: PropTypes.func,
+    detachFromForm: PropTypes.func
 }
 
 export default FileField

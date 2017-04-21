@@ -5,6 +5,7 @@ import { Set } from "immutable"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { sectorOptions, categoryOptions } from "../../lib/filters"
+import PropTypes from "prop-types"
 
 const suggestions = Set()
 
@@ -159,8 +160,8 @@ class TagsField extends React.Component {
 }
 
 TagsField.contextTypes = {
-    attachToForm: React.PropTypes.func,
-    detachFromForm: React.PropTypes.func
+    attachToForm: PropTypes.func,
+    detachFromForm: PropTypes.func
 }
 
 const Query = gql`

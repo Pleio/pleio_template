@@ -7,6 +7,7 @@ import Document from "../core/components/Document"
 import ProfileField from "./components/ProfileField"
 import ProfileScore from "./components/ProfileScore"
 import Modal from "../core/components/Modal"
+import Wrapper from "./components/Wrapper"
 
 class Profile extends React.Component {
     constructor(props) {
@@ -76,64 +77,66 @@ class Profile extends React.Component {
         })
 
         return (
-            <section className="section ___grey ___grow">
-                <Document title={entity.name} />
-                <div className="container">
-                    <div className="card-profile">
-                        <div className="row">
-                            <div className="col-sm-4 col-lg-3">
-                                <div style={pictureStyles} className="card-profile__picture">
-                                    {editProfile}
-                                </div>
-                            </div>
-                            <div className="col-sm-8 col-lg-9">
-                                <div className="row">
-                                    <div className="col-sm-12 col-lg-8">
-                                        <ul className="card-profile__details">
-                                            <li><span>Contactgegevens</span></li>
-                                            {contactData}
-                                        </ul>
+            <Wrapper match={this.props.match}>
+                <section className="section ___grey ___grow">
+                    <Document title={entity.name} />
+                    <div className="container">
+                        <div className="card-profile">
+                            <div className="row">
+                                <div className="col-sm-4 col-lg-3">
+                                    <div style={pictureStyles} className="card-profile__picture">
+                                        {editProfile}
                                     </div>
-                                    <div className="col-sm-12 col-lg-4">
-                                        {profileScore}
-                                        <ul className="card-profile__social">
-                                            <li>
-                                                <label>Antwoorden:</label>
-                                                <span>{stats.answers || 0}</span>
-                                            </li>
-                                            <li>
-                                                <label>Stemmen omhoog:</label>
-                                                <span>{stats.upvotes || 0}</span>
-                                            </li>
-                                            <li>
-                                                <label>Stemmen omlaag:</label>
-                                                <span>{stats.downvotes || 0}</span>
-                                            </li>
-                                        </ul>
+                                </div>
+                                <div className="col-sm-8 col-lg-9">
+                                    <div className="row">
+                                        <div className="col-sm-12 col-lg-8">
+                                            <ul className="card-profile__details">
+                                                <li><span>Contactgegevens</span></li>
+                                                {contactData}
+                                            </ul>
+                                        </div>
+                                        <div className="col-sm-12 col-lg-4">
+                                            {profileScore}
+                                            <ul className="card-profile__social">
+                                                <li>
+                                                    <label>Antwoorden:</label>
+                                                    <span>{stats.answers || 0}</span>
+                                                </li>
+                                                <li>
+                                                    <label>Stemmen omhoog:</label>
+                                                    <span>{stats.upvotes || 0}</span>
+                                                </li>
+                                                <li>
+                                                    <label>Stemmen omlaag:</label>
+                                                    <span>{stats.downvotes || 0}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="card-profile">
-                        <div className="row">
-                            <div className="col-sm-4 col-lg-3">
-                                <div className="card-profile__icon"></div>
+                        <div className="card-profile">
+                            <div className="row">
+                                <div className="col-sm-4 col-lg-3">
+                                    <div className="card-profile__icon"></div>
+                                </div>
+                                <div className="col-sm-8 col-lg-6">
+                                    <ul className="card-profile__details">
+                                        {siteProfile}
+                                    </ul>
+                                    <ProfileField type="textarea" entity={entity} canEdit={entity.canEdit} dataKey="description" name={profileByKey.description.name} value={profileByKey.description.value} className="card-profile__about" />
+                                </div>
+                                <div className="col-lg-3"></div>
                             </div>
-                            <div className="col-sm-8 col-lg-6">
-                                <ul className="card-profile__details">
-                                    {siteProfile}
-                                </ul>
-                                <ProfileField type="textarea" entity={entity} canEdit={entity.canEdit} dataKey="description" name={profileByKey.description.name} value={profileByKey.description.value} className="card-profile__about" />
-                            </div>
-                            <div className="col-lg-3"></div>
                         </div>
                     </div>
-                </div>
-                <Modal ref="profilePictureModal" title="Bewerk profielfoto">
-                    <ProfilePicture entity={entity} />
-                </Modal>
-            </section>
+                    <Modal ref="profilePictureModal" title="Bewerk profielfoto">
+                        <ProfilePicture entity={entity} />
+                    </Modal>
+                </section>
+            </Wrapper>
         )
     }
 }
@@ -166,7 +169,7 @@ const Settings =  {
     options: (ownProps) => {
         return {
             variables: {
-                username: ownProps.params.username
+                username: ownProps.match.params.username
             }
         }
     }

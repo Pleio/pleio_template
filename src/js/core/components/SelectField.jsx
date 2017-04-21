@@ -2,6 +2,7 @@ import React from "react"
 import classnames from "classnames"
 import Validator from "validatorjs"
 import Select from "./NewSelect"
+import PropTypes from "prop-types"
 
 class SelectField extends React.Component {
     constructor(props) {
@@ -78,8 +79,8 @@ class SelectField extends React.Component {
 }
 
 SelectField.contextTypes = {
-    attachToForm: React.PropTypes.func,
-    detachFromForm: React.PropTypes.func
+    attachToForm: PropTypes.func,
+    detachFromForm: PropTypes.func
 }
 
 export default SelectField

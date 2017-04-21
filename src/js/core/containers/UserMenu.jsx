@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import NavigationSearch from "../../search/components/NavigationSearch"
 
 class UserMenu extends React.Component {
@@ -51,7 +51,7 @@ class UserMenu extends React.Component {
                 <ul className="navigation__actions">
                     <li>
                         <a onClick={this.toggleSearch} title="Zoeken" className="navigation__action ___search"></a>
-                        <NavigationSearch ref="search" />
+                        <NavigationSearch ref="search" history={this.props.history} />
                     </li>
                     <li>
                         <Link to="/login" title="Inloggen" className="navigation__action ___login">

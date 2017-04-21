@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import ContentHeader from "../core/components/ContentHeader"
 import ContentFilters from "../core/containers/ContentFilters"
 import QuestionList from "./containers/QuestionList"

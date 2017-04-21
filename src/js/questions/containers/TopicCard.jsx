@@ -1,6 +1,6 @@
 import React from "react"
 import Accordeon from "../../core/components/Accordeon"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { showShortDate } from "../../lib/showDate"

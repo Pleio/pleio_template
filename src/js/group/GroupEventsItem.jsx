@@ -39,7 +39,7 @@ class Item extends React.Component {
                         <div className="col-sm-6 end-sm">
                         </div>
                     </div>
-                    <Menu params={this.props.params} />
+                    <Menu match={this.props.match} />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
                     <div className="container">
@@ -97,7 +97,7 @@ const Settings = {
     options: (ownProps) => {
         return {
             variables: {
-                guid: ownProps.params.guid
+                guid: ownProps.match.params.guid
             }
         }
     }

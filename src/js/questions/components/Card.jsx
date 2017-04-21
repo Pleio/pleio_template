@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import Bookmark from "../../bookmarks/components/Bookmark"
 import showDate from "../../lib/showDate"
 import { displayTags } from "../../lib/helpers"

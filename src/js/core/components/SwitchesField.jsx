@@ -3,6 +3,7 @@ import classnames from "classnames"
 import Validator from "validatorjs"
 import Switch from "./Switch"
 import { Set } from "immutable"
+import PropTypes from "prop-types"
 
 class SwitchesField extends React.Component {
     constructor(props) {
@@ -97,8 +98,8 @@ class SwitchesField extends React.Component {
 }
 
 SwitchesField.contextTypes = {
-    attachToForm: React.PropTypes.func,
-    detachFromForm: React.PropTypes.func
+    attachToForm: PropTypes.func,
+    detachFromForm: PropTypes.func
 }
 
 export default SwitchesField

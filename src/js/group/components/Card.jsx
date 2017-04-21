@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import showDate from "../../lib/showDate"
 import classnames from "classnames"
 

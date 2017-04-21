@@ -2,7 +2,7 @@ import React from "react"
 import Accordeon from "../../../core/components/Accordeon"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 
 class Top extends React.Component {
     render() {

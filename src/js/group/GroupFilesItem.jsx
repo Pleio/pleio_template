@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { graphql } from "react-apollo"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import gql from "graphql-tag"
 import classnames from "classnames"
 import Document from "../core/components/Document"
@@ -59,7 +59,7 @@ class Item extends React.Component {
     }
 
     render() {
-        const { params } = this.props
+        const { match } = this.props
         const { entity, viewer } = this.props.data
 
         if (!entity) {
@@ -92,7 +92,7 @@ class Item extends React.Component {
             )
         }
 
-        const containerGuid = params.containerGuid ? params.containerGuid : params.guid
+        const containerGuid = match.params.containerGuid ? match.params.containerGuid : match.params.guid
 
         return (
             <div className="page-container">
@@ -109,12 +109,12 @@ class Item extends React.Component {
                             <AddButton title="Nieuw bestand" subtype="file" onClick={() => this.refs.addFile.toggle()} />
                         </div>
                     </div>
-                    <Menu params={this.props.params} />
+                    <Menu match={this.props.match} />
                 </ContentHeader>
                 <section className={classnames({"section ___grey ___grow": true, "___show-checkboxes": this.state.selected.size > 0})}>
                     <div className="container">
                         {actions}
-                        <FileFolderList containerGuid={containerGuid} containerClassName="" rowClassName="" childClass={FileFolder} offset={0} limit={50} type="object" subtype="file|folder" selected={this.state.selected} />
+                        <FileFolderList containerGuid={containerGuid} containerClassName="" rowClassName="" childClass={FileFolder} offset={0} limit={50} type="object" subtype="file|folder" selected={this.state.selected} history={this.props.history} />
                     </div>
                 </section>
                 <AddFileModal ref="addFile" containerGuid={containerGuid} onComplete={this.clearSelection} />
@@ -171,7 +171,7 @@ const Settings = {
     options: (ownProps) => {
         return {
             variables: {
-                guid: ownProps.params.guid
+                guid: ownProps.match.params.guid
             }
         }
     }

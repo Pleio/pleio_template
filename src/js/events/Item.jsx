@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import gql from "graphql-tag"
 import CommentList from "../core/components/CommentList"
 import EditModal from "../core/Edit"
@@ -146,7 +146,7 @@ const Settings = {
     options: (ownProps) => {
         return {
             variables: {
-                guid: ownProps.params.guid
+                guid: ownProps.match.params.guid
             }
         }
     }

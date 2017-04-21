@@ -1,4 +1,5 @@
-import React from 'react'
+import React from "react"
+import PropTypes from "prop-types"
 
 class Language extends React.Component {
     render() {
@@ -13,11 +14,11 @@ class Language extends React.Component {
 }
 
 Language.propTypes = {
-    children: React.PropTypes.object.isRequired
+    children: PropTypes.object.isRequired
 }
 
 Language.childContextTypes = {
-    currentLanguage: React.PropTypes.string.isRequired
+    currentLanguage: PropTypes.string.isRequired
 }
 
 export default Language;

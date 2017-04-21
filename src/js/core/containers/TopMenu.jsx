@@ -1,9 +1,8 @@
 import React from "react"
-import { Link } from "react-router"
+import { NavLink } from "react-router-dom"
 import UserMenu from "./UserMenu"
 import UserMobileMenu from "./UserMobileMenu"
 import classnames from "classnames"
-import { browserHistory } from "react-router"
 
 export default class TopMenu extends React.Component {
     constructor(props) {
@@ -30,13 +29,7 @@ export default class TopMenu extends React.Component {
     }
 
     onSearch(e) {
-        e.preventDefault()
-        browserHistory.push(`/search?q=${this.state.q}`)
-        this.closeMobileMenu()
-
-        this.setState({
-            q: ""
-        })
+        window.location.href = `/search?q=${this.state.q}`
     }
 
     render() {
@@ -51,29 +44,29 @@ export default class TopMenu extends React.Component {
 
         menuItems = site.menu.map((item, i) => (
             <li key={i}>
-                <Link to={item.link} onClick={this.closeMobileMenu} title={item.title} className="navigation__link" activeClassName="___is-active">
+                <NavLink to={item.link} onClick={this.closeMobileMenu} title={item.title} className="navigation__link" activeClassName="___is-active">
                     {item.title}
-                </Link>
+                </NavLink>
             </li>
         ))
 
         footerItems = site.footer.map((item, i) => (
-            <Link key={i} to={item.link} onClick={this.closeMobileMenu} title={item.title} activeClassName="___is-active">{item.title}</Link>
+            <NavLink key={i} to={item.link} onClick={this.closeMobileMenu} title={item.title} activeClassName="___is-active">{item.title}</NavLink>
         ))
 
         if (site.showLogo) {
             home = (
                 <li>
-                    <Link to="/" onClick={this.closeMobileMenu} title="Home" className="navigation__link ___home" activeClassName="___is-active">Home</Link>
+                    <NavLink exact to="/" onClick={this.closeMobileMenu} title="Home" className="navigation__link ___home" activeClassName="___is-active">Home</NavLink>
                 </li>
             )
             mobileHome = (
-                <Link to="/" onClick={this.closeMobileMenu} className="mobile-navigation__home" />
+                <NavLink exact to="/" onClick={this.closeMobileMenu} className="mobile-navigation__home" />
             )
         } else {
             home = (
                 <li>
-                    <Link to="/" onClick={this.closeMobileMenu} title="Home" className="navigation__link" activeClassName="___is-active">Home</Link>
+                    <NavLink exact to="/" onClick={this.closeMobileMenu} title="Home" className="navigation__link" activeClassName="___is-active">Home</NavLink>
                 </li>
             )
         }

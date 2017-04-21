@@ -1,7 +1,6 @@
 import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
-import { browserHistory } from "react-router"
 
 class Logout extends React.Component {
     constructor(props) {

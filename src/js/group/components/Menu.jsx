@@ -3,7 +3,7 @@ import TabMenu from "../../core/components/TabMenu"
 
 export default class Menu extends React.Component {
     render() {
-        const rootUrl =  `/groups/view/${this.props.params.guid}/${this.props.params.slug}`
+        const rootUrl =  `/groups/view/${this.props.match.params.guid}/${this.props.match.params.slug}`
 
         const menuOptions = [
             { link: `${rootUrl}`, title:"Home" },

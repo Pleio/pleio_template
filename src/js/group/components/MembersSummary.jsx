@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import MemberItem from "./MemberItem"
 import MembersModal from "./MembersModal"
 

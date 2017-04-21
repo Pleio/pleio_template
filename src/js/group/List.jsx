@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import ContentHeader from "../core/components/ContentHeader"
 import Document from "../core/components/Document"
 import AddButton from "../core/containers/AddButton"

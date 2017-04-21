@@ -3,6 +3,7 @@ import Switches from "./Switches"
 import { Set } from "immutable"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
+import PropTypes from "prop-types"
 
 class ContentFiltersInputField extends React.Component {
     constructor(props) {
@@ -130,8 +131,8 @@ const Query = gql`
 `
 
 ContentFiltersInputField.contextTypes = {
-    attachToForm: React.PropTypes.func,
-    detachFromForm: React.PropTypes.func
+    attachToForm: PropTypes.func,
+    detachFromForm: PropTypes.func
 }
 
 export default graphql(Query)(ContentFiltersInputField)

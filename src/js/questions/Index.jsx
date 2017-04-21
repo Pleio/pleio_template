@@ -4,7 +4,7 @@ import UsersOnline from "../core/containers/UsersOnline"
 import TopicCard from "./containers/TopicCard"
 import Add from "../core/Add"
 import Document from "../core/components/Document"
-import { Link, browserHistory } from "react-router"
+import { Link } from "react-router-dom"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
@@ -22,7 +22,7 @@ class Index extends React.Component {
 
     onSubmit(e) {
         e.preventDefault()
-        browserHistory.push(`/search?q=${this.state.q}&type=object&subtype=question`)
+        this.props.history.push(`/search?q=${this.state.q}&type=object&subtype=question`)
 
         this.setState({
             q: ""

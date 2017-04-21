@@ -2,6 +2,7 @@ import React from "react"
 import classnames from "classnames"
 import Validator from "validatorjs"
 import Switch from "./Switch"
+import PropTypes from "prop-types"
 
 class SwitchField extends React.Component {
     constructor(props) {
@@ -76,8 +77,8 @@ class SwitchField extends React.Component {
 }
 
 SwitchField.contextTypes = {
-    attachToForm: React.PropTypes.func,
-    detachFromForm: React.PropTypes.func
+    attachToForm: PropTypes.func,
+    detachFromForm: PropTypes.func
 }
 
 export default SwitchField

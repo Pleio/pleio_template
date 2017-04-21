@@ -1,15 +1,15 @@
 import React from "react"
-import { browserHistory } from "react-router"
 import AddCore from "../core/Add"
 import Modal from "../core/components/Modal"
 
 export default class Add extends React.Component {
     constructor(props) {
         super(props)
+        this.onClose = this.onClose.bind(this)
     }
 
     onClose() {
-        browserHistory.push("/news")
+        this.props.history.push("/news")
     }
 
     afterAdd() {

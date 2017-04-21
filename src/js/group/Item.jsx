@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import gql from "graphql-tag"
 import { showModal } from "../lib/actions"
 import Document from "../core/components/Document"
@@ -79,7 +79,7 @@ class Item extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <Menu params={this.props.params} />
+                    <Menu match={this.props.match} />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
                     <div className="container">
@@ -140,7 +140,7 @@ const Settings = {
     options: (ownProps) => {
         return {
             variables: {
-                guid: ownProps.params.guid
+                guid: ownProps.match.params.guid
             }
         }
     }

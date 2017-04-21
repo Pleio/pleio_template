@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 
 class IconField extends React.Component {
     constructor(props) {
@@ -93,8 +94,8 @@ class IconField extends React.Component {
 }
 
 IconField.contextTypes = {
-    attachToForm: React.PropTypes.func,
-    detachFromForm: React.PropTypes.func
+    attachToForm: PropTypes.func,
+    detachFromForm: PropTypes.func
 }
 
 export default IconField

@@ -14,10 +14,9 @@ import SelectField from "../core/components/SelectField"
 import SwitchField from "../core/components/SwitchField"
 import IconField from "../core/components/IconField"
 import { convertToRaw } from "draft-js"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import NotFound from "../core/NotFound"
 import DeleteModal from "../core/Delete"
-import { browserHistory } from "react-router"
 import { Set } from "immutable"
 
 class Edit extends React.Component {
@@ -39,7 +38,7 @@ class Edit extends React.Component {
 
     onClose() {
         const { entity } = this.props.data
-        browserHistory.push(entity.url)
+        this.props.history.push(entity.url)
     }
 
     onDelete(e) {
@@ -171,7 +170,7 @@ const Settings = {
     options: (ownProps) => {
         return {
             variables: {
-                guid: ownProps.params.guid
+                guid: ownProps.match.params.guid
             }
         }
     }

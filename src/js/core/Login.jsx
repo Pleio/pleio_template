@@ -6,7 +6,7 @@ import Errors from "./components/Errors"
 import { logErrors } from "../lib/helpers"
 import Modal from "./components/Modal"
 import Form from "./components/Form"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import InputField from "./components/InputField"
 import { showModal, hideModal } from "../lib/actions"
 

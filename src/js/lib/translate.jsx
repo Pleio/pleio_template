@@ -1,6 +1,7 @@
-import React from 'react';
-import en from '../i18n/en';
-import nl from '../i18n/nl';
+import React from "react"
+import en from "../i18n/en"
+import nl from "../i18n/nl"
+import PropTypes from "prop-types"
 
 const languages = {
     en,
@@ -17,7 +18,7 @@ export default function translate(key) {
         }
 
         TranslationComponent.contextTypes = {
-            currentLanguage: React.PropTypes.string
+            currentLanguage: PropTypes.string
         }
 
         return TranslationComponent

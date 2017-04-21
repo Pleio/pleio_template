@@ -3,6 +3,7 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import AccountPassword from "./components/AccountPassword"
 import AccountEmail from "./components/AccountEmail"
+import Wrapper from "./components/Wrapper"
 
 class Account extends React.Component {
     render() {
@@ -15,12 +16,14 @@ class Account extends React.Component {
         }
 
         return (
-            <section className="section ___grey ___grow">
-                <div className="container">
-                    <AccountPassword entity={entity} />
-                    <AccountEmail entity={entity} />
-                </div>
-            </section>
+            <Wrapper match={this.props.match}>
+                <section className="section ___grey ___grow">
+                    <div className="container">
+                        <AccountPassword entity={entity} />
+                        <AccountEmail entity={entity} />
+                    </div>
+                </section>
+            </Wrapper>
         )
     }
 }
@@ -43,7 +46,7 @@ const withQuery = graphql(Query, {
     options: (ownProps) => {
         return {
             variables: {
-                username: ownProps.params.username
+                username: ownProps.match.params.username
             }
         }
     }

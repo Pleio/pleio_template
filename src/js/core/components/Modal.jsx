@@ -1,7 +1,6 @@
 import React from "react"
 import classNames from "classnames"
 import { hideModal } from "../../lib/actions"
-import { browserHistory } from "react-router"
 
 let now = new Date().getTime()
 
@@ -55,7 +54,7 @@ class Modal extends React.Component {
             this.props.onClose()
         } else {
             if (this.props.noParent) {
-                browserHistory.push("/")
+                this.props.history.push("/")
             } else {
                 this.toggle()
             }

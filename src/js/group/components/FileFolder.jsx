@@ -1,6 +1,5 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { browserHistory } from "react-router"
 import showDate from "../../lib/showDate"
 import CheckField from "../../core/components/CheckField"
 import classnames from "classnames"
@@ -25,7 +24,7 @@ class FileFolder extends React.Component {
             window.location.href = `/file/download/${entity.guid}`
         } else {
             this.context.clearSelection()
-            browserHistory.push(`/groups/view/${group.guid}/${group.name}/files/${entity.guid}`)
+            this.props.history.push(`/groups/view/${group.guid}/${group.name}/files/${entity.guid}`)
         }
     }
 

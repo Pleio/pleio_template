@@ -7,7 +7,7 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { showModal } from "../lib/actions"
 import { logErrors } from "../lib/helpers"
-import { Link, browserHistory } from "react-router"
+import { Link } from "react-router-dom"
 
 class ForgotPasswordConfirm extends React.Component {
     constructor(props) {

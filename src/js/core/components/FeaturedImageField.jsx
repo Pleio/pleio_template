@@ -1,5 +1,6 @@
 import React from "react"
 import classnames from "classnames"
+import PropTypes from "prop-types"
 
 class FeaturedImageField extends React.Component {
 
@@ -100,8 +101,8 @@ class FeaturedImageField extends React.Component {
 }
 
 FeaturedImageField.contextTypes = {
-    attachToForm: React.PropTypes.func,
-    detachFromForm: React.PropTypes.func
+    attachToForm: PropTypes.func,
+    detachFromForm: PropTypes.func
 }
 
 export default FeaturedImageField

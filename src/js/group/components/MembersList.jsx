@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import gql from "graphql-tag"
 import Modal from "../../core/components/NewModal"
 import Form from "../../core/components/Form"

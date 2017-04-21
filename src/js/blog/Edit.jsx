@@ -4,7 +4,6 @@ import EditCore from "../core/Edit"
 import DeleteCore from "../core/Delete"
 import Modal from "../core/components/Modal"
 import { graphql } from "react-apollo"
-import { browserHistory } from "react-router"
 import gql from "graphql-tag"
 
 class Edit extends React.Component {
@@ -18,7 +17,7 @@ class Edit extends React.Component {
 
     onClose() {
         const { entity } = this.props.data
-        browserHistory.push(entity.url)
+        this.props.history.push(entity.url)
     }
 
     afterEdit() {
@@ -97,7 +96,7 @@ const Settings = {
     options: (ownProps) => {
         return {
             variables: {
-                guid: ownProps.params.guid
+                guid: ownProps.match.params.guid
             }
         }
     }

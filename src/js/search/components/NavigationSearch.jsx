@@ -1,7 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
 import { search } from "../../lib/actions"
-import { browserHistory } from "react-router"
 
 let autocompleteTimer
 
@@ -41,7 +40,7 @@ class NavigationSearch extends React.Component {
 
     onSubmit(e) {
         e.preventDefault()
-        browserHistory.push(`/search?q=${this.state.q}`)
+        window.location.href = `/search?q=${this.state.q}`
         document.body.classList.remove("navigation-search-open")
     }
 

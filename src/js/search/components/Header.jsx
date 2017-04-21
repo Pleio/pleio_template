@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, browserHistory } from "react-router"
+import { Link } from "react-router-dom"
 import TabMenu from "../../core/components/TabMenu"
 import classnames from "classnames"
 
@@ -31,7 +31,7 @@ export default class Header extends React.Component {
 
     onSubmit(e) {
         e.preventDefault()
-        browserHistory.push(`/search?q=${this.state.q}`)
+        this.props.history.push(`/search?q=${this.state.q}`)
     }
 
     render() {
@@ -63,7 +63,7 @@ export default class Header extends React.Component {
             }
 
             options.push({
-                link: `/search?type=object&subtype=${subtype.subtype}&q=${this.state.q}`,
+                link: `/search?q=${this.state.q}&type=object&subtype=${subtype.subtype}`,
                 title: `${subtype.title} (${total})`
             })
         })

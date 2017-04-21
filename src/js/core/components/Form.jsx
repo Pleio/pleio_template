@@ -12,6 +12,7 @@ import CheckField from "./CheckField"
 import SwitchField from "./SwitchField"
 import ContentFiltersInputField from "./ContentFiltersInputField"
 import FeaturedImageField from "./FeaturedImageField"
+import PropTypes from "prop-types"
 
 class Form extends React.Component {
     constructor(props) {
@@ -190,8 +191,8 @@ class Form extends React.Component {
 }
 
 Form.childContextTypes = {
-    attachToForm: React.PropTypes.func,
-    detachFromForm: React.PropTypes.func
+    attachToForm: PropTypes.func,
+    detachFromForm: PropTypes.func
 }
 
 export default Form

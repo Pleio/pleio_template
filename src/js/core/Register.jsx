@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { graphql } from "react-apollo"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import gql from "graphql-tag"
 import Errors from "./components/Errors"
 import { logErrors } from "../lib/helpers"

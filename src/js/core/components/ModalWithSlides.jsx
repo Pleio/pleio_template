@@ -1,7 +1,6 @@
 import React from "react"
 import classnames from "classnames"
 import { hideModal } from "../../lib/actions"
-import { browserHistory } from "react-router"
 
 class ModalWithSlides extends React.Component {
 
@@ -35,7 +34,7 @@ class ModalWithSlides extends React.Component {
         }
 
         if (this.props.noParent) {
-            browserHistory.push("/")
+            this.props.history.push("/")
         } else {
             this.props.dispatch(hideModal())
         }

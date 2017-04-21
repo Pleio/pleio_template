@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import { getClassFromTags } from "../../lib/helpers"
 import classnames from "classnames"
 import NewsCard from "../../news/components/Card"
@@ -11,8 +11,6 @@ export default class Card extends React.Component {
         super(props)
 
         this.renderNews = this.renderNews.bind(this)
-        this.renderBlog = this.renderBlog.bind(this)
-        this.renderQuestion = this.renderQuestion.bind(this)
     }
 
     render() {
@@ -26,9 +24,13 @@ export default class Card extends React.Component {
             case "news":
                 return this.renderNews()
             case "blog":
-                return this.renderBlog()
+                return (
+                    <BlogCard entity={this.props.entity.object} inActivityFeed={true} />
+                )
             case "question":
-                return this.renderQuestion()
+                return (
+                    <QuestionCard entity={this.props.entity.object} inActivityFeed={true} />
+                )
             default:
                 return (
                     <div></div>
@@ -42,18 +44,6 @@ export default class Card extends React.Component {
 
         return (
             <NewsCard entity={this.props.entity.object} inActivityFeed={true} />
-        )
-    }
-
-    renderBlog() {
-        return (
-            <BlogCard entity={this.props.entity.object} inActivityFeed={true} />
-        )
-    }
-
-    renderQuestion() {
-        return (
-            <QuestionCard entity={this.props.entity.object} inActivityFeed={true} />
         )
     }
 }

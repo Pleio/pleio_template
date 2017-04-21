@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import { showModal } from "../../lib/actions"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"

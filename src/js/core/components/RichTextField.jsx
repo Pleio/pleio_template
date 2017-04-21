@@ -12,6 +12,7 @@ import IntroBlock from "./RichText/IntroBlock"
 
 import LinkModal from "./RichText/LinkModal"
 import MediaModal from "./RichText/MediaModal"
+import PropTypes from "prop-types"
 
 function findLinkEntities(contentBlock, callback) {
     contentBlock.findEntityRanges(
@@ -434,8 +435,8 @@ class RichTextField extends React.Component {
 }
 
 RichTextField.contextTypes = {
-    attachToForm: React.PropTypes.func,
-    detachFromForm: React.PropTypes.func
+    attachToForm: PropTypes.func,
+    detachFromForm: PropTypes.func
 }
 
 export default RichTextField

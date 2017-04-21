@@ -2,11 +2,12 @@ import React from "react"
 import { ApolloProvider } from "react-apollo";
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
 import { currentLanguage, modal, search } from "./lib/reducers"
-import { Router, browserHistory } from "react-router"
-import Routes from "./Routes"
+import Router from "./Router"
 import client from "./lib/client"
 
 const lang = "nl"
+
+/*const browserHistory = createBrowserHistory()
 
 browserHistory.listen((location) => {
     setTimeout(() => {
@@ -22,7 +23,7 @@ browserHistory.listen((location) => {
             window.ga("send", "pageview", location.pathname)
         }
     }, 100)
-})
+})*/
 
 let initialStore = {
     currentLanguage: lang,
@@ -45,7 +46,7 @@ export default class App extends React.Component {
     render() {
         return (
             <ApolloProvider client={client} store={store}>
-                <Router onUpdate={() => window.scrollTo(0, 0)} history={browserHistory} routes={Routes} />
+                <Router />
             </ApolloProvider>
         )
     }

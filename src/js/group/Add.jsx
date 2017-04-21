@@ -13,7 +13,6 @@ import TagsField from "../core/components/TagsField"
 import SelectField from "../core/components/SelectField"
 import SwitchField from "../core/components/SwitchField"
 import IconField from "../core/components/IconField"
-import { browserHistory } from "react-router"
 import { convertToRaw } from "draft-js"
 import { Set } from "immutable"
 
@@ -25,11 +24,12 @@ class Add extends React.Component {
             errors: []
         }
 
+        this.onClose = this.onClose.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
     }
 
     onClose() {
-        browserHistory.push("/groups")
+        this.props.history.push("/groups")
     }
 
     onSubmit(e) {

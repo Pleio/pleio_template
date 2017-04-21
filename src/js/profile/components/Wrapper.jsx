@@ -3,7 +3,7 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import ContentHeader from "../../core/components/ContentHeader"
 import TabMenu from "../../core/components/TabMenu"
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 import ProfileField from "./ProfileField"
 import classnames from "classnames"
 
@@ -18,7 +18,7 @@ class Wrapper extends React.Component {
             )
         }
 
-        let baseLink = "/profile/" + this.props.params.username
+        let baseLink = "/profile/" + this.props.match.params.username
 
         let options = [
             {title: "Profiel", link: baseLink},
@@ -85,7 +85,7 @@ export default graphql(query, {
     options: (ownProps) => {
         return {
             variables: {
-                username: ownProps.params.username
+                username: ownProps.match.params.username
             }
         }
     }

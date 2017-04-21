@@ -20,11 +20,11 @@ export default class List extends React.Component {
     render() {
         return (
             <div className="page-container">
-                <Document title={this.props.params.tag} />
+                <Document title={this.props.match.params.tag} />
                 <section className="section">
                     <div className="container">
                         <h3 className="main__title ___trending">
-                            {this.props.params.tag}
+                            {this.props.match.params.tag}
                         </h3>
                         <ContentFilters page="trending" onChangeSubtype={this.onChangeSubtype} selectClassName="selector ___margin-bottom-mobile ___filter" />
                     </div>
@@ -38,7 +38,7 @@ export default class List extends React.Component {
                                 </div>
                             </div>
                             <div className="col-sm-12 col-lg-8">
-                                <TrendingList childClass={Card} className="col-sm-12 col-lg-8" subtype={this.state.subtype} tags={[this.props.params.tag]} offset={0} limit={50} />
+                                <TrendingList childClass={Card} className="col-sm-12 col-lg-8" subtype={this.state.subtype} tags={[this.props.match.params.tag]} offset={0} limit={50} />
                             </div>
                         </div>
                     </div>
