@@ -151,7 +151,7 @@ class Mutations {
 
         switch ($input["type"]) {
             case "object":
-                if (!in_array($input["subtype"], array("news", "blog", "question", "comment","page"))) {
+                if (!in_array($input["subtype"], array("file", "folder", "news", "blog", "question", "comment","page"))) {
                     throw new Exception("invalid_subtype");
                 }
 
@@ -304,6 +304,92 @@ class Mutations {
         }
 
         throw new Exception("could_not_delete");
+    }
+
+    static function addFile($input) {
+        $site = elgg_get_site_entity();
+        if (!Helpers::isUser()) {
+            if (Helpers::canJoin()) {
+                Helpers::addUser();
+            } else {
+                throw new Exception("not_member_of_site");
+            }
+        }
+
+        $file = Helpers::getFile($input["file"]);
+        if (!$file) {
+            throw new Exception("no_file");
+        }
+
+        $entity = new \FilePluginFile();
+        $entity->title = $file["name"];
+        $entity->access_id = get_default_access();
+
+        if ($input["containerGuid"]) {
+            $entity->container_guid = $input["containerGuid"];
+        }
+
+        $filestorename = elgg_strtolower(time() . basename($file["name"]));
+        $entity->setFilename("file/" . $filestorename);
+        $entity->originalfilename = $file["name"];
+
+        $entity->open("write");
+        $entity->close();
+
+        move_uploaded_file($file["tmp_name"], $entity->getFilenameOnFilestore());
+
+        $mime_type = \ElggFile::detectMimeType($entity->getFilenameOnFilestore(), $file["type"]);
+
+        $entity->setMimeType($mime_type);
+        $entity->simpletype = file_get_simple_type($mime_type);
+
+        $result = $entity->save();
+
+        if ($result) {
+            return [
+                "guid" => $entity->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
+    }
+
+    static function editFileFolder($input) {
+        $entity = get_entity((int) $input["guid"]);
+        if (!$entity) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$entity->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        if (!in_array($entity->getSubtype(), array("file", "folder"))) {
+            throw new Exception("invalid_object_subtype");
+        }
+
+        if ($input["title"]) {
+            $entity->title = $input["title"];
+        }
+
+        if ($entity->getSubtype() === "file" && $input["file"]) {
+            $file = Helpers::getFile($input["file"]);
+            move_uploaded_file($file["tmp_name"], $entity->getFilenameOnFilestore());
+            $entity->originalfilename = $file["name"];
+            $mime_type = \ElggFile::detectMimeType($entity->getFilenameOnFilestore(), $file["type"]);
+            $entity->setMimeType($mime_type);
+            $entity->simpletype = file_get_simple_type($mime_type);
+        }
+
+        $result = $entity->save();
+
+        if ($result) {
+            return [
+                "guid" => $entity->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
     }
 
     static function bookmark($input) {

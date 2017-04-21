@@ -5,6 +5,7 @@ import InputField from "./InputField"
 import IconField from "./IconField"
 import TagsField from "./TagsField"
 import TextField from "./TextField"
+import FileField from "./FileField"
 import RichTextField from "./RichTextField"
 import SelectField from "./SelectField"
 import CheckField from "./CheckField"
@@ -134,6 +135,7 @@ class Form extends React.Component {
 
             switch (child.type) {
                 case InputField:
+                case FileField:
                 case SelectField:
                 case TextField:
                 case RichTextField:

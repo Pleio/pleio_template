@@ -182,3 +182,25 @@ body.modal__open {
 body.___rijkshuisstijl .navigation__wrapper {
     z-index: 1;
 }
+
+.file__item {
+    .file__check {
+        display: none;
+    }
+
+    &:hover {
+        background-color: @color-grey--60;
+
+        .file__check {
+            display: block;
+        }
+    }
+}
+
+.___show-checkboxes {
+    .file__item {
+        .file__check {
+            display: block;
+        }
+    }
+}

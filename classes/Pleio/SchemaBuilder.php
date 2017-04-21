@@ -936,6 +936,51 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::subscribeNewsletter"
         ]);
 
+        $addFileMutation = Relay::mutationWithClientMutationId([
+            "name" => "addFile",
+            "inputFields" => [
+                "containerGuid" => [
+                    "type" => Type::string()
+                ],
+                "file" => [
+                    "type" => Type::string()
+                ]
+            ],
+            "outputFields" => [
+                "entity" => [
+                    "type" => $entityInterface,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::addFile"
+        ]);
+
+        $editFileFolderMutation = Relay::mutationWithClientMutationId([
+            "name" => "editFileFolder",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::string()
+                ],
+                "title" => [
+                    "type" => Type::string()
+                ],
+                "file" => [
+                    "type" => Type::string()
+                ]
+            ],
+            "outputFields" => [
+                "entity" => [
+                    "type" => $entityInterface,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::editFileFolder"
+        ]);
+
         $addEntityMutation = Relay::mutationWithClientMutationId([
             "name" => "addEntity",
             "inputFields" => [
@@ -1484,6 +1529,8 @@ class SchemaBuilder {
                     "addEntity" => $addEntityMutation,
                     "editEntity" => $editEntityMutation,
                     "deleteEntity" => $deleteEntityMutation,
+                    "addFile" => $addFileMutation,
+                    "editFileFolder" => $editFileFolderMutation,
                     "addPage" => $addPageMutation,
                     "editPage" => $editPageMutation,
                     "addWidget" => $addWidgetMutation,

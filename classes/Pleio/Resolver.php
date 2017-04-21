@@ -565,7 +565,9 @@ class Resolver {
         if ($type == "object") {
             if (!$args["subtype"] || $args["subtype"] == "all") {
                 $subtypes = ["blog", "news", "question"];
-            } else {
+            } elseif ($args["subtype"] === "file|folder") {
+                $subtypes = ["file", "folder"];
+            } elseif ($args["subtype"]) {
                 $subtypes = $args["subtype"];
             }
         }

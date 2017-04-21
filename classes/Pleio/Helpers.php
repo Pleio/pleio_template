@@ -122,6 +122,16 @@ class Helpers {
         }
     }
 
+    static function getFile($filename) {
+        $filename = str_replace(".", "_", $filename);
+
+        if (empty($_FILES[$filename])) {
+            return null;
+        }
+
+        return $_FILES[$filename];
+    }
+
     static function saveToFeatured($filename, $owner) {
         $filename = str_replace(".", "_", $filename);
 

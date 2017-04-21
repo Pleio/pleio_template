@@ -27,7 +27,12 @@ class TabMenu extends React.Component {
         })
 
         if (!selected) {
-            selected = this.props.options[0].link
+            this.props.options.forEach((item, i) => {
+                selectOptions[item.link] = item.title
+                if (this.context.router.isActive(encodeURI(item.link), true)) {
+                    selected = item.link
+                }
+            })            
         }
 
         let content = this.props.options.map((item, i) => (

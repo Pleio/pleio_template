@@ -1,15 +1,65 @@
 import React from "react"
+import PropTypes from "prop-types"
 import { graphql } from "react-apollo"
+import { Link } from "react-router"
 import gql from "graphql-tag"
+import classnames from "classnames"
 import Document from "../core/components/Document"
 import ContentHeader from "../core/components/ContentHeader"
 import NotFound from "../core/NotFound"
-import MoreInfoModal from "./components/MoreInfoModal"
+import AddButton from "../core/containers/AddButton"
 import MemberSummary from "./components/MembersSummary"
 import Menu from "./components/Menu"
+import FileFolderList from "./containers/FileFolderList"
+import FileFolder from "./components/FileFolder"
+import AddFileModal from "./components/AddFileModal"
+import AddFolderModal from "./components/AddFolderModal"
+import EditFileFolderModal from "./components/EditFileFolderModal"
+import DeleteFileFolderModal from "./components/DeleteFileFolderModal"
+import { Set } from "immutable"
 
 class Item extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            selected: new Set()
+        }
+
+        this.onCheck = this.onCheck.bind(this)
+        this.clearSelection = this.clearSelection.bind(this)
+    }
+
+    getChildContext() {
+        const { entity } = this.props.data
+
+        return {
+            onCheck: this.onCheck,
+            clearSelection: this.clearSelection,
+            selected: this.state.selected,
+            group: entity
+        }
+    }
+
+    onCheck(entity, checked) {
+        let newState
+        if (checked) {
+            newState = this.state.selected.add(entity)
+        } else {
+            newState = this.state.selected.delete(entity)
+        }
+
+        this.setState({
+            selected: newState
+        })
+    }
+
+    clearSelection() {
+        this.setState({ selected: new Set() })
+    }
+
     render() {
+        const { params } = this.props
         const { entity, viewer } = this.props.data
 
         if (!entity) {
@@ -25,6 +75,25 @@ class Item extends React.Component {
             )
         }
 
+        let actions, edit
+        if (this.state.selected.size === 1) {
+            edit = (
+                <a href="#" onClick={() => this.refs.edit.toggle()}>Wijzigen</a>
+            )
+        }
+
+        if (this.state.selected.size > 0) {
+            actions = (
+                <div>
+                    {this.state.selected.size} {this.state.selected.size > 1 ? "items" : "item"} geselecteerd.
+                    {edit}
+                    <a href="#" onClick={() => this.refs.delete.toggle()}>Verwijderen</a>
+                </div>
+            )
+        }
+
+        const containerGuid = params.containerGuid ? params.containerGuid : params.guid
+
         return (
             <div className="page-container">
                 <Document title={entity.name} />
@@ -33,30 +102,35 @@ class Item extends React.Component {
                         <div className="col-sm-6">
                             <h3 className="main__title ___info">
                                 {entity.name}
-                                <div onClick={() => this.refs.moreInfo.toggle()} />
                             </h3>
                         </div>
                         <div className="col-sm-6 end-sm">
+                            <AddButton title="Nieuwe map" subtype="folder" onClick={() => this.refs.addFolder.toggle()} />
+                            <AddButton title="Nieuw bestand" subtype="file" onClick={() => this.refs.addFile.toggle()} />
                         </div>
                     </div>
                     <Menu params={this.props.params} />
                 </ContentHeader>
-                <section className="section ___grey ___grow">
+                <section className={classnames({"section ___grey ___grow": true, "___show-checkboxes": this.state.selected.size > 0})}>
                     <div className="container">
-                        <div className="row">
-                            <div className="col-sm-12 col-lg-4 last-lg top-lg">
-                                <MemberSummary entity={entity} /> 
-                            </div>
-                            <div className="col-sm-12 col-lg-8">
-                                Bestanden
-                            </div>
-                        </div>
+                        {actions}
+                        <FileFolderList containerGuid={containerGuid} containerClassName="" rowClassName="" childClass={FileFolder} offset={0} limit={50} type="object" subtype="file|folder" selected={this.state.selected} />
                     </div>
                 </section>
-                <MoreInfoModal ref="moreInfo" entity={entity} />
+                <AddFileModal ref="addFile" containerGuid={containerGuid} onComplete={this.clearSelection} />
+                <AddFolderModal ref="addFolder" containerGuid={containerGuid} onComplete={this.clearSelection} />
+                <EditFileFolderModal ref="edit" entity={this.state.selected.first()} onComplete={this.clearSelection} />
+                <DeleteFileFolderModal ref="delete" entities={this.state.selected} onComplete={this.clearSelection} />
             </div>
         )
     }
+}
+
+Item.childContextTypes = {
+    onCheck: PropTypes.func,
+    clearSelection: PropTypes.func,
+    selected: PropTypes.object,
+    group: PropTypes.object
 }
 
 const Query = gql`

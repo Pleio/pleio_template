@@ -157,7 +157,7 @@ class InfiniteList extends React.Component {
         }
 
         const items = data[rootFieldName].edges.map((item, i) => (
-            <this.props.childClass key={i} subtype={this.props.subtype} entity={item} />
+            <this.props.childClass key={i} subtype={this.props.subtype} entity={item} {...this.props} />
         ))
 
         return (

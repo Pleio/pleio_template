@@ -28,6 +28,11 @@ import NewsItem from "./news/Item"
 import NewsAdd from "./news/Add"
 import NewsEdit from "./news/Edit"
 
+import EventsList from "./events/List"
+import EventsItem from "./events/Item"
+import EventsAdd from "./events/Add"
+import EventsEdit from "./events/Edit"
+
 import PageList from "./page/List"
 import PageItem from "./page/Item"
 
@@ -38,6 +43,7 @@ import GroupItem from "./group/Item"
 import GroupBlogItem from "./group/GroupBlogItem"
 import GroupForumItem from "./group/GroupForumItem"
 import GroupFilesItem from "./group/GroupFilesItem"
+import GroupEventsItem from "./group/GroupEventsItem"
 
 import QuestionsIndex from "./questions/Index"
 import QuestionsAdd from "./questions/Add.jsx"
@@ -120,6 +126,17 @@ const questionsRoutes = {
     ]
 }
 
+const eventsRoutes = {
+    path: "/events",
+    component: Container,
+    indexRoute: { component: EventsList },
+    childRoutes: [
+        { path: "add", component: EventsAdd},
+        { path: "edit/:guid", component: EventsEdit },
+        { path: "view/:guid/:slug", component: EventsItem }
+    ]
+}
+
 const groupRoutes = {
     path: "/groups",
     component: Container,
@@ -131,7 +148,9 @@ const groupRoutes = {
         { path: "view/:guid/:slug", component: GroupItem },
         { path: "view/:guid/:slug/blog", component: GroupBlogItem },
         { path: "view/:guid/:slug/questions", component: GroupForumItem },
-        { path: "view/:guid/:slug/files", component: GroupFilesItem }
+        { path: "view/:guid/:slug/files", component: GroupFilesItem },
+        { path: "view/:guid/:slug/files/:containerGuid", component: GroupFilesItem },
+        { path: "view/:guid/:slug/events", component: GroupEventsItem }
     ]
 }
 
@@ -158,7 +177,17 @@ const notFoundRoutes = {
 }
 
 const rootRoute = {
-    childRoutes: [ routes, pageRoutes, newsRoutes, blogRoutes, questionsRoutes, profileRoutes, groupRoutes, notFoundRoutes ]
+    childRoutes: [
+        routes,
+        pageRoutes,
+        newsRoutes,
+        blogRoutes,
+        questionsRoutes,
+        eventsRoutes,
+        profileRoutes,
+        groupRoutes,
+        notFoundRoutes
+    ]
 }
 
 export default rootRoute
