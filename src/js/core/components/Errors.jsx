@@ -21,7 +21,7 @@ export default class Errors extends React.Component {
         let displayErrors = errors.map((error, i) => {
             return (
                 <div key={i}>
-                    {translation[error] || translation["unknown_error"]}
+                    {translation[error] || `${translation["unknown_error"]} (${error})`}
                 </div>
             )
         })

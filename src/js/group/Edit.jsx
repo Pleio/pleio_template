@@ -68,8 +68,7 @@ class Edit extends React.Component {
         this.props.mutate({
             variables: {
                 input
-            },
-            refetchQueries: this.props.refetchQueries
+            }
         }).then(({data}) => {
             window.location.href = entity.url
         }).catch((errors) => {

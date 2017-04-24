@@ -44,6 +44,7 @@ class Add extends React.Component {
             description: values.description.getPlainText(),
             richDescription: JSON.stringify(convertToRaw(values.description)),
             featuredImage: values.featuredImage,
+            containerGuid: this.props.containerGuid,
             tags: new Set().merge(values.filters).merge(values.tags).toJS()
         }
 
@@ -116,6 +117,7 @@ class Add extends React.Component {
                 {featuredImage}
                 <div className="container">
                     <div className="form">
+                        <Errors errors={this.state.errors} />
                         <InputField name="title" type="text" placeholder="Titel" className="form__input" rules="required" autofocus />
                         <RichTextField ref="richText" name="description" placeholder="Beschrijving" rules="required" />
                         {extraFields}

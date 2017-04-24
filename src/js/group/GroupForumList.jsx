@@ -1,16 +1,16 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import gql from "graphql-tag"
 import { Link } from "react-router-dom"
 import AddButton from "../core/containers/AddButton"
+import gql from "graphql-tag"
 import Document from "../core/components/Document"
-import Card from "../blog/components/Card"
-import BlogList from "../blog/containers/BlogList"
 import ContentHeader from "../core/components/ContentHeader"
 import NotFound from "../core/NotFound"
 import MoreInfoModal from "./components/MoreInfoModal"
 import MemberSummary from "./components/MembersSummary"
 import Menu from "./components/Menu"
+import QuestionList from "../questions/containers/QuestionList"
+import Card from "../questions/components/Card"
 
 class Item extends React.Component {
     render() {
@@ -42,8 +42,8 @@ class Item extends React.Component {
                         </div>
                         <div className="col-sm-6 end-sm">
                             <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
-                                <Link to="/blog/add" className="right-lg">
-                                    <AddButton subtype="blog" title="Schrijf een verhaal" containerGuid={entity.guid} />
+                                <Link to="/questions/add" className="right-lg">
+                                    <AddButton subtype="question" title="Stel een vraag" containerGuid={entity.guid} />
                                 </Link>
                             </div>
                         </div>
@@ -57,7 +57,7 @@ class Item extends React.Component {
                                 <MemberSummary entity={entity} /> 
                             </div>
                             <div className="col-sm-12 col-lg-8">
-                                <BlogList childClass={Card} subtype="blog" offset={0} limit={20} tags={[]} containerGuid={entity.guid} />
+                                <QuestionList containerGuid={entity.guid} childClass={Card} subtype="question" offset={0} limit={20} tags={[]} />
                             </div>
                         </div>
                     </div>
@@ -106,7 +106,7 @@ const Settings = {
     options: (ownProps) => {
         return {
             variables: {
-                guid: ownProps.match.params.guid
+                guid: ownProps.match.params.groupGuid
             }
         }
     }

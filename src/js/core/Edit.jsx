@@ -123,6 +123,7 @@ class Edit extends React.Component {
                 {featuredImage}
                 <div className="container">
                     <div className="form">
+                        <Errors errors={this.state.errors} />
                         <InputField name="title" type="text" placeholder="Titel" className="form__input" value={entity.title} rules="required" autofocus />
                         <RichTextField ref="richText" name="description" placeholder="Beschrijving" value={entity.description} richValue={entity.richDescription} rules="required" />
                         {extraFields}
