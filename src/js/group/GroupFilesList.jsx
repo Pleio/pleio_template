@@ -171,7 +171,7 @@ const Settings = {
     options: (ownProps) => {
         return {
             variables: {
-                guid: ownProps.match.params.guid
+                guid: ownProps.match.params.groupGuid
             }
         }
     }

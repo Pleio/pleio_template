@@ -51,8 +51,7 @@ class Add extends React.Component {
         this.props.mutate({
             variables: {
                 input
-            },
-            refetchQueries: this.props.refetchQueries
+            }
         }).then(({data}) => {
             window.location.href = "/groups"
         }).catch((errors) => {

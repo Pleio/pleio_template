@@ -1,15 +1,18 @@
 import React from "react"
 import { graphql } from "react-apollo"
+import { Link } from "react-router-dom"
+import AddButton from "../core/containers/AddButton"
 import gql from "graphql-tag"
 import Document from "../core/components/Document"
 import ContentHeader from "../core/components/ContentHeader"
 import NotFound from "../core/NotFound"
-import MoreInfoModal from "./components/MoreInfoModal"
-import MemberSummary from "./components/MembersSummary"
 import Menu from "./components/Menu"
+import WikiList from "./containers/WikiList"
+import Card from "../wiki/components/Card"
 
 class Item extends React.Component {
     render() {
+        const { match } = this.props
         const { entity, viewer } = this.props.data
 
         if (!entity) {
@@ -33,27 +36,21 @@ class Item extends React.Component {
                         <div className="col-sm-6">
                             <h3 className="main__title ___info">
                                 {entity.name}
-                                <div onClick={() => this.refs.moreInfo.toggle()} />
                             </h3>
                         </div>
                         <div className="col-sm-6 end-sm">
+                            <Link to={`wiki/add`} className="right-lg">
+                                <AddButton title="Maak een wiki" subtype="wiki" />
+                            </Link>
                         </div>
                     </div>
                     <Menu match={this.props.match} />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
                     <div className="container">
-                        <div className="row">
-                            <div className="col-sm-12 col-lg-4 last-lg top-lg">
-                                <MemberSummary entity={entity} /> 
-                            </div>
-                            <div className="col-sm-12 col-lg-8">
-                                Bestanden
-                            </div>
-                        </div>
+                        <WikiList type="object" subtype="wiki" childClass={Card} containerGuid={entity.guid} offset={0} limit={20} />
                     </div>
                 </section>
-                <MoreInfoModal ref="moreInfo" entity={entity} />
             </div>
         )
     }
@@ -97,7 +94,7 @@ const Settings = {
     options: (ownProps) => {
         return {
             variables: {
-                guid: ownProps.match.params.guid
+                guid: ownProps.match.params.groupGuid
             }
         }
     }
