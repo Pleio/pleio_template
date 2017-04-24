@@ -18,6 +18,7 @@ export default class InviteModal extends React.Component {
 
     onChange(e) {
         this.setState({ q: e.target.value })
+        console.log("onChange Triggered")
     }
 
     toggle() {
@@ -29,6 +30,7 @@ export default class InviteModal extends React.Component {
 
         return (
             <Modal ref="modal" title="Leden uitnodigen">
+                {this.state.q}
                 <div className="group-info">
                     <div className="group-info__content">
                         <div className="search-bar ___margin-bottom">

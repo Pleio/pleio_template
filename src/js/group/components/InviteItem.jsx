@@ -4,6 +4,15 @@ import { logErrors } from "../../lib/helpers"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
+const Translation = {
+    invited: 'Uitgenodigd',
+    requested: 'Aangevraagd',
+    member: 'Lid',
+    notmember: 'Geen lid',
+    admin: 'Beheerder',
+    owner: 'Eigenaar'
+}
+
 class InviteItem extends React.Component {
     constructor(props) {
         super(props)
@@ -44,21 +53,40 @@ class InviteItem extends React.Component {
         this.setState({ invited: !this.state.invited })
     }
 
+    componentDidMount() {
+        const status = this.props.status
+        console.log(status)
+        if (status == "notmember" || status == "requested") {
+            this.setState({ invited: false })
+        } else {
+            this.setState({ invited: true })
+        }
+
+    }
+
     render() {
-        const { user } = this.props
+        const { user, status } = this.props
+        // Voor een beheerder moet de button disabled zijn
+        // Voor een status requeted (status: aangevraagd) moet deze knop accepteren
+        // Voor een status invited moet deze knop disabled zijn
+        
+        const inviteButton = (
+        <div className={classnames({"button ___square ___grey list-members__add":true, "___is-invited": this.state.invited})} onClick={this.toggleInvite}>
+            <div className="list-members__add-icons">
+                <span className="___check" /><span className="___plus" />
+            </div>
+        </div>
+        );
 
         return (
             <div className="col-sm-6">
                 <div className="list-members__member">
                     <div className="list-members__picture" style={{backgroundImage: `url(${user.icon})`}} />
                     <div className="list-members__name">
-                        {user.name}
+                        {user.name}<br />
+                        {Translation[status]}
                     </div>
-                    <div className={classnames({"button ___square ___grey list-members__add":true, "___is-invited": this.state.invited})} onClick={this.toggleInvite}>
-                        <div className="list-members__add-icons">
-                            <span className="___check" /><span className="___plus" />
-                        </div>
-                    </div>
+                    {inviteButton}
                 </div>
             </div>
         )
