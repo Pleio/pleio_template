@@ -6,20 +6,33 @@ export default class Add extends React.Component {
     constructor(props) {
         super(props)
         this.onClose = this.onClose.bind(this)
+        this.afterAdd = this.afterAdd.bind(this)
+    }
+
+    getRootURL() {
+        const { match } = this.props
+
+        if (match.params.groupGuid && match.params.groupSlug) {
+            return `/groups/view/${match.params.groupGuid}/${match.params.groupSlug}`
+        }
+
+        return ""
     }
 
     onClose() {
-        this.props.history.push("/news")
+        this.props.history.push(`${this.getRootURL()}/events`)
     }
 
     afterAdd() {
-        window.location.href = "/news"
+        window.location.href = `${this.getRootURL()}/events`
     }
 
     render() {
+        const { match } = this.props
+        
         return (
-            <Modal title="Nieuws toevoegen" full={true} noParent={true} onClose={this.onClose}>
-                <AddCore subtype="news" featuredImage={true} refetchQueries={["InfiniteList"]} afterAdd={this.afterAdd} />
+            <Modal title="Agenda-item toevoegen" full={true} noParent={true} onClose={this.onClose}>
+                <AddCore subtype="event" featuredImage={true} afterAdd={this.afterAdd} containerGuid={match.params.groupGuid} />
             </Modal>
         )
     }

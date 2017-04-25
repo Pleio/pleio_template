@@ -12,6 +12,7 @@ import Form from "./components/Form"
 import ContentFiltersInputField from "./components/ContentFiltersInputField"
 import InputField from "./components/InputField"
 import TagsField from "./components/TagsField"
+import DateTimeField from "./components/DateTimeField"
 import FeaturedImageField from "./components/FeaturedImageField"
 import SwitchField from "./components/SwitchField"
 import { convertToRaw } from "draft-js"
@@ -56,6 +57,9 @@ class Add extends React.Component {
             case "blog":
                 input["isRecommended"] = values.isRecommended
                 break
+            case "event":
+                input["startDate"] = values.start
+                input["endDate"] = values.end
         }
 
         this.props.mutate({
@@ -109,6 +113,14 @@ class Add extends React.Component {
                         </div>
                     )
                 }
+                break
+            case "event":
+                extraFields = (
+                    <div>
+                        <DateTimeField name="start" className="form__input" label="Startdatum" />
+                        <DateTimeField name="end" className="form__input" label="Einddatum" />
+                    </div>
+                )
                 break
         }
 

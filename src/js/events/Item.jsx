@@ -28,6 +28,15 @@ class Item extends React.Component {
         }
     }
 
+    getRootURL() {
+        const { match } = this.props
+
+        if (match.params.groupGuid && match.params.groupSlug) {
+            return `/groups/view/${match.params.groupGuid}/${match.params.groupSlug}`
+        }
+
+        return ""
+    }
 
     render() {
         let { entity, viewer } = this.props.data
@@ -49,7 +58,7 @@ class Item extends React.Component {
         if (entity.canEdit) {
             edit = (
                 <div className="article-actions__justify">
-                    <Link to={`/news/edit/${entity.guid}`}>
+                    <Link to={`${this.getRootURL()}/events/edit/${entity.guid}`}>
                         <div className="button__text article-action ___edit-post">
                             Bewerken
                         </div>
@@ -89,7 +98,7 @@ class Item extends React.Component {
                                     <h3 className="article__title">{entity.title}</h3>
                                     <div className="article-meta">
                                         <div className="article-meta__date">
-                                            {showDate(entity.timeCreated)}
+                                            {showDate(entity.startDate)} - {showDate(entity.endDate)}
                                         </div>
                                         {source}
                                     </div>
@@ -110,7 +119,7 @@ class Item extends React.Component {
 }
 
 const Query = gql`
-    query NewsItem($guid: String!) {
+    query EventItem($guid: String!) {
         viewer {
             guid
             loggedIn
@@ -128,11 +137,14 @@ const Query = gql`
                 title
                 description
                 richDescription
+                startDate
+                endDate
                 accessId
                 timeCreated
                 source
                 isFeatured
                 featuredImage
+                url
                 canEdit
                 tags
                 isBookmarked

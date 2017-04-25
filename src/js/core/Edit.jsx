@@ -14,6 +14,7 @@ import InputField from "./components/InputField"
 import ContentFiltersInputField from "./components/ContentFiltersInputField"
 import TagsField from "./components/TagsField"
 import FeaturedImageField from "./components/FeaturedImageField"
+import DateTimeField from "./components/DateTimeField"
 import SwitchField from "./components/SwitchField"
 import SwitchesField from "./components/SwitchesField"
 import SelectField from "./components/SelectField"
@@ -57,6 +58,9 @@ class Edit extends React.Component {
             case "blog":
                 input["isRecommended"] = values.isRecommended
                 break
+            case "event":
+                input["startDate"] = values.start
+                input["endDate"] = values.end
         }
 
         this.props.mutate({
@@ -116,6 +120,14 @@ class Edit extends React.Component {
                     )
                 }
                 break
+            case "event":
+                extraFields = (
+                    <div>
+                        <DateTimeField name="start" className="form__input" label="Startdatum" value={entity.startDate} />
+                        <DateTimeField name="end" className="form__input" label="Einddatum" value={entity.endDate} />
+                    </div>
+                )
+                break
         }
 
         return (
@@ -159,6 +171,8 @@ const Mutation = gql`
                     isFeatured
                     isRecommended
                     featuredImage
+                    startDate
+                    endDate
                     tags
                 }
             }

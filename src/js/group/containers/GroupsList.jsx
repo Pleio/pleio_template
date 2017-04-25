@@ -7,6 +7,7 @@ const Query = gql`
     query GroupsList($type: Type!, $offset: Int!, $limit: Int!) {
         entities(type: $type, offset: $offset, limit: $limit) {
             total
+            canWrite
             edges {
                 guid
                 ... on Group {

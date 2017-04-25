@@ -307,6 +307,24 @@ class Resolver {
         }
     }
 
+    static function canWriteToContainer($a, $args, $c) {
+        if ($args["containerGuid"]) {
+            $container = get_entity($args["containerGuid"]);
+            if (!$container) {
+                throw new Exception("could_not_find");
+            }
+
+            return $container->canWriteToContainer(0, "object", $args["subtype"]);
+        }
+
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            return false;
+        }
+
+        return $user->canWriteToContainer(0, "object", $args["subtype"]);
+    }
+
     static function countComments($object) {
         $options = array(
             "type" => "object",

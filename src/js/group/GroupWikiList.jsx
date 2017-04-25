@@ -40,7 +40,7 @@ class Item extends React.Component {
                         </div>
                         <div className="col-sm-6 end-sm">
                             <Link to={`wiki/add`} className="right-lg">
-                                <AddButton title="Maak een wiki" subtype="wiki" />
+                                <AddButton title="Maak een wiki" subtype="wiki" containerGuid={entity.guid} />
                             </Link>
                         </div>
                     </div>
@@ -48,7 +48,7 @@ class Item extends React.Component {
                 </ContentHeader>
                 <section className="section ___grey ___grow">
                     <div className="container">
-                        <WikiList type="object" subtype="wiki" childClass={Card} containerGuid={entity.guid} offset={0} limit={20} />
+                        <WikiList type="object" subtype="wiki" containerGuid={entity.guid} childClass={Card} offset={0} limit={20} match={this.props.match} />
                     </div>
                 </section>
             </div>
@@ -72,6 +72,7 @@ const Query = gql`
             guid
             status
             ... on Group {
+                guid
                 name
                 description
                 icon

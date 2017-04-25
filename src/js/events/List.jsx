@@ -26,11 +26,11 @@ class List extends React.Component {
                 <Document title="Evenementen" />
                 <ContentHeader>
                     <h3 className="main__title">
-                        Evenementen
+                        Agenda
                     </h3>
-                    <ContentFilters page="news" onChange={this.onChangeFilter} value={this.state.tags} selectClassName="selector ___margin-bottom-mobile ___filter">
-                        <Link to="/news/add" className="right-lg">
-                            <AddButton subtype="news" />
+                    <ContentFilters page="events" onChange={this.onChangeFilter} value={this.state.tags} selectClassName="selector ___margin-bottom-mobile ___filter">
+                        <Link to="/events/add" className="right-lg">
+                            <AddButton subtype="event" />
                         </Link>
                     </ContentFilters>
                 </ContentHeader>

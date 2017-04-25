@@ -92,7 +92,7 @@ class Item extends React.Component {
             )
         }
 
-        const containerGuid = match.params.containerGuid ? match.params.containerGuid : match.params.guid
+        const containerGuid = match.params.containerGuid ? match.params.containerGuid : match.params.groupGuid
 
         return (
             <div className="page-container">
@@ -105,8 +105,8 @@ class Item extends React.Component {
                             </h3>
                         </div>
                         <div className="col-sm-6 end-sm">
-                            <AddButton title="Nieuwe map" subtype="folder" onClick={() => this.refs.addFolder.toggle()} />
-                            <AddButton title="Nieuw bestand" subtype="file" onClick={() => this.refs.addFile.toggle()} />
+                            <AddButton title="Nieuwe map" subtype="folder" containerGuid={entity.guid} onClick={() => this.refs.addFolder.toggle()} />
+                            <AddButton title="Nieuw bestand" subtype="file" containerGuid={entity.guid} onClick={() => this.refs.addFile.toggle()} />
                         </div>
                     </div>
                     <Menu match={this.props.match} />
@@ -149,6 +149,7 @@ const Query = gql`
             guid
             status
             ... on Group {
+                guid
                 name
                 description
                 icon

@@ -4,9 +4,10 @@ import gql from "graphql-tag"
 import AddButton from "../components/AddButton"
 
 const Query = gql`
-    query AddButton($containerGuid: Int, $subtype: String!) {
-        entities(containerGuid: $containerGuid, subtype: $subtype) {
-            canWrite
+    query AddButton($containerGuid: String, $subtype: String!) {
+        viewer {
+            guid
+            canWriteToContainer(containerGuid: $containerGuid, subtype: $subtype)
         }
     }
 `

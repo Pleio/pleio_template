@@ -12,21 +12,32 @@ class Edit extends React.Component {
 
         this.onClose = this.onClose.bind(this)
         this.afterEdit = this.afterEdit.bind(this)
+        this.afterDelete = this.afterDelete.bind(this)
         this.onDeleteClick = this.onDeleteClick.bind(this)
+    }
+
+    getRootURL() {
+        const { match } = this.props
+
+        if (match.params.groupGuid && match.params.groupSlug) {
+            return `/groups/view/${match.params.groupGuid}/${match.params.groupSlug}`
+        }
+
+        return ""
     }
 
     onClose() {
         const { entity } = this.props.data
-        this.props.history.push(entity.url)
+        this.props.history.push(`${this.getRootURL()}/questions/view/${entity.guid}/${entity.title}`)
     }
 
     afterEdit() {
         const { entity } = this.props.data
-        window.location.href = entity.url
+        window.location.href = `${this.getRootURL()}/questions/view/${entity.guid}/${entity.title}`
     }
 
     afterDelete() {
-        window.location.href = "/questions"
+        window.location.href = `${this.getRootURL()}/questions`
     }
 
     onDeleteClick(e) {
@@ -51,7 +62,7 @@ class Edit extends React.Component {
 
         return (
             <Modal title="Vraag wijzigen" full={true} noParent={true} onClose={this.onClose}>
-                <EditCore subtype="question" viewer={viewer} entity={entity} featuredImage={true} refetchQueries={["InfiniteList"]} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
+                <EditCore subtype="question" viewer={viewer} entity={entity} featuredImage={true} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
                 <DeleteCore title="Vraag verwijderen" ref="deleteModal" entity={entity} afterDelete={this.afterDelete} />
             </Modal>
         )

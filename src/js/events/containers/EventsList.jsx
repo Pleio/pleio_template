@@ -7,6 +7,7 @@ const Query = gql`
     query EventsList($offset: Int!, $limit: Int!, $tags: [String!], $subtype: String!) {
         entities(offset: $offset, limit: $limit, tags: $tags, subtype: $subtype) {
             total
+            canWrite
             edges {
                 guid
                 ... on Object {
@@ -21,6 +22,8 @@ const Query = gql`
                     tags
                     isFeatured
                     featuredImage
+                    startDate
+                    endDate
                     timeCreated
                     views
                     commentCount

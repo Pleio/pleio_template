@@ -12,7 +12,7 @@ class TabMenu extends React.Component {
     }
 
     onChange(value) {
-        this.props.history.push(value)
+        window.location.href = value
     }
 
     render() {

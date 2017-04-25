@@ -395,6 +395,12 @@ class SchemaBuilder {
                 "timeUpdated" => [
                     "type" => Type::string()
                 ],
+                "startDate" => [
+                    "type" => Type::string()
+                ],
+                "endDate" => [
+                    "type" => Type::string()
+                ],
                 "source" => [
                     "type" => Type::string()
                 ],
@@ -538,6 +544,18 @@ class SchemaBuilder {
                 ],
                 "tags" => [
                     "type" => Type::listOf(Type::string())
+                ],
+                "canWriteToContainer" => [
+                    "type" => Type::nonNull(Type::boolean()),
+                    "args" => [
+                        "containerGuid" => [
+                            "type" => Type::string()
+                        ],
+                        "subtype" => [
+                            "type" => Type::string()
+                        ]
+                    ],
+                    "resolve" => "Pleio\Resolver::canWriteToContainer"
                 ],
                 "user" => [
                     "type" => $userType,
@@ -1008,6 +1026,12 @@ class SchemaBuilder {
                 "featuredImage" => [
                     "type" => Type::string()
                 ],
+                "startDate" => [
+                    "type" => Type::string()
+                ],
+                "endDate" => [
+                    "type" => Type::string()
+                ],
                 "source" => [
                     "type" => Type::string()
                 ],
@@ -1054,6 +1078,12 @@ class SchemaBuilder {
                     "type" => Type::boolean()
                 ],
                 "featuredImage" => [
+                    "type" => Type::string()
+                ],
+                "startDate" => [
+                    "type" => Type::string()
+                ],
+                "endDate" => [
                     "type" => Type::string()
                 ],
                 "source" => [

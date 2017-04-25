@@ -4,13 +4,23 @@ import { getClassFromTags } from "../../lib/helpers"
 import classnames from "classnames"
 
 export default class Card extends React.Component {
+    getRootURL() {
+        const { match } = this.props
+
+        if (!match || !match.params.groupGuid || !match.params.groupSlug) {
+            return ""
+        }
+
+        return `/groups/view/${match.params.groupGuid}/${match.params.groupSlug}`
+    }
+    
     render() {
         const { guid, title, excerpt } = this.props.entity
 
         return (
             <div className="card-blog-post">
                 <div className="card-blog-post__post">
-                    <Link to={`wiki/view/${guid}/${title}`} className="card-blog-post__title">
+                    <Link to={`${this.getRootURL()}/wiki/view/${guid}/${title}`} className="card-blog-post__title">
                         {title}
                     </Link>
 

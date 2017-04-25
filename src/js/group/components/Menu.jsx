@@ -16,7 +16,7 @@ export default class Menu extends React.Component {
         ]
 
         return (
-            <TabMenu options={menuOptions} />
+            <TabMenu options={menuOptions} history={history} />
         )
     }
 }

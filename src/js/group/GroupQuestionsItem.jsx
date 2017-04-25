@@ -7,7 +7,7 @@ import Document from "../core/components/Document"
 import ContentHeader from "../core/components/ContentHeader"
 import NotFound from "../core/NotFound"
 import Menu from "./components/Menu"
-import WikiItem from "../wiki/Item"
+import QuestionsItem from "../questions/Item"
 
 class Item extends React.Component {
     render() {
@@ -42,7 +42,7 @@ class Item extends React.Component {
                 </ContentHeader>
                 <section className="section ___grey ___grow">
                     <div className="container">
-                        <WikiItem match={this.props.match} />
+                        <QuestionsItem match={this.props.match} />
                     </div>
                 </section>
             </div>
@@ -66,7 +66,6 @@ const Query = gql`
             guid
             status
             ... on Group {
-                guid
                 name
                 description
                 icon

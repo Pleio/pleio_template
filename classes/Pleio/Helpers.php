@@ -55,29 +55,42 @@ class Helpers {
     static function getURL($entity) {
         switch ($entity->type) {
             case "group":
-                return "/groups/view/{$entity->guid}/{$entity->name}";
+                $friendlytitle = elgg_get_friendly_title($entity->name);
+                return "/groups/view/{$entity->guid}/{$friendlytitle}";
             case "user":
                 return "/profile/{$entity->username}";
             case "object":
                 $friendlytitle = elgg_get_friendly_title($entity->title);
-                switch ($entity->getSubtype()) {
-                    case "news":
-                        $root = "news";
-                        break;
-                    case "question":
-                        $root = "questions";
-                        break;
-                    case "blog":
-                        $root = "blog";
-                        break;
-                    case "page":
-                        $root = "page";
-                        break;
-                    default:
-                        $root = $entity->getSubtype();
+
+                $container = $entity->getContainerEntity();
+                if ($container instanceof \ElggGroup) {
+                    $containerFriendlytitle = elgg_get_friendly_title($container->name);
+                    $root = "/groups/view/{$container->guid}/{$container->name}/";
+                } else {
+                    $root = "/";
                 }
 
-                return "/{$root}/view/{$entity->guid}/$friendlytitle";
+                switch ($entity->getSubtype()) {
+                    case "news":
+                        $root .= "news";
+                        break;
+                    case "question":
+                        $root .= "questions";
+                        break;
+                    case "blog":
+                        $root .= "blog";
+                        break;
+                    case "page":
+                        $root .= "page";
+                        break;
+                    case "event":
+                        $root .= "events";
+                        break;
+                    default:
+                        $root .= $entity->getSubtype();
+                }
+
+                return "{$root}/view/{$entity->guid}/$friendlytitle";
         }
     }
 

@@ -8,8 +8,6 @@ import Card from "../blog/components/Card"
 import BlogList from "../blog/containers/BlogList"
 import ContentHeader from "../core/components/ContentHeader"
 import NotFound from "../core/NotFound"
-import MoreInfoModal from "./components/MoreInfoModal"
-import MemberSummary from "./components/MembersSummary"
 import Menu from "./components/Menu"
 
 class Item extends React.Component {
@@ -37,12 +35,11 @@ class Item extends React.Component {
                         <div className="col-sm-6">
                             <h3 className="main__title ___info">
                                 {entity.name}
-                                <div onClick={() => this.refs.moreInfo.toggle()} />
                             </h3>
                         </div>
                         <div className="col-sm-6 end-sm">
                             <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
-                                <Link to="/blog/add" className="right-lg">
+                                <Link to="blog/add" className="right-lg">
                                     <AddButton subtype="blog" title="Schrijf een verhaal" containerGuid={entity.guid} />
                                 </Link>
                             </div>
@@ -51,18 +48,8 @@ class Item extends React.Component {
                     <Menu match={this.props.match} />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-sm-12 col-lg-4 last-lg top-lg">
-                                <MemberSummary entity={entity} /> 
-                            </div>
-                            <div className="col-sm-12 col-lg-8">
-                                <BlogList childClass={Card} subtype="blog" offset={0} limit={20} tags={[]} containerGuid={entity.guid} />
-                            </div>
-                        </div>
-                    </div>
+                    <BlogList childClass={Card} subtype="blog" offset={0} limit={20} tags={[]} containerGuid={entity.guid} match={this.props.match} />
                 </section>
-                <MoreInfoModal ref="moreInfo" entity={entity} />
             </div>
         )
     }

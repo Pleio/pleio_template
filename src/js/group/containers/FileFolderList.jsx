@@ -7,6 +7,7 @@ const Query = gql`
     query FilesList($type: Type!, $subtype: String, $containerGuid: Int, $offset: Int!, $limit: Int!) {
         entities(type: $type, subtype: $subtype, containerGuid: $containerGuid, offset: $offset, limit: $limit) {
             total
+            canWrite
             edges {
                 guid
                 ... on Object {

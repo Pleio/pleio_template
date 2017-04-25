@@ -6,14 +6,12 @@ import gql from "graphql-tag"
 import Document from "../core/components/Document"
 import ContentHeader from "../core/components/ContentHeader"
 import NotFound from "../core/NotFound"
-import MoreInfoModal from "./components/MoreInfoModal"
-import MemberSummary from "./components/MembersSummary"
 import Menu from "./components/Menu"
-import QuestionList from "../questions/containers/QuestionList"
-import Card from "../questions/components/Card"
+import WikiItem from "../wiki/Item"
 
 class Item extends React.Component {
     render() {
+        const { match } = this.props
         const { entity, viewer } = this.props.data
 
         if (!entity) {
@@ -37,32 +35,16 @@ class Item extends React.Component {
                         <div className="col-sm-6">
                             <h3 className="main__title ___info">
                                 {entity.name}
-                                <div onClick={() => this.refs.moreInfo.toggle()} />
                             </h3>
-                        </div>
-                        <div className="col-sm-6 end-sm">
-                            <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
-                                <Link to="/questions/add" className="right-lg">
-                                    <AddButton subtype="question" title="Stel een vraag" containerGuid={entity.guid} />
-                                </Link>
-                            </div>
                         </div>
                     </div>
                     <Menu match={this.props.match} />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
                     <div className="container">
-                        <div className="row">
-                            <div className="col-sm-12 col-lg-4 last-lg top-lg">
-                                <MemberSummary entity={entity} /> 
-                            </div>
-                            <div className="col-sm-12 col-lg-8">
-                                <QuestionList containerGuid={entity.guid} childClass={Card} subtype="question" offset={0} limit={20} tags={[]} />
-                            </div>
-                        </div>
+                        <WikiItem match={this.props.match} />
                     </div>
                 </section>
-                <MoreInfoModal ref="moreInfo" entity={entity} />
             </div>
         )
     }

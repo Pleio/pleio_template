@@ -151,7 +151,7 @@ class Mutations {
 
         switch ($input["type"]) {
             case "object":
-                if (!in_array($input["subtype"], array("file", "folder", "news", "blog", "question", "comment","page", "wiki"))) {
+                if (!in_array($input["subtype"], array("file", "folder", "news", "blog", "question", "comment","page", "wiki", "event"))) {
                     throw new Exception("invalid_subtype");
                 }
 
@@ -185,7 +185,7 @@ class Mutations {
             throw new Exception("could_not_save");
         }
 
-        if (in_array($input["subtype"], ["news", "blog", "page"])) {
+        if (in_array($input["subtype"], ["news", "blog", "page", "event"])) {
             if (isset($input["isFeatured"])) {
                 $entity->isFeatured = $input["isFeatured"];
             }
@@ -199,6 +199,12 @@ class Mutations {
                 $entity->source = $input["source"];
             }
 
+            $result = $entity->save();
+        }
+
+        if ($input["subtype"] === "event") {
+            $entity->startDate = date("U", strtotime($input["startDate"]));
+            $entity->endDate = date("U", strtotime($input["endDate"]));
             $result = $entity->save();
         }
 
@@ -275,6 +281,12 @@ class Mutations {
             }
 
             $result &= $entity->save();
+        }
+
+        if ($entity->getSubtype() === "event") {
+            $entity->startDate = date("U", strtotime($input["startDate"]));
+            $entity->endDate = date("U", strtotime($input["endDate"]));
+            $result = $entity->save();
         }
 
         if ($result) {

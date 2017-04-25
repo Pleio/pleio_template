@@ -7,6 +7,7 @@ const Query = gql`
     query PageList($offset: Int!, $limit: Int!, $tags: [String!], $subtype: String!) {
         entities(offset: $offset, limit: $limit, tags: $tags, subtype: $subtype) {
             total
+            canWrite
             edges {
                 guid
                 ... on Page {

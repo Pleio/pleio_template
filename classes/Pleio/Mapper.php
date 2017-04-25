@@ -55,6 +55,8 @@ class Mapper {
             "excerpt" => elgg_get_excerpt($entity->description),
             "timeCreated" => date("c", $entity->time_created),
             "timeUpdated" => date("c", $entity->time_updated),
+            "startDate" => date("c", $entity->startDate),
+            "endDate" => date("c", $entity->endDate),
             "canEdit" => $entity->canEdit(),
             "accessId" => $entity->access_id,
             "tags" => Helpers::renderTags($entity->tags)
