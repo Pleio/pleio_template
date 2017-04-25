@@ -9,6 +9,14 @@ import InviteItem from "./InviteItem"
 class InviteList extends React.Component {
     constructor(props) {
         super(props)
+
+        this.state = {
+            q: ""
+        }
+    }
+
+    onChange(e) {
+        this.setState({ q: e.props.q })
     }
 
 
@@ -23,8 +31,9 @@ class InviteList extends React.Component {
         }
 
         const List = entity.invite.edges.map((invite, i) => (
-            <InviteItem key={i} group={entity} user={invite.user} invited={invite.invited} />
+            <InviteItem key={i} group={entity} user={invite.user} status={invite.status} />
         ))
+
 
         return (
             <div className="list-members">
@@ -36,7 +45,7 @@ class InviteList extends React.Component {
     }
 }
 
-const Query = gql`
+/*const Query = gql`
     query InviteList($guid: String!, $q: String){
       entity(guid: $guid) {
         guid
@@ -68,4 +77,121 @@ const Settings = {
     }
 }
 
-export default graphql(Query, Settings)(InviteList)
+export default graphql(Query, Settings)(InviteList)*/
+
+export default class InviteListWithData extends React.Component {
+    render() {
+        const data = {
+            "entity": {
+              "guid": "1445",
+              "invite": {
+                "edges": [
+                  {
+                    "status": "invited",
+                    "user": {
+                      "guid": "1428",
+                      "username": "user",
+                      "name": "Invited user",
+                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                    }
+                  },
+                  {
+                    "status": "requested",
+                    "user": {
+                      "guid": "1412",
+                      "username": "manager",
+                      "name": "Requested user",
+                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                    }
+                  },
+                  {
+                    "status": "member",
+                    "user": {
+                      "guid": "864",
+                      "username": "admin",
+                      "name": "Member",
+                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                    }
+                  },
+                  {
+                    "status": "notmember",
+                    "user": {
+                      "guid": "864",
+                      "username": "admin",
+                      "name": "Not member",
+                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                    }
+                  },
+                  {
+                    "status": "admin",
+                    "user": {
+                      "guid": "864",
+                      "username": "admin",
+                      "name": "Administrator",
+                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                    }
+                  },
+                  {
+                    "status": "admin",
+                    "user": {
+                      "guid": "864",
+                      "username": "admin",
+                      "name": "Administrator",
+                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                    }
+                  },
+                  {
+                    "status": "owner",
+                    "user": {
+                      "guid": "864",
+                      "username": "admin",
+                      "name": "Eind baas",
+                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                    }
+                  },
+                  {
+                    "status": "invited",
+                    "user": {
+                      "guid": "1428",
+                      "username": "user",
+                      "name": "Invited user",
+                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                    }
+                  },
+                  {
+                    "status": "requested",
+                    "user": {
+                      "guid": "1412",
+                      "username": "manager",
+                      "name": "Requested user",
+                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                    }
+                  },
+                  {
+                    "status": "member",
+                    "user": {
+                      "guid": "864",
+                      "username": "admin",
+                      "name": "Member",
+                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                    }
+                  },
+                  {
+                    "status": "notmember",
+                    "user": {
+                      "guid": "864",
+                      "username": "admin",
+                      "name": "Not member",
+                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+
+        return (
+            <InviteList data={data} />
+        )
+    }
+}
