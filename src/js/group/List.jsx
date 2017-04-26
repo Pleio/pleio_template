@@ -1,13 +1,27 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import { graphql } from "react-apollo"
+import gql from "graphql-tag"
 import ContentHeader from "../core/components/ContentHeader"
 import Document from "../core/components/Document"
-import AddButton from "../core/containers/AddButton"
 import GroupsList from "./containers/GroupsList"
 import Card from "./components/Card"
 
-export default class List extends React.Component {
+class List extends React.Component {
     render() {
+        const { viewer } = this.props.data
+
+        let add
+        if (viewer && viewer.canWriteToContainer) {
+            add = (
+                <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
+                    <Link to={`groups/add`} className="right-lg">
+                        <div className="button ___large ___add"><span>Maak een groep</span></div>
+                    </Link>
+                </div>
+            )
+        }
+
         return (
             <div className="page-container">
                 <Document title="Groepen" />
@@ -19,9 +33,7 @@ export default class List extends React.Component {
                             </h3>
                         </div>
                         <div className="col-sm-6 end-sm">
-                            <Link to="/groups/add">
-                                <AddButton title="Nieuwe groep" type="group" subtype="" />
-                            </Link>
+                            {add}
                         </div>
                     </div>
                 </ContentHeader>
@@ -38,3 +50,15 @@ export default class List extends React.Component {
         )
     }
 }
+
+const Query = gql`
+    query GroupList {
+        viewer {
+            guid
+            loggedIn
+            canWriteToContainer(type: group)
+        }
+    }
+`
+
+export default graphql(Query)(List)

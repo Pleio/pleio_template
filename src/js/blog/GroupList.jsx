@@ -2,13 +2,12 @@ import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { Link } from "react-router-dom"
-import AddButton from "../core/containers/AddButton"
 import Document from "../core/components/Document"
+import Card from "../blog/components/Card"
+import BlogList from "../blog/containers/BlogList"
 import ContentHeader from "../core/components/ContentHeader"
 import NotFound from "../core/NotFound"
-import EventsList from "./containers/EventsList"
-import Menu from "./components/Menu"
-import Card from "../events/components/Card"
+import Menu from "../group/components/Menu"
 
 class Item extends React.Component {
     render() {
@@ -27,6 +26,17 @@ class Item extends React.Component {
             )
         }
 
+        let add
+        if (viewer.canWriteToContainer) {
+            add = (
+                <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
+                    <Link to={`blog/add`} className="right-lg">
+                        <div className="button ___large ___add"><span>Schrijf een verhaal</span></div>
+                    </Link>
+                </div>
+            )
+        }
+
         return (
             <div className="page-container">
                 <Document title={entity.name} />
@@ -38,17 +48,15 @@ class Item extends React.Component {
                             </h3>
                         </div>
                         <div className="col-sm-6 end-sm">
-                            <Link to={`events/add`} className="right-lg">
-                                <AddButton title="Maak een agenda-item" subtype="event" containerGuid={entity.guid} />
-                            </Link>
+                            <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
+                                {add}
+                            </div>
                         </div>
                     </div>
                     <Menu match={this.props.match} />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
-                    <div className="container">
-                        <EventsList type="object" subtype="event" containerGuid={entity.guid} childClass={Card} offset={0} limit={20} match={this.props.match} />
-                    </div>
+                    <BlogList childClass={Card} subtype="blog" offset={0} limit={20} tags={[]} containerGuid={entity.guid} match={this.props.match} />
                 </section>
             </div>
         )
@@ -60,6 +68,7 @@ const Query = gql`
         viewer {
             guid
             loggedIn
+            canWriteToContainer(containerGuid: $guid, type: object, subtype: "blog")
             user {
                 guid
                 name

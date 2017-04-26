@@ -107,10 +107,7 @@ class InfiniteList extends React.Component {
             updateQuery: (previousResult, { fetchMoreResult }) => {
                 isFetchingMore = false
 
-                const { data } = fetchMoreResult
-                if (!data) { return previousResult }
-
-                const rootFieldName = this.getRootFieldName(data)
+                const rootFieldName = this.getRootFieldName(fetchMoreResult)
 
                 this.setState({
                     loading: false
@@ -118,7 +115,7 @@ class InfiniteList extends React.Component {
 
                 return Object.assign({}, previousResult, {
                     [rootFieldName]: Object.assign({}, previousResult[rootFieldName], {
-                        edges: [...previousResult[rootFieldName].edges, ...fetchMoreResult.data[rootFieldName].edges]
+                        edges: [...previousResult[rootFieldName].edges, ...fetchMoreResult[rootFieldName].edges]
                     })
                 });
             }

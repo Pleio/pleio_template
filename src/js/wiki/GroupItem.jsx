@@ -1,17 +1,16 @@
 import React from "react"
 import { graphql } from "react-apollo"
 import { Link } from "react-router-dom"
-import AddButton from "../core/containers/AddButton"
 import gql from "graphql-tag"
 import Document from "../core/components/Document"
 import ContentHeader from "../core/components/ContentHeader"
 import NotFound from "../core/NotFound"
-import Menu from "./components/Menu"
-import QuestionList from "../questions/containers/QuestionList"
-import Card from "../questions/components/Card"
+import Menu from "../group/components/Menu"
+import WikiItem from "../wiki/Item"
 
 class Item extends React.Component {
     render() {
+        const { match } = this.props
         const { entity, viewer } = this.props.data
 
         if (!entity) {
@@ -37,18 +36,13 @@ class Item extends React.Component {
                                 {entity.name}
                             </h3>
                         </div>
-                        <div className="col-sm-6 end-sm">
-                            <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
-                                <Link to="questions/add" className="right-lg">
-                                    <AddButton subtype="question" title="Stel een vraag" containerGuid={entity.guid} />
-                                </Link>
-                            </div>
-                        </div>
                     </div>
                     <Menu match={this.props.match} />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
-                    <QuestionList containerGuid={entity.guid} childClass={Card} subtype="question" offset={0} limit={20} tags={[]} match={this.props.match} />
+                    <div className="container">
+                        <WikiItem match={this.props.match} />
+                    </div>
                 </section>
             </div>
         )

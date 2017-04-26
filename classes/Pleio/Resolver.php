@@ -314,7 +314,7 @@ class Resolver {
                 throw new Exception("could_not_find");
             }
 
-            return $container->canWriteToContainer(0, "object", $args["subtype"]);
+            return $container->canWriteToContainer(0, $args["type"], $args["subtype"]);
         }
 
         $user = elgg_get_logged_in_user_entity();
@@ -322,7 +322,7 @@ class Resolver {
             return false;
         }
 
-        return $user->canWriteToContainer(0, "object", $args["subtype"]);
+        return $user->canWriteToContainer(0, $args["type"], $args["subtype"]);
     }
 
     static function countComments($object) {

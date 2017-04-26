@@ -57,7 +57,7 @@ class Index extends React.Component {
                     <span className="forum__search-separate">of</span>
                     <Link to="/questions/add">
                         <button className="button ___large forum__ask-a-question">
-                            Een vraag stellen
+                            Stel een vraag
                         </button>
                     </Link>
                 </div>

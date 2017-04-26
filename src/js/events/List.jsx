@@ -4,7 +4,6 @@ import ContentHeader from "../core/components/ContentHeader"
 import EventsList from "./containers/EventsList"
 import Card from "./components/Card"
 import ContentFilters from "../core/containers/ContentFilters"
-import AddButton from "../core/containers/AddButton"
 import Document from "../core/components/Document"
 import Add from "../core/Add"
 
@@ -30,7 +29,6 @@ class List extends React.Component {
                     </h3>
                     <ContentFilters page="events" onChange={this.onChangeFilter} value={this.state.tags} selectClassName="selector ___margin-bottom-mobile ___filter">
                         <Link to="/events/add" className="right-lg">
-                            <AddButton subtype="event" />
                         </Link>
                     </ContentFilters>
                 </ContentHeader>

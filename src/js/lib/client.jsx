@@ -50,9 +50,8 @@ if (global.SITE) {
 const networkInterface = createNetworkInterface(url)
 
 const client = new ApolloClient({
-    ssrMode: true,
     networkInterface,
-    //shouldBatch: true,
+    queryDeduplication: true,
     dataIdFromObject: o => {
         if (o.guid) {
             return o.guid

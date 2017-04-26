@@ -551,6 +551,9 @@ class SchemaBuilder {
                         "containerGuid" => [
                             "type" => Type::string()
                         ],
+                        "type" => [
+                            "type" => $typeEnum
+                        ],
                         "subtype" => [
                             "type" => Type::string()
                         ]

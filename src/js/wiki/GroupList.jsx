@@ -1,12 +1,11 @@
 import React from "react"
 import { graphql } from "react-apollo"
 import { Link } from "react-router-dom"
-import AddButton from "../core/containers/AddButton"
 import gql from "graphql-tag"
 import Document from "../core/components/Document"
 import ContentHeader from "../core/components/ContentHeader"
 import NotFound from "../core/NotFound"
-import Menu from "./components/Menu"
+import Menu from "../group/components/Menu"
 import WikiList from "./containers/WikiList"
 import Card from "../wiki/components/Card"
 
@@ -28,6 +27,17 @@ class Item extends React.Component {
             )
         }
 
+        let add
+        if (viewer.canWriteToContainer) {
+            add = (
+                <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
+                    <Link to={`wiki/add`} className="right-lg">
+                        <div className="button ___large ___add"><span>Maak een pagina</span></div>
+                    </Link>
+                </div>
+            )
+        }
+
         return (
             <div className="page-container">
                 <Document title={entity.name} />
@@ -39,9 +49,7 @@ class Item extends React.Component {
                             </h3>
                         </div>
                         <div className="col-sm-6 end-sm">
-                            <Link to={`wiki/add`} className="right-lg">
-                                <AddButton title="Maak een wiki" subtype="wiki" containerGuid={entity.guid} />
-                            </Link>
+                            {add}
                         </div>
                     </div>
                     <Menu match={this.props.match} />
@@ -61,6 +69,7 @@ const Query = gql`
         viewer {
             guid
             loggedIn
+            canWriteToContainer(containerGuid: $guid, type: object, subtype: "wiki")
             user {
                 guid
                 name

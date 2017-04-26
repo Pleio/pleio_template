@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 import ContentHeader from "../core/components/ContentHeader"
 import ContentFilters from "../core/containers/ContentFilters"
 import QuestionList from "./containers/QuestionList"
-import AddButton from "../core/containers/AddButton"
 import Document from "../core/components/Document"
 import Card from "./components/Card"
 
@@ -28,7 +27,6 @@ class List extends React.Component {
                     </h3>
                     <ContentFilters page="questions" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags} selectClassName="selector ___margin-bottom-mobile ___filter">
                         <Link to="/questions/add" className="right-lg">
-                            <AddButton subtype="question" />
                         </Link>
                     </ContentFilters>
                 </ContentHeader>

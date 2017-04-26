@@ -1,4 +1,5 @@
 import React from "react"
+import classnames from "classnames"
 import ActivityList from "./containers/ActivityList"
 import ContentHeader from "../core/components/ContentHeader"
 import Lead from "./components/Lead"
@@ -25,10 +26,10 @@ class Activity extends React.Component {
     }
 
     render() {
-        const { site } = this.props.data
-        let leader, initiative
+        const { site, viewer } = this.props.data
 
-        if (site && site.showLeader) {
+        let leader, initiative
+        if (site && site.showLeader && !viewer.loggedIn) {
             leader = (
                 <Lead title="Leraar.nl" image="/mod/pleio_template/src/images/lead-home2.png" />
             )
@@ -41,7 +42,7 @@ class Activity extends React.Component {
         }
 
         return (
-            <section className="section ___less-padding-top">
+            <section className={classnames({"section":true, "padding-top": !leader, "___less-padding-top": leader})}>
                 <Document title="Activiteiten" />
                 <div className="container">
                     {leader}
@@ -71,6 +72,10 @@ class Activity extends React.Component {
 
 const Query = gql`
     query ActivityList {
+        viewer {
+            guid
+            loggedIn
+        }
         site {
             guid
             showLeader

@@ -25,8 +25,6 @@ const Query = gql`
                     startDate
                     endDate
                     timeCreated
-                    views
-                    commentCount
                     owner {
                         guid
                         username

@@ -12,7 +12,8 @@ export default class Menu extends React.Component {
             { link: `${rootUrl}/blog`, title:"Blog" },
             { link: `${rootUrl}/questions`, title:"Forum" },
             { link: `${rootUrl}/files`, title:"Bestanden" },
-            { link: `${rootUrl}/wiki`, title:"Wiki" }
+            { link: `${rootUrl}/wiki`, title:"Wiki" },
+            { link: `${rootUrl}/tasks`, title:"Taken" }
         ]
 
         return (

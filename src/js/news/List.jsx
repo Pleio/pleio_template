@@ -1,10 +1,11 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import { graphql } from "react-apollo"
+import gql from "graphql-tag"
 import ContentHeader from "../core/components/ContentHeader"
 import NewsList from "./containers/NewsList"
 import Card from "./components/Card"
 import ContentFilters from "../core/containers/ContentFilters"
-import AddButton from "../core/containers/AddButton"
 import Document from "../core/components/Document"
 import Add from "../core/Add"
 
@@ -21,6 +22,17 @@ class List extends React.Component {
     }
 
     render() {
+        const { viewer } = this.props.data
+
+        let add
+        if (viewer && viewer.canWriteToContainer) {
+            add = (
+                <Link to={`news/add`} className="right-lg">
+                    <div className="button ___large ___add"><span>Nieuws toevoegen</span></div>
+                </Link>
+            )
+        }
+
         return (
             <div className="page-container">
                 <Document title="Nieuws" />
@@ -29,9 +41,7 @@ class List extends React.Component {
                         Nieuws
                     </h3>
                     <ContentFilters page="news" onChange={this.onChangeFilter} value={this.state.tags} selectClassName="selector ___margin-bottom-mobile ___filter">
-                        <Link to="/news/add" className="right-lg">
-                            <AddButton subtype="news" />
-                        </Link>
+                        {add}
                     </ContentFilters>
                 </ContentHeader>
                 <section className="section ___grey ___grow">
@@ -42,4 +52,14 @@ class List extends React.Component {
     }
 }
 
-export default List
+const Query = gql`
+    query NewsList {
+        viewer {
+            guid
+            loggedIn
+            canWriteToContainer(type: object, subtype: "news")
+        }
+    }
+`
+
+export default graphql(Query)(List)

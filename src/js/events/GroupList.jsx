@@ -1,17 +1,16 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import { Link } from "react-router-dom"
-import AddButton from "../core/containers/AddButton"
 import gql from "graphql-tag"
+import { Link } from "react-router-dom"
 import Document from "../core/components/Document"
 import ContentHeader from "../core/components/ContentHeader"
 import NotFound from "../core/NotFound"
-import Menu from "./components/Menu"
-import QuestionsItem from "../questions/Item"
+import EventsGroupList from "./containers/EventsGroupList"
+import Menu from "../group/components/Menu"
+import Card from "./components/Card"
 
 class Item extends React.Component {
     render() {
-        const { match } = this.props
         const { entity, viewer } = this.props.data
 
         if (!entity) {
@@ -27,6 +26,17 @@ class Item extends React.Component {
             )
         }
 
+        let add
+        if (viewer.canWriteToContainer) {
+            add = (
+                <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
+                    <Link to={`events/add`} className="right-lg">
+                        <div className="button ___large ___add"><span>Agenda-item toevoegen</span></div>
+                    </Link>
+                </div>
+            )
+        }
+
         return (
             <div className="page-container">
                 <Document title={entity.name} />
@@ -37,12 +47,15 @@ class Item extends React.Component {
                                 {entity.name}
                             </h3>
                         </div>
+                        <div className="col-sm-6 end-sm">
+                            {add}
+                        </div>
                     </div>
                     <Menu match={this.props.match} />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
                     <div className="container">
-                        <QuestionsItem match={this.props.match} />
+                        <EventsGroupList type="object" subtype="event" containerGuid={entity.guid} childClass={Card} offset={0} limit={20} match={this.props.match} />
                     </div>
                 </section>
             </div>
@@ -55,6 +68,7 @@ const Query = gql`
         viewer {
             guid
             loggedIn
+            canWriteToContainer(containerGuid: $guid, type: object, subtype: "event")
             user {
                 guid
                 name

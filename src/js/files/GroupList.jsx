@@ -7,9 +7,7 @@ import classnames from "classnames"
 import Document from "../core/components/Document"
 import ContentHeader from "../core/components/ContentHeader"
 import NotFound from "../core/NotFound"
-import AddButton from "../core/containers/AddButton"
-import MemberSummary from "./components/MembersSummary"
-import Menu from "./components/Menu"
+import Menu from "../group/components/Menu"
 import FileFolderList from "./containers/FileFolderList"
 import FileFolder from "./components/FileFolder"
 import AddFileModal from "./components/AddFileModal"
@@ -75,7 +73,16 @@ class Item extends React.Component {
             )
         }
 
-        let actions, edit
+        let actions, edit, add
+        if (viewer.canWriteToContainer) {
+            add = (
+                <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
+                    <div className="button ___large ___add" onClick={(e) => this.refs.addFile.toggle()}><span>Bestand toevoegen</span></div>
+                    <div className="button ___large ___add" onClick={(e) => this.refs.addFolder.toggle()}><span>Map toevoegen</span></div>
+                </div>
+            )
+        }
+
         if (this.state.selected.size === 1) {
             edit = (
                 <a href="#" onClick={() => this.refs.edit.toggle()}>Wijzigen</a>
@@ -105,8 +112,7 @@ class Item extends React.Component {
                             </h3>
                         </div>
                         <div className="col-sm-6 end-sm">
-                            <AddButton title="Nieuwe map" subtype="folder" containerGuid={entity.guid} onClick={() => this.refs.addFolder.toggle()} />
-                            <AddButton title="Nieuw bestand" subtype="file" containerGuid={entity.guid} onClick={() => this.refs.addFile.toggle()} />
+                            {add}
                         </div>
                     </div>
                     <Menu match={this.props.match} />
@@ -138,6 +144,7 @@ const Query = gql`
         viewer {
             guid
             loggedIn
+            canWriteToContainer(containerGuid: $guid, subtype: "file")
             user {
                 guid
                 name

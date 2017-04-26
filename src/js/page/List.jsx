@@ -4,7 +4,6 @@ import ContentHeader from "../core/components/ContentHeader"
 import PageList from "./containers/PageList"
 import Card from "./components/Card"
 import ContentFilters from "../core/containers/ContentFilters"
-import AddButton from "../core/containers/AddButton"
 import Add from "../core/Add"
 import Document from "../core/components/Document"
 
@@ -29,7 +28,6 @@ export default class List extends React.Component {
                         Pagina's
                     </h3>
                     <ContentFilters page="news" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags}>
-                        <AddButton subtype="news" onClick={this.onClickAdd} />
                     </ContentFilters>
                 </ContentHeader>
                 <section className="section ___grey ___grow">

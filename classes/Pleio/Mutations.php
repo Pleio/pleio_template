@@ -151,7 +151,7 @@ class Mutations {
 
         switch ($input["type"]) {
             case "object":
-                if (!in_array($input["subtype"], array("file", "folder", "news", "blog", "question", "comment","page", "wiki", "event"))) {
+                if (!in_array($input["subtype"], array("file", "folder", "news", "blog", "question", "comment","page", "wiki", "event", "task"))) {
                     throw new Exception("invalid_subtype");
                 }
 

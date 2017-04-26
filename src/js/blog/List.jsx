@@ -1,13 +1,14 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { showModal } from "../lib/actions"
+import { graphql } from "react-apollo"
+import gql from "graphql-tag"
 import ContentHeader from "../core/components/ContentHeader"
 import BlogList from "./containers/BlogList"
 import Card from "./components/Card"
 import Trending from "../activity/components/Trending"
 import Top from "../core/components/Top"
 import ContentFilters from "../core/containers/ContentFilters"
-import AddButton from "../core/containers/AddButton"
 import Document from "../core/components/Document"
 
 class List extends React.Component {
@@ -23,6 +24,17 @@ class List extends React.Component {
     }
 
     render() {
+        const { viewer } = this.props.data
+
+        let add
+        if (viewer && viewer.canWriteToContainer) {
+            add = (
+                <Link to={`blog/add`} className="right-lg">
+                    <div className="button ___large ___add"><span>Schrijf een verhaal</span></div>
+                </Link>
+            )
+        }
+
         return (
             <div className="page-container">
                 <Document title="Blog" />
@@ -31,9 +43,7 @@ class List extends React.Component {
                         Blog
                     </h3>
                     <ContentFilters page="blog" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags} selectClassName="selector ___margin-bottom-mobile ___filter">
-                        <Link to="/blog/add" className="right-lg">
-                            <AddButton title="Schrijf een verhaal" subtype="blog" />
-                        </Link>
+                        {add}
                     </ContentFilters>
                 </ContentHeader>
                 <section className="section ___grey ___grow">
@@ -56,4 +66,14 @@ class List extends React.Component {
     }
 }
 
-export default List
+const Query = gql`
+    query GroupList {
+        viewer {
+            guid
+            loggedIn
+            canWriteToContainer(type: object, subtype: "blog")
+        }
+    }
+`
+
+export default graphql(Query)(List)

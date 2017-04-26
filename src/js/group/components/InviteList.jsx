@@ -92,7 +92,7 @@ export default class InviteListWithData extends React.Component {
                       "guid": "1428",
                       "username": "user",
                       "name": "Invited user",
-                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                      "icon": "http://www.pleio.dev:8000/mod/pleio_template/src/images/user.png"
                     }
                   },
                   {
@@ -101,7 +101,7 @@ export default class InviteListWithData extends React.Component {
                       "guid": "1412",
                       "username": "manager",
                       "name": "Requested user",
-                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                      "icon": "http://www.pleio.dev:8000/mod/pleio_template/src/images/user.png"
                     }
                   },
                   {
@@ -110,7 +110,7 @@ export default class InviteListWithData extends React.Component {
                       "guid": "864",
                       "username": "admin",
                       "name": "Member",
-                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                      "icon": "http://www.pleio.dev:8000/mod/pleio_template/src/images/user.png"
                     }
                   },
                   {
@@ -119,7 +119,7 @@ export default class InviteListWithData extends React.Component {
                       "guid": "864",
                       "username": "admin",
                       "name": "Not member",
-                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                      "icon": "http://www.pleio.dev:8000/mod/pleio_template/src/images/user.png"
                     }
                   },
                   {
@@ -128,7 +128,7 @@ export default class InviteListWithData extends React.Component {
                       "guid": "864",
                       "username": "admin",
                       "name": "Administrator",
-                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                      "icon": "http://www.pleio.dev:8000/mod/pleio_template/src/images/user.png"
                     }
                   },
                   {
@@ -137,7 +137,7 @@ export default class InviteListWithData extends React.Component {
                       "guid": "864",
                       "username": "admin",
                       "name": "Administrator",
-                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                      "icon": "http://www.pleio.dev:8000/mod/pleio_template/src/images/user.png"
                     }
                   },
                   {
@@ -146,7 +146,7 @@ export default class InviteListWithData extends React.Component {
                       "guid": "864",
                       "username": "admin",
                       "name": "Eind baas",
-                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                      "icon": "http://www.pleio.dev:8000/mod/pleio_template/src/images/user.png"
                     }
                   },
                   {
@@ -155,7 +155,7 @@ export default class InviteListWithData extends React.Component {
                       "guid": "1428",
                       "username": "user",
                       "name": "Invited user",
-                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                      "icon": "http://www.pleio.dev:8000/mod/pleio_template/src/images/user.png"
                     }
                   },
                   {
@@ -164,7 +164,7 @@ export default class InviteListWithData extends React.Component {
                       "guid": "1412",
                       "username": "manager",
                       "name": "Requested user",
-                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                      "icon": "http://www.pleio.dev:8000/mod/pleio_template/src/images/user.png"
                     }
                   },
                   {
@@ -173,7 +173,7 @@ export default class InviteListWithData extends React.Component {
                       "guid": "864",
                       "username": "admin",
                       "name": "Member",
-                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                      "icon": "http://www.pleio.dev:8000/mod/pleio_template/src/images/user.png"
                     }
                   },
                   {
@@ -182,7 +182,7 @@ export default class InviteListWithData extends React.Component {
                       "guid": "864",
                       "username": "admin",
                       "name": "Not member",
-                      "icon": "http://www.pleio.dev/mod/pleio_template/src/images/user.png"
+                      "icon": "http://www.pleio.dev:8000/mod/pleio_template/src/images/user.png"
                     }
                   }
                 ]

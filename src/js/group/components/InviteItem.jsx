@@ -55,7 +55,6 @@ class InviteItem extends React.Component {
 
     componentDidMount() {
         const status = this.props.status
-        console.log(status)
         if (status == "notmember" || status == "requested") {
             this.setState({ invited: false })
         } else {

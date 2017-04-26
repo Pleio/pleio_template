@@ -36,7 +36,7 @@ class Item extends React.Component {
         }
 
         let join, edit, invite
-        if (!entity.isClosed && entity.membership === "not_joined") {
+        if (viewer.loggedIn && !entity.isClosed && entity.membership === "not_joined") {
             join = (
                 <JoinGroupButton entity={entity} />
             )
