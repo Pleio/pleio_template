@@ -31,6 +31,7 @@ $theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
     <link href="<?php echo $path; ?>web.css?v=<?php echo $CONFIG->lastcache; ?>" rel="stylesheet" type="text/css">
 </head>
 <body class="___<?php echo $theme; ?>">
+    <?php echo elgg_view("page/elements/noscript"); ?>
     <div id="react-root" class="page-container"><?php echo elgg_extract('body', $vars, ''); ?></div>
     <?php if ($store): ?>
         <script>
