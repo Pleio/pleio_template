@@ -288,6 +288,19 @@ class SchemaBuilder {
             ]
         ]);
 
+        $pluginEnum = new EnumType([
+            "name" => "Plugins",
+            "description" => "The available plugins.",
+            "values" => [
+                "events" => [ "value" => "events" ],
+                "blog" => [ "value" => "blog" ],
+                "questions" => [ "value" => "questions" ],
+                "files" => [ "value" => "files" ],
+                "wiki" => [ "value" => "wiki" ],
+                "tasks" => [ "value" => "tasks" ]
+            ]
+        ]);
+
         $groupType = new ObjectType([
             "name" => "Group",
             "interfaces" => [$entityInterface],
@@ -354,6 +367,9 @@ class SchemaBuilder {
                         ]
                     ],
                     "resolve" => "Pleio\Resolver::getInvite"
+                ],
+                "plugins" => [
+                    "type" => Type::listOf($pluginEnum)
                 ]
             ]
         ]);
@@ -406,6 +422,9 @@ class SchemaBuilder {
                 ],
                 "isFeatured" => [
                     "type" => Type::boolean()
+                ],
+                "state" => [
+                    "type" => Type::string()
                 ],
                 "isRecommended" => [
                     "type" => Type::boolean(),
@@ -1450,7 +1469,8 @@ class SchemaBuilder {
                 "icon" => [ "type" => Type::string() ],
                 "isClosed" => [ "type" => Type::boolean() ],
                 "description" => [ "type" => Type::string() ],
-                "tags" => [ "type" => Type::listOf(Type::string()) ]
+                "tags" => [ "type" => Type::listOf(Type::string()) ],
+                "plugins" => [ "type" => Type::listOf($pluginEnum) ]
             ],
             "outputFields" => [
                 "group" => [
@@ -1474,7 +1494,8 @@ class SchemaBuilder {
                     "description" => "True when membership has to be requested by the user, False when every user can join the group."
                 ],
                 "description" => [ "type" => Type::string() ],
-                "tags" => [ "type" => Type::listOf(Type::string()) ]
+                "tags" => [ "type" => Type::listOf(Type::string()) ],
+                "plugins" => [ "type" => Type::listOf($pluginEnum) ]
             ],
             "outputFields" => [
                 "group" => [
@@ -1551,6 +1572,23 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::inviteToGroup"
         ]);
 
+        $editTaskMutation = Relay::mutationWithClientMutationId([
+            "name" => "editTask",
+            "inputFields" => [
+                "guid" => [ "type" => Type::string() ],
+                "state" => [ "type" => Type::string() ]
+            ],
+            "outputFields" => [
+                "entity" => [
+                    "type" => $objectType,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::editTask"
+        ]);
+
         $mutationType = new ObjectType([
             "name" => "Mutation",
             "fields" => [
@@ -1582,7 +1620,8 @@ class SchemaBuilder {
                     "editGroup" => $editGroupMutation,
                     "joinGroup" => $joinGroupMutation,
                     "leaveGroup" => $leaveGroupMutation,
-                    "inviteToGroup" => $inviteToGroupMutation
+                    "inviteToGroup" => $inviteToGroupMutation,
+                    "editTask" => $editTaskMutation
             ]
         ]);
 

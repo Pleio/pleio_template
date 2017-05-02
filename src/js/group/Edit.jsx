@@ -11,12 +11,13 @@ import Form from "../core/components/Form"
 import InputField from "../core/components/InputField"
 import TagsField from "../core/components/TagsField"
 import SelectField from "../core/components/SelectField"
-import SwitchField from "../core/components/SwitchField"
+import SwitchesField from "../core/components/SwitchesField"
 import IconField from "../core/components/IconField"
 import { convertToRaw } from "draft-js"
 import { Link } from "react-router-dom"
 import NotFound from "../core/NotFound"
 import DeleteModal from "../core/Delete"
+import { groupPlugins } from "../lib/constants"
 import { Set } from "immutable"
 
 class Edit extends React.Component {
@@ -62,7 +63,8 @@ class Edit extends React.Component {
             description: values.description,
             isClosed: (values.membership === "closed") ? true : false,
             icon: values.icon,
-            tags: values.tags
+            tags: values.tags,
+            plugins: values.plugins
         }
 
         this.props.mutate({
@@ -114,6 +116,7 @@ class Edit extends React.Component {
                             <SelectField label="Lidmaatschap" name="membership" type="text" className="form__input" options={{open: "Open", "closed": "Besloten"}} value={membership} />
                             <TextField label="Beschrijving" name="description" type="text" placeholder="Vertel wat over de groep" className="form__input" rules="required" value={entity.description} />
                             <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" value={entity.tags}/>
+                            <SwitchesField label="Plugins" name="plugins" options={groupPlugins} values={entity.plugins} />
 
                             <div className="buttons ___space-between">
                                 <button className="button" type="submit" name="update">
@@ -142,6 +145,7 @@ const Query = gql`
                 description
                 icon
                 isClosed
+                plugins
                 canEdit
                 url
                 tags
@@ -157,6 +161,7 @@ const Mutation = gql`
                 guid
                 name
                 description
+                plugins
                 icon
                 isClosed
                 tags

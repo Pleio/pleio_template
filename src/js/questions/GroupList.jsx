@@ -53,7 +53,7 @@ class Item extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <Menu match={this.props.match} />
+                    <Menu match={this.props.match} group={entity} />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
                     <QuestionList containerGuid={entity.guid} childClass={Card} subtype="question" offset={0} limit={20} tags={[]} match={this.props.match} />
@@ -83,6 +83,7 @@ const Query = gql`
                 guid
                 name
                 description
+                plugins
                 icon
                 isClosed
                 members(limit: 5) {

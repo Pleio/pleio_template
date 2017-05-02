@@ -115,7 +115,7 @@ class Item extends React.Component {
                             {add}
                         </div>
                     </div>
-                    <Menu match={this.props.match} />
+                    <Menu match={this.props.match} group={entity} />
                 </ContentHeader>
                 <section className={classnames({"section ___grey ___grow": true, "___show-checkboxes": this.state.selected.size > 0})}>
                     <div className="container">
@@ -159,6 +159,7 @@ const Query = gql`
                 guid
                 name
                 description
+                plugins
                 icon
                 isClosed
                 members(limit: 5) {

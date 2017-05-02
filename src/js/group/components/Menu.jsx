@@ -1,23 +1,26 @@
 import React from "react"
 import TabMenu from "../../core/components/TabMenu"
+import { groupPlugins as defaultPlugins } from "../../lib/constants"
 
 export default class Menu extends React.Component {
     render() {
-        const { match } = this.props
+        const { match, group } = this.props
         const rootUrl =  `/groups/view/${match.params.groupGuid}/${match.params.groupSlug}`
+        
+        const plugins = group.plugins ? group.plugins : Object.keys(defaultPlugins)
 
-        const menuOptions = [
-            { link: `${rootUrl}`, title:"Activiteiten" },
-            { link: `${rootUrl}/events`, title:"Agenda" },
-            { link: `${rootUrl}/blog`, title:"Blog" },
-            { link: `${rootUrl}/questions`, title:"Forum" },
-            { link: `${rootUrl}/files`, title:"Bestanden" },
-            { link: `${rootUrl}/wiki`, title:"Wiki" },
-            { link: `${rootUrl}/tasks`, title:"Taken" }
-        ]
+        const menuOptions = plugins.map((key) => {
+            return {
+                link: `${rootUrl}/${key}`,
+                title: defaultPlugins[key]
+            }
+        })
 
         return (
-            <TabMenu options={menuOptions} history={history} />
+            <TabMenu options={[
+                ...[{ link: `${rootUrl}`, title:"Activiteiten" }],
+                ...menuOptions
+            ]} history={history} />
         )
     }
 }

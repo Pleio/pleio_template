@@ -6,7 +6,7 @@ import Document from "../core/components/Document"
 import ContentHeader from "../core/components/ContentHeader"
 import NotFound from "../core/NotFound"
 import Menu from "../group/components/Menu"
-import TasksList from "./containers/TasksList"
+import TasksList from "./components/TasksList"
 import Card from "./components/Card"
 
 class GroupList extends React.Component {
@@ -52,7 +52,7 @@ class GroupList extends React.Component {
                             {add}
                         </div>
                     </div>
-                    <Menu match={this.props.match} />
+                    <Menu match={this.props.match} group={entity} />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
                     <div className="container">
@@ -84,6 +84,7 @@ const Query = gql`
                 guid
                 name
                 description
+                plugins
                 icon
                 isClosed
                 members(limit: 5) {

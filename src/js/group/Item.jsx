@@ -79,7 +79,7 @@ class Item extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <Menu match={this.props.match} />
+                    <Menu match={this.props.match} group={entity} />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
                     <div className="container">
@@ -117,6 +117,7 @@ const Query = gql`
             status
             ... on Group {
                 name
+                plugins
                 description
                 icon
                 isClosed

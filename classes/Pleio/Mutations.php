@@ -824,6 +824,7 @@ class Mutations {
         $group->name = $input["name"];
         $group->membership = $input["isClosed"] ? ACCESS_PRIVATE : ACCESS_PUBLIC;
         $group->description = $input["description"];
+        $group->plugins = array_unique($input["plugins"]);
         $group->tags = filter_tags($input["tags"]);
         $group->access_id = get_default_access();
         $result = $group->save();
@@ -860,6 +861,8 @@ class Mutations {
         $group->membership = $input["isClosed"] ? ACCESS_PRIVATE : ACCESS_PUBLIC;
         $group->description = $input["description"];
         $group->tags = filter_tags($input["tags"]);
+        $group->plugins = array_unique($input["plugins"]);
+
         $result = $group->save();
 
         if ($result) {
@@ -942,6 +945,29 @@ class Mutations {
         if ($result !== false) {
             return [
                 "guid" => $group->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
+    }
+
+    static function editTask($input) {
+        $task = get_entity((int) $input["guid"]);
+        if (!$task) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$task->canEdit() || !$task instanceof \ElggObject) {
+            throw new Exception("could_not_save");
+        }
+
+        $task->state = $input["state"];
+
+        $result = $task->save();
+
+        if ($result) {
+            return [
+                "guid" => $task->guid
             ];
         }
 

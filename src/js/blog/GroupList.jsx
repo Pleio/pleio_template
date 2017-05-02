@@ -53,7 +53,7 @@ class Item extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <Menu match={this.props.match} />
+                    <Menu match={this.props.match} group={entity} />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
                     <BlogList childClass={Card} subtype="blog" offset={0} limit={20} tags={[]} containerGuid={entity.guid} match={this.props.match} />
@@ -82,6 +82,7 @@ const Query = gql`
             ... on Group {
                 name
                 description
+                plugins
                 icon
                 isClosed
                 members(limit: 5) {
