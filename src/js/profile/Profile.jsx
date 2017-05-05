@@ -132,7 +132,7 @@ class Profile extends React.Component {
                                     <ul className="card-profile__details">
                                         {siteProfile}
                                     </ul>
-                                    <ProfileField type="textarea" entity={entity} canEdit={entity.canEdit} dataKey="description" name={profileByKey.description.name} value={profileByKey.description.value} className="card-profile__about" />
+                                    <ProfileField type="textarea" entity={entity} canEdit={entity.canEdit} dataKey="description" name={profileByKey.description.name} value={profileByKey.description.value || ""} className="card-profile__about" />
                                 </div>
                                 <div className="col-lg-3"></div>
                             </div>

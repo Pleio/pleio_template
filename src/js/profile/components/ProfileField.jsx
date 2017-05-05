@@ -118,7 +118,7 @@ class ProfileField extends React.Component {
                 <span className={classnames({"___is-editable-field": true, "___is-editing": this.state.isEditing, "___is-empty": !this.state.value})} onClick={this.onClick}>
                     <span className="editable-field">{this.state.value || "..."}</span>
                     {fillNow}
-                    <input type="text" ref="input" onChange={this.onChange} onKeyPress={this.onKeyPress} onBlur={this.onBlur} value={this.state.value} />
+                    <input type="text" ref="input" onChange={this.onChange} onKeyPress={this.onKeyPress} onBlur={this.onBlur} value={this.state.value || ""} />
                 </span>
             </li>
         )
@@ -175,7 +175,7 @@ class ProfileField extends React.Component {
                             <span className="editable-field">{this.state.value || "..."}</span>
                             {fillNow}
                             <div className="editor profile__editor">
-                                <textarea ref="input" onChange={this.onChange} onBlur={this.onBlur} value={this.state.value} className="profile__textarea" />
+                                <textarea ref="input" onChange={this.onChange} onBlur={this.onBlur} value={this.state.value || ""} className="profile__textarea" />
                             </div>
                         </span>
                     </li>
