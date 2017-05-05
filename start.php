@@ -95,11 +95,30 @@ function pleio_template_plugins_settings_save($hook, $type, $return_value, $para
     $menuTitle = get_input("menuTitle");
     $menuLink = get_input("menuLink");
 
+    $profileKey = get_input("profileKey");
+    $profileName = get_input("profileName");
+
     $menu = [];
     foreach ($menuLink as $i => $link) {
         $menu[] = [
             "title" => $menuTitle[$i],
             "link" => $menuLink[$i]
+        ];
+    }
+
+    $profile = [];
+    foreach ($profileKey as $i => $key) {
+        if (in_array($profileKey[$i], ["guid", "type", "subtype", "owner_guid", "site_guid", "container_guid", "access_id", "time_created", "time_updated", "last_action", "enabled", "name", "username", "password", "salt", "password_hash", "email", "language", "code", "banned", "admin", "last_action", "prev_last_action", "last_login", "prev_last_login"])) {
+            continue;
+        }
+
+        if (preg_match("/^a-z/", $profileKey[$i])) {
+            continue;
+        }
+
+        $profile[] = [
+            "key" => $profileKey[$i],
+            "name" => $profileName[$i]
         ];
     }
 
@@ -125,6 +144,7 @@ function pleio_template_plugins_settings_save($hook, $type, $return_value, $para
 
     $params = get_input("params");
     $params["menu"] = serialize($menu);
+    $params["profile"] = serialize($profile);
     $params["filters"] = serialize($filters);
     $params["footer"] = serialize($footer);
     set_input("params", $params);

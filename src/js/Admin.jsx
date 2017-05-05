@@ -3,6 +3,7 @@ import ReactDOM from "react-dom"
 import ApolloClient from "apollo-client"
 import { ApolloProvider } from "react-apollo"
 import Menu from "./admin/Menu"
+import Profile from "./admin/Profile"
 import Filters from "./admin/Filters"
 import Footer from "./admin/Footer"
 
@@ -14,6 +15,15 @@ if (document.getElementById("pleio-template-admin-menu")) {
             <Menu />
         </ApolloProvider>,
         document.getElementById("pleio-template-admin-menu")
+    )  
+}
+
+if (document.getElementById("pleio-template-admin-profile")) {
+    ReactDOM.render(
+        <ApolloProvider client={client}>
+            <Profile />
+        </ApolloProvider>,
+        document.getElementById("pleio-template-admin-profile")
     )  
 }
 

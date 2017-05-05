@@ -13,6 +13,7 @@ const Query = gql`
                 ... on Page {
                     guid
                     title
+                    url
                 }
             }
         }

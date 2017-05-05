@@ -86,7 +86,7 @@ class Mapper {
             "guid" => $entity->guid,
             "type" => $entity->widget_type ? $entity->widget_type : "Empty",
             "row" => $entity->row ? $entity->row : 1,
-            "settings" => $settings ? $settings : []
+            "settings" => $entity->getPrivateSetting("settings") ? unserialize($entity->getPrivateSetting("settings")) : []
         ];
     }
 }

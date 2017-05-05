@@ -8,6 +8,7 @@ import ProfileField from "./components/ProfileField"
 import ProfileScore from "./components/ProfileScore"
 import Modal from "../core/components/Modal"
 import Wrapper from "./components/Wrapper"
+import { Set } from "immutable"
 
 class Profile extends React.Component {
     constructor(props) {
@@ -51,11 +52,16 @@ class Profile extends React.Component {
             }
         })
 
-        const contactData = ['emailaddress', 'site', 'phone', 'mobile'].map((key, i) => (
+        const allFields = new Set(Object.keys(profileByKey))
+
+        const defaultFields = new Set(["emailaddress", "site", "phone", "mobile", "description"])
+        const topFields = new Set(["emailaddress", "site", "phone", "mobile"])
+
+        const contactData = topFields.intersect(defaultFields).map((key, i) => (
             <ProfileField key={i} entity={entity} canEdit={entity.canEdit} dataKey={key} name={profileByKey[key].name} value={profileByKey[key].value} />
         ))
 
-        const siteProfile = ['sector', 'school'].map((key, i) => (
+        const siteProfile = allFields.subtract(defaultFields).map((key, i) => (
             <ProfileField key={i} entity={entity} canEdit={entity.canEdit} dataKey={key} name={profileByKey[key].name} value={profileByKey[key].value} />
         ))
 

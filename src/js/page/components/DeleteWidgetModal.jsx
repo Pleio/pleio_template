@@ -1,17 +1,12 @@
 import React from "react"
-import classnames from "classnames"
+import Modal from "../../core/components/Modal"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
-class DeleteWidgetModal extends React.Component {
+class DeleteWidget extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            isOpen: false
-        }
-
-        this.toggle = () => this.setState({ isOpen: !this.state.isOpen })
         this.onSubmit = this.onSubmit.bind(this)
     }
 
@@ -29,32 +24,21 @@ class DeleteWidgetModal extends React.Component {
             },
             refetchQueries: ["PageItem"]
         }).then(({data}) => {
-            this.setState({
-                isOpen: false
-            })
+            this.props.afterDelete()
         })
     }
 
     render() {
         return (
-            <div tabIndex="0" className={classnames({"modal ___small ___middle": true, "___is-open": this.state.isOpen})}>
-                <div className="modal__wrapper">
-                    <div className="modal__background"></div>
-                    <div className="modal__box">
-                        <div className="modal__close" onClick={this.toggle}></div>
-                        <h3 className="modal__title">Verwijderen</h3>
-                        <form className="form" onSubmit={this.onSubmit}>
-                            <p>Weet je zeker dat je dit widget wil verwijderen?</p>
-                            <button className="button" type="submit">Verwijder</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            <form className="form" onSubmit={this.onSubmit}>
+                <p>Weet je zeker dat je dit widget wil verwijderen?</p>
+                <button className="button" type="submit">Verwijder</button>
+            </form>
         )
     }
 }
 
-const Delete = gql`
+const Mutation = gql`
     mutation deleteEntity($input: deleteEntityInput!) {
         deleteEntity(input: $input) {
             entity {
@@ -66,8 +50,20 @@ const Delete = gql`
         }
     }
 `
-const withDelete = graphql(Delete, {
-    withRef: "true"
-})
 
-export default withDelete(DeleteWidgetModal)
+const DeleteWidgetWithMutation = graphql(Mutation)(DeleteWidget)
+
+export default class DeleteWidgetModal extends React.Component {
+    constructor(props) {
+        super(props)
+        this.toggle = () => this.refs.modal.toggle()
+    }
+    
+    render() {
+        return (
+            <Modal ref="modal" title="Widget verwijderen">
+                <DeleteWidgetWithMutation {...this.props} />
+            </Modal>
+        )
+    }
+}

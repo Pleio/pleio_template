@@ -1,9 +1,11 @@
 import React from "react"
-import { BrowserRouter, Route, Switch } from "react-router-dom"
+import { Router as ReactRouter } from "react-router-dom"
+import { Route, Switch } from "react-router-dom"
+import browserHistory from "./lib/browserHistory"
 
 import Container from "./core/components/Container"
 
-import Campagne from "./pages/Campagne"
+import Campagne from "./Campagne"
 import ActivityList from "./activity/List"
 import Privacy from "./core/Privacy"
 import Terms from "./core/Terms"
@@ -45,6 +47,8 @@ import EventsEdit from "./events/Edit"
 
 import PageList from "./page/List"
 import PageItem from "./page/Item"
+import PageEdit from "./page/Edit"
+import PageAdd from "./page/Add"
 
 import GroupList from "./group/List"
 import GroupAdd from "./group/Add"
@@ -62,7 +66,6 @@ import TasksGroupList from "./tasks/GroupList"
 import TasksEdit from "./tasks/Edit"
 import TasksAdd from "./tasks/Add"
 
-
 import ProfileWrapper from "./profile/components/Wrapper"
 import Profile from "./profile/Profile"
 import Account from "./profile/Account"
@@ -72,7 +75,7 @@ import NotFound from "./core/NotFound"
 export default class Router extends React.Component {
     render() {
         return (
-            <BrowserRouter>
+            <ReactRouter history={browserHistory}>
                 <Container>
                     <Switch>
                         <Route exact path="/" component={ActivityList} />
@@ -124,7 +127,10 @@ export default class Router extends React.Component {
                         <Route exact path="/groups/view/:groupGuid/:groupSlug/events/view/:guid/:slug" component={EventsGroupItem} />
 
                         <Route exact path="/page" component={PageList} />
+                        <Route exact path="/page/add" component={PageAdd} />
+                        <Route exact path="/page/edit/:guid" component={PageEdit} />
                         <Route exact path="/page/view/:guid/:slug" component={PageItem} />
+
 
                         <Route exact path="/groups" component={GroupList} />
                         <Route exact path="/groups/add" component={GroupAdd} />
@@ -149,7 +155,7 @@ export default class Router extends React.Component {
                         <Route component={NotFound} />
                     </Switch>
                 </Container>
-            </BrowserRouter>
+            </ReactRouter>
         )
     }
 }

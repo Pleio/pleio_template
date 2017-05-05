@@ -15,6 +15,11 @@ class Resolver {
             $menu = [];
         }
 
+        $profile = unserialize(elgg_get_plugin_setting("profile", "pleio_template"));
+        if (!$profile) {
+            $profile = [];
+        }
+
         $filters = unserialize(elgg_get_plugin_setting("filters", "pleio_template"));
         if (!$filters) {
             $filters = [];
@@ -45,6 +50,7 @@ class Resolver {
             "guid" => $site->guid,
             "name" => $site->name,
             "menu" => $menu,
+            "profile" => $profile,
             "theme" => $theme,
             "footer" => $footer,
             "logo" => "/mod/pleio_template/logo.php?lastcache={$site->logotime}",
@@ -227,21 +233,11 @@ class Resolver {
             if (!$entity) {
                 continue;
             }
-
-            $user = [
-                "guid" => $entity->guid,
-                "type" => $entity->type,
-                "name" => $entity->name,
-                "icon" => $entity->getIconURL(),
-                "username" => $entity->username
+             
+            $return[] = [
+                "user" => Mapper::getUser($entity),
+                "likes" => $likes
             ];
-
-            if ($user) {
-                $return[] = [
-                    "user" => $user,
-                    "likes" => $likes
-                ];
-            }
         }
 
         return $return;
@@ -299,8 +295,9 @@ class Resolver {
             $subtype = $entity->getSubtype();
             switch ($subtype) {
                 case "page":
-                    $return = Mapper::getPage($entity);
                     return Mapper::getPage($entity);
+                case "page_widget":
+                    return Mapper::getWidget($entity);
                 default:
                     return Mapper::getObject($entity);
             }
@@ -511,20 +508,22 @@ class Resolver {
             return [];
         }
 
-        $defaultItems = [
+        $defaultFields = [
             [ "key" => "phone", "name" => "Telefoonnummer" ],
             [ "key" => "mobile", "name" => "Mobiel nummer" ],
             [ "key" => "emailaddress", "name" => "E-mailadres" ],
             [ "key" => "site", "name" => "Website" ],
-            [ "key" => "sector", "name" => "Onderwijssector" ],
-            [ "key" => "school", "name" => "School" ],
             [ "key" => "description", "name" => "Over mij" ]
         ];
+
+        $customFields = elgg_get_plugin_setting("profile", "pleio_template") ? unserialize(elgg_get_plugin_setting("profile", "pleio_template")) : [];
+
+        $allFields = array_merge($defaultFields, $customFields);
 
         $raw_results = elgg_get_metadata([
             "guid" => $user->guid,
             "site_guids" => $site->guid,
-            "metadata_names" => ["phone", "mobile", "emailaddress", "site", "sector", "school", "description"]
+            "metadata_names" => array_map(function($f) { return $f["key"]; }, $allFields)
         ]);
 
         $profile = [];
@@ -533,7 +532,7 @@ class Resolver {
         }
 
         $result = [];
-        foreach ($defaultItems as $item) {
+        foreach ($allFields as $item) {
             $result[] = [
                 "key" => $item["key"],
                 "name" => $item["name"],

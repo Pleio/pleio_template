@@ -1,13 +1,14 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import { showModal } from "../lib/actions"
+import { graphql, gql } from "react-apollo"
 import ContentHeader from "../core/components/ContentHeader"
 import PageList from "./containers/PageList"
 import Card from "./components/Card"
 import ContentFilters from "../core/containers/ContentFilters"
-import Add from "../core/Add"
 import Document from "../core/components/Document"
 
-export default class List extends React.Component {
+class List extends React.Component {
     constructor(props) {
         super(props)
 
@@ -20,6 +21,17 @@ export default class List extends React.Component {
     }
 
     render() {
+        const { viewer } = this.props.data
+
+        let add
+        if (viewer && viewer.canWriteToContainer) {
+            add = (
+                <Link to={`page/add`} className="right-lg">
+                    <div className="button ___large ___add"><span>Pagina toevoegen</span></div>
+                </Link>
+            )
+        }
+
         return (
             <div className="page-container">
                 <Document title="Pagina's" />
@@ -28,13 +40,25 @@ export default class List extends React.Component {
                         Pagina's
                     </h3>
                     <ContentFilters page="news" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags}>
+                        {add}
                     </ContentFilters>
                 </ContentHeader>
                 <section className="section ___grey ___grow">
-                    <InfiniteList childClass={Card} subtype="page" offset={0} limit={20} tags={this.state.tags} />
+                    <PageList childClass={Card} subtype="page" offset={0} limit={20} tags={this.state.tags} />
                 </section>
-                <Add title="Pagina toevoegen" subtype="page" featuredImage={true} refetchQueries={["InfiniteList"]} />
             </div>
         )
     }
 }
+
+const Query = gql`
+    query PageList {
+        viewer {
+            guid
+            loggedIn
+            canWriteToContainer(type: object, subtype: "page")
+        }
+    }
+`
+
+export default graphql(Query)(List)

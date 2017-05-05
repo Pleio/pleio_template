@@ -11,14 +11,19 @@ import showDate from "../lib/showDate"
 import RichTextView from "../core/components/RichTextView"
 import Document from "../core/components/Document"
 import AddWidgetModal from "./components/AddWidgetModal"
-import Widget from "./components/Widget"
+import DeleteWidgetModal from "./components/DeleteWidgetModal"
+import { DragDropContext } from "react-dnd"
+import HTML5Backend from "react-dnd-html5-backend"
+import update from "immutability-helper"
+import Row from "./components/Row"
 
 class Item extends React.Component {
     constructor(props) {
         super(props)
 
-        this.onAddWidget = () => this.props.dispatch(showModal("addWidget"))
-        this.onAddRow = this.onAddRow.bind(this)
+        this.moveWidget = this.moveWidget.bind(this)
+        this.deleteWidget = this.deleteWidget.bind(this)
+        this.afterDelete = this.afterDelete.bind(this)
 
         this.state = {
             rows: this.processRows(this.props.data.entity)
@@ -29,6 +34,33 @@ class Item extends React.Component {
         this.setState({
             rows: this.processRows(nextProps.data.entity)
         })
+    }
+
+    moveWidget(sourceIndex, targetIndex) {
+        const dragWidget = this.state.rows[1][sourceIndex]
+
+        this.setState(update(this.state, {
+            rows: {
+                1: {
+                    $splice: [
+                        [sourceIndex, 1],
+                        [targetIndex, 0, dragWidget]
+                    ]
+                }
+            }
+        }))
+    }
+
+    deleteWidget(entity) {
+        this.setState({
+            deleteEntity: entity
+        })
+
+        this.refs.deleteWidget.toggle()
+    }
+
+    afterDelete() {
+        this.refs.deleteWidget.toggle()
     }
 
     onAddRow() {
@@ -77,7 +109,7 @@ class Item extends React.Component {
         if (entity.canEdit) {
             add = (
                 <div className="widget__add">
-                    <div className="button ___large ___add" onClick={this.onAddWidget}>
+                    <div className="button ___large ___add" onClick={() => this.refs.addWidget.toggle()}>
                         <span>Widget toevoegen</span>
                     </div>
                 </div>
@@ -85,23 +117,22 @@ class Item extends React.Component {
         }
 
         const rows = Object.keys(this.state.rows).map((row, i) => {
-            const content = this.state.rows[row].map((widget, j) => (
-                <Widget key={j} entity={widget} />
-            ))
-
             return (
-                <div key={i} className="row">
-                    {content}
-                </div>
+                <Row key={i} entities={this.state.rows[row]} canEdit={entity.canEdit} moveWidget={this.moveWidget} deleteWidget={this.deleteWidget} selected={true} />
             )
         })
 
         return (
             <div>
                 <Document title={entity.title} />
-                    {add}
-                    {rows}
-                <AddWidgetModal entity={entity} />
+                    <section className="section padding-top">
+                        <div className="container">
+                            {add}
+                            {rows}
+                        </div>
+                    </section>
+                <AddWidgetModal ref="addWidget" entity={entity} />
+                <DeleteWidgetModal ref="deleteWidget" entity={this.state.deleteEntity} toggleEdit={this.toggleEdit} afterDelete={this.afterDelete} />
             </div>
         )
     }
@@ -139,4 +170,4 @@ const Settings = {
     }
 }
 
-export default graphql(Query, Settings)(Item)
+export default DragDropContext(HTML5Backend)(graphql(Query, Settings)(Item))

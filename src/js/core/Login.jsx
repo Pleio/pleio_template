@@ -65,7 +65,7 @@ class Login extends React.Component {
         }
 
         return (
-            <Modal ref="modal" id="login" title={title} small={true} isBlue={true} noParent={true}>
+            <Modal ref="modal" id="login" title={title} small={true} isBlue={true} noParent={true} history={this.props.history}>
                 {errors}
                 <Form ref="form" className="form login" onSubmit={this.onSubmit}>
                     <InputField name="username" type="text" placeholder="E-mailadres" className="form__input" rules="required" />

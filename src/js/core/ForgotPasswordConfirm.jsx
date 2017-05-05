@@ -78,7 +78,7 @@ class ForgotPasswordConfirm extends React.Component {
         }
 
         return (
-            <Modal id="register" title="Wachtwoord vergeten?" steps={[2,2]} small={true} noParent={this.state.showMe} isBlue={true}>
+            <Modal id="register" title="Wachtwoord vergeten?" steps={[2,2]} small={true} noParent={this.state.showMe} isBlue={true} history={this.props.history}>
                 {errors}
                 {body}
             </Modal>

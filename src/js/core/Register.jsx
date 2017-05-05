@@ -141,7 +141,7 @@ class Register extends React.Component {
         let content = ""
 
         return (
-            <ModalWithSlides id="register" title="Registreren" steps={[1,2]} small={true} isBlue={true} noParent={true}>
+            <ModalWithSlides id="register" title="Registreren" steps={[1,2]} small={true} isBlue={true} noParent={true} history={this.props.history}>
                 <SlideOne ref="slideOne" />
                 <SlideTwo ref="slideTwo" onRegister={this.onRegister} errors={this.state.errors} success={this.state.success} />
             </ModalWithSlides>

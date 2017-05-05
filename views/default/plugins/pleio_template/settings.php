@@ -21,6 +21,12 @@ echo elgg_view_module(
 
 echo elgg_view_module(
     "inline",
+    elgg_echo("pleio_template:profile"),
+    elgg_view("plugins/pleio_template/modules/profile", ["plugin" => $plugin])
+);
+
+echo elgg_view_module(
+    "inline",
     elgg_echo("pleio_template:filters"),
     elgg_view("plugins/pleio_template/modules/filters", ["plugin" => $plugin])
 );

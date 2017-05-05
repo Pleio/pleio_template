@@ -1,6 +1,6 @@
 import React from "react"
-import Document from "../core/components/Document"
-import VideoModal from "../core/components/VideoModal"
+import Document from "./core/components/Document"
+import VideoModal from "./core/components/VideoModal"
 import { Link } from "react-router-dom"
 
 export default class Campagne extends React.Component {

@@ -76,7 +76,7 @@ class ForgotPassword extends React.Component {
         }
 
         return (
-            <Modal ref="modal" id="forgotPassword" title="Wachtwoord vergeten?" steps={[1,2]} small={true} isBlue={true} noParent={true}>
+            <Modal ref="modal" id="forgotPassword" title="Wachtwoord vergeten?" steps={[1,2]} small={true} isBlue={true} noParent={true} history={this.props.history}>
                 {errors}
                 {body}
             </Modal>

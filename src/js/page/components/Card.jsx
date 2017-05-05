@@ -5,15 +5,7 @@ import classnames from "classnames"
 
 export default class Card extends React.Component {
     render() {
-        const { inActivityFeed } = this.props
-        const { guid, url, title, excerpt, isFeatured, featuredImage } = this.props.entity
-
-        let featured
-        if (featuredImage) {
-            featured = (
-                <Link to={url} style={{backgroundImage: "url(" + featuredImage + ")"}} className="card-blog-post__image" />
-            )
-        }
+        const { url, title } = this.props.entity
 
         return (
             <div className="card-blog-post">

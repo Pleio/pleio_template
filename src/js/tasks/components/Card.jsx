@@ -4,23 +4,6 @@ import { DragSource } from "react-dnd"
 import { getClassFromTags } from "../../lib/helpers"
 import classnames from "classnames"
 
-const source = {
-    beginDrag(props) {
-        const { guid } = props.entity
-
-        return {
-            guid
-        }
-    }
-}
-
-function collect(connect, monitor) {
-    return {
-        connectDragSource: connect.dragSource(),
-        isDragging: monitor.isDragging()
-    }
-}
-
 class Card extends React.Component {
     getRootURL() {
         const { match } = this.props
@@ -47,6 +30,23 @@ class Card extends React.Component {
                 </div>
             </div>
         )
+    }
+}
+
+const source = {
+    beginDrag(props) {
+        const { guid } = props.entity
+
+        return {
+            guid
+        }
+    }
+}
+
+function collect(connect, monitor) {
+    return {
+        connectDragSource: connect.dragSource(),
+        isDragging: monitor.isDragging()
     }
 }
 

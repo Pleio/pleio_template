@@ -6,7 +6,6 @@ import Modal from "../../core/components/Modal"
 import Form from "../../core/components/Form"
 import Errors from "../../core/components/Errors"
 import SelectField from "../../core/components/SelectField"
-import TextSettings from "./widgets/TextSettings"
 
 const widgetOptions = {
     "Leader": "Volledige afbeelding",
@@ -16,7 +15,7 @@ const widgetOptions = {
     "Top": "Top bloggers"
 }
 
-class AddWidgetModal extends React.Component {
+class AddWidget extends React.Component {
     constructor(props) {
         super(props)
 
@@ -47,6 +46,7 @@ class AddWidgetModal extends React.Component {
             }
         }).then(({data}) => {
             this.refs.form.clearValues()
+            this.props.afterAdd()
         }).catch((errors) => {
             logErrors(errors)
             this.setState({
@@ -57,16 +57,14 @@ class AddWidgetModal extends React.Component {
 
     render() {
         return (
-            <Modal id="addWidget" title="Widget toevoegen">
-                <Form ref="form" onSubmit={this.onSubmit}>
-                    <SelectField label="Type" name="type" className="form__input" options={widgetOptions} rules="required" />
-                    <div className="buttons">
-                        <button className="button" onClick={this.onSubmit}>
-                            Toevoegen
-                        </button>
-                    </div>
-                </Form>
-            </Modal>
+            <Form ref="form" onSubmit={this.onSubmit}>
+                <SelectField label="Type" name="type" className="form__input" options={widgetOptions} rules="required" />
+                <div className="buttons">
+                    <button className="button" onClick={this.onSubmit}>
+                        Toevoegen
+                    </button>
+                </div>
+            </Form>
         )
     }
 }
@@ -91,4 +89,21 @@ const Mutation = gql`
         }
     }
 `
-export default graphql(Mutation)(AddWidgetModal)
+
+const AddWidgetWithMutation = graphql(Mutation)(AddWidget)
+
+export default class AddWidgetModal extends React.Component {
+    constructor(props) {
+        super(props)
+        this.toggle = () => this.refs.modal.toggle()
+        this.afterAdd = () => this.refs.modal.toggle()
+    }
+
+    render() {
+        return (
+            <Modal ref="modal" title="Widget toevoegen">
+                <AddWidgetWithMutation afterAdd={this.afterAdd} {...this.props} />
+            </Modal>
+        )
+    }
+}

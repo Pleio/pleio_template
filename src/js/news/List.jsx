@@ -1,7 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { graphql } from "react-apollo"
-import gql from "graphql-tag"
+import { graphql, gql } from "react-apollo"
 import ContentHeader from "../core/components/ContentHeader"
 import NewsList from "./containers/NewsList"
 import Card from "./components/Card"

@@ -5,6 +5,7 @@ $english = array(
     "pleio_template:piwik" => "Piwik",
     "pleio_template:sentry" => "Sentry",
     "pleio_template:settings" => "Settings",
+    "pleio_template:profile" => "Profile",
     "pleio_template:menu" => "Menu",
     "pleio_template:filters" => "Tag filters",
     "pleio_template:footer" => "Footer",

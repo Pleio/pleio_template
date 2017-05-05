@@ -34,7 +34,7 @@ class Recommended extends React.Component {
             )
         }
 
-        const items = recommended.entities.map((entity, i) => (
+        const items = recommended.edges.map((entity, i) => (
             <Link key={i} to={entity.url} className="card-list-recommended__item">
                 <div style={{backgroundImage: "url(" + entity.owner.icon + ")"}} className="card-list-recommended__picture" />
                 <div className="card-list-recommended__justify">
@@ -56,7 +56,7 @@ const Query = gql`
     query Recommended {
         recommended(limit:3) {
             total
-            entities {
+            edges {
                 guid
                 ... on Object {
                     title

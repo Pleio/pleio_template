@@ -493,7 +493,19 @@ class Mutations {
         $key = $input["key"];
         $value = $input["value"];
 
-        if (!in_array($key, ["name", "phone", "mobile", "emailaddress", "site", "sector", "school", "description"])) {
+        $defaultFields = [
+            [ "key" => "phone", "name" => "Telefoonnummer" ],
+            [ "key" => "mobile", "name" => "Mobiel nummer" ],
+            [ "key" => "emailaddress", "name" => "E-mailadres" ],
+            [ "key" => "site", "name" => "Website" ],
+            [ "key" => "description", "name" => "Over mij" ]
+        ];
+
+        $customFields = elgg_get_plugin_setting("profile", "pleio_template") ? unserialize(elgg_get_plugin_setting("profile", "pleio_template")) : [];
+
+        $allFields = array_merge($defaultFields, $customFields);
+
+        if (!in_array($key, array_map(function($f) { return $f["key"]; }, $allFields))) {
             throw new Exception("invalid_key");
         }
 
@@ -799,11 +811,13 @@ class Mutations {
         $entity->title = $input["title"];
         $entity->row = (int) $input["row"];
         $entity->col = (int) $input["col"];
+        $entity->setPrivateSetting("settings", serialize($input["settings"]));
+
         $result = $entity->save();
 
         if ($result) {
             return [
-                "guid" => $page->guid
+                "guid" => $entity->guid
             ];
         }
 

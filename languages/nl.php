@@ -5,6 +5,7 @@ $dutch = array(
     "pleio_template:piwik" => "Piwik",
     "pleio_template:sentry" => "Sentry",
     "pleio_template:settings" => "Instellingen",
+    "pleio_template:profile" => "Profiel",
     "pleio_template:menu" => "Menu",
     "pleio_template:filters" => "Tag filters",
     "pleio_template:footer" => "Footer",

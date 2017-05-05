@@ -7,24 +7,6 @@ import client from "./lib/client"
 
 const lang = "nl"
 
-/*const browserHistory = createBrowserHistory()
-
-browserHistory.listen((location) => {
-    setTimeout(() => {
-        // Piwik
-        if (typeof _paq !== "undefined") {
-            _paq.push(["setDocumentTitle", document.title]);
-            _paq.push(["setCustomUrl", location.pathname])
-            _paq.push(["trackPageView"])
-        }
-
-        // Google Analytics
-        if (typeof window.ga !== "undefined") {
-            window.ga("send", "pageview", location.pathname)
-        }
-    }, 100)
-})*/
-
 let initialStore = {
     currentLanguage: lang,
     modal: null,

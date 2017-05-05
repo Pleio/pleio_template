@@ -698,6 +698,9 @@ class SchemaBuilder {
                 "menu" => [
                     "type" => Type::listOf($menuItemType)
                 ],
+                "profile" => [
+                    "type" => Type::listOf($profileItem)
+                ],
                 "footer" => [
                     "type" => Type::listOf($menuItemType)  
                 ],
@@ -1234,7 +1237,7 @@ class SchemaBuilder {
             ],
             "outputFields" => [
                 "entity" => [
-                    "type" => $entityInterface,
+                    "type" => $widgetItem,
                     "resolve" => function($entity) {
                         return Resolver::getEntity(null, $entity, null);
                     }
