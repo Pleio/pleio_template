@@ -11372,6 +11372,9 @@ body.modal__open {
 .widget:hover .widget__admin {
   display: block;
 }
+.widget:hover .widget__drag {
+  display: block;
+}
 .widget__row .___selected {
   padding: 2px solid red;
 }
@@ -11443,15 +11446,16 @@ body.modal__open {
   color: #009ee3;
 }
 .widget__drag {
+  display: none;
   z-index: 2;
   background-color: #009ee3;
   border: 1px solid #fff;
   border-radius: 8px;
   height: 16px;
   width: 16px;
-  pointer-events: all;
   position: absolute;
-  top: 50px;
+  cursor: ew-resize;
+  top: 50%;
   right: 0;
 }
 .page-container {
