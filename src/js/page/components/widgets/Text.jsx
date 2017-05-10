@@ -1,7 +1,7 @@
 import React from "react"
 import { gql, graphql } from "react-apollo"
 import Form from "../../../core/components/Form"
-import TextField from "../../../core/components/TextField"
+import InputField from "../../../core/components/InputField"
 import RichTextField from "../../../core/components/RichTextField"
 import RichTextView from "../../../core/components/RichTextView"
 import { convertToRaw } from "draft-js"
@@ -55,22 +55,19 @@ class Text extends React.Component {
 
         if (isEditing) {
             return (
-                <Form ref="form" onSubmit={this.onSubmit}>
-                    <div className="card-list-trending">
-                        <div className="card-list-trending__title">
-                            <TextField name="title" value={this.getSetting("title")} />
-                        </div>
-                        <div className="card-list-trending__items">
-                            <RichTextField name="description" value={this.getSetting("description")} richValue={this.getSetting("richDescription")} />
-                        </div>
+                <div className="card-list-trending">
+                    <Form ref="form" className="form" onSubmit={this.onSubmit}>
+                        <InputField type="text" name="title" placeholder="Titel" className="form__input" value={this.getSetting("title")} />
+                        <RichTextField name="description" placeholder="Hier komt de tekst..." className="form__input" value={this.getSetting("description")} richValue={this.getSetting("richDescription")} />
 
                         <div className="buttons ___space-between">
                             <button className="button" type="submit">
                                 Opslaan
                             </button>
                         </div>
-                    </div>
-                </Form>
+                    </Form>
+                </div>
+
             )
         }
 

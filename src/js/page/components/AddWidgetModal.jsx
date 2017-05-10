@@ -12,7 +12,8 @@ const widgetOptions = {
     "Text": "Tekst",
     "Recommended": "Aanbevolen",
     "Trending": "Trending",
-    "Top": "Top bloggers"
+    "Top": "Top bloggers",
+    "Objects": "Lijst met objecten",
 }
 
 class AddWidget extends React.Component {
@@ -45,13 +46,11 @@ class AddWidget extends React.Component {
                 }
             }
         }).then(({data}) => {
-            this.refs.form.clearValues()
-            this.props.afterAdd()
+            if (this.props.afterAdd) {
+                this.props.afterAdd()
+            }
         }).catch((errors) => {
             logErrors(errors)
-            this.setState({
-                errors: errors
-            })
         })
     }
 
@@ -74,11 +73,14 @@ const Mutation = gql`
         addWidget(input: $input) {
             entity {
                 guid
+                status
                 ... on Page {
+                    title
+                    canEdit
                     widgets {
                         guid
                         type
-                        row
+                        width
                         settings {
                             key
                             value
@@ -96,13 +98,12 @@ export default class AddWidgetModal extends React.Component {
     constructor(props) {
         super(props)
         this.toggle = () => this.refs.modal.toggle()
-        this.afterAdd = () => this.refs.modal.toggle()
     }
 
     render() {
         return (
             <Modal ref="modal" title="Widget toevoegen">
-                <AddWidgetWithMutation afterAdd={this.afterAdd} {...this.props} />
+                <AddWidgetWithMutation afterAdd={this.toggle} {...this.props} />
             </Modal>
         )
     }

@@ -25,6 +25,9 @@ class Item extends React.Component {
         this.deleteWidget = this.deleteWidget.bind(this)
         this.afterDelete = this.afterDelete.bind(this)
 
+        this.onDragStart = this.onDragStart.bind(this)
+        this.onDragEnd = this.onDragEnd.bind(this)
+
         this.state = {
             rows: this.processRows(this.props.data.entity)
         }
@@ -33,6 +36,18 @@ class Item extends React.Component {
     componentWillReceiveProps(nextProps) {
         this.setState({
             rows: this.processRows(nextProps.data.entity)
+        })
+    }
+
+    onDragStart() {
+        this.setState({
+            dragging: true
+        })
+    }
+
+    onDragEnd() {
+        this.setState({
+            dragging: false
         })
     }
 
@@ -90,7 +105,7 @@ class Item extends React.Component {
     }
 
     render() {
-        let { entity, viewer } = this.props.data
+        let { entity } = this.props.data
 
         if (!entity) {
             // Loading...
@@ -118,9 +133,16 @@ class Item extends React.Component {
 
         const rows = Object.keys(this.state.rows).map((row, i) => {
             return (
-                <Row key={i} entities={this.state.rows[row]} canEdit={entity.canEdit} moveWidget={this.moveWidget} deleteWidget={this.deleteWidget} selected={true} />
+                <Row key={i} i={i} entities={this.state.rows[row]} canEdit={entity.canEdit} moveWidget={this.moveWidget} deleteWidget={this.deleteWidget} />
             )
         })
+
+        let newRow
+        if (this.state.dragging) {
+            newRow = (
+                <Row entities={[]} canEdit={entity.canEdit} />
+            )
+        }
 
         return (
             <div>
@@ -129,6 +151,7 @@ class Item extends React.Component {
                         <div className="container">
                             {add}
                             {rows}
+                            {newRow}
                         </div>
                     </section>
                 <AddWidgetModal ref="addWidget" entity={entity} />
@@ -149,7 +172,7 @@ const Query = gql`
                 widgets {
                     guid
                     type
-                    row
+                    width
                     settings {
                         key
                         value

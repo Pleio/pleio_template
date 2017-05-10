@@ -135,6 +135,9 @@ class SchemaBuilder {
                 "row" => [
                     "type" => Type::nonNull(Type::int())
                 ],
+                "width" => [
+                    "type" => Type::nonNull(Type::int())
+                ],
                 "settings" => [
                     "type" => Type::listOf($widgetSetting)
                 ]
@@ -1226,10 +1229,13 @@ class SchemaBuilder {
                     "type" => Type::nonNull(Type::string())
                 ],
                 "row" => [
-                    "type" => Type::nonNull(Type::int())
+                    "type" => Type::int()
                 ],
                 "col" => [
-                    "type" => Type::nonNull(Type::int())
+                    "type" => Type::int()
+                ],
+                "width" => [
+                    "type" => Type::int()
                 ],
                 "settings" => [
                     "type" => Type::listOf($widgetSettingInput)

@@ -9,7 +9,7 @@ export default class Row extends React.Component {
 
         const widgets = entities.map((entity, i) => {
             return (
-                <Widget key={i} index={i} entity={entity} canEdit={canEdit} moveWidget={moveWidget} deleteWidget={deleteWidget} />
+                <Widget key={entity.guid} index={i} entity={entity} canEdit={canEdit} moveWidget={moveWidget} deleteWidget={deleteWidget} />
             )
         })
 

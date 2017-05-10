@@ -808,10 +808,25 @@ class Mutations {
             throw new Eception("could_not_save");
         }
 
-        $entity->title = $input["title"];
-        $entity->row = (int) $input["row"];
-        $entity->col = (int) $input["col"];
-        $entity->setPrivateSetting("settings", serialize($input["settings"]));
+        if ($input["title"]) {
+            $entity->title = $input["title"];
+        }
+
+        if ($input["row"]) {
+            $entity->row = (int) $input["row"];
+        }
+
+        if ($input["col"]) {
+            $entity->col = (int) $input["col"];            
+        }
+
+        if ($input["width"]) {
+            $entity->width = (int) $input["width"];
+        }
+
+        if ($input["settings"]) {
+            $entity->setPrivateSetting("settings", serialize($input["settings"]));
+        }
 
         $result = $entity->save();
 
