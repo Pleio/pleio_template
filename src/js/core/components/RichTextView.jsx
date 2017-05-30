@@ -19,6 +19,20 @@ function findLinkEntities(contentBlock, callback) {
     )
 }
 
+function findDocumentEntities(contentBlock, callback) {
+    contentBlock.findEntityRanges(
+        (character) => {
+            const entityKey = character.getEntity()
+
+            return (
+                entityKey !== null &&
+                Entity.get(entityKey).getType() === "DOCUMENT"
+            );
+        },
+        callback
+    )
+}
+
 const decorator = new CompositeDecorator([
     {
         strategy: findLinkEntities,
@@ -29,6 +43,29 @@ const decorator = new CompositeDecorator([
                 <a href={url} target={target}>
                     {props.children}
                 </a>
+            )
+        }
+    },
+    {
+        strategy: findDocumentEntities,
+        component: (props) => {
+            const data = Entity.get(props.entityKey).getData()
+            const size = Math.round(data.size / 10000) / 100
+
+            let type
+            switch (data.mimeType) {
+                case "application/pdf":
+                    type = "___pdf"
+                    break
+                default:
+                    type = "___doc"
+            }
+
+            return (
+                <div className={`document ${type}`}>
+                    <a href={data.url} target="_blank">{props.children}</a>
+                    <span>({size}MB)</span>
+                </div>
             )
         }
     }

@@ -1,7 +1,12 @@
 import { Set } from "immutable"
 
-export function getQueryVariable(variable) {
-    var query = window.location.search.substring(1);
+export function getQueryVariable(variable, search) {
+    if (!search) {
+        var query = window.location.search.substring(1);
+    } else {
+        var query = search.substring(1);
+    }
+
     var vars = query.split('&');
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split('=');
@@ -109,4 +114,9 @@ export function arrayToObject(array) {
     })
 
     return returnValue
+}
+
+export function getVideoThumbnail(url) {
+    const v = getQueryVariable("v", parseURL(url).search)
+    return `https://img.youtube.com/vi/${v}/hqdefault.jpg`
 }

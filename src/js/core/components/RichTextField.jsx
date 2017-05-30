@@ -1,4 +1,6 @@
 import React from "react"
+import autobind from "autobind-decorator"
+import PropTypes from "prop-types"
 import { Editor, EditorState, ContentState, RichUtils, AtomicBlockUtils, DefaultDraftBlockRenderMap, CompositeDecorator, Entity, Modifier, convertToRaw, convertFromRaw } from "draft-js"
 import { stateFromHTML } from "draft-js-import-html"
 import { stateToHTML } from "draft-js-export-html"
@@ -6,13 +8,13 @@ import classnames from "classnames"
 import Validator from "validatorjs"
 import Select from "./NewSelect"
 import Immutable from "immutable"
-
 import AtomicBlock from "./RichText/AtomicBlock"
 import IntroBlock from "./RichText/IntroBlock"
-
 import LinkModal from "./RichText/LinkModal"
-import MediaModal from "./RichText/MediaModal"
-import PropTypes from "prop-types"
+import ImageModal from "./RichText/ImageModal"
+import VideoModal from "./RichText/VideoModal"
+import DocumentModal from "./RichText/DocumentModal"
+import SocialModal from "./RichText/SocialModal"
 
 function findLinkEntities(contentBlock, callback) {
     contentBlock.findEntityRanges(
@@ -22,6 +24,20 @@ function findLinkEntities(contentBlock, callback) {
             return (
                 entityKey !== null &&
                 Entity.get(entityKey).getType() === "LINK"
+            );
+        },
+        callback
+    )
+}
+
+function findDocumentEntities(contentBlock, callback) {
+    contentBlock.findEntityRanges(
+        (character) => {
+            const entityKey = character.getEntity()
+
+            return (
+                entityKey !== null &&
+                Entity.get(entityKey).getType() === "DOCUMENT"
             );
         },
         callback
@@ -38,6 +54,29 @@ const decorator = new CompositeDecorator([
                 <a href={url} target={target}>
                     {props.children}
                 </a>
+            )
+        }
+    },
+    {
+        strategy: findDocumentEntities,
+        component: (props) => {
+            const data = Entity.get(props.entityKey).getData()
+            const size = Math.round(data.size / 10000) / 100
+
+            let type
+            switch (data.mimeType) {
+                case "application/pdf":
+                    type = "___pdf"
+                    break
+                default:
+                    type = "___doc"
+            }
+
+            return (
+                <div className={`document ${type}`}>
+                    <a href={data.url} target="_blank">{props.children}</a>
+                    <span>({size}MB)</span>
+                </div>
             )
         }
     }
@@ -92,6 +131,7 @@ class RichTextField extends React.Component {
         this.updateStickyToolbar = this.updateStickyToolbar.bind(this)
 
         this.submitLink = this.submitLink.bind(this)
+        this.submitDocument = this.submitDocument.bind(this)
         this.submitMedia = this.submitMedia.bind(this)
 
         this.isValid = this.isValid.bind(this)
@@ -181,6 +221,26 @@ class RichTextField extends React.Component {
         }
     }
 
+    @autobind
+    onEmbed(value) {
+        switch (value) {
+            case "image":
+                this.refs.imageModal.toggle()
+                break
+            case "video":
+                this.refs.videoModal.toggle()
+                break
+            case "document":
+                this.refs.documentModal.toggle()
+                break
+            case "social":
+                this.refs.socialModal.toggle()
+                break
+            default:
+                console.error("Invalid embed value.")
+        }
+    }
+
     blockRendererFn(contentBlock) {
         const type = contentBlock.getType()
         switch(type) {
@@ -204,10 +264,6 @@ class RichTextField extends React.Component {
         switch (block.getType()) {
             case "intro":
                 return "article-intro"
-            case "left":
-                return "align-left"
-            case "right":
-                return "align-right"
             default:
                 return null
         }
@@ -299,16 +355,25 @@ class RichTextField extends React.Component {
         setTimeout(() => this.focus(), 0)
     }
 
-    submitMedia(src, width, height) {
+    submitDocument(name, data) {
         const { editorState } = this.state
-        const entityKey = Entity.create("IMAGE", "MUTABLE", {
-            src,
-            width,
-            height,
-            float: "left",
-            display: "block"
-        })
+        const entity = Entity.create("DOCUMENT", "MUTABLE", data)
 
+        let contentState = Modifier.insertText(
+            editorState.getCurrentContent(),
+            editorState.getSelection(),
+            name,
+            null,
+            entity
+        )
+
+        this.onChange(EditorState.push(this.state.editorState, contentState, "apply-entity"))
+        setTimeout(() => this.focus(), 0)
+    }
+
+    submitMedia(type, data) {
+        const { editorState } = this.state
+        const entityKey = Entity.create(type, "IMMUTABLE", data)
         const newEditorState = AtomicBlockUtils.insertAtomicBlock(this.state.editorState, entityKey, " ")
         this.onChange(newEditorState)
         setTimeout(() => this.focus(), 0)
@@ -356,7 +421,6 @@ class RichTextField extends React.Component {
         const richMedia = (
             <div className="editor__tool-group">
                 <div className="editor__tool ___hyperlink" onClick={() => this.refs.linkModal.toggle()} />
-                <div className="editor__tool ___image" onClick={() => this.refs.mediaModal.toggle()} />
             </div>
         )
 
@@ -385,10 +449,14 @@ class RichTextField extends React.Component {
             </div>
         )
 
-        const align = (
-            <div className="editor__tool-group">
-                <div className="editor__tool ___indent-left" onClick={() => this.changeAlignment("left")} />
-                <div className="editor__tool ___indent-right" onClick={() => this.changeAlignment("right")} />
+        const embed = (
+            <div className="editor__tool-group" id="editor-insert">
+                <Select options={{
+                    "image": "Afbeelding",
+                    "video": "Video",
+                    "document": "Document(en)",
+                    "social": "Social media post"
+                }} name="embed" placeholder="Invoegen" onChange={this.onEmbed} />
             </div>
         )
 
@@ -408,7 +476,7 @@ class RichTextField extends React.Component {
                     {richMedia}
                     {quote}
                     {lists}
-                    {align}
+                    {embed}
                 </div>
                 <div className="content editor__input" onClick={this.focus}>
                     <Editor
@@ -428,7 +496,10 @@ class RichTextField extends React.Component {
                     <div style={{clear:"both"}} />
                 </div>
                 <LinkModal ref="linkModal" onSubmit={this.submitLink} />
-                <MediaModal ref="mediaModal" onSubmit={this.submitMedia} />
+                <ImageModal ref="imageModal" onSubmit={this.submitMedia} />
+                <VideoModal ref="videoModal" onSubmit={this.submitMedia} />
+                <DocumentModal ref="documentModal" onSubmit={this.submitDocument} />
+                <SocialModal ref="socialModal" onSubmit={this.submitMedia} />
             </div>
         )
     }

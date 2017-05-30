@@ -4,7 +4,7 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import AddImage from "./AddImage"
 
-export default class MediaModal extends React.Component {
+export default class ImageModal extends React.Component {
     constructor(props) {
         super(props)
 
@@ -70,7 +70,7 @@ export default class MediaModal extends React.Component {
                     <div className="modal__background"></div>
                     <div className="modal__box">
                         <div className="modal__close" onClick={this.toggle}></div>
-                        <h3 className="modal__title">Media invoegen</h3>
+                        <h3 className="modal__title">Afbeelding invoegen</h3>
                         <div className="form">
                             <div className="mini-tabmenu">
                                 <div className="mini-tabmenu__tabs">
