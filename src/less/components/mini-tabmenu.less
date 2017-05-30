@@ -18,7 +18,6 @@
     width: 4rem;
     height: 2.4rem;
     color: @color-grey--60;
-    cursor: pointer;
     transition: color @trans-fast;
 
     &:not(:last-child) {
@@ -27,6 +26,10 @@
 
     &:hover {
         color: @color-grey--80;
+    }
+
+    &:not(.___is-active) {
+        cursor: pointer;
     }
 
     &.___is-active {

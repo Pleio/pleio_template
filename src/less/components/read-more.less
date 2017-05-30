@@ -49,9 +49,13 @@
         font-weight: bold;
         padding: 0.2rem 0 0 0;
 
-        .card-tile:not(.___image-full) & {
-            @media ( max-width: @screen-xs-max ) {
-                display: none;
+
+        @media ( max-width: @screen-xs-max ) {
+            display: none;
+
+            .card-tile.___full-image.___is-highlighted &,
+            .card-tile.___full-video.___is-highlighted & {
+                display: block;
             }
         }
     }
@@ -66,12 +70,18 @@
     border-radius: 100%;
     transition: background-color @trans-fast;
 
-    .card-tile:not(.___image-full) & {
-        @media ( max-width: @screen-xs-max ) {
-            margin: 0;
-            position: absolute;
-            right: 2rem;
-            bottom: 2rem;
+    @media ( max-width: @screen-xs-max ) {
+        margin: 0;
+        position: absolute;
+        right: 2rem;
+        bottom: 2rem;
+
+        .card-tile.___full-image.___is-highlighted &,
+        .card-tile.___full-video.___is-highlighted & {
+            position: static;
+            margin: 0 0.8rem 0 0;
+            right: auto;
+            bottom: 0;
         }
     }
 

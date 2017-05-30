@@ -1,5 +1,4 @@
 .content {
-
     h1 {
         .font(title-extra-large);
         color: @color-secondary;
@@ -20,6 +19,10 @@
         }
     }
 
+    p {
+        margin: 0 0 3rem;
+    }
+
     a {
         border-bottom: 1px solid transparent;
         color: @color-secondary;
@@ -33,18 +36,22 @@
 
     ul {
         list-style: disc;
-        margin: 0 0 2rem 0;
+        margin: 0 0 3rem 0;
         padding-left: 2rem;
     }
 
     ol {
         list-style: decimal;
-        margin: 0 0 2rem 0;
+        margin: 0 0 3rem 0;
         padding-left: 2rem;
 
         li {
             padding-left: 1rem;
         }
+    }
+
+    img {
+        margin: 0 auto 3rem;
     }
 
     blockquote {
@@ -59,5 +66,10 @@
 
     strong {
         display: block;
+    }
+
+    iframe {
+        margin: 0 0 3rem !important;
+        width: 100% !important;
     }
 }

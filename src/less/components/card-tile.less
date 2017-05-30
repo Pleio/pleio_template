@@ -1,11 +1,10 @@
 .card-tile-container {
     display: flex; // IE10-11 COLUMN FIX
+    width: 100%;
 
-    .___fill {
+    .row.fill & {
         height: 100%; // fill to row height
     }
-
-    width: 100%;
 }
 
 .card-tile {
@@ -19,8 +18,21 @@
     color: inherit;
     width: 100%; // IE10-11 COLUMN FIX
 
+    &.___is-highlighted {
+        &:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: .4rem;
+            background-color: @color-lightblue;
+            z-index: 1;
+        }
+    }
+
     .read-more {
-        margin-top: 1.8rem;
+        margin-top: auto;
     }
 
     &[href=""] {
@@ -164,208 +176,218 @@
 }
 
 // Full cover image
-.card-tile.___full-image {
-    @media ( max-width: @screen-xs-max ) {
-        min-height: 9rem;
+.card-tile {
+    &.___full-image,
+    &.___full-video {
+        @media ( max-width: @screen-xs-max ) {
+            min-height: 9rem;
 
-        &.___featured {
-            min-height: 25rem;
+            &.___is-highlighted {
+                min-height: 25rem;
 
-            .card-tile__title {
-                .font(title-small);
-                padding: 0;
+                .card-tile__title {
+                    .font(title-small);
+                    padding: 0;
+                }
             }
         }
-    }
 
-    .card-tile__image {
-        display: flex;
-        flex-grow: 1;
+        .card-tile__image {
+            display: flex;
+            flex-grow: 1;
 
-        &:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-            display: block;
-            background: fade(@color-grey--80, 25%);
-            background: linear-gradient(to right, fade(@color-grey--80, 40%) 0%, fade(@color-grey--80, 0%) 100%);
+            &:before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                display: block;
+                background: fade(@color-grey--80, 25%);
+                background: linear-gradient(to right, fade(@color-grey--80, 40%) 0%, fade(@color-grey--80, 0%) 100%);
+            }
         }
-    }
 
-    .card-tile__title {
-        color: @color-white;
-        text-shadow: @text-shadow;
-        word-wrap: break-word;
+        .card-tile__title {
+            color: @color-white;
+            text-shadow: @text-shadow;
+            word-wrap: break-word;
 
-        &:hover {
+            &:hover {
+                color: @color-white;
+            }
+
+            @media ( min-width: @screen-sm ) {
+                .font(title-extra-large);
+            }
+        }
+
+        .read-more {
             color: @color-white;
         }
 
-        @media ( min-width: @screen-sm ) {
-            padding: 0 6rem 0 0;
-            .font(title-extra-large);
-        }
-    }
+        @media ( max-width: @screen-xs-max ) {
+            .___search-results & {
+                min-height: 9rem;
 
-    .read-more {
-        color: @color-white;
-    }
+                .card-tile__title {
+                    max-width: ~"calc(100% - 3rem)";
+                    .font(medium);
+                }
 
-    @media ( max-width: @screen-xs-max ) {
-        .___search-results & {
-            min-height: 9rem;
+                .read-more__circle {
+                    margin: 0;
+                    position: absolute;
+                    right: 2rem;
+                    bottom: 2rem;
+                }
 
-            .card-tile__title {
-                max-width: ~"calc(100% - 3rem)";
-                .font(medium);
-            }
-
-            .read-more__circle {
-                margin: 0;
-                position: absolute;
-                right: 2rem;
-                bottom: 2rem;
-            }
-
-            .read-more span {
-                display: none;
-            }
-        }
-    }
-
-    &.___no-image {
-        &.___leren,
-        &.___vernieuwing,
-        &.___arbeidsvoorwaarden,
-        &.___wetten,
-        &.___actualiteit,
-        &.___overig,
-        &.___klas {
-            &:after {
-                flex-shrink: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 15rem;
-                margin: 0 4rem 0 0;
-                color: fade(@color-black, 40%);
-
-                @media ( max-width: @screen-xs-max ) {
+                .read-more span {
                     display: none;
                 }
             }
         }
 
-        .read-more__circle {
-            background-color: @color-white;
-        }
-        .card-tile__title,
-        .read-more {
-            text-shadow: none;
-            color: @color-white;
-        }
+        &.___no-image {
+            &.___leren,
+            &.___vernieuwing,
+            &.___arbeidsvoorwaarden,
+            &.___wetten,
+            &.___actualiteit,
+            &.___overig,
+            &.___klas {
+                &:after {
+                    flex-shrink: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 15rem;
+                    margin: 0 4rem 0 0;
+                    color: fade(@color-black, 40%);
 
-        &.card-tile:hover {
-            .read-more__circle {
-                background-color: @color-quaternary;
-
-                &:before {
-                    color: @color-white;
+                    @media ( max-width: @screen-xs-max ) {
+                        display: none;
+                    }
                 }
             }
+
+            .read-more__circle {
+                background-color: @color-white;
+            }
+            .card-tile__title,
+            .read-more {
+                text-shadow: none;
+                color: @color-white;
+            }
+
+            &.card-tile:hover {
+                .read-more__circle {
+                    background-color: @color-quaternary;
+
+                    &:before {
+                        color: @color-white;
+                    }
+                }
+            }
+
+            &.___leren {
+                background-color: @color-leren;
+
+                .read-more__circle:before {
+                    color: @color-leren;
+                }
+
+                .icon(cat-leren, after);
+                &:after {
+                    font-size: 15rem;
+                }
+            }
+            &.___vernieuwing {
+                background-color: @color-vernieuwing;
+
+                .read-more__circle:before {
+                    color: @color-vernieuwing;
+                }
+
+                .icon(cat-vernieuwing, after);
+                &:after {
+                    font-size: 14rem;
+                }
+            }
+            &.___arbeidsvoorwaarden {
+                background-color: @color-arbeidsvoorwaarden;
+
+                .read-more__circle:before {
+                    color: @color-arbeidsvoorwaarden;
+                }
+
+                .icon(cat-arbeidsvoorwaarden, after);
+                &:after {
+                    font-size: 14rem;
+                }
+            }
+            &.___wetten {
+                background-color: @color-wetten;
+
+                .read-more__circle:before {
+                    color: @color-wetten;
+                }
+
+                .icon(cat-wetten-2, after);
+                &:after {
+                    font-size: 13.4rem;
+                }
+            }
+            &.___actualiteit {
+                background-color: @color-actualiteit;
+
+                .read-more__circle:before {
+                    color: @color-actualiteit;
+                }
+
+                .icon(cat-actualiteit, after);
+                &:after {
+                    font-size: 13.6rem;
+                }
+            }
+            &.___overig {
+                background-color: @color-overig;
+
+                .read-more__circle:before {
+                    color: @color-overig;
+                }
+
+                .icon(cat-overig, after);
+                &:after {
+                    font-size: 13rem;
+                }
+            }
+            &.___klas {
+                background-color: @color-klas;
+
+                .read-more__circle:before {
+                    color: @color-klas;
+                }
+
+                .icon(cat-klas, after);
+                &:after {
+                    font-size: 13rem;
+                }
+            }
+
+            @media ( min-width: @screen-sm ) {
+                flex-direction: row;
+            }
         }
+    }
 
-        &.___leren {
-            background-color: @color-leren;
-
-            .read-more__circle:before {
-                color: @color-leren;
+    &.___full-image {
+        .card-tile__title {
+            @media ( min-width: @screen-sm ) {
+                padding: 0 6rem 0 0;
             }
-
-            .icon(cat-leren, after);
-            &:after {
-                font-size: 15rem;
-            }
-        }
-        &.___vernieuwing {
-            background-color: @color-vernieuwing;
-
-            .read-more__circle:before {
-                color: @color-vernieuwing;
-            }
-
-            .icon(cat-vernieuwing, after);
-            &:after {
-                font-size: 14rem;
-            }
-        }
-        &.___arbeidsvoorwaarden {
-            background-color: @color-arbeidsvoorwaarden;
-
-            .read-more__circle:before {
-                color: @color-arbeidsvoorwaarden;
-            }
-
-            .icon(cat-arbeidsvoorwaarden, after);
-            &:after {
-                font-size: 14rem;
-            }
-        }
-        &.___wetten {
-            background-color: @color-wetten;
-
-            .read-more__circle:before {
-                color: @color-wetten;
-            }
-
-            .icon(cat-wetten-2, after);
-            &:after {
-                font-size: 13.4rem;
-            }
-        }
-        &.___actualiteit {
-            background-color: @color-actualiteit;
-
-            .read-more__circle:before {
-                color: @color-actualiteit;
-            }
-
-            .icon(cat-actualiteit, after);
-            &:after {
-                font-size: 13.6rem;
-            }
-        }
-        &.___overig {
-            background-color: @color-overig;
-
-            .read-more__circle:before {
-                color: @color-overig;
-            }
-
-            .icon(cat-overig, after);
-            &:after {
-                font-size: 13rem;
-            }
-        }
-        &.___klas {
-            background-color: @color-klas;
-
-            .read-more__circle:before {
-                color: @color-klas;
-            }
-
-            .icon(cat-klas, after);
-            &:after {
-                font-size: 13rem;
-            }
-        }
-
-        @media ( min-width: @screen-sm ) {
-            flex-direction: row;
         }
     }
 }
@@ -557,7 +579,6 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     flex: 1 1 auto;
     width: 100%;
     padding: 2.5rem 3rem 3rem;
@@ -566,16 +587,16 @@
     overflow: hidden; // forces word break
 
     @media ( max-width: @screen-xs-max ) {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        //position: absolute;
+        //top: 0;
+        //left: 0;
+        //right: 0;
+        //bottom: 0;
         padding: 2rem;
     }
 
     p {
-        margin-bottom: 0;
+        margin-bottom: 2rem;
         .ellipsis(@line-height--base, 4);
 
         @media ( max-width: @screen-xs-max ) {

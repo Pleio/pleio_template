@@ -28,8 +28,9 @@
         background-color: @color-primary;
     }
 
-    &:disabled {
-        background-color: @color-grey--50;
+    &[disabled] {
+        background-color: @color-grey--40;
+        color: @color-grey--60;
         cursor: default;
     }
 
@@ -322,7 +323,7 @@ button.button {
     }
 
     &.___edit-post {
-        margin: 0 0 2rem 0rem;
+        margin: 0 0 2rem 0;
         padding: 0 1rem;
         font-weight: normal;
         color: @color-grey--60;
@@ -334,10 +335,6 @@ button.button {
 
         &:hover {
             color: @color-secondary;
-        }
-
-        @media ( max-width: @screen-xs-max ) {
-            margin: 2rem 0 0 0;
         }
     }
 
@@ -434,6 +431,14 @@ button.button {
     align-items: center;
     margin: 2rem 0 0 0;
     flex-wrap: wrap;
+
+    & > .button {
+        margin-right: 1rem;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
 
     &.___no-margin {
         margin: 0;

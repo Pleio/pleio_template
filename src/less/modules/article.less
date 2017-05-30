@@ -192,3 +192,62 @@ a.tooltip span
         opacity: 1;
     }
 }
+
+.article-preview__card {
+    position: fixed;
+    background-color: white;
+    top:11rem;
+    right:1rem;
+
+    padding: 3rem;
+    max-width: 33rem;
+    width: ~"calc(100% - 2rem)";
+
+    box-shadow: @box-shadow;
+    z-index: 1;
+
+
+
+    @media (max-width: @screen-md-max) {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 100%;
+        box-shadow: none;
+        padding: 0;
+        margin-bottom: 2rem;
+    }
+}
+
+.article-preview__text,
+.article-preview__title {
+    color: @color-secondary;
+    .font(title-small);
+    @media (max-width: @screen-md-max) {
+        display: none;
+    }
+}
+
+.article-preview__title {
+    font-weight: bold;
+}
+
+.article-preview__text {
+    margin-bottom: 5rem;
+}
+
+.article-preview__actions {
+    display: flex;
+    justify-content: center;
+    @media (max-width: @screen-md-max) {
+        justify-content: flex-start;
+    }
+
+    & > .button {
+        margin-right: 1rem;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}

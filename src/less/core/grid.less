@@ -77,7 +77,7 @@
 }
 
 .row.fill {
-    flex: 1 1 auto;
+    //flex: 1 1 auto;
 }
 
 .row.reverse {
@@ -95,13 +95,9 @@
     flex-basis: @width11;
     max-width: @width11;
 
-    @media (min-width: @screen-sm) {
-        // Is dit nodig?
-        // position: relative;
-    }
-
-    &.fill {
+    .fill & {
         display: flex;
+        flex-direction: column;
     }
 }
 

@@ -1,0 +1,40 @@
+.document {
+    display: flex;
+    align-items: center;
+
+    .content & {
+        margin: 0 0 1rem;
+    }
+
+    a {
+        padding: .5rem 0;
+        border: none !important;
+        color: @color-secondary;
+
+        &:before {
+            margin-right: 1rem;
+            margin-bottom: .3rem;
+        }
+    }
+
+    &.___doc a {
+        .icon(doc);
+        &:before {
+            font-size: 1.6rem;
+            color: @color-secondary;
+        }
+    }
+
+    &.___pdf a {
+        .icon(doc-pdf);
+        &:before {
+            font-size: 1.6rem;
+            color: @color-error;
+        }
+    }
+
+    span {
+        margin-left: 1rem;
+        color: @color-grey;
+    }
+}

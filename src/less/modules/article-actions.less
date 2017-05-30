@@ -1,12 +1,8 @@
 .article-actions {
     margin: 3rem 0 0 0;
 
-    @media ( max-width: @screen-xs-max ) {
-        margin-top: 2rem;
-    }
-
-    &.___no-padding {
-        padding: 0;
+    @media ( min-width: @screen-lg ) {
+        margin-top: 3rem;
     }
 }
 
@@ -16,8 +12,18 @@
 }
 
 .article-actions__buttons {
-    display: flex;
-    justify-content: space-between;
+    @media ( max-width: @screen-sm-max ) {
+        > *:not(:last-child) {
+            margin-bottom: 2rem;
+        }
+    }
+    @media ( min-width: @screen-md ) {
+        display: flex;
+
+        > *:not(:last-child) {
+            margin-right: 2rem;
+        }
+    }
 }
 
 .article-actions__justify {

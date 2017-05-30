@@ -16,7 +16,6 @@
         .selector__options {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0);
         }
     }
 
@@ -117,8 +116,26 @@
         color: @color-grey--60;
     }
 
-    .icon(angle-down, after);
+    .editor__tool-group#editor-insert & {
+        .icon(plus);
+        &:before {
+            font-size: 1.4rem;
+            margin-right: .8rem;
+            margin-bottom: .3rem;
+        }
 
+        @media ( max-width: @screen-xs-max ) {
+            &:after {
+                display: none;
+            }
+
+            span {
+                display: none;
+            }
+        }
+    }
+
+    .icon(angle-down, after);
     &:after {
         position: absolute;
         right: 1.6rem;
@@ -173,12 +190,10 @@
     box-shadow: @box-shadow;
     z-index: 1;
     opacity: 0;
-    transform: translateY(-0.5rem);
     visibility: hidden;
-    transition: opacity @trans-fast, visibility @trans-fast, transform @trans-material-fast;
+    transition: opacity @trans-fast, visibility @trans-fast;
 
     .___drop-up & {
-        transform: translateY(0.5rem);
         display: flex;
         flex-direction: column-reverse;
         top: auto;
@@ -190,6 +205,10 @@
 
         .modal & {
             padding: 0.6rem 0;
+        }
+
+        .editor__tool-group#editor-insert & {
+            left: auto;
         }
     }
 
@@ -204,7 +223,6 @@
     line-height: 3.2rem;
     cursor: pointer;
     transition: color @trans-fast;
-    -webkit-font-smoothing: subpixel-antialiased;
 
     @media ( max-width: @screen-xs-max ) {
         padding: 0 1.4rem;
@@ -228,6 +246,15 @@
         &:hover {
             color: @color-grey--60;
         }
+
+        .editor__tool-group#editor-insert & {
+            .icon(plus);
+            &:before {
+                font-size: 1.4rem;
+                margin-right: .8rem;
+                margin-bottom: .3rem;
+            }
+        }
     }
 
     &:hover {
@@ -236,5 +263,9 @@
 
     @media ( max-width: @screen-xs-max ) {
         padding: 0 1.4rem;
+
+        .editor__tool-group#editor-insert & {
+            white-space: nowrap;
+        }
     }
 }

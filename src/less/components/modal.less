@@ -11,17 +11,12 @@
     z-index: 12;
     transition: visibility @trans-normal, opacity @trans-normal;
 
-    p {
-        &.___blue {
-            margin: 0 0 3rem 0;
-            .font(medium);
-        }
-    }
-
     @media ( max-width: @screen-xs-max ) {
-        background: @color-white;
-        font-size: @font-size--base;
-        line-height: @line-height--base;
+        &:not(.___video) {
+            background: @color-white;
+            font-size: @font-size--base;
+            line-height: @line-height--base;
+        }
     }
 
     &.___is-open {
@@ -33,8 +28,21 @@
         background-color: @color-white;
     }
 
+    &.___small {
+        p {
+            .font(medium);
+            margin: 0 0 2rem;
+        }
+    }
+
     &.___small:not(.___blue) {
         transition: visibility @trans-fast, opacity @trans-fast;
+    }
+
+    &.___video {
+        .container {
+            width: 100%;
+        }
     }
 }
 
@@ -46,9 +54,14 @@
     transition: transform @trans-material-normal;
     transform: translate(0, 0);
 
+    .modal.___video > & {
+        min-height: 100%;
+        align-items: center;
+        padding: 4.5rem 0;
+    }
+
     .modal.___full > & {
         display: block;
-
     }
 
     &[data-modal-slides="2"] {
@@ -77,6 +90,10 @@
         min-height: 100%;
         padding: 16rem 0 4rem 0;
 
+        .modal.___video > & {
+            padding: 6rem 0 10rem 0;
+        }
+
         .modal.___middle > & {
             height: 100%;
             align-items: center;
@@ -101,12 +118,18 @@
     background-color: rgba(0, 0, 0, 0.15);
     cursor: pointer;
 
+    .modal.___video > .modal__wrapper > & {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
     .modal.___blue > .modal__wrapper > & {
         background-color: fade(@color-primary, 90%);
     }
 
     @media ( max-width: @screen-xs-max ) {
-        display: none;
+        .modal:not(.___video) > .modal__wrapper > & {
+            display: none;
+        }
     }
 }
 
@@ -247,9 +270,14 @@
     .font(title-extra-large);
     font-weight: bold;
     color: @color-secondary;
-    margin: 0 0 3rem 0;
+    margin: 0 0 3rem;
 
-    .modal.___small > .modal__wrapper > .modal__box > & {
+    .modal.___small:not(.___blue) > .modal__wrapper > .modal__box > & {
+        .font(title-small);
+        margin: 0 0 2rem;
+    }
+
+    .modal.___blue > .modal__wrapper > .modal__box > & {
         .font(title-large);
     }
 
