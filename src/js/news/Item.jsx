@@ -72,7 +72,7 @@ class Item extends React.Component {
         if (entity.source) {
             source = (
                 <div className="article-meta__source">
-                    Bron:&nbsp;<a href="#">{entity.source}</a>
+                    Bron:&nbsp;<span>{entity.source}</span>
                 </div>
             )
         }

@@ -25,4 +25,8 @@
         <type>plugin</type>
         <name>security_tools</name>
     </requires>
+    <conflicts>
+        <type>plugin</type>
+        <name>blog_tools</name>
+    </conflicts>
 </plugin_manifest>

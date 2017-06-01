@@ -30,16 +30,8 @@ export default class SocialModal extends React.Component {
     }
 
     onSubmit(e) {
-        const regex = /instagram.com\/p\/(.*?)\//.exec(this.state.code)
-
-        if (!regex) {
-            // error
-            return
-        }
-
         this.props.onSubmit("SOCIAL", {
-            platform: "instagram",
-            guid: regex[1]
+            code: this.state.code
         })
 
         this.setState({
@@ -57,6 +49,7 @@ export default class SocialModal extends React.Component {
                     <div className="modal__box">
                         <div className="modal__close" onClick={this.toggle}></div>
                         <h3 className="modal__title">Social media post invoegen</h3>
+                        <p>Plaats hieronder de embed code van de social media post (Facebook, Twitter of Instagram).</p>
                         <div className="form">
                             <textarea type="text" ref="code" placeholder="Code" onKeyPress={this.onKeyPress} onChange={this.onChangeCode} value={this.state.code} />
                             <div className="buttons ___end">

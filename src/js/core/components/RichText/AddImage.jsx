@@ -41,7 +41,7 @@ class AddImage extends React.Component {
             }
         }).then(({data}) => {
             this.props.onSubmit("IMAGE", {
-                url: data.addImage.file.url
+                src: data.addImage.file.url
             })
 
             this.setState({

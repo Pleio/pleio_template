@@ -17,6 +17,7 @@ const Query = gql`
                         title
                         url
                         excerpt
+                        isFeatured
                         featuredImage
                         subtype
                         tags

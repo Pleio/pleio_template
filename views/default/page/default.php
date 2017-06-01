@@ -40,6 +40,8 @@ $theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
     <?php endif; ?>
     <script src="<?php echo $path; ?>vendor.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
     <script src="<?php echo $path; ?>web.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
     <?php echo elgg_view("page/elements/analytics"); ?>
 </body>
 </html>

@@ -68,7 +68,7 @@ export default class Card extends React.Component {
             if (featuredImage) {
                 return (
                     <div className="card-tile-container">
-                        <Link to={url} className={classnames({"card-tile ___full-image ___small-card": true, "___no-image": (featuredImage ? false : true), [getClassFromTags(tags)]: true})}>
+                        <Link to={url} className={classnames({"card-tile ___full-image ___small-card": true, "___is-highlighted":isFeatured, "___no-image": (featuredImage ? false : true), [getClassFromTags(tags)]: true})}>
                             <div className="card-tile__image" style={{backgroundImage: `url('${featuredImage}')`}}>
                                 <div className="card-tile__content">
                                     <h3 className="card-tile__title">
@@ -86,7 +86,7 @@ export default class Card extends React.Component {
             } else {
                 return (
                     <div className="card-tile-container">
-                        <Link to={url} className={classnames({"card-tile ___full-image ___small-card": true, "___no-image": (featuredImage ? false : true), [getClassFromTags(tags)]: true})}>
+                        <Link to={url} className={classnames({"card-tile ___full-image ___small-card": true, "___is-highlighted":isFeatured, "___no-image": (featuredImage ? false : true), [getClassFromTags(tags)]: true})}>
                             <div className="card-tile__content">
                                 <h3 className="card-tile__title">
                                     {title}

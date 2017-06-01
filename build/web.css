@@ -957,8 +957,8 @@ img {
 }
 @font-face {
   font-family: "icons-webfont";
-  src: url(/mod/pleio_template/build/71a18be2ac57dcc8ccfe9beafe15ed5a.eot);
-  src: url(/mod/pleio_template/build/71a18be2ac57dcc8ccfe9beafe15ed5a.eot?#iefix) format('eot'), url(/mod/pleio_template/build/2691d0cc6c57a67335484d9d9f41358c.woff2) format('woff2'), url(/mod/pleio_template/build/310a9c981f18343f36d2b927897ea781.woff) format('woff'), url(/mod/pleio_template/build/920cc616f504a2b448b3a6be5175a84e.ttf) format('truetype'), url(/mod/pleio_template/build/3c71a558411d3ec036826897c89e731a.svg#icons-webfont) format('svg');
+  src: url(/mod/pleio_template/build/4a8e2386930e61ebfee3509040bbea41.eot);
+  src: url(/mod/pleio_template/build/4a8e2386930e61ebfee3509040bbea41.eot?#iefix) format('eot'), url(/mod/pleio_template/build/bbfb4c67cbc2351637bf51cc7d0de0e6.woff2) format('woff2'), url(/mod/pleio_template/build/a150406e36518406f5ac70f5b88d1490.woff) format('woff'), url(/mod/pleio_template/build/73f838bf969ab4cb9c4d25c9eeb46e97.ttf) format('truetype'), url(/mod/pleio_template/build/3273718855a2c03757217b4b5e8070c5.svg#icons-webfont) format('svg');
 }
 [class^="icon-"],
 [class*=" icon-"],
@@ -11943,6 +11943,26 @@ body.___rijkshuisstijl .navigation__wrapper {
 }
 .___show-checkboxes .file__item .file__check {
   display: block;
+}
+.content img {
+  margin: 0 auto !important;
+  width: 60% !important;
+}
+.content iframe {
+  margin: 0 auto !important;
+  width: 60% !important;
+}
+.document a span {
+  color: #009ee3;
+}
+.editor__toolbar {
+  top: 0;
+  border-top: 1px solid #CCCCCC;
+  position: -webkit-sticky;
+  position: sticky;
+}
+.modal.___full > .modal__wrapper > .modal__box {
+  max-width: 102.4rem;
 }
 #__bs_notify__ {
   opacity: .15 !important;

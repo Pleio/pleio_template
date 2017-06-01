@@ -5,6 +5,7 @@ import ImageContextualMenu from "./ImageContextualMenu"
 import classnames from "classnames"
 import ImageContextualInfoModal from "./ImageContextualInfoModal"
 import { parseURL } from "../../../lib/helpers"
+import SocialBlock from "./SocialBlock"
 
 export default class AtomicBlock extends React.Component {
     constructor(props) {
@@ -23,28 +24,27 @@ export default class AtomicBlock extends React.Component {
         switch (type) {
             case "IMAGE":
                 return this.renderImage(entity.getData())
-            case "DOCUMENT":
-                return this.renderDocument(entity.getData())
             case "VIDEO":
                 return this.renderVideo(entity.getData())
             case "SOCIAL":
                 return this.renderSocial(entity.getData())
             default:
+                console.error(`Trying to render an unknown atomic block type ${type}.`)
                 return (<div></div>)
         }
     }
 
     @autobind
     onDelete() {
-        const { editorState, onChange } = this.props.blockProps
         const { block } = this.props
+        const { editorState, onChange } = this.props.blockProps
+        const contentState = editorState.getCurrentContent()
 
-        const content = editorState.getCurrentContent()
-        const blockMap = content.getBlockMap().delete(block.getKey())
-
-        let withoutAtomicBlock = content.merge({blockMap, selectionAfter: editorState.getSelection()})
-        const newEditorState = EditorState.push(editorState, withoutAtomicBlock, "remove-range")
-        onChange(newEditorState)
+        const newContentState = contentState.merge({
+            blockMap: contentState.blockMap.delete(block.key)
+        })
+        
+        onChange(EditorState.push(editorState, newContentState, "remove-range"))
     }
 
     @autobind
@@ -128,14 +128,12 @@ export default class AtomicBlock extends React.Component {
                     <div style={imageContainerStyle}>
                         {content}
                         <ImageContextualMenu
-                            left={this.refs.media ? this.refs.media.offsetLeft : 0}
                             isVisible={this.state.showMenu}
                             onDelete={this.onDelete}
                             onClickInfo={this.onClickInfo}
-                            onClickResize={this.onClickResize}
                         />
                     </div>
-                    <ImageContextualInfoModal ref="infoModal" alt={alt} onSubmit={this.onSubmitInfo} onClose={this.onCloseModal} />
+                    <ImageContextualInfoModal ref="infoModal" alt={alt} data={data} onSubmit={this.onSubmitInfo} onClose={this.onCloseModal} />
                 </div>
             )
         } else {
@@ -168,12 +166,6 @@ export default class AtomicBlock extends React.Component {
 
     @autobind
     renderSocial(data) {
-        switch (data.platform) {
-            case "instagram":
-                return ( <iframe ref="media" src={`https://www.instagram.com/p/${data.guid}/embed/`} frameBorder="0" height={800} /> )
-            default:
-                console.error("Trying to render invalid social platform.")
-                return ( <div /> )
-        }
+        return ( <SocialBlock code={data.code} /> )
     }
 }

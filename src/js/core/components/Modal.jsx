@@ -8,35 +8,11 @@ class Modal extends React.Component {
     constructor(props) {
         super(props)
 
-        this.onScroll = this.onScroll.bind(this)
         this.onClose = this.onClose.bind(this)
 
         this.state = {
             isOpen: false
         }
-    }
-
-    componentDidMount() {
-        this.refs.modal.addEventListener("scroll", this.onScroll)
-    }
-
-    componentWillUnmount() {
-        this.refs.modal.removeEventListener("scroll", this.onScroll)
-    }
-
-    onScroll(e) {
-        if ((new Date().getTime() - now) < 100) {
-            return
-        } else {
-            now = new Date().getTime()
-        }
-
-        if (!this.state.isOpen && !this.props.noParent) {
-            return
-        }
-
-        const event = new Event("updateStickyToolbar")
-        window.dispatchEvent(event)
     }
 
     toggle() {

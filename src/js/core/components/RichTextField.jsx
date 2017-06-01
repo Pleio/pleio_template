@@ -75,7 +75,7 @@ const decorator = new CompositeDecorator([
             return (
                 <div className={`document ${type}`}>
                     <a href={data.url} target="_blank">{props.children}</a>
-                    <span>({size}MB)</span>
+                    <span contentEditable="false" suppressContentEditableWarning>({size}MB)</span>
                 </div>
             )
         }
@@ -109,8 +109,6 @@ class RichTextField extends React.Component {
             textAlignment: "left",
             isSelectorOpen: false,
             inBrowser: false,
-            isSticky: false,
-            stickyPosition: 0,
             readOnly: false
         }
 
@@ -128,7 +126,6 @@ class RichTextField extends React.Component {
         this.toggleBlockType = this.toggleBlockType.bind(this)
         this.changeAlignment = this.changeAlignment.bind(this)
         this.blockRendererFn = this.blockRendererFn.bind(this)
-        this.updateStickyToolbar = this.updateStickyToolbar.bind(this)
 
         this.submitLink = this.submitLink.bind(this)
         this.submitDocument = this.submitDocument.bind(this)
@@ -165,49 +162,12 @@ class RichTextField extends React.Component {
     }
 
     componentDidMount() {
-        window.addEventListener("updateStickyToolbar", this.updateStickyToolbar)
-
         this.setState({inBrowser: true})
     }
 
     componentWillUnmount() {
-        window.removeEventListener("updateStickyToolbar", this.updateStickyToolbar)
-
         if (this.context.detachFromForm) {
             this.context.detachFromForm(this)
-        }
-    }
-
-    updateStickyToolbar(e) {
-        const rect = this.refs.container.getBoundingClientRect()
-
-        let makeSticky
-        if (rect.top < 0 && rect.bottom > 0) {
-            makeSticky = true
-        } else {
-            makeSticky = false
-        }
-
-        if (makeSticky) {
-            this.setState({
-                stickyPosition: e.target.scrollTop
-            })
-        } else {
-            if (this.state.stickyPosition !== 0) {
-                this.setState({
-                    stickyPosition: 0
-                })
-            }
-        }
-
-        if (!this.state.isSticky && makeSticky) {
-            this.setState({
-                isSticky: true
-            })
-        } else if (this.state.isSticky && !makeSticky) {
-            this.setState({
-                isSticky: false
-            })
         }
     }
 
@@ -387,7 +347,7 @@ class RichTextField extends React.Component {
 
         const textSizeValue = (currentBlockType === "unstyled" || currentBlockType === "intro" || currentBlockType === "paragraph" || currentBlockType === "header-two" || currentBlockType == "header-three") ? currentBlockType : "unstyled"
         const textSize = (
-            <div className="editor__tool-group ___no-padding">
+            <div className="editor__tool-group ___no-padding" id="editor-format">
                 <Select options={{
                         "unstyled": "Normale tekst",
                         "paragraph": "Paragraaf",
@@ -469,8 +429,8 @@ class RichTextField extends React.Component {
         }
 
         return (
-            <div ref="container" className={classnames({"editor": true, "___is-sticky": this.state.isSticky})}>
-                <div className="editor__toolbar" style={{"top": this.state.stickyPosition, "zIndex": 10}}>
+            <div ref="container" className="editor">
+                <div className="editor__toolbar ___make-sticky">
                     {textSize}
                     {inline}
                     {richMedia}

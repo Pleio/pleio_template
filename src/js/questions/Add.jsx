@@ -31,7 +31,7 @@ export default class Add extends React.Component {
         const { match } = this.props
         
         return (
-            <Modal title="Stel een vraag" full={false} noParent={true} onClose={this.onClose}>
+            <Modal title="Stel een vraag" full noParent onClose={this.onClose}>
                 <AddCore title="Stel een vraag" subtype="question" afterAdd={this.afterAdd} containerGuid={match.params.groupGuid} />
             </Modal>
         )

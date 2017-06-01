@@ -18,7 +18,9 @@ export default class DocumentModal extends React.Component {
 
     onSubmit(name, data) {
         this.props.onSubmit(name, data)
-        this.toggle()
+        this.setState({
+            isOpen: false
+        })
     }
 
     render() {

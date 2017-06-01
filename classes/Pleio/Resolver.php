@@ -107,11 +107,31 @@ class Resolver {
             ];
         }
 
+        $featured = elgg_get_entities_from_metadata(array_merge($options, [
+            "metadata_name_value_pairs" => [
+                "name" => "isFeatured",
+                "value" => "1",
+                "limit" => 1
+            ]
+        ]));
+
+        $featured = $featured[0];
+
         $activities = array();
+        $activities[] = [
+            "guid" => "activity:" . $featured->guid,
+            "type" => "create",
+            "object_guid" => $featured->guid
+        ];
+
         foreach ($result["entities"] as $object) {
             $object = get_entity($object->guid);
             $subject = $object->getOwnerEntity();
             if ($object && $subject) {
+                if ($featured && $object->guid === $featured->guid) {
+                    continue;
+                }
+
                 $activities[] = array(
                     "guid" => "activity:" . $object->guid,
                     "type" => "create",

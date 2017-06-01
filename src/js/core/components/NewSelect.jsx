@@ -82,7 +82,7 @@ export default class Select extends React.Component {
             <div className={className}>
                 {select}
                 <div tabIndex="0" className={classnames({"selector__select":true, "___not-selected":!this.props.value})} onClick={this.toggle} onBlur={this.onBlur}>
-                    {value || (this.props.placeholder || "Maak een keuze")}
+                    <span>{value || (this.props.placeholder || "Maak een keuze")}</span>
                 </div>
                 <ul className="selector__options">
                     {placeholder}

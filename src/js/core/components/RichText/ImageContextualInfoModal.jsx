@@ -5,22 +5,24 @@ export default class ImageContextualInfoModal extends React.Component {
     constructor(props) {
         super(props)
 
+        const { data } = this.props
+
         this.state = {
             isOpen: false,
-            text: this.props.text || ""
+            alt: data.alt || ""
         }
 
         this.toggle = (e) => this.setState({isOpen: !this.state.isOpen})
-        this.changeText = (e) => this.setState({text: e.target.value})
+        this.changeAlt = (e) => this.setState({alt: e.target.value})
         this.onKeyPress = this.onKeyPress.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
         this.onClose = this.onClose.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.text !== this.props.text) {
+        if (nextProps.data !== this.props.data) {
             this.setState({
-                text: nextProps.text
+                alt: nextProps.data.alt
             })
         }
     }
@@ -39,7 +41,7 @@ export default class ImageContextualInfoModal extends React.Component {
         this.toggle()
 
         if (this.props.onSubmit) {
-            this.props.onSubmit(this.state.text)
+            this.props.onSubmit(this.state.alt)
         }
     }
 
@@ -61,7 +63,7 @@ export default class ImageContextualInfoModal extends React.Component {
                                 <h3 className="modal__title">Alternatieve tekst</h3>
                                 <div className="form">
                                     <label className="form__item">
-                                        <input type="text" placeholder="Omschrijving van afbeelding" onKeyPress={this.onKeyPress} onChange={this.changeText} value={this.state.text} />
+                                        <input type="text" name="alt" placeholder="Omschrijving van afbeelding" onKeyPress={this.onKeyPress} onChange={this.changeAlt} value={this.state.alt} />
                                     </label>
                                     <div className="buttons ___end">
                                         <div className="button" onClick={this.onSubmit}>Bijwerken</div>

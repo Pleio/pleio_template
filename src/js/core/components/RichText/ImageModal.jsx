@@ -44,18 +44,15 @@ export default class ImageModal extends React.Component {
         this.onAddUrl(e)
     }
 
-    onAddImage(url) {
-        if (this.props.onSubmit) {
-            this.props.onSubmit(url, 200);
-        }
-
+    onAddImage(name, data) {
+        this.props.onSubmit(name, data)
         this.toggle()
     }
 
     onAddUrl(e) {
-        if (this.props.onSubmit) {
-            this.props.onSubmit(this.state.url, 200);
-        }
+        this.props.onSubmit("IMAGE", {
+            src: this.state.url
+        })
 
         this.setState({
             url: "",
