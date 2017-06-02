@@ -11739,6 +11739,9 @@ input.___is-hidden {
 .selector__options {
   z-index: 2;
 }
+.contextual {
+  bottom: -1rem;
+}
 .contextual.___is-visible {
   visibility: visible;
   opacity: 1;
@@ -11944,25 +11947,11 @@ body.___rijkshuisstijl .navigation__wrapper {
 .___show-checkboxes .file__item .file__check {
   display: block;
 }
-.content img {
-  margin: 0 auto !important;
-  width: 60% !important;
-}
-.content iframe {
-  margin: 0 auto !important;
-  width: 60% !important;
-}
 .document a span {
   color: #009ee3;
 }
-.editor__toolbar {
-  top: 0;
-  border-top: 1px solid #CCCCCC;
-  position: -webkit-sticky;
-  position: sticky;
-}
-.modal.___full > .modal__wrapper > .modal__box {
-  max-width: 102.4rem;
+.article-meta__source span {
+  color: #01689b;
 }
 #__bs_notify__ {
   opacity: .15 !important;
