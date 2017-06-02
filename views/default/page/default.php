@@ -14,6 +14,9 @@ $path .= "mod/pleio_template/build/";
 
 $theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
 
+$custom_css = elgg_is_active_plugin("custom_css");
+$custom_js = elgg_is_active_plugin("custom_js");
+
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang; ?>">
@@ -29,6 +32,10 @@ $theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
     <meta name="version" content="1.0.0">
     <meta name="relative-path" content="">
     <link href="<?php echo $path; ?>web.css?v=<?php echo $CONFIG->lastcache; ?>" rel="stylesheet" type="text/css">
+
+    <?php if ($custom_css): ?>
+        <link href="/css/custom.css?v=<?php echo $CONFIG->lastcache; ?>" rel="stylesheet" type="text/css">
+    <?php endif; ?>
 </head>
 <body class="___<?php echo $theme; ?>">
     <?php echo elgg_view("page/elements/noscript"); ?>
@@ -42,6 +49,11 @@ $theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
     <script src="<?php echo $path; ?>web.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
     <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
     <script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
+
+    <?php if ($custom_js): ?>
+        <script src="/js/custom.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
+    <?php endif; ?>
+
     <?php echo elgg_view("page/elements/analytics"); ?>
 </body>
 </html>

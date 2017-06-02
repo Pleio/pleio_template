@@ -25,6 +25,18 @@
         <type>plugin</type>
         <name>security_tools</name>
     </requires>
+    <requires>
+        <type>plugin</type>
+        <name>news</name>
+    </requires>
+    <requires>
+        <type>plugin</type>
+        <name>blog</name>
+    </requires>
+    <requires>
+        <type>plugin</type>
+        <name>groups</name>
+    </requires>
     <conflicts>
         <type>plugin</type>
         <name>blog_tools</name>
