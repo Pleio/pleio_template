@@ -1,0 +1,17 @@
+// Position children next to each other with various options
+.flexer {
+    display: flex;
+    align-items: center;
+
+    &.___space-between {
+        justify-content: space-between;
+    }
+
+    &.___margin-bottom {
+        margin: 0 0 3rem 0;
+
+        @media ( max-width: @screen-xs-max ) {
+            margin: 0 0 1.5rem 0;
+        }
+    }
+}

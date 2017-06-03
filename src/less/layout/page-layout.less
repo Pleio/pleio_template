@@ -12,11 +12,19 @@
             padding-top: 6rem;
         }
     }
+
+    body.___no-nav & {
+        padding-top: 0 !important; // replace by really removing page-layout when hiding the navigation
+    }
 }
 
 .page-layout__header {
     flex: 0 0 auto;
     position: relative;
+
+    body.___no-nav & {
+        display: none;
+    }
 }
 
 .page-layout__main {

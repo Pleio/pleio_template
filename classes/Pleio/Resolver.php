@@ -946,21 +946,9 @@ class Resolver {
 
             $entities = [];
             foreach (elgg_get_entities_from_relationship($options) as $entity) {
-                $entities[] = [
-                    "guid" => $entity->guid,
-                    "ownerGuid" => $entity->owner_guid,
-                    "title" => $entity->title,
-                    "type" => $entity->type,
-                    "subtype" => $entity->getSubtype(),
-                    "url" => Helpers::getURL($entity),
-                    "isFeatured" => $entity->isFeatured ? true : false,
-                    "featuredImage" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
-                    "description" => $entity->description,
-                    "timeCreated" => date("c", $entity->time_created),
-                    "timeUpdated" => date("c", $entity->time_updated),
-                    "tags" => Helpers::renderTags($entity->tags)
-                ];
+                $entities[] = Mapper::getObject($entity);
             }
+
         } else {
             $total = 0;
             $entities = [];

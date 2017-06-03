@@ -49,13 +49,11 @@ class Item extends React.Component {
 
         if (entity.canEdit) {
             edit = (
-                <div className="article-actions__justify">
                     <Link to={`/news/edit/${entity.guid}`}>
                         <div className="button__text article-action ___edit-post">
                             Bewerken
                         </div>
                     </Link>
-                </div>
             )
         }
 
@@ -86,8 +84,10 @@ class Item extends React.Component {
                                     <RichTextView richValue={entity.richDescription} value={entity.description} />
                                     <LikeAndBookmark like={false} bookmark={true} viewer={viewer} entity={entity} />
                                     <div className="article-actions">
-                                        <SocialShare />
                                         {edit}
+                                        <div className="article-actions__buttons">
+                                            <SocialShare />
+                                        </div>
                                     </div>
                                 </article>
                             </div>

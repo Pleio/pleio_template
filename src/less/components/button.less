@@ -323,10 +323,11 @@ button.button {
     }
 
     &.___edit-post {
-        margin: 0 0 2rem 0;
+        margin: 0 0 1rem 0;
         padding: 0 1rem;
         font-weight: normal;
         color: @color-grey--60;
+
         .icon(pencil);
         &:before {
             margin: 0 0.5rem 0.2rem 0;
@@ -335,54 +336,6 @@ button.button {
 
         &:hover {
             color: @color-secondary;
-        }
-    }
-
-    &.___likes {
-        padding: 0 0 0 2.8rem;
-        color: @color-grey--80;
-
-        .icon(heart);
-        .icon(heart-fill, after);
-
-        @media ( max-width: @screen-xs-max ) {
-            padding: 0 0 0 2.5rem;
-        }
-
-        &:before,
-        &:after {
-            position: absolute;
-            width: 2.3rem;
-            left: 0;
-            top: 0.9rem;
-            font-size: 2rem;
-            text-align: center;
-            color: @color-secondary;
-            transition: opacity @trans-fast, color @trans-fast;
-
-            @media ( max-width: @screen-xs-max ) {
-                top: 0.8rem;
-                font-size: 1.8rem;
-            }
-        }
-
-        &:after {
-            opacity: 0;
-        }
-
-        &.___is-liked,
-        &:hover {
-            &:before {
-                opacity: 0;
-            }
-
-            &:after {
-                opacity: 1;
-            }
-        }
-
-        &.___margin-top {
-            margin-top: 2.5rem;
         }
     }
 }
