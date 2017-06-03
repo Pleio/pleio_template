@@ -62,7 +62,7 @@ class Edit extends React.Component {
 
         return (
             <Modal title="Vraag wijzigen" full={true} noParent={true} onClose={this.onClose}>
-                <EditCore subtype="question" viewer={viewer} entity={entity} featuredImage={true} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
+                <EditCore subtype="question" viewer={viewer} entity={entity} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
                 <DeleteCore title="Vraag verwijderen" ref="deleteModal" entity={entity} afterDelete={this.afterDelete} />
             </Modal>
         )
@@ -70,7 +70,7 @@ class Edit extends React.Component {
 }
 
 const Query = gql`
-    query EditNews($guid: String!) {
+    query EditQuestion($guid: String!) {
         viewer {
             guid
             loggedIn
@@ -93,7 +93,11 @@ const Query = gql`
                 source
                 url
                 isFeatured
-                featuredImage
+                featured {
+                    image
+                    video
+                    positionY
+                }
                 canEdit
                 tags
                 isBookmarked

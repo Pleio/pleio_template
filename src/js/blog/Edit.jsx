@@ -51,7 +51,7 @@ class Edit extends React.Component {
 
         return (
             <Modal title="Blog wijzigen" full={true} noParent={true} onClose={this.onClose}>
-                <EditCore subtype="blog" viewer={viewer} entity={entity} featuredImage={true} refetchQueries={["InfiniteList"]} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
+                <EditCore subtype="blog" viewer={viewer} entity={entity} featured={true} refetchQueries={["InfiniteList"]} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
                 <DeleteCore title="Blog verwijderen" ref="deleteModal" entity={entity} afterDelete={this.afterDelete} />
             </Modal>
         )
@@ -59,7 +59,7 @@ class Edit extends React.Component {
 }
 
 const Query = gql`
-    query EditNews($guid: String!) {
+    query EditBlog($guid: String!) {
         viewer {
             guid
             loggedIn
@@ -82,7 +82,11 @@ const Query = gql`
                 timeCreated
                 source
                 isFeatured
-                featuredImage
+                featured {
+                    image
+                    video
+                    positionY
+                }
                 canEdit
                 tags
                 isBookmarked

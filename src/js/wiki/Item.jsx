@@ -117,7 +117,11 @@ const Query = gql`
                 richDescription
                 accessId
                 timeCreated
-                featuredImage
+                featured {
+                    image
+                    video
+                    positionY
+                }
                 isRecommended
                 canEdit
                 tags

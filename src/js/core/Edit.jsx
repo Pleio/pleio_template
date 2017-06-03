@@ -13,7 +13,7 @@ import Form from "./components/Form"
 import InputField from "./components/InputField"
 import ContentFiltersInputField from "./components/ContentFiltersInputField"
 import TagsField from "./components/TagsField"
-import FeaturedImageField from "./components/FeaturedImageField"
+import FeaturedField from "./components/FeaturedField"
 import DateTimeField from "./components/DateTimeField"
 import SwitchField from "./components/SwitchField"
 import SwitchesField from "./components/SwitchesField"
@@ -47,7 +47,7 @@ class Edit extends React.Component {
             title: values.title,
             description: values.description.getPlainText(),
             richDescription: JSON.stringify(convertToRaw(values.description)),
-            featuredImage: values.featuredImage,
+            featured: values.featured,
             tags: new Set().merge(values.filters).merge(values.tags).toJS()
         }
 
@@ -94,10 +94,10 @@ class Edit extends React.Component {
             )
         }
 
-        let featuredImage
-        if (this.props.featuredImage) {
-            featuredImage = (
-                <FeaturedImageField name="featuredImage" value={entity.featuredImage} />
+        let featured
+        if (this.props.featured) {
+            featured = (
+                <FeaturedField name="featured" value={entity.featured} />
             )
         }
 
@@ -132,7 +132,7 @@ class Edit extends React.Component {
 
         return (
             <Form ref="form" onSubmit={this.onSubmit}>
-                {featuredImage}
+                {featured}
                 <div className="container">
                     <div className="form">
                         <Errors errors={this.state.errors} />
@@ -170,7 +170,11 @@ const Mutation = gql`
                     source
                     isFeatured
                     isRecommended
-                    featuredImage
+                    featured {
+                        image
+                        video
+                        positionY
+                    }
                     startDate
                     endDate
                     tags

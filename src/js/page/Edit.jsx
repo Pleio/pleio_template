@@ -51,7 +51,7 @@ class Edit extends React.Component {
 
         return (
             <Modal title="Pagina wijzigen" full={true} noParent={true} onClose={this.onClose}>
-                <EditCore subtype="page" viewer={viewer} entity={entity} featuredImage={true} refetchQueries={["InfiniteList"]} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
+                <EditCore subtype="page" viewer={viewer} entity={entity} refetchQueries={["InfiniteList"]} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
                 <DeleteCore title="Pagina verwijderen" ref="deleteModal" entity={entity} afterDelete={this.afterDelete} />
             </Modal>
         )
@@ -82,7 +82,11 @@ const Query = gql`
                 timeCreated
                 source
                 isFeatured
-                featuredImage
+                featured {
+                    image
+                    video
+                    positionY
+                }
                 canEdit
                 tags
                 isBookmarked

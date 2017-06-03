@@ -32,7 +32,7 @@ export default class Add extends React.Component {
         
         return (
             <Modal title="Agenda-item toevoegen" full={true} noParent={true} onClose={this.onClose}>
-                <AddCore subtype="event" featuredImage={true} afterAdd={this.afterAdd} containerGuid={match.params.groupGuid} />
+                <AddCore subtype="event" featured={true} afterAdd={this.afterAdd} containerGuid={match.params.groupGuid} />
             </Modal>
         )
     }

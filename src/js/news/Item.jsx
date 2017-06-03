@@ -13,6 +13,7 @@ import showDate from "../lib/showDate"
 import RichTextView from "../core/components/RichTextView"
 import LikeAndBookmark from "../core/components/LikeAndBookmark"
 import Document from "../core/components/Document"
+import Featured from "../core/components/Featured"
 
 class Item extends React.Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class Item extends React.Component {
 
     render() {
         let { entity, viewer } = this.props.data
-        let edit, featuredImage, source
+        let edit, featured, source
 
         if (!entity) {
             // Loading...
@@ -58,17 +59,6 @@ class Item extends React.Component {
             )
         }
 
-        if (entity.featuredImage) {
-            featuredImage = (
-                <div style={{backgroundImage: "url(" + entity.featuredImage + ")"}} className="lead ___content">
-                    <div className="lead__justify">
-                    <div className="container">
-                    </div>
-                    </div>
-                </div>
-            )
-        }
-
         if (entity.source) {
             source = (
                 <div className="article-meta__source">
@@ -80,7 +70,7 @@ class Item extends React.Component {
         return (
             <div>
                 <Document title={entity.title} />
-                {featuredImage}
+                <Featured entity={entity} />
                 <section className="section">
                     <div className="container">
                         <div className="row">
@@ -132,7 +122,11 @@ const Query = gql`
                 timeCreated
                 source
                 isFeatured
-                featuredImage
+                featured {
+                    image
+                    video
+                    positionY
+                }
                 canEdit
                 tags
                 isBookmarked

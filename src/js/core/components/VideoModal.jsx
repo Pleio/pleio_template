@@ -1,4 +1,5 @@
 import React from "react"
+import classnames from "classnames"
 
 export default class VideoModal extends React.Component {
     constructor(props) {
@@ -8,7 +9,10 @@ export default class VideoModal extends React.Component {
             isVisible: false
         }
 
-        this.onToggle = () => this.setState({isVisible: !this.state.isVisible})
+        this.onToggle = (e) => {
+            if (e) { e.preventDefault() }
+            this.setState({isVisible: !this.state.isVisible})
+        }
     }
 
     render() {
@@ -29,12 +33,14 @@ export default class VideoModal extends React.Component {
         }
 
         return (
-            <div className="video-modal" style={{display: this.state.isVisible ? "block" : "none"}}>
-                <div className="video-modal__overlay" onClick={this.onToggle}></div>
-                <div className="container">
-                    <div id="video-modal__box" className="video-modal__box">
-                        <span className="video-modal__close" onClick={this.onToggle}></span>
-                        {video}
+            <div className={classnames({"modal ___video": true, "___is-open": this.state.isVisible})}>
+                <div className="modal__wrapper">
+                    <div className="modal__background" onClick={this.onToggle} />
+                    <div className="container">
+                        <div className="video">
+                            <span className="video__close" onClick={this.onToggle}></span>
+                            {video}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -14,9 +14,9 @@ export default class Campagne extends React.Component {
                 <Document title="Over leraar.nl" />
                 <div style={{backgroundImage: "url(/mod/pleio_template/src/images/lead-1-reversed.jpg"}} className="lead ___campagne">
                     <div className="lead__justify">
-                    <div className="container">
-                        <div className="lead__about" onClick={() => this.refs.videoModal.onToggle()}>
-                            <div className="lead__play"></div>
+                        <div className="container">
+                            <div className="lead__about" onClick={() => this.refs.videoModal.onToggle()}>
+                                <div className="play-button" />
                                 <div className="lead__titles">
                                     <h1 className="lead__title">Over leraar.nl</h1>
                                     <h2 className="lead__sub-title">bekijk de video</h2>

@@ -63,7 +63,7 @@ class Edit extends React.Component {
 
         return (
             <Modal title="Agenda-item wijzigen" full={true} noParent={true} onClose={this.onClose}>
-                <EditCore subtype="event" viewer={viewer} entity={entity} featuredImage={true} refetchQueries={["InfiniteList"]} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
+                <EditCore subtype="event" viewer={viewer} entity={entity} featured={true} refetchQueries={["InfiniteList"]} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
                 <DeleteCore title="Agenda-item verwijderen" ref="deleteModal" entity={entity} afterDelete={this.afterDelete} />
             </Modal>
         )
@@ -94,7 +94,11 @@ const Query = gql`
                 timeCreated
                 source
                 isFeatured
-                featuredImage
+                featured {
+                    image
+                    video
+                    positionY
+                }
                 startDate
                 endDate
                 canEdit

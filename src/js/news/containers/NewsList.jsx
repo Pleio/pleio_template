@@ -20,8 +20,12 @@ const Query = gql`
                     isBookmarked
                     canBookmark
                     tags
-                    isFeatured
-                    featuredImage
+                    isHighlighted
+                    featured {
+                        image
+                        video
+                        positionY
+                    }
                     timeCreated
                     views
                     commentCount

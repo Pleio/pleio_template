@@ -190,9 +190,27 @@ class Mutations {
                 $entity->isFeatured = $input["isFeatured"];
             }
 
-            if ($input["featuredImage"]) {
-                Helpers::saveToFeatured($input["featuredImage"], $entity);
-                $entity->featuredIcontime = time();
+            if ($input["featured"]) {
+                if ($input["featured"]["image"]) {
+                    if ($input["featured"]["image"] === "false") {
+                        unset($entity->featuredIcontime);
+                    } else {
+                        Helpers::saveToFeatured($input["featured"]["image"], $entity);   
+                        $entity->featuredIcontime = time();
+                    }
+                }
+
+                if ($input["featured"]["video"]) {
+                    $entity->featuredVideo = $input["featured"]["video"];
+                } else {
+                    unset($entity->featuredVideo);
+                }
+
+                if ($input["featured"]["positionY"]) {
+                    $entity->featuredPositionY = $input["featured"]["positionY"];
+                } else {
+                    unset($entity->featuredPositionY);
+                }
             }
 
             if ($input["source"]) {
@@ -267,13 +285,31 @@ class Mutations {
                 $entity->isFeatured = $input["isFeatured"];
             }
 
-            if ($input["featuredImage"]) {
-                if ($input["featuredImage"] === "false") {
-                    unset($entity->featuredIcontime);
-                } else {
-                    Helpers::saveToFeatured($input["featuredImage"], $entity);
-                    $entity->featuredIcontime = time();
+            if ($input["featured"]) {
+                if ($input["featured"]["image"]) {
+                    if ($input["featured"]["image"] === "false") {
+                        unset($entity->featuredIcontime);
+                    } else {
+                        Helpers::saveToFeatured($input["featured"]["image"], $entity);   
+                        $entity->featuredIcontime = time();
+                    }
                 }
+
+                if ($input["featured"]["video"]) {
+                    $entity->featuredVideo = $input["featured"]["video"];
+                } else {
+                    unset($entity->featuredVideo);
+                }
+
+                if ($input["featured"]["positionY"]) {
+                    $entity->featuredPositionY = $input["featured"]["positionY"];
+                } else {
+                    unset($entity->featuredPositionY);
+                }
+            } else {
+                unset($entity->featuredIcontime);
+                unset($entity->featuredVideo);
+                unset($entity->featuredPositionY);
             }
 
             if ($input["source"]) {
@@ -286,7 +322,7 @@ class Mutations {
         if ($entity->getSubtype() === "event") {
             $entity->startDate = date("U", strtotime($input["startDate"]));
             $entity->endDate = date("U", strtotime($input["endDate"]));
-            $result = $entity->save();
+            $result &= $entity->save();
         }
 
         if ($result) {

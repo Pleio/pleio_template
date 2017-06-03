@@ -13,7 +13,7 @@ import ContentFiltersInputField from "./components/ContentFiltersInputField"
 import InputField from "./components/InputField"
 import TagsField from "./components/TagsField"
 import DateTimeField from "./components/DateTimeField"
-import FeaturedImageField from "./components/FeaturedImageField"
+import FeaturedField from "./components/FeaturedField"
 import SwitchField from "./components/SwitchField"
 import { convertToRaw } from "draft-js"
 import { Set } from "immutable"
@@ -44,7 +44,7 @@ class Add extends React.Component {
             title: values.title,
             description: values.description.getPlainText(),
             richDescription: JSON.stringify(convertToRaw(values.description)),
-            featuredImage: values.featuredImage,
+            featured: values.featured,
             containerGuid: this.props.containerGuid,
             tags: new Set().merge(values.filters).merge(values.tags).toJS()
         }
@@ -88,10 +88,10 @@ class Add extends React.Component {
     render() {
         let { viewer } = this.props.data
 
-        let featuredImage
-        if (this.props.featuredImage) {
-            featuredImage = (
-                <FeaturedImageField name="featuredImage" />
+        let featured
+        if (this.props.featured) {
+            featured = (
+                <FeaturedField name="featured" />
             )
         }
 
@@ -126,7 +126,7 @@ class Add extends React.Component {
 
         return (
             <Form ref="form" onSubmit={this.onSubmit}>
-                {featuredImage}
+                {featured}
                 <div className="container">
                     <div className="form">
                         <Errors errors={this.state.errors} />

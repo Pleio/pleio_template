@@ -83,7 +83,11 @@ const Query = gql`
                 timeCreated
                 source
                 isFeatured
-                featuredImage
+                featured {
+                    image
+                    video
+                    positionY
+                }
                 canEdit
                 tags
                 isBookmarked

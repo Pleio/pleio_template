@@ -144,6 +144,21 @@ class SchemaBuilder {
             ]
         ]);
 
+        $featured = new ObjectType([
+            "name" => "Featured",
+            "fields" => [
+                "video" => [
+                    "type" => Type::string()
+                ],
+                "image" => [
+                    "type" => Type::string()
+                ],
+                "positionY" => [
+                    "type" => Type::int()
+                ]
+            ]
+        ]);
+
         $pageType = new ObjectType([
             "name" => "Page",
             "interfaces" => [$entityInterface],
@@ -426,6 +441,9 @@ class SchemaBuilder {
                 "isFeatured" => [
                     "type" => Type::boolean()
                 ],
+                "isHighlighted" => [
+                    "type" => Type::boolean()
+                ],
                 "state" => [
                     "type" => Type::string()
                 ],
@@ -435,8 +453,8 @@ class SchemaBuilder {
                         return Resolver::isRecommended($object);
                     }
                 ],
-                "featuredImage" => [
-                    "type" => Type::string()
+                "featured" => [
+                    "type" => $featured
                 ],
                 "canEdit" => [
                     "type" => Type::boolean()
@@ -643,7 +661,10 @@ class SchemaBuilder {
                 "object" => [
                     "type" => Type::nonNull($objectType),
                     "resolve" => function($activity) {
-                        return Resolver::getEntity(null, ["guid" => $activity["object_guid"]], null);
+                        return Resolver::getEntity(null, [
+                            "guid" => $activity["object_guid"],
+                            "isHighlighted" => $activity["isHighlighted"]
+                        ], null);
                     }
                 ]
             ]
@@ -1027,6 +1048,21 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::editFileFolder"
         ]);
 
+        $featuredInput = new InputObjectType([
+            "name" => "FeaturedInput",
+            "fields" => [
+                "video" => [
+                    "type" => Type::string()
+                ],
+                "image" => [
+                    "type" => Type::string()
+                ],
+                "positionY" => [
+                    "type" => Type::int()
+                ]
+            ]
+        ]);
+
         $addEntityMutation = Relay::mutationWithClientMutationId([
             "name" => "addEntity",
             "inputFields" => [
@@ -1051,8 +1087,8 @@ class SchemaBuilder {
                 "isFeatured" => [
                     "type" => Type::boolean()
                 ],
-                "featuredImage" => [
-                    "type" => Type::string()
+                "featured" => [
+                    "type" => $featuredInput
                 ],
                 "startDate" => [
                     "type" => Type::string()
@@ -1105,8 +1141,8 @@ class SchemaBuilder {
                 "isFeatured" => [
                     "type" => Type::boolean()
                 ],
-                "featuredImage" => [
-                    "type" => Type::string()
+                "featured" => [
+                    "type" => $featuredInput
                 ],
                 "startDate" => [
                     "type" => Type::string()

@@ -46,7 +46,7 @@ class Recommended extends React.Component {
 
         return (
             <div className="col-sm-6 col-lg-12">
-                <Accordeon title="Aanbevolen" className="card-list-recommended">
+                <Accordeon title="Aanbevolen blogs" className="card-list-recommended">
                     {items}
                 </Accordeon>
             </div>

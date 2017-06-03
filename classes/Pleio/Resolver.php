@@ -107,22 +107,20 @@ class Resolver {
             ];
         }
 
-        $featured = elgg_get_entities_from_metadata(array_merge($options, [
-            "metadata_name_value_pairs" => [
-                "name" => "isFeatured",
-                "value" => "1",
-                "limit" => 1
-            ]
-        ]));
-
-        $featured = $featured[0];
+        if ((int) $args["offset"] === 0) {
+            $featured = Helpers::getFeaturedEntity($options, $tags);
+        }
 
         $activities = array();
-        $activities[] = [
-            "guid" => "activity:" . $featured->guid,
-            "type" => "create",
-            "object_guid" => $featured->guid
-        ];
+
+        if ($featured) {
+            $activities[] = [
+                "guid" => "activity:" . $featured->guid,
+                "type" => "create",
+                "object_guid" => $featured->guid,
+                "isHighlighted" => true
+            ];
+        }
 
         foreach ($result["entities"] as $object) {
             $object = get_entity($object->guid);
@@ -319,7 +317,10 @@ class Resolver {
                 case "page_widget":
                     return Mapper::getWidget($entity);
                 default:
-                    return Mapper::getObject($entity);
+                    $result = Mapper::getObject($entity);
+                    return array_merge($result, [
+                        "isHighlighted" => $args["isHighlighted"] ? true : false
+                    ]);
             }
         }
     }
@@ -649,10 +650,25 @@ class Resolver {
             ];
         }
 
+        if ((int) $args["offset"] === 0) {
+            $featured = Helpers::getFeaturedEntity($options, $tags);
+        }
+
         $entities = array();
+
+        if ($featured) {
+            $entities[] = array_merge(Mapper::getObject($featured), [
+                "isHighlighted" => "true"
+            ]);
+        }
+
         foreach ($result["entities"] as $entity) {
             switch ($entity->type) {
                 case "object":
+                    if ($featured && $entity->guid === $featured->guid) {
+                        continue;
+                    }
+
                     $entities[] = Mapper::getObject($entity);
                     break;
                 case "group":

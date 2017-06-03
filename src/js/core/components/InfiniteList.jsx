@@ -159,7 +159,7 @@ class InfiniteList extends React.Component {
 
         return (
             <div className={getAttribute("containerClassName", this.props, "container")} ref="infiniteScroll">
-                <div className={getAttribute("rowClassName", this.props, "row")}>
+                <div className={getAttribute("rowClassName", this.props, "row fill")}>
                     {items}
                     {loading}
                 </div>

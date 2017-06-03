@@ -32,7 +32,7 @@ export default class Add extends React.Component {
 
         return (
             <Modal title="Schrijf een verhaal" full={true} noParent={true} onClose={this.onClose}>
-                <AddCore ref="add" subtype="blog" featuredImage={true} afterAdd={this.afterAdd} containerGuid={match.params.groupGuid} />
+                <AddCore ref="add" subtype="blog" featured={true} afterAdd={this.afterAdd} containerGuid={match.params.groupGuid} />
             </Modal>
         )
     }

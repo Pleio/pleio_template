@@ -47,8 +47,12 @@ class Mapper {
             "type" => $entity->type,
             "subtype" => $entity->getSubtype(),
             "source" => $entity->source,
-            "isFeatured" => $entity->isFeatured ? true : false,
-            "featuredImage" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
+            "isFeatured" => $entity->isFeatured,
+            "featured" => [
+                "image" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
+                "positionY" => $entity->featuredPositionY ? $entity->featuredPositionY : 50,
+                "video" => $entity->featuredVideo ? $entity->featuredVideo : ""
+            ],
             "title" => $entity->title,
             "url" => Helpers::getURL($entity),
             "description" => $entity->description,

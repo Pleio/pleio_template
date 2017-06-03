@@ -17,8 +17,12 @@ const Query = gql`
                         title
                         url
                         excerpt
-                        isFeatured
-                        featuredImage
+                        isHighlighted
+                        featured {
+                            image
+                            video
+                            positionY
+                        }
                         subtype
                         tags
                         timeCreated

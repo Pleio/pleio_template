@@ -116,6 +116,18 @@ export function arrayToObject(array) {
     return returnValue
 }
 
+export function getVideoFromUrl(input) {
+    const url = parseURL(input)
+    switch (url.hostname) {
+        case "youtube.com":
+        case "www.youtube.com":
+            return { "type": "youtube", "id": getQueryVariable("v", url.search) }
+        case "vimeo.com":
+        case "www.vimeo.com":
+            return { "type": "vimeo", "id": getQueryVariable("v", url.search) }
+    }
+}
+
 export function getVideoThumbnail(url) {
     const v = getQueryVariable("v", parseURL(url).search)
     return `https://img.youtube.com/vi/${v}/hqdefault.jpg`

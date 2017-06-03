@@ -3,35 +3,50 @@ import classnames from "classnames"
 import PropTypes from "prop-types"
 import Modal from "./NewModal"
 import Form from "./Form"
-import { getVideoThumbnail } from "../../lib/helpers"
+import { getVideoFromUrl, getVideoThumbnail } from "../../lib/helpers"
 
-class FeaturedImageField extends React.Component {
+class FeaturedField extends React.Component {
 
     constructor(props) {
         super(props)
 
-        this.state = {
-            type: null,
-            content: null,
-            previewUrl: this.props.value || null
+        this.state = this.props.value || {
+            video: null,
+            image: null,
+            imageFile: null,
+            positionY: 50
         }
+
+        this.dragging = false
 
         this.selectImage = this.selectImage.bind(this)
         this.selectVideo = this.selectVideo.bind(this)
         this.changeImage = this.changeImage.bind(this)
         this.changeVideo = this.changeVideo.bind(this)
+        
+        this.onMouseDown = this.onMouseDown.bind(this)
+        this.onMouseMove = this.onMouseMove.bind(this)
+        this.onMouseUp = this.onMouseUp.bind(this)
+        this.onDoubleClick = this.onDoubleClick.bind(this)
+
         this.isValid = this.isValid.bind(this)
         this.getValue = this.getValue.bind(this)
         this.clearValue = this.clearValue.bind(this)
     }
 
     componentWillMount() {
+        window.addEventListener("mouseup", this.onMouseUp)
+        window.addEventListener("mousemove", this.onMouseMove)
+
         if (this.context.attachToForm) {
             this.context.attachToForm(this)
         }
     }
 
     componentWillUnmount() {
+        window.removeEventListener("mouseup", this.onMouseUp)
+        window.removeEventListener("mousemove", this.onMouseMove)
+
         if (this.context.detachFromForm) {
             this.context.detachFromForm(this)
         }
@@ -57,9 +72,8 @@ class FeaturedImageField extends React.Component {
 
         reader.onloadend = () => {
             this.setState({
-                type: "IMAGE",
-                content: file,
-                previewUrl: reader.result
+                image: reader.result,
+                imageFile: file
             })
         }
 
@@ -71,12 +85,42 @@ class FeaturedImageField extends React.Component {
 
         const url = this.refs.videoLink.value
         this.setState({
-            type: "VIDEO",
-            content: url,
-            previewUrl: getVideoThumbnail(url)
+            video: url,
+            image: null,
+            imageFile: null
         })
 
         this.refs.videoModal.toggle()
+    }
+
+    onMouseDown(e) {
+        this.dragging = true
+        this.originY = e.clientY
+        this.newY = this.state.positionY
+    }
+
+    onMouseMove(e) {
+        if (!this.dragging) {
+            return
+        }
+
+        this.newY = Math.min(Math.max(0, (this.newY - (e.clientY - this.originY) / 5)), 100)
+        this.originY = e.clientY
+
+        this.setState({
+            positionY: this.newY
+        })
+    }
+
+    onMouseUp(e) {
+        this.dragging = false
+    }
+
+
+    onDoubleClick(e) {
+        this.setState({
+            positionY: 50
+        })
     }
 
     isValid() {
@@ -84,27 +128,42 @@ class FeaturedImageField extends React.Component {
     }
 
     getValue() {
-        return this.state.content
+        if (!this.state.video && !this.state.image) {
+            return null
+        }
+
+        let image = null
+        if (this.state.imageFile) {
+            image = this.state.imageFile
+        } else if (!this.state.image && !this.state.imageFile) {
+            image = "false"
+        }
+
+        return {
+            video: this.state.video,
+            image: image,
+            positionY: this.state.positionY
+        }
     }
 
     clearValue() {
         this.setState({
-            type: null,
-            content: null,
-            previewUrl: null
+            video: null,
+            image: null,
+            imageFile: null
         })
     }
 
     render() {
-        let content
-        if (this.state.previewUrl) {
-            content = (
-                <div className="lead" style={{backgroundImage: "url(" + this.state.previewUrl + ")", width:"100%", height:"100%"}} />
-            )
+        let backgroundImage = ""
+        if (this.state.image) {
+            backgroundImage = this.state.image
+        } else if (this.state.video) {
+            backgroundImage = getVideoThumbnail(this.state.video)
         }
 
         return (
-            <div className={classnames({"upload-image": true, "___uploaded-video": this.state.type === "VIDEO", "___uploaded-image": this.state.type === "IMAGE"})} style={{"backgroundImage": this.state.previewUrl ? `url(${this.state.previewUrl})` : null}}>
+            <div onMouseDown={this.onMouseDown} onDoubleClick={this.onDoubleClick} className={classnames({"upload-image": true, "___uploaded-video": this.state.video, "___uploaded-image": this.state.image && !this.state.video})} style={{"backgroundImage": `url(${backgroundImage})`, "backgroundPositionY": this.state.positionY + "%"}}>
                 <div className="container relative">
                     <div className="upload-image__boxes">
                         <div className="upload-image__box ___image" onClick={this.selectImage}>
@@ -135,6 +194,9 @@ class FeaturedImageField extends React.Component {
                         <div className="button ___primary upload-image__delete" onClick={this.clearValue}>
                             <span>Video verwijderen</span>
                         </div>
+                        <div className="button ___primary upload-image__delete" onClick={this.selectImage}>
+                            <span>Preview wijzigen</span>
+                        </div>
                     </div>
                 </div>
                 <input type="file" ref="image" name="image" onChange={this.changeImage} accept="image/*" className="___is-hidden" />
@@ -154,9 +216,9 @@ class FeaturedImageField extends React.Component {
     }
 }
 
-FeaturedImageField.contextTypes = {
+FeaturedField.contextTypes = {
     attachToForm: PropTypes.func,
     detachFromForm: PropTypes.func
 }
 
-export default FeaturedImageField
+export default FeaturedField

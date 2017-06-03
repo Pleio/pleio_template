@@ -40,6 +40,37 @@ class Helpers {
         return $username;
     }
 
+    static function getFeaturedEntity($options, $tags = []) {
+        $tags = Helpers::renderTags($tags);
+
+        $entities = elgg_get_entities_from_metadata(array_merge($options, [
+            "metadata_name_value_pairs" => [
+                "name" => "isFeatured",
+                "value" => "1"
+            ],
+            "limit" => 1
+        ]));
+
+        if (!$entities) {
+            return null;
+        }
+
+        if ($entities) {
+            $entity = $entities[0];
+        }
+
+        if (!$tags || count($tags) === 0) {
+            return $entity;
+        }
+
+        $entityTags = Helpers::renderTags($entity->tags);
+        if (count(array_intersect($entityTags, $tags)) > 0) {
+            return $entity;
+        }
+        
+        return null;
+    }
+
     static function renderTags($tags) {
         if ($tags) {
             if (!is_array($tags)) {

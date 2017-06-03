@@ -21,7 +21,11 @@ const Query = gql`
                     canBookmark
                     tags
                     isFeatured
-                    featuredImage
+                    featured {
+                        image
+                        video
+                        positionY
+                    }
                     startDate
                     endDate
                     timeCreated

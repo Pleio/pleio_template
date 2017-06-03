@@ -12,7 +12,6 @@ import SelectField from "./SelectField"
 import CheckField from "./CheckField"
 import SwitchField from "./SwitchField"
 import ContentFiltersInputField from "./ContentFiltersInputField"
-import FeaturedImageField from "./FeaturedImageField"
 import PropTypes from "prop-types"
 
 class Form extends React.Component {

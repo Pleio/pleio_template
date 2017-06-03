@@ -19,7 +19,11 @@ const Query = gql`
                     guid
                     title
                     url
-                    featuredImage
+                    featured {
+                        image
+                        video
+                        positionY
+                    }
                     subtype
                     tags
                     timeCreated

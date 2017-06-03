@@ -13,6 +13,7 @@ import { Link } from "react-router-dom"
 import LikeAndBookmark from "../core/components/LikeAndBookmark"
 import RichTextView from "../core/components/RichTextView"
 import Document from "../core/components/Document"
+import Featured from "../core/components/Featured"
 
 class Item extends React.Component {
     constructor(props) {
@@ -43,18 +44,6 @@ class Item extends React.Component {
             )
         }
 
-        let featuredImage = ""
-        if (entity.featuredImage) {
-            featuredImage = (
-                <div style={{backgroundImage: "url(" + entity.featuredImage + ")"}} className="lead ___content">
-                    <div className="lead__justify">
-                    <div className="container">
-                    </div>
-                    </div>
-                </div>
-            )
-        }
-
         let edit
         if (entity.canEdit) {
             edit = (
@@ -82,7 +71,7 @@ class Item extends React.Component {
 
         return (
             <div>
-                {featuredImage}
+                <Featured entity={entity} />
                 <Document title={entity.title} />
                 <section className="section">
                     <div className="container">
@@ -140,7 +129,11 @@ const Query = gql`
                 richDescription
                 accessId
                 timeCreated
-                featuredImage
+                featured {
+                    image
+                    video
+                    positionY
+                }
                 isRecommended
                 canEdit
                 tags

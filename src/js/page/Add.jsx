@@ -19,7 +19,7 @@ export default class Add extends React.Component {
     render() {
         return (
             <Modal title="Pagina toevoegen" full={true} noParent={true} onClose={this.onClose}>
-                <AddCore subtype="page" featuredImage={true} refetchQueries={["InfiniteList"]} afterAdd={this.afterAdd} />
+                <AddCore subtype="page" featured={true} refetchQueries={["InfiniteList"]} afterAdd={this.afterAdd} />
             </Modal>
         )
     }
