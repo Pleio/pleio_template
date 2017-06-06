@@ -3,5 +3,6 @@ export const Errors = {
     could_not_login: 'Could not login, please check username and password.',
     unknown_error: 'An unknown error occured.',
     already_registered: 'This e-mailaddress is already registered.',
-    passwords_not_the_same: 'The provided passwords are not the same.'
+    passwords_not_the_same: 'The provided passwords are not the same.',
+    not_logged_in: 'Please make sure you are logged in.'
 }

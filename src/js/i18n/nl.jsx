@@ -4,5 +4,6 @@ export const Errors = {
     unknown_error: "Een onbekende fout is opgetreden. Probeer het opnieuw.",
     already_registered: "Dit e-mailadres is reeds geregistreerd.",
     passwords_not_the_same: "De ingevulde wachtwoorden komen niet overeen.",
-    invalid_old_password: "Het oude wachtwoord is niet correct."
+    invalid_old_password: "Het oude wachtwoord is niet correct.",
+    not_logged_in: "Je bent niet ingelogd. Log in en probeer het opnieuw."
 }
