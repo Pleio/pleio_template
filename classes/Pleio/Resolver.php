@@ -800,24 +800,7 @@ class Resolver {
         );
 
         foreach ($es_results["hits"] as $hit) {
-            $results[] = [
-                "guid" => $hit->guid,
-                "ownerGuid" => $hit->owner_guid,
-                "status" => 200,
-                "type" => $hit->type,
-                "subtype" => $hit->getSubtype(),
-                "isFeatured" => $hit->isFeatured ? true : false,
-                "featuredImage" => $hit->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$hit->guid}&lastcache={$hit->featuredIcontime}" : "",
-                "title" => $hit->title,
-                "url" => Helpers::getURL($hit),
-                "description" => $hit->description,
-                "excerpt" => elgg_get_excerpt($hit->description),
-                "timeCreated" => date("c", $hit->time_created),
-                "timeUpdated" => date("c", $hit->time_updated),
-                "canEdit" => $hit->canEdit(),
-                "accessId" => $hit->access_id,
-                "tags" => Helpers::renderTags($hit->tags)
-            ];
+            $results[] = Mapper::getObject($hit);
         }
 
         $searchTotals = [];
