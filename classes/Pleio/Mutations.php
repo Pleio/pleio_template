@@ -136,6 +136,10 @@ class Mutations {
     }
 
     static function addEntity($input) {
+        if (!elgg_is_logged_in()) {
+            throw new Exception("not_logged_in");
+        }
+
         $site = elgg_get_site_entity();
         if (!Helpers::isUser()) {
             if (Helpers::canJoin()) {
