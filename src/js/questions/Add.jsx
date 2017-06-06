@@ -1,6 +1,6 @@
 import React from "react"
 import AddCore from "../core/Add"
-import Modal from "../core/components/Modal"
+import ActionContainer from "../core/components/ActionContainer"
 
 export default class Add extends React.Component {
     constructor(props) {
@@ -31,9 +31,9 @@ export default class Add extends React.Component {
         const { match } = this.props
         
         return (
-            <Modal title="Stel een vraag" full noParent onClose={this.onClose}>
+            <ActionContainer title="Stel een vraag" full noParent onClose={this.onClose}>
                 <AddCore title="Stel een vraag" subtype="question" afterAdd={this.afterAdd} containerGuid={match.params.groupGuid} />
-            </Modal>
+            </ActionContainer>
         )
     }
 }

@@ -166,6 +166,6 @@ export default class AtomicBlock extends React.Component {
 
     @autobind
     renderSocial(data) {
-        return ( <SocialBlock code={data.code} /> )
+        return ( <SocialBlock url={data.url} /> )
     }
 }

@@ -2,7 +2,7 @@ import React from "react"
 import NotFound from "../core/NotFound"
 import EditCore from "../core/Edit"
 import DeleteCore from "../core/Delete"
-import Modal from "../core/components/Modal"
+import ActionContainer from "../core/components/ActionContainer"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
@@ -39,7 +39,7 @@ class Edit extends React.Component {
 
         if (!entity) {
             return (
-                <Modal title="Blog wijzigen" full={true} noParent={true} />
+                <div />
             )
         }
 
@@ -50,10 +50,10 @@ class Edit extends React.Component {
         }
 
         return (
-            <Modal title="Blog wijzigen" full={true} noParent={true} onClose={this.onClose}>
+            <ActionContainer title="Blog wijzigen" full={true} noParent={true} onClose={this.onClose}>
                 <EditCore subtype="blog" viewer={viewer} entity={entity} featured={true} refetchQueries={["InfiniteList"]} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
                 <DeleteCore title="Blog verwijderen" ref="deleteModal" entity={entity} afterDelete={this.afterDelete} />
-            </Modal>
+            </ActionContainer>
         )
     }
 }

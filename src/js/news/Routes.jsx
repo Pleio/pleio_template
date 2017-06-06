@@ -13,10 +13,10 @@ export default class Routes extends React.Component {
         return (
             <Switch>
                 <Route exact path="/news/add" component={Add} />
+                <Route exact path="/news/edit/:guid" component={Edit} />
                 <Container>
                     <Switch>
                         <Route exact path="/news" component={List} />
-                        <Route exact path="/news/edit/:guid" component={Edit} />
                         <Route exact path="/news/view/:guid/:slug" component={Item} />
                         <Route component={NotFound} />
                     </Switch>

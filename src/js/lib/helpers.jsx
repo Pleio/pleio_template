@@ -132,3 +132,11 @@ export function getVideoThumbnail(url) {
     const v = getQueryVariable("v", parseURL(url).search)
     return `https://img.youtube.com/vi/${v}/hqdefault.jpg`
 }
+
+export function loadScript(src, cb) {
+    const script = document.createElement("script")
+    script.setAttribute("src", src)
+    script.async = true
+    script.onload = cb
+    document.body.appendChild(script)
+}

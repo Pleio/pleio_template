@@ -106,16 +106,16 @@ class RichTextField extends React.Component {
 
         this.state = {
             editorState: EditorState.createWithContent(contentState, decorator),
-            textAlignment: "left",
-            isSelectorOpen: false,
-            inBrowser: false,
-            readOnly: false
+            readOnly: false,
+            isSticky: false
         }
 
         this.focus = () => {
             this.refs.editor.focus()
         }
 
+        this.onScroll= this.onScroll.bind(this)
+        this.updateScrollbar = this.updateScrollbar.bind(this)
         this.onChange = this.onChange.bind(this)
         this.onTab = this.onTab.bind(this)
         this.handleKeyCommand = this.handleKeyCommand.bind(this)
@@ -124,7 +124,6 @@ class RichTextField extends React.Component {
         this.changeTextSize = this.changeTextSize.bind(this)
         this.toggleInlineStyle = this.toggleInlineStyle.bind(this)
         this.toggleBlockType = this.toggleBlockType.bind(this)
-        this.changeAlignment = this.changeAlignment.bind(this)
         this.blockRendererFn = this.blockRendererFn.bind(this)
 
         this.submitLink = this.submitLink.bind(this)
@@ -135,6 +134,8 @@ class RichTextField extends React.Component {
         this.getValue = this.getValue.bind(this)
         this.getTextValue = this.getTextValue.bind(this)
         this.clearValue = this.clearValue.bind(this)
+
+        this.scrolling = false
 
     }
 
@@ -162,12 +163,41 @@ class RichTextField extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({inBrowser: true})
+        window.addEventListener("scroll", this.onScroll)
     }
 
     componentWillUnmount() {
+        window.removeEventListener("scroll", this.onScroll)
+
         if (this.context.detachFromForm) {
             this.context.detachFromForm(this)
+        }
+    }
+
+    onScroll(e) {
+        // throttle scroll events for performance improvement
+        if (this.scrolling === true) {
+            return
+        }
+
+        this.scrolling = true
+        this.scrollEvent = setTimeout(() => {
+            this.scrolling = false
+            this.updateScrollbar()
+        }, 50)
+    }
+
+    updateScrollbar() {
+        if (!this.refs.container) {
+            return
+        }
+
+        const rect = this.refs.container.getBoundingClientRect()
+
+        if (this.state.isSticky === false && rect.top <= 0 && rect.bottom >= 50) {
+            this.setState({ isSticky: true })
+        } else if (this.state.isSticky === true && (rect.top > 0 || rect.bottom < 50)) {
+            this.setState({ isSticky: false })
         }
     }
 
@@ -275,10 +305,6 @@ class RichTextField extends React.Component {
 
     toggleBlockType(blockType) {
         this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType))
-    }
-
-    changeAlignment(direction) {
-        this.setState({textAlignment: direction})
     }
 
     onTab(e) {
@@ -420,17 +446,14 @@ class RichTextField extends React.Component {
             </div>
         )
 
-        // do not render editor on server-side because it's output is non-deterministic
-        // and will cause React to re-render.
-        if (!this.state.inBrowser) {
-            return (
-                <div></div>
-            )
+        let toolbarWidth
+        if (this.refs.container) {
+            toolbarWidth = this.refs.container.offsetWidth - 2
         }
 
         return (
-            <div ref="container" className="editor">
-                <div className="editor__toolbar ___make-sticky">
+            <div ref="container" className={classnames({"editor": true, "___is-sticky": this.state.isSticky})}>
+                <div className="editor__toolbar" style={{width:toolbarWidth}}>
                     {textSize}
                     {inline}
                     {richMedia}
@@ -443,7 +466,7 @@ class RichTextField extends React.Component {
                         ref="editor"
                         handleKeyCommand={this.handleKeyCommand}
                         onTab={this.onTab}
-                        textAlignment={this.state.textAlignment}
+                        textAlignment="left"
                         placeholder={this.props.placeholder}
                         blockRenderMap={extendedBlockRenderMap}
                         blockStyleFn={this.blockStyleFn}

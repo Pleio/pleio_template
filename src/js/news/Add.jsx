@@ -1,6 +1,6 @@
 import React from "react"
 import AddCore from "../core/Add"
-import Modal from "../core/components/Modal"
+import ActionContainer from "../core/components/ActionContainer"
 
 export default class Add extends React.Component {
     constructor(props) {
@@ -18,9 +18,9 @@ export default class Add extends React.Component {
 
     render() {
         return (
-            <Modal title="Nieuws toevoegen" full={true} noParent={true} onClose={this.onClose}>
+            <ActionContainer title="Nieuws toevoegen" onClose={this.onClose}>
                 <AddCore subtype="news" featured={true} refetchQueries={["InfiniteList"]} afterAdd={this.afterAdd} />
-            </Modal>
+            </ActionContainer>
         )
     }
 }

@@ -2,7 +2,7 @@ import React from "react"
 import NotFound from "../core/NotFound"
 import EditCore from "../core/Edit"
 import DeleteCore from "../core/Delete"
-import Modal from "../core/components/Modal"
+import ActionContainer from "../core/components/ActionContainer"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
@@ -50,10 +50,10 @@ class Edit extends React.Component {
         }
 
         return (
-            <Modal title="Nieuws wijzigen" full={true} noParent={true} onClose={this.onClose}>
+            <ActionContainer title="Nieuws wijzigen" full={true} noParent={true} onClose={this.onClose}>
                 <EditCore subtype="news" viewer={viewer} entity={entity} featured={true} refetchQueries={["InfiniteList"]} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
                 <DeleteCore title="Nieuws verwijderen" ref="deleteModal" entity={entity} afterDelete={this.afterDelete} />
-            </Modal>
+            </ActionContainer>
         )
     }
 }

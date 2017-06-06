@@ -128,17 +128,21 @@ class Add extends React.Component {
             <Form ref="form" onSubmit={this.onSubmit}>
                 {featured}
                 <div className="container">
-                    <div className="form">
-                        <Errors errors={this.state.errors} />
-                        <InputField name="title" type="text" placeholder="Titel" className="form__input" rules="required" autofocus />
-                        <RichTextField ref="richText" name="description" placeholder="Beschrijving" rules="required" />
-                        {extraFields}
-                        <ContentFiltersInputField name="filters" className="form__input" />
-                        <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" />
-                        <div className="buttons ___end ___margin-top">
-                            <button className="button" type="submit">
-                                Publiceer
-                            </button>
+                    <div className="row">
+                        <div className="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+                            <div className="form">
+                                <Errors errors={this.state.errors} />
+                                <InputField name="title" type="text" placeholder="Titel" className="form__input" rules="required" autofocus />
+                                <RichTextField ref="richText" name="description" placeholder="Beschrijving" rules="required" />
+                                {extraFields}
+                                <ContentFiltersInputField name="filters" className="form__input" />
+                                <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" />
+                                <div className="buttons ___end ___margin-top">
+                                    <button className="button" type="submit">
+                                        Publiceer
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

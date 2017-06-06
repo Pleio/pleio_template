@@ -54,16 +54,11 @@ class Item extends React.Component {
             );
         }
 
-        let actions
+        let comment
         if (entity.canComment) {
-            actions = (
-                <div className="article-actions__buttons">
-                    <div className="article-actions__justify">
-                        <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
-                            Schrijf een reactie
-                        </div>
-                        {edit}
-                    </div>
+            comment = (
+                <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
+                    Schrijf een reactie
                 </div>
             )
         }
@@ -91,8 +86,11 @@ class Item extends React.Component {
                                     <RichTextView richValue={entity.richDescription} value={entity.description} />
                                     <LikeAndBookmark like={false} bookmark={true} viewer={viewer} entity={entity} />
                                     <div className="article-actions">
-                                        <SocialShare />
-                                        {actions}
+                                        {edit}
+                                        <div className="article-actions__buttons">
+                                            {comment}
+                                            <SocialShare />
+                                        </div>
                                     </div>
                                 </article>
                                 <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["QuestionsItem"]} />
