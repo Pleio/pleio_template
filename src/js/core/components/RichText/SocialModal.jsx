@@ -37,8 +37,6 @@ export default class SocialModal extends React.Component {
     }
 
     onSubmit(e) {
-        e.preventDefault()
-
         let match = false
 
         networks.forEach((network) => {

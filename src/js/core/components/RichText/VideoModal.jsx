@@ -10,6 +10,7 @@ export default class VideoModal extends React.Component {
 
         this.state = {
             isOpen: false,
+            hasError: false,
             url: ""
         }
 
@@ -33,11 +34,12 @@ export default class VideoModal extends React.Component {
         const regex = /youtube.com\/watch\?v=([a-zA-Z0-9]*)/.exec(this.state.url)
 
         if (!regex) {
-            // error
+            this.setState({
+                hasError: true
+            })
+
             return
         }
-
-        console.log(regex[1])
 
         this.props.onSubmit("VIDEO", {
             platform: "youtube",
@@ -46,6 +48,7 @@ export default class VideoModal extends React.Component {
 
         this.setState({
             url: "",
+            hasError: false,
             isOpen: false
         })
     }
@@ -58,7 +61,7 @@ export default class VideoModal extends React.Component {
                     <div className="modal__box">
                         <div className="modal__close" onClick={this.toggle}></div>
                         <h3 className="modal__title">Video invoegen</h3>
-                        <p>Plaats hieronder de link van de video die je wilt toevoegen (YouTube of Vimeo).</p>
+                        <p>Plaats hieronder de link van de Youtube video die je wilt toevoegen.</p>
                         <div className="form">
                             <input type="text" ref="url" placeholder="Link"  onKeyPress={this.onKeyPress} onChange={this.onChangeUrl} value={this.state.url} />
                             <div className="buttons ___end">

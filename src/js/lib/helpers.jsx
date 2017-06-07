@@ -128,9 +128,17 @@ export function getVideoFromUrl(input) {
     }
 }
 
-export function getVideoThumbnail(url) {
-    const v = getQueryVariable("v", parseURL(url).search)
-    return `https://img.youtube.com/vi/${v}/hqdefault.jpg`
+export function getVideoThumbnail(input) {
+    const url = parseURL(input)
+
+    switch (url.hostname) {
+        case "youtube.com":
+        case "www.youtube.com":
+            let v = getQueryVariable("v", url.search)
+            return `https://img.youtube.com/vi/${v}/hqdefault.jpg`
+    }
+
+    return ""
 }
 
 export function loadScript(src, cb) {

@@ -11955,6 +11955,9 @@ body.modal__open {
   padding: 1.5em;
   text-align: center;
 }
+.infinite-scroll__spinner img {
+  margin: 0 auto;
+}
 .right-lg {
   margin-left: auto;
 }
@@ -12001,6 +12004,9 @@ body.___rijkshuisstijl .navigation__wrapper {
 }
 .content {
   margin: 0 0 3rem;
+}
+.page-layout.___no-nav {
+  padding-top: 0 !important;
 }
 #__bs_notify__ {
   opacity: .15 !important;

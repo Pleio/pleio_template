@@ -61,6 +61,7 @@ class AddDocument extends React.Component {
         }).catch((errors) => {
             logErrors(errors)
             this.setState({
+                uploading: false,
                 errors: errors
             })
         })
@@ -71,15 +72,22 @@ class AddDocument extends React.Component {
 
         if (this.state.uploading) {
             return (
-                <div className="editor__upload">
-                    <span>Bezig met uploaden...</span>
+                <div>
+                    <p>Kies een of meerdere documenten. Let op, de documenten mogen maximaal 10MB groot zijn.</p>
+                    <div className="editor__upload">
+                        <span>Bezig met uploaden...</span>
+                    </div>
                 </div>
             )
         } else {
             return (
-                <div className="editor__upload" onClick={this.triggerFileSelect}>
-                    <input ref="file" type="file" name="document" onChange={this.onChange} className="___is-hidden" multiple />
-                    <span>+ Document(en) uploaden</span>
+                <div>
+                    <p>Kies een of meerdere documenten. Let op, de documenten mogen maximaal 10MB groot zijn.</p>
+                    <div className="editor__upload" onClick={this.triggerFileSelect}>
+                        <Errors errors={this.state.errors} />
+                        <input ref="file" type="file" name="document" onChange={this.onChange} className="___is-hidden" multiple accept=".pdf,.csv,.png,.jpg,.doc,.docx,.xls,.xlsx,.ppt,.pptx" />
+                        <span>+ Document(en) uploaden</span>
+                    </div>
                 </div>
             )
         }

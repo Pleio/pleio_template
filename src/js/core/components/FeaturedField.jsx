@@ -14,7 +14,8 @@ class FeaturedField extends React.Component {
             video: null,
             image: null,
             imageFile: null,
-            positionY: 50
+            positionY: 50,
+            hasError: false
         }
 
         this.dragging = false
@@ -84,13 +85,18 @@ class FeaturedField extends React.Component {
         e.preventDefault()
 
         const url = this.refs.videoLink.value
-        this.setState({
-            video: url,
-            image: null,
-            imageFile: null
-        })
 
-        this.refs.videoModal.toggle()
+        if (getVideoThumbnail(url)) {
+            this.setState({
+                video: url,
+                image: null,
+                imageFile: null
+            })
+
+            this.refs.videoModal.toggle()
+        } else {
+            this.setState({ hasError: true })
+        }
     }
 
     onMouseDown(e) {
@@ -150,7 +156,8 @@ class FeaturedField extends React.Component {
         this.setState({
             video: null,
             image: null,
-            imageFile: null
+            imageFile: null,
+            hasError: false
         })
     }
 
@@ -160,6 +167,13 @@ class FeaturedField extends React.Component {
             backgroundImage = this.state.image
         } else if (this.state.video) {
             backgroundImage = getVideoThumbnail(this.state.video)
+        }
+
+        let error
+        if (this.state.hasError) {
+            error = (
+                <div className="form__error">Dit is geen geldige link</div>
+            )
         }
 
         return (
@@ -201,10 +215,11 @@ class FeaturedField extends React.Component {
                 </div>
                 <input type="file" ref="image" name="image" onChange={this.changeImage} accept="image/*" className="___is-hidden" />
                 <Modal ref="videoModal" small title="Upload een video">
-                    <p>Plaats hieronder de url van de video die je wilt toevoegen. Bijvoorbeeld van YouTube of Vimeo.</p>
+                    <p>Plaats hieronder de url van de Youtube video die je wilt toevoegen.</p>
                     <div className="form">
-                        <label className="form__item">
-                            <input ref="videoLink" type="text" name="link" placeholder="Link" />
+                        <label className={classnames({"form__item": true, "___error": this.state.hasError})}>
+                            <input ref="videoLink" type="text" name="link" className={classnames({"___error": this.state.hasError})} placeholder="Link" />
+                            {error}
                         </label>
                         <div className="buttons ___end">
                             <button className="button" onClick={this.changeVideo}>Invoegen</button>
