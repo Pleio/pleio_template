@@ -17,7 +17,7 @@ export default class SocialModal extends React.Component {
         this.state = {
             isOpen: false,
             hasError: false,
-            link: ""
+            url: ""
         }
 
         this.onKeyPress = this.onKeyPress.bind(this)
