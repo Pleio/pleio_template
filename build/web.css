@@ -11793,9 +11793,6 @@ input.___is-hidden {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
-.editor__image {
-  z-index: 1;
-}
 .profile__editor {
   width: 100%;
 }
