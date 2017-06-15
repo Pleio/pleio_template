@@ -42,7 +42,7 @@ class Index extends React.Component {
                 <section className="section ___grey ___grow">
                     <div className="container">
                         <h3 className="section__title">Categorieën</h3>
-                        <div className="row">
+                        <div className="row fill">
                             {categories}
                         </div>
                     </div>
@@ -89,7 +89,7 @@ class Index extends React.Component {
 
                 <section className="section">
                     <div className="container">
-                        <div className="row">
+                        <div className="row fill">
                             <TopicCard title="Recente vragen" tags={[]} />
                             <TopicCard title="Populaire vragen" tags={[]} />
                         </div>
