@@ -114,7 +114,9 @@ export default class AtomicBlock extends React.Component {
         let content
         if (regex) {
             content = (
-                <iframe ref="media" width={400} height={300} src={`https://www.youtube.com/embed/${regex[1]}`} frameBorder="0" allowFullScreen />
+                <p className="video">
+                    <iframe ref="media" src={`https://www.youtube.com/embed/${regex[1]}`} frameBorder="0" allowFullScreen />
+                </p>
             )
         } else {
             content = (
@@ -151,17 +153,16 @@ export default class AtomicBlock extends React.Component {
     renderVideo(data) {
         switch (data.platform) {
             case "youtube":
-                return ( <iframe ref="media" src={`https://www.youtube.com/embed/${data.guid}`} frameBorder="0" allowFullScreen /> )
+                return (
+                    <p className="video">
+                        <iframe ref="media" src={`https://www.youtube.com/embed/${data.guid}`} frameBorder="0" allowFullScreen />
+                    </p>
+                )
             default:
                 console.error("Trying to render invalid video platform.")
-                return ( <div /> )
         }
 
-        return (
-            <p className="video">
-                {content}
-            </p>
-        )
+        return ( <div /> )
     }
 
     @autobind
