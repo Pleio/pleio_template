@@ -370,6 +370,12 @@ class RichTextField extends React.Component {
 
         const currentInlineStyles = editorState.getCurrentInlineStyle()
         const currentBlockType = editorState.getCurrentContent().getBlockForKey(editorState.getSelection().getStartKey()).getType()
+        const contentState = editorState.getCurrentContent()
+
+        let hidePlaceholder = false
+        if (!contentState.hasText() && contentState.getBlockMap().first().getType() !== "unstyled") {
+            hidePlaceholder = true
+        }
 
         const textSizeValue = (currentBlockType === "unstyled" || currentBlockType === "intro" || currentBlockType === "paragraph" || currentBlockType === "header-two" || currentBlockType == "header-three") ? currentBlockType : "unstyled"
         const textSize = (
@@ -461,7 +467,7 @@ class RichTextField extends React.Component {
                     {lists}
                     {embed}
                 </div>
-                <div className="content editor__input" onClick={this.focus}>
+                <div className={classnames({"content editor__input": true, "___hide-placeholder":hidePlaceholder})} onClick={this.focus}>
                     <Editor
                         ref="editor"
                         handleKeyCommand={this.handleKeyCommand}
