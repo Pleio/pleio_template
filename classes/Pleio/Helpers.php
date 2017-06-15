@@ -179,7 +179,7 @@ class Helpers {
     static function saveToFeatured($filename, $owner) {
         $filename = str_replace(".", "_", $filename);
 
-        $resized = get_resized_image_from_uploaded_file($filename, 1400, 396, false, true);
+        $resized = get_resized_image_from_uploaded_file($filename, 1400, 2000, false, false);
         if ($resized) {
             $file = new \ElggFile();
             $file->owner_guid = $owner->guid;
@@ -195,7 +195,7 @@ class Helpers {
         $filename = str_replace(".", "_", $filename);
         $time = time();
 
-        $resized = get_resized_image_from_uploaded_file($filename, 1200, 1200, false, true);
+        $resized = get_resized_image_from_uploaded_file($filename, 1200, 1200, false, false);
         if ($resized) {
             $file = new \ElggFile();
             $file->owner_guid = $owner->guid;
