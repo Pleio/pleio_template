@@ -73,7 +73,7 @@ export default class SocialModal extends React.Component {
         return (
             <div tabIndex="0" className={classnames({"modal ___small ___middle": true, "___is-open": this.state.isOpen})}>
                 <div className="modal__wrapper">
-                    <div className="modal__background"></div>
+                    <div className="modal__background" onClick={this.toggle}></div>
                     <div className="modal__box">
                         <div className="modal__close" onClick={this.toggle}></div>
                         <h3 className="modal__title">Social media post invoegen</h3>
