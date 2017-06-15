@@ -6,17 +6,6 @@ import { displayTags } from "../../lib/helpers"
 import classnames from "classnames"
 
 export default class Card extends React.Component {
-    getRootURL() {
-        const { match } = this.props
-
-        if (!match || !match.params.groupGuid || !match.params.groupSlug) {
-            return ""
-        }
-
-        return `/groups/view/${match.params.groupGuid}/${match.params.groupSlug}`
-    }
-
-
     render () {
         const { entity, inActivityFeed } = this.props
 
@@ -24,7 +13,7 @@ export default class Card extends React.Component {
         if (inActivityFeed) {
             actions = (
                 <div className="card-topic__actions">
-                    <Link to={`${this.getRootURL()}/questions/view/${entity.guid}/${entity.title}`} className="card-topic__comments">
+                    <Link to={entity.url} className="card-topic__comments">
                         {entity.commentCount} {(entity.commentCount === 1) ? " antwoord" : " antwoorden"}
                     </Link>
                     <Bookmark entity={entity} />
@@ -39,7 +28,7 @@ export default class Card extends React.Component {
                         </div>
                         <Bookmark entity={entity} />
                     </div>
-                    <Link to={`${this.getRootURL()}/questions/view/${entity.guid}/${entity.title}`} className="card-topic__comments">
+                    <Link to={entity.url} className="card-topic__comments">
                         {entity.commentCount} {(entity.commentCount === 1) ? " antwoord" : " antwoorden"}
                     </Link>
                 </div>
@@ -51,7 +40,7 @@ export default class Card extends React.Component {
             tags = (
                 <span>
                     &nbsp;in&nbsp;
-                    <Link to={`${this.getRootURL()}/questions/view/${entity.guid}/${entity.title}`} className="card-topic__subject">
+                    <Link to={entity.url} className="card-topic__subject">
                         {displayTags(entity.tags)}
                     </Link>
                 </span>
@@ -62,7 +51,7 @@ export default class Card extends React.Component {
             <div className={classnames({"card-topic": true, "___feed": inActivityFeed})}>
                 <Link to={entity.owner.url} title={entity.owner.name} style={{backgroundImage: "url(" + entity.owner.icon + ")"}} className="card-topic__picture"></Link>
                 <div className="card-topic__post">
-                    <Link to={`${this.getRootURL()}/questions/view/${entity.guid}/${entity.title}`} className="card-topic__title">
+                    <Link to={entity.url} className="card-topic__title">
                         {entity.title}
                     </Link>
                     <div className="card-topic__meta">
