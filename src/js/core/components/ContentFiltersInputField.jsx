@@ -93,10 +93,8 @@ class ContentFiltersInputField extends React.Component {
 
         const filters = site.filters.map((filter, i) => (
             <div key={i} className="col-sm-8 col-lg-6">
-                <div className="form__item">
-                    <div className="form__label">{filter.name}</div>
-                    <Switches options={filter.values} onChange={this.onChange} value={this.props.value} />
-                </div>
+                <div className="form__label">{filter.name}</div>
+                <Switches options={filter.values} onChange={this.onChange} value={this.props.value} />
             </div>
         ))
 

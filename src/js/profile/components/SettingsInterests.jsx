@@ -45,7 +45,7 @@ class SettingsInterests extends React.Component {
             <div className="card-profile">
                 <h3 className="card-profile__title">Stel hier je interesses in</h3>
                 <Form ref="form" onChange={this.onChange}>
-                    <ContentFiltersInputField name="tags" value={this.props.entity.tags} />
+                    <ContentFiltersInputField name="tags" value={this.props.entity.tags} noWrap />
                 </Form>
             </div>
         )

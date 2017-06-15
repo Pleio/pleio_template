@@ -146,7 +146,9 @@ class Form extends React.Component {
                 case IconField:
                 case SwitchField:
                 case CheckField:
-                    return this.wrapComponent(child)
+                    if (!child.props.noWrap) {
+                        return this.wrapComponent(child)
+                    }
                 default:
                     if (child && child.props && child.props.children) {
                         return React.cloneElement(child, {
