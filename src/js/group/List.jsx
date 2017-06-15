@@ -43,7 +43,7 @@ class List extends React.Component {
                             <div className="col-sm-4 col-lg-3">
                             </div>
                         </div>
-                        <GroupsList type="group" containerClassName="" rowClassName="row" childClass={Card} offset={0} limit={20} />
+                        <GroupsList type="group" childClass={Card} offset={0} limit={20} hasRows />
                     </div>
                 </section>
             </div>

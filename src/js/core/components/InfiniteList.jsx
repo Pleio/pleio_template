@@ -157,14 +157,23 @@ class InfiniteList extends React.Component {
             <this.props.childClass key={i} subtype={this.props.subtype} entity={item} {...this.props} />
         ))
 
-        return (
-            <div className={getAttribute("containerClassName", this.props, "container")} ref="infiniteScroll">
-                <div className={getAttribute("rowClassName", this.props, "row fill")}>
+        if (this.props.hasRows) {
+            return (
+                <div className={getAttribute("containerClassName", this.props, "container")} ref="infiniteScroll">
+                    <div className={getAttribute("rowClassName", this.props, "row fill")}>
+                        {items}
+                        {loading}
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div className={getAttribute("containerClassName", this.props, "container")} ref="infiniteScroll">
                     {items}
                     {loading}
                 </div>
-            </div>
-        )
+            )
+        }
     }
 }
 

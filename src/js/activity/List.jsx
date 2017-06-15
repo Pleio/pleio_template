@@ -53,16 +53,14 @@ class Activity extends React.Component {
                     </ContentFilters>
                     <div className="row">
                         <div className="col-sm-12 col-lg-4 last-lg top-lg">
-                            <div className="row fill">
+                            <div className="row">
                                 <Recommended />
                                 <Trending />
                                 {initiative}
                                 <Footer />
                             </div>
                         </div>
-                        <div className="col-sm-12 col-lg-8">
-                            <ActivityList childClass={Card} containerClassName="" rowClassName="" tags={this.state.tags} offset={0} limit={20} />
-                        </div>
+                        <ActivityList containerClassName="col-sm-12 col-lg-8" childClass={Card} tags={this.state.tags} offset={0} limit={20} />
                     </div>
                 </div>
             </section>

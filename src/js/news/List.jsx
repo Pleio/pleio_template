@@ -44,7 +44,7 @@ class List extends React.Component {
                     </ContentFilters>
                 </ContentHeader>
                 <section className="section ___grey ___grow">
-                    <NewsList childClass={Card} subtype="news" offset={0} limit={20} tags={this.state.tags} />
+                    <NewsList childClass={Card} subtype="news" offset={0} limit={20} tags={this.state.tags} hasRows />
                 </section>
             </div>
         )

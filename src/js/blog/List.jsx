@@ -50,14 +50,12 @@ class List extends React.Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-12 col-lg-4 last-lg top-lg">
-                                <div className="row fill">
+                                <div className="row">
                                     <Top />
                                     <Trending />
                                 </div>
                             </div>
-                            <div className="col-sm-12 col-lg-8">
-                                <BlogList childClass={Card} subtype="blog" offset={0} limit={20} tags={this.state.tags} />
-                            </div>
+                            <BlogList containerClassName="col-sm-12 col-lg-8" childClass={Card} subtype="blog" offset={0} limit={20} tags={this.state.tags} />
                         </div>
                     </div>
                 </section>
