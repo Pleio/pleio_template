@@ -8,6 +8,7 @@ import Modal from "./components/Modal"
 import Form from "./components/Form"
 import { Link } from "react-router-dom"
 import InputField from "./components/InputField"
+import CheckField from "./components/CheckField"
 import { showModal, hideModal } from "../lib/actions"
 
 class Login extends React.Component {
@@ -34,7 +35,7 @@ class Login extends React.Component {
                     clientMutationId: 1,
                     username: values.username,
                     password: values.password,
-                    rememberMe: false
+                    rememberMe: values.rememberMe
                 }
             }
         }).then(({data}) => {
@@ -70,6 +71,8 @@ class Login extends React.Component {
                 <Form ref="form" className="form login" onSubmit={this.onSubmit}>
                     <InputField name="username" type="text" placeholder="E-mailadres" className="form__input" rules="required" />
                     <InputField name="password" type="password" placeholder="Wachtwoord" className="form__input" rules="required" />
+
+                    <CheckField name="rememberMe" label="Onthoud mij" checked />
 
                     <button className="button ___block ___large ___primary" type="submit">
                         Inloggen
