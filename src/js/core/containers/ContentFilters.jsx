@@ -1,5 +1,6 @@
 import React from "react"
 import Select from "../components/NewSelect"
+import autobind from "autobind-decorator"
 import { List } from "immutable"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
@@ -8,13 +9,50 @@ class ContentFilters extends React.Component {
     constructor(props) {
         super(props)
 
+        const localStorage = this.getLocalStorage()
+
         this.state = {
-            filters: {}
+            filters: localStorage ? localStorage : {}
         }
 
-        this.onChangeFilter = this.onChangeFilter.bind(this)
+        this.initialized = false
     }
 
+    componentDidUpdate() {
+        const { site } = this.props.data
+
+        if (!site) {
+            return
+        }
+
+        if (this.initialized) {
+            return
+        }
+
+        this.initialized = true
+
+        const localStorage = this.getLocalStorage()
+
+        if (localStorage) {
+            let isValid = true
+
+            Object.keys(localStorage).forEach((i) => {
+                if (!site.filters[i]) {
+                    isValid = false
+                }
+
+                if (site.filters[i].values.indexOf(localStorage[i]) === -1) {
+                    isValid = false
+                }
+            })
+
+            if (isValid) {
+                this.props.onChange(localStorage)
+            }
+        }
+    }
+
+    @autobind
     onChangeFilter(i, value) {
         const { site } = this.props.data
         const filters = Object.assign({}, this.state.filters, {
@@ -27,6 +65,32 @@ class ContentFilters extends React.Component {
 
         const selectedTags = Object.keys(filters).map((i) => filters[i]).filter((i) => i !== "all")
         this.props.onChange(selectedTags)
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        this.setLocalStorage(nextState)
+    }
+
+    @autobind
+    getLocalStorage() {
+        if (!localStorage) {
+            return
+        }
+
+        try {
+            return localStorage.getItem("contentFilters") ? JSON.parse(localStorage.getItem("contentFilters")) : null
+        } catch(e) {
+            return null
+        }
+    }
+
+    @autobind
+    setLocalStorage(nextState) {
+        if (!localStorage) {
+            return
+        }
+
+        localStorage.setItem("contentFilters", JSON.stringify(nextState.filters))
     }
 
     render() {
