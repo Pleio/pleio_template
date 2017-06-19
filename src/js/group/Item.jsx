@@ -8,6 +8,7 @@ import ContentHeader from "../core/components/ContentHeader"
 import NotFound from "../core/NotFound"
 import Card from "../activity/components/Card"
 import MoreInfoModal from "./components/MoreInfoModal"
+import LeaveGroupModal from "./components/LeaveGroupModal"
 import InviteModal from "./components/InviteModal"
 import MembersSummary from "./components/MembersSummary"
 import ActivityList from "./components/ActivityList"
@@ -35,10 +36,16 @@ class Item extends React.Component {
             )
         }
 
-        let join, edit, invite
+        let join, leave, edit, invite
         if (viewer.loggedIn && !entity.isClosed && entity.membership === "not_joined") {
             join = (
                 <JoinGroupButton entity={entity} />
+            )
+        }
+
+        if (!entity.canEdit && entity.membership === "joined") {
+            leave = (
+                <div className="button" onClick={() => this.refs.leaveGroupModal.toggle()}>Verlaat groep</div>
             )
         }
 
@@ -74,6 +81,7 @@ class Item extends React.Component {
                         <div className="col-sm-6 end-sm">
                             <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
                                 {join}
+                                {leave}
                                 {edit}
                                 {invite}
                             </div>
@@ -93,7 +101,8 @@ class Item extends React.Component {
                         </div>
                     </div>
                 </section>
-                <MoreInfoModal ref="moreInfoModal" onKeyDown={this.handleKeyPress} entity={entity} />
+                <MoreInfoModal ref="moreInfoModal" entity={entity} />
+                <LeaveGroupModal ref="leaveGroupModal" entity={entity} />
                 <InviteModal ref="inviteModal" entity={entity} />
             </div>
         )

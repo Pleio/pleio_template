@@ -355,13 +355,29 @@ class Resolver {
     }
 
     static function getMembers($a, $args, $c) {
+        $dbprefix = elgg_get_config("dbprefix");
         $group = get_entity($a["guid"]);
         
-        $offset = $args["offset"] ? $args["offset"] : 0;
-        $limit = $args["limit"] ? $args["limit"] : 10;
+        $offset = (int) $args["offset"] ? (int) $args["offset"] : 0;
+        $limit = (int) $args["limit"] ? (int) $args["limit"] : 10;
+
+        $options = [
+            "relationship" => "member",
+            "relationship_guid" => $group->guid,
+            "inverse_relationship" => true,
+            "type" => "user",
+            "limit" => $limit,
+            "offset" => $offset
+        ];
+
+        if ($args["q"]) {
+            $q = sanitize_string($args["q"]);
+            $options["joins"] = "JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid";
+            $options["wheres"] = "ue.name LIKE '{$q}%'";
+        }
 
         $members = [];
-        foreach ($group->getMembers($limit, $offset) as $member) {
+        foreach (elgg_get_entities_from_relationship($options) as $member) {
             $members[] = Mapper::getUser($member);
         }
 
@@ -376,8 +392,8 @@ class Resolver {
         $dbprefix = elgg_get_config("dbprefix");
         $site = elgg_get_site_entity();
 
-        $offset = $args["offset"] || 0;
-        $limit = $args["limit"] || 10;
+        $offset = (int) $args["offset"] || 0;
+        $limit = (int) $args["limit"] || 10;
 
         $group = get_entity($a["guid"]);
         

@@ -1593,6 +1593,19 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::leaveGroup"
         ]);
 
+        $inviteToGroupUserType = new InputObjectType([
+            "name" => "InviteToGroupUser",
+            "description" => "An object with either the guid or the e-mailaddress of a user.",
+            "fields" => [
+                "guid" => [
+                    "type" => Type::string()
+                ],
+                "email" => [
+                    "type" => Type::string()
+                ]
+            ]
+        ]);
+
         $inviteToGroupMutation = Relay::mutationWithClientMutationId([
             "name" => "inviteToGroup",
             "description" => "Create an invitation to join a group.",
@@ -1601,9 +1614,9 @@ class SchemaBuilder {
                     "type" => Type::string(),
                     "description" => "The guid of the group to invite to."
                 ],
-                "userGuidOrEmail" => [
-                    "type" => Type::string(),
-                    "description" => "The guid or e-mail address of the user to invite."
+                "users" => [
+                    "type" => Type::listOf($inviteToGroupUserType),
+                    "description" => "A list of users to invite."
                 ]
             ],
             "outputFields" => [
@@ -1615,6 +1628,26 @@ class SchemaBuilder {
                 ]
             ],
             "mutateAndGetPayload" => "Pleio\Mutations::inviteToGroup"
+        ]);
+
+        $acceptGroupInvitation = Relay::mutationWithClientMutationId([
+            "name" => "acceptGroupInvitation",
+            "description" => "Accept a group invitation.",
+            "inputFields" => [
+                "code" => [
+                    "type" => Type::string(),
+                    "description" => "The unique invite code."
+                ]
+            ],
+            "outputFields" => [
+                "group" => [
+                    "type" => $groupType,
+                    "resolve" => function($group) {
+                        return Resolver::getEntity(null, $group, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::acceptGroupInvitation"
         ]);
 
         $editTaskMutation = Relay::mutationWithClientMutationId([
@@ -1666,6 +1699,7 @@ class SchemaBuilder {
                     "joinGroup" => $joinGroupMutation,
                     "leaveGroup" => $leaveGroupMutation,
                     "inviteToGroup" => $inviteToGroupMutation,
+                    "acceptGroupInvitation" => $acceptGroupInvitation,
                     "editTask" => $editTaskMutation
             ]
         ]);

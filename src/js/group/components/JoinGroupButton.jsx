@@ -44,6 +44,15 @@ const Mutation = gql`
             group {
                 guid
                 membership
+                members(limit: 5) {
+                    total
+                    edges {
+                        guid
+                        name
+                        icon
+                        url
+                    }
+                }
             }
         }
     }

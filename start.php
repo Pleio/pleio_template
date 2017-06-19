@@ -43,6 +43,8 @@ function pleio_template_init() {
     elgg_unregister_plugin_hook_handler("entity:icon:url", "user", "profile_override_avatar_url");
     elgg_register_plugin_hook_handler("entity:icon:url", "user", "pleio_template_user_icon_url");
 
+    elgg_unregister_plugin_hook_handler("route", "groups", "group_tools_route_groups_handler");
+
     elgg_extend_view("css/admin", "pleio_template/css/admin");
 
     if (!isset($_COOKIE["CSRF_TOKEN"])) {

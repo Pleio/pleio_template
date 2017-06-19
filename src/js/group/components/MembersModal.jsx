@@ -12,12 +12,23 @@ export default class MembersModal extends React.Component {
         this.onChange = this.onChange.bind(this)
 
         this.state = {
-            q: ""
+            q: "",
+            search: ""
         }
     }
 
     onChange(e) {
-        this.setState({ q: e.target.value })
+        const q = e.target.value
+
+        this.setState({ q })
+
+        if (this.changeTimeout) {
+            clearTimeout(this.changeTimeout)
+        }
+
+        this.changeTimeout = setTimeout(() => {
+            this.setState({ search: q })
+        }, 100)
     }
 
     toggle() {
@@ -31,7 +42,11 @@ export default class MembersModal extends React.Component {
             <Modal ref="modal" title="Leden">
                 <div className="group-info">
                     <div className="group-info__content">
-                        <MembersList entity={entity} />
+                        <div className="search-bar ___margin-bottom">
+                            <input type="text" name="q" onChange={this.onChange} placeholder="Zoek op naam..." autoComplete="off" value={this.state.q} />
+                            <div className="search-bar__button" />
+                        </div>
+                        <MembersList entity={entity} q={this.state.search} />
                     </div>
                 </div>
             </Modal>

@@ -6,6 +6,8 @@ import List from "./List"
 import Add from "./Add"
 import Edit from "./Edit"
 import Item from "./Item"
+import Info from "./Info"
+import Invitations from "./Invitations"
 import BlogGroupList from "../blog/GroupList"
 import BlogAdd from "../blog/Add"
 import BlogEdit from "../blog/Edit"
@@ -36,6 +38,8 @@ export default class Routes extends React.Component {
                     <Route exact path="/groups" component={List} />
                     <Route exact path="/groups/add" component={Add} />
                     <Route exact path="/groups/edit/:guid" component={Edit} />
+                    <Route exact path="/groups/info/:guid" component={Info} />
+                    <Route exact path="/groups/invitations" component={Invitations} />
                     <Route exact path="/groups/view/:groupGuid/:groupSlug" component={Item} />
                     <Route exact path="/groups/view/:groupGuid/:groupSlug/blog" component={BlogGroupList} />
                     <Route exact path="/groups/view/:groupGuid/:groupSlug/blog/add" component={BlogAdd} />

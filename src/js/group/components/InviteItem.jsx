@@ -1,107 +1,57 @@
 import React from "react"
 import classnames from "classnames"
-import { logErrors } from "../../lib/helpers"
-import { graphql } from "react-apollo"
-import gql from "graphql-tag"
+import autobind from "autobind-decorator"
+import Select from "../../core/components/NewSelect"
 
-const Translation = {
-    invited: 'Uitgenodigd',
-    requested: 'Aangevraagd',
-    member: 'Lid',
-    notmember: 'Geen lid',
-    admin: 'Beheerder',
-    owner: 'Eigenaar'
-}
-
-class InviteItem extends React.Component {
-    constructor(props) {
-        super(props)
-        
-        this.toggleInvite = this.toggleInvite.bind(this)
-
-        this.state = {
-          invited: this.props.invited
-        }      
-    }
-
-    toggleInvite() {
-        const { user, group } = this.props
-
-        const newState = !this.state.invited
-
-        if (newState) {
-            const input = {
-                clientMutationId: 1,
-                guid: group.guid,
-                userGuidOrEmail: user.guid
-            }
-
-            this.props.mutate({
-                variables: {
-                    input
-                }
-            }).then(({data}) => {
-                // do nothing
-            }).catch((errors) => {
-                logErrors(errors)
-                this.setState({
-                    errors: errors
-                })
-            })
+export default class InviteItem extends React.Component {
+    @autobind
+    onChange(value) {
+        switch (value) {
+            case "remove":
+                this.props.onDeselect(this.props.user)
+                break
         }
-
-        this.setState({ invited: !this.state.invited })
-    }
-
-    componentDidMount() {
-        const status = this.props.status
-        if (status == "notmember" || status == "requested") {
-            this.setState({ invited: false })
-        } else {
-            this.setState({ invited: true })
-        }
-
     }
 
     render() {
-        const { user, status } = this.props
-        // Voor een beheerder moet de button disabled zijn
-        // Voor een status requeted (status: aangevraagd) moet deze knop accepteren
-        // Voor een status invited moet deze knop disabled zijn
-        
-        const inviteButton = (
-        <div className={classnames({"button ___square ___grey list-members__add":true, "___is-invited": this.state.invited})} onClick={this.toggleInvite}>
-            <div className="list-members__add-icons">
-                <span className="___check" /><span className="___plus" />
-            </div>
-        </div>
-        );
+        const { user } = this.props
 
-        return (
-            <div className="col-sm-6">
-                <div className="list-members__member">
-                    <div className="list-members__picture" style={{backgroundImage: `url(${user.icon})`}} />
-                    <div className="list-members__name">
-                        {user.name}<br />
-                        {Translation[status]}
+        let added
+        if (this.props.added) {
+            return (
+                <div className="row">
+                    <div className="col-sm-8">
+                        <div className="list-members__member">
+                            <div className="list-members__picture" style={{backgroundImage: user.icon ? `url(${user.icon})` : "url(/mod/pleio_template/src/images/user.png)"}} />
+                            <div className="list-members__name">
+                                {user.name}
+                            </div>
+                        </div>
                     </div>
-                    {inviteButton}
+                    <div className="col-sm-4">
+                        <Select options={{lid: "Lid", remove: "Verwijderen"}} onChange={this.onChange} value="lid" />
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        } else {
+            return (
+                <div className="row">
+                    <div className="col-sm-12">
+                        <div className="list-members__member">
+                            <div className="list-members__picture" style={{backgroundImage: user.icon ? `url(${user.icon})` : "url(/mod/pleio_template/src/images/user.png)"}} />
+                            <div className="list-members__name">
+                                {user.name}
+                            </div>
+                            <div className="button ___square ___grey list-members__add">
+                                <div className="list-members__add-icons">
+                                    <span className="___check" />
+                                    <span className="___plus" onClick={() => this.props.onSelect(user)} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
     }
 }
-
-const Mutation = gql`
-    mutation InviteItem($input: inviteToGroupInput!){
-      inviteToGroup(input: $input) {
-        group {
-            ... on Group {
-                guid
-            }
-        }
-      }
-    }
-`
-
-export default graphql(Mutation)(InviteItem)

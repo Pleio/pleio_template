@@ -16,9 +16,18 @@ export default class Card extends React.Component {
             )
         }
 
+        let url
+        if (!entity.isClosed) {
+            url = entity.url
+        } else if (entity.isClosed && (entity.membership === "joined" || entity.canEdit)) {
+            url = entity.url
+        } else {
+            url = `/groups/info/${entity.guid}`
+        }
+
         return (
             <div className="col-lg-6">
-                <Link to={entity.url} className={classnames({"card-group": true})}>
+                <Link to={url} className={classnames({"card-group": true})}>
                         <div style={{backgroundImage: `url('${entity.icon}')`}} className="card-group__picture" />
                         <div className="card-group__title">
                             {entity.name}

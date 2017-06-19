@@ -23,37 +23,40 @@ class MembersList extends React.Component {
         }
 
         const members = entity.members.edges.map((member, i) => (
-            <div key={i} className="col-sm-6">
-                <MemberItem member={member} />
-            </div>
+            <MemberItem key={i} member={member} editable={entity.canEdit} />
         ))
+
+        let placeholder
+        if (members.length === 0) {
+            placeholder = "Er zijn geen leden gevonden."
+        }
 
         return (
             <div className="list-members">
-                <div className="row">
-                    {members}
-                </div>
+                {placeholder}
+                {members}
             </div>
         )
     }
 }
 
 const Query = gql`
-    query MembersList($guid: String!){
-      entity(guid: $guid) {
-        guid
-        ... on Group {
-          members {
-            edges {
-                guid
-                username
-                url
-                name
-                icon
+    query MembersList($guid: String!, $q: String) {
+        entity(guid: $guid) {
+            guid
+            ... on Group {
+                canEdit
+                members(q: $q) {
+                    edges {
+                        guid
+                        username
+                        url
+                        name
+                        icon
+                    }
+                }
             }
-          }
         }
-      }
     }
 `
 

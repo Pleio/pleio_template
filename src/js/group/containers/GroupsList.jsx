@@ -13,6 +13,7 @@ const Query = gql`
                 ... on Group {
                     guid
                     name
+                    canEdit
                     description
                     isClosed
                     membership

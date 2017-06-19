@@ -153,6 +153,14 @@ class Mutations {
             throw new Exception("invalid_type");
         }
 
+        $accessId = get_default_access();
+        if ((int) $input["containerGuid"]) {
+            $container = get_entity((int) $input["containerGuid"]);
+            if ($container instanceof \ElggGroup && $container->membership === ACCESS_PRIVATE && $container->group_acl) {
+                $accessId = $container->group_acl;
+            }
+        }
+
         switch ($input["type"]) {
             case "object":
                 if (!in_array($input["subtype"], array("file", "folder", "news", "blog", "question", "comment","page", "wiki", "event", "task"))) {
@@ -169,7 +177,7 @@ class Mutations {
                     $entity->richDescription = $input["richDescription"];
                 }
 
-                $entity->access_id = $input["accessId"] ? (int) $input["accessId"] : get_default_access();
+                $entity->access_id = $accessId;
                 $entity->tags = filter_tags($input["tags"]);
 
                 if (elgg_is_admin_logged_in()) {
@@ -178,8 +186,8 @@ class Mutations {
                     }
                 }
 
-                if ((int) $input["containerGuid"]) {
-                    $entity->container_guid = (int) $input["containerGuid"];
+                if ($container) {
+                    $entity->container_guid = $container->guid;
                 }
         }
 
@@ -996,11 +1004,22 @@ class Mutations {
         }
 
         $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            throw new Exception("not_logged_in");   
+        }
+
+
         if ($group->owner_guid == $user->guid) {
             throw new Exception("could_not_leave");
         }
 
-        $group->leave($user);
+        if (!$group->leave($user)) {
+            throw new Exception("could_not_leave");   
+        }
+
+        if ($group->group_acl) {
+            remove_user_from_access_collection($user->guid, $group->group_acl);
+        }
 
         remove_entity_relationship($user->guid, "membership_request", $group->guid);
         remove_entity_relationship($user->guid, "invited", $group->guid);
@@ -1016,31 +1035,57 @@ class Mutations {
             throw new Exception("could_not_find_group");
         }
 
-        $userGuidOrEmail = $input["userGuidOrEmail"];
-        if (strpos($userGuidOrEmail, "@") !== false) {
-            $email = $userGuidOrEmail;
-        } else {
-            $user = get_entity((int) $userGuidOrEmail);
-            if (!$user || !$user instanceof \ElggUser) {
-                throw new Exception("could_not_find_user");
-            }
-
-            $email = $user->email;
-        }
-
         if (!$group->canEdit()) {
             throw new Exception("could_not_save");
         }
 
-        $result = group_tools_invite_email($group, $email);
+        foreach ($input["users"] as $user) {
+            if ($user["guid"]) {
+                $user = get_entity((int) $user["guid"]);
+                $email = $user->email;
+            } else if ($user["email"]) {
+                $email = $user["email"];
+            } else {
+                $email = "";
+            }
 
-        if ($result !== false) {
-            return [
-                "guid" => $group->guid
-            ];
+            if ($email) {
+                group_tools_invite_email($group, $email, "", true);
+            }
+        }
+    }
+
+    static function acceptGroupInvitation($input) {
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            throw new Exception("not_logged_in");
         }
 
-        throw new Exception("could_not_save");
+        $group = group_tools_check_group_email_invitation($input["code"]);
+        if (!$group) {
+            throw new Exception("invalid_code");
+        }
+
+        groups_join_group($group, $user);
+
+        $options = array(
+            "guid" => $group->guid,
+            "annotation_name" => "email_invitation",
+            "wheres" => array("(v.string = '" . sanitize_string($input["code"]) . "' OR v.string LIKE '" . sanitize_string($input["code"]) . "|%')"),
+            "annotation_owner_guid" => $group->guid,
+            "limit" => 1
+        );
+        
+        $annotations = elgg_get_annotations($options);
+        if (!empty($annotations)) {
+            $ia = elgg_set_ignore_access(true);
+            $annotations[0]->delete();
+            elgg_set_ignore_access($ia);
+        }
+
+        return [
+            "guid" => $group->guid
+        ];
     }
 
     static function editTask($input) {
