@@ -1,0 +1,32 @@
+[data-tabber] {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+
+    .modal__box & {
+        margin-left: -4rem;
+        margin-right: -4rem;
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
+}
+
+[data-tabber-slides] {
+    flex: 1 1 auto;
+    display: flex;
+    transition: transform @trans-material-normal;
+}
+
+[data-tabber-slide] {
+    overflow-y: auto;
+    width: 100%;
+    transition: opacity @trans-normal, visibility @trans-normal;
+
+    &:not(.___is-active) {
+        opacity: 0;
+    }
+
+    &.___is-active {
+        opacity: 1;
+    }
+}

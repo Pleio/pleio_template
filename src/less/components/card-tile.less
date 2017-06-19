@@ -2,8 +2,10 @@
     display: flex; // IE10-11 COLUMN FIX
     width: 100%;
 
-    .row.fill & {
-        height: 100%; // fill to row height
+    @media ( min-width: @screen-sm ) {
+        .row.fill & {
+            height: 100%; // fill to row height
+        }
     }
 }
 
@@ -17,6 +19,10 @@
     text-decoration: none;
     color: inherit;
     width: 100%; // IE10-11 COLUMN FIX
+
+    @media ( max-width: @screen-xs-max ) {
+        min-height: 9rem;
+    }
 
     &.___is-highlighted {
         &:before {
@@ -180,9 +186,7 @@
     &.___full-image,
     &.___full-video {
         @media ( max-width: @screen-xs-max ) {
-            min-height: 9rem;
-
-            &.___is-highlighted {
+            &:not(.___no-image) {
                 min-height: 25rem;
 
                 .card-tile__title {
@@ -395,13 +399,8 @@
 .card-tile__image {
     position: relative;
     width: 100%;
-    min-height: 12rem;
     background-size: cover;
     background-position: center;
-
-    @media ( max-width: @screen-xs-max ) {
-        min-height: 9rem;
-    }
 
     .card-tile.___leren &,
     .card-tile.___vernieuwing &,
@@ -471,6 +470,12 @@
     }
 
     @media ( max-width: @screen-xs-max ) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
         &:before {
             content: "";
             position: absolute;
@@ -489,6 +494,10 @@
             visibility: none;
         }
     }
+
+    @media ( min-width: @screen-sm ) {
+        min-height: 12rem;
+    }
 }
 
 .card-tile__placeholder {
@@ -496,19 +505,26 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    min-height: 12rem;
 
     &:after {
         color: fade(@color-black, 40%);
     }
 
     @media ( max-width: @screen-xs-max ) {
-        min-height: 9rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
 
         &:after {
             opacity: 0;
-            visibility: none;
+            visibility: hidden;
         }
+    }
+
+    @media ( min-width: @screen-sm ) {
+        min-height: 12rem;
     }
 
     .card-tile.___leren & {
@@ -587,22 +603,20 @@
     overflow: hidden; // forces word break
 
     @media ( max-width: @screen-xs-max ) {
-        //position: absolute;
-        //top: 0;
-        //left: 0;
-        //right: 0;
-        //bottom: 0;
         padding: 2rem;
     }
 
     p {
-        margin-bottom: 2rem;
         .ellipsis(@line-height--base, 4);
 
         @media ( max-width: @screen-xs-max ) {
             display: none;
         }
     }
+}
+
+.card-tile__content-justify {
+    margin-bottom: 2rem;
 }
 
 .card-tile__title {

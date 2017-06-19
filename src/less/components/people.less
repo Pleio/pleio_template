@@ -1,0 +1,30 @@
+.people {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+
+    .card & {
+        margin-bottom: 2rem;
+    }
+
+    > * {
+        &:not(:first-child) {
+            margin-left: -.8rem;
+        }
+    }
+}
+
+.people__more {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: @color-tertiary;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    padding-top: .1rem;
+    padding-right: .2rem;
+}

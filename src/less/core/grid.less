@@ -76,10 +76,6 @@
     margin-right: @gutter-compensation;
 }
 
-.row.fill {
-    //flex: 1 1 auto;
-}
-
 .row.reverse {
     flex-direction: row-reverse;
 }
@@ -95,9 +91,11 @@
     flex-basis: @width11;
     max-width: @width11;
 
-    .fill & {
-        display: flex;
-        flex-direction: column;
+    @media ( min-width: @screen-sm ) {
+        .fill & {
+            display: flex;
+            flex-direction: column;
+        }
     }
 }
 

@@ -17,8 +17,8 @@
         bottom: 0;
         width: 100%;
         display: block;
-        background: fade(@color-grey--80, 25%);
-        background: linear-gradient(to right, fade(@color-grey--80, 40%) 0%, fade(@color-grey--80, 0%) 100%);
+        background: fade(@color-quaternary, 25%);
+        background: linear-gradient(to right, fade(@color-quaternary, 40%) 0%, fade(@color-quaternary, 0%) 100%);
     }
 
     &.___video {
@@ -36,17 +36,7 @@
         }
     }
 
-    &.___content {
-        .lead__justify {
-            @media (max-width: @screen-xs-max) {
-                min-height: 13rem;
-            }
-
-            @media (min-width: @screen-sm) {
-                min-height: 33rem;
-            }
-        }
-
+    &.___no-content {
         &:before {
             background: none;
         }
@@ -202,7 +192,16 @@
     align-items: center;
     width: 100%;
     min-height: 20rem;
-    padding: 2rem 0;
+
+    @media (max-width: @screen-xs-max) {
+        min-height: 13rem;
+        padding: 2rem 0;
+    }
+
+    @media (min-width: @screen-sm) {
+        min-height: 33rem;
+        padding: 4rem 0;
+    }
 
     .___forum & {
         display: block;
@@ -211,6 +210,11 @@
 
     > .container {
         width: 100%;
+    }
+
+    .lead.___bottom & {
+        align-items: flex-end;
+        text-align: left;
     }
 }
 

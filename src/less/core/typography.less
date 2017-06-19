@@ -9,3 +9,18 @@ p {
 h1, h2, h3, h4, h5, h6, strong {
     margin: 0;
 }
+
+.title {
+    .font(title-small);
+    font-weight: bold;
+    color: @color-primary;
+
+    @media ( max-width: @screen-xs-max ) {
+        .font(base);
+    }
+
+    small {
+        font-weight: normal;
+        margin-left: 1rem;
+    }
+}

@@ -104,6 +104,13 @@ button.button {
     &:active {
         background-color: @color-secondary;
     }
+
+    .button:not(.___grey) + & {
+        &:hover,
+        &:active {
+            background-color: @color-grey--60;
+        }
+    }
 }
 
 // Full width button
@@ -185,7 +192,7 @@ button.button {
 
 .button.___line {
     color: @color-grey--60;
-    background-color: transparent;
+    background-color: white;
     border: 1px solid @color-grey--40;
 
     &:hover,
@@ -374,87 +381,6 @@ button.button {
 
         .form & {
             height: 4rem;
-        }
-    }
-}
-
-.buttons {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin: 2rem 0 0 0;
-    flex-wrap: wrap;
-
-    & > .button {
-        margin-right: 1rem;
-
-        &:last-child {
-            margin-right: 0;
-        }
-    }
-
-    &.___no-margin {
-        margin: 0;
-    }
-
-    &.___margin-top {
-        margin-top: 4rem;
-
-        @media ( max-width: @screen-xs-max ) {
-            margin-top: 2rem;
-
-            .modal.___blue & {
-                margin-top: 4rem;
-            }
-        }
-    }
-
-    &.___margin-top-extra {
-        margin-top: 6rem;
-
-        @media ( max-width: @screen-xs-max ) {
-            margin-top: 3rem;
-        }
-    }
-
-    &.___gutter {
-        margin-bottom: -1rem;
-
-        > * {
-            margin-bottom: 1rem;
-        }
-
-        > *:not(:last-child) {
-            margin-right: 2rem;
-
-            @media ( max-width: @screen-xs-max ) {
-                margin-right: 1.5rem;
-            }
-        }
-    }
-
-    &.___space-between {
-        justify-content: space-between;
-    }
-
-    &.___center {
-        justify-content: center;
-    }
-
-    &.___end {
-        justify-content: flex-end;
-    }
-
-    &.___hide-on-tablet {
-        @media ( max-width: @screen-md-max ) {
-            display: none;
-        }
-    }
-
-    &.___vertical-mobile {
-        @media ( max-width: @screen-xs-max ) {
-            flex-direction: column;
-            align-items: flex-start;
         }
     }
 }
