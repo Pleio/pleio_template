@@ -9,7 +9,6 @@ import Terms from "./Terms"
 import Contact from "./Contact"
 import BookmarksList from "../bookmarks/List"
 import TrendingList from "../trending/List"
-import SearchResults from "../search/Results"
 import Login from "./Login"
 import Logout from "./Logout"
 import Register from "./Register"
@@ -30,7 +29,6 @@ export default class Routes extends React.Component {
                         <Route exact path="/pages/contact" component={Contact} />
                         <Route exact path="/bookmarks" component={BookmarksList} />
                         <Route exact path="/trending/:tag" component={TrendingList} />
-                        <Route exact path="/search" component={SearchResults} />
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/logout" component={Logout} />
                         <Route exact path="/register" component={Register} />

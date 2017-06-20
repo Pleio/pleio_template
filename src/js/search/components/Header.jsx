@@ -31,7 +31,7 @@ export default class Header extends React.Component {
 
     onSubmit(e) {
         e.preventDefault()
-        this.props.history.push(`/search?q=${this.state.q}`)
+        this.props.history.push(`/search/results?q=${this.state.q}`)
     }
 
     render() {
@@ -52,7 +52,7 @@ export default class Header extends React.Component {
         })
 
         let options = [{
-            link: `/search?q=${this.state.q}`,
+            link: `/search/results?q=${this.state.q}`,
             title: `Alles (${total})`
         }]
 
@@ -63,7 +63,7 @@ export default class Header extends React.Component {
             }
 
             options.push({
-                link: `/search?q=${this.state.q}&type=object&subtype=${subtype.subtype}`,
+                link: `/search/results?q=${this.state.q}&type=object&subtype=${subtype.subtype}`,
                 title: `${subtype.title} (${total})`
             })
         })

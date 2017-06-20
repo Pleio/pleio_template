@@ -1,20 +1,7 @@
 import React from "react"
 import { NavLink } from "react-router-dom"
-import NavigationSearch from "../../search/components/NavigationSearch"
 
 export default class UserMobileMenu extends React.Component {
-    constructor(props) {
-        super(props)
-        this.toggleSearch = this.toggleSearch.bind(this)
-    }
-
-    toggleSearch() {
-        document.body.classList.toggle("navigation-search-open")
-        setTimeout(() => {
-            this.refs.search.getWrappedInstance().focus()
-        }, 100)
-    }
-
     render () {
         let menuItems = ""
 
@@ -31,8 +18,7 @@ export default class UserMobileMenu extends React.Component {
                         <NavLink to="/bookmarks" onClick={this.props.onClick} title="Bewaard" className="mobile-navigation__action ___bookmarks" activeClassName="___is_active" />
                     </li>
                     <li>
-                        <a href="#" onClick={this.toggleSearch} title="Zoeken" className="mobile-navigation__action ___search" />
-                        <NavigationSearch ref="search" />
+                        <NavLink to="/search" title="Zoeken" className="mobile-navigation__action ___search" />
                     </li>
                     <li>
                         <NavLink to={"/profile/" + this.props.viewer.user.username} onClick={this.props.onClick} title="Account" className="mobile-navigation__action ___account" activeClassName="___is_active">
@@ -46,7 +32,6 @@ export default class UserMobileMenu extends React.Component {
                 <ul className="mobile-navigation__actions">
                     <li>
                         <a href="#" onClick={this.toggleSearch} title="Zoeken" className="mobile-navigation__action ___search" />
-                        <NavigationSearch ref="search" />
                     </li>
                     <li>
                         <a href="#" onClick={this.props.onClick} title="Inloggen" className="mobile-navigation__action ___login">

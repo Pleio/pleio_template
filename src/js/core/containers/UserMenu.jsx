@@ -1,22 +1,8 @@
 import React from "react"
 import { graphql } from "react-apollo"
 import { Link } from "react-router-dom"
-import NavigationSearch from "../../search/components/NavigationSearch"
 
 class UserMenu extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.toggleSearch = this.toggleSearch.bind(this)
-    }
-
-    toggleSearch() {
-        document.body.classList.toggle("navigation-search-open")
-        setTimeout(() => {
-            this.refs.search.getWrappedInstance().focus()
-        }, 100)
-    }
-
     render() {
         if (!this.props.viewer) {
             return (
@@ -35,8 +21,7 @@ class UserMenu extends React.Component {
                         </Link>
                     </li>
                     <li>
-                        <a onClick={this.toggleSearch} title="Zoeken" className="navigation__action ___search"></a>
-                        <NavigationSearch ref="search" />
+                        <Link to="/search" title="Zoeken" className="navigation__action ___search" />
                     </li>
                     <li>
                         <Link to={"/profile/" + this.props.viewer.user.username} onClick={this.props.onClick} title="Account" className="navigation__action ___account">
@@ -51,7 +36,6 @@ class UserMenu extends React.Component {
                 <ul className="navigation__actions">
                     <li>
                         <a onClick={this.toggleSearch} title="Zoeken" className="navigation__action ___search"></a>
-                        <NavigationSearch ref="search" history={this.props.history} />
                     </li>
                     <li>
                         <Link to="/login" title="Inloggen" className="navigation__action ___login">

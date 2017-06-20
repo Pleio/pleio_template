@@ -8,9 +8,9 @@ class SearchOverlay extends React.Component {
     render() {
         let autocompleteLists
 
-        if (this.props.search) {
+        if (this.props.q) {
             autocompleteLists = subtypes.map((subtype, i) => (
-                <AutocompleteList key={i} q={this.props.search} type="object" title={subtype.title} subtype={subtype.subtype} />
+                <AutocompleteList key={i} q={this.props.q} type="object" title={subtype.title} subtype={subtype.subtype} />
             ))
         }
 
@@ -26,10 +26,4 @@ class SearchOverlay extends React.Component {
     }
 }
 
-const stateToProps = (state) => {
-    return {
-        search: state.search
-    }
-}
-
-export default connect(stateToProps)(SearchOverlay)
+export default SearchOverlay

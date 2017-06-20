@@ -5,11 +5,6 @@ import gql from "graphql-tag"
 import { showShortDate } from "../../lib/showDate"
 
 class AutocompleteList extends React.Component {
-
-    closeSearch() {
-        document.body.classList.remove("navigation-search-open")
-    }
-
     render() {
         const { search } = this.props.data
 
@@ -23,7 +18,7 @@ class AutocompleteList extends React.Component {
         if (search.edges) {
             edges = search.edges.map((item, i) => (
                 <li key={i}>
-                    <Link to={item.url} onClick={this.closeSearch}>
+                    <Link to={item.url}>
                         <span>{showShortDate(item.timeCreated)}</span>{item.title}
                     </Link>
                 </li>
@@ -38,7 +33,7 @@ class AutocompleteList extends React.Component {
                 <ul className="navigation-search-results__list">
                     {edges}
                 </ul>
-                <Link to={`/search?type=object&subtype=${this.props.subtype}&q=${this.props.q}`} onClick={this.closeSearch} title="Bekijk alle resultaten" className="navigation-search-results__show-all">
+                <Link to={`/search/results?q=${this.props.q}&type=object&subtype=${this.props.subtype}`} onClick={this.closeSearch} title="Bekijk alle resultaten" className="navigation-search-results__show-all">
                     Bekijk alle resultaten
                 </Link>
             </div>

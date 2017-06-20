@@ -2,7 +2,6 @@ import React from "react"
 import TopMenu from "../containers/TopMenu"
 import TopNavigation from "./TopNavigation"
 import Logo from "./Logo"
-import SearchOverlay from "../../search/components/SearchOverlay"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
@@ -30,7 +29,6 @@ class Container extends React.Component {
                 <main id="skip-navigation" className="page-layout__main ___no-padding">
                     {this.props.children}
                 </main>
-                <SearchOverlay />
             </div>
         )
     }

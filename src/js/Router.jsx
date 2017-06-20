@@ -11,6 +11,7 @@ import GroupRoutes from "./group/Routes"
 import PageRoutes from "./page/Routes"
 import TasksRoutes from "./tasks/Routes"
 import ProfileRoutes from "./profile/Routes"
+import SearchRoutes from "./search/Routes"
 import CoreRoutes from "./core/Routes"
 import NotFound from "./core/NotFound"
 
@@ -27,6 +28,7 @@ export default class Router extends React.Component {
                         <Route path="/page" component={PageRoutes} />
                         <Route path="/tasks" component={TasksRoutes} />
                         <Route path="/profile" component={ProfileRoutes} />
+                        <Route path="/search" component={SearchRoutes} />
                         <Route path="/" component={CoreRoutes} />
                         <Route component={NotFound} />
                     </Switch>

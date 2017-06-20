@@ -1,51 +1,48 @@
 import React from "react"
-import { connect } from "react-redux"
-import { search } from "../../lib/actions"
-
-let autocompleteTimer
+import { withRouter } from "react-router-dom"
+import autobind from "autobind-decorator"
 
 class NavigationSearch extends React.Component {
     constructor(props) {
         super(props)
-
         this.state = {
             q: ""
         }
-
-        this.onChange = this.onChange.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
     }
 
-    focus() {
-        this.refs.q.focus()
+    componentDidMount() {
+        setTimeout(() => {
+            this.refs.q.focus()
+        }, 100)
     }
 
+    @autobind
     onChange(e) {
-        this.setState({
-            q: e.target.value
-        })
+        const q = e.target.value
 
-        if (autocompleteTimer) {
-            clearTimeout(autocompleteTimer)
+        this.setState({ q })
+
+        if (this.autocompleteTimer) {
+            clearTimeout(this.autocompleteTimer)
         }
 
-        autocompleteTimer = setTimeout(() => {
-            this.onAutocomplete()
+        this.autocompleteTimer = setTimeout(() => {
+            this.props.onChange(q)
         }, 250)
     }
 
-    onAutocomplete() {
-        this.props.dispatch(search(this.state.q))
-    }
-
+    @autobind
     onSubmit(e) {
         e.preventDefault()
-        window.location.href = `/search?q=${this.state.q}`
-        document.body.classList.remove("navigation-search-open")
+
+        const { history } = this.props
+        history.push(`/search/results?q=${this.state.q}`)
     }
 
+    @autobind
     onClose() {
-        document.body.classList.toggle("navigation-search-open")
+        const { history } = this.props
+        history.goBack()
     }
 
     render() {
@@ -63,4 +60,4 @@ class NavigationSearch extends React.Component {
     }
 }
 
-export default connect(null, null, null, { withRef: true })(NavigationSearch)
+export default withRouter(NavigationSearch)

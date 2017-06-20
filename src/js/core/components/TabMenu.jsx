@@ -1,29 +1,26 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 import Select from "./NewSelect"
 import classnames from "classnames"
-import PropTypes from "prop-types"
+import autobind from "autobind-decorator"
 
 class TabMenu extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.onChange = this.onChange.bind(this)
-    }
-
+    @autobind
     onChange(value) {
-        window.location.href = value
+        const { history, match } = this.props
+        history.push(value)
     }
 
     render() {
-        const { router } = this.context
-        const path = router.route.location.pathname + router.route.location.search
+        const { history, match, location } = this.props
+
+        const url = location.pathname + location.search
 
         let selected = null
         let selectOptions = []
         this.props.options.forEach((item, i) => {
             selectOptions[item.link] = item.title
-            if (path === item.link) {
+            if (url.indexOf(item.link) !== -1) {
                 selected = item.link
             }
         })
@@ -47,8 +44,4 @@ class TabMenu extends React.Component {
     }
 }
 
-TabMenu.contextTypes = {
-    router: PropTypes.object
-}
-
-export default TabMenu
+export default withRouter(TabMenu)
