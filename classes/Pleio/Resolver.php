@@ -369,14 +369,16 @@ class Resolver {
             "relationship" => "member",
             "relationship_guid" => $group->guid,
             "inverse_relationship" => true,
+            "joins" => ["JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"],
+            "order_by" => "ue.name",
             "type" => "user",
             "limit" => $limit,
-            "offset" => $offset
+            "offset" => $offset,
+
         ];
 
         if ($args["q"]) {
             $q = sanitize_string($args["q"]);
-            $options["joins"] = "JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid";
             $options["wheres"] = "ue.name LIKE '{$q}%'";
         }
 
@@ -388,9 +390,31 @@ class Resolver {
             ];
         }
 
+        $admins = elgg_get_entities_from_relationship([
+            "relationship" => "group_admin",
+            "relationship_guid" => $group->guid,
+            "inverse_relationship" => true,
+            "type" => "user",
+            "limit" => 0
+        ]);
+
+        $owner = $group->getOwnerEntity();
+        $admins[] = $owner;
+
         $members = [];
         foreach (elgg_get_entities_from_relationship($options) as $member) {
-            $members[] = Mapper::getUser($member);
+            if ($member == $owner) {
+                $role = "owner";
+            } else if (in_array($member, $admins)) {
+                $role = "admin";
+            } else {
+                $role = "member";
+            }
+
+            $members[] = [
+                "role" => $role,
+                "user" => Mapper::getUser($member)
+            ];
         }
 
         return [

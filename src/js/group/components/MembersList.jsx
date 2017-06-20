@@ -22,8 +22,8 @@ class MembersList extends React.Component {
             )
         }
 
-        const members = entity.members.edges.map((member, i) => (
-            <MemberItem key={i} member={member} editable={entity.canEdit} />
+        const members = entity.members.edges.map((member) => (
+            <MemberItem key={member.user.guid} group={entity} member={member} editable={entity.canEdit} />
         ))
 
         let placeholder
@@ -43,16 +43,21 @@ class MembersList extends React.Component {
 const Query = gql`
     query MembersList($guid: String!, $q: String) {
         entity(guid: $guid) {
-            guid
             ... on Group {
+                guid
                 canEdit
                 members(q: $q) {
+                    total
                     edges {
-                        guid
-                        username
-                        url
-                        name
-                        icon
+                        role
+                        email
+                        user {
+                            guid
+                            username
+                            url
+                            name
+                            icon
+                        }
                     }
                 }
             }

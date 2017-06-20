@@ -76,10 +76,15 @@ const Mutation = gql`
                     members(limit: 5) {
                         total
                         edges {
-                            guid
-                            name
-                            icon
-                            url
+                            role
+                            email
+                            user {
+                                guid
+                                username
+                                url
+                                name
+                                icon
+                            }
                         }
                     }
                 }

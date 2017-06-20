@@ -30,6 +30,25 @@ class SchemaBuilder {
             ]
         ]);
 
+        $roleEnum = new EnumType([
+            "name" => "Role",
+            "description" => "The type of role.",
+            "values" => [
+                "owner" => [
+                    "value" => "owner"
+                ],
+                "admin" => [
+                    "value" => "admin"
+                ],
+                "member" => [
+                    "value" => "member"
+                ],
+                "removed" => [
+                    "value" => "removed"
+                ],
+            ]
+        ]);
+
         $entityInterface = new InterfaceType([
             "name" => "Entity",
             "fields" => [
@@ -287,6 +306,33 @@ class SchemaBuilder {
             ]
         ]);
 
+        $memberType = new ObjectType([
+            "name" => "Member",
+            "fields" => [
+                "role" => [
+                    "type" => $roleEnum
+                ],
+                "user" => [
+                    "type" => $userType
+                ],
+                "email" => [
+                    "type" => Type::string()
+                ]
+            ]
+        ]);
+
+        $memberListType = new ObjectType([
+            "name" => "MemberList",
+            "fields" => [
+                "total" => [
+                    "type" => Type::nonNull(Type::int())
+                ],
+                "edges" => [
+                    "type" => Type::listOf($memberType)
+                ]
+            ]
+        ]);
+
         $membershipEnum = new EnumType([
             "name" => "Membership",
             "description" => "The type of membership.",
@@ -357,7 +403,7 @@ class SchemaBuilder {
                     "type" => Type::listOf(Type::string())
                 ],
                 "members" => [
-                    "type" => $userListType,
+                    "type" => $memberListType,
                     "args" => [
                         "q" => [
                             "type" => Type::string()
@@ -1650,6 +1696,34 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::acceptGroupInvitation"
         ]);
 
+        $changeGroupRoleMutation = Relay::mutationWithClientMutationId([
+            "name" => "changeGroupRole",
+            "description" => "Change the role of a user in a group.",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::string(),
+                    "description" => "The group guid."
+                ],
+                "userGuid" => [
+                    "type" => Type::string(),
+                    "description" => "The user guid."
+                ],
+                "role" => [
+                    "type" => $roleEnum,
+                    "description" => "The new role for the user."
+                ]
+            ],
+            "outputFields" => [
+                "group" => [
+                    "type" => $groupType,
+                    "resolve" => function($group) {
+                        return Resolver::getEntity(null, $group, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::changeGroupRoleMutation"
+        ]);
+
         $editTaskMutation = Relay::mutationWithClientMutationId([
             "name" => "editTask",
             "inputFields" => [
@@ -1700,6 +1774,7 @@ class SchemaBuilder {
                     "leaveGroup" => $leaveGroupMutation,
                     "inviteToGroup" => $inviteToGroupMutation,
                     "acceptGroupInvitation" => $acceptGroupInvitation,
+                    "changeGroupRole" => $changeGroupRoleMutation,
                     "editTask" => $editTaskMutation
             ]
         ]);

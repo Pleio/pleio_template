@@ -1088,6 +1088,50 @@ class Mutations {
         ];
     }
 
+    static function changeGroupRoleMutation($input) {
+        $current_user = elgg_get_logged_in_user_entity();
+        if (!$current_user) {
+            throw new Exception("not_logged_in");
+        }
+
+        $group = get_entity((int) $input["guid"]);
+        if (!$group || !$group instanceof \ElggGroup) {
+            throw new Exception("could_not_find_group");
+        }
+
+        if (!$group->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        $user = get_entity((int) $input["userGuid"]);
+        if (!$user || !$user instanceof \ElggUser) {
+            throw new Exception("could_not_find_user");
+        }
+
+        if (!$group->isMember($user)) {
+           throw new Exception("user_not_member_of_group"); 
+        }
+
+        $role = $input["role"];
+
+        switch ($role) {
+            case "admin":
+                add_entity_relationship($user->guid, "group_admin", $group->guid);
+                break;
+            case "member":
+                remove_entity_relationship($user->guid, "group_admin", $group->guid);
+                break;
+            case "removed":
+                remove_entity_relationship($user->guid, "group_admin", $group->guid);
+                leave_group($group->guid, $user->guid);
+                break;
+        }
+
+        return [
+            "guid" => $group->guid
+        ];
+    }
+
     static function editTask($input) {
         $task = get_entity((int) $input["guid"]);
         if (!$task) {

@@ -96,7 +96,7 @@ class Item extends React.Component {
                                 <MembersSummary entity={entity} /> 
                             </div>
                             <div className="col-sm-12 col-lg-8">
-                                <ActivityList containerGuid={entity.guid} childClass={Card} offset={0} limit={20} tags={[]} />
+                                <ActivityList containerGuid={entity.guid} containerClassName="" childClass={Card} offset={0} limit={20} tags={[]} />
                             </div>
                         </div>
                     </div>
@@ -135,10 +135,15 @@ const Query = gql`
                 members(limit: 5) {
                     total
                     edges {
-                        guid
-                        name
-                        icon
-                        url
+                        role
+                        email
+                        user {
+                            guid
+                            username
+                            url
+                            name
+                            icon
+                        }
                     }
                 }
             }

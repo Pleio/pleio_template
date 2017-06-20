@@ -5,9 +5,9 @@ import InviteList from "./InviteList"
 import autobind from "autobind-decorator"
 import { Set } from "immutable"
 import { graphql } from "react-apollo"
+import gql from "graphql-tag"
 import { logErrors } from "../../lib/helpers"
 import Errors from "../../core/components/Errors"
-import gql from "graphql-tag"
 import classnames from "classnames"
 
 class InviteForm extends React.Component {
