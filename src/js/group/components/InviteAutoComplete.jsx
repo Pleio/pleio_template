@@ -39,7 +39,7 @@ export default class InviteAutoComplete extends React.Component {
         let results
         if (this.state.q) {
             results = (
-                <div className="search-bar__results">
+                <div className="invite-list__results">
                     <InviteAutoCompleteList group={group} q={this.state.search} onSelect={this.onSelect} />
                 </div>
             )

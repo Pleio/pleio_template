@@ -4,7 +4,7 @@ import { logErrors } from "../lib/helpers"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Errors from "../core/components/Errors"
-import Modal from "../core/components/Modal"
+import ActionContainer from "../core/components/ActionContainer"
 import AccessSelect from "../core/containers/AccessSelect"
 import TextField from "../core/components/TextField"
 import Form from "../core/components/Form"
@@ -106,31 +106,35 @@ class Edit extends React.Component {
 
         let membership = (entity.isClosed) ? "closed" : "open"
         return (
-            <Modal id="add" title="Bewerk groep" full={true} noParent={true} onClose={this.onClose}>
-                {errors}
-                <Form ref="form" onSubmit={this.onSubmit}>
-                    <div className="container">
-                        <div className="form">
-                            <InputField value={entity.name} label="Naam" name="name" type="text" placeholder="Voeg een korte duidelijke naam toe" className="form__input" rules="required" autofocus />
-                            <IconField name="icon" value={entity.icon} />                            
-                            <SelectField label="Lidmaatschap" name="membership" type="text" className="form__input" options={{open: "Open", "closed": "Besloten"}} value={membership} />
-                            <TextField label="Beschrijving" name="description" type="text" placeholder="Vertel wat over de groep" className="form__input" rules="required" value={entity.description} />
-                            <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" value={entity.tags}/>
-                            <SwitchesField label="Plugins" name="plugins" options={groupPlugins} values={entity.plugins} />
+            <ActionContainer title="Bewerk groep" onClose={this.onClose}>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+                            {errors}
+                            <Form ref="form" onSubmit={this.onSubmit}>
+                                    <div className="form">
+                                        <InputField value={entity.name} label="Naam" name="name" type="text" placeholder="Voeg een korte duidelijke naam toe" className="form__input" rules="required" autofocus />
+                                        <IconField name="icon" value={entity.icon} />                            
+                                        <SelectField label="Lidmaatschap" name="membership" type="text" className="form__input" options={{open: "Open", "closed": "Besloten"}} value={membership} />
+                                        <TextField label="Beschrijving" name="description" type="text" placeholder="Vertel wat over de groep" className="form__input" rules="required" value={entity.description} />
+                                        <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" value={entity.tags}/>
+                                        <SwitchesField label="Plugins" name="plugins" options={groupPlugins} values={entity.plugins} />
 
-                            <div className="buttons ___space-between">
-                                <button className="button" type="submit" name="update">
-                                    Bijwerken
-                                </button>
-                                <button className="button ___link" onClick={this.onDelete}>
-                                    Verwijderen
-                                </button>
-                            </div>
+                                        <div className="buttons ___space-between">
+                                            <button className="button" type="submit" name="update">
+                                                Bijwerken
+                                            </button>
+                                            <button className="button ___link" onClick={this.onDelete}>
+                                                Verwijderen
+                                            </button>
+                                        </div>
+                                    </div>
+                            </Form>
+                            <DeleteModal ref="deleteModal" title="Groep verwijderen" entity={entity} subtype="group" afterDelete={this.afterDelete} />
                         </div>
                     </div>
-                </Form>
-                <DeleteModal ref="deleteModal" title="Groep verwijderen" entity={entity} subtype="group" afterDelete={this.afterDelete} />
-            </Modal>
+                </div>
+            </ActionContainer>
         )
     }
 }

@@ -61,15 +61,17 @@ const Mutation = gql`
         leaveGroup(input: $input) {
             group {
                 guid
-                membership
-                isClosed
-                members(limit: 5) {
-                    total
-                    edges {
-                        guid
-                        name
-                        icon
-                        url
+                ... on Group {
+                    membership
+                    isClosed
+                    members(limit: 5) {
+                        total
+                        edges {
+                            guid
+                            name
+                            icon
+                            url
+                        }
                     }
                 }
             }

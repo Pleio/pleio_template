@@ -139,7 +139,11 @@ class InfiniteList extends React.Component {
         if (data[rootFieldName] && data[rootFieldName].edges.length === 0) {
             return (
                 <div className={getAttribute("containerClassName", this.props, "container")} ref="infiniteScroll">
-                    Er zijn geen items in deze categorie.
+                    <div className={getAttribute("rowClassName", this.props, "row fill")}>
+                        <div className="col-sm-12">
+                            Er zijn geen items in deze categorie.
+                        </div>
+                    </div>
                 </div>
             )
         }

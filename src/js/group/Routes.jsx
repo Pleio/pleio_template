@@ -33,39 +33,40 @@ import NotFound from "../core/NotFound"
 export default class Routes extends React.Component {
     render() {
         return (
-            <Container>
-                <Switch>
-                    <Route exact path="/groups" component={List} />
-                    <Route exact path="/groups/add" component={Add} />
-                    <Route exact path="/groups/edit/:guid" component={Edit} />
-                    <Route exact path="/groups/info/:guid" component={Info} />
-                    <Route exact path="/groups/invitations" component={Invitations} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug" component={Item} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/blog" component={BlogGroupList} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/blog/add" component={BlogAdd} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/blog/edit/:guid" component={BlogEdit} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/blog/view/:guid/:slug" component={BlogGroupItem} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/questions" component={QuestionsGroupList} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/questions/add" component={QuestionsAdd} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/questions/edit/:guid" component={QuestionsEdit} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/questions/view/:guid/:slug" component={QuestionsGroupItem} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/events" component={EventsGroupList} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/events/add" component={EventsAdd} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/events/edit/:guid" component={EventsEdit} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/events/view/:guid/:slug" component={EventsGroupItem} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/files" component={FilesGroupList} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/files/:containerGuid" component={FilesGroupList} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/wiki" component={WikiGroupList} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/wiki/add" component={WikiAdd} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/wiki/edit/:guid" component={WikiEdit} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/wiki/view/:guid/:slug" component={WikiGroupItem} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/tasks" component={TasksGroupList} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/tasks/add" component={TasksAdd} />
-                    <Route exact path="/groups/view/:groupGuid/:groupSlug/tasks/edit/:guid" component={TasksEdit} />
-                    <Route component={NotFound} />
-                </Switch>
-            </Container>
-
+            <Switch>
+                <Route exact path="/groups/add" component={Add} />
+                <Route exact path="/groups/edit/:guid" component={Edit} />
+                <Route exact path="/groups/view/:groupGuid/:groupSlug/blog/add" component={BlogAdd} />
+                <Route exact path="/groups/view/:groupGuid/:groupSlug/blog/edit/:guid" component={BlogEdit} />
+                <Route exact path="/groups/view/:groupGuid/:groupSlug/questions/add" component={QuestionsAdd} />
+                <Route exact path="/groups/view/:groupGuid/:groupSlug/questions/edit/:guid" component={QuestionsEdit} />
+                <Route exact path="/groups/view/:groupGuid/:groupSlug/events/add" component={EventsAdd} />
+                <Route exact path="/groups/view/:groupGuid/:groupSlug/events/edit/:guid" component={EventsEdit} />
+                <Route exact path="/groups/view/:groupGuid/:groupSlug/wiki/add" component={WikiAdd} />
+                <Route exact path="/groups/view/:groupGuid/:groupSlug/wiki/edit/:guid" component={WikiEdit} />
+                <Route exact path="/groups/view/:groupGuid/:groupSlug/tasks/add" component={TasksAdd} />
+                <Route exact path="/groups/view/:groupGuid/:groupSlug/tasks/edit/:guid" component={TasksEdit} />
+                <Container>
+                    <Switch>
+                        <Route exact path="/groups" component={List} />
+                        <Route exact path="/groups/info/:guid" component={Info} />
+                        <Route exact path="/groups/invitations" component={Invitations} />
+                        <Route exact path="/groups/view/:groupGuid/:groupSlug" component={Item} />
+                        <Route exact path="/groups/view/:groupGuid/:groupSlug/blog" component={BlogGroupList} />
+                        <Route exact path="/groups/view/:groupGuid/:groupSlug/blog/view/:guid/:slug" component={BlogGroupItem} />
+                        <Route exact path="/groups/view/:groupGuid/:groupSlug/questions" component={QuestionsGroupList} />
+                        <Route exact path="/groups/view/:groupGuid/:groupSlug/questions/view/:guid/:slug" component={QuestionsGroupItem} />
+                        <Route exact path="/groups/view/:groupGuid/:groupSlug/events" component={EventsGroupList} />
+                        <Route exact path="/groups/view/:groupGuid/:groupSlug/events/view/:guid/:slug" component={EventsGroupItem} />
+                        <Route exact path="/groups/view/:groupGuid/:groupSlug/files" component={FilesGroupList} />
+                        <Route exact path="/groups/view/:groupGuid/:groupSlug/files/:containerGuid" component={FilesGroupList} />
+                        <Route exact path="/groups/view/:groupGuid/:groupSlug/wiki" component={WikiGroupList} />
+                        <Route exact path="/groups/view/:groupGuid/:groupSlug/wiki/view/:guid/:slug" component={WikiGroupItem} />
+                        <Route exact path="/groups/view/:groupGuid/:groupSlug/tasks" component={TasksGroupList} />
+                        <Route component={NotFound} />
+                    </Switch>
+                </Container>
+            </Switch>
         )
     }
 }

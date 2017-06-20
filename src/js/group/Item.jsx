@@ -37,7 +37,7 @@ class Item extends React.Component {
         }
 
         let join, leave, edit, invite
-        if (viewer.loggedIn && !entity.isClosed && entity.membership === "not_joined") {
+        if (((viewer.loggedIn && !entity.isClosed) || entity.canEdit) && entity.membership === "not_joined") {
             join = (
                 <JoinGroupButton entity={entity} />
             )
@@ -59,7 +59,7 @@ class Item extends React.Component {
             )
         }
 
-        if (entity.canEdit) {
+        if (entity.membership === "joined" && entity.canEdit) {
             invite = (
                 <div className="button ___large" onClick={() => this.refs.inviteModal.toggle()}>
                     Leden uitnodigen

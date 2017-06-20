@@ -269,23 +269,50 @@ body.___rijkshuisstijl .navigation__wrapper {
 }
 
 .file__item {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #ccc;
+
     .file__check {
         display: none;
+
+        .checkbox label:before {
+            top:0rem;
+        }
+
+        .checkbox label:after {
+            top:0.4rem;
+        }
     }
 
     &:hover {
-        background-color: @color-grey--60;
+        background-color: #fff;
 
         .file__check {
-            display: block;
+            display: inline-block;
+        }
+
+        .file__icon {
+            display: none;
         }
     }
+
+    &.___selected {
+        background-color: #fff;
+    }
+}
+
+.file__item a {
+    color: black;
 }
 
 .___show-checkboxes {
     .file__item {
         .file__check {
-            display: block;
+            display: inline-block;
+        }
+        .file__icon {
+            display: none;
         }
     }
 }
@@ -315,7 +342,7 @@ body.___rijkshuisstijl .navigation__wrapper {
     overflow-x: scroll;
 }
 
-.search-bar__results {
+.invite-list__results {
     z-index: 2;
     background-color: white;
     border: 1px solid transparent;
@@ -326,3 +353,5 @@ body.___rijkshuisstijl .navigation__wrapper {
     left: 0;
     right: 0;
 }
+
+.st0{fill:#B4B4B4;}

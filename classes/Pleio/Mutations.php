@@ -985,7 +985,7 @@ class Mutations {
             throw new Exception("not_logged_in");
         }
 
-        if ($group->isPublicMembership()) {
+        if ($group->isPublicMembership() || $group->canEdit()) {
             groups_join_group($group, $user);
         } else {
             add_entity_relationship($user->guid, "membership_request", $group->guid);

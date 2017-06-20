@@ -4,7 +4,7 @@ import { logErrors } from "../lib/helpers"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Errors from "../core/components/Errors"
-import Modal from "../core/components/Modal"
+import ActionContainer from "../core/components/ActionContainer"
 import AccessSelect from "../core/containers/AccessSelect"
 import TextField from "../core/components/TextField"
 import Form from "../core/components/Form"
@@ -71,25 +71,29 @@ class Add extends React.Component {
         }
 
         return (
-            <Modal id="add" title="Nieuwe groep" full={true} noParent={true} onClose={this.onClose}>
-                {errors}
-                <Form ref="form" onSubmit={this.onSubmit}>
-                    <div className="container">
-                        <div className="form">
-                            <InputField label="Naam" name="name" type="text" placeholder="Voeg een korte duidelijke naam toe" className="form__input" rules="required" autofocus />
-                            <IconField name="icon" />
-                            <SelectField label="Lidmaatschap" name="membership" type="text" className="form__input" options={{open: "Open", "closed": "Besloten"}} value="open" />
-                            <TextField label="Beschrijving" name="description" type="text" placeholder="Vertel wat over de groep" className="form__input" rules="required" />
-                            <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" />
-                            <div className="buttons ___end ___margin-top">
-                                <button className="button" type="submit">
-                                    Aanmaken
-                                </button>
-                            </div>
+            <ActionContainer title="Nieuwe groep" onClose={this.onClose}>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+                            {errors}
+                            <Form ref="form" onSubmit={this.onSubmit}>
+                                <div className="form">
+                                    <InputField label="Naam" name="name" type="text" placeholder="Voeg een korte duidelijke naam toe" className="form__input" rules="required" autofocus />
+                                    <IconField name="icon" />
+                                    <SelectField label="Lidmaatschap" name="membership" type="text" className="form__input" options={{open: "Open", "closed": "Besloten"}} value="open" />
+                                    <TextField label="Beschrijving" name="description" type="text" placeholder="Vertel wat over de groep" className="form__input" rules="required" />
+                                    <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" />
+                                    <div className="buttons ___end ___margin-top">
+                                        <button className="button" type="submit">
+                                            Aanmaken
+                                        </button>
+                                    </div>
+                                </div>
+                            </Form>
                         </div>
                     </div>
-                </Form>
-            </Modal>
+                </div>
+            </ActionContainer>
         )
     }
 }

@@ -357,7 +357,11 @@ class Resolver {
     static function getMembers($a, $args, $c) {
         $dbprefix = elgg_get_config("dbprefix");
         $group = get_entity($a["guid"]);
-        
+
+        if (!$group) {
+            throw new Exception("could_not_find");
+        }
+
         $offset = (int) $args["offset"] ? (int) $args["offset"] : 0;
         $limit = (int) $args["limit"] ? (int) $args["limit"] : 10;
 
@@ -374,6 +378,14 @@ class Resolver {
             $q = sanitize_string($args["q"]);
             $options["joins"] = "JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid";
             $options["wheres"] = "ue.name LIKE '{$q}%'";
+        }
+
+        if ($group->membership === ACCESS_PRIVATE && !$group->canEdit() && !$group->isMember())  {
+            return [
+                "total" => $group->getMembers($limit, $offset, true),
+                "canWrite" => false,
+                "edges" => []
+            ];
         }
 
         $members = [];
@@ -396,6 +408,10 @@ class Resolver {
         $limit = (int) $args["limit"] || 10;
 
         $group = get_entity($a["guid"]);
+
+        if (!$group->canEdit()) {
+            throw new Exception("could_not_edit");
+        }
         
         $options = [
             "type" => "user",

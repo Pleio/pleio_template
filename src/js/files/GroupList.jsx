@@ -91,10 +91,20 @@ class Item extends React.Component {
 
         if (this.state.selected.size > 0) {
             actions = (
-                <div>
-                    {this.state.selected.size} {this.state.selected.size > 1 ? "items" : "item"} geselecteerd.
-                    {edit}
-                    <a href="#" onClick={() => this.refs.delete.toggle()}>Verwijderen</a>
+                <div className="row file__item">
+                    <div className="col-sm-12">
+                        {this.state.selected.size} {this.state.selected.size > 1 ? "items" : "item"} geselecteerd.
+                        &nbsp;<b>{edit}</b>&nbsp;
+                        <a href="#" onClick={() => this.refs.delete.toggle()}><b>Verwijderen</b></a>
+                    </div>
+                </div>
+            )
+        } else {
+            actions = (
+                <div className="row file__item">
+                    <div className="col-sm-8">Bestandsnaam</div>
+                    <div className="col-sm-2">Aanmaakdatum</div>
+                    <div className="col-sm-2">Eigenaar</div>
                 </div>
             )
         }
@@ -120,7 +130,7 @@ class Item extends React.Component {
                 <section className={classnames({"section ___grey ___grow": true, "___show-checkboxes": this.state.selected.size > 0})}>
                     <div className="container">
                         {actions}
-                        <FileFolderList containerGuid={containerGuid} containerClassName="" rowClassName="" childClass={FileFolder} offset={0} limit={50} type="object" subtype="file|folder" selected={this.state.selected} history={this.props.history} />
+                        <FileFolderList containerGuid={containerGuid} containerClassName="" rowClassName="row file__item" childClass={FileFolder} offset={0} limit={50} type="object" subtype="file|folder" selected={this.state.selected} history={this.props.history} />
                     </div>
                 </section>
                 <AddFileModal ref="addFile" containerGuid={containerGuid} onComplete={this.clearSelection} />

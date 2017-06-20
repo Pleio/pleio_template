@@ -41,15 +41,30 @@ class FileFolder extends React.Component {
             )
         }
 
+        let subtype
+        if (entity.subtype === "folder") {
+            subtype = (
+                <span className="file__icon" style={{marginRight:"0.5em"}}>
+                    <svg version="1.1" x="0px" y="0px" width="16px" height="12.8px" viewBox="0 0 16 12.8">
+                        <path style={{fill:"#B4B4B4"}} d="M6.4,0H1.6C0.7,0,0,0.7,0,1.6l0,9.6c0,0.9,0.7,1.6,1.6,1.6h12.8c0.9,0,1.6-0.7,1.6-1.6v-8c0-0.9-0.7-1.6-1.6-1.6H8L6.4,0z"/>
+                    </svg>
+                </span>
+            )
+        } else {
+            subtype = (
+                <span className="file__icon" style={{marginRight:"0.5em"}}>
+                    <svg version="1.1" x="0px" y="0px" width="12.8px" height="16px" viewBox="0 0 12.8 16">
+                        <path style={{fill:"#009FE3"}} d="M1.6,0C0.7,0,0,0.7,0,1.6l0,12.8C0,15.3,0.7,16,1.6,16h9.6c0.9,0,1.6-0.7,1.6-1.6V4.8L8,0H1.6z"/>
+                    </svg>
+                </span>
+            )
+        }
+
         return (
-            <div className="row file__item">
-                <div className="col-sm-1">
+            <div className={classnames({"row file__item": true, "___selected": selected.has(entity)})}>
+                <div className="col-sm-8">
                     {checkbox}
-                </div>
-                <div className="col-sm-1">
-                    {entity.subtype}
-                </div>
-                <div className="col-sm-6">
+                    {subtype}
                     <a href="javascript:void(0);" onClick={this.onClick}>
                         {entity.title}
                     </a>
