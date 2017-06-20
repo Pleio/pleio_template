@@ -63,6 +63,7 @@ const Query = gql`
         viewer {
             guid
             loggedIn
+            isAdmin
             user {
                 guid
                 name

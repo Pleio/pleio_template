@@ -101,6 +101,8 @@ class Edit extends React.Component {
             )
         }
 
+        console.log(this.props)
+
         let extraFields
         switch (this.props.subtype) {
             case "news":

@@ -33,7 +33,7 @@ export default class List extends React.Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-12 col-lg-4 last-lg top-lg">
-                                <div className="row fill">
+                                <div className="row">
                                     <Trending />
                                 </div>
                             </div>
