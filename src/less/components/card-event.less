@@ -1,11 +1,18 @@
 .card-event {
     position: relative;
     background-color: @color-white;
-    padding: 3rem;
     margin-bottom: 2rem;
     width: 100%;
     box-shadow: @box-shadow;
     display: flex;
+
+    @media (max-width: @screen-xs-max) {
+        padding: 2rem;
+    }
+
+    @media (min-width: @screen-sm) {
+        padding: 3rem;
+    }
 
     &.___is-highlighted {
         &:before {
@@ -30,18 +37,33 @@
 .card-event__picture {
     flex: 0 0 auto;
     display: block;
-    width: 17rem;
-    height: 17rem;
-    margin-right: 3rem;
+
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+
+    @media (max-width: @screen-xs-max) {
+        width: 4rem;
+        height: 4rem;
+        margin-right: 1.5rem;
+    }
+
+    @media (min-width: @screen-sm) {
+        width: 17rem;
+        height: 17rem;
+        margin-right: 3rem;
+    }
 }
 
 .card-event__content {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
+
+    p {
+        margin: 0;
+        color: @color-grey--60;
+    }
 }
 
 .card-event__bottom {
@@ -49,4 +71,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    padding-top: 2rem;
 }

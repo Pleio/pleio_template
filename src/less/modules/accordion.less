@@ -1,0 +1,131 @@
+[data-accordion-trigger] {
+    .icon(angle-down, after);
+    &:after {
+        font-size: 0.8rem;
+        color: @color-secondary;
+        padding: 0 1rem;
+        transition: transform @trans-fast;
+    }
+}
+
+[data-accordion-trigger="mobile"] {
+    @media ( max-width: @screen-xs-max ) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        .card & {
+            margin: -2rem -2rem 0;
+            padding: 2rem;
+        }
+
+        &:after {
+            font-size: 0.6rem;
+        }
+
+        .___is-open & > {
+            &:after {
+                transform: scaleY(-1);
+            }
+        }
+    }
+
+    @media ( min-width: @screen-sm ) {
+        &:after {
+            display: none;
+        }
+    }
+
+    + [data-accordion-content] {
+        @media ( max-width: @screen-xs-max ) {
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: height @trans-material-normal, opacity @trans-normal;
+
+            .___is-open & {
+                opacity: 1;
+                height: auto;
+            }
+
+            .card & {
+                margin-bottom: -2rem;
+            }
+
+            > div {
+                padding-bottom: 2rem;
+            }
+        }
+    }
+}
+
+[data-accordion-trigger="tablet"] {
+    @media ( max-width: @screen-xs-max ) {
+        .card & {
+            margin: -2rem -2rem 0;
+            padding: 2rem;
+        }
+
+        &:after {
+            font-size: 0.6rem;
+        }
+    }
+
+    @media ( min-width: @screen-sm ) and ( max-width: @screen-md-max ) {
+        margin: -3rem -3rem 0;
+        padding: 2rem 3rem;
+    }
+
+    @media ( max-width: @screen-md-max ) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        .___is-open & > {
+            &:after {
+                transform: scaleY(-1);
+            }
+        }
+    }
+
+    @media ( min-width: @screen-lg ) {
+        &:after {
+            display: none;
+        }
+    }
+
+    + [data-accordion-content] {
+        @media ( max-width: @screen-xs-max ) {
+            .card & {
+                margin-bottom: -2rem;
+            }
+
+            > div {
+                padding-top: 1rem;
+                padding-bottom: 2rem;
+            }
+        }
+
+        @media ( min-width: @screen-sm ) and ( max-width: @screen-md-max ) {
+            margin-bottom: -3rem;
+
+            > div {
+                padding-bottom: 3rem;
+            }
+        }
+
+        @media ( max-width: @screen-md-max ) {
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: height @trans-material-normal, opacity @trans-normal;
+
+            .___is-open & {
+                opacity: 1;
+                height: auto;
+            }
+        }
+    }
+}

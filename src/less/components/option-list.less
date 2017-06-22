@@ -2,19 +2,29 @@
     position: absolute;
     top: 0;
     right: 0;
+    display: flex;
+    flex-direction: column;
     width: 23rem;
+    max-height: 17.6rem;
     padding: 0.8rem 0;
     background-color: @color-white;
     text-align: left;
     box-shadow: @box-shadow;
+    overflow-y: auto;
     z-index: 1;
     visibility: hidden;
     opacity: 0;
     transition: visibility @trans-fast, opacity @trans-fast;
 
+    .form__time:hover &,
     .___show-options & {
         visibility: visible;
         opacity: 1;
+    }
+
+    .form__time & {
+        width: auto;
+        left: 0;
     }
 
     .contextual__tool & {
@@ -27,7 +37,8 @@
         margin: 0;
     }
 
-    li {
+    > * {
+        flex: 0 0 auto;
         display: flex; align-items: center;
         padding: 0.4rem 2rem;
         line-height: @line-height--base;
@@ -44,6 +55,10 @@
         &.___is-active,
         &:hover {
             color: @color-secondary;
+        }
+
+        .form__time & {
+            padding-left: 3.9rem;
         }
 
         &.___align-left {

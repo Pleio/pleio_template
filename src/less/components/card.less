@@ -1,8 +1,15 @@
 .card {
     position: relative;
     width: 100%;
-    padding: 3rem;
     margin-bottom: 2rem;
     background-color: @color-white;
     box-shadow: @box-shadow;
+
+    @media (max-width: @screen-xs-max) {
+        padding: 2rem;
+    }
+
+    @media (min-width: @screen-sm) {
+        padding: 3rem;
+    }
 }

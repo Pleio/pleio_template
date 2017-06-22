@@ -139,3 +139,35 @@ textarea:-moz-placeholder { /* Firefox 18- */
     font-size: @font-size--medium;
     line-height: @line-height--medium;
 }
+
+.form__date {
+    .icon(calendar);
+}
+
+.form__time {
+    .icon(clock);
+}
+
+.form__date,
+.form__time {
+    position: relative;
+
+    &:before {
+        position: absolute;
+        left: 1.6rem;
+        top: 0;
+        bottom: 0;
+        font-size: 1.5rem;
+        color: @color-grey--60;
+        display: flex;
+        align-items: center;
+    }
+
+    &:hover:before {
+        z-index: 2;
+    }
+
+    input {
+        padding-left: 3.8rem !important;
+    }
+}

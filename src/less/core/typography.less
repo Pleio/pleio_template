@@ -11,12 +11,17 @@ h1, h2, h3, h4, h5, h6, strong {
 }
 
 .title {
+    margin-bottom: 1.5rem;
     .font(title-small);
     font-weight: bold;
     color: @color-primary;
 
     @media ( max-width: @screen-xs-max ) {
         .font(base);
+    }
+
+    .card-event & {
+        margin-bottom: .5rem;
     }
 
     small {

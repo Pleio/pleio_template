@@ -2,6 +2,22 @@
 .flexer {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+
+    .lead & {
+        @media ( max-width: @screen-xs-max ) {
+            margin-top: 1.5rem;
+        }
+    }
+
+    .card-event &,
+    .lead & {
+        @media ( max-width: @screen-md-max ) {
+            width: 100%;
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
 
     &.___margin-top {
         margin-top: 4rem;
@@ -43,6 +59,13 @@
 
             @media ( max-width: @screen-xs-max ) {
                 margin-right: 1.5rem;
+            }
+
+            .card-event &,
+            .lead & {
+                @media ( max-width: @screen-md-max ) {
+                    margin-right: 0;
+                }
             }
         }
     }

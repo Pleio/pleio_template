@@ -1,10 +1,21 @@
 .tabmenu {
+    position: relative;
     flex-shrink: 0;
     display: flex;
     margin: 4rem 0 0 0;
 
     .modal & {
         margin: 0; // Event attendees
+        
+        &:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: @color-grey--50;
+            height: 1px;
+        }
     }
 
     @media ( max-width: @screen-xs-max ) {
@@ -13,16 +24,18 @@
 }
 
 .tabmenu__link {
+    position: relative;
     display: block;
     color: @color-black;
     font-size: @font-size--base;
     line-height: @line-height--base;
-    border-bottom: 0.5rem solid @color-white;
+    border-bottom: 0.5rem solid transparent;
     padding: 1rem 0.8rem 1rem 0.8rem;
     text-decoration: none;
     margin-left: 0.8rem;
-    transition: color @trans-fast;
     cursor: pointer;
+    user-select: none;
+    transition: color @trans-fast;
 
     &:first-child {
         margin-left: 0;

@@ -49,9 +49,8 @@
         font-weight: bold;
         padding: 0.2rem 0 0 0;
 
-
         @media ( max-width: @screen-xs-max ) {
-            display: none;
+            order: -1;
 
             .card-tile.___full-image.___is-highlighted &,
             .card-tile.___full-video.___is-highlighted & {
@@ -82,6 +81,10 @@
             margin: 0 0.8rem 0 0;
             right: auto;
             bottom: 0;
+        }
+
+        .card-list-topics & {
+            position: static;
         }
     }
 

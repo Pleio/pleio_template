@@ -1,6 +1,9 @@
 .date {
-    .font(large);
     color: @color-secondary;
+
+    @media (min-width: @screen-sm) {
+        .font(large);
+    }
 
     &.___grey {
         color: @color-grey--60;

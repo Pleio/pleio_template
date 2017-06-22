@@ -64,6 +64,12 @@
         display: block;
     }
 
+    .modal.___square > & {
+        @media ( max-width: @screen-xs-max ) {
+            height: 100%;
+        }
+    }
+
     &[data-modal-slides="2"] {
         width: 200%;
 
@@ -138,7 +144,6 @@
     max-width: 72.8rem;
     width: 100%;
     margin: 0 auto;
-    padding: 5.2rem 2rem 4rem 2rem;
     background-color: @color-white;
     overflow-x: hidden;
 
@@ -154,14 +159,22 @@
     }
 
     .modal.___square > .modal__wrapper > & {
-        height: 56rem;
         display: flex;
         flex-direction: column;
-        padding: 4rem 4rem 0 4rem;
+        padding-bottom: 0;
+
+        @media ( max-width: @screen-xs-max ) {
+            height: 100%;
+        }
+
+        @media ( min-width: @screen-sm ) {
+            height: 56rem;
+        }
     }
 
     @media ( max-width: @screen-xs-max ) {
         max-width: 100%;
+        padding: 5.2rem 2rem 4rem;
 
         .modal.___small > .modal__wrapper > & {
             max-width: 100%;

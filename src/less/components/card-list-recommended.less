@@ -8,14 +8,12 @@
 
     @media ( min-width: @screen-sm ) {
         background-color: @color-white;
-        padding: 3rem 3rem 2rem 3rem;
+        padding: 3rem;
         margin: 0 0 2rem 0;
         box-shadow: @box-shadow;
     }
 
     @media ( max-width: @screen-md-max ) {
-        cursor: pointer;
-
         .read-more {
             justify-content: flex-end;
             padding-top: 1.5rem;
@@ -45,62 +43,9 @@
     font-weight: bold;
     color: @color-primary;
 
-    .icon(angle-down, after);
-    &:after {
-        font-size: 0.8rem;
-        color: @color-secondary;
-        padding: 0 1rem;
-        transition: transform @trans-fast;
-    }
-
     @media ( max-width: @screen-xs-max ) {
         font-size: @font-size--title-extra-small;
         line-height: 4rem;
-
-        &:after {
-            font-size: 0.6rem;
-        }
-    }
-
-    @media ( min-width: @screen-sm ) and ( max-width: @screen-md-max ) {
-        line-height: 1;
-        margin: 0 0 1rem 0;
-    }
-
-    @media ( max-width: @screen-md-max ) {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        .___is-open & > {
-            &:after {
-                transform: scaleY(-1);
-            }
-        }
-    }
-
-    @media ( min-width: @screen-lg ) {
-        margin: 0 0 1rem 0;
-
-        &:after {
-            display: none;
-        }
-    }
-}
-
-.card-list-recommended__items {
-    @media ( max-width: @screen-md-max ) {
-        height: 0;
-        overflow: hidden;
-        opacity: 0;
-        transition: height @trans-material-normal, opacity @trans-normal;
-
-        .___is-open & {
-            opacity: 1;
-        }
-    }
-    @media ( min-width: @screen-lg ) {
-        height: auto !important;
     }
 }
 
@@ -113,6 +58,19 @@
 
     @media ( max-width: @screen-md-max ) {
         line-height: 2.4rem;
+
+        &:first-child {
+            padding-top: 0;
+        }
+        &:last-child {
+            padding-bottom: 0;
+        }
+    }
+
+    @media ( min-width: @screen-lg ) {
+        &:last-child {
+            margin-bottom: -1rem;
+        }
     }
 }
 

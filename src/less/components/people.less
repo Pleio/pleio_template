@@ -7,7 +7,15 @@
         margin-bottom: 2rem;
     }
 
+    @media (max-width: @screen-xs-max) {
+        .card-event & {
+            display: none;
+        }
+    }
+
     > * {
+        flex: 0 0 auto;
+        
         &:not(:first-child) {
             margin-left: -.8rem;
         }

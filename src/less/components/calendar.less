@@ -1,0 +1,107 @@
+.calendar {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 28rem;
+    background-color: white;
+    color: @color-grey--80;
+    box-shadow: @box-shadow;
+    overflow: hidden;
+    z-index: 1;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility @trans-fast, opacity @trans-fast;
+
+    .form__date:hover & {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    button,
+    .calendar__days span {
+        width: 4rem;
+        height: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.calendar__months {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bold;
+    border-bottom: 1px solid @color-grey--50;
+
+    button {
+        transition: color @trans-fast;
+
+        &:first-child {
+            .icon(prev);
+            &:before {
+                font-size: 1.2rem;
+            }
+        }
+
+        &:last-child {
+            .icon(next);
+            &:before {
+                font-size: 1.2rem;
+            }
+        }
+
+        &:hover {
+            color: @color-secondary
+        }
+    }
+
+    span {
+        padding-top: .1rem;
+        white-space: nowrap;
+    }
+}
+
+.calendar__days {
+    display: flex;
+    border-bottom: 1px solid @color-grey--50;
+}
+
+.calendar__numbers {
+    display: flex;
+    flex-wrap: wrap;
+
+    button {
+        position: relative;
+        padding-top: .1rem;
+        font-size: 1.5rem;
+        color: @color-secondary;
+        transition: background-color @trans-fast, color @trans-fast;
+
+        &.___grey:hover,
+        &:hover {
+            background-color: @color-secondary--lighter;
+        }
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: -1px;
+            bottom: -1px;
+            border-right: 1px solid @color-grey--40;
+            border-bottom: 1px solid @color-grey--40;
+            z-index: 1;
+        }
+
+        &.___grey {
+            background-color: @color-grey--20;
+        }
+
+        &.___current {
+            background-color: @color-secondary;
+            color: white;
+        }
+    }
+}
