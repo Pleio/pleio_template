@@ -35,6 +35,7 @@
     "isomorphic-form-data": "0.0.1",
     "jest": "^15.1.1",
     "jsx-loader": "^0.13.2",
+    "moment": "^2.18.1",
     "object-path": "^0.11.2",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",

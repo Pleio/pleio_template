@@ -2,32 +2,25 @@ import React from "react"
 import classnames from "classnames"
 import Validator from "validatorjs"
 import PropTypes from "prop-types"
+import autobind from "autobind-decorator"
+import moment from "moment"
+
+moment.locale("nl")
+moment.weekdays(true)
 
 class DateTimeField extends React.Component {
     constructor(props) {
         super(props)
-        this.onChange = this.onChange.bind(this)
-
-        let date
-        if (this.props.value) {
-            date = new Date(this.props.value)
-        } else {
-            date = new Date()
-        }
 
         this.state = {
-            day: date.getDate(),
-            month: date.getMonth() + 1,
-            year: date.getFullYear(),
-            hour: date.getHours(),
-            minute: date.getMinutes()
+            value: moment(this.props.value)
         }
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.value !== this.props.value) {
             this.setState({
-                value: nextProps.value
+                value: moment(this.props.value)
             })
         }
     }
@@ -44,14 +37,22 @@ class DateTimeField extends React.Component {
         }
     }
 
-    onChange(field, value) {
-        this.setState({
-            [field]: value
-        })
+    @autobind
+    resetTime(e) {
+        e.preventDefault()
+        this.setState({ value: moment() })
+    }
 
-        if (this.props.onChange) {
-            this.props.onChange(field, value)
-        }
+    @autobind
+    previousMonth(e) {
+        e.preventDefault()
+        this.setState({ value: moment(this.state.value).subtract(1, "month") })
+    }
+
+    @autobind
+    nextMonth(e) {
+        e.preventDefault()
+        this.setState({ value: moment(this.state.value).add(1, "month") })
     }
 
     isValid() {
@@ -59,10 +60,7 @@ class DateTimeField extends React.Component {
     }
 
     getValue() {
-        const date = new Date()
-        date.setFullYear(this.state.year, (this.state.month - 1), this.state.day)
-        date.setHours(this.state.hour, this.state.minute)
-        return date.toISOString()
+        return this.state.value.toISOString()
     }
 
     clearValue() {
@@ -72,13 +70,72 @@ class DateTimeField extends React.Component {
     }
 
     render() {
+        const days = moment.weekdaysMin(true).map((i) => (
+            <span key={i}>{i}</span>
+        ))
+
+        const begin = moment(this.state.value).clone().startOf("month")
+        const prefix = begin.clone().weekday(0)
+
+        const end = moment(this.state.value).clone().endOf("month")
+        const postfix = end.clone().weekday(6)
+
+        const numbers = []
+        for (const i = prefix; i.isBefore(postfix); i.add(1, "day")) {
+            const current = i.clone().hours(this.state.value.hours()).minutes(this.state.value.minutes())
+
+            numbers.push((
+                <button
+                    key={current.toISOString()}
+                    className={classnames({
+                        "___grey": current.isBefore(begin, "day") || current.isAfter(end, "day"),
+                        "___current": current.isSame(this.state.value, "day"),
+                    })}
+                    onClick={(e) => { e.preventDefault(); this.setState({ value: current })}}
+                >
+                    {current.format("D")}
+                </button>
+            ))
+        }
+
+        const startOfDay = this.state.value.clone().startOf("day")
+        const endOfDay = this.state.value.clone().endOf("day")
+
+        const times = []
+        for (const i = startOfDay; i.isBefore(endOfDay); i.add(0.5, "hour")) {
+            const current = i.clone()
+            times.push((
+                <button
+                    key={current.toISOString()}
+                    onClick={(e) => { e.preventDefault(); this.setState({ value: current })}}
+                >{current.format("HH:mm")}</button>
+            ))
+        }
+
         return (
-            <div>
-                <input type="number" onChange={(e) => this.onChange("day", e.target.value)} name={this.props.name + "_date[]"} style={{width:"3em"}} min={1} max={31} value={this.state.day} />-
-                <input type="number" onChange={(e) => this.onChange("month", e.target.value)} name={this.props.name + "_date[]"} style={{width:"3em"}} min={1} max={12} value={this.state.month}/>-
-                <input type="number" onChange={(e) => this.onChange("year", e.target.value)} name={this.props.name + "_date[]"} style={{width:"5em"}} min={1900} max={3000} value={this.state.year} />&nbsp;
-                <input type="number" onChange={(e) => this.onChange("hour", e.target.value)} name={this.props.name + "_time[]"} style={{width:"3em"}} min={0} max={24} value={this.state.hour} />:
-                <input type="number" onChange={(e) => this.onChange("minute", e.target.value)} name={this.props.name + "_time[]"} style={{width:"3em"}} min={0} max={60} value={this.state.minute} />
+            <div className="row">
+                <div className="col-xs-6">
+                    <div className="form__date">
+                        <input placeholder="Datum" type="text" value={this.state.value.format("ddd D MMM YYYY")} readOnly />
+                        <div className="calendar">
+                            <div className="calendar__months">
+                                <button onClick={this.previousMonth} />
+                                <span onDoubleClick={this.resetTime}>{this.state.value.format("MMMM YYYY")}</span>
+                                <button onClick={this.nextMonth} />
+                            </div>
+                            <div className="calendar__days">{days}</div>
+                            <div className="calendar__numbers">{numbers}</div>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-xs-6">
+                    <div className="form__time">
+                        <input placeholder="Tijd" type="text" value={this.state.value.format("HH:mm")} readOnly />
+                        <div className="option-list">
+                            {times}
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

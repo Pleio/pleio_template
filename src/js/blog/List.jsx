@@ -29,9 +29,11 @@ class List extends React.Component {
         let add
         if (viewer && viewer.canWriteToContainer) {
             add = (
-                <Link to={`blog/add`} className="right-lg">
-                    <div className="button ___large ___add"><span>Schrijf een verhaal</span></div>
-                </Link>
+                <div className="col-right">
+                    <Link to={`blog/add`} className="button ___large ___add">
+                        <span>Schrijf een verhaal</span>
+                    </Link>
+                </div>
             )
         }
 

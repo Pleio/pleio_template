@@ -1,6 +1,6 @@
 import React from "react"
 import AddCore from "../core/Add"
-import Modal from "../core/components/Modal"
+import ActionContainer from "../core/components/ActionContainer"
 
 export default class Add extends React.Component {
     constructor(props) {
@@ -31,9 +31,9 @@ export default class Add extends React.Component {
         const { match } = this.props
         
         return (
-            <Modal title="Agenda-item toevoegen" full={true} noParent={true} onClose={this.onClose}>
+            <ActionContainer title="Evenement toevoegen" onClose={this.onClose}>
                 <AddCore subtype="event" featured={true} afterAdd={this.afterAdd} containerGuid={match.params.groupGuid} />
-            </Modal>
+            </ActionContainer>
         )
     }
 }

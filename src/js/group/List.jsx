@@ -14,9 +14,9 @@ class List extends React.Component {
         let add
         if (viewer && viewer.canWriteToContainer) {
             add = (
-                <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
-                    <Link to={`groups/add`} className="right-lg">
-                        <div className="button ___large ___add"><span>Maak een groep</span></div>
+                <div className="col-right">
+                    <Link to={`groups/add`} className="button ___large ___add">
+                        <span>Maak een groep</span>
                     </Link>
                 </div>
             )
@@ -26,25 +26,15 @@ class List extends React.Component {
             <div className="page-container">
                 <Document title="Groepen" />
                 <ContentHeader>
+                    <h3 className="main__title">
+                        Groepen
+                    </h3>
                     <div className="row">
-                        <div className="col-sm-6">
-                            <h3 className="main__title">
-                                Groepen
-                            </h3>
-                        </div>
-                        <div className="col-sm-6 end-sm">
-                            {add}
-                        </div>
+                        {add}
                     </div>
                 </ContentHeader>
                 <section className="section ___grey ___grow">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-sm-4 col-lg-3">
-                            </div>
-                        </div>
-                        <GroupsList type="group" childClass={Card} offset={0} limit={20} hasRows />
-                    </div>
+                    <GroupsList type="group" childClass={Card} offset={0} limit={20} hasRows />
                 </section>
             </div>
         )

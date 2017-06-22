@@ -4,7 +4,7 @@ function pad(num, size) {
     return s
 }
 
-function fullMonth(m) {
+function getMonth(m) {
     const trans = {
         1: "jan",
         2: "feb",
@@ -23,13 +23,44 @@ function fullMonth(m) {
     return trans[m]
 }
 
+function getFullMonth(m) {
+    const trans = {
+        1: "januari",
+        2: "februari",
+        3: "maart",
+        4: "april",
+        5: "mei",
+        6: "juni",
+        7: "juli",
+        8: "augustus",
+        9: "september",
+        10: "oktober",
+        11: "november",
+        12: "december"
+    }
+
+    return trans[m]
+}
+
 export function showShortDate(isoDate) {
     const date = new Date(isoDate)
     const d = date.getDate()
     const m = date.getMonth() + 1
-    const mFull = fullMonth(m)
+    const mFull = getMonth(m)
 
     return `${d} ${mFull}`
+}
+
+export function showFullDate(isoDate) {
+    const date = new Date(isoDate)
+    const d = date.getDate()
+    const m = date.getMonth() + 1
+    const mFull = getFullMonth(m)
+    const y = date.getFullYear()
+
+    const h = pad(date.getHours(), 2)
+    const i = pad(date.getMinutes(), 2)
+    return `${d} ${mFull} ${y}, ${h}:${i}`
 }
 
 export default function showDate(isoDate) {

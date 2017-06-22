@@ -3,24 +3,30 @@ import { Link } from "react-router-dom"
 import { getClassFromTags } from "../../lib/helpers"
 import showDate from "../../lib/showDate"
 import classnames from "classnames"
+import Select from "../../core/components/NewSelect"
 
 export default class Card extends React.Component {
     render() {
-        const { guid, title, excerpt, startDate, endDate, url } = this.props.entity
+        const { entity } = this.props
 
         return (
-            <div className="card-blog-post">
-                <div className="card-blog-post__post">
-                    <Link to={`${url}`} className="card-blog-post__title">
-                        {title}
-                    </Link>
-
-                    <i>{showDate(startDate)} - {showDate(endDate)}</i>
-
-                    <div className="card-blog-post__content">
-                        {excerpt}
+            <div className="card-event">
+                <Link to={entity.url} className="card-event__picture" title={entity.title} style={{backgroundColor:"#8fcae7"}} />
+                <div className="card-event__content">
+                    <div className="date">{showDate(entity.startDate)}</div>
+                    <Link to={entity.url} className="title">{entity.title}</Link>
+                    <div className="card-event__bottom">
+                        <Select name="selector" options={{test: "Test", test2: "Test 2"}}/>
+                        <div className="people">
+                            <div className="face" />
+                            <div className="face" />
+                            <div className="face" />
+                            <div className="face" />
+                            <div className="people__more">+6</div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         )
     }

@@ -58,9 +58,11 @@ export default class Featured extends React.Component {
                 // not an in-card view
                 if (backgroundImage) {
                     return (
-                        <div style={{"backgroundImage": `url(${backgroundImage})`, "backgroundPositionY": featured.positionY + "%"}} className={classnames({"lead ___content": true, "___video": featured.video})} onClick={this.playVideo}>
+                        <div className={classnames({"lead ___content": true, "___video": featured.video, "___event": this.props.event, "___bottom": this.props.bottom})}>
+                            <div className="lead__background" style={{"backgroundImage": `url(${backgroundImage})`, "backgroundPositionY": featured.positionY + "%"}} onClick={this.playVideo} />
                             <div className="lead__justify">
                                 {playButton}
+                                {this.props.children}
                             </div>
                             {videoModal}
                         </div>

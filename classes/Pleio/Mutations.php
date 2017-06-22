@@ -292,7 +292,7 @@ class Mutations {
 
         $result = $entity->save();
 
-        if (in_array($entity->getSubtype(), ["blog", "news", "page"])) {
+        if (in_array($entity->getSubtype(), ["news", "blog", "page", "event"])) {
             if (isset($input["isFeatured"])) {
                 $entity->isFeatured = $input["isFeatured"];
             }

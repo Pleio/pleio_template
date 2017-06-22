@@ -29,8 +29,6 @@ class EditFileFolder extends React.Component {
 
         const values = this.refs.form.getValues()
 
-        console.log(values)
-
         this.props.mutate({
             variables: {
                 input: {

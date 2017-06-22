@@ -2,7 +2,7 @@ import React from "react"
 import NotFound from "../core/NotFound"
 import EditCore from "../core/Edit"
 import DeleteCore from "../core/Delete"
-import Modal from "../core/components/Modal"
+import ActionContainer from "../core/components/ActionContainer"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
@@ -62,10 +62,10 @@ class Edit extends React.Component {
         }
 
         return (
-            <Modal title="Agenda-item wijzigen" full={true} noParent={true} onClose={this.onClose}>
+            <ActionContainer title="Evenement wijzigen" onClose={this.onClose}>
                 <EditCore subtype="event" viewer={viewer} entity={entity} featured={true} refetchQueries={["InfiniteList"]} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
-                <DeleteCore title="Agenda-item verwijderen" ref="deleteModal" entity={entity} afterDelete={this.afterDelete} />
-            </Modal>
+                <DeleteCore title="Evenement verwijderen" ref="deleteModal" entity={entity} afterDelete={this.afterDelete} />
+            </ActionContainer>
         )
     }
 }

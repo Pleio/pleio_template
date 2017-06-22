@@ -1,4 +1,6 @@
 import React from "react"
+import { graphql } from "react-apollo"
+import gql from "graphql-tag"
 import { Link } from "react-router-dom"
 import ContentHeader from "../core/components/ContentHeader"
 import EventsList from "./containers/EventsList"
@@ -20,16 +22,26 @@ class List extends React.Component {
     }
 
     render() {
+        const { viewer } = this.props.data
+
+        let add
+        if (viewer && viewer.canWriteToContainer) {
+            add = (
+                <div className="col-right">
+                    <Link to={`events/add`} className="button ___large ___add">
+                        <span>Nieuw evenement</span>
+                    </Link>
+                </div>
+            )
+        }
+
         return (
             <div className="page-container">
                 <Document title="Evenementen" />
                 <ContentHeader>
-                    <h3 className="main__title">
-                        Agenda
-                    </h3>
+                    <h3 className="main__title">Evenementen</h3>
                     <ContentFilters page="events" onChange={this.onChangeFilter} value={this.state.tags} selectClassName="selector ___margin-bottom-mobile ___filter">
-                        <Link to="/events/add" className="right-lg">
-                        </Link>
+                        {add}
                     </ContentFilters>
                 </ContentHeader>
                 <section className="section ___grey ___grow">
@@ -40,4 +52,14 @@ class List extends React.Component {
     }
 }
 
-export default List
+const Query = gql`
+    query EventsList {
+        viewer {
+            guid
+            loggedIn
+            canWriteToContainer(type: group)
+        }
+    }
+`
+
+export default graphql(Query)(List)
