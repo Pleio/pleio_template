@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
 class UserMenu extends React.Component {
     render() {
@@ -16,18 +16,18 @@ class UserMenu extends React.Component {
             return (
                 <ul className="navigation__actions">
                     <li>
-                        <Link to="/bookmarks" onClick={this.props.onClick} title="Bewaard" className="navigation__action ___bookmarks">
+                        <NavLink to="/bookmarks" onClick={this.props.onClick} title="Bewaard" className="navigation__action ___bookmarks">
                             <span>Bewaard</span>
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to="/search" title="Zoeken" className="navigation__action ___search" />
+                        <NavLink to="/search" title="Zoeken" className="navigation__action ___search" />
                     </li>
                     <li>
-                        <Link to={"/profile/" + this.props.viewer.user.username} onClick={this.props.onClick} title="Account" className="navigation__action ___account">
+                        <NavLink to={"/profile/" + this.props.viewer.user.username} onClick={this.props.onClick} title="Account" className="navigation__action ___account">
                             <div style={{backgroundImage: "url('" + this.props.viewer.user.icon + "')"}} className="navigation__picture"></div>
                             <span>{this.props.viewer.user.name}</span>
-                        </Link>
+                        </NavLink>
                     </li>
                 </ul>
             )
@@ -35,17 +35,17 @@ class UserMenu extends React.Component {
             return (
                 <ul className="navigation__actions">
                     <li>
-                        <a onClick={this.toggleSearch} title="Zoeken" className="navigation__action ___search"></a>
+                        <NavLink to="/search" title="Zoeken" className="navigation__action ___search" />
                     </li>
                     <li>
-                        <Link to="/login" title="Inloggen" className="navigation__action ___login">
+                        <NavLink to="/login" title="Inloggen" className="navigation__action ___login">
                             Inloggen
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to="/register" title="Registeren" className="navigation__action ___register">
+                        <NavLink to="/register" title="Registeren" className="navigation__action ___register">
                             Registeren
-                        </Link>
+                        </NavLink>
                     </li>
                 </ul>
             )

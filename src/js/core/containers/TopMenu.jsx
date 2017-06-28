@@ -1,10 +1,10 @@
 import React from "react"
-import { NavLink } from "react-router-dom"
+import { NavLink, withRouter } from "react-router-dom"
 import UserMenu from "./UserMenu"
 import UserMobileMenu from "./UserMobileMenu"
 import classnames from "classnames"
 
-export default class TopMenu extends React.Component {
+class TopMenu extends React.Component {
     constructor(props) {
         super(props)
 
@@ -29,7 +29,11 @@ export default class TopMenu extends React.Component {
     }
 
     onSearch(e) {
-        window.location.href = `/search?q=${this.state.q}`
+        e.preventDefault()
+        const { history } = this.props
+
+        this.closeMobileMenu()
+        history.push(`/search/results?q=${this.state.q}`)
     }
 
     render() {
@@ -126,3 +130,5 @@ export default class TopMenu extends React.Component {
         )
     }
 }
+
+export default withRouter(TopMenu)

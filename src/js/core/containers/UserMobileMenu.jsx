@@ -31,17 +31,17 @@ export default class UserMobileMenu extends React.Component {
             menuItems = (
                 <ul className="mobile-navigation__actions">
                     <li>
-                        <a href="#" onClick={this.toggleSearch} title="Zoeken" className="mobile-navigation__action ___search" />
+                        <NavLink to="/search" title="Zoeken" className="mobile-navigation__action ___search" />
                     </li>
                     <li>
-                        <a href="#" onClick={this.props.onClick} title="Inloggen" className="mobile-navigation__action ___login">
+                        <NavLink to="/login" title="Inloggen" className="mobile-navigation__action ___login">
                             Inloggen
-                        </a>
+                        </NavLink>
                     </li>
                     <li>
-                        <a href="#" onClick={this.props.onClick} title="Registreren" className="mobile-navigation__action ___register">
+                        <NavLink to="/register" title="Registreren" className="mobile-navigation__action ___register">
                             Registreren
-                        </a>
+                        </NavLink>
                     </li>
                 </ul>
             )
