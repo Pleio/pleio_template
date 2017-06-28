@@ -30,7 +30,7 @@ export default class Featured extends React.Component {
         let playButton
         if (featured.video) {
             playButton = (
-                <div className={classnames({"play-button":true, "___small":inCard})} />
+                <div className={classnames({"play-button":true, "___small":inCard})} onClick={this.playVideo} />
             )
         }
 
