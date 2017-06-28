@@ -5,7 +5,6 @@ import { getQueryVariable } from "../lib/helpers"
 import Errors from "./components/Errors"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
-import { showModal } from "../lib/actions"
 import { logErrors } from "../lib/helpers"
 import { Link } from "react-router-dom"
 

@@ -1,6 +1,5 @@
 import React from "react"
 import classNames from "classnames"
-import { hideModal } from "../../lib/actions"
 
 let now = new Date().getTime()
 

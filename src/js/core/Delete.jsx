@@ -1,6 +1,5 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { hideModal } from "../lib/actions"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Errors from "./components/Errors"

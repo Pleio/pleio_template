@@ -1,5 +1,4 @@
 import React from "react"
-import { connect } from "react-redux"
 import AutocompleteList from "../containers/AutocompleteList"
 
 const subtypes = [{title:"Blog", subtype:"blog"}, {title:"Forum", subtype:"question"}, {title:"Nieuws", subtype:"news"}]

@@ -1,6 +1,5 @@
 import React from "react"
 import classNames from "classnames"
-import { hideModal } from "../../lib/actions"
 
 export default class Modal extends React.Component {
     constructor(props) {

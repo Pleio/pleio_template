@@ -1,6 +1,5 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { showModal, hideModal } from "../lib/actions"
 import { logErrors } from "../lib/helpers"
 import { graphql } from "react-apollo"
 import DeleteModal from "./Delete"

@@ -1,6 +1,5 @@
 import React from "react"
 import Modal from "./components/Modal"
-import { showModal } from "../lib/actions"
 import { logErrors } from "../lib/helpers"
 import { graphql } from "react-apollo"
 import { Link } from "react-router-dom"

@@ -1,6 +1,5 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { showModal } from "../lib/actions"
 import { graphql, gql } from "react-apollo"
 import ContentHeader from "../core/components/ContentHeader"
 import PageList from "./containers/PageList"

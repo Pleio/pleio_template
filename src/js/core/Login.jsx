@@ -9,7 +9,6 @@ import Form from "./components/Form"
 import { Link } from "react-router-dom"
 import InputField from "./components/InputField"
 import CheckField from "./components/CheckField"
-import { showModal, hideModal } from "../lib/actions"
 
 class Login extends React.Component {
     constructor(props) {

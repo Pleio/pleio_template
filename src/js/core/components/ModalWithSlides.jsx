@@ -1,6 +1,5 @@
 import React from "react"
 import classnames from "classnames"
-import { hideModal } from "../../lib/actions"
 
 class ModalWithSlides extends React.Component {
 
