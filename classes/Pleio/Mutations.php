@@ -1138,7 +1138,7 @@ class Mutations {
             throw new Exception("could_not_find");
         }
 
-        if (!$task->canEdit() || !$task instanceof \ElggObject) {
+        if (!$task->canEdit() || !$task instanceof \ElggObject || $task->getSubtype() !== "task") {
             throw new Exception("could_not_save");
         }
 
@@ -1149,6 +1149,32 @@ class Mutations {
         if ($result) {
             return [
                 "guid" => $task->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
+    }
+
+    static function attendEvent($input) {
+        $event = get_entity((int) $input["guid"]);
+        if (!$event) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$event instanceof \ElggObject || $event->getSubtype() !== "event") {
+            throw new Exception("could_not_save");
+        }
+
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            throw new Exception("not_logged_in");
+        }
+
+        $result = add_entity_relationship($user->guid, "event_attending", $event->guid);
+
+        if ($result) {
+            return [
+                "guid" => $event->guid
             ];
         }
 

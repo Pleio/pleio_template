@@ -36,6 +36,15 @@ const Query = gql`
                         url
                         icon
                     }
+                    attendees(limit: 5) {
+                        total
+                        edges {
+                            guid
+                            username
+                            name
+                            icon
+                        }
+                    }
                 }
             }
         }

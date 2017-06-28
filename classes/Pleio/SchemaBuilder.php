@@ -556,6 +556,18 @@ class SchemaBuilder {
                         return Resolver::getUser($object["ownerGuid"]);
                     }
                 ],
+                "attendees" => [
+                    "type" => $userListType,
+                    "args" => [
+                        "offset" => [
+                            "type" => Type::int()
+                        ],
+                        "limit" => [
+                            "type" => Type::int()
+                        ]
+                    ],
+                    "resolve" => "Pleio\Resolver::getAttendees"
+                ],
                 "comments" => [
                     "type" => function() use (&$objectType) {
                         return Type::listOf($objectType);
@@ -1741,6 +1753,23 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::editTask"
         ]);
 
+        $attendEventMutation = Relay::mutationWithClientMutationId([
+            "name" => "attendEvent",
+            "inputFields" => [
+                "guid" => [ "type" => Type::string() ],
+                "state" => [ "type" => Type::string() ]
+            ],
+            "outputFields" => [
+                "entity" => [
+                    "type" => $objectType,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::attendEvent"
+        ]);
+
         $mutationType = new ObjectType([
             "name" => "Mutation",
             "fields" => [
@@ -1775,7 +1804,8 @@ class SchemaBuilder {
                     "inviteToGroup" => $inviteToGroupMutation,
                     "acceptGroupInvitation" => $acceptGroupInvitation,
                     "changeGroupRole" => $changeGroupRoleMutation,
-                    "editTask" => $editTaskMutation
+                    "editTask" => $editTaskMutation,
+                    "attendEvent" => $attendEventMutation
             ]
         ]);
 

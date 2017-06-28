@@ -4,6 +4,7 @@ import { getClassFromTags } from "../../lib/helpers"
 import showDate from "../../lib/showDate"
 import classnames from "classnames"
 import Select from "../../core/components/NewSelect"
+import Attendees from "./Attendees"
 
 export default class Card extends React.Component {
     render() {
@@ -17,13 +18,7 @@ export default class Card extends React.Component {
                     <Link to={entity.url} className="title">{entity.title}</Link>
                     <div className="card-event__bottom">
                         <Select name="selector" options={{test: "Test", test2: "Test 2"}}/>
-                        <div className="people">
-                            <div className="face" />
-                            <div className="face" />
-                            <div className="face" />
-                            <div className="face" />
-                            <div className="people__more">+6</div>
-                        </div>
+                        <Attendees entity={entity} />
                     </div>
                 </div>
 

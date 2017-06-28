@@ -31,11 +31,11 @@ export default class Accordeon extends React.Component {
 
         return (
             <div className={this.props.className + " " + classnames({"___is-open": this.state.isOpen})}>
-                <div className={this.props.className + "__title"} onClick={this.toggleOpen}>
+                <div className={this.props.className + "__title"} onClick={this.toggleOpen} data-accordion-trigger="tablet">
                     {this.props.title}
                     {icon}
                 </div>
-                <div ref="items" className={this.props.className + "__items"} style={this.calculateHeight() ? {height: this.calculateHeight()} : {}}>
+                <div ref="items" className={this.props.className + "__items"} style={this.calculateHeight() ? {height: this.calculateHeight()} : {}} data-accordion-content>
                     <div>
                         {this.props.children}
                     </div>

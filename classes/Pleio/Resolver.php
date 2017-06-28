@@ -424,6 +424,36 @@ class Resolver {
         ];
     }
 
+    static function getAttendees($a, $args, $c) {
+        $entity = get_entity($a["guid"]);
+        if (!$entity || !$entity->getSubtype() === "event") {
+            return [
+                "total" => 0,
+                "edges" => []
+            ];
+        }
+
+        $options = [
+            "type" => "user",
+            "relationship" => "event_attending",
+            "relationship_guid" => $entity->guid,
+            "inverse_relationship" => false
+        ];
+
+        $total = elgg_get_entities_from_relationship(array_merge($options, ["count" => true]));
+        $attendees = elgg_get_entities_from_relationship($options);
+
+        $edges = [];
+        foreach ($attendees as $attendee) {
+            $edges[] = Mapper::getUser($attendee);
+        }
+
+        return [
+            "total" => $total,
+            "edges" => $edges
+        ];
+    }
+
     static function getInvite($a, $args, $c) {
         $dbprefix = elgg_get_config("dbprefix");
         $site = elgg_get_site_entity();

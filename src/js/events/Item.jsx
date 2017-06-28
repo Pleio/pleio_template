@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import { Link } from "react-router-dom"
 import gql from "graphql-tag"
+import { Link } from "react-router-dom"
 import CommentList from "../core/components/CommentList"
 import EditModal from "../core/Edit"
 import DeleteModal from "../core/Delete"
@@ -14,6 +14,7 @@ import RichTextView from "../core/components/RichTextView"
 import LikeAndBookmark from "../core/components/LikeAndBookmark"
 import Document from "../core/components/Document"
 import Featured from "../core/components/Featured"
+import AttendButtons from "./components/AttendButtons"
 
 class Item extends React.Component {
     constructor(props) {
@@ -92,11 +93,7 @@ class Item extends React.Component {
                                     </div>
                                 </div>
                                 <div className="col-sm-3 end-sm bottom-sm col-lg-6">
-                                    <div className="flexer ___gutter">
-                                        <button className="button">Accepteren</button>
-                                        <button className="button ___grey">Misschien</button>
-                                        <button className="button ___line">Afwijzen</button>
-                                    </div>
+                                    <AttendButtons entity={entity} />
                                 </div>
                             </div>
                         </div>
