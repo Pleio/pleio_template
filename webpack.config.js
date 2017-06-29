@@ -51,7 +51,12 @@ module.exports = {
     devServer: {
         publicPath: "http://localhost:9001/mod/pleio_template/build/",
         hot: true,
-        port: 9001
+        port: 9001,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+          "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+        }
     },
     devtool: "cheap-eval-source-map",
     plugins: [
