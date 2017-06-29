@@ -2,54 +2,29 @@
 $site = elgg_get_site_entity();
 elgg_set_page_owner_guid($site->guid);
 
-$title = $site->title;
+$page = get_input("page");
+if ($page && $page[0] === "view") {
+    $object = pleio_template_get_object($page[1]);
+}
 
-$isomorphic = elgg_get_plugin_setting("isomorphic", "pleio_template");
-if ($isomorphic === "yes") {
-    $cmd = "/usr/local/bin/node " . dirname(dirname(__FILE__)) . "/.babel/RunServer.js";
-
-    $desc = array(
-        0 => array("pipe", "r"),
-        1 => array("pipe", "w"),
-        2 => array("pipe", "r")
-    );
-
-    $p = proc_open($cmd, $desc, $pipes);
-
-    $input = json_encode([
-        "url" => $_SERVER["REQUEST_URI"],
-        "site" => $site->url,
-        "cookies" => [
-            "Elgg" => $_COOKIE["Elgg"]
-        ]
-    ]);
-
-    fwrite($pipes[0], $input);
-    fclose($pipes[0]);
-
-    $output = stream_get_contents($pipes[1]);
-    $errors = stream_get_contents($pipes[2]);
-
-    fclose($pipes[1]);
-    fclose($pipes[2]);
-    $flag = proc_close($p);
-
-    if ($output) {
-        $output = json_decode($output);
-    }
-
-    $content = "";
-    if ($output->content) {
-        $content = $output->content;
-    }
-
-    unset($output->store->apollo->queries);
-    $store = $output->store;
+if ($object) {
+    $title = ($object->title ? $object->title : $object->name) . " · " . $site->name;
+    $metas = [
+        "og:title" => $object->title ? $object->title : $object->name,
+        "og:description" => str_replace("\"", "", elgg_get_excerpt($object->description)),
+        "og:type" => "article",
+        "og:image" => $object->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$object->guid}&lastcache={$object->featuredIcontime}" : "",
+        "og:video" => $object->featuredVideo ? $object->featuredVideo : "",
+        "og:url" => full_url(),
+        "og:site_name" => $site->name,
+        "article:published_time" => date("Y-m-d H:i", $object->time_created),
+        "article:modified_time" => date("Y-m-d H:i", $object->time_updated),
+    ];
 } else {
-    $content = "";
-    $store = null;
+    $title = $site->name;
+    $metas = [ "og:title" => $site->name ];
 }
 
 echo elgg_view_page($title, $content, "default", [
-    "store" => $store
+    "metas" => $metas
 ]);

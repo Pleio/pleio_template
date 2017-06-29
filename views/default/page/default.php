@@ -3,6 +3,7 @@ header("Content-type: text/html; charset=utf-8");
 $lang = get_current_language();
 
 $store = elgg_extract("store", $vars);
+$metas = elgg_extract("metas", $vars);
 
 if (webpack_dev_server_is_available()) {
     $path = "http://localhost:9001/";
@@ -31,6 +32,9 @@ $custom_js = elgg_is_active_plugin("custom_js");
     <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
     <meta name="version" content="1.0.0">
     <meta name="relative-path" content="">
+    <?php foreach ($metas as $name => $content): ?><meta name="<?php echo $name; ?>" content="<?php echo $content; ?>">
+    <?php endforeach; ?>
+
     <link href="<?php echo $path; ?>web.css?v=<?php echo $CONFIG->lastcache; ?>" rel="stylesheet" type="text/css">
 
     <?php if ($custom_css): ?>

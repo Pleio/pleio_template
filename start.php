@@ -215,6 +215,7 @@ function pleio_template_user_icon_url($hook, $type, $return_value, $params) {
 }
 
 function pleio_template_page_handler($page) {
+    set_input("page", $page);
     include("pages/react.php");
     return true;
 }
@@ -242,4 +243,22 @@ function webpack_dev_server_is_available() {
     } else {
         return false;
     }
+}
+
+function pleio_template_get_object($guid) {
+    $object = get_entity($guid);
+
+    if (!$object) {
+        return false;
+    }
+
+    if (!$object instanceof ElggObject) {
+        return false;
+    }
+
+    if (!in_array($object->getSubtype(), ["blog", "question", "news"])) {
+        return false;
+    }
+
+    return $object;
 }
