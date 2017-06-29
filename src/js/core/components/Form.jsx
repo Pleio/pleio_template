@@ -11,7 +11,6 @@ import RichTextField from "./RichTextField"
 import SelectField from "./SelectField"
 import CheckField from "./CheckField"
 import SwitchField from "./SwitchField"
-import ContentFiltersInputField from "./ContentFiltersInputField"
 import PropTypes from "prop-types"
 
 class Form extends React.Component {
@@ -140,7 +139,6 @@ class Form extends React.Component {
                 case SelectField:
                 case TextField:
                 case RichTextField:
-                case ContentFiltersInputField:
                 case DateTimeField:
                 case TagsField:
                 case IconField:
