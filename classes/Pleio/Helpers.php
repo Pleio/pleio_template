@@ -272,6 +272,7 @@ class Helpers {
         }
 
         $guid = (int) $entity->guid;
+        $user_guid = (int) elgg_get_logged_in_user_guid();
         $type = sanitise_string($entity->type);
         $subtype = (int) $entity->subtype;
 
@@ -279,6 +280,11 @@ class Helpers {
             INSERT INTO elgg_entity_views (guid, type, subtype, container_guid, site_guid, views)
             VALUES ({$guid}, '{$type}', {$subtype}, {$entity->container_guid}, {$entity->site_guid}, 1)
             ON DUPLICATE KEY UPDATE views = views + 1;
+        ");
+
+        insert_data("
+            INSERT INTO elgg_entity_views_log (entity_guid, type, subtype, container_guid, site_guid, performed_by_guid, time_created)
+            VALUES ({$guid}, '${type}', {$subtype}, {$entity->container_guid}, {$entity->site_guid}, {$user_guid}, NOW());
         ");
 
         if (is_memcache_available()) {

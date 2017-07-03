@@ -9,6 +9,7 @@ function pleio_template_autoloader($class) {
 }
 
 define("PLEIO_TEMPLATE_LESS", dirname(__FILE__) . "/src/less/");
+define("PLEIO_SUBTYPES", ["news", "blog", "question"]);
 
 function pleio_template_init() {
     elgg_register_plugin_hook_handler("index", "system", "pleio_template_index_handler");
@@ -52,9 +53,28 @@ function pleio_template_init() {
         $domain = ini_get("session.cookie_domain");
         setcookie("CSRF_TOKEN", $token, 0, "/", $domain);
     }
+
+    if (function_exists("pleio_register_console_handler")) {
+        pleio_register_console_handler('send:emailoverview', 'Send an e-mail overview to a specific user <user_guid>.', 'pleio_console_send_emailoverview');
+    }
 }
 
 elgg_register_event_handler("init", "system", "pleio_template_init");
+
+function pleio_console_send_emailoverview($params) {
+    $user = get_user_by_username($params[0]);
+
+    //$ia = elgg_set_ignore_access(true);
+
+    if ($user) {
+        echo "Sending overview..." . PHP_EOL;
+        Pleio\EmailOverviewHandler::sendOverview($user);
+    } else {
+        echo "Could not find user by username." . PHP_EOL;
+    }
+
+    //elgg_set_ignore_access($ia);
+}
 
 function pleio_template_index_handler($hook, $type, $return_value, $params) {
     if ($return_value) {
@@ -145,10 +165,10 @@ function pleio_template_plugins_settings_save($hook, $type, $return_value, $para
     }
 
     $params = get_input("params");
-    $params["menu"] = serialize($menu);
-    $params["profile"] = serialize($profile);
-    $params["filters"] = serialize($filters);
-    $params["footer"] = serialize($footer);
+    $params["menu"] = json_encode($menu);
+    $params["profile"] = json_encode($profile);
+    $params["filters"] = json_encode($filters);
+    $params["footer"] = json_encode($footer);
     set_input("params", $params);
 
     $file = new \ElggFile();

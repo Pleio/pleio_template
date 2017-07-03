@@ -572,7 +572,7 @@ class Mutations {
             [ "key" => "description", "name" => "Over mij" ]
         ];
 
-        $customFields = elgg_get_plugin_setting("profile", "pleio_template") ? unserialize(elgg_get_plugin_setting("profile", "pleio_template")) : [];
+        $customFields = elgg_get_plugin_setting("profile", "pleio_template") ? json_decode(elgg_get_plugin_setting("profile", "pleio_template"), true) : [];
 
         $allFields = array_merge($defaultFields, $customFields);
 
@@ -896,7 +896,7 @@ class Mutations {
         }
 
         if ($input["settings"]) {
-            $entity->setPrivateSetting("settings", serialize($input["settings"]));
+            $entity->setPrivateSetting("settings", json_encode($input["settings"]));
         }
 
         $result = $entity->save();

@@ -10,24 +10,24 @@ class Resolver {
         $showLeader = (elgg_get_plugin_setting("show_leader", "pleio_template") === "yes") ? true : false;
         $showInitiative = (elgg_get_plugin_setting("show_initiative", "pleio_template") === "yes") ? true : false;
 
-        $menu = unserialize(elgg_get_plugin_setting("menu", "pleio_template"));
+        $menu = json_decode(elgg_get_plugin_setting("menu", "pleio_template"));
         if (!$menu) {
             $menu = [];
         }
 
-        $profile = unserialize(elgg_get_plugin_setting("profile", "pleio_template"));
+        $profile = json_decode(elgg_get_plugin_setting("profile", "pleio_template"));
         if (!$profile) {
             $profile = [];
         }
 
-        $filters = unserialize(elgg_get_plugin_setting("filters", "pleio_template"));
+        $filters = json_decode(elgg_get_plugin_setting("filters", "pleio_template"));
         if (!$filters) {
             $filters = [];
         }
 
         $theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
 
-        $footer = unserialize(elgg_get_plugin_setting("footer", "pleio_template"));
+        $footer = json_decode(elgg_get_plugin_setting("footer", "pleio_template"));
         if (!$footer) {
             $footer = [];
         }
@@ -133,7 +133,7 @@ class Resolver {
                 $activities[] = array(
                     "guid" => "activity:" . $object->guid,
                     "type" => "create",
-                    "object_guid" => $object->guid
+                    "object" => $object
                 );
             }
         }
@@ -317,10 +317,7 @@ class Resolver {
                 case "page_widget":
                     return Mapper::getWidget($entity);
                 default:
-                    $result = Mapper::getObject($entity);
-                    return array_merge($result, [
-                        "isHighlighted" => $args["isHighlighted"] ? true : false
-                    ]);
+                    return Mapper::getObject($entity);
             }
         }
     }
@@ -623,7 +620,7 @@ class Resolver {
             [ "key" => "description", "name" => "Over mij" ]
         ];
 
-        $customFields = elgg_get_plugin_setting("profile", "pleio_template") ? unserialize(elgg_get_plugin_setting("profile", "pleio_template")) : [];
+        $customFields = elgg_get_plugin_setting("profile", "pleio_template") ? json_decode(elgg_get_plugin_setting("profile", "pleio_template"), true) : [];
 
         $allFields = array_merge($defaultFields, $customFields);
 

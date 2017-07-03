@@ -719,10 +719,7 @@ class SchemaBuilder {
                 "object" => [
                     "type" => Type::nonNull($objectType),
                     "resolve" => function($activity) {
-                        return Resolver::getEntity(null, [
-                            "guid" => $activity["object_guid"],
-                            "isHighlighted" => $activity["isHighlighted"]
-                        ], null);
+                        return Mapper::getObject($activity["object"]);
                     }
                 ]
             ]

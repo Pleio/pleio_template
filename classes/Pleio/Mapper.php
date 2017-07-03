@@ -39,7 +39,7 @@ class Mapper {
         ];
     }
 
-    static function getObject($entity) {
+    static function getObject($entity, $is_highlighted = false) {
         return [
             "guid" => $entity->guid,
             "status" => 200,
@@ -48,6 +48,7 @@ class Mapper {
             "subtype" => $entity->getSubtype(),
             "source" => $entity->source,
             "isFeatured" => $entity->isFeatured,
+            "isHighlighted" => $is_highlighted ? true : false,
             "featured" => [
                 "image" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
                 "positionY" => $entity->featuredPositionY ? $entity->featuredPositionY : 50,
@@ -91,7 +92,7 @@ class Mapper {
             "type" => $entity->widget_type ? $entity->widget_type : "Empty",
             "row" => $entity->row ? $entity->row : 1,
             "width" => $entity->width ? $entity->width : 4,
-            "settings" => $entity->getPrivateSetting("settings") ? unserialize($entity->getPrivateSetting("settings")) : []
+            "settings" => $entity->getPrivateSetting("settings") ? json_decode($entity->getPrivateSetting("settings")) : []
         ];
     }
 }
