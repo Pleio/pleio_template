@@ -2,8 +2,30 @@
 namespace Pleio;
 
 class EmailOverviewHandler {
-    static function getRecipients() {
+    static function sendToAll($use_queue = true) {
+        $dbprefix = elgg_get_config("dbprefix");
+        $site = elgg_get_site_entity();
 
+        $site_guid = (int) $site->guid;
+
+        $sql = "SELECT r.guid_one FROM {$dbprefix}entity_relationships r
+            JOIN
+                {$dbprefix}private_settings ps ON r.guid_one = ps.entity_guid
+            WHERE r.relationship = 'member_of_site'
+                AND r.guid_two = {$site_guid}
+                AND ps.name = 'email_overview'
+        ";
+
+        $members = get_data($sql);
+        foreach ($members as $member) {
+            $member = get_entity($member->guid_one);
+
+            if ($use_queue) {
+                PleioAsyncTaskhandler::schedule("Pleio\EmailOverviewHandler::sendOverview", [ $member ]);
+            } else {
+                EmailOverviewHandler::sendOverview($member);
+            }
+        }
     }
 
     static function sendOverview(\ElggUser $user) {

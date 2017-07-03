@@ -46,6 +46,8 @@ function pleio_template_init() {
 
     elgg_unregister_plugin_hook_handler("route", "groups", "group_tools_route_groups_handler");
 
+    elgg_register_plugin_hook_handler("cron", "daily", "pleio_template_cron_handler");
+
     elgg_extend_view("css/admin", "pleio_template/css/admin");
 
     if (!isset($_COOKIE["CSRF_TOKEN"])) {
@@ -55,25 +57,17 @@ function pleio_template_init() {
     }
 
     if (function_exists("pleio_register_console_handler")) {
-        pleio_register_console_handler('send:emailoverview', 'Send an e-mail overview to a specific user <user_guid>.', 'pleio_console_send_emailoverview');
+        pleio_register_console_handler('send:emailoverview', 'Send an e-mail overview to all the users.', 'pleio_console_send_emailoverview');
     }
 }
 
 elgg_register_event_handler("init", "system", "pleio_template_init");
 
-function pleio_console_send_emailoverview($params) {
-    $user = get_user_by_username($params[0]);
-
-    //$ia = elgg_set_ignore_access(true);
-
-    if ($user) {
-        echo "Sending overview..." . PHP_EOL;
-        Pleio\EmailOverviewHandler::sendOverview($user);
-    } else {
-        echo "Could not find user by username." . PHP_EOL;
-    }
-
-    //elgg_set_ignore_access($ia);
+function pleio_console_send_emailoverview() {
+    echo "Sending an e-mailoverview to all users." . PHP_EOL;
+    $ia = elgg_set_ignore_access(true);
+    Pleio\EmailOverviewHandler::sendToAll($use_queue = false);
+    elgg_set_ignore_access($ia);
 }
 
 function pleio_template_index_handler($hook, $type, $return_value, $params) {
@@ -175,7 +169,7 @@ function pleio_template_plugins_settings_save($hook, $type, $return_value, $para
     $file->owner_guid = $site->guid;
     $file->access_id = ACCESS_PUBLIC;
     $file->setFilename("pleio_template/{$site->guid}_logo.jpg");
-    
+
     $logo = get_resized_image_from_uploaded_file("logo", 404, 231, false, true);
     $remove_logo = get_input("remove_logo");
 
@@ -188,7 +182,7 @@ function pleio_template_plugins_settings_save($hook, $type, $return_value, $para
         $site->save();
     } elseif ($remove_logo === "1") {
         $file->delete();
-        
+
         unset($site->logotime);
         $site->save();
     }
@@ -281,4 +275,8 @@ function pleio_template_get_object($guid) {
     }
 
     return $object;
+}
+
+function pleio_template_cron_handler($hook, $period, $return, $params) {
+    Pleio\EmailOverviewHandler::sendToAll();
 }
