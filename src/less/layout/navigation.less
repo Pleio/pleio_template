@@ -13,8 +13,8 @@ This file contains the styling for the main navigation.
     bottom: 0;
     visibility: hidden;
     opacity: 0;
-    transition: all @trans-normal;
-    background-color: rgba(0, 0, 0, 0.15);
+    transition: visibility @trans-normal, opacity @trans-normal;
+    background: fade(black, 15%);
     z-index: 10;
 
     @media (max-width: @screen-md-max) {

@@ -16,7 +16,11 @@
     opacity: 0;
     transition: visibility @trans-fast, opacity @trans-fast;
 
-    .form__time:hover &,
+    &.___is-open {
+        visibility: visible;
+        opacity: 1;
+    }
+
     .___show-options & {
         visibility: visible;
         opacity: 1;

@@ -105,7 +105,8 @@ button.button {
         background-color: @color-secondary;
     }
 
-    .button:not(.___grey) + & {
+    .button:not(.___grey) + &,
+    .button:not(.___grey) + * + & {
         &:hover,
         &:active {
             background-color: @color-grey--60;
@@ -337,7 +338,7 @@ button.button {
 
         .icon(pencil);
         &:before {
-            margin: 0 0.5rem 0.2rem 0;
+            margin: 0 .8rem .1rem 0;
             font-size: 1.5rem;
         }
 

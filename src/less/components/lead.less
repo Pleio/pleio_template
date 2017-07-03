@@ -1,6 +1,5 @@
 .lead {
     position: relative;
-    display: flex; // IE10-11 COLUMN FIX
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -43,25 +42,25 @@
     }
 
     &.___event {
-        display: block;
-
         @media ( max-width: @screen-xs-max ) {
-            .lead__title {
-                color: @color-secondary;
-            }
+            margin-bottom: -5.5rem;
+            padding-top: 1rem;
+            padding-bottom: 3.5rem;
 
-            color: @color-grey--60;
-            text-shadow: none;
-
-            &:before {
-                display: none;
-            }
+            //.lead__title {
+            //    color: @color-secondary;
+            //}
+            //
+            //color: @color-grey--60;
+            //text-shadow: none;
+            //
+            //&:before {
+            //    display: none;
+            //}
         }
     }
 
     &.___forum {
-        display: block;
-
         > .container {
             position: relative;
             width: 100%;
@@ -128,10 +127,13 @@
         }
 
         .lead__justify {
-            min-height: 48rem;
 
             @media (max-width: @screen-xs-max) {
                 min-height: 26rem;
+            }
+
+            @media (min-width: @screen-sm) {
+                min-height: 48rem;
             }
         }
 
@@ -207,6 +209,21 @@
         .lead.___forum & {
             height: 20rem;
         }
+
+        .lead.___event & {
+            &:before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                display: block;
+                background: fade(@color-quaternary, 25%);
+                background: linear-gradient(to right, fade(@color-quaternary, 40%) 0%, fade(@color-quaternary, 0%) 100%);
+            }
+        }
     }
 }
 
@@ -215,7 +232,6 @@
     display: flex;
     align-items: center;
     width: 100%;
-    min-height: 20rem;
 
     @media (max-width: @screen-xs-max) {
         min-height: 13rem;
@@ -236,7 +252,7 @@
         width: 100%;
     }
 
-    .lead.___bottom & {
+    .lead.___event & {
         align-items: flex-end;
         text-align: left;
     }
@@ -265,10 +281,6 @@
     @media( min-width: @screen-sm ) {
         .font(title-small);
     }
-}
-
-.lead__content {
-    margin: 4rem 0 0 0;
 }
 
 .lead__button {

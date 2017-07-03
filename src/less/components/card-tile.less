@@ -4,7 +4,7 @@
 
     @media ( min-width: @screen-sm ) {
         .row.fill & {
-            height: 100%; // fill to row height
+            flex: 1 0 auto;
         }
     }
 }
@@ -125,46 +125,7 @@
     }
 
     @media ( min-width: @screen-sm ) {
-        min-height: 35.5rem;
-
-        &.___small-card {
-            min-height: 27.5rem;
-        }
-
-        &.homepage-block {
-            min-height: 16rem;
-        }
-
-        &.navigation-block {
-            min-height: 27.4rem;
-        }
-    }
-
-    &.___blue,
-    &.___green {
-        color: @color-white;
-
-        .card-tile__title {
-            .font(title-small);
-        }
-
-        .read-more__circle {
-            background-color: @color-white;
-        }
-
-        &:hover {
-            .card-tile__title {
-                color: @color-white;
-            }
-        }
-    }
-
-    &.___blue {
-        background-color: @color-primary;
-
-        .read-more__circle:before {
-            color: @color-primary;
-        }
+        min-height: 27.5rem;
     }
 
     &.___contact {
@@ -192,6 +153,7 @@
                 .card-tile__title {
                     .font(title-small);
                     padding: 0;
+                    .ellipsis(@line-height--title-small, 5);
                 }
             }
         }
@@ -221,10 +183,6 @@
 
             &:hover {
                 color: @color-white;
-            }
-
-            @media ( min-width: @screen-sm ) {
-                .font(title-extra-large);
             }
         }
 
@@ -491,7 +449,7 @@
 
         &:after {
             opacity: 0;
-            visibility: none;
+            visibility: hidden;
         }
     }
 
@@ -598,8 +556,7 @@
     flex: 1 1 auto;
     width: 100%;
     padding: 2.5rem 3rem 3rem;
-    z-index: 0;  // stay on top of grey background gradient
-    position: relative;
+    z-index: 0; // stay on top of grey background gradient
     overflow: hidden; // forces word break
 
     @media ( max-width: @screen-xs-max ) {
@@ -607,7 +564,8 @@
     }
 
     p {
-        .ellipsis(@line-height--base, 4);
+        margin: 1rem 0 0 0;
+        .ellipsis(@line-height--base, 3);
 
         @media ( max-width: @screen-xs-max ) {
             display: none;
@@ -620,92 +578,30 @@
 }
 
 .card-tile__title {
-    font-size: @font-size--title-small;
-    line-height: @line-height--title-small;
-    margin: 0 0 1rem 0;
-
     @media ( max-width: @screen-xs-max ) {
         padding: 0 4rem 0 0;
-        .font(medium);
         color: @color-white;
         text-shadow: @text-shadow;
 
         .card-tile.___no-image & {
             text-shadow: none;
         }
+
+        &:not(.___large) {
+            .font(medium);
+            .ellipsis(@line-height--medium, 2);
+        }
     }
 
-    .___small-card & {
-        margin: 0;
+    @media ( min-width: @screen-sm ) {
+        &:not(.___large) {
+            .font(title-small);
+            .ellipsis(@line-height--title-small, 2);
+        }
+
+        &.___large {
+            .font(title-extra-large);
+            .ellipsis(@line-height--title-main, 4);
+        }
     }
-}
-
-.card-tile__subtitle {
-    .font(base);
-    color: @color-primary;
-    margin: 0 0 1rem 0;
-}
-
-.card-tile__small-text {
-    .font(medium);
-}
-
-.card-tile__icon {
-    display: block;
-    position: relative;
-    min-height: 10rem;
-    text-align: center;
-    color: @color-primary;
-    font-size: 8rem;
-    transition: color @trans-fast;
-
-    [href=""] > & {
-        color: @color-grey--50;
-    }
-
-    .card-tile:hover & {
-        color: @color-tertiary;
-    }
-
-    &.___positioned-right {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        top: 0;
-        right: 4.5rem;
-        bottom: 0;
-        font-size: 6.5rem;
-    }
-
-    &.___large {
-        font-size: 8rem;
-    }
-
-    &.___nudge-to-right {
-        margin-right: -1.5rem;
-    }
-}
-
-.card-tile__link {
-    display: block;
-    margin: -(@calc-line-height/2) 0 -(@calc-line-height/2);
-    text-decoration: none;
-    color: @color-black;
-    transition: color @trans-fast;
-
-    [href=""] > & {
-        color: transparent;
-    }
-
-    .card-tile:hover & {
-        color: @color-primary;
-    }
-}
-
-.card-tile__link__icon {
-    padding-right: 0.8rem;
-    font-size: 1.1rem;
-    position: relative;
-    top: -0.1rem;
 }

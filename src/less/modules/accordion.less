@@ -1,14 +1,18 @@
-[data-accordion-trigger] {
+.accordion__trigger {
+    user-select: none;
     .icon(angle-down, after);
     &:after {
         font-size: 0.8rem;
         color: @color-secondary;
-        padding: 0 1rem;
         transition: transform @trans-fast;
+
+        @media ( max-width: @screen-xs-max ) {
+            padding: 0 1rem;
+        }
     }
 }
 
-[data-accordion-trigger="mobile"] {
+.accordion__trigger.___mobile {
     @media ( max-width: @screen-xs-max ) {
         display: flex;
         justify-content: space-between;
@@ -37,7 +41,7 @@
         }
     }
 
-    + [data-accordion-content] {
+    + .accordion__content {
         @media ( max-width: @screen-xs-max ) {
             height: 0;
             overflow: hidden;
@@ -60,7 +64,7 @@
     }
 }
 
-[data-accordion-trigger="tablet"] {
+.accordion__trigger.___tablet {
     @media ( max-width: @screen-xs-max ) {
         .card & {
             margin: -2rem -2rem 0;
@@ -96,7 +100,7 @@
         }
     }
 
-    + [data-accordion-content] {
+    + .accordion__content {
         @media ( max-width: @screen-xs-max ) {
             .card & {
                 margin-bottom: -2rem;

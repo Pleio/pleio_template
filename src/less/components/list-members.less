@@ -1,8 +1,16 @@
 .list-members {
     flex: 1 1 auto;
-    padding: 0 1rem 3rem 0;
+    padding-bottom: 2rem;
     overflow: hidden;
     overflow-y: auto;
+
+    @media ( min-width: @screen-lg ) {
+        padding-right: 1rem;
+    }
+
+    .search-bar + & {
+        padding-top: 1rem;
+    }
 }
 
 .list-members__member {

@@ -12,7 +12,7 @@
     opacity: 0;
     transition: visibility @trans-fast, opacity @trans-fast;
 
-    .form__date:hover & {
+    &.___is-open {
         visibility: visible;
         opacity: 1;
     }
@@ -30,7 +30,7 @@
 .calendar__months {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    //justify-content: space-between;
     font-weight: bold;
     border-bottom: 1px solid @color-grey--50;
 
@@ -57,14 +57,18 @@
     }
 
     span {
+        flex: 1 1 auto;
         padding-top: .1rem;
         white-space: nowrap;
+        user-select: none;
+        text-align: center;
     }
 }
 
 .calendar__days {
     display: flex;
     border-bottom: 1px solid @color-grey--50;
+    font-size: 1.5rem;
 }
 
 .calendar__numbers {
@@ -78,9 +82,9 @@
         color: @color-secondary;
         transition: background-color @trans-fast, color @trans-fast;
 
-        &.___grey:hover,
+        &.___other-month:hover,
         &:hover {
-            background-color: @color-secondary--lighter;
+            background-color: @color-secondary--lightest;
         }
 
         &:before {
@@ -95,11 +99,15 @@
             z-index: 1;
         }
 
-        &.___grey {
+        &.___other-month {
             background-color: @color-grey--20;
         }
 
-        &.___current {
+        &.___was-selected {
+            background-color: @color-secondary--lighter;
+        }
+
+        &.___is-selected {
             background-color: @color-secondary;
             color: white;
         }
