@@ -34,11 +34,11 @@ export default class List extends React.Component {
                         <div className="row">
                             <div className="col-sm-12 col-lg-4 last-lg top-lg">
                                 <div className="row">
-                                    <Trending />
+                                    <Trending showmd />
                                 </div>
                             </div>
                             <div className="col-sm-12 col-lg-8">
-                                <TrendingList childClass={Card} className="col-sm-12 col-lg-8" subtype={this.state.subtype} tags={[this.props.match.params.tag]} offset={0} limit={50} />
+                                <TrendingList childClass={Card} className="col-sm-12 col-lg-8" subtype={this.state.subtype} tags={[this.props.match.params.tag]} offset={0} limit={50} containerClassName="" />
                             </div>
                         </div>
                     </div>
