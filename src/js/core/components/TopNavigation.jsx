@@ -1,8 +1,9 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 
-export default class TopNavigation extends React.Component {
+class TopNavigation extends React.Component {
     render() {
+        const { location } = this.props
         const { viewer } = this.props.data
 
         let userMenu
@@ -15,7 +16,7 @@ export default class TopNavigation extends React.Component {
             )
         } else {
             userMenu = (
-                <Link to="/login" title="Inloggen" className="top-navigation__link ___right">
+                <Link to={{pathname: "/login", state: { next: location.pathname }}} title="Inloggen" className="top-navigation__link ___right">
                     Inloggen
                 </Link>
             )
@@ -35,3 +36,5 @@ export default class TopNavigation extends React.Component {
         )
     }
 }
+
+export default withRouter(TopNavigation)

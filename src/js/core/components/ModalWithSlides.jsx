@@ -28,12 +28,14 @@ class ModalWithSlides extends React.Component {
     }
 
     onClose(e) {
+        const { history } = this.props
+
         if (e) {
             e.preventDefault()
         }
 
         if (this.props.noParent) {
-            this.props.history.push("/")
+            history.goBack()
         } else {
             this.props.dispatch(hideModal())
         }

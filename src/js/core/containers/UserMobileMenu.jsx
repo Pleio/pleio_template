@@ -1,7 +1,7 @@
 import React from "react"
-import { NavLink } from "react-router-dom"
+import { NavLink, withRouter } from "react-router-dom"
 
-export default class UserMobileMenu extends React.Component {
+class UserMobileMenu extends React.Component {
     render () {
         let menuItems = ""
 
@@ -34,7 +34,7 @@ export default class UserMobileMenu extends React.Component {
                         <NavLink to="/search" title="Zoeken" className="mobile-navigation__action ___search" />
                     </li>
                     <li>
-                        <NavLink to="/login" title="Inloggen" className="mobile-navigation__action ___login">
+                        <NavLink to={{pathname: "/login", state: { next: location.pathname }}} title="Inloggen" className="mobile-navigation__action ___login">
                             Inloggen
                         </NavLink>
                     </li>
@@ -50,3 +50,5 @@ export default class UserMobileMenu extends React.Component {
         return menuItems
     }
 }
+
+export default withRouter(UserMobileMenu)

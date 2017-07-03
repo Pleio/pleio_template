@@ -1,6 +1,7 @@
 import React from "react"
 import classnames from "classnames"
 import { graphql } from "react-apollo"
+import { withRouter } from "react-router-dom"
 import gql from "graphql-tag"
 
 class Likes extends React.Component {
@@ -25,6 +26,8 @@ class Likes extends React.Component {
     }
 
     onToggle(e) {
+        const { history, location } = this.props
+
         e.preventDefault()
 
         let isAdding = !this.state.isLiked
@@ -37,11 +40,15 @@ class Likes extends React.Component {
                     score: isAdding ? 1 : -1
                 }
             }
+        }).catch((error) => {
+            this.setState({ isLiked: !isAdding })
+
+            if (error.graphQLErrors[0].message === "not_logged_in") {
+                history.push({pathname: "/login", state: { fromComment: true, next: location.pathname }})
+            }
         })
 
-        this.setState({
-            isLiked: isAdding
-        })
+        this.setState({ isLiked: isAdding })
     }
 
     render() {
@@ -64,5 +71,5 @@ const Query = gql`
         }
     }
 `
-const withQuery = graphql(Query)
-export default withQuery(Likes)
+
+export default graphql(Query)(withRouter(Likes))

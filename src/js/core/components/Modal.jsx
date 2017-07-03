@@ -1,5 +1,6 @@
 import React from "react"
 import classNames from "classnames"
+import { withRouter } from "react-router-dom"
 
 let now = new Date().getTime()
 
@@ -21,6 +22,8 @@ class Modal extends React.Component {
     }
 
     onClose(e) {
+        const { history } = this.props
+
         if (e) {
             e.preventDefault()
         }
@@ -29,7 +32,7 @@ class Modal extends React.Component {
             this.props.onClose()
         } else {
             if (this.props.noParent) {
-                this.props.history.push("/")
+                history.goBack()
             } else {
                 this.toggle()
             }

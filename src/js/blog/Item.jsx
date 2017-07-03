@@ -8,8 +8,9 @@ import AddComment from "../core/containers/AddComment"
 import SocialShare from "../core/components/SocialShare"
 import NotFound from "../core/NotFound"
 import showDate from "../lib/showDate"
-import { Link } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 import LikeAndBookmark from "../core/components/LikeAndBookmark"
+import LoggedInButton from "../core/components/LoggedInButton"
 import RichTextView from "../core/components/RichTextView"
 import Document from "../core/components/Document"
 import Featured from "../core/components/Featured"
@@ -28,6 +29,7 @@ class Item extends React.Component {
 
 
     render() {
+        const { location } = this.props
         let { entity, viewer } = this.props.data
 
         if (!entity) {
@@ -51,15 +53,6 @@ class Item extends React.Component {
                         Bewerken
                     </div>
                 </Link>
-            )
-        }
-
-        let comment
-        if (viewer.loggedIn) {
-            comment = (
-                <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
-                    Schrijf een reactie
-                </div>
             )
         }
 
@@ -89,7 +82,7 @@ class Item extends React.Component {
                                     <div className="article-actions">
                                         {edit}
                                         <div className="article-actions__buttons">
-                                            {comment}
+                                            <LoggedInButton title="Schrijf een reactie" className="button article-action ___comment" viewer={viewer} onClick={this.toggleAddComment} fromComment />
                                             <SocialShare />
                                         </div>
                                     </div>
@@ -174,4 +167,4 @@ const Settings = {
     }
 }
 
-export default graphql(Query, Settings)(Item)
+export default graphql(Query, Settings)(withRouter(Item))

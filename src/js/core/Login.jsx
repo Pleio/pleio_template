@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { graphql } from "react-apollo"
+import { withRouter } from "react-router-dom"
 import gql from "graphql-tag"
 import Errors from "./components/Errors"
 import { logErrors } from "../lib/helpers"
@@ -22,6 +23,8 @@ class Login extends React.Component {
     }
 
     onSubmit(e) {
+        const { location } = this.props
+
         this.setState({
             errors: null
         })
@@ -39,7 +42,11 @@ class Login extends React.Component {
             }
         }).then(({data}) => {
             if (data.login.viewer.loggedIn === true) {
-                window.location.href = '/'
+                if (location.state && location.state.next) {
+                    window.location.href = location.state.next
+                } else {
+                    window.location.href = "/"
+                }
             }
         }).catch((errors) => {
             logErrors(errors)
@@ -51,7 +58,9 @@ class Login extends React.Component {
     }
 
     render() {
+        const { location } = this.props
         const { site } = this.props.data
+
         let title, errors
 
         if (site) {
@@ -64,8 +73,27 @@ class Login extends React.Component {
             errors = ( <Errors errors={this.state.errors} /> );
         }
 
+        let registerButton = (
+            <Link to="/register" className="form__link ___block-mobile">
+                Registreren
+            </Link>
+        )
+
+        let message
+        if (location.state && location.state.fromComment) {
+            message = (
+                <p>Om te reageren, dien je ingelogd te zijn op je persoonlijke profiel.</p>
+            )
+            registerButton = (
+                <Link to="/register" className="form__link ___block-mobile">
+                    Nog geen profiel? Registreer je hier!
+                </Link>
+            )
+        }
+
         return (
             <Modal ref="modal" id="login" title={title} small={true} isBlue={true} noParent={true} history={this.props.history}>
+                {message}
                 {errors}
                 <Form ref="form" className="form login" onSubmit={this.onSubmit}>
                     <InputField name="username" type="text" placeholder="E-mailadres" className="form__input" rules="required" />
@@ -78,9 +106,7 @@ class Login extends React.Component {
                     </button>
 
                     <div className="buttons ___vertical-mobile">
-                        <Link to="/register" className="form__link ___block-mobile">
-                            Registreren
-                        </Link>
+                        {registerButton}
                         <Link to="/forgotpassword" className="form__link ___block-mobile">
                             Wachtwoord vergeten?
                         </Link>
@@ -121,4 +147,4 @@ const Mutation = gql`
         }
     }
 `
-export default graphql(Query)(graphql(Mutation)(Login))
+export default graphql(Query)(graphql(Mutation)(withRouter(Login)))

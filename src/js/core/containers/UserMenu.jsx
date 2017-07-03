@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import { NavLink } from "react-router-dom"
+import { NavLink, withRouter } from "react-router-dom"
 
 class UserMenu extends React.Component {
     render() {
@@ -38,7 +38,7 @@ class UserMenu extends React.Component {
                         <NavLink to="/search" title="Zoeken" className="navigation__action ___search" />
                     </li>
                     <li>
-                        <NavLink to="/login" title="Inloggen" className="navigation__action ___login">
+                        <NavLink to={{pathname: "/login", state: { next: location.pathname }}} title="Inloggen" className="navigation__action ___login">
                             Inloggen
                         </NavLink>
                     </li>
@@ -53,4 +53,4 @@ class UserMenu extends React.Component {
     }
 }
 
-export default UserMenu
+export default withRouter(UserMenu)

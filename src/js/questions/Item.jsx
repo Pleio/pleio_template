@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import { Link } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 import gql from "graphql-tag"
 import CommentList from "../core/components/CommentList"
 import Edit from "../core/Edit"
@@ -12,6 +12,7 @@ import showDate from "../lib/showDate"
 import RichTextView from "../core/components/RichTextView"
 import LikeAndBookmark from "../core/components/LikeAndBookmark"
 import Document from "../core/components/Document"
+import LoggedInButton from "../core/components/LoggedInButton"
 
 class Item extends React.Component {
     constructor(props) {
@@ -53,15 +54,6 @@ class Item extends React.Component {
             );
         }
 
-        let comment
-        if (entity.canComment) {
-            comment = (
-                <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
-                    Schrijf een reactie
-                </div>
-            )
-        }
-
         return (
             <div>
                 <Document title={entity.title} />
@@ -87,7 +79,7 @@ class Item extends React.Component {
                                     <div className="article-actions">
                                         {edit}
                                         <div className="article-actions__buttons">
-                                            {comment}
+                                            <LoggedInButton title="Schrijf een reactie" className="button article-action ___comment" viewer={viewer} onClick={this.toggleAddComment} fromComment />
                                             <SocialShare />
                                         </div>
                                     </div>
