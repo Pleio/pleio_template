@@ -251,7 +251,7 @@ class Resolver {
             if (!$entity) {
                 continue;
             }
-             
+
             $return[] = [
                 "user" => Mapper::getUser($entity),
                 "likes" => $likes
@@ -776,6 +776,19 @@ class Resolver {
             "canWrite" => $canWrite,
             "edges" => $entities
         ];
+    }
+
+    static function emailOverview($user) {
+        $user = get_entity($user["guid"]);
+        if (!$user || !$user instanceof \ElggUser) {
+            return "none";
+        }
+
+        if (!$user->canEdit()) {
+            return "none";
+        }
+
+        return $user->getPrivateSetting("email_overview");
     }
 
     static function getsNotificationOnReply($user) {

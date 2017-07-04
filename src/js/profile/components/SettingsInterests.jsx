@@ -7,8 +7,6 @@ import { Set } from "immutable"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
-let submitTimeout
-
 class SettingsInterests extends React.Component {
     constructor(props) {
         super(props)
@@ -18,10 +16,10 @@ class SettingsInterests extends React.Component {
     }
 
     onChange(name, isChecked) {
-        clearTimeout(submitTimeout)
-        submitTimeout = setTimeout(() => {
+        clearTimeout(this.submitTimeout)
+        this.submitTimeout = setTimeout(() => {
             this.submit()
-        }, 1000)
+        }, 500)
     }
 
     submit() {
@@ -44,8 +42,8 @@ class SettingsInterests extends React.Component {
         return (
             <div className="card-profile">
                 <h3 className="card-profile__title">Stel hier je interesses in</h3>
-                <Form ref="form" onChange={this.onChange}>
-                    <ContentFiltersInputField name="tags" value={this.props.entity.tags} noWrap />
+                <Form ref="form">
+                    <ContentFiltersInputField name="tags" value={this.props.entity.tags} onChange={this.onChange} noWrap />
                 </Form>
             </div>
         )
@@ -63,5 +61,4 @@ const Query = gql`
     }
 `
 
-const withQuery = graphql(Query)
-export default withQuery(SettingsInterests)
+export default graphql(Query)(SettingsInterests)

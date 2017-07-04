@@ -53,5 +53,4 @@ const Query = gql`
     }
 `
 
-const withQuery = graphql(Query)
-export default withQuery(SettingsNotifications)
+export default graphql(Query)(SettingsNotifications)

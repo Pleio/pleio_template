@@ -30,6 +30,17 @@ class SchemaBuilder {
             ]
         ]);
 
+        $overviewEnum = new EnumType([
+            "name" => "Overview",
+            "values" => [
+                "daily" => [ "value" => "daily" ],
+                "weekly" => [ "value" => "weekly" ],
+                "twoweekly" => [ "value" => "twoweekly" ],
+                "monthly" => [ "value" => "monthly" ],
+                "never" => [ "value" => "never" ]
+            ]
+        ]);
+
         $roleEnum = new EnumType([
             "name" => "Role",
             "description" => "The type of role.",
@@ -241,6 +252,12 @@ class SchemaBuilder {
                     "type" => Type::boolean(),
                     "resolve" => function($user) {
                         return Resolver::getsNewsletter($user);
+                    }
+                ],
+                "emailOverview" => [
+                    "type" => $overviewEnum,
+                    "resolve" => function($user) {
+                        return Resolver::emailOverview($user);
                     }
                 ],
                 "profile" => [
@@ -1499,6 +1516,27 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::editNotifications"
         ]);
 
+        $editEmailOverviewMutation = Relay::mutationWithClientMutationId([
+            "name" => "editEmailOverview",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::string()
+                ],
+                "overview" => [
+                    "type" => $overviewEnum
+                ]
+            ],
+            "outputFields" => [
+                "user" => [
+                    "type" => $userType,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::editEmailOverview"
+        ]);
+
         $editEmailMutation = Relay::mutationWithClientMutationId([
             "name" => "editEmail",
             "inputFields" => [
@@ -1787,6 +1825,7 @@ class SchemaBuilder {
                     "subscribeNewsletter" => $subscribeNewsletterMutation,
                     "editInterests" => $editInterestsMutation,
                     "editNotifications" => $editNotificationsMutation,
+                    "editEmailOverview" => $editEmailOverviewMutation,
                     "editEmail" => $editEmailMutation,
                     "editPassword" => $editPasswordMutation,
                     "bookmark" => $bookmarkMutation,

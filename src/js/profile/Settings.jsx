@@ -3,6 +3,7 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import SettingsInterests from "./components/SettingsInterests"
 import SettingsNotifications from "./components/SettingsNotifications"
+import SettingsEmailOverview from "./components/SettingsEmailOverview"
 import Wrapper from "./components/Wrapper"
 
 class Settings extends React.Component {
@@ -19,8 +20,15 @@ class Settings extends React.Component {
             <Wrapper match={this.props.match}>
                 <section className="section ___grey ___grow">
                     <div className="container">
-                        <SettingsInterests entity={entity} />
-                        <SettingsNotifications entity={entity} />
+                        <div className="row">
+                            <div className="col-md-8">
+                                <SettingsInterests entity={entity} />
+                                <SettingsNotifications entity={entity} />
+                            </div>
+                            <div className="col-md-4">
+                                <SettingsEmailOverview entity={entity} />
+                            </div>
+                        </div>
                     </div>
                 </section>
             </Wrapper>
@@ -37,6 +45,7 @@ const Query = gql`
                 canEdit
                 getsNotificationOnReply
                 getsNewsletter
+                emailOverview
                 tags
             }
         }
