@@ -43,6 +43,7 @@ export default class Modal extends React.Component {
                 <div className="modal__wrapper">
                     <div className="modal__background" onClick={this.toggle} />
                     <div className="modal__box">
+                        <div className="modal__close" onClick={this.toggle} />
                         {title}
                         {this.props.children}
                     </div>
@@ -52,6 +53,7 @@ export default class Modal extends React.Component {
             modal = (
                 <div className="modal__wrapper">
                     <div className="modal__box">
+                        <div className="modal__close" onClick={this.toggle} />
                         <div className="container relative">
                             {title}
                         </div>
@@ -64,6 +66,7 @@ export default class Modal extends React.Component {
                 <div className="modal__wrapper">
                     <div className="modal__background" onClick={this.toggle} />
                     <div className="modal__box">
+                        <div className="modal__close" onClick={this.toggle} />
                         {title}
                         {this.props.children}
                     </div>
@@ -72,8 +75,7 @@ export default class Modal extends React.Component {
         }
 
         return (
-            <div id={this.props.id} ref="modal" tabIndex="0" className={classNames({"modal":true, "___full":this.props.full, "___blue":this.props.isBlue, "___small": this.props.small, "___is-open": this.state.isOpen })}>
-                <div className="modal__close" onClick={this.toggle} />
+            <div id={this.props.id} ref="modal" tabIndex="0" className={classNames({"modal":true, "___full":this.props.full, "___blue":this.props.isBlue, "___small": this.props.small, "___square": this.props.square, "___is-open": this.state.isOpen })}>
                 {modal}
             </div>
         )

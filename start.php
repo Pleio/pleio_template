@@ -48,6 +48,9 @@ function pleio_template_init() {
 
     elgg_register_plugin_hook_handler("cron", "daily", "pleio_template_cron_handler");
 
+    elgg_unregister_plugin_hook_handler("email", "system", "html_email_handler_email_hook");
+    elgg_register_plugin_hook_handler("email", "system", "pleio_template_email_handler");
+
     elgg_extend_view("css/admin", "pleio_template/css/admin");
 
     if (!isset($_COOKIE["CSRF_TOKEN"])) {
@@ -279,4 +282,36 @@ function pleio_template_get_object($guid) {
 
 function pleio_template_cron_handler($hook, $period, $return, $params) {
     Pleio\EmailOverviewHandler::sendToAll();
+}
+
+function pleio_template_email_handler($hook, $type, $return, $params) {
+    global $CONFIG;
+    $site = elgg_get_site_entity();
+
+    $message_id = sprintf("<%s.%s@%s>", base_convert(microtime(), 10, 36), base_convert(bin2hex(openssl_random_pseudo_bytes(8)), 16, 36), $_SERVER["SERVER_NAME"]);
+
+    $reply_to = "=?UTF-8?B?" . base64_encode($site->name) . "?= ";
+
+    if ($site->email) {
+        $reply_to .= "<" . $site->email . ">";
+    } elseif (isset($CONFIG->email_from)) {
+        $reply_to .= "<{$CONFIG->email_from[1]}>";
+    } else {
+        $reply_to .= "<noreply@" . get_site_domain($site->guid) . ">";
+    }
+
+    $headers = "Sender: {$params["from"]}\r\n"
+        . "From: {$params["from"]}\r\n"
+        . "Reply-To: {$reply_to}\r\n"
+        . "Message-Id: {$message_id}\r\n"
+        . "MIME-Version: 1.0\r\n"
+        . "Content-Type: text/html; charset=UTF-8\r\n";
+
+    // Sanitise subject by stripping line endings
+    $subject = preg_replace("/(\r\n|\r|\n)/", " ", $params["subject"]);
+
+    return mail($params["to"], $subject, elgg_view("emails/default", [
+        "subject" => $subject,
+        "body" => $params["body"]
+    ]), $headers);
 }

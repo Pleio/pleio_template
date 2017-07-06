@@ -57,6 +57,7 @@ class Add extends React.Component {
                 input["isRecommended"] = values.isRecommended
                 break
             case "event":
+                input["source"] = values.source
                 input["startDate"] = values.start
                 input["endDate"] = values.end
         }
@@ -116,6 +117,7 @@ class Add extends React.Component {
             case "event":
                 extraFields = (
                     <div>
+                        <InputField name="source" type="text" placeholder="Tickets (link)" className="form__input" />
                         <DateTimeField name="start" className="form__input" label="Startdatum" />
                         <DateTimeField name="end" className="form__input" label="Einddatum" />
                     </div>

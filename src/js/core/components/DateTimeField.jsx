@@ -13,14 +13,42 @@ class DateTimeField extends React.Component {
         super(props)
 
         this.state = {
-            value: moment(this.props.value)
+            value: this.toMoment(this.props.value),
+            isOpenDate: false,
+            isOpenTime: false
         }
+    }
+
+    toMoment(value) {
+        const start = moment(value)
+        const remainder = 30 - start.minute() % 30
+        return moment(start).add(remainder, "minutes")
+    }
+
+    @autobind
+    openDate(e) {
+        this.setState({ isOpenDate: true })
+    }
+
+    @autobind
+    closeDate(e) {
+        this.setState({ isOpenDate: false })
+    }
+
+    @autobind
+    openTime(e) {
+        this.setState({ isOpenTime: true })
+    }
+
+    @autobind
+    closeTime(e) {
+        this.setState({ isOpenTime: false })
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.value !== this.props.value) {
             this.setState({
-                value: moment(this.props.value)
+                value: this.toMoment(nextProps.value)
             })
         }
     }
@@ -39,8 +67,7 @@ class DateTimeField extends React.Component {
 
     @autobind
     resetTime(e) {
-        e.preventDefault()
-        this.setState({ value: moment() })
+        this.setState({ value: this.toMoment() })
     }
 
     @autobind
@@ -64,9 +91,7 @@ class DateTimeField extends React.Component {
     }
 
     clearValue() {
-        this.setState({
-            value: ""
-        })
+        this.setState({ value: "" })
     }
 
     render() {
@@ -87,11 +112,12 @@ class DateTimeField extends React.Component {
             numbers.push((
                 <button
                     key={current.toISOString()}
+                    type="button"
                     className={classnames({
-                        "___grey": current.isBefore(begin, "day") || current.isAfter(end, "day"),
-                        "___current": current.isSame(this.state.value, "day"),
+                        "___other-month": current.isBefore(begin, "day") || current.isAfter(end, "day"),
+                        "___is-selected": current.isSame(this.state.value, "day"),
                     })}
-                    onClick={(e) => { e.preventDefault(); this.setState({ value: current })}}
+                    onClick={(e) => { this.setState({ value: current, isOpenDate: false }) }}
                 >
                     {current.format("D")}
                 </button>
@@ -107,7 +133,8 @@ class DateTimeField extends React.Component {
             times.push((
                 <button
                     key={current.toISOString()}
-                    onClick={(e) => { e.preventDefault(); this.setState({ value: current })}}
+                    type="button"
+                    onClick={(e) => { this.setState({ value: current, isOpenTime: false }) }}
                 >{current.format("HH:mm")}</button>
             ))
         }
@@ -115,13 +142,13 @@ class DateTimeField extends React.Component {
         return (
             <div className="row">
                 <div className="col-xs-6">
-                    <div className="form__date">
-                        <input placeholder="Datum" type="text" value={this.state.value.format("ddd D MMM YYYY")} readOnly />
-                        <div className="calendar">
+                    <div className="form__date" onBlur={this.closeDate}>
+                        <input placeholder="Datum" type="text" value={this.state.value.format("ddd D MMM YYYY")} readOnly onClick={this.openDate} />
+                        <div ref="calendar" className={classnames({"calendar": true, "___is-open": this.state.isOpenDate})}>
                             <div className="calendar__months">
-                                <button onClick={this.previousMonth} />
+                                <button type="button" onMouseDown={this.previousMonth} />
                                 <span onDoubleClick={this.resetTime}>{this.state.value.format("MMMM YYYY")}</span>
-                                <button onClick={this.nextMonth} />
+                                <button type="button" onMouseDown={this.nextMonth} />
                             </div>
                             <div className="calendar__days">{days}</div>
                             <div className="calendar__numbers">{numbers}</div>
@@ -129,9 +156,9 @@ class DateTimeField extends React.Component {
                     </div>
                 </div>
                 <div className="col-xs-6">
-                    <div className="form__time">
-                        <input placeholder="Tijd" type="text" value={this.state.value.format("HH:mm")} readOnly />
-                        <div className="option-list">
+                    <div className="form__time" onBlur={this.closeTime}>
+                        <input placeholder="Tijd" type="text" value={this.state.value.format("HH:mm")} readOnly onClick={this.openTime} />
+                        <div ref="time" className={classnames({"option-list": true, "___is-open": this.state.isOpenTime})}>
                             {times}
                         </div>
                     </div>

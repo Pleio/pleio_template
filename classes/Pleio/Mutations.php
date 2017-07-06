@@ -302,7 +302,7 @@ class Mutations {
                     if ($input["featured"]["image"] === "false") {
                         unset($entity->featuredIcontime);
                     } else {
-                        Helpers::saveToFeatured($input["featured"]["image"], $entity);   
+                        Helpers::saveToFeatured($input["featured"]["image"], $entity);
                         $entity->featuredIcontime = time();
                     }
                 }
@@ -1199,14 +1199,26 @@ class Mutations {
             throw new Exception("not_logged_in");
         }
 
-        $result = add_entity_relationship($user->guid, "event_attending", $event->guid);
-
-        if ($result) {
-            return [
-                "guid" => $event->guid
-            ];
+        if ($input["state"] === "accept") {
+            add_entity_relationship($user->guid, "event_attending", $event->guid);
+        } else {
+            remove_entity_relationship($user->guid, "event_attending", $event->guid);
         }
 
-        throw new Exception("could_not_save");
+        if ($input["state"] === "maybe") {
+            add_entity_relationship($user->guid, "event_maybe", $event->guid);
+        } else {
+            remove_entity_relationship($user->guid, "event_maybe", $event->guid);
+        }
+
+        if ($input["state"] == "reject") {
+            add_entity_relationship($user->guid, "event_reject", $event->guid);
+        } else {
+            remove_entity_relationship($user->guid, "event_reject", $event->guid);
+        }
+
+        return [
+            "guid" => $event->guid
+        ];
     }
 }

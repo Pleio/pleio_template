@@ -12,8 +12,10 @@ import { showFullDate } from "../lib/showDate"
 import RichTextView from "../core/components/RichTextView"
 import LikeAndBookmark from "../core/components/LikeAndBookmark"
 import Document from "../core/components/Document"
+import People from "./components/People"
 import Featured from "../core/components/Featured"
 import AttendButtons from "./components/AttendButtons"
+import AttendeesModal from "./components/AttendeesModal"
 
 class Item extends React.Component {
     constructor(props) {
@@ -68,6 +70,13 @@ class Item extends React.Component {
             )
         }
 
+        let tickets
+        if (entity.source) {
+            tickets = (
+                <a className="link" href={entity.source} target="_blank">Tickets</a>
+            )
+        }
+
         let comment
         if (viewer.loggedIn) {
             comment = (
@@ -102,13 +111,28 @@ class Item extends React.Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-4 last-sm top-sm">
-                                <div className="card">
-                                    <div className="title">Aanwezig</div>
+                                <div className="card" onClick={() => this.refs.modal.toggle()}>
+                                    <People users={entity.attendees} />
+                                    <div className="flexer ___space-between">
+                                        <div className="attendees">
+                                            <div className="attendees__number">{entity.attendees.total}</div>
+                                            <div className="attendees__label">aanwezig</div>
+                                        </div>
+                                        <div className="attendees">
+                                            <div className="attendees__number">{entity.attendees.totalMaybe}</div>
+                                            <div className="attendees__label">misschien</div>
+                                        </div>
+                                        <div className="attendees">
+                                            <div className="attendees__number">{entity.attendees.totalReject}</div>
+                                            <div className="attendees__label">afwezig</div>
+                                        </div>
+                                    </div>
+                                    <AttendeesModal ref="modal" />
                                 </div>
                             </div>
                             <div className="col-sm-8">
                                 <h2 className="title">{showFullDate(entity.startDate)}<small>Den Haag</small></h2>
-                                <a className="link">Tickets</a>
+                                {tickets}
                                 <RichTextView richValue={entity.richDescription} value={entity.description} />
                                     <div className="article-actions">
                                         {edit}
@@ -160,6 +184,18 @@ const Query = gql`
                     image
                     video
                     positionY
+                }
+                isAttending
+                attendees(limit: 5) {
+                    total
+                    totalMaybe
+                    totalReject
+                    edges {
+                        guid
+                        name
+                        username
+                        icon
+                    }
                 }
                 url
                 canEdit

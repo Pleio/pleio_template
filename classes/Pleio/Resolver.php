@@ -426,6 +426,8 @@ class Resolver {
         if (!$entity || !$entity->getSubtype() === "event") {
             return [
                 "total" => 0,
+                "totalMaybe" => 0,
+                "totalReject" => 0,
                 "edges" => []
             ];
         }
@@ -434,10 +436,13 @@ class Resolver {
             "type" => "user",
             "relationship" => "event_attending",
             "relationship_guid" => $entity->guid,
-            "inverse_relationship" => false
+            "inverse_relationship" => true
         ];
 
         $total = elgg_get_entities_from_relationship(array_merge($options, ["count" => true]));
+        $totalMaybe = elgg_get_entities_from_relationship(array_merge($options, ["relationship" => "event_maybe", "count" => true]));
+        $totalReject = elgg_get_entities_from_relationship(array_merge($options, ["relationship" => "event_reject", "count" => true]));
+
         $attendees = elgg_get_entities_from_relationship($options);
 
         $edges = [];
@@ -447,8 +452,34 @@ class Resolver {
 
         return [
             "total" => $total,
+            "totalMaybe" => $totalMaybe,
+            "totalReject" => $totalReject,
             "edges" => $edges
         ];
+    }
+
+    static function getAttending($a, $args, $c) {
+        $entity = get_entity($a["guid"]);
+        if (!$entity || !$entity->getSubtype() === "event") {
+            return null;
+        }
+
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            return null;
+        }
+
+        if (check_entity_relationship($user->guid, "event_attending", $entity->guid)) {
+            return "accept";
+        }
+
+        if (check_entity_relationship($user->guid, "event_maybe", $entity->guid)) {
+            return "maybe";
+        }
+
+        if (check_entity_relationship($user->guid, "event_reject", $entity->guid)) {
+            return "reject";
+        }
     }
 
     static function getInvite($a, $args, $c) {
@@ -463,7 +494,7 @@ class Resolver {
         if (!$group->canEdit()) {
             throw new Exception("could_not_edit");
         }
-        
+
         $options = [
             "type" => "user",
             "site_guids" => false,
@@ -677,6 +708,8 @@ class Resolver {
     }
 
     static function getEntities($a, $args, $c) {
+        $dbprefix = elgg_get_config("dbprefix");
+
         if (!$args["type"] || !in_array($args["type"], ["group", "object"])) {
             $type = "object";
         } else {
@@ -712,6 +745,18 @@ class Resolver {
                 "offset" => (int) $args["offset"],
                 "limit" => (int) $args["limit"]
             ];
+
+            if ($args["subtype"] === "event") {
+                $msid = get_metastring_id("startDate");
+                if ($msid) {
+                    $options["joins"] = [
+                        "JOIN {$dbprefix}metadata md ON e.guid = md.entity_guid",
+                        "JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id"
+                    ];
+                    $options["wheres"] = [ "md.name_id = {$msid}" ];
+                    $options["order_by"] = "msv.string ASC";
+                }
+            }
 
             if ($tags) {
                 $options["metadata_name_value_pairs"] = [];

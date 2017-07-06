@@ -299,6 +299,16 @@ class SchemaBuilder {
             ]
         ]);
 
+        $attendeesListType = new ObjectType([
+            "name" => "AttendeesList",
+            "fields" => [
+                "total" => [ "type" => Type::nonNull(Type::int()) ],
+                "totalMaybe" => [ "type" => Type::nonNull(Type::int()) ],
+                "totalReject" => [ "type" => Type::nonNull(Type::int()) ],
+                "edges" => [ "type" => Type::listOf($userType) ]
+            ]
+        ]);
+
         $inviteType = new ObjectType([
             "name" => "Invite",
             "fields" => [
@@ -573,8 +583,12 @@ class SchemaBuilder {
                         return Resolver::getUser($object["ownerGuid"]);
                     }
                 ],
+                "isAttending" => [
+                    "type" => Type::string(),
+                    "resolve" => "Pleio\Resolver::getAttending"
+                ],
                 "attendees" => [
-                    "type" => $userListType,
+                    "type" => $attendeesListType,
                     "args" => [
                         "offset" => [
                             "type" => Type::int()
