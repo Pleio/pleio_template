@@ -1,5 +1,6 @@
 import React from "react"
 import autobind from "autobind-decorator"
+import classnames from "classnames"
 
 export default class Tabber extends React.Component {
     constructor(props) {
@@ -11,20 +12,19 @@ export default class Tabber extends React.Component {
     }
 
     @autobind
-    toggleSlide(e, i) {
-        e.preventDefault()
+    toggleSlide(i) {
         this.setState({ slide: i })
     }
 
     render() {
         const menu = this.props.items.map((item, i) => (
-            <div key={i} className="tabmenu__link" onClick={(e) => this.toggleSlide(e, i)}>
+            <div key={i} className={classnames({"tabmenu__link": true, "___is-active": this.state.slide === i})} onClick={(e) => this.toggleSlide(i)}>
                 {item.title}
             </div>
         ))
 
         const slides = this.props.items.map((item, i) => (
-            <div key={i} className="tabber__slide">
+            <div key={i} className={classnames({"tabber__slide": true, "___is-active": this.state.slide === i})}>
                 {item.content}
             </div>
         ))
@@ -34,7 +34,7 @@ export default class Tabber extends React.Component {
                 <div className="tabmenu">
                     {menu}
                 </div>
-                <div className="tabber__slides" style={{width: "200%", transform: "translateX(0%)"}}>
+                <div className="tabber__slides" style={{width: `${this.props.items.length * 100}%`, transform: "translateX(0%)"}}>
                     {slides}
                 </div>
             </div>

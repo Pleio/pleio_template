@@ -1,6 +1,6 @@
 import React from "react"
 import autobind from "autobind-decorator"
-import Modal from "../../core/components/NewModal"
+import Modal from "../../core/components/Modal"
 import Tabber from "../../core/components/Tabber"
 
 export default class AttendeesModal extends React.Component {

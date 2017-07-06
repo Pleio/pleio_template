@@ -69,16 +69,16 @@ export default class ImageModal extends React.Component {
                         <div className="modal__close" onClick={this.toggle}></div>
                         <h3 className="modal__title">Afbeelding invoegen</h3>
                         <div className="form">
-                            <div className="mini-tabmenu">
+                            <div className="tabber">
                                 <div className="mini-tabmenu__tabs">
                                     <div className={classnames({"mini-tabmenu__tab ___upload": true, "___is-active": (this.state.tab === "upload")})} onClick={() => this.toggleTab("upload")} />
                                     <div className={classnames({"mini-tabmenu__tab ___hyperlink": true, "___is-active": (this.state.tab === "link")})} onClick={() => this.toggleTab("link")} />
                                 </div>
-                                <div data-tab-slides="2" className={classnames({"mini-tabmenu__slides": true, " ___slide-2": (this.state.tab === "link")})}>
-                                    <div className="mini-tabmenu__slide">
+                                <div data-tab-slides="2" className={classnames({"tabber__slides": true})} style={{width:"200%", transform: this.state.tab === "link" ? "translateX(-50%)" : "translateX(0%)"}}>
+                                    <div className={classnames({"tabber__slide": true, "___is-active": (this.state.tab === "upload")})}>
                                         <AddImage onSubmit={this.onAddImage} />
                                     </div>
-                                    <div className="mini-tabmenu__slide">
+                                    <div className={classnames({"tabber__slide": true, "___is-active": (this.state.tab === "link")})}>
                                         <label className="form__item">
                                             <input type="text" ref="url" placeholder="Link"  onKeyPress={this.onKeyPress} onChange={this.onChangeUrl} value={this.state.url} />
                                         </label>
