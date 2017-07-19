@@ -24,16 +24,14 @@ class AttendButtons extends React.Component {
 
         if (entity.isAttending) {
             return (
-                <div className="flexer ___gutter">
-                    <Select name="attending" options={{accept: "Aanwezig", maybe: "Misschien", reject: "Afwijzen"}} onChange={this.onSubmit} value={entity.isAttending} className="___attend-select" />
-                </div>
+                <Select name="attending" options={{accept: "Aanwezig", maybe: "Misschien", reject: "Afwijzen"}} onChange={this.onSubmit} value={entity.isAttending} className="___attend-select" />
             )
         } else {
             return (
                 <div className="flexer ___gutter">
                     <button className="button" onClick={(e) => this.onSubmit("reject")}>Accepteren</button>
                     <button className="button ___grey" onClick={(e) => this.onSubmit("maybe")}>Misschien</button>
-                    <button className="button ___line" onClick={(e) => this.onSubmit("reject")}>Afwijzen</button>
+                    <button className="button ___grey" onClick={(e) => this.onSubmit("reject")}>Afwijzen</button>
                 </div>
             )
         }
