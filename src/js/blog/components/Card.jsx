@@ -32,7 +32,7 @@ export default class Card extends React.Component {
                         </div>
                     </div>
 
-                    <Featured entity={entity} inCard="blog" />
+                    <Featured entity={entity} inCard="blog" to={entity.url} />
 
                     <Link to={entity.url} className="card-blog-post__title">
                         {entity.title}

@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import { getVideoFromUrl, getVideoThumbnail } from "../../lib/helpers"
 import { getClassFromTags } from "../../lib/helpers"
 import VideoModal from "./VideoModal"
@@ -46,10 +47,12 @@ export default class Featured extends React.Component {
             case "blog":
                 if (backgroundImage) {
                     return (
-                        <div style={{"backgroundImage": `url(${backgroundImage})`, "backgroundPositionY": featured.positionY + "%"}} className="card-blog-post__image" onClick={this.playVideo}>
-                            {playButton}
-                            {videoModal}
-                        </div>
+                        <Link to={this.props.to}>
+                            <div style={{"backgroundImage": `url(${backgroundImage})`, "backgroundPositionY": featured.positionY + "%"}} className="card-blog-post__image" onClick={this.playVideo}>
+                                {playButton}
+                                {videoModal}
+                            </div>
+                        </Link>
                     )
                 } else {
                     return ( <div /> )
