@@ -16,12 +16,12 @@ class UserMenu extends React.Component {
             return (
                 <ul className="navigation__actions">
                     <li>
+                        <NavLink to="/search" title="Zoeken" className="navigation__action ___search" />
+                    </li>
+                    <li>
                         <NavLink to="/bookmarks" onClick={this.props.onClick} title="Bewaard" className="navigation__action ___bookmarks">
                             <span>Bewaard</span>
                         </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/search" title="Zoeken" className="navigation__action ___search" />
                     </li>
                     <li>
                         <NavLink to={"/profile/" + this.props.viewer.user.username} onClick={this.props.onClick} title="Account" className="navigation__action ___account">
