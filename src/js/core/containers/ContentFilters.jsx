@@ -51,9 +51,25 @@ class ContentFilters extends React.Component {
 
             options["all"] = `Alle ${filter.name}`
 
+            let selectClassName = this.props.selectClassName
+
+            if (this.props.onActivity) {
+                if (i === 0) {
+                    selectClassName = "___margin-top ___margin-bottom ___margin-bottom-mobile ___filter"
+                } else {
+                    selectClassName = "___margin-top ___margin-bottom ___no-margin-top-mobile ___filter"
+                }
+            } else {
+                if (i !== (site.filters.length - 1)) {
+                    selectClassName = "___margin-bottom-mobile ___filter"
+                } else {
+                    selectClassName = "___filter"
+                }
+            }
+
             return (
                 <div key={i} className="col-sm-4 col-lg-3">
-                    <Select name={filter.name} className={this.props.selectClassName} options={options} onChange={(value) => this.onChangeFilter(i, value)} value={this.state.filters[i] || "all"} />
+                    <Select name={filter.name} className={selectClassName} options={options} onChange={(value) => this.onChangeFilter(i, value)} value={this.state.filters[i] || "all"} />
                 </div>
             )
         })

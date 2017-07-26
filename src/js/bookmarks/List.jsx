@@ -29,7 +29,7 @@ export default class List extends React.Component {
                         <h3 className="main__title">
                             Bewaard
                         </h3>
-                        <ContentFilters page="bookmarks" onChangeTags={this.onChangeFilter} onChangeSubtype={this.onChangeSubtype} selectClassName="selector ___margin-bottom-mobile ___filter" />
+                        <ContentFilters page="bookmarks" onChangeTags={this.onChangeFilter} onChangeSubtype={this.onChangeSubtype} />
                     </div>
                 </section>
                 <section className="section ___grey ___grow">

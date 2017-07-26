@@ -41,7 +41,7 @@ class List extends React.Component {
                     <h3 className="main__title">
                         Nieuws
                     </h3>
-                    <ContentFilters page="news" onChange={this.onChangeFilter} value={this.state.tags} selectClassName="selector ___margin-bottom-mobile ___filter">
+                    <ContentFilters page="news" onChange={this.onChangeFilter} value={this.state.tags}>
                         {add}
                     </ContentFilters>
                 </ContentHeader>

@@ -40,7 +40,7 @@ class List extends React.Component {
                 <Document title="Evenementen" />
                 <ContentHeader>
                     <h3 className="main__title">Evenementen</h3>
-                    <ContentFilters page="events" onChange={this.onChangeFilter} value={this.state.tags} selectClassName="selector ___margin-bottom-mobile ___filter">
+                    <ContentFilters page="events" onChange={this.onChangeFilter} value={this.state.tags}>
                         {add}
                     </ContentFilters>
                 </ContentHeader>

@@ -46,8 +46,8 @@ class Activity extends React.Component {
                 <Document title="Activiteiten" />
                 <div className="container">
                     {leader}
-                    <ContentFilters onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} selectClassName="selector ___margin-bottom ___margin-bottom-mobile ___filter">
-                        <div className="right-lg">
+                    <ContentFilters onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} onActivity>
+                        <div className="col-right middle-lg">
                             <UsersOnline isGrey={true} />
                         </div>
                     </ContentFilters>

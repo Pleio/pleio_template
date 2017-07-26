@@ -26,7 +26,7 @@ export default class List extends React.Component {
                         <h3 className="main__title ___trending">
                             {this.props.match.params.tag}
                         </h3>
-                        <ContentFilters page="trending" onChangeSubtype={this.onChangeSubtype} selectClassName="selector ___margin-bottom-mobile ___filter" />
+                        <ContentFilters page="trending" onChangeSubtype={this.onChangeSubtype} />
                     </div>
                 </section>
                 <section className="section ___grey ___grow">
