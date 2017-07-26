@@ -9,9 +9,14 @@ function pleio_template_autoloader($class) {
 }
 
 define("PLEIO_TEMPLATE_LESS", dirname(__FILE__) . "/src/less/");
-define("PLEIO_SUBTYPES", ["news", "blog", "question"]);
+define("PLEIO_SUBTYPES", ["news", "blog", "question", "event"]);
 
 function pleio_template_init() {
+    $lang = get_current_language();
+    if ($lang == "nl") {
+        setlocale(LC_TIME, "nl_NL");
+    }
+
     elgg_register_plugin_hook_handler("index", "system", "pleio_template_index_handler");
     elgg_register_plugin_hook_handler("container_permissions_check", "object", "pleio_template_container_permissions_check_hook");
     elgg_register_plugin_hook_handler("action", "plugins/settings/save", "pleio_template_plugins_settings_save");
@@ -28,7 +33,7 @@ function pleio_template_init() {
     elgg_register_page_handler("search", "pleio_template_page_handler");
     elgg_register_page_handler("bookmarks", "pleio_template_page_handler");
     elgg_register_page_handler("trending", "pleio_template_page_handler");
-    elgg_register_page_handler("events", "pleio_template_page_handler");
+    elgg_register_page_handler("events", "pleio_template_events_handler");
 
     elgg_register_page_handler("login", "pleio_template_page_handler");
     elgg_register_page_handler("register", "pleio_template_page_handler");
@@ -231,6 +236,17 @@ function pleio_template_user_icon_url($hook, $type, $return_value, $params) {
     return null;
 }
 
+function pleio_template_events_handler($page) {
+    // rewrite some old event URL's
+    switch ($page[0]) {
+        case "event":
+            forward("/events/view/{$page[2]}/{$page[3]}");
+            return true;
+        default:
+            return pleio_template_page_handler($page);
+    }
+}
+
 function pleio_template_page_handler($page) {
     set_input("page", $page);
     include("pages/react.php");
@@ -314,14 +330,24 @@ function pleio_template_email_handler($hook, $type, $return, $params) {
     $body = preg_replace("!(((f|ht)tp(s)?://)[-a-zA-Zа-яА-Я()0-9@:%_+.~#?&;//=]+)!i", "<a href=\"$1\">$1</a>", $body);
     $body = nl2br($body);
 
-    if ($params["overview"]) {
-        $view = "emails/overview";
-    } else {
-        $view = "emails/default";
-    }
-
-    return mail($params["to"], $subject, elgg_view($view, [
+    $email_params = [
         "subject" => $subject,
         "body" => $body
-    ]), $headers);
+    ];
+
+    return mail(
+        $params["to"],
+        $subject,
+        elgg_view("emails/default", array_merge($email_params, $params["params"])),
+        $headers
+    );
+}
+
+function pleio_template_format_date($datetime, $type = "default") {
+    switch ($type) {
+        case "event":
+            return strftime("%d %B %Y", $datetime);
+        default:
+            return strftime("%d-%m-%y", $datetime);
+    }
 }

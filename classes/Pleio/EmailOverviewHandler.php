@@ -29,6 +29,7 @@ class EmailOverviewHandler {
     }
 
     static function sendOverview(\ElggUser $user) {
+        global $CONFIG;
         static $site;
         static $subtypes;
 
@@ -81,13 +82,15 @@ class EmailOverviewHandler {
             return;
         }
 
-        $result = email_notify_handler(
-            $site,
-            $user,
+        $result = elgg_send_email(
+            $site->email ? $site->email : "noreply@" . get_site_domain($CONFIG->site_guid),
+            $user->email,
             "Periodiek overzicht van {$site->name}",
-            elgg_view("emails/overview", [
+            "",
+            [
+                "overview" => true,
                 "entities" => EmailOverviewHandler::getEntities($selected_entities, 5)
-            ])
+            ]
         );
 
         if ($result) {
