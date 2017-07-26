@@ -24,7 +24,9 @@ export default class Card extends React.Component {
                     <div className="date">{showFullDate(entity.startDate)}</div>
                     <Link to={entity.url} className="title">{entity.title}</Link>
                     <div className="card-event__bottom">
-                        <People users={entity.attendees} />
+                        <Link to={entity.url}>
+                            <People users={entity.attendees} />
+                        </Link>
                     </div>
                 </div>
 
