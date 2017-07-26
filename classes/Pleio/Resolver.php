@@ -432,9 +432,24 @@ class Resolver {
             ];
         }
 
+        switch ($args["state"]) {
+            case "accept":
+                $relationship = "event_attending";
+                break;
+            case "maybe":
+                $relationship = "event_maybe";
+                break;
+            case "reject":
+                $relationship = "event_reject";
+                break;
+            default:
+                $relationship = "event_attending";
+                break;
+        }
+
         $options = [
             "type" => "user",
-            "relationship" => "event_attending",
+            "relationship" => $relationship,
             "relationship_guid" => $entity->guid,
             "inverse_relationship" => true
         ];

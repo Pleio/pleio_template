@@ -34,7 +34,7 @@ export default class Tabber extends React.Component {
                 <div className="tabmenu">
                     {menu}
                 </div>
-                <div className="tabber__slides" style={{width: `${this.props.items.length * 100}%`, transform: "translateX(0%)"}}>
+                <div className="tabber__slides" style={{width: `${this.props.items.length * 100}%`, transform: `translateX(-${(this.state.slide / this.props.items.length)*100}%)`}}>
                     {slides}
                 </div>
             </div>

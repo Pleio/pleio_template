@@ -111,23 +111,31 @@ class Item extends React.Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-4 last-sm top-sm">
-                                <div className="card" onClick={() => this.refs.modal.toggle()}>
-                                    <People users={entity.attendees} />
+                                <div className="card">
+                                    <a onClick={() => this.refs.modal.toggle()}>
+                                        <People users={entity.attendees} />
+                                    </a>
                                     <div className="flexer ___space-between">
                                         <div className="attendees">
-                                            <div className="attendees__number">{entity.attendees.total}</div>
-                                            <div className="attendees__label">aanwezig</div>
+                                            <a onClick={() => this.refs.modal.toggle(0)}>
+                                                <div className="attendees__number">{entity.attendees.total}</div>
+                                                <div className="attendees__label">aanwezig</div>
+                                            </a>
                                         </div>
                                         <div className="attendees">
-                                            <div className="attendees__number">{entity.attendees.totalMaybe}</div>
-                                            <div className="attendees__label">misschien</div>
+                                            <a onClick={() => this.refs.modal.toggle(1)}>
+                                                <div className="attendees__number">{entity.attendees.totalMaybe}</div>
+                                                <div className="attendees__label">misschien</div>
+                                            </a>
                                         </div>
                                         <div className="attendees">
-                                            <div className="attendees__number">{entity.attendees.totalReject}</div>
-                                            <div className="attendees__label">afwezig</div>
+                                            <a onClick={() => this.refs.modal.toggle(2)}>
+                                                <div className="attendees__number">{entity.attendees.totalReject}</div>
+                                                <div className="attendees__label">afwezig</div>
+                                            </a>
                                         </div>
                                     </div>
-                                    <AttendeesModal ref="modal" />
+                                    <AttendeesModal ref="modal" entity={entity} />
                                 </div>
                             </div>
                             <div className="col-sm-8">

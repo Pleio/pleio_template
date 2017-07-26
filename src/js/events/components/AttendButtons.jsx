@@ -14,8 +14,9 @@ class AttendButtons extends React.Component {
                     clientMutationId: 1,
                     guid: entity.guid,
                     state
-                }
-            }
+                },
+            },
+            refetchQueries: [ "AttendeesList" ]
         })
     }
 

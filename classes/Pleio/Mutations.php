@@ -1104,7 +1104,7 @@ class Mutations {
             "annotation_owner_guid" => $group->guid,
             "limit" => 1
         );
-        
+
         $annotations = elgg_get_annotations($options);
         if (!empty($annotations)) {
             $ia = elgg_set_ignore_access(true);

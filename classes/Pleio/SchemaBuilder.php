@@ -595,6 +595,9 @@ class SchemaBuilder {
                         ],
                         "limit" => [
                             "type" => Type::int()
+                        ],
+                        "state" => [
+                            "type" => Type::string()
                         ]
                     ],
                     "resolve" => "Pleio\Resolver::getAttendees"
