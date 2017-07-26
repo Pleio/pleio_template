@@ -3,6 +3,7 @@ import autobind from "autobind-decorator"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Select from "../../core/components/NewSelect"
+import LoggedInButton from "../../core/components/LoggedInButton"
 
 class AttendButtons extends React.Component {
     @autobind
@@ -21,7 +22,7 @@ class AttendButtons extends React.Component {
     }
 
     render() {
-        const { entity } = this.props
+        const { entity, viewer } = this.props
 
         if (entity.isAttending) {
             return (
@@ -30,9 +31,9 @@ class AttendButtons extends React.Component {
         } else {
             return (
                 <div className="flexer ___gutter">
-                    <button className="button" onClick={(e) => this.onSubmit("accept")}>Accepteren</button>
-                    <button className="button ___grey" onClick={(e) => this.onSubmit("maybe")}>Misschien</button>
-                    <button className="button ___grey" onClick={(e) => this.onSubmit("reject")}>Afwijzen</button>
+                    <LoggedInButton className="button" viewer={viewer} onClick={(e) => this.onSubmit("accept")}>Accepteren</LoggedInButton>
+                    <LoggedInButton className="button ___grey" viewer={viewer} onClick={(e) => this.onSubmit("maybe")}>Misschien</LoggedInButton>
+                    <LoggedInButton className="button ___grey" viewer={viewer} onClick={(e) => this.onSubmit("reject")}>Afwijzen</LoggedInButton>
                 </div>
             )
         }

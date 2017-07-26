@@ -16,6 +16,7 @@ import People from "./components/People"
 import Featured from "../core/components/Featured"
 import AttendButtons from "./components/AttendButtons"
 import AttendeesModal from "./components/AttendeesModal"
+import LoggedInButton from "../core/components/LoggedInButton"
 
 class Item extends React.Component {
     constructor(props) {
@@ -77,15 +78,6 @@ class Item extends React.Component {
             )
         }
 
-        let comment
-        if (viewer.loggedIn) {
-            comment = (
-                <div title="Schrijf een reactie" className="button article-action ___comment" onClick={this.toggleAddComment}>
-                    Schrijf een reactie
-                </div>
-            )
-        }
-
         return (
             <div>
                 <Document title={entity.title} />
@@ -101,7 +93,7 @@ class Item extends React.Component {
                                     </div>
                                 </div>
                                 <div className="col-sm-3 end-sm bottom-sm col-lg-6">
-                                    <AttendButtons entity={entity} />
+                                    <AttendButtons viewer={viewer} entity={entity} />
                                 </div>
                             </div>
                         </div>
@@ -145,7 +137,9 @@ class Item extends React.Component {
                                     <div className="article-actions">
                                         {edit}
                                         <div className="article-actions__buttons">
-                                            {comment}
+                                            <LoggedInButton title="Schrijf een reactie" className="button article-action ___comment" viewer={viewer} onClick={this.toggleAddComment} fromComment>
+                                                Schrijf een reactie
+                                            </LoggedInButton>
                                         </div>
                                     </div>
                                 <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["EventItem"]} />

@@ -7,16 +7,16 @@ class LoggedInButton extends React.Component {
 
         if (viewer.loggedIn) {
             return (
-                <div title={this.props.title} className={this.props.className} onClick={this.props.onClick}>
-                    {this.props.title}
-                </div>
+                <button title={this.props.title} className={this.props.className} onClick={this.props.onClick}>
+                    {this.props.children}
+                </button>
             )
         } else {
             return (
                 <Link to={{pathname: "/login", state: { fromAddContent: this.props.fromAddContent, fromComment: this.props.fromComment, next: location.pathname }}}>
-                    <div title={this.props.title} className="button article-action ___comment">
-                        {this.props.title}
-                    </div>
+                    <button title={this.props.title} className={this.props.className}>
+                        {this.props.children}
+                    </button>
                 </Link>
             )
         }
