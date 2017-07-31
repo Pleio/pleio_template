@@ -336,6 +336,10 @@ function pleio_template_email_handler($hook, $type, $return, $params) {
         "body" => $body
     ];
 
+    if (!is_array($params["params"])) {
+        $params["params"] = [];
+    }
+
     return mail(
         $params["to"],
         $subject,
