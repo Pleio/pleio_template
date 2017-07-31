@@ -50,7 +50,7 @@ export default class Featured extends React.Component {
                 if (background) {
                     return (
                         <Link to={this.props.to}>
-                            <div style={background} className="card-blog-post__image" onClick={this.playVideo}>
+                            <div style={background} className="card-blog-post__image">
                                 {playButton}
                                 {videoModal}
                             </div>
@@ -64,7 +64,7 @@ export default class Featured extends React.Component {
                 if (background) {
                     return (
                         <div style={background} className={classnames({"lead ___content": true, "___video": featured.video, "___event": this.props.event, "___bottom": this.props.bottom})}>
-                            <div className="lead__justify" onClick={this.playVideo}>
+                            <div className="lead__justify">
                                 {playButton}
                                 {this.props.children}
                             </div>
