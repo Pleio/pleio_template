@@ -763,12 +763,17 @@ class Resolver {
 
             if ($args["subtype"] === "event") {
                 $msid = get_metastring_id("startDate");
+                $yesterday = (int) mktime(0, 0, 0, date("n"), date("j") - 1, date("Y"));
+
                 if ($msid) {
                     $options["joins"] = [
                         "JOIN {$dbprefix}metadata md ON e.guid = md.entity_guid",
                         "JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id"
                     ];
-                    $options["wheres"] = [ "md.name_id = {$msid}" ];
+                    $options["wheres"] = [
+                        "md.name_id = {$msid}",
+                        "msv.string > $yesterday"
+                    ];
                     $options["order_by"] = "msv.string ASC";
                 }
             }
