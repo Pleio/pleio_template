@@ -753,7 +753,7 @@ class SchemaBuilder {
                 "object" => [
                     "type" => Type::nonNull($objectType),
                     "resolve" => function($activity) {
-                        return Mapper::getObject($activity["object"]);
+                        return Mapper::getObject($activity["object"], isset($activity["isHighlighted"]));
                     }
                 ]
             ]

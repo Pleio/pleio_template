@@ -108,7 +108,9 @@ class EmailOverviewHandler {
     }
 
     private static function getSubtypes() {
-        $subtypes = array_filter(array_map(function($v) { return get_subtype_id("object", $v); }, PLEIO_SUBTYPES));
+        global $CONFIG;
+
+        $subtypes = array_filter(array_map(function($v) { return get_subtype_id("object", $v); }, $CONFIG->pleio_subtypes));
         $sanitized_subtypes = array_map(function($v) { return sanitize_int($v); }, $subtypes);
         return implode(",", $sanitized_subtypes);
     }

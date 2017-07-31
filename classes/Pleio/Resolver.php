@@ -117,7 +117,7 @@ class Resolver {
             $activities[] = [
                 "guid" => "activity:" . $featured->guid,
                 "type" => "create",
-                "object_guid" => $featured->guid,
+                "object" => $featured,
                 "isHighlighted" => true
             ];
         }
@@ -800,9 +800,7 @@ class Resolver {
         $entities = array();
 
         if ($featured) {
-            $entities[] = array_merge(Mapper::getObject($featured), [
-                "isHighlighted" => "true"
-            ]);
+            $entities[] = Mapper::getObject($featured, true);
         }
 
         foreach ($result["entities"] as $entity) {

@@ -8,8 +8,7 @@ function pleio_template_autoloader($class) {
     }
 }
 
-define("PLEIO_TEMPLATE_LESS", dirname(__FILE__) . "/src/less/");
-define("PLEIO_SUBTYPES", ["news", "blog", "question", "event"]);
+$CONFIG->pleio_subtypes = ["news", "blog", "question", "event"];
 
 function pleio_template_init() {
     $lang = get_current_language();
