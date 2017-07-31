@@ -18,9 +18,9 @@ export default class Tabber extends React.Component {
 
     render() {
         const menu = this.props.items.map((item, i) => (
-            <div key={i} className={classnames({"tabmenu__link": true, "___is-active": this.state.slide === i})} onClick={(e) => this.toggleSlide(i)}>
+            <a key={i} className={classnames({"___is-active": this.state.slide === i})} onClick={(e) => this.toggleSlide(i)}>
                 {item.title}
-            </div>
+            </a>
         ))
 
         const slides = this.props.items.map((item, i) => (
