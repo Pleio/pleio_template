@@ -4,13 +4,13 @@
     margin-bottom: 2rem;
     width: 100%;
     box-shadow: @box-shadow;
-    display: flex;
 
     @media (max-width: @screen-xs-max) {
-        padding: 2rem;
+        padding: 0 2rem 2rem;
     }
 
     @media (min-width: @screen-sm) {
+        display: flex;
         padding: 3rem;
     }
 
@@ -35,17 +35,20 @@
 }
 
 .card-event__picture {
+    position: relative;
     flex: 0 0 auto;
     display: block;
 
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    cursor: pointer;
 
     @media (max-width: @screen-xs-max) {
-        width: 4rem;
-        height: 4rem;
-        margin-right: 1.5rem;
+        margin-left: -2rem;
+        margin-right: -2rem;
+        height: 9rem;
+        margin-bottom: 2rem;
     }
 
     @media (min-width: @screen-sm) {
@@ -70,7 +73,16 @@
     margin-top: auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     flex-wrap: wrap;
     padding-top: 2rem;
+
+    .people {
+        margin-left: auto;
+    }
+
+    .flexer + .people {
+        @media (max-width: @screen-md-max) {
+            display: none;
+        }
+    }
 }

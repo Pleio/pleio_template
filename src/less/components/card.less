@@ -1,15 +1,202 @@
 .card {
+    display: block;
     position: relative;
     width: 100%;
-    margin-bottom: 2rem;
-    background-color: @color-white;
-    box-shadow: @box-shadow;
-
-    @media (max-width: @screen-xs-max) {
-        padding: 2rem;
-    }
 
     @media (min-width: @screen-sm) {
         padding: 3rem;
     }
+
+    &:not(.___side) {
+        background-color: @color-white;
+        box-shadow: @box-shadow;
+        margin-bottom: 2rem;
+
+        @media (max-width: @screen-xs-max) {
+            padding: 2rem;
+        }
+    }
+
+    &.___side {
+        @media (max-width: @screen-xs-max) {
+            border-bottom: 1px solid @color-grey--50;
+
+            .people {
+                display: none;
+            }
+        }
+
+        @media (min-width: @screen-sm) {
+            background-color: @color-white;
+            box-shadow: @box-shadow;
+            margin-bottom: 2rem;
+        }
+    }
+
+    &.___indent {
+        @media (min-width: @screen-sm) {
+            padding-left: 8rem;
+        }
+    }
+
+    &.___last {
+        @media (max-width: @screen-xs-max) {
+            margin-bottom: 2rem;
+        }
+    }
+
+    &.___is-highlighted {
+        &:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: .4rem;
+            background-color: @color-lightblue;
+            z-index: 1;
+        }
+    }
+}
+
+// children
+.card {
+    .people {
+        margin-bottom: 2rem;
+    }
+
+    .read-more {
+        padding: 1rem 0;
+        margin-top: -1rem;
+        margin-bottom: -1rem;
+    }
+
+    &.___members {
+        @media ( max-width: @screen-xs-max ) {
+            .card__title {
+                padding: .8rem 0;
+                margin: 0;
+            }
+        }
+
+        @media ( min-width: @screen-sm ) and ( max-width: @screen-md-max ) {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .card__title {
+                margin: 0;
+            }
+
+            .people {
+                order: 1;
+                margin: 0;
+            }
+        }
+
+        @media (min-width: @screen-lg) {
+            .card__title {
+                margin-bottom: -.5rem;
+                color: @color-grey--80;
+                text-align: center;
+            }
+        }
+    }
+
+    &.___info {
+        .picture {
+            position: absolute;
+            top: 3rem;
+            left: 2.4rem;
+            align-items: flex-start;
+            border-radius: 0;
+
+            .icon(info);
+            &:before {
+                font-size: 3rem;
+                color: @color-grey--50;
+            }
+
+            @media ( max-width: @screen-xs-max ) {
+                display: none;
+            }
+        }
+
+        .card__title {
+            padding-right: 3rem;
+        }
+    }
+}
+
+a.card {
+    cursor: pointer;
+}
+
+.card__title {
+    margin-top: -.3rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    color: @color-primary;
+
+    @media ( max-width: @screen-xs-max ) {
+        .font(base);
+    }
+
+    @media (min-width: @screen-sm) {
+        .font(title-small);
+    }
+}
+
+.card__subtitle {
+    color: @color-secondary;
+}
+
+.card__item {
+    display: block;
+    margin-bottom: 2rem;
+}
+
+.card__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 2rem;
+    color: @color-grey--50;
+    transition: color @trans-fast;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 1;
+
+    &:hover,
+    &:focus {
+        color: @color-secondary;
+    }
+
+    .icon(cross);
+    &:before {
+        font-size: 1.4rem;
+    }
+
+    @media (max-width: @screen-xs-max) {
+        &:before {
+            font-size: 1.2rem;
+        }
+    }
+}
+
+.card__content {
+    a {
+        color: @color-secondary;
+    }
+}
+
+.card__bottom {
+    display: flex;
+    justify-content: flex-end;
 }

@@ -74,7 +74,8 @@
 
     .lead.___video &,
     .upload-image &,
-    .card-blog-post & {
+    .card-blog-post &,
+    .card-event__picture & {
         position: absolute;
         left: 0;
         right: 0;
@@ -117,9 +118,11 @@
         cursor: pointer;
 
         &:hover,
-        .lead.___video:hover &,
+        .lead.___video:not(.___event):hover &,
+        .lead__background:hover &,
         .lead__about:hover &,
-        .card-blog-post__image:hover & {
+        .card-blog-post__image:hover &,
+        .card-event__picture:hover & {
             &:before {
                 color: @color-quaternary;
             }

@@ -3,10 +3,6 @@
     justify-content: center;
     cursor: pointer;
 
-    .card & {
-        margin-bottom: 2rem;
-    }
-
     @media (max-width: @screen-xs-max) {
         .card-event & {
             display: none;
@@ -15,7 +11,7 @@
 
     > * {
         flex: 0 0 auto;
-        
+
         &:not(:first-child) {
             margin-left: -.8rem;
         }
@@ -27,7 +23,7 @@
     height: 4rem;
     border-radius: 50%;
     overflow: hidden;
-    background-color: @color-tertiary;
+    background-color: @color-secondary--light;
     color: white;
     display: flex;
     align-items: center;

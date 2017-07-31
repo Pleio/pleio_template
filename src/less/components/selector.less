@@ -2,6 +2,9 @@
     position: relative;
     width: 100%;
     user-select: none;
+    color: black;
+    text-shadow: none;
+    text-align: left;
 
     &.___is-open {
         .selector__select:after {
@@ -98,9 +101,9 @@
     }
 
     .selector.___filter.___not-default & {
-        background-color:  @color-tertiary--lighter;
+        background-color: @color-secondary--lightest;
         color: @color-black;
-        border-color: @color-tertiary--lighter;
+        border-color: @color-secondary--lightest;
 
         &:hover,
         &.___has-focus {

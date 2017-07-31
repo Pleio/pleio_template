@@ -31,7 +31,7 @@
     &.___small {
         p {
             .font(medium);
-            margin: 0 0 2rem;
+            margin-bottom: 2rem;
         }
     }
 
@@ -290,11 +290,15 @@
     .font(title-extra-large);
     font-weight: bold;
     color: @color-secondary;
-    margin: 0 0 3rem;
+    margin: -.5rem 0 3rem;
 
     .modal.___small:not(.___blue) > .modal__wrapper > .modal__box > & {
         .font(title-small);
         margin: 0 0 2rem;
+    }
+
+    + p {
+        margin-top: -2rem;
     }
 
     .modal.___blue > .modal__wrapper > .modal__box > & {

@@ -20,7 +20,7 @@
     cursor: pointer;
     user-select: none;
     -webkit-appearance: none;
-         -moz-appearance: none;
+    -moz-appearance: none;
 
     &.___is-active,
     &:hover,
@@ -125,6 +125,14 @@ button.button {
 .button.___square {
     width: 4rem;
     padding: 0;
+
+    &:hover {
+        background-color: @color-grey--80;
+    }
+
+    &.___is-invited {
+        background-color: @color-secondary;
+    }
 
     @media ( max-width: @screen-xs-max ) {
         width: 3.6rem;
@@ -258,7 +266,7 @@ button.button {
         .icon(social-facebook);
 
         &:before {
-                font-size: 1.8rem;
+            font-size: 1.8rem;
         }
     }
     &.___google {
@@ -266,7 +274,7 @@ button.button {
         .icon(social-google);
 
         &:before {
-                font-size: 1.4rem;
+            font-size: 1.4rem;
         }
     }
     &.___linkedin {
@@ -274,7 +282,7 @@ button.button {
         .icon(social-linkedin);
 
         &:before {
-                font-size: 1.8rem;
+            font-size: 1.8rem;
         }
     }
     &.___mail {
@@ -282,36 +290,25 @@ button.button {
         .icon(envelope);
 
         &:before {
-                font-size: 1.2rem;
+            font-size: 1.2rem;
         }
     }
 }
 
 .button.___options {
     position: absolute;
-    top: 4rem;
+    top: 2rem;
     right: 2rem;
-    background-color: @color-grey--50;
+    width: 3.6rem;
+    background-color: @color-secondary;
     overflow: visible;
 
     .icon(options);
     &:before {
-        font-size: 0.6rem;
+        font-size: .5rem;
     }
 
-    @media ( max-width: @screen-xs-max ) {
-        &.___large.___square {
-            top: 2rem;
-            width: 2.6rem;
-            height: 2.6rem;
-        }
-
-        &:before {
-            font-size: 0.35rem;
-        }
-    }
-
-    @media ( min-width: @screen-lg ) {
+    @media ( min-width: @screen-sm ) {
         display: none;
     }
 }

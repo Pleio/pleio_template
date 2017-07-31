@@ -2,11 +2,11 @@
     position: relative;
     flex-shrink: 0;
     display: flex;
-    margin: 4rem 0 0 0;
+    margin: 3rem 0 0 0;
 
     .modal & {
         margin: 0; // Event attendees
-        
+
         &:before {
             content: '';
             position: absolute;
@@ -18,41 +18,69 @@
         }
     }
 
+    &.___group {
+        width: 100%;
+        margin: 0;
+        padding: 0 2rem;
+        background-color: tint(@color-secondary, 90%);
+
+        a {
+            padding-top: 1.9rem;
+        }
+    }
+
     @media ( max-width: @screen-xs-max ) {
         display: none;
     }
-}
 
-.tabmenu__link {
-    position: relative;
-    display: block;
-    color: @color-black;
-    font-size: @font-size--base;
-    line-height: @line-height--base;
-    border-bottom: 0.5rem solid transparent;
-    padding: 1rem 0.8rem 1rem 0.8rem;
-    text-decoration: none;
-    margin-left: 0.8rem;
-    cursor: pointer;
-    user-select: none;
-    transition: color @trans-fast;
+    a {
+        position: relative;
+        display: block;
+        color: @color-black;
+        font-size: @font-size--base;
+        line-height: @line-height--base;
+        padding: 0 1rem 1.7rem;
+        text-decoration: none;
+        cursor: pointer;
+        user-select: none;
+        transition: color @trans-fast;
 
-    &:first-child {
-        margin-left: 0;
-    }
+        &:hover {
+            color: @color-primary;
+        }
 
-    &:hover {
-        color: @color-primary;
-    }
+        &.___is-active {
+            color: @color-primary;
 
-    &.___is-active {
-        border-color: @color-secondary;
-        color: @color-primary;
-        cursor: default;
+            &:before {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: .5rem;
+                background-color: @color-secondary;
+            }
+        }
     }
 }
 
 .tabmenu__dropdown {
+    .selector__select {
+        line-height: 4.4rem;
+    }
+
+    .selector__option {
+        line-height: 3.4rem;
+    }
+
+    &.___group {
+        .selector__select {
+            border-color: transparent;
+            background-color: tint(@color-secondary, 90%);
+        }
+    }
+
     @media ( min-width: @screen-sm ) {
         display: none;
     }
