@@ -81,24 +81,21 @@ class Item extends React.Component {
         return (
             <div>
                 <Document title={entity.title} />
-                <div className={"lead ___event ___bottom"}>
-                    <div className="lead__background" style={{"backgroundImage": `url(${entity.featured.image})`, "backgroundPositionY": entity.featured.positionY + "%"}} />
-                    <div className="lead__justify">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-sm-9 bottom-sm col-lg-6">
-                                    <div>
-                                        <h1 className="lead__title">{entity.title}</h1>
-                                        <span>Georganiseerd door {entity.owner.name}</span>
-                                    </div>
+                <Featured entity={entity} showEmpty event bottom>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-sm-9 bottom-sm col-lg-6">
+                                <div>
+                                    <h1 className="lead__title">{entity.title}</h1>
+                                    <span>Georganiseerd door {entity.owner.name}</span>
                                 </div>
-                                <div className="col-sm-3 end-sm bottom-sm col-lg-6">
-                                    <AttendButtons viewer={viewer} entity={entity} />
-                                </div>
+                            </div>
+                            <div className="col-sm-3 end-sm bottom-sm col-lg-6">
+                                <AttendButtons viewer={viewer} entity={entity} />
                             </div>
                         </div>
                     </div>
-                </div>
+                </Featured>
                 <section className="section">
                     <div className="container">
                         <div className="row">

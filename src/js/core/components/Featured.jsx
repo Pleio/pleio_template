@@ -18,14 +18,16 @@ export default class Featured extends React.Component {
     }
 
     render() {
-        const { entity, inCard, inActivityFeed } = this.props
+        const { entity, inCard, inActivityFeed, showEmpty } = this.props
         const { featured } = entity
 
-        let backgroundImage = ""
+        let background
         if (featured.image) {
-            backgroundImage = featured.image
+            background = { backgroundImage: `url(${featured.image}`, "backgroundPositionY": featured.positionY + "%"}
         } else if (featured.video) {
-            backgroundImage = getVideoThumbnail(featured.video)
+            background = { backgroundImage: `url(${getVideoThumbnail(featured.video)}`, "backgroundPositionY": featured.positionY + "%"}
+        } else if (showEmpty) {
+            background = { backgroundColor: "#8fcae7" }
         }
 
         let playButton
@@ -45,10 +47,10 @@ export default class Featured extends React.Component {
 
         switch (inCard) {
             case "blog":
-                if (backgroundImage) {
+                if (background) {
                     return (
                         <Link to={this.props.to}>
-                            <div style={{"backgroundImage": `url(${backgroundImage})`, "backgroundPositionY": featured.positionY + "%"}} className="card-blog-post__image" onClick={this.playVideo}>
+                            <div style={background} className="card-blog-post__image" onClick={this.playVideo}>
                                 {playButton}
                                 {videoModal}
                             </div>
@@ -59,11 +61,10 @@ export default class Featured extends React.Component {
                 }
             default:
                 // not an in-card view
-                if (backgroundImage) {
+                if (background) {
                     return (
-                        <div className={classnames({"lead ___content": true, "___video": featured.video, "___event": this.props.event, "___bottom": this.props.bottom})}>
-                            <div className="lead__background" style={{"backgroundImage": `url(${backgroundImage})`, "backgroundPositionY": featured.positionY + "%"}} onClick={this.playVideo} />
-                            <div className="lead__justify">
+                        <div style={background} className={classnames({"lead ___content": true, "___video": featured.video, "___event": this.props.event, "___bottom": this.props.bottom})}>
+                            <div className="lead__justify" onClick={this.playVideo}>
                                 {playButton}
                                 {this.props.children}
                             </div>
