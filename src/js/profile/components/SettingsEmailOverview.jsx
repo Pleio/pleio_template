@@ -6,7 +6,6 @@ import gql from "graphql-tag"
 const Options = {
     daily: "Dagelijks",
     weekly: "Wekelijks",
-    twoweekly: "Om de twee weken",
     monthly: "Maandelijks",
     never: "Nooit"
 }

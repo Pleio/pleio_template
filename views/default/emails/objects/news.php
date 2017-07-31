@@ -1,6 +1,8 @@
 <?php
 $site = elgg_get_site_entity();
 $entity = elgg_extract("entity", $vars);
+$friendly_title = elgg_get_friendly_title($entity->title);
+$url = "{$site->url}news/view/{$entity->guid}/{$friendly_title}";
 ?>
 <!-- Article -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -45,7 +47,7 @@ $entity = elgg_extract("entity", $vars);
                                         </tr>
                                         <tr>
                                             <td class="text-button" style="color:#009fe3; font-family:Arial,sans-serif; font-size:16px; line-height:20px; text-align:left; padding-top:24px">
-                                                <a href="<?php echo $entity->getURL(); ?>" target="_blank" class="link-blue" style="color:#009fe3; text-decoration:none"><span class="link-blue" style="color:#009fe3; text-decoration:none">&gt; <?php echo elgg_echo("pleio_template:read_more"); ?></span></a>
+                                                <a href="<?php echo $url; ?>" target="_blank" class="link-blue" style="color:#009fe3; text-decoration:none"><span class="link-blue" style="color:#009fe3; text-decoration:none">&gt; <?php echo elgg_echo("pleio_template:read_more"); ?></span></a>
                                             </td>
                                         </tr>
                                     </table>

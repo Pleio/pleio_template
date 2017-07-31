@@ -110,12 +110,8 @@ class Profile extends React.Component {
                                                     <span>{stats.answers || 0}</span>
                                                 </li>
                                                 <li>
-                                                    <label>Stemmen omhoog:</label>
+                                                    <label>Likes gegeven:</label>
                                                     <span>{stats.upvotes || 0}</span>
-                                                </li>
-                                                <li>
-                                                    <label>Stemmen omlaag:</label>
-                                                    <span>{stats.downvotes || 0}</span>
                                                 </li>
                                             </ul>
                                         </div>
