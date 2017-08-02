@@ -4,7 +4,7 @@ import MemberItem from "./MemberItem"
 import MembersModal from "./MembersModal"
 import People from "../../core/components/People"
 
-export default class MembersSummary extends React.Component {
+export default class MembersCard extends React.Component {
     render () {
         const { entity } = this.props
 

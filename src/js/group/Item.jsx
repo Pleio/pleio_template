@@ -5,7 +5,8 @@ import { Link } from "react-router-dom"
 import GroupContainer from "./components/GroupContainer"
 import Document from "../core/components/Document"
 import Card from "../activity/components/Card"
-import MembersSummary from "./components/MembersSummary"
+import MembersCard from "./components/MembersCard"
+import EventsCard from "./components/EventsCard"
 import ActivityList from "./components/ActivityList"
 
 class Item extends React.Component {
@@ -66,7 +67,14 @@ class Item extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-12 col-lg-4 last-lg top-lg">
-                            <MembersSummary entity={entity} />
+                            <div className="row">
+                                <div className="col-sm-6 col-lg-12">
+                                    <MembersCard entity={entity} />
+                                </div>
+                                <div className="col-sm-6 col-lg-12">
+                                    <EventsCard entity={entity} />
+                                </div>
+                            </div>
                         </div>
                         <div className="col-sm-12 col-lg-8">
                             <ActivityList containerGuid={entity.guid} containerClassName="" childClass={Card} offset={0} limit={20} tags={[]} />
@@ -95,6 +103,7 @@ const Query = gql`
             status
             ... on Group {
                 name
+                url
                 plugins
                 description
                 icon

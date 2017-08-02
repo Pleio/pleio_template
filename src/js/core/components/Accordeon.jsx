@@ -30,7 +30,7 @@ export default class Accordeon extends React.Component {
         }
 
         return (
-            <div className={this.props.className + " " + classnames({"___is-open": this.state.isOpen})}>
+            <div className={this.props.className + " " + classnames({"___is-open": this.state.isOpen, "___side": this.props.side, "___last": this.props.last})}>
                 <div className={this.props.className + "__title accordion__trigger ___tablet"} onClick={this.toggleOpen}>
                     {this.props.title}
                     {icon}
