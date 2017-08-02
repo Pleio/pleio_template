@@ -3,6 +3,8 @@ import { Router as ReactRouter } from "react-router-dom"
 import { Route, Switch } from "react-router-dom"
 import browserHistory from "./lib/browserHistory"
 
+import ScrollToTop from "./core/components/ScrollToTop"
+
 import NewsRoutes from "./news/Routes"
 import BlogRoutes from "./blog/Routes"
 import QuestionsRoutes from "./questions/Routes"
@@ -19,6 +21,7 @@ export default class Router extends React.Component {
     render() {
         return (
             <ReactRouter history={browserHistory}>
+                <ScrollToTop>
                     <Switch>
                         <Route path="/news" component={NewsRoutes} />
                         <Route path="/blog" component={BlogRoutes} />
@@ -32,6 +35,7 @@ export default class Router extends React.Component {
                         <Route path="/" component={CoreRoutes} />
                         <Route component={NotFound} />
                     </Switch>
+                </ScrollToTop>
             </ReactRouter>
         )
     }
