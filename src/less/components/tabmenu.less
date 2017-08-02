@@ -21,7 +21,7 @@
     &.___group {
         width: 100%;
         margin: 0;
-        padding: 0 2rem;
+        padding: 0 0 0 2rem;
         background-color: tint(@color-secondary, 90%);
 
         a {
@@ -83,5 +83,63 @@
 
     @media ( min-width: @screen-sm ) {
         display: none;
+    }
+}
+
+.tabmenu__search-button {
+    margin-left: auto;
+    height: 6rem;
+    width: 6rem;
+
+    .icon(search);
+    &:before {
+        font-size: 1.8rem;
+    }
+}
+
+.tabmenu__search {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    background-color: @color-primary;
+    color: white;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility @trans-fast, opacity @trans-fast;
+
+    .icon(search);
+    &:before {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 6rem;
+        width: 6rem;
+        font-size: 1.8rem;
+    }
+
+    input {
+        flex: 1 1 auto;
+        background-color: transparent;
+        border: none;
+    }
+
+    button {
+        flex: 0 0 auto;
+        height: 6rem;
+        width: 6rem;
+
+        .icon(cross,);
+        &:before {
+            font-size: 1.8rem;
+        }
+    }
+
+    .tabmenu:hover & {
+        visibility: visible;
+        opacity: 1;
     }
 }

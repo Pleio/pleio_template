@@ -6,6 +6,14 @@
     text-shadow: none;
     text-align: left;
 
+    &.___no-line {
+        .selector__select {
+            &:not(:hover) {
+                border-color: transparent;
+            }
+        }
+    }
+
     &.___is-open {
         .selector__select:after {
             color: @color-grey--60;

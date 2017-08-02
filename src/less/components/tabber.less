@@ -9,6 +9,10 @@
         padding-left: 4rem;
         padding-right: 4rem;
     }
+
+    .search-bar + & {
+        margin-top: 3rem;
+    }
 }
 
 .tabber__slides {
@@ -20,7 +24,7 @@
 .tabber__slide {
     overflow-y: auto;
     width: 100%;
-    padding-top: 2rem;
+    padding-top: 1rem;
     transition: opacity @trans-normal, visibility @trans-normal;
 
     &:not(.___is-active) {

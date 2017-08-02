@@ -1,8 +1,6 @@
 .list-members {
     flex: 1 1 auto;
     padding-bottom: 2rem;
-    overflow: hidden;
-    overflow-y: auto;
 
     @media ( min-width: @screen-lg ) {
         padding-right: 1rem;
@@ -24,6 +22,14 @@
     @media ( max-width: @screen-md-max ) {
         flex-wrap: wrap;
         line-height: 2.4rem;
+    }
+
+    .button, .selector {
+        margin-left: 2rem;
+    }
+
+    .selector {
+        max-width: 14rem;
     }
 }
 
