@@ -957,6 +957,8 @@ class Mutations {
         $group->tags = filter_tags($input["tags"]);
         $group->access_id = get_default_access();
 
+        $result = $group->save();
+
         if ($input["featured"]) {
             if ($input["featured"]["image"]) {
                 Helpers::saveToFeatured($input["featured"]["image"], $group);
@@ -973,8 +975,6 @@ class Mutations {
                 unset($group->featuredPositionY);
             }
         }
-
-        $result = $group->save();
 
         if ($result) {
             $group->join($user);
