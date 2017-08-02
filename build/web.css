@@ -1097,6 +1097,9 @@ body.___rijkshuisstijl .navigation__search:before,
 .editor__tool-group#editor-insert .selector__option.___is-disabled:before,
 .top-navigation .single-dropdown__trigger:after,
 .single-dropdown__back:after,
+.tabmenu__search-button:before,
+.tabmenu__search:before,
+.tabmenu__search button:before,
 .search-bar__button:before,
 .tag__remove:before,
 .users-online:after,
@@ -3248,11 +3251,7 @@ button.button {
   font-size: 1.2rem;
 }
 .button.___options {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
   width: 3.6rem;
-  background-color: #009ee3;
   overflow: visible;
 }
 .button.___options:before {
@@ -6475,6 +6474,8 @@ a.card {
   }
 }
 .lead.___group .lead__title {
+  -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
   margin: 0;
   cursor: pointer;
 }
@@ -6816,8 +6817,6 @@ a.card {
   -ms-flex: 1 1 auto;
       flex: 1 1 auto;
   padding-bottom: 2rem;
-  overflow: hidden;
-  overflow-y: auto;
 }
 @media (min-width: 1024px) {
   .list-members {
@@ -6843,6 +6842,13 @@ a.card {
         flex-wrap: wrap;
     line-height: 2.4rem;
   }
+}
+.list-members__member .button,
+.list-members__member .selector {
+  margin-left: 2rem;
+}
+.list-members__member .selector {
+  max-width: 14rem;
 }
 .list-members__picture {
   -ms-flex-negative: 0;
@@ -8429,6 +8435,9 @@ a.card-tile:hover .read-more__circle {
   text-shadow: none;
   text-align: left;
 }
+.selector.___no-line .selector__select:not(:hover) {
+  border-color: transparent;
+}
 .selector.___is-open .selector__select:after {
   color: #B4B4B4;
   transform: scaleY(-1);
@@ -8894,6 +8903,9 @@ a.card-tile:hover .read-more__circle {
   padding-left: 4rem;
   padding-right: 4rem;
 }
+.search-bar + .tabber {
+  margin-top: 3rem;
+}
 .tabber__slides {
   -ms-flex: 1 1 auto;
       flex: 1 1 auto;
@@ -8904,7 +8916,7 @@ a.card-tile:hover .read-more__circle {
 .tabber__slide {
   overflow-y: auto;
   width: 100%;
-  padding-top: 2rem;
+  padding-top: 1rem;
   transition: opacity 0.35s ease, visibility 0.35s ease;
 }
 .tabber__slide:not(.___is-active) {
@@ -8936,7 +8948,7 @@ a.card-tile:hover .read-more__circle {
 .tabmenu.___group {
   width: 100%;
   margin: 0;
-  padding: 0 2rem;
+  padding: 0 0 0 2rem;
   background-color: #e6f5fc;
 }
 .tabmenu.___group a {
@@ -8991,6 +9003,69 @@ a.card-tile:hover .read-more__circle {
   .tabmenu__dropdown {
     display: none;
   }
+}
+.tabmenu__search-button {
+  margin-left: auto;
+  height: 6rem;
+  width: 6rem;
+}
+.tabmenu__search-button:before {
+  content: "\E041";
+}
+.tabmenu__search-button:before {
+  font-size: 1.8rem;
+}
+.tabmenu__search {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #01689b;
+  color: white;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.2s ease, opacity 0.2s ease;
+}
+.tabmenu__search:before {
+  content: "\E041";
+}
+.tabmenu__search:before {
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+  height: 6rem;
+  width: 6rem;
+  font-size: 1.8rem;
+}
+.tabmenu__search input {
+  -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+  background-color: transparent;
+  border: none;
+}
+.tabmenu__search button {
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+  height: 6rem;
+  width: 6rem;
+}
+.tabmenu__search button:before {
+  content: "\E01C";
+}
+.tabmenu__search button:before {
+  font-size: 1.8rem;
+}
+.tabmenu:hover .tabmenu__search {
+  visibility: visible;
+  opacity: 1;
 }
 .search-bar {
   position: relative;
