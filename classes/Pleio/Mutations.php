@@ -207,7 +207,7 @@ class Mutations {
                     if ($input["featured"]["image"] === "false") {
                         unset($entity->featuredIcontime);
                     } else {
-                        Helpers::saveToFeatured($input["featured"]["image"], $entity);   
+                        Helpers::saveToFeatured($input["featured"]["image"], $entity);
                         $entity->featuredIcontime = time();
                     }
                 }
@@ -917,7 +917,7 @@ class Mutations {
         }
 
         if ($input["col"]) {
-            $entity->col = (int) $input["col"];            
+            $entity->col = (int) $input["col"];
         }
 
         if ($input["width"]) {
@@ -956,6 +956,24 @@ class Mutations {
         $group->plugins = array_unique($input["plugins"]);
         $group->tags = filter_tags($input["tags"]);
         $group->access_id = get_default_access();
+
+        if ($input["featured"]) {
+            if ($input["featured"]["image"]) {
+                Helpers::saveToFeatured($input["featured"]["image"], $group);
+                $group->featuredIcontime = time();
+            }
+
+            if ($input["featured"]["video"]) {
+                $group->featuredVideo = $input["featured"]["video"];
+            }
+
+            if ($input["featured"]["positionY"]) {
+                $group->featuredPositionY = $input["featured"]["positionY"];
+            } else {
+                unset($group->featuredPositionY);
+            }
+        }
+
         $result = $group->save();
 
         if ($result) {
@@ -991,6 +1009,29 @@ class Mutations {
         $group->description = $input["description"];
         $group->tags = filter_tags($input["tags"]);
         $group->plugins = array_unique($input["plugins"]);
+
+        if ($input["featured"]) {
+            if ($input["featured"]["image"]) {
+                if ($input["featured"]["image"] === "false") {
+                    unset($group->featuredIcontime);
+                } else {
+                    Helpers::saveToFeatured($input["featured"]["image"], $group);
+                    $group->featuredIcontime = time();
+                }
+            }
+
+            if ($input["featured"]["video"]) {
+                $group->featuredVideo = $input["featured"]["video"];
+            } else {
+                unset($group->featuredVideo);
+            }
+
+            if ($input["featured"]["positionY"]) {
+                $group->featuredPositionY = $input["featured"]["positionY"];
+            } else {
+                unset($group->featuredPositionY);
+            }
+        }
 
         $result = $group->save();
 

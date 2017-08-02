@@ -17,6 +17,11 @@ const Query = gql`
                     endDate
                     url
                     excerpt
+                    featured {
+                        image
+                        video
+                        positionY
+                    }
                 }
             }
         }

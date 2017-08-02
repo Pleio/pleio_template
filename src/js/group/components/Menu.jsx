@@ -1,13 +1,15 @@
 import React from "react"
 import TabMenu from "../../core/components/TabMenu"
 import { groupPlugins as defaultPlugins } from "../../lib/constants"
+import { withRouter } from "react-router"
 
-export default class Menu extends React.Component {
+class Menu extends React.Component {
     render() {
-        const { match, group } = this.props
+        const { match, entity } = this.props
+
         const rootUrl =  `/groups/view/${match.params.groupGuid}/${match.params.groupSlug}`
-        
-        const plugins = group.plugins ? group.plugins : Object.keys(defaultPlugins)
+
+        const plugins = entity.plugins ? entity.plugins : Object.keys(defaultPlugins)
 
         const menuOptions = plugins.map((key) => {
             return {
@@ -17,10 +19,12 @@ export default class Menu extends React.Component {
         })
 
         return (
-            <TabMenu options={[
-                ...[{ link: `${rootUrl}`, title:"Activiteiten" }],
+            <TabMenu className="tabmenu ___group" options={[
+                ...[{ link: `${rootUrl}`, title:"Overzicht" }],
                 ...menuOptions
-            ]} history={history} />
+            ]} />
         )
     }
 }
+
+export default withRouter(Menu)

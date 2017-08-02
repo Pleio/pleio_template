@@ -4,10 +4,8 @@ import { graphql } from "react-apollo"
 import { Link } from "react-router-dom"
 import gql from "graphql-tag"
 import classnames from "classnames"
+import GroupContainer from "../group/components/GroupContainer"
 import Document from "../core/components/Document"
-import ContentHeader from "../core/components/ContentHeader"
-import NotFound from "../core/NotFound"
-import Menu from "../group/components/Menu"
 import FileFolderList from "./containers/FileFolderList"
 import FileFolder from "./components/FileFolder"
 import AddFileModal from "./components/AddFileModal"
@@ -109,35 +107,26 @@ class Item extends React.Component {
             )
         }
 
+       const buttons = (
+            <div className="flexer ___gutter ___top">
+                {add}
+            </div>
+        )
+
         const containerGuid = match.params.containerGuid ? match.params.containerGuid : match.params.groupGuid
 
         return (
-            <div className="page-container">
+            <GroupContainer buttons={buttons} match={this.props.match}>
                 <Document title={entity.name} />
-                <ContentHeader className="___no-padding-bottom">
-                    <div className="row">
-                        <div className="col-sm-6">
-                            <h3 className="main__title ___info">
-                                {entity.name}
-                            </h3>
-                        </div>
-                        <div className="col-sm-6 end-sm">
-                            {add}
-                        </div>
-                    </div>
-                    <Menu match={this.props.match} group={entity} />
-                </ContentHeader>
-                <section className={classnames({"section ___grey ___grow": true, "___show-checkboxes": this.state.selected.size > 0})}>
-                    <div className="container">
-                        {actions}
-                        <FileFolderList containerGuid={containerGuid} containerClassName="" rowClassName="row file__item" childClass={FileFolder} offset={0} limit={50} type="object" subtype="file|folder" selected={this.state.selected} history={this.props.history} />
-                    </div>
-                </section>
+                <div className="container">
+                    {actions}
+                    <FileFolderList containerGuid={containerGuid} containerClassName="" rowClassName="row file__item" childClass={FileFolder} offset={0} limit={50} type="object" subtype="file|folder" selected={this.state.selected} history={this.props.history} />
+                </div>
                 <AddFileModal ref="addFile" containerGuid={containerGuid} onComplete={this.clearSelection} />
                 <AddFolderModal ref="addFolder" containerGuid={containerGuid} onComplete={this.clearSelection} />
                 <EditFileFolderModal ref="edit" entity={this.state.selected.first()} onComplete={this.clearSelection} />
                 <DeleteFileFolderModal ref="delete" entities={this.state.selected} onComplete={this.clearSelection} />
-            </div>
+            </GroupContainer>
         )
     }
 }

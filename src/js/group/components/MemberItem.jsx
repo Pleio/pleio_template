@@ -68,9 +68,9 @@ class MemberItem extends React.Component {
             <div className="row">
                 <Errors errors={this.state.errors} />
                 <div className={this.props.editable ? "col-sm-8" : "col-sm-12"}>
-                    <Link to={member.user.url} className="card-list-members__item">
-                        <div style={{backgroundImage: `url('${member.user.icon}')`}} className="card-list-members__picture" />
-                        <div className="card-list-members__name">{member.user.name}</div>
+                    <Link to={member.user.url} className="list-members__member">
+                        <div style={{backgroundImage: `url('${member.user.icon}')`}} className="list-members__picture" />
+                        <div className="list-members__name">{member.user.name}</div>
                     </Link>
                 </div>
                 {editable}

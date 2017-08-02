@@ -2,22 +2,30 @@ import React from "react"
 import { Link } from "react-router-dom"
 import MemberItem from "./MemberItem"
 import MembersModal from "./MembersModal"
-import Accordeon from "../../core/components/Accordeon"
+import People from "../../core/components/People"
 
 export default class MembersSummary extends React.Component {
     render () {
         const { entity } = this.props
 
-        const members = entity.members.edges.map((member, i) => (
-            <MemberItem key={i} member={member} />
-        ))
+        if (!entity.members) {
+            return (
+                <div />
+            )
+        }
+
+        const users = {
+            edges: entity.members.edges.map((membership) => membership.user)
+        }
 
         return (
-            <Accordeon className="card-list-members" title={`${entity.members.total} ${(entity.members.total === 1) ? " lid" : " leden"}`}>
-                {members}
-                <div className="card-list-members__more" onClick={() => this.refs.modal.toggle()}>Alle</div>
+            <div className="card ___side ___members">
+                <div onClick={() => this.refs.modal.toggle()}>
+                    <People users={users} />
+                    <div className="card__title">{`${entity.members.total} ${(entity.members.total === 1) ? " lid" : " leden"}`}</div>
+                </div>
                 <MembersModal ref="modal" entity={entity} />
-            </Accordeon>
+            </div>
         )
     }
 }

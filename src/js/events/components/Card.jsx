@@ -6,7 +6,7 @@ import { showFullDate } from "../../lib/showDate"
 import classnames from "classnames"
 import VideoModal from "../../core/components/VideoModal"
 import Select from "../../core/components/NewSelect"
-import People from "./People"
+import People from "../../core/components/People"
 import autobind from "autobind-decorator"
 
 export default class Card extends React.Component {

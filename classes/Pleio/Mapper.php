@@ -32,6 +32,11 @@ class Mapper {
             "plugins" => $entity->plugins ? $entity->plugins : [],
             "url" => Helpers::getURL($entity),
             "icon" => $entity->getIconURL("large"),
+            "featured" => [
+                "image" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
+                "positionY" => $entity->featuredPositionY ? $entity->featuredPositionY : 50,
+                "video" => $entity->featuredVideo ? $entity->featuredVideo : ""
+            ],
             "timeCreated" => $entity->time_created,
             "timeUpdated" => $entity->time_updated,
             "canEdit" => $entity->canEdit(),

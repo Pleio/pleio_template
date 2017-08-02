@@ -2,10 +2,8 @@ import React from "react"
 import { graphql } from "react-apollo"
 import { Link } from "react-router-dom"
 import gql from "graphql-tag"
+import GroupContainer from "../group/components/GroupContainer"
 import Document from "../core/components/Document"
-import ContentHeader from "../core/components/ContentHeader"
-import NotFound from "../core/NotFound"
-import Menu from "../group/components/Menu"
 import QuestionList from "../questions/containers/QuestionList"
 import Card from "../questions/components/Card"
 
@@ -37,28 +35,17 @@ class Item extends React.Component {
             )
         }
 
-        return (
-            <div className="page-container">
-                <Document title={entity.name} />
-                <ContentHeader className="___no-padding-bottom">
-                    <div className="row">
-                        <div className="col-sm-6">
-                            <h3 className="main__title ___info">
-                                {entity.name}
-                            </h3>
-                        </div>
-                        <div className="col-sm-6 end-sm">
-                            <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
-                                {add}
-                            </div>
-                        </div>
-                    </div>
-                    <Menu match={this.props.match} group={entity} />
-                </ContentHeader>
-                <section className="section ___grey ___grow">
-                    <QuestionList containerGuid={entity.guid} childClass={Card} subtype="question" offset={0} limit={20} tags={[]} match={this.props.match} />
-                </section>
+        const buttons = (
+            <div className="flexer ___gutter ___top">
+                {add}
             </div>
+        )
+
+        return (
+            <GroupContainer buttons={buttons} match={this.props.match}>
+                <Document title={entity.name} />
+                <QuestionList containerGuid={entity.guid} childClass={Card} subtype="question" offset={0} limit={20} tags={[]} match={this.props.match} />
+            </GroupContainer>
         )
     }
 }

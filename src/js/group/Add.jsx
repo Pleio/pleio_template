@@ -9,6 +9,7 @@ import AccessSelect from "../core/containers/AccessSelect"
 import TextField from "../core/components/TextField"
 import Form from "../core/components/Form"
 import InputField from "../core/components/InputField"
+import FeaturedField from "../core/components/FeaturedField"
 import TagsField from "../core/components/TagsField"
 import SelectField from "../core/components/SelectField"
 import SwitchField from "../core/components/SwitchField"
@@ -45,6 +46,7 @@ class Add extends React.Component {
             name: values.name,
             description: values.description,
             icon: values.icon,
+            featured: values.featured,
             isClosed: (values.membership === "closed") ? true : false,
             tags: values.tags,
             plugins: Object.keys(defaultPlugins)
@@ -72,11 +74,12 @@ class Add extends React.Component {
 
         return (
             <ActionContainer title="Nieuwe groep" onClose={this.onClose}>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
-                            {errors}
-                            <Form ref="form" onSubmit={this.onSubmit}>
+                <Form ref="form" onSubmit={this.onSubmit}>
+                    <FeaturedField name="featured" />
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+                                {errors}
                                 <div className="form">
                                     <InputField label="Naam" name="name" type="text" placeholder="Voeg een korte duidelijke naam toe" className="form__input" rules="required" autofocus />
                                     <IconField name="icon" />
@@ -89,10 +92,10 @@ class Add extends React.Component {
                                         </button>
                                     </div>
                                 </div>
-                            </Form>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </Form>
             </ActionContainer>
         )
     }

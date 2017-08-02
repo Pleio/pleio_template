@@ -1,7 +1,7 @@
 export const groupPlugins = {
     events: "Agenda",
     blog: "Blog",
-    questions: "Forum",
+    questions: "Discussies",
     files: "Bestanden",
     wiki: "Wiki",
     tasks: "Taken"

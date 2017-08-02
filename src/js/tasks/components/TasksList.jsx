@@ -53,8 +53,10 @@ class TasksList extends React.Component {
         })
 
         return (
-            <div className="row">
-                {columns}
+            <div className="container">
+                <div className="row">
+                    {columns}
+                </div>
             </div>
         )
     }

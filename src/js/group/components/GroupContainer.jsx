@@ -2,17 +2,13 @@ import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { Link } from "react-router-dom"
-import GroupContainer from "./components/GroupContainer"
-import Document from "../core/components/Document"
-import Card from "../activity/components/Card"
-import MembersSummary from "./components/MembersSummary"
-import ActivityList from "./components/ActivityList"
+import Featured from "../../core/components/Featured"
+import Menu from "./Menu"
+import MoreInfoModal from "./MoreInfoModal"
+import LeaveGroupModal from "./LeaveGroupModal"
+import InviteModal from "./InviteModal"
 
-class Item extends React.Component {
-    constructor(props) {
-        super(props)
-    }
-
+class GroupContainer extends React.Component {
     render() {
         const { entity, viewer } = this.props.data
 
@@ -26,6 +22,13 @@ class Item extends React.Component {
         if (entity.status == 404) {
             return (
                 <NotFound />
+            )
+        }
+
+        let icon
+        if (!entity.featured.image && !entity.featured.video) {
+            icon = (
+                <div className="picture" style={{backgroundImage: `url(${entity.icon})`}} />
             )
         }
 
@@ -45,7 +48,7 @@ class Item extends React.Component {
         if (entity.canEdit) {
             edit = (
                 <Link to={`/groups/edit/${entity.guid}`} >
-                    <div className="button ___large ___line">
+                    <div className="button ___large">
                         <span>Groep bewerken</span>
                     </div>
                 </Link>
@@ -60,20 +63,38 @@ class Item extends React.Component {
             )
         }
 
-        return (
-            <GroupContainer match={this.props.match}>
-                <Document title={entity.name} />
-                <div className="container">
-                    <div className="row">
-                        <div className="col-sm-12 col-lg-4 last-lg top-lg">
-                            <MembersSummary entity={entity} />
-                        </div>
-                        <div className="col-sm-12 col-lg-8">
-                            <ActivityList containerGuid={entity.guid} containerClassName="" childClass={Card} offset={0} limit={20} tags={[]} />
-                        </div>
-                    </div>
+        let buttons = this.props.buttons
+        if (!buttons) {
+            buttons = (
+                <div className="flexer ___gutter ___top">
+                    {join}
+                    {leave}
+                    {edit}
+                    {invite}
                 </div>
-            </GroupContainer>
+            )
+        }
+
+        return (
+            <div className="page-container">
+                <Featured entity={entity} group showEmpty>
+                    <h1 className="lead__title" onClick={() => this.refs.moreInfoModal.toggle()}>
+                        {icon}
+                        <span>{entity.name}</span>
+                    </h1>
+                    <div className="button ___options"></div>
+                    {buttons}
+                </Featured>
+                <div className="container">
+                    <Menu entity={entity} />
+                </div>
+                <section className="section ___grow">
+                    {this.props.children}
+                </section>
+                <MoreInfoModal ref="moreInfoModal" entity={entity} />
+                <LeaveGroupModal ref="leaveGroupModal" entity={entity} />
+                <InviteModal ref="inviteModal" entity={entity} />
+            </div>
         )
     }
 }
@@ -135,4 +156,4 @@ const Settings = {
     }
 }
 
-export default graphql(Query, Settings)(Item)
+export default graphql(Query, Settings)(GroupContainer)

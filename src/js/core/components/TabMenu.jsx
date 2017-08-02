@@ -33,7 +33,7 @@ class TabMenu extends React.Component {
 
         return (
             <div>
-                <div className="tabmenu">
+                <div className={this.props.className || "tabmenu"}>
                     {content}
                 </div>
                 <div className="tabmenu__dropdown">

@@ -2,12 +2,10 @@ import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { Link } from "react-router-dom"
+import GroupContainer from "../group/components/GroupContainer"
 import Document from "../core/components/Document"
 import Card from "../blog/components/Card"
 import BlogList from "../blog/containers/BlogList"
-import ContentHeader from "../core/components/ContentHeader"
-import NotFound from "../core/NotFound"
-import Menu from "../group/components/Menu"
 
 class Item extends React.Component {
     render() {
@@ -37,28 +35,17 @@ class Item extends React.Component {
             )
         }
 
-        return (
-            <div className="page-container">
-                <Document title={entity.name} />
-                <ContentHeader className="___no-padding-bottom">
-                    <div className="row">
-                        <div className="col-sm-6">
-                            <h3 className="main__title ___info">
-                                {entity.name}
-                            </h3>
-                        </div>
-                        <div className="col-sm-6 end-sm">
-                            <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
-                                {add}
-                            </div>
-                        </div>
-                    </div>
-                    <Menu match={this.props.match} group={entity} />
-                </ContentHeader>
-                <section className="section ___grey ___grow">
-                    <BlogList childClass={Card} subtype="blog" offset={0} limit={20} tags={[]} containerGuid={entity.guid} match={this.props.match} />
-                </section>
+        const buttons = (
+            <div className="flexer ___gutter ___top">
+                {add}
             </div>
+        )
+
+        return (
+            <GroupContainer buttons={buttons} match={this.props.match}>
+                <Document title={entity.name} />
+                <BlogList childClass={Card} subtype="blog" offset={0} limit={20} tags={[]} containerGuid={entity.guid} match={this.props.match} />
+            </GroupContainer>
         )
     }
 }

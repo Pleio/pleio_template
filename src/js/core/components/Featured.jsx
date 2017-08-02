@@ -18,7 +18,7 @@ export default class Featured extends React.Component {
     }
 
     render() {
-        const { entity, inCard, inActivityFeed, showEmpty } = this.props
+        const { entity, inCard, inActivityFeed, showEmpty, group } = this.props
         const { featured } = entity
 
         let background
@@ -27,7 +27,11 @@ export default class Featured extends React.Component {
         } else if (featured.video) {
             background = { backgroundImage: `url(${getVideoThumbnail(featured.video)}`, "backgroundPositionY": featured.positionY + "%"}
         } else if (showEmpty) {
-            background = { backgroundColor: "#8fcae7" }
+            if (group) {
+                background = { backgroundColor: "#fff" }
+            } else {
+                background = { backgroundColor: "#8fcae7" }
+            }
         }
 
         let playButton
@@ -63,8 +67,8 @@ export default class Featured extends React.Component {
                 // not an in-card view
                 if (background) {
                     return (
-                        <div style={background} className={classnames({"lead ___content": true, "___video": featured.video, "___event": this.props.event, "___bottom": this.props.bottom})}>
-                            <div className="lead__justify">
+                        <div style={background} className={classnames({"lead ___content": true, "___video": featured.video, "___event": this.props.event, "___group": this.props.group, "___has-background": featured.image || featured.video,"___bottom": this.props.bottom})}>
+                            <div className="container lead__justify">
                                 {playButton}
                                 {this.props.children}
                             </div>
