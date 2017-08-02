@@ -11,10 +11,13 @@ class Menu extends React.Component {
 
         const plugins = entity.plugins ? entity.plugins : Object.keys(defaultPlugins)
 
-        const menuOptions = plugins.map((key) => {
-            return {
-                link: `${rootUrl}/${key}`,
-                title: defaultPlugins[key]
+        let menuOptions = []
+        Object.keys(defaultPlugins).forEach((key) => {
+            if (plugins.includes(key)) {
+                menuOptions.push({
+                    link: `${rootUrl}/${key}`,
+                    title: defaultPlugins[key]
+                })
             }
         })
 
