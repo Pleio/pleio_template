@@ -5,9 +5,11 @@ import { Link } from "react-router-dom"
 import GroupContainer from "./components/GroupContainer"
 import Document from "../core/components/Document"
 import Card from "../activity/components/Card"
+import Introduction from "./components/Introduction"
 import MembersCard from "./components/MembersCard"
 import EventsCard from "./components/EventsCard"
 import ActivityList from "./components/ActivityList"
+import JoinGroupButton from "./components/JoinGroupButton"
 
 class Item extends React.Component {
     constructor(props) {
@@ -77,6 +79,7 @@ class Item extends React.Component {
                             </div>
                         </div>
                         <div className="col-sm-12 col-lg-8">
+                            <Introduction entity={entity} />
                             <ActivityList containerGuid={entity.guid} containerClassName="" childClass={Card} offset={0} limit={20} tags={[]} />
                         </div>
                     </div>
@@ -106,6 +109,7 @@ const Query = gql`
                 url
                 plugins
                 description
+                introduction
                 icon
                 featured {
                     video

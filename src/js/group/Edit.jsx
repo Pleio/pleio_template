@@ -7,6 +7,7 @@ import Errors from "../core/components/Errors"
 import ActionContainer from "../core/components/ActionContainer"
 import AccessSelect from "../core/containers/AccessSelect"
 import TextField from "../core/components/TextField"
+import RichTextField from "../core/components/RichTextField"
 import Form from "../core/components/Form"
 import FeaturedField from "../core/components/FeaturedField"
 import InputField from "../core/components/InputField"
@@ -62,6 +63,7 @@ class Edit extends React.Component {
             guid: entity.guid,
             name: values.name,
             description: values.description,
+            introduction: JSON.stringify(convertToRaw(values.introduction)),
             isClosed: (values.membership === "closed") ? true : false,
             icon: values.icon,
             featured: values.featured,
@@ -117,9 +119,10 @@ class Edit extends React.Component {
                                 {errors}
                                         <div className="form">
                                             <InputField value={entity.name} label="Naam" name="name" type="text" placeholder="Voeg een korte duidelijke naam toe" className="form__input" rules="required" autofocus />
-                                            <IconField name="icon" value={entity.icon} />                            
+                                            <IconField name="icon" value={entity.icon} />
                                             <SelectField label="Lidmaatschap" name="membership" type="text" className="form__input" options={{open: "Open", "closed": "Besloten"}} value={membership} />
-                                            <TextField label="Beschrijving" name="description" type="text" placeholder="Vertel wat over de groep" className="form__input" rules="required" value={entity.description} />
+                                            <TextField label="Beschrijving" name="description" type="text" placeholder="Vertel wat over de groep voor leden die nog geen lid zijn" className="form__input" rules="required" value={entity.description} />
+                                            <RichTextField label="Introductie" name="introduction" type="text" placeholder="Hier kun je een korte introductie geven aan de leden van de groep" className="form__input" richValue={entity.introduction} />
                                             <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" value={entity.tags}/>
                                             <SwitchesField label="Plugins" name="plugins" options={groupPlugins} values={entity.plugins} />
 
@@ -150,6 +153,7 @@ const Query = gql`
             ... on Group {
                 name
                 description
+                introduction
                 icon
                 featured {
                     video
@@ -173,6 +177,7 @@ const Mutation = gql`
                 guid
                 name
                 description
+                introduction
                 plugins
                 icon
                 isClosed

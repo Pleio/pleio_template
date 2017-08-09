@@ -953,6 +953,7 @@ class Mutations {
         $group->name = $input["name"];
         $group->membership = $input["isClosed"] ? ACCESS_PRIVATE : ACCESS_PUBLIC;
         $group->description = $input["description"];
+        $group->introduction = $input["introduction"];
         $group->plugins = array_unique($input["plugins"]);
         $group->tags = filter_tags($input["tags"]);
         $group->access_id = get_default_access();
@@ -1007,6 +1008,7 @@ class Mutations {
         $group->name = $input["name"];
         $group->membership = $input["isClosed"] ? ACCESS_PRIVATE : ACCESS_PUBLIC;
         $group->description = $input["description"];
+        $group->introduction = $input["introduction"];
         $group->tags = filter_tags($input["tags"]);
         $group->plugins = array_unique($input["plugins"]);
 

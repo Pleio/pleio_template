@@ -7,6 +7,7 @@ import Errors from "../core/components/Errors"
 import ActionContainer from "../core/components/ActionContainer"
 import AccessSelect from "../core/containers/AccessSelect"
 import TextField from "../core/components/TextField"
+import RichTextField from "../core/components/RichTextField"
 import Form from "../core/components/Form"
 import InputField from "../core/components/InputField"
 import FeaturedField from "../core/components/FeaturedField"
@@ -45,6 +46,7 @@ class Add extends React.Component {
             clientMutationId: 1,
             name: values.name,
             description: values.description,
+            introduction: JSON.stringify(convertToRaw(values.introduction)),
             icon: values.icon,
             featured: values.featured,
             isClosed: (values.membership === "closed") ? true : false,
@@ -85,6 +87,7 @@ class Add extends React.Component {
                                     <IconField name="icon" />
                                     <SelectField label="Lidmaatschap" name="membership" type="text" className="form__input" options={{open: "Open", "closed": "Besloten"}} value="open" />
                                     <TextField label="Beschrijving" name="description" type="text" placeholder="Vertel wat over de groep" className="form__input" rules="required" />
+                                    <RichTextField label="Introductie" name="introduction" type="text" placeholder="Hier kun je een korte introductie geven aan de leden van de groep" className="form__input" />
                                     <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" />
                                     <div className="buttons ___end ___margin-top">
                                         <button className="button" type="submit">

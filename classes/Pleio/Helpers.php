@@ -366,7 +366,7 @@ class Helpers {
         if (method_exists($site, "isUser")) {
             return $site->isUser();
         }
-        
+
         return check_entity_relationship($user->guid, "member_of_site", $site->guid);
     }
 
@@ -375,7 +375,7 @@ class Helpers {
         if (method_exists($site, "canJoin")) {
             return $site->canJoin();
         }
-        
+
         return elgg_get_config("allow_registration");
     }
 
@@ -407,6 +407,14 @@ class Helpers {
         }
 
         return "not_joined";
+    }
+
+    static function getGroupIntroduction(\ElggGroup $group) {
+        if ($group->isMember()) {
+            return $group->introduction;
+        }
+
+        return "";
     }
 
     static function sendGroupMembershipRequestNotification(\ElggGroup $group, \ElggUser $user) {

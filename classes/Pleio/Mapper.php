@@ -29,6 +29,7 @@ class Mapper {
             "isClosed" => ($entity->membership === ACCESS_PRIVATE) ? true : false,
             "membership" => Helpers::getGroupMembership($entity),
             "description" => $entity->description,
+            "introduction" => Helpers::getGroupIntroduction($entity),
             "plugins" => $entity->plugins ? $entity->plugins : [],
             "url" => Helpers::getURL($entity),
             "icon" => $entity->getIconURL("large"),

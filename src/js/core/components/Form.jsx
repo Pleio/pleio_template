@@ -171,7 +171,7 @@ class Form extends React.Component {
             )
         }
 
-        if ((component.type == InputField || component.type == SelectField || component.type == TextField || component.type == DateTimeField) && component.props.label) {
+        if ((component.type == RichTextField || component.type == InputField || component.type == SelectField || component.type == TextField || component.type == DateTimeField) && component.props.label) {
             label = (
                 <div className="form__label">{component.props.label}</div>
             )

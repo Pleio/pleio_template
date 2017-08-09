@@ -7,6 +7,7 @@ import Menu from "./Menu"
 import MoreInfoModal from "./MoreInfoModal"
 import LeaveGroupModal from "./LeaveGroupModal"
 import InviteModal from "./InviteModal"
+import JoinGroupButton from "./JoinGroupButton"
 
 class GroupContainer extends React.Component {
     render() {

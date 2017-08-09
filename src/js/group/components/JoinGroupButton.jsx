@@ -44,6 +44,7 @@ const Mutation = gql`
             group {
                 guid
                 membership
+                introduction
                 members(limit: 5) {
                     total
                     edges {
