@@ -5,14 +5,6 @@ $lang = get_current_language();
 $store = elgg_extract("store", $vars);
 $metas = elgg_extract("metas", $vars);
 
-if (webpack_dev_server_is_available()) {
-    $path = "http://localhost:9001/";
-} else {
-    $path = "/";
-}
-
-$path .= "mod/pleio_template/build/";
-
 $theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
 
 $custom_css = elgg_is_active_plugin("custom_css");
@@ -35,10 +27,10 @@ $custom_js = elgg_is_active_plugin("custom_js");
     <?php foreach ($metas as $name => $content): ?><meta name="<?php echo $name; ?>" content="<?php echo $content; ?>">
     <?php endforeach; ?>
 
-    <link href="<?php echo $path; ?>web.css?v=<?php echo $CONFIG->lastcache; ?>" rel="stylesheet" type="text/css">
+    <link href="<?php echo elgg_get_simplecache_url("css", "web"); ?>" rel="stylesheet" type="text/css">
 
     <?php if ($custom_css): ?>
-        <link href="/css/custom.css?v=<?php echo $CONFIG->lastcache; ?>" rel="stylesheet" type="text/css">
+        <link href="<?php echo elgg_get_simplecache_url("css", "custom"); ?>" rel="stylesheet" type="text/css">
     <?php endif; ?>
 </head>
 <body class="___<?php echo $theme; ?>">
@@ -49,11 +41,11 @@ $custom_js = elgg_is_active_plugin("custom_js");
             window.__STORE__ = <?php echo json_encode($store); ?>;
         </script>
     <?php endif; ?>
-    <script src="<?php echo $path; ?>vendor.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
-    <script src="<?php echo $path; ?>web.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
+    <script src="<?php echo elgg_get_simplecache_url("js", "vendor"); ?>"></script>
+    <script src="<?php echo elgg_get_simplecache_url("js", "web"); ?>"></script>
 
     <?php if ($custom_js): ?>
-        <script src="/js/custom.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
+        <script src="<?php echo elgg_get_simplecache_url("js", "custom"); ?>"></script>
     <?php endif; ?>
 
     <?php echo elgg_view("page/elements/analytics"); ?>

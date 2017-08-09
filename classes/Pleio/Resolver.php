@@ -59,7 +59,17 @@ class Resolver {
             "showInitiative" => $showInitiative,
             "accessIds" => $accessIds,
             "filters" => $filters,
+            "style" => Resolver::getStyle(),
             "defaultAccessId" => get_default_access()
+        ];
+    }
+
+    static function getStyle() {
+        return [
+            "colorPrimary" => elgg_get_plugin_setting("color_primary", "pleio_template"),
+            "colorSecondary" => elgg_get_plugin_setting("color_secondary", "pleio_template"),
+            "colorTertiary" => elgg_get_plugin_setting("color_tertiary", "pleio_template"),
+            "colorQuaternary" => elgg_get_plugin_setting("color_quaternary", "pleio_template")
         ];
     }
 

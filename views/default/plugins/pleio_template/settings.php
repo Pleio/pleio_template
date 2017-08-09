@@ -9,6 +9,12 @@ echo elgg_view_module(
 
 echo elgg_view_module(
     "inline",
+    elgg_echo("pleio_template:colors"),
+    elgg_view("plugins/pleio_template/modules/colors", ["plugin" => $plugin])
+);
+
+echo elgg_view_module(
+    "inline",
     elgg_echo("pleio_template:settings"),
     elgg_view("plugins/pleio_template/modules/settings", ["plugin" => $plugin])
 );

@@ -798,6 +798,24 @@ class SchemaBuilder {
             ]
         ]);
 
+        $styleType = new ObjectType([
+            "name" => "StyleType",
+            "fields" => [
+                "colorPrimary" => [
+                    "type" => Type::string()
+                ],
+                "colorSecondary" => [
+                    "type" => Type::string()
+                ],
+                "colorTertiary" => [
+                    "type" => Type::string()
+                ],
+                "colorQuaternary" => [
+                    "type" => Type::string()
+                ]
+            ]
+        ]);
+
         $siteType = new ObjectType([
             "name" => "Site",
             "description" => "The current site",
@@ -818,7 +836,7 @@ class SchemaBuilder {
                     "type" => Type::listOf($profileItem)
                 ],
                 "footer" => [
-                    "type" => Type::listOf($menuItemType)  
+                    "type" => Type::listOf($menuItemType)
                 ],
                 "accessIds" => [
                     "type" => Type::listOf($accessIdType)
@@ -834,6 +852,9 @@ class SchemaBuilder {
                 ],
                 "showInitiative" => [
                     "type" => Type::nonNull(Type::boolean())
+                ],
+                "style" => [
+                    "type" => Type::nonNull($styleType)
                 ],
                 "filters" => [
                     "type" => Type::nonNull(Type::listOf($filterType))
