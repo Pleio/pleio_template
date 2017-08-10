@@ -7,8 +7,7 @@ import Profile from "./admin/Profile"
 import Colors from "./admin/Colors"
 import Filters from "./admin/Filters"
 import Footer from "./admin/Footer"
-
-const client = new ApolloClient()
+import client from "./lib/client"
 
 if (document.getElementById("pleio-template-admin-menu")) {
     ReactDOM.render(
