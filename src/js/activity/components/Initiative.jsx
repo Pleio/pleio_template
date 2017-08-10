@@ -6,7 +6,7 @@ export default class Initiative extends React.Component {
     render() {
         const { site } = this.props
 
-        if (!site.logo) {
+        if (!site.logo || !site.showInitiative) {
             return (
                 <div />
             )
