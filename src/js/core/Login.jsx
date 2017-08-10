@@ -58,10 +58,28 @@ class Login extends React.Component {
     }
 
     render() {
-        const { location } = this.props
+        const { data, location } = this.props
         const { site } = this.props.data
 
         let title, errors
+
+        if (data.loading) {
+            return (
+                <div />
+            )
+        }
+
+        if (data.site.externalLogin) {
+            if (location.state.next) {
+                window.location.href = `/login?returnto=${location.state.next}`
+            } else {
+                window.location.href = "/login"
+            }
+
+            return (
+                <div />
+            )
+        }
 
         if (site) {
             title = `Welkom op ${site.name}`
@@ -128,6 +146,7 @@ const Query = gql`
         site {
             guid
             name
+            externalLogin
         }
     }
 `

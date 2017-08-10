@@ -46,6 +46,8 @@ class Resolver {
             ];
         }
 
+        $externalLogin = elgg_is_active_plugin("pleio") ? true : false;
+
         return [
             "guid" => $site->guid,
             "name" => $site->name,
@@ -57,6 +59,7 @@ class Resolver {
             "showLogo" => $showLogo,
             "showLeader" => $showLeader,
             "showInitiative" => $showInitiative,
+            "externalLogin" => $externalLogin,
             "accessIds" => $accessIds,
             "filters" => $filters,
             "style" => Resolver::getStyle(),

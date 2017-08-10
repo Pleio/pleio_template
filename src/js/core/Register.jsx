@@ -138,7 +138,21 @@ class Register extends React.Component {
     }
 
     render() {
-        let content = ""
+        const { data } = this.props
+
+        if (data.loading) {
+            return (
+                <div />
+            )
+        }
+
+        if (data.site.externalLogin) {
+            window.location.href = "/login"
+
+            return (
+                <div />
+            )
+        }
 
         return (
             <ModalWithSlides id="register" title="Registreren" steps={[1,2]} small={true} isBlue={true} noParent={true} history={this.props.history}>
@@ -148,6 +162,16 @@ class Register extends React.Component {
         )
     }
 }
+
+const Query = gql`
+    query Register {
+        site {
+            guid
+            name
+            externalLogin
+        }
+    }
+`
 
 const Mutation = gql`
     mutation register($input: registerInput!) {
@@ -160,4 +184,4 @@ const Mutation = gql`
     }
 `
 
-export default graphql(Mutation)(Register)
+export default graphql(Query)(graphql(Mutation)(Register))
