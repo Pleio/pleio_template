@@ -1,7 +1,26 @@
 import React from "react"
+import { graphql } from "react-apollo"
+import gql from "graphql-tag"
 
 export default class Initiative extends React.Component {
     render() {
+        const { site } = this.props
+
+        if (!site.logo) {
+            return (
+                <div />
+            )
+        }
+
+        let link
+        if (site.initiatorLink) {
+            link = (
+                <a href={site.initiatorLink} target="_blank" className="card-initiative__link">
+                    Naar de website
+                </a>
+            )
+        }
+
         return (
             <div className="col-sm-6 col-lg-12">
                 <div className="card-initiative">
@@ -9,10 +28,8 @@ export default class Initiative extends React.Component {
                         Initiatief van
                     </div>
                     <div className="card-initiative__line"></div>
-                    <img src="/mod/pleio_template/src/images/logo.svg" className="card-initiative__logo" />
-                    <a href="https://www.rijksoverheid.nl/ministeries/ministerie-van-onderwijs-cultuur-en-wetenschap" target="_blank" className="card-initiative__link">
-                        Naar de website
-                    </a>
+                    <img src={site.logo} className="card-initiative__logo" />
+                    {link}
                 </div>
             </div>
         )

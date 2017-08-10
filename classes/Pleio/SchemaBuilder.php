@@ -847,6 +847,9 @@ class SchemaBuilder {
                 "logo" => [
                     "type" => Type::nonNull(Type::string())
                 ],
+                "initiatorLink" => [
+                    "type" => Type::string()
+                ],
                 "showLogo" => [
                     "type" => Type::nonNull(Type::boolean())
                 ],

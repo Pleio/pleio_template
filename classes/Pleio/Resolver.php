@@ -25,6 +25,8 @@ class Resolver {
             $filters = [];
         }
 
+        $initiatorLink = elgg_get_plugin_setting("initiator_link", "pleio_template");
+
         $theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
 
         $footer = json_decode(elgg_get_plugin_setting("footer", "pleio_template"));
@@ -57,6 +59,7 @@ class Resolver {
             "footer" => $footer,
             "logo" => "/mod/pleio_template/logo.php?lastcache={$site->logotime}",
             "showLogo" => $showLogo,
+            "initiatorLink" => $initiatorLink,
             "showLeader" => $showLeader,
             "showInitiative" => $showInitiative,
             "externalLogin" => $externalLogin,

@@ -16,3 +16,12 @@ $logotime = $site->logotime ? $site->logotime : time();
         <label for="remove_logo"><?php echo elgg_echo("pleio_template:remove_logo"); ?></label>
     </p>
 <?php endif; ?>
+
+<div>
+    <label><?php echo elgg_echo("pleio_template:initiator_link"); ?></label>
+    <?php echo elgg_view("input/text", [
+        "name" => "params[initiator_link]",
+        "placeholder" => elgg_echo("pleio_template:initiator_link:example"),
+        "value" => $vars["plugin"]->initiator_link
+    ]); ?>
+</div>

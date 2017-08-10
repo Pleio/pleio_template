@@ -35,9 +35,9 @@ class Activity extends React.Component {
             )
         }
 
-        if (site && site.showInitiative) {
+        if (site) {
             initiative = (
-                <Initiative />
+                <Initiative site={site} />
             )
         }
 
@@ -78,6 +78,8 @@ const Query = gql`
             guid
             showLeader
             showInitiative
+            logo
+            initiatorLink
         }
     }
 `
