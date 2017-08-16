@@ -48,7 +48,7 @@ export default class Card extends React.Component {
         if (inActivityFeed) {
             content = (
                 <div className="card-tile__content">
-                    <h3 className="card-tile__title">{entity.title}</h3>
+                    <h3 className="card-tile__title ___large">{entity.title}</h3>
                     <div className="read-more"><div className="read-more__circle" /><span>Lees meer</span></div>
                 </div>
             )
@@ -56,7 +56,7 @@ export default class Card extends React.Component {
             if (entity.isHighlighted) {
                 content = (
                     <div className="card-tile__content">
-                        <h3 className="card-tile__title">{entity.title}</h3>
+                        <h3 className="card-tile__title ___large">{entity.title}</h3>
                         <div className="read-more"><div className="read-more__circle" /><span>Lees meer</span></div>
                     </div>
                 )
