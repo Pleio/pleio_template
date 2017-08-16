@@ -191,7 +191,7 @@
     top: 0;
     left: 0;
     right: 0;
-    padding: 0.6rem 0;
+    padding: .5rem 0 .6rem;
     background-color: @color-white;
     border: 1px solid transparent;
     box-shadow: @box-shadow;
@@ -208,10 +208,10 @@
     }
 
     @media ( max-width: @screen-xs-max ) {
-        padding: 0.5rem 0;
+        padding: .4rem 0 .5rem;
 
         .modal & {
-            padding: 0.6rem 0;
+            padding: .5rem 0 .6rem;
         }
 
         .editor__tool-group#editor-insert & {
@@ -226,18 +226,19 @@
 }
 
 .selector__option {
-    padding: 0 1.6rem;
-    line-height: 3.2rem;
+    padding: .5rem 1.6rem;
     cursor: pointer;
     transition: color @trans-fast;
 
     @media ( max-width: @screen-xs-max ) {
-        padding: 0 1.4rem;
-        line-height: 2.8rem;
+        padding: .4rem 1.4rem;
+
+        .editor__tool-group#editor-insert & {
+            white-space: nowrap;
+        }
 
         .modal & {
-            padding: 0 1.6rem;
-            line-height: 3.2rem;
+            padding: .5rem 1.6rem;
         }
     }
 
@@ -266,13 +267,5 @@
 
     &:hover {
         color: @color-secondary;
-    }
-
-    @media ( max-width: @screen-xs-max ) {
-        padding: 0 1.4rem;
-
-        .editor__tool-group#editor-insert & {
-            white-space: nowrap;
-        }
     }
 }

@@ -44,6 +44,10 @@
 .forum__search-form {
     position: relative;
     flex-grow: 1;
+
+    @media ( max-width: @screen-xs-max ) {
+        margin-bottom: 1rem;
+    }
 }
 
 .forum__search-separate {
@@ -52,19 +56,5 @@
 
     @media ( max-width: @screen-xs-max ) {
         display: none;
-    }
-}
-
-.forum__ask-a-question {
-    .icon(plus);
-    &:before {
-        margin: 0 0.5rem 0.1rem 0;
-        font-size: 0.8rem;
-    }
-
-    @media ( max-width: @screen-xs-max ) {
-        display: block;
-        margin: 1rem 0 0 0;
-        text-align: center;
     }
 }

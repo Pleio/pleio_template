@@ -89,11 +89,15 @@
 .tabmenu__search-button {
     margin-left: auto;
     height: 6rem;
-    width: 6rem;
+    width: 6.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     .icon(search);
     &:before {
         font-size: 1.8rem;
+        color: @color-primary;
     }
 }
 
@@ -110,36 +114,57 @@
     opacity: 0;
     transition: visibility @trans-fast, opacity @trans-fast;
 
+    &.___is-visible {
+        visibility: visible;
+        opacity: 1;
+    }
+
     .icon(search);
     &:before {
+        position: absolute;
+        left: 0;
         flex: 0 0 auto;
         display: flex;
         align-items: center;
         justify-content: center;
         height: 6rem;
-        width: 6rem;
+        width: 6.4rem;
         font-size: 1.8rem;
+        pointer-events: none;
     }
 
     input {
         flex: 1 1 auto;
+        padding-left: 6.4rem;
         background-color: transparent;
         border: none;
+        font-weight: bold;
+
+        &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: tint(@color-primary, 50%);
+        }
+
+        &:-moz-placeholder { /* Firefox 18- */
+            color: tint(@color-primary, 50%);
+        }
+
+        &::-moz-placeholder { /* Firefox 19+ */
+            color: tint(@color-primary, 50%);
+        }
+
+        &:-ms-input-placeholder { /* IE 10+ */
+            color: tint(@color-primary, 50%);
+        }
     }
 
     button {
         flex: 0 0 auto;
         height: 6rem;
-        width: 6rem;
+        width: 6.4rem;
 
-        .icon(cross,);
+        .icon(cross);
         &:before {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
         }
-    }
-
-    .tabmenu:hover & {
-        visibility: visible;
-        opacity: 1;
     }
 }

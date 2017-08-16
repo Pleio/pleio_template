@@ -3,6 +3,10 @@
     align-items: center;
     margin: 0 0 0.6rem 0;
 
+    &.___margin-bottom {
+        margin: 1rem 0 2rem;
+    }
+
     a {
         display: flex;
         align-items: center;
@@ -18,7 +22,8 @@
             }
         }
 
-        &:hover {
+        &:hover,
+        &.___is-active {
             color: @color-primary;
 
             &:before {

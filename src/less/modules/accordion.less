@@ -19,11 +19,6 @@
         align-items: center;
         cursor: pointer;
 
-        .card & {
-            //margin: -2rem -2rem 0;
-            //padding: 2rem;
-        }
-
         &:after {
             font-size: 0.6rem;
         }
@@ -53,13 +48,13 @@
                 height: auto;
             }
 
-            .card & {
-                //margin-bottom: -2rem;
-            }
-
             > div {
                 padding-bottom: 2rem;
             }
+        }
+
+        @media ( min-width: @screen-sm ) {
+            height: auto !important;
         }
     }
 }
@@ -103,7 +98,6 @@
     + .accordion__content {
         @media ( max-width: @screen-xs-max ) {
             .card & {
-                //margin-bottom: -2rem;
                 margin: 0;
             }
 
@@ -131,6 +125,10 @@
                 opacity: 1;
                 height: auto;
             }
+        }
+
+        @media ( min-width: @screen-lg ) {
+            height: auto !important;
         }
     }
 }

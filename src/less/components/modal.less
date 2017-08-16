@@ -151,6 +151,10 @@
         max-width: 40rem;
     }
 
+    .modal.___medium > .modal__wrapper > & {
+        max-width: 50rem;
+    }
+
     .modal.___full > .modal__wrapper > & {
         max-width: 100%;
         padding: 0 0 4rem 0;
@@ -292,7 +296,8 @@
     color: @color-secondary;
     margin: -.5rem 0 3rem;
 
-    .modal.___small:not(.___blue) > .modal__wrapper > .modal__box > & {
+    .modal.___small:not(.___blue) > .modal__wrapper > .modal__box > &,
+    .modal.___medium:not(.___blue) > .modal__wrapper > .modal__box > & {
         .font(title-small);
         margin: 0 0 2rem;
     }

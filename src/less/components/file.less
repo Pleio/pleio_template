@@ -1,0 +1,152 @@
+.file {
+    transition: background-color @trans-fast;
+
+    &:hover {
+        .checkbox {
+            opacity: 1;
+        }
+    }
+
+    &.___is-checked {
+        background-color: @color-secondary--bright;
+
+        .checkbox {
+            opacity: 1;
+        }
+    }
+}
+
+.file__check {
+    position: relative;
+    width: 1.6rem;
+
+    .checkbox {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        transition: opacity @trans-fast;
+
+        label {
+            &:before {
+                position: static;
+                margin-top: 1.3rem;
+            }
+
+            &:after {
+                top: 1.7rem;
+            }
+        }
+    }
+}
+
+.file__name {
+    a {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 1rem 0;
+        transition: color @trans-fast;
+
+        &:hover {
+            color: @color-primary;
+        }
+    }
+}
+
+.file__type {
+    width: 4rem;
+    text-align: center;
+
+    &:before {
+        padding-bottom: .3rem;
+    }
+
+    &.___folder {
+        .icon(folder);
+        &:before {
+            font-size: 1.4rem;
+            color: @color-folder;
+            padding-bottom: .4rem;
+        }
+    }
+
+    &.___doc {
+        .icon(doc);
+        &:before {
+            font-size: 1.7rem;
+            color: @color-doc;
+            padding-bottom: .4rem;
+        }
+    }
+
+    &.___pdf {
+        .icon(pdf);
+        &:before {
+            font-size: 1.6rem;
+            color: @color-pdf;
+        }
+    }
+
+    &.___img {
+        .icon(image);
+        &:before {
+            font-size: 1.6rem;
+            color: @color-image;
+        }
+    }
+}
+
+.file__fav {
+    position: relative;
+    width: 6rem;
+
+    button {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 6rem;
+
+        .icon(star);
+        &:before {
+            color: @color-grey--60;
+        }
+
+        .icon(star-fill, after);
+        &:after {
+            color: @color-secondary;
+            opacity: 0;
+            transition: opacity @trans-fast;
+        }
+
+        .file.___is-favorite &,
+        &:hover {
+            &:after {
+                opacity: 1;
+            }
+        }
+
+        &:before,
+        &:after {
+            font-size: 1.8rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: .3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
+
+.file__date,
+.file__owner {
+    width: 18%;
+}

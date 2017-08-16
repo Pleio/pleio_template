@@ -12,7 +12,6 @@
     font-weight: bold;
     text-decoration: none;
     white-space: nowrap;
-    overflow: hidden;
     background-color: @color-secondary;
     color: @color-white;
     text-shadow: none;
@@ -183,19 +182,13 @@ button.button {
 
 // Link button
 .button.___link {
-    height: auto;
     padding: 0;
-    color: @color-grey--80;
+    color: @color-secondary;
     background-color: transparent;
-    font-weight: normal;
-    border-radius: 0;
-    transition: color @trans-fast;
 
     &:hover,
     &:focus {
-        color: @color-secondary;
-        border-color: @color-secondary;
-        background-color: transparent;
+        color: @color-primary;
     }
 }
 
@@ -211,37 +204,63 @@ button.button {
     }
 }
 
-.button.___underlined {
-    border-bottom: 1px solid @color-grey--80;
+.button.___move {
+    .icon(folder);
+    &:before {
+        font-size: 1.1rem;
+        margin-left: -.3rem;
+        margin-right: .8rem;
+        margin-bottom: .2rem;
+    }
+}
+
+.button.___edit {
+    .icon(pencil);
+    &:before {
+        font-size: 1.3rem;
+        margin-left: -.3rem;
+        margin-right: .8rem;
+        margin-bottom: .1rem;
+    }
+}
+
+.button.___download {
+    .icon(download);
+    &:before {
+        font-size: 1.4rem;
+        margin-left: -.1rem;
+        margin-right: .9rem;
+    }
 }
 
 .button.___add {
     .icon(plus);
     &:before {
-        font-size: 0.8rem;
+        font-size: 1rem;
+        margin: 0 0.7rem .1rem 0;
     }
 
-    @media ( max-width: @screen-xs-max ) {
-        display: flex;
-        justify-content: center;
-        width: 2.6rem;
-        height: 2.6rem;
-        line-height: 2.6rem;
-        padding: 0;
-        border-radius: 50%;
-        font-size: 2.4rem;
-        position: absolute;
-        top: 2rem;
-        right: 2rem;
+    &.___stick {
+        @media ( max-width: @screen-xs-max ) {
+            display: flex;
+            justify-content: center;
+            width: 2.6rem;
+            height: 2.6rem;
+            line-height: 2.6rem;
+            padding: 0;
+            border-radius: 50%;
+            font-size: 2.4rem;
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
 
-        span {
-            display: none;
-        }
-    }
+            &:before {
+                margin: 0;
+            }
 
-    @media ( min-width: @screen-sm ) {
-        &:before {
-            margin: 0 0.5rem 0 0;
+            span {
+                display: none;
+            }
         }
     }
 }
@@ -297,7 +316,6 @@ button.button {
 
 .button.___options {
     width: 3.6rem;
-    overflow: visible;
 
     .icon(options);
     &:before {

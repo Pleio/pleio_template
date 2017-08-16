@@ -2,6 +2,27 @@
     display: flex;
     position: relative;
 
+    &.___large {
+        label {
+            padding: 0;
+
+            &:before {
+                display: block;
+                width: 1.6rem;
+                height: 1.6rem;
+                top: auto;
+                border-color: @color-grey--50;
+                border-radius: .3rem;
+            }
+
+            &:after {
+                top: .4rem;
+                left: .35rem;
+                font-size: 0.8rem;
+            }
+        }
+    }
+
     label {
         padding: 0.3rem 0 0.3rem 2.2rem;
         user-select: none;
@@ -21,7 +42,6 @@
         }
 
         .icon(check, after);
-
         &:after {
             position: absolute;
             top: 1.1rem;
