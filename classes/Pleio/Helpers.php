@@ -410,7 +410,7 @@ class Helpers {
     }
 
     static function getGroupIntroduction(\ElggGroup $group) {
-        if ($group->isMember()) {
+        if ($group->isMember() || $group->canEdit()) {
             return $group->introduction;
         }
 
