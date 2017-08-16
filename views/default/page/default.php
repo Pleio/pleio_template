@@ -6,6 +6,7 @@ $store = elgg_extract("store", $vars);
 $metas = elgg_extract("metas", $vars);
 
 $theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
+$font = elgg_get_plugin_setting("font", "pleio_template");
 
 $custom_css = elgg_is_active_plugin("custom_css");
 $custom_js = elgg_is_active_plugin("custom_js");
@@ -28,6 +29,16 @@ $custom_js = elgg_is_active_plugin("custom_js");
     <?php endforeach; ?>
 
     <link href="<?php echo elgg_get_simplecache_url("css", "web"); ?>" rel="stylesheet" type="text/css">
+
+    <?php if ($font): ?>
+        <?php if ($font === "Roboto"): ?>
+            <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+        <?php elseif ($font === "Merriweather"): ?>
+            <link href="https://fonts.googleapis.com/css?family=Merriweather:400,700" rel="stylesheet">
+        <?php elseif ($font === "Open Sans"): ?>
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+        <?php endif; ?>
+    <?php endif; ?>
 
     <?php if ($custom_css): ?>
         <link href="<?php echo elgg_get_simplecache_url("css", "custom"); ?>" rel="stylesheet" type="text/css">

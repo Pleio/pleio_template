@@ -44,4 +44,15 @@ if ($quaternary) {
     $contents = str_replace("#154273", $quaternary, $contents);
 }
 
+$font = elgg_get_plugin_setting("font", "pleio_template");
+if ($font) {
+    switch ($font) {
+        case "Roboto":
+        case "Merriweather":
+        case "Open Sans":
+        case "Arial":
+            $contents = str_replace("ROsanswebtext", $font, $contents);
+    }
+}
+
 echo $contents;

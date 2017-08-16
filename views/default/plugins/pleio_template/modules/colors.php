@@ -1,1 +1,0 @@
-<div id="pleio-template-admin-colors"></div>
