@@ -1033,6 +1033,10 @@ class Mutations {
             } else {
                 unset($group->featuredPositionY);
             }
+        } else {
+            unset($group->featuredIcontime);
+            unset($group->featuredVideo);
+            unset($group->featuredPositionY);
         }
 
         $result = $group->save();
