@@ -118,14 +118,16 @@ class Item extends React.Component {
         return (
             <GroupContainer buttons={buttons} match={this.props.match}>
                 <Document title={entity.name} />
-                <div className="container">
-                    {actions}
-                    <FileFolderList containerGuid={containerGuid} containerClassName="" rowClassName="row file__item" childClass={FileFolder} offset={0} limit={50} type="object" subtype="file|folder" selected={this.state.selected} history={this.props.history} />
-                </div>
-                <AddFileModal ref="addFile" containerGuid={containerGuid} onComplete={this.clearSelection} />
-                <AddFolderModal ref="addFolder" containerGuid={containerGuid} onComplete={this.clearSelection} />
-                <EditFileFolderModal ref="edit" entity={this.state.selected.first()} onComplete={this.clearSelection} />
-                <DeleteFileFolderModal ref="delete" entities={this.state.selected} onComplete={this.clearSelection} />
+                <section className="section ___grow">
+                    <div className="container">
+                        {actions}
+                        <FileFolderList containerGuid={containerGuid} containerClassName="" rowClassName="row file__item" childClass={FileFolder} offset={0} limit={50} type="object" subtype="file|folder" selected={this.state.selected} history={this.props.history} />
+                    </div>
+                    <AddFileModal ref="addFile" containerGuid={containerGuid} onComplete={this.clearSelection} />
+                    <AddFolderModal ref="addFolder" containerGuid={containerGuid} onComplete={this.clearSelection} />
+                    <EditFileFolderModal ref="edit" entity={this.state.selected.first()} onComplete={this.clearSelection} />
+                    <DeleteFileFolderModal ref="delete" entities={this.state.selected} onComplete={this.clearSelection} />
+                </section>
             </GroupContainer>
         )
     }

@@ -28,6 +28,7 @@ import WikiGroupItem from "../wiki/GroupItem"
 import TasksGroupList from "../tasks/GroupList"
 import TasksEdit from "../tasks/Edit"
 import TasksAdd from "../tasks/Add"
+import SearchGroupResults from "../search/GroupResults"
 import NotFound from "../core/NotFound"
 
 export default class Routes extends React.Component {
@@ -63,6 +64,7 @@ export default class Routes extends React.Component {
                         <Route exact path="/groups/view/:groupGuid/:groupSlug/wiki" component={WikiGroupList} />
                         <Route exact path="/groups/view/:groupGuid/:groupSlug/wiki/view/:guid/:slug" component={WikiGroupItem} />
                         <Route exact path="/groups/view/:groupGuid/:groupSlug/tasks" component={TasksGroupList} />
+                        <Route exact path="/groups/view/:groupGuid/:groupSlug/search/results" component={SearchGroupResults} />
                         <Route component={NotFound} />
                     </Switch>
                 </Container>

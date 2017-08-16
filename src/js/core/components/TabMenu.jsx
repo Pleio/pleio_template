@@ -35,6 +35,7 @@ class TabMenu extends React.Component {
             <div>
                 <div className={this.props.className || "tabmenu"}>
                     {content}
+                    {this.props.children}
                 </div>
                 <div className="tabmenu__dropdown">
                     <Select name="tabmenu" onChange={this.onChange} options={selectOptions} value={selected} className="___is-mobile-only ___margin-top ___margin-bottom" />

@@ -44,7 +44,9 @@ class Item extends React.Component {
         return (
             <GroupContainer buttons={buttons} match={this.props.match}>
                 <Document title={entity.name} />
-                <BlogList childClass={Card} subtype="blog" offset={0} limit={20} tags={[]} containerGuid={entity.guid} match={this.props.match} />
+                <section className="section ___grow">
+                    <BlogList childClass={Card} subtype="blog" offset={0} limit={20} tags={[]} containerGuid={entity.guid} match={this.props.match} />
+                </section>
             </GroupContainer>
         )
     }

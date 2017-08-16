@@ -66,24 +66,26 @@ class Item extends React.Component {
         return (
             <GroupContainer match={this.props.match}>
                 <Document title={entity.name} />
-                <div className="container">
-                    <div className="row">
-                        <div className="col-sm-12 col-lg-4 last-lg top-lg">
-                            <div className="row">
-                                <div className="col-sm-6 col-lg-12">
-                                    <MembersCard entity={entity} />
-                                </div>
-                                <div className="col-sm-6 col-lg-12">
-                                    <EventsCard entity={entity} />
+                <section className="section ___grow">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-sm-12 col-lg-4 last-lg top-lg">
+                                <div className="row">
+                                    <div className="col-sm-6 col-lg-12">
+                                        <MembersCard entity={entity} />
+                                    </div>
+                                    <div className="col-sm-6 col-lg-12">
+                                        <EventsCard entity={entity} />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-sm-12 col-lg-8">
-                            <Introduction entity={entity} />
-                            <ActivityList containerGuid={entity.guid} containerClassName="" childClass={Card} offset={0} limit={20} tags={[]} />
+                            <div className="col-sm-12 col-lg-8">
+                                <Introduction entity={entity} />
+                                <ActivityList containerGuid={entity.guid} containerClassName="" childClass={Card} offset={0} limit={20} tags={[]} />
+                            </div>
                         </div>
                     </div>
-                </div>
+                </section>
             </GroupContainer>
         )
     }

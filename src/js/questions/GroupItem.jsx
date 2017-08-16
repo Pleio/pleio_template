@@ -27,7 +27,9 @@ class Item extends React.Component {
         return (
             <GroupContainer buttons="" match={this.props.match}>
                 <Document title={entity.name} />
-                <QuestionsItem match={this.props.match} />
+                <section className="section ___grow">
+                    <QuestionsItem match={this.props.match} />
+                </section>
             </GroupContainer>
         )
     }

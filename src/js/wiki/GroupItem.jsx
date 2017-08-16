@@ -25,8 +25,11 @@ class Item extends React.Component {
         }
 
         return (
-            <GroupContainer buttons="" match={this.props.match}>                <Document title={entity.name} />
-                <WikiItem match={this.props.match} />
+            <GroupContainer buttons="" match={this.props.match}>
+                <Document title={entity.name} />
+                <section className="section ___grow">
+                    <WikiItem match={this.props.match} />
+                </section>
             </GroupContainer>
         )
     }

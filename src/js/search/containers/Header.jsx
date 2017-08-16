@@ -6,8 +6,8 @@ import { showShortDate } from "../../lib/showDate"
 import Header from "../components/Header"
 
 const Query = gql`
-    query SearchHeader($q: String!, $type: Type, $subtype: String, $offset: Int, $limit: Int) {
-        search(q: $q, offset: $offset, limit: $limit, type: $type, subtype: $subtype) {
+    query SearchHeader($q: String!, $containerGuid: String, $type: Type, $subtype: String, $offset: Int, $limit: Int) {
+        search(q: $q, containerGuid: $containerGuid, offset: $offset, limit: $limit, type: $type, subtype: $subtype) {
             total
             totals {
                 subtype

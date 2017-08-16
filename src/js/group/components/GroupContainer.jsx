@@ -89,9 +89,7 @@ class GroupContainer extends React.Component {
                 <div className="container">
                     <Menu entity={entity} />
                 </div>
-                <section className="section ___grow">
-                    {this.props.children}
-                </section>
+                {this.props.children}
                 <MoreInfoModal ref="moreInfoModal" entity={entity} />
                 <LeaveGroupModal ref="leaveGroupModal" entity={entity} />
                 <InviteModal ref="inviteModal" entity={entity} />

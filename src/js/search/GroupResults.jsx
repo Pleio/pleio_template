@@ -1,13 +1,15 @@
 import React from "react"
 import { graphql } from "react-apollo"
-import gql from "graphql-tag"
 import { Link } from "react-router-dom"
-import GroupContainer from "../group/components/GroupContainer"
-import Document from "../core/components/Document"
-import TasksList from "./components/TasksList"
+import gql from "graphql-tag"
+import ResultList from "./containers/ResultList"
 import Card from "./components/Card"
+import GroupContainer from "../group/components/GroupContainer"
+import Header from "./containers/Header"
+import Document from "../core/components/Document"
+import { getQueryVariable } from "../lib/helpers"
 
-class GroupList extends React.Component {
+class Item extends React.Component {
     render() {
         const { match } = this.props
         const { entity, viewer } = this.props.data
@@ -25,28 +27,12 @@ class GroupList extends React.Component {
             )
         }
 
-        let add
-        if (viewer.canWriteToContainer) {
-            add = (
-                <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
-                    <Link to={`tasks/add`} className="right-lg">
-                        <div className="button ___large ___add"><span>Maak een taak</span></div>
-                    </Link>
-                </div>
-            )
-        }
-
-        const buttons = (
-            <div className="flexer ___gutter ___top">
-                {add}
-            </div>
-        )
-
         return (
-            <GroupContainer buttons={buttons} match={this.props.match}>
+            <GroupContainer buttons="" match={this.props.match}>
                 <Document title={entity.name} />
-                <section className="section ___grow">
-                    <TasksList type="object" subtype="task" containerGuid={entity.guid} offset={0} limit={100} match={this.props.match} />
+                <Header q={getQueryVariable("q")} type={getQueryVariable("type")} subtype={getQueryVariable("subtype")} containerGuid={match.params.groupGuid} noSearchBar />
+                <section className="section ___grey ___grow">
+                    <ResultList childClass={Card} q={getQueryVariable("q")} type={getQueryVariable("type")} subtype={getQueryVariable("subtype")} offset={getQueryVariable("offset") || 0} limit={getQueryVariable("limit") || 10} containerGuid={match.params.groupGuid} />
                 </section>
             </GroupContainer>
         )
@@ -54,11 +40,10 @@ class GroupList extends React.Component {
 }
 
 const Query = gql`
-    query GroupList($guid: String!) {
+    query GroupItem($guid: String!) {
         viewer {
             guid
             loggedIn
-            canWriteToContainer(containerGuid: $guid, type: object, subtype: "wiki")
             user {
                 guid
                 name
@@ -105,4 +90,4 @@ const Settings = {
     }
 }
 
-export default graphql(Query, Settings)(GroupList)
+export default graphql(Query, Settings)(Item)

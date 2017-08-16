@@ -903,6 +903,9 @@ class SchemaBuilder {
                         "q" => [
                             "type" => Type::nonNull(Type::string()),
                         ],
+                        "containerGuid" => [
+                            "type" => Type::string()
+                        ],
                         "type" => [
                             "type" => $typeEnum
                         ],

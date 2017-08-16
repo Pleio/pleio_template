@@ -6,8 +6,8 @@ import { showShortDate } from "../../lib/showDate"
 import InfiniteList from "../../core/components/InfiniteList"
 
 const Query = gql`
-    query ResultList($q: String!, $type: Type, $subtype: String, $offset: Int, $limit: Int) {
-        search(q: $q, offset: $offset, limit: $limit, type: $type, subtype: $subtype) {
+    query ResultList($q: String!, $containerGuid: String, $type: Type, $subtype: String, $offset: Int, $limit: Int) {
+        search(q: $q, containerGuid: $containerGuid, offset: $offset, limit: $limit, type: $type, subtype: $subtype) {
             total
             totals {
                 subtype

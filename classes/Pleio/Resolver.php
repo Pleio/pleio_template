@@ -971,7 +971,10 @@ class Resolver {
             $args["type"],
             $args["subtype"],
             $args["limit"],
-            $args["offset"]
+            $args["offset"],
+            "",
+            "",
+            $args["containerGuid"]
         );
 
         foreach ($es_results["hits"] as $hit) {
@@ -979,7 +982,7 @@ class Resolver {
         }
 
         $searchTotals = [];
-        $totals = $es->search($args["q"], null, $args["type"], ["blog","news","question"]);
+        $totals = $es->search($args["q"], null, $args["type"], ["blog","news","question"], null, null, "", "", $args["containerGuid"]);
 
         foreach ($totals["count_per_subtype"] as $subtype => $total) {
             $searchTotals[] = [

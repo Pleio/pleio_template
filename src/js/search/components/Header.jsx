@@ -31,7 +31,7 @@ export default class Header extends React.Component {
 
     onSubmit(e) {
         e.preventDefault()
-        this.props.history.push(`/search/results?q=${this.state.q}`)
+        this.props.history.push(`results?q=${this.state.q}`)
     }
 
     render() {
@@ -52,7 +52,7 @@ export default class Header extends React.Component {
         })
 
         let options = [{
-            link: `/search/results?q=${this.state.q}`,
+            link: `results?q=${this.state.q}`,
             title: `Alles (${total})`
         }]
 
@@ -63,29 +63,36 @@ export default class Header extends React.Component {
             }
 
             options.push({
-                link: `/search/results?q=${this.state.q}&type=object&subtype=${subtype.subtype}`,
+                link: `results?q=${this.state.q}&type=object&subtype=${subtype.subtype}`,
                 title: `${subtype.title} (${total})`
             })
         })
 
+        let searchBar
+        if (!this.props.noSearchBar) {
+            searchBar = (
+                <div className="row">
+                    <div className="col-sm-9">
+                        <div className="search-bar">
+                            <form ref="form" method="GET" onSubmit={this.onSubmit}>
+                                <input name="q" onChange={this.onChange} value={this.state.q} />
+                                <div className="search-bar__button" onClick={this.onSubmit}></div>
+                            </form>
+                        </div>
+                    </div>
+                    <div className="col-sm-3">
+                        <div className="search-bar__results">
+                            {total || 0} {(total == 1) ? "resultaat" : "resultaten"}
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+
         return (
             <section className="section ___no-padding-bottom">
                 <div className="container">
-                    <div className="row">
-                        <div className="col-sm-9">
-                            <div className="search-bar">
-                                <form ref="form" method="GET" onSubmit={this.onSubmit}>
-                                    <input name="q" onChange={this.onChange} value={this.state.q} />
-                                    <div className="search-bar__button" onClick={this.onSubmit}></div>
-                                </form>
-                            </div>
-                        </div>
-                        <div className="col-sm-3">
-                            <div className="search-bar__results">
-                                {total || 0} {(total == 1) ? "resultaat" : "resultaten"}
-                            </div>
-                        </div>
-                    </div>
+                    {searchBar}
                     <TabMenu options={options} />
 
                     <div className="row">
