@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import gql from "graphql-tag"
 import Document from "../core/components/Document"
 import GroupContainer from "../group/components/GroupContainer"
-import WikiItem from "../wiki/Item"
+import BlogItem from "../blog/Item"
 
 class Item extends React.Component {
     render() {
@@ -28,7 +28,7 @@ class Item extends React.Component {
             <GroupContainer buttons="" match={this.props.match}>
                 <Document title={entity.name} />
                 <section className="section ___grow">
-                    <WikiItem match={this.props.match} />
+                    <BlogItem match={this.props.match} />
                 </section>
             </GroupContainer>
         )
