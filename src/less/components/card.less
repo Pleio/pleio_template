@@ -61,8 +61,10 @@
 
 // children
 .card {
-    .people {
-        margin-bottom: 2rem;
+    @media ( min-width: @screen-sm ) {
+        .selector {
+            max-width: 23.1rem;
+        }
     }
 
     .read-more {
@@ -103,6 +105,12 @@
                 text-align: center;
             }
         }
+    }
+
+    .picture {
+        position: absolute;
+        top: 3rem;
+        left: 2.4rem;
     }
 
     &.___info {

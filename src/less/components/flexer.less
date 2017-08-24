@@ -33,11 +33,6 @@
 
     &.___gutter {
         margin-bottom: -1rem;
-        margin-right: -2rem;
-
-        @media ( max-width: @screen-xs-max ) {
-            margin-right: -1.5rem;
-        }
 
         &.___margin-bottom {
             margin-bottom: 2rem;
@@ -49,17 +44,15 @@
 
         > * {
             margin-bottom: 1rem;
+        }
+
+        > *:not(:last-child) {
             margin-right: 2rem;
 
             @media ( max-width: @screen-xs-max ) {
                 margin-right: 1.5rem;
-            }
-        }
 
-        > *:not(:last-child) {
-
-            .card-event & {
-                @media ( max-width: @screen-xs-max ) {
+                .card-event & {
                     margin-right: 0;
                 }
             }

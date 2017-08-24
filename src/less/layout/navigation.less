@@ -35,7 +35,55 @@ This file contains the styling for the main navigation.
     }
 }
 
- // This wrapper turns into the mobile navigation panel when screen < 1024px
+.navigation__cms {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+
+    &:before {
+        content: '';
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: 60px solid fade(black, 40%);
+        border-left: 60px solid transparent;
+    }
+
+    .icon(pencil, after);
+    &:after {
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-size: 1.7rem;
+        color: white;
+        margin-top: .7rem;
+        margin-right: .7rem;
+    }
+}
+
+.navigation__add-page {
+    float: left;
+    width: 6rem;
+    height: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color @trans-fast;
+
+    .icon(plus-large);
+    &:before {
+        font-size: 1.6rem;
+        color: white;
+        margin-bottom: .2rem;
+    }
+
+    &:hover {
+        background-color: @c-primary;
+    }
+}
+
+// This wrapper turns into the mobile navigation panel when screen < 1024px
 .navigation__wrapper {
     .container {
         padding: 0;
@@ -75,12 +123,15 @@ This file contains the styling for the main navigation.
         .nav-level-one & {
             transform: translate(-100%, 0);
         }
+
         .nav-level-two & {
             transform: translate(-200%, 0);
         }
+
         .nav-level-three & {
             transform: translate(-300%, 0);
         }
+
         .nav-level-four & {
             transform: translate(-400%, 0);
         }
@@ -110,6 +161,7 @@ This file contains the styling for the main navigation.
             line-height: inherit;
             transition: transform @trans-fast;
         }
+
         .navigation__dropdown:hover & {
             background-color: red;
 
@@ -144,6 +196,7 @@ This file contains the styling for the main navigation.
         float: right;
     }
 }
+
 .navigation__action {
     display: block;
     height: 100%;
@@ -157,6 +210,7 @@ This file contains the styling for the main navigation.
         &:hover {
             background-color: @color-secondary--lightest;
         }
+
         &.___is-active:not(.___home) {
             color: @color-secondary;
         }
@@ -168,6 +222,7 @@ This file contains the styling for the main navigation.
         &:hover {
             color: @color-grey;
         }
+
         body.___campagne & {
             color: @color-white;
             &:hover {
@@ -190,6 +245,7 @@ This file contains the styling for the main navigation.
             &.___is-active {
                 color: @color-white;
             }
+
             span {
                 display: none;
             }
@@ -305,6 +361,7 @@ body.___leraar {
             &:hover {
                 background-color: @color-secondary--lightest;
             }
+
             &.___is-active:not(.___home) {
                 color: @color-secondary;
             }
@@ -316,9 +373,11 @@ body.___leraar {
             &:hover:not(.___is-active) {
                 color: @color-grey;
             }
+
             &.___is-active:not(.___home) {
                 background-color: @color-primary--light;
             }
+
             // Hide mobile navigation links (desktop)
             &.___mobile {
                 display: none;
@@ -412,6 +471,7 @@ body.___rijkshuisstijl {
             &.___is-active {
                 color: @color-quaternary;
             }
+
             &:hover {
                 background-color: @color-navigation-hover;
             }
@@ -423,6 +483,7 @@ body.___rijkshuisstijl {
             &:hover {
                 background-color: @color-navigation-hover;
             }
+
             &.___is-active {
                 line-height: 4.5rem;
                 background-color: @color-secondary--lightest;
@@ -430,6 +491,7 @@ body.___rijkshuisstijl {
                     background-color: transparent;
                 }
             }
+
             // Hide mobile navigation links (desktop)
             &.___mobile {
                 display: none;

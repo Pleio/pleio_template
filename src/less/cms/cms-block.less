@@ -1,0 +1,45 @@
+.cms-block {
+    position: relative;
+    height: 30rem;
+    background-color: @color-grey--10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.___add {
+        background-color: transparent;
+        background-image: repeating-linear-gradient(to right, @color-grey--50 0%, @color-grey--50 50%, transparent 50%, transparent 100%), repeating-linear-gradient(to right, @color-grey--50 0%, @color-grey--50 50%, transparent 50%, transparent 100%), repeating-linear-gradient(to bottom, @color-grey--50 0%, @color-grey--50 50%, transparent 50%, transparent 100%), repeating-linear-gradient(to bottom, @color-grey--50 0%, @color-grey--50 50%, transparent 50%, transparent 100%);
+        background-position: left top, left bottom, left top, right top;
+        background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+        background-size: 10px 1px, 10px 1px, 1px 10px, 1px 10px;
+        cursor: pointer;
+        transition: background-color @trans-fast;
+
+        &.___small {
+            height: 6rem;
+        }
+
+        .icon(plus-large);
+        &:before {
+            font-size: 1.8rem;
+            margin-bottom: 1px;
+            color: @c-primary;
+        }
+
+        &:hover {
+            background-color: @color-grey--10;
+        }
+    }
+}
+
+.cms-block__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    > * {
+        &:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+    }
+}

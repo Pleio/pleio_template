@@ -1,0 +1,138 @@
+.cms-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    border: .2rem solid @c-primary;
+    opacity: 0;
+    transition: opacity @trans-material-fast;
+
+    .lead__title > & {
+        left: -.8rem;
+        right: -.8rem;
+    }
+
+    .card-list-recommended__title > & {
+        left: -.5rem;
+        right: -.5rem;
+    }
+
+    .lead.___rounded > & {
+        border-radius: .5rem;
+    }
+
+    :hover > & {
+        opacity: 1;
+
+        .cms-overlay__buttons {
+            transform: translate(0, 0) !important;
+        }
+    }
+}
+
+.cms-overlay__actions {
+    position: absolute;
+    top: -.2rem;
+    right: -4.4rem;
+    pointer-events: auto;
+    overflow: hidden;
+
+    .navigation__link &,
+    .cms-block & {
+        top: auto;
+        right: 0;
+        left: -.2rem;
+        bottom: -4.4rem;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: @container-width - @outer-margin - @outer-margin - .2rem;
+
+        .cms-overlay__buttons {
+            display: inline-flex;
+            transform: translateY(-100%);
+
+            button {
+                &:not(:last-child) {
+                    margin-bottom: 0;
+                    margin-right: 0;
+
+                    &:after {
+                        top: .7rem;
+                        bottom: .7rem;
+                        right: -1px;
+                        left: auto;
+                        width: 1px;
+                        height: auto;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.cms-overlay__buttons {
+    background-color: @c-primary;
+    color: white;
+    transform: translateX(-100%);
+    transition: transform @trans-material-fast;
+
+    button {
+        position: relative;
+        width: 4.4rem;
+        height: 4.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color @trans-fast;
+
+        &:hover {
+            background-color: fade(black, 5%);
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 1px;
+
+            &:after {
+                content: '';
+                position: absolute;
+                left: .7rem;
+                right: .7rem;
+                bottom: -1px;
+                height: 1px;
+                background-color: fade(white, 50%);
+            }
+        }
+
+        &.___add {
+            .icon(plus-large);
+            &:before {
+                font-size: 1.6rem;
+            }
+        }
+
+        &.___settings {
+            .icon(settings);
+            &:before {
+                font-size: 1.9rem;
+            }
+        }
+
+        &.___delete {
+            .icon(delete-fill);
+            &:before {
+                font-size: 1.8rem;
+                margin-bottom: .1rem;
+            }
+        }
+
+        &.___more {
+            .icon(options);
+            &:before {
+                font-size: .4rem;
+                margin-bottom: .1rem;
+            }
+        }
+    }
+}

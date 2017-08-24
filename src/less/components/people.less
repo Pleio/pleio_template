@@ -3,6 +3,10 @@
     justify-content: center;
     cursor: pointer;
 
+    &:not(:last-child) {
+        margin-bottom: 2rem;
+    }
+
     @media (max-width: @screen-xs-max) {
         .card-event & {
             display: none;

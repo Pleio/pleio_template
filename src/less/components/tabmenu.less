@@ -93,11 +93,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color: @color-primary;
+    transition: color @trans-fast;
 
     .icon(search);
     &:before {
         font-size: 1.8rem;
-        color: @color-primary;
+    }
+
+    &:hover {
+        color: @color-secondary;
     }
 }
 

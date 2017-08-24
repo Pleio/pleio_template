@@ -20,6 +20,14 @@
         background: linear-gradient(to right, fade(@color-quaternary, 40%) 0%, fade(@color-quaternary, 0%) 100%);
     }
 
+    &.___rounded {
+        border-radius: .5rem;
+
+        &:before {
+            border-radius: .5rem;
+        }
+    }
+
     &.___has-background {
         .button.___grey {
             background-color: fade(black, 50%);
@@ -134,10 +142,13 @@
         }
 
         .flexer {
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
 
             @media (max-width: @screen-xs-max) {
                 display: none;
+            }
+            @media (min-width: @screen-md) {
+                flex-shrink: 0;
             }
         }
     }

@@ -18,16 +18,19 @@
 
 .file__check {
     position: relative;
-    width: 1.6rem;
 
     .checkbox {
         position: absolute;
         top: 0;
-        left: 0;
+        left: 1rem;
         right: 0;
         bottom: 0;
         opacity: 0;
         transition: opacity @trans-fast;
+
+        @media ( max-width: @screen-xs-max ) {
+            opacity: 1;
+        }
 
         label {
             &:before {
@@ -58,7 +61,6 @@
 }
 
 .file__type {
-    width: 4rem;
     text-align: center;
 
     &:before {
@@ -102,16 +104,8 @@
 
 .file__fav {
     position: relative;
-    width: 6rem;
 
     button {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 6rem;
-
         .icon(star);
         &:before {
             color: @color-grey--60;
@@ -144,9 +138,4 @@
             justify-content: center;
         }
     }
-}
-
-.file__date,
-.file__owner {
-    width: 18%;
 }

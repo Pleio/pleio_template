@@ -1,4 +1,9 @@
 .form {
+    .modal.___full & {
+        max-width: 64.8rem;
+        margin: 0 auto;
+    }
+
     input[type="text"],
     input[type="email"],
     input[type="password"] {
@@ -50,25 +55,23 @@
             padding: 1.1rem 1.4rem;
         }
     }
-
-    .modal.___full & {
-        max-width: 64.8rem;
-        margin: 0 auto;
-    }
 }
 
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: @color-grey--60;
 }
+
 input::-moz-placeholder,
 textarea::-moz-placeholder { /* Firefox 19+ */
     color: @color-grey--60;
 }
+
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder { /* IE 10+ */
     color: @color-grey--60;
 }
+
 input:-moz-placeholder,
 textarea:-moz-placeholder { /* Firefox 18- */
     color: @color-grey--60;

@@ -1,0 +1,63 @@
+.cms__panel {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    border-radius: 3rem;
+    background-color: white;
+    box-shadow: @box-shadow;
+    z-index: 12;
+
+    button {
+        position: relative;
+        width: 6rem;
+        height: 6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color @trans-fast;
+
+        &:hover {
+            color: @c-primary;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 1px;
+
+            &:after {
+                content: '';
+                position: absolute;
+                left: 1rem;
+                right: 1rem;
+                bottom: -1px;
+                height: 1px;
+                background-color: @color-grey--40;
+            }
+        }
+
+        &:first-child {
+            &:before {
+                margin-top: .3rem;
+            }
+        }
+
+        &:last-child {
+            &:before {
+                margin-bottom: .3rem;
+            }
+        }
+
+        &.___close {
+            .icon(cross);
+            &:before {
+                font-size: 1.8rem;
+            }
+        }
+
+        &.___settings {
+            .icon(settings);
+            &:before {
+                font-size: 2.2rem;
+            }
+        }
+    }
+}
