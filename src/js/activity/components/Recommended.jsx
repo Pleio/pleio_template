@@ -28,7 +28,7 @@ class Recommended extends React.Component {
     render() {
         const { recommended } = this.props.data
 
-        if (!recommended) {
+        if (!recommended || recommended.edges.length === 0) {
             return (
                 <div></div>
             )
