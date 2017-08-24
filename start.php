@@ -1,4 +1,5 @@
 <?php
+require_once(dirname(__FILE__) . "/lib/functions.php");
 require_once(dirname(__FILE__) . "/../../vendor/autoload.php");
 spl_autoload_register("pleio_template_autoloader");
 function pleio_template_autoloader($class) {
@@ -41,6 +42,8 @@ function pleio_template_init() {
 
     elgg_register_page_handler("graphql", "pleio_template_graphql");
     elgg_register_page_handler("upload", "pleio_template_upload");
+
+    elgg_register_page_handler("bulk_download", "pleio_template_bulk_download");
 
     elgg_unregister_plugin_hook_handler("register", "user", "newsletter_register_user_handler");
     elgg_unregister_event_handler("create", "member_of_site", "newsletter_join_site_event_handler");
@@ -254,8 +257,13 @@ function pleio_template_page_handler($page) {
     return true;
 }
 
-function pleio_template_graphql() {
+function pleio_template_graphql($page) {
     include("pages/graphql.php");
+    return true;
+}
+
+function pleio_template_bulk_download($page) {
+    include("pages/bulk_download.php");
     return true;
 }
 

@@ -18,6 +18,8 @@ class FileFolder extends React.Component {
     }
 
     onClick(e) {
+        e.preventDefault()
+
         const { group } = this.context
         const { entity } = this.props
         if (entity.subtype === "file") {
@@ -32,50 +34,37 @@ class FileFolder extends React.Component {
         const { onCheck, group } = this.context
         const { entity, selected } = this.props
 
+        let link
+        switch (entity.subtype) {
+            case "file":
+                link = `/file/download/${entity.guid}`
+                break;
+            case "folder":
+                link = `/groups/view/${group.guid}/${group.name}/files/${entity.guid}`
+                break;
+        }
+
         let checkbox
         if (entity.canEdit) {
             checkbox = (
-                <div className="file__check">
-                    <CheckField name={entity.guid} onChange={this.onCheck} checked={selected.has(entity)} />
-                </div>
-            )
-        }
-
-        let subtype
-        if (entity.subtype === "folder") {
-            subtype = (
-                <span className="file__icon" style={{marginRight:"0.5em"}}>
-                    <svg version="1.1" x="0px" y="0px" width="16px" height="12.8px" viewBox="0 0 16 12.8">
-                        <path style={{fill:"#B4B4B4"}} d="M6.4,0H1.6C0.7,0,0,0.7,0,1.6l0,9.6c0,0.9,0.7,1.6,1.6,1.6h12.8c0.9,0,1.6-0.7,1.6-1.6v-8c0-0.9-0.7-1.6-1.6-1.6H8L6.4,0z"/>
-                    </svg>
-                </span>
-            )
-        } else {
-            subtype = (
-                <span className="file__icon" style={{marginRight:"0.5em"}}>
-                    <svg version="1.1" x="0px" y="0px" width="12.8px" height="16px" viewBox="0 0 12.8 16">
-                        <path style={{fill:"#009FE3"}} d="M1.6,0C0.7,0,0,0.7,0,1.6l0,12.8C0,15.3,0.7,16,1.6,16h9.6c0.9,0,1.6-0.7,1.6-1.6V4.8L8,0H1.6z"/>
-                    </svg>
+                <span className="checkbox ___large">
+                    <input id={`file-${entity.guid}`} name={`file-${entity.guid}`} type="checkbox" onClick={this.onCheck} checked={selected.has(entity)} />
+                    <label htmlFor={`file-${entity.guid}`} />
                 </span>
             )
         }
 
         return (
-            <div className={classnames({"row file__item": true, "___selected": selected.has(entity)})}>
-                <div className="col-sm-8">
-                    {checkbox}
-                    {subtype}
-                    <a href="javascript:void(0);" onClick={this.onClick}>
-                        {entity.title}
-                    </a>
-                </div>
-                <div className="col-sm-2">
-                    {showDate(entity.timeCreated)}
-                </div>
-                <div className="col-sm-2">
-                    {entity.owner.name}
-                </div>
-            </div>
+            <tr className={classnames({"file": true, "___is-checked": selected.has(entity)})}>
+                <td className="file__check">{checkbox}</td>
+                <td className={classnames({"file__type": true, "___folder": entity.subtype === "folder", "___doc": entity.subtype === "file"})}></td>
+                <td className="file__name" onClick={this.onClick}>
+                    <a href={link}>{entity.title}</a>
+                </td>
+                <td className="file__fav"></td>
+                <td className="file__date">{showDate(entity.timeCreated)}</td>
+                <td className="file__owner">{entity.owner.name}</td>
+            </tr>
         )
     }
 }

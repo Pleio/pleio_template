@@ -137,15 +137,25 @@ class InfiniteList extends React.Component {
         }
 
         if (data[rootFieldName] && data[rootFieldName].edges.length === 0) {
-            return (
-                <div className={getAttribute("containerClassName", this.props, "container")} ref="infiniteScroll">
-                    <div className={getAttribute("rowClassName", this.props, "row fill")}>
-                        <div className="col-sm-12">
-                            Er zijn geen items in deze categorie.
+            if (this.props.inTable) {
+                return (
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Er zijn geen items in deze categorie.</td>
+                    </tr>
+                )
+            } else {
+                return (
+                    <div className={getAttribute("containerClassName", this.props, "container")} ref="infiniteScroll">
+                        <div className={getAttribute("rowClassName", this.props, "row fill")}>
+                            <div className="col-sm-12">
+                                Er zijn geen items in deze categorie.
+                            </div>
                         </div>
                     </div>
-                </div>
-            )
+                )
+            }
         }
 
         let loading
@@ -169,6 +179,13 @@ class InfiniteList extends React.Component {
                         {loading}
                     </div>
                 </div>
+            )
+        } else if (this.props.inTable) {
+            return (
+                <tbody ref="infiniteScroll">
+                    {items}
+                    {loading}
+                </tbody>
             )
         } else {
             return (

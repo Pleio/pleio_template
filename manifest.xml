@@ -45,4 +45,9 @@
         <type>plugin</type>
         <name>widget_manager</name>
     </conflicts>
+    <conflicts>
+        <type>plugin</type>
+        <name>pleiofile</name>
+    </conflicts>
+
 </plugin_manifest>

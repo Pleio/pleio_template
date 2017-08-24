@@ -26,5 +26,4 @@ const Query = gql`
     }
 `
 
-const withQuery = graphql(Query)
-export default withQuery(InfiniteList)
+export default graphql(Query)(InfiniteList)
