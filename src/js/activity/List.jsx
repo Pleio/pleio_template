@@ -25,8 +25,22 @@ class Activity extends React.Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        const { data } = nextProps
+
+        if (data.viewer && data.viewer.loggedIn && this.state.tags.length === 0) {
+            this.setState({ tags: ["mine"] })
+        }
+    }
+
     render() {
         const { site, viewer } = this.props.data
+
+        if (!viewer) {
+            return (
+                <div />
+            )
+        }
 
         let leader, initiative
         if (site && site.showLeader && !viewer.loggedIn) {

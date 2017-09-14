@@ -84,29 +84,33 @@ class Resolver {
 
         $tags = $args["tags"];
 
-        if ($tags == ["mine"]) {
-            $user = elgg_get_logged_in_user_entity();
-            if ($user && $user->tags) {
+        $user = elgg_get_logged_in_user_entity();
+        if ($user && $tags == ["mine"]) {
+            if ($user->tags) {
                 if (is_array($user->tags)) {
                     $tags = $user->tags;
                 } else {
                     $tags = [$user->tags];
                 }
+            } else {
+                $tags = [];
             }
+        }
 
+        $options = [
+            "type" => "object",
+            "subtype" => ["news", "blog", "question"],
+            "offset" => (int) $args["offset"],
+            "limit" => (int) $args["limit"]
+        ];
+
+        if ($args["containerGuid"]) {
+            $options["container_guid"] = (int) $args["containerGuid"];
+        }
+
+        if (count($tags) > 2) {
             $result = Helpers::getEntitiesFromTags(["news", "blog", "question"], $tags, (int) $args["offset"], (int) $args["limit"]);
         } else {
-            $options = [
-                "type" => "object",
-                "subtype" => ["news", "blog", "question"],
-                "offset" => (int) $args["offset"],
-                "limit" => (int) $args["limit"]
-            ];
-
-            if ($args["containerGuid"]) {
-                $options["container_guid"] = (int) $args["containerGuid"];
-            }
-
             if ($tags) {
                 $options["metadata_name_value_pairs"] = [];
                 foreach ($tags as $tag) {

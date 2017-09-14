@@ -34,7 +34,8 @@ class SettingsInterests extends React.Component {
                     guid: this.props.entity.guid,
                     tags: values.tags
                 }
-            }
+            },
+            refetchQueries: [ "InfiniteList" ]
         })
     }
 

@@ -30,7 +30,7 @@ class ContentFilters extends React.Component {
     }
 
     render() {
-        const { site } = this.props.data
+        const { site, viewer } = this.props.data
 
         if (!site) {
             return (
@@ -45,7 +45,7 @@ class ContentFilters extends React.Component {
                 options[value] = value
             })
 
-            if (i === (site.filters.length - 1)) {
+            if (i === (site.filters.length - 1) && viewer.loggedIn) {
                 options["mine"] = `Mijn ${filter.name}`
             }
 
@@ -67,9 +67,14 @@ class ContentFilters extends React.Component {
                 }
             }
 
+            let value = this.state.filters[i] || "all"
+            if (i === (site.filters.length - 1) && !this.state.filters[i] && this.props.onActivity && viewer.loggedIn) {
+                value = "mine"
+            }
+
             return (
                 <div key={i} className="col-sm-4 col-lg-3">
-                    <Select name={filter.name} className={selectClassName} options={options} onChange={(value) => this.onChangeFilter(i, value)} value={this.state.filters[i] || "all"} />
+                    <Select name={filter.name} className={selectClassName} options={options} onChange={(value) => this.onChangeFilter(i, value)} value={value} />
                 </div>
             )
         })
@@ -85,6 +90,10 @@ class ContentFilters extends React.Component {
 
 const Query = gql`
     query Filters {
+        viewer {
+            guid
+            loggedIn
+        }
         site {
             guid
             filters {
