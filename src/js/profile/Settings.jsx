@@ -1,9 +1,8 @@
 import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
-import SettingsInterests from "./components/SettingsInterests"
-import SettingsNotifications from "./components/SettingsNotifications"
-import SettingsEmailOverview from "./components/SettingsEmailOverview"
+import AccountPassword from "./components/AccountPassword"
+import AccountEmail from "./components/AccountEmail"
 import Wrapper from "./components/Wrapper"
 
 class Settings extends React.Component {
@@ -20,15 +19,8 @@ class Settings extends React.Component {
             <Wrapper match={this.props.match}>
                 <section className="section ___grey ___grow">
                     <div className="container">
-                        <div className="row">
-                            <div className="col-md-8">
-                                <SettingsInterests entity={entity} />
-                                <SettingsNotifications entity={entity} />
-                            </div>
-                            <div className="col-md-4">
-                                <SettingsEmailOverview entity={entity} />
-                            </div>
-                        </div>
+                        <AccountPassword entity={entity} />
+                        <AccountEmail entity={entity} />
                     </div>
                 </section>
             </Wrapper>
@@ -37,15 +29,13 @@ class Settings extends React.Component {
 }
 
 const Query = gql`
-    query ProfileSettings($username: String!) {
+    query ProfileAccount($username: String!) {
         entity(username: $username) {
             guid
             status
             ... on User {
                 canEdit
-                getsNotificationOnReply
-                getsNewsletter
-                emailOverview
+                email
                 tags
             }
         }

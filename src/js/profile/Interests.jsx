@@ -1,11 +1,12 @@
 import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
-import AccountPassword from "./components/AccountPassword"
-import AccountEmail from "./components/AccountEmail"
+import SettingsInterests from "./components/SettingsInterests"
+import SettingsNotifications from "./components/SettingsNotifications"
+import SettingsEmailOverview from "./components/SettingsEmailOverview"
 import Wrapper from "./components/Wrapper"
 
-class Account extends React.Component {
+class Settings extends React.Component {
     render() {
         const { entity } = this.props.data
 
@@ -19,8 +20,15 @@ class Account extends React.Component {
             <Wrapper match={this.props.match}>
                 <section className="section ___grey ___grow">
                     <div className="container">
-                        <AccountPassword entity={entity} />
-                        <AccountEmail entity={entity} />
+                        <div className="row">
+                            <div className="col-md-8">
+                                <SettingsInterests entity={entity} />
+                                <SettingsNotifications entity={entity} />
+                            </div>
+                            <div className="col-md-4">
+                                <SettingsEmailOverview entity={entity} />
+                            </div>
+                        </div>
                     </div>
                 </section>
             </Wrapper>
@@ -29,13 +37,15 @@ class Account extends React.Component {
 }
 
 const Query = gql`
-    query ProfileAccount($username: String!) {
+    query ProfileSettings($username: String!) {
         entity(username: $username) {
             guid
             status
             ... on User {
                 canEdit
-                email
+                getsNotificationOnReply
+                getsNewsletter
+                emailOverview
                 tags
             }
         }
@@ -52,4 +62,4 @@ const withQuery = graphql(Query, {
     }
 })
 
-export default withQuery(Account)
+export default withQuery(Settings)

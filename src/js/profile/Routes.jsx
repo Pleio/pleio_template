@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom"
 import Container from "../core/components/Container"
 
 import Profile from "./Profile"
-import Account from "./Account"
+import Interests from "./Interests"
 import Settings from "./Settings"
 import NotFound from "../core/NotFound"
 
@@ -13,7 +13,7 @@ export default class Routes extends React.Component {
             <Container>
                 <Switch>
                     <Route exact path="/profile/:username" component={Profile} />
-                    <Route exact path="/profile/:username/account" component={Account} />
+                    <Route exact path="/profile/:username/interests" component={Interests} />
                     <Route exact path="/profile/:username/settings" component={Settings} />
                     <Route component={NotFound} />
                 </Switch>
