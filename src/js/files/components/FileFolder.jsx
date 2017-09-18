@@ -2,21 +2,17 @@ import React from "react"
 import PropTypes from "prop-types"
 import showDate from "../../lib/showDate"
 import CheckField from "../../core/components/CheckField"
+import autobind from "autobind-decorator"
 import classnames from "classnames"
 
 class FileFolder extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.onCheck = this.onCheck.bind(this)
-        this.onClick = this.onClick.bind(this)
-    }
-
+    @autobind
     onCheck(e) {
         const { entity, selected } = this.props
         this.context.onCheck(entity, !selected.has(entity))
     }
 
+    @autobind
     onClick(e) {
         e.preventDefault()
 
@@ -58,8 +54,8 @@ class FileFolder extends React.Component {
             <tr className={classnames({"file": true, "___is-checked": selected.has(entity)})}>
                 <td className="file__check">{checkbox}</td>
                 <td className={classnames({"file__type": true, "___folder": entity.subtype === "folder", "___doc": entity.subtype === "file"})}></td>
-                <td className="file__name" onClick={this.onClick}>
-                    <a href={link}>{entity.title}</a>
+                <td className="file__name">
+                    <a href={link} onClick={this.onClick}>{entity.title}</a>
                 </td>
                 <td className="file__fav"></td>
                 <td className="file__date">{showDate(entity.timeCreated)}</td>
