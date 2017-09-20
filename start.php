@@ -62,6 +62,10 @@ function pleio_template_init() {
 
     elgg_extend_view("css/admin", "pleio_template/css/admin");
 
+    elgg_register_simplecache_view("css/web");
+    elgg_register_simplecache_view("js/web");
+    elgg_register_simplecache_view("js/vendor");
+
     if (!isset($_COOKIE["CSRF_TOKEN"])) {
         $token = md5(openssl_random_pseudo_bytes(32));
         $domain = ini_get("session.cookie_domain");
