@@ -35,6 +35,42 @@
 </div>
 
 <div>
+    <label><?php echo elgg_echo("pleio_template:show_leader_buttons"); ?></label>
+    <?php echo elgg_view("input/dropdown", [
+        "name" => "params[show_leader_buttons]",
+        "value" => $vars["plugin"]->show_leader_buttons,
+        "options_values" => [
+            "no" => elgg_echo("option:no"),
+            "yes" => elgg_echo("option:yes")
+        ]
+    ]); ?>
+</div>
+
+<div>
+    <label><?php echo elgg_echo("pleio_template:subtitle"); ?></label>
+    <?php echo elgg_view("input/text", [
+        "name" => "params[subtitle]",
+        "value" => $vars["plugin"]->subtitle,
+        "options_values" => [
+            "no" => elgg_echo("option:no"),
+            "yes" => elgg_echo("option:yes")
+        ]
+    ]); ?>
+</div>
+
+<div>
+    <label><?php echo elgg_echo("pleio_template:leader_image"); ?></label>
+    <?php echo elgg_view("input/text", [
+        "name" => "params[leader_image]",
+        "value" => $vars["plugin"]->leader_image,
+        "options_values" => [
+            "no" => elgg_echo("option:no"),
+            "yes" => elgg_echo("option:yes")
+        ]
+    ]); ?>
+</div>
+
+<div>
     <label><?php echo elgg_echo("pleio_template:show_initiative"); ?></label>
     <?php echo elgg_view("input/dropdown", [
         "name" => "params[show_initiative]",

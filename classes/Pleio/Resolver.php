@@ -8,6 +8,18 @@ class Resolver {
 
         $showLogo = (elgg_get_plugin_setting("show_logo", "pleio_template") === "yes") ? true : false;
         $showLeader = (elgg_get_plugin_setting("show_leader", "pleio_template") === "yes") ? true : false;
+        $showLeaderButtons = (elgg_get_plugin_setting("show_leader_buttons", "pleio_template") === "no") ? false : true;
+
+        $subtitle = elgg_get_plugin_setting("subtitle", "pleio_template");
+        if (!$subtitle) {
+            $subtitle = "";
+        }
+
+        $leaderImage = elgg_get_plugin_setting("leader_image", "pleio_template");
+        if (!$leaderImage) {
+            $leaderImage = "";
+        }
+
         $showInitiative = (elgg_get_plugin_setting("show_initiative", "pleio_template") === "yes") ? true : false;
 
         $menu = json_decode(elgg_get_plugin_setting("menu", "pleio_template"));
@@ -61,6 +73,9 @@ class Resolver {
             "showLogo" => $showLogo,
             "initiatorLink" => $initiatorLink,
             "showLeader" => $showLeader,
+            "showLeaderButtons" => $showLeaderButtons,
+            "subtitle" => $subtitle,
+            "leaderImage" => $leaderImage,
             "showInitiative" => $showInitiative,
             "externalLogin" => $externalLogin,
             "accessIds" => $accessIds,

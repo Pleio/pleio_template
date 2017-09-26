@@ -856,6 +856,15 @@ class SchemaBuilder {
                 "showLeader" => [
                     "type" => Type::nonNull(Type::boolean())
                 ],
+                "showLeaderButtons" => [
+                    "type" => Type::nonNull(Type::boolean())
+                ],
+                "subtitle" => [
+                    "type" => Type::string()
+                ],
+                "leaderImage" => [
+                    "type" => Type::string()
+                ],
                 "showInitiative" => [
                     "type" => Type::nonNull(Type::boolean())
                 ],

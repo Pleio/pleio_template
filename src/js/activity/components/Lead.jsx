@@ -28,9 +28,17 @@ class Lead extends React.Component {
     }
 
     render() {
+        const { viewer, site } = this.props.data
+
+        if (!viewer || !site || viewer.loggedIn) {
+            return (
+                <div></div>
+            )
+        }
+
         let style = {
             height: this.state.height,
-            backgroundImage: "url(" + this.props.image + ")"
+            backgroundImage: `url(${site.leaderImage || "/mod/pleio_template/src/images/lead-home2.png"})`
         }
 
         if (!this.state.visible) {
@@ -39,9 +47,21 @@ class Lead extends React.Component {
             style.height = 0;
         }
 
-        if (!this.props.data.viewer || this.props.data.viewer.loggedIn) {
-            return (
-                <div></div>
+        let buttons
+        if (site.showLeaderButtons) {
+            buttons = (
+                <div className="buttons ___margin-top ___gutter ___center">
+                    <Link to="/campagne">
+                        <div className="button ___large">
+                            Over Leraar.nl
+                        </div>
+                    </Link>
+                    <Link to="/register">
+                        <div className="button ___large">
+                            Aan de slag
+                        </div>
+                    </Link>
+                </div>
             )
         }
 
@@ -52,23 +72,12 @@ class Lead extends React.Component {
                 <div className="lead__justify">
                     <div className="container">
                         <h1 className="lead__title">
-                            {this.props.title}
+                            {site.name}
                         </h1>
                         <h2 className="lead__sub-title">
-                            {this.props.subtitle}
+                            {site.subtitle}
                         </h2>
-                        <div className="buttons ___margin-top ___gutter ___center">
-                            <Link to="/campagne">
-                                <div className="button ___large">
-                                    Over Leraar.nl
-                                </div>
-                            </Link>
-                            <Link to="/register">
-                                <div className="button ___large">
-                                    Aan de slag
-                                </div>
-                            </Link>
-                        </div>
+                        {buttons}
                     </div>
                 </div>
             </div>
@@ -78,6 +87,13 @@ class Lead extends React.Component {
 
 const Query = gql`
     query Lead {
+        site {
+            guid
+            name
+            showLeaderButtons
+            subtitle
+            leaderImage
+        }
         viewer {
             guid
             loggedIn

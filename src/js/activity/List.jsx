@@ -45,7 +45,7 @@ class Activity extends React.Component {
         let leader, initiative
         if (site && site.showLeader && !viewer.loggedIn) {
             leader = (
-                <Lead title="Leraar.nl" image="/mod/pleio_template/src/images/lead-home2.png" />
+                <Lead />
             )
         }
 
