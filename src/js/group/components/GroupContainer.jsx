@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
-import { Link, withRouter } from "react-router-dom"
+import { Link } from "react-router-dom"
 import Featured from "../../core/components/Featured"
 import Menu from "./Menu"
 import MoreInfoModal from "./MoreInfoModal"
@@ -155,4 +155,4 @@ const Settings = {
     }
 }
 
-export default graphql(Query, Settings)(withRouter(GroupContainer))
+export default graphql(Query, Settings)(GroupContainer)
