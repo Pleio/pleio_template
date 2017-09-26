@@ -22,13 +22,13 @@ function pleio_template_add_folder_to_zip(ZipArchive &$zip_archive, ElggObject $
                 // check if the file exists
                 if($zip_archive->statName($folder_path . $file->originalfilename) === false){
                     // doesn't exist, so add
-                    $zip_archive->addFile($file->getFilenameOnFilestore(), $folder_path . sanitize_file_name($file->originalfilename));
+                    $zip_archive->addFile($file->getFilenameOnFilestore(), $folder_path . pleio_template_sanitize_file_name($file->originalfilename));
                 } else {
                     // file name exists, so create a new one
                     $ext_pos = strrpos($file->originalfilename, ".");
                     $file_name = substr($file->originalfilename, 0, $ext_pos) . "_" . $file->getGUID() . substr($file->originalfilename, $ext_pos);
 
-                    $zip_archive->addFile($file->getFilenameOnFilestore(), $folder_path . sanitize_file_name($file_name));
+                    $zip_archive->addFile($file->getFilenameOnFilestore(), $folder_path . pleio_template_sanitize_file_name($file_name));
                 }
             }
         }
@@ -49,7 +49,7 @@ function pleio_template_add_folder_to_zip(ZipArchive &$zip_archive, ElggObject $
     }
 }
 
-function sanitize_file_name($filename) {
+function pleio_template_sanitize_file_name($filename) {
     $filename = mb_ereg_replace("([^\w\s\d\-_~,;:\[\]\(\).])", '', $filename);
     $filename = mb_ereg_replace("([\.]{2,})", '', $filename);
     return $filename;
