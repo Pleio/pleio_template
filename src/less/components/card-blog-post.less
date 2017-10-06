@@ -9,6 +9,10 @@
     @media ( min-width: @screen-sm ) {
         padding: 3rem 3rem 2rem 8rem;
     }
+
+    .read-more {
+        color: @color-grey--80;
+    }
 }
 
 .card-blog-post__picture {
@@ -22,9 +26,26 @@
     background-size: cover;
     border-radius: 50%;
     overflow: hidden;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     @media ( max-width: @screen-xs-max ) {
         display: none;
+    }
+}
+
+.card-blog-post__icon {
+    position: relative;
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    path {
+        fill: white;
     }
 }
 
@@ -87,7 +108,7 @@
     display: block;
     position: relative;
     width: 100%;
-    min-height: 12rem;
+    height: 16rem;
     margin: 0 0 2rem 0;
     background-size: cover;
     background-position: center;

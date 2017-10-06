@@ -26,12 +26,23 @@ This file contains the styling for the main navigation.
 }
 
 .navigation {
-    body.___leraar.___campagne & {
-        position: absolute;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: @color-primary;
+    user-select: none;
+    z-index: 11;
+
+    @media (max-width: @screen-md-max) {
+        > .container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
     }
 
-    body.___leraar:not(.___campagne) & {
-        background-color: @color-primary;
+    body.___campagne & {
+        position: absolute;
+        background-color: transparent;
     }
 }
 
@@ -85,9 +96,8 @@ This file contains the styling for the main navigation.
 
 // This wrapper turns into the mobile navigation panel when screen < 1024px
 .navigation__wrapper {
-    .container {
-        padding: 0;
-    }
+    z-index: 1;
+
     // MOBILE
     @media (max-width: @screen-md-max) {
         position: fixed;
@@ -108,6 +118,10 @@ This file contains the styling for the main navigation.
             box-shadow: @box-shadow;
         }
     }
+
+    @media (min-width: @screen-lg) {
+        display: flex;
+    }
 }
 
 //
@@ -116,10 +130,20 @@ This file contains the styling for the main navigation.
 .navigation__links {
     display: flex;
     position: relative;
+    text-decoration: none;
+    transition: color @trans-fast, background-color @trans-fast;
+
     // MOBILE & TABLET
     @media (max-width: @screen-md-max) {
         display: block;
+        color: @color-black;
+        line-height: 3.2rem;
         transition: transform @trans-normal;
+
+        &.___is-active:not(.___home) {
+            color: @color-secondary;
+        }
+
         .nav-level-one & {
             transform: translate(-100%, 0);
         }
@@ -136,8 +160,102 @@ This file contains the styling for the main navigation.
             transform: translate(-400%, 0);
         }
     }
+
+    // DESKTOP
     @media (min-width: @screen-lg) {
-        float: left;
+        color: @color-white;
+        line-height: 6rem;
+
+        &:hover:not(.___is-active) {
+            color: @color-grey;
+        }
+
+        &.___is-active:not(.___home) {
+            background-color: @color-primary--light;
+        }
+
+        // Hide mobile navigation links (desktop)
+        &.___mobile {
+            display: none;
+        }
+    }
+}
+
+.navigation__link {
+    display: block;
+    position: relative;
+    text-decoration: none;
+    padding: 0 2rem;
+    transition: color @trans-fast, background-color @trans-fast;
+
+    // MOBILE & TABLET
+    @media (max-width: @screen-md-max) {
+        color: @color-black;
+        line-height: 3.2rem;
+        &:hover {
+            background-color: @color-secondary--lightest;
+        }
+
+        &.___is-active:not(.___home) {
+            color: @color-secondary;
+        }
+    }
+
+    // DESKTOP
+    @media (min-width: @screen-lg) {
+        color: @color-white;
+        line-height: 6rem;
+        &:hover:not(.___is-active) {
+            color: @color-grey;
+        }
+
+        &.___is-active:not(.___home) {
+            background-color: @color-primary--light;
+        }
+
+        // Hide mobile navigation links (desktop)
+        &.___mobile {
+            display: none;
+        }
+    }
+}
+
+// Link - Highlight home on mobile
+.navigation__link.___home {
+    .icon(home);
+    &:before {
+        width: 100%;
+        font-size: 2.8rem;
+        color: @color-white;
+        transition: color @trans-fast;
+    }
+    // MOBILE & TABLET
+    @media (max-width: @screen-md-max) {
+        font-weight: bold;
+        line-height: 5.2rem;
+        margin: 0 0 1rem 0;
+        color: @color-black;
+        &:before {
+            display: none;
+        }
+    }
+    @media (min-width: @screen-lg) {
+        width: 6rem;
+        padding: 0;
+        color: transparent;
+        overflow: hidden;
+        text-align: center;
+        white-space: nowrap;
+        &:not(.___is-active):hover:before {
+            color: @color-grey;
+        }
+    }
+}
+
+.navigation__link.___pleio {
+    margin: 3.2rem 0 0 0;
+    @media (min-width: @screen-lg) {
+        display: none;
     }
 }
 
@@ -175,25 +293,15 @@ This file contains the styling for the main navigation.
     }
 }
 
-.navigation__search-text {
-    display: none;
-    line-height: normal;
-    font-weight: bold;
-    margin: 0 0 0 0.4rem;
-    @media (min-width: @screen-sm) {
-        span {
-            display: inline;
-        }
-    }
-}
-
 .navigation__actions {
+    flex: 1 0 auto;
+
     @media (max-width: @screen-md-max) {
         margin: 3.2rem 0 0 0;
     }
     @media (min-width: @screen-lg) {
         display: flex;
-        float: right;
+        justify-content: flex-end;
     }
 }
 
@@ -219,8 +327,9 @@ This file contains the styling for the main navigation.
         padding: 0 1.2rem;
         color: @color-secondary--light;
         line-height: 6rem;
+
         &:hover {
-            color: @color-grey;
+            color: white;
         }
 
         body.___campagne & {
@@ -230,43 +339,53 @@ This file contains the styling for the main navigation.
             }
         }
     }
-    &.___bookmarks {
-        .icon(bookmark);
+
+    &.___notifications {
+        position: relative;
+        .icon(notification);
         &:before {
-            /* icon height */
             font-size: 2.1rem;
+            margin-top: .1rem;
         }
+
         @media (max-width: @screen-md-max) {
             &:before {
                 display: none;
             }
         }
+
         @media (min-width: @screen-lg) {
-            &.___is-active {
-                color: @color-white;
+            &.___is-open {
+                color: white;
             }
 
-            span {
+            > span {
                 display: none;
             }
         }
     }
+
     &.___search {
         .icon(search);
         &:before {
-            /* icon height */
-            font-size: 2.1rem;
+            font-size: 1.9rem;
+            margin-top: .1rem;
         }
+
         @media (max-width: @screen-md-max) {
             display: none;
         }
     }
+
     &.___account {
+        position: relative;
         display: flex;
         align-items: center;
+
         @media (max-width: @screen-md-max) {
             padding: 0 2rem;
         }
+
         @media (min-width: @screen-lg) {
             padding: 1rem 0.8rem;
             span {
@@ -274,16 +393,19 @@ This file contains the styling for the main navigation.
             }
         }
     }
+
     &.___login,
     &.___register {
         @media (min-width: @screen-lg) {
             padding: 0;
             color: @color-white;
+
             &:hover {
                 color: @color-grey;
             }
         }
     }
+
     &.___login {
         @media (min-width: @screen-lg) {
             &:after {
@@ -297,6 +419,25 @@ This file contains the styling for the main navigation.
             }
         }
     }
+}
+
+.navigation__badge {
+    position: absolute;
+    top: 1.5rem;
+    left: calc(~"100% - 2rem");
+    min-width: 1.8rem;
+    height: 1.8rem;
+    border-radius: .9rem;
+    padding-left: .4rem;
+    padding-right: .5rem;
+    background-color: @color-error;
+    color: white;
+    font-size: 1.3rem;
+    font-weight: bold;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .navigation__picture {
@@ -316,155 +457,19 @@ This file contains the styling for the main navigation.
     }
 }
 
-body.___leraar {
-    .skip-navigation__link {
-        display: none;
-    }
-
-    .navigation {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        user-select: none;
-        z-index: 11;
-
-        @media (max-width: @screen-md-max) {
-            > .container {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-        }
-    }
-
-    .navigation__wrapper {
-        z-index: 1;
-    }
-
-    .navigation__links {
-        @media (min-width: @screen-lg) {
-            float: left;
-        }
-    }
-    //
-    // Links
-    //
-    .navigation__link {
-        display: block;
-        position: relative;
-        text-decoration: none;
-        padding: 0 2rem;
-        transition: color @trans-fast, background-color @trans-fast;
-        // MOBILE & TABLET
-        @media (max-width: @screen-md-max) {
-            color: @color-black;
-            line-height: 3.2rem;
-            &:hover {
-                background-color: @color-secondary--lightest;
-            }
-
-            &.___is-active:not(.___home) {
-                color: @color-secondary;
-            }
-        }
-        // DESKTOP
-        @media (min-width: @screen-lg) {
-            color: @color-white;
-            line-height: 6rem;
-            &:hover:not(.___is-active) {
-                color: @color-grey;
-            }
-
-            &.___is-active:not(.___home) {
-                background-color: @color-primary--light;
-            }
-
-            // Hide mobile navigation links (desktop)
-            &.___mobile {
-                display: none;
-            }
-        }
-    }
-    // Link - Highlight home on mobile
-    .navigation__link.___home {
-        .icon(home);
-        &:before {
-            width: 100%;
-            font-size: 2.8rem;
-            color: @color-white;
-            transition: color @trans-fast;
-        }
-        // MOBILE & TABLET
-        @media (max-width: @screen-md-max) {
-            font-weight: bold;
-            line-height: 5.2rem;
-            margin: 0 0 1rem 0;
-            color: @color-black;
-            &:before {
-                display: none;
-            }
-        }
-        @media (min-width: @screen-lg) {
-            width: 6rem;
-            padding: 0;
-            color: transparent;
-            overflow: hidden;
-            text-align: center;
-            white-space: nowrap;
-            &:not(.___is-active):hover:before {
-                color: @color-grey;
-            }
-        }
-    }
-    .navigation__link.___pleio {
-        margin: 3.2rem 0 0 0;
-        @media (min-width: @screen-lg) {
-            display: none;
-        }
-    }
-}
-
 body.___rijkshuisstijl {
     .navigation {
         position: relative;
         background-color: @color-secondary--light;
-        user-select: none;
-    }
-
-    .navigation__wrapper {
-        float: left;
-    }
-
-    .skip-navigation__link {
-        display: block;
-        position: absolute;
-        z-index: 1;
-        background-color: @color-secondary--light;
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-        top: -6.5rem;
-        opacity: 0;
-        width: 0;
-        overflow: hidden;
-        &:focus {
-            opacity: 1;
-            width: auto;
-            overflow: auto;
-            padding: 1.1rem;
-        }
+        z-index: auto;
     }
 
     //
     // Links
     //
     .navigation__link {
-        display: block;
-        position: relative;
         color: @color-black;
-        text-decoration: none;
-        line-height: 3.2rem;
-        padding: 0 2rem;
-        transition: color @trans-fast, background-color @trans-fast;
+
         // MOBILE & TABLET
         @media (max-width: @screen-md-max) {
             // There is no distinction between top and sub link states (mobile)
@@ -476,20 +481,14 @@ body.___rijkshuisstijl {
                 background-color: @color-navigation-hover;
             }
         }
+
         // DESKTOP
         @media (min-width: @screen-lg) {
             font-weight: bold;
             line-height: 4.5rem;
+
             &:hover {
                 background-color: @color-navigation-hover;
-            }
-
-            &.___is-active {
-                line-height: 4.5rem;
-                background-color: @color-secondary--lightest;
-                .wide-dropdown-open & {
-                    background-color: transparent;
-                }
             }
 
             // Hide mobile navigation links (desktop)
@@ -515,27 +514,74 @@ body.___rijkshuisstijl {
     //
     //
     .navigation__search {
-        float: right;
-        padding: 0 2rem;
-        color: @color-black;
-        text-decoration: none;
-        line-height: 4rem;
-        transition: background-color @trans-fast;
-        &:hover {
-            background-color: @color-navigation-hover;
+        flex: 1 0 auto;
+        max-width: 31.466rem;
+        background-color: @color-secondary--lighter;
+        display: flex;
+        align-items: stretch;
+
+        input {
+            flex: 1 0 auto;
+            background-color: transparent;
+            border: none;
+            padding-left: 2rem;
+            color: @color-primary;
+            font-weight: bold;
+
+            &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+                color: @color-primary;
+            }
+
+            &::-moz-placeholder { /* Firefox 19+ */
+                color: @color-primary;
+            }
+
+            &:-ms-input-placeholder { /* IE 10+ */
+                color: @color-primary;
+            }
+
+            &:-moz-placeholder { /* Firefox 18- */
+                color: @color-primary;
+            }
         }
-        .icon(search);
-        &:before {
-            position: relative;
-            top: -0.1rem;
-            line-height: normal;
-            /* icon height */
-            font-size: 1.2rem;
-        }
-        @media (min-width: @screen-lg) {
-            line-height: 4.5rem;
+
+        button {
+            flex: 0 0 auto;
+            padding: 0 2rem;
+
+            .icon(search);
+            &:before {
+                font-size: 1.8rem;
+                color: @color-primary;
+                margin-bottom: .1rem;
+            }
         }
     }
+
+    //.navigation__search {
+    //    padding: 0 2rem;
+    //    color: @color-black;
+    //    text-decoration: none;
+    //    line-height: 4rem;
+    //    transition: background-color @trans-fast;
+    //
+    //    &:hover {
+    //        background-color: @color-navigation-hover;
+    //    }
+    //
+    //    .icon(search);
+    //    &:before {
+    //        position: relative;
+    //        top: -0.1rem;
+    //        line-height: normal;
+    //        /* icon height */
+    //        font-size: 1.2rem;
+    //    }
+    //
+    //    @media (min-width: @screen-lg) {
+    //        line-height: 4.5rem;
+    //    }
+    //}
     //
     //
     //

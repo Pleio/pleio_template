@@ -335,6 +335,57 @@ button.button {
     }
 }
 
+.button__icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    color: @color-grey--60;
+    transition: color @trans-fast;
+
+    &:not(.___is-active):hover {
+        color: @color-grey--80;
+    }
+
+    &.___is-active {
+        color: @color-secondary;
+        cursor: default;
+    }
+
+    &.___large {
+        width: 4.6rem;
+        height: 4.6rem;
+    }
+
+    &.___settings {
+        .icon(settings);
+        &:before {
+            font-size: 1.8rem;
+            margin-bottom: .2rem;
+        }
+
+        &:not(.___is-active):hover {
+            color: @color-secondary;
+        }
+    }
+
+    &.___list {
+        .icon(list);
+        &:before {
+            font-size: 1.8rem;
+        }
+    }
+
+    &.___tiles {
+        .icon(tiles);
+        &:before {
+            font-size: 1.8rem;
+        }
+    }
+}
+
 .button__text {
     position: relative;
     display: inline-flex;
@@ -360,6 +411,14 @@ button.button {
             margin: 0 .8rem .1rem 0;
             font-size: 1.5rem;
         }
+
+        &:hover {
+            color: @color-secondary;
+        }
+    }
+
+    &.___grey {
+        color: @color-grey--60;
 
         &:hover {
             color: @color-secondary;

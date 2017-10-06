@@ -1,0 +1,63 @@
+.notifications__header {
+    padding: 1.6rem 2rem 1.2rem 3.6rem;
+
+    .button__icon.___settings {
+        margin-left: 1rem;
+    }
+}
+
+.notifications__title {
+    .font(title-extra-small);
+    font-weight: bold;
+    color: @color-primary;
+    margin-bottom: .2rem;
+}
+
+.notifications__scroll {
+    max-height: 42rem;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.notification {
+    position: relative;
+    padding: 1.2rem 2rem 1.2rem 3.6rem;
+    min-height: 7rem;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid @color-grey--20;
+    cursor: pointer;
+    transition: background-color @trans-fast;
+
+    &:hover {
+        background-color: @color-grey--10;
+    }
+
+    &:before {
+        content: '';
+        width: 1rem;
+        height: 1rem;
+        background-color: @color-lightblue;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        left: 1.4rem;
+        bottom: 0;
+        margin-top: auto;
+        margin-bottom: auto;
+        opacity: 0;
+        transition: opacity @trans-fast;
+    }
+
+    &.___is-unread {
+        &:before {
+            opacity: 1;
+        }
+    }
+
+    .face {
+        flex-shrink: 0;
+        margin-right: 2rem;
+    }
+
+}

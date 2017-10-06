@@ -7,6 +7,7 @@
     pointer-events: none;
     border: .2rem solid @c-primary;
     opacity: 0;
+    z-index: 1;
     transition: opacity @trans-material-fast;
 
     .lead__title > & {
@@ -41,6 +42,7 @@
 
     .navigation__link &,
     .cms-block & {
+        display: flex;
         top: auto;
         right: 0;
         left: -.2rem;
@@ -51,6 +53,7 @@
 
         .cms-overlay__buttons {
             display: inline-flex;
+
             transform: translateY(-100%);
 
             button {
@@ -70,6 +73,11 @@
             }
         }
     }
+
+    .navigation__link & {
+        right: auto;
+    }
+
 }
 
 .cms-overlay__buttons {

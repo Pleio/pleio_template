@@ -1,0 +1,222 @@
+.file-tiles {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -1rem 8rem;
+}
+
+.file-tile {
+    position: relative;
+    padding: 0 1rem 2rem;
+    cursor: pointer;
+    width: 50%;
+
+    @media ( min-width: 460px ) {
+        width: calc(100% / 3);
+    }
+
+    @media ( min-width: @screen-sm ) {
+        width: 25%;
+    }
+
+    @media ( min-width: @screen-lg ) {
+        width: 20%;
+    }
+
+    .checkbox {
+        position: absolute;
+        top: 1rem;
+        left: 1.2rem;
+
+        opacity: 0;
+        transform: translateX(-2rem);
+        transition: opacity @trans-fast, transform @trans-material-fast;
+    }
+
+    &.___is-checked {
+        .checkbox {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    &.___folder {
+        .file-tile__image {
+            background-color: tint(@color-folder, 92%);
+            color: tint(@color-folder, 50%);
+
+            .icon(folder);
+            &:before {
+                font-size: 4rem;
+                margin-bottom: .1rem;
+            }
+        }
+
+        &:hover,
+        &.___is-checked {
+            .file-tile__image {
+                color: @color-folder;
+            }
+        }
+    }
+
+    &.___doc {
+        .file-tile__image {
+            background-color: tint(@color-doc, 90%);
+            color: tint(@color-doc, 46%);
+
+            .icon(doc);
+            &:before {
+                font-size: 4.5rem;
+                margin-bottom: .1rem;
+            }
+        }
+
+        &:hover,
+        &.___is-checked {
+            .file-tile__image {
+                color: @color-doc;
+            }
+        }
+    }
+
+    &.___pdf {
+        .file-tile__image {
+            background-color: tint(@color-pdf, 94%);
+            color: tint(@color-pdf, 60%);
+
+            .icon(pdf);
+            &:before {
+                font-size: 4.2rem;
+            }
+        }
+
+        &:hover,
+        &.___is-checked {
+            .file-tile__image {
+                color: @color-pdf;
+            }
+        }
+    }
+
+    &:hover {
+        .checkbox {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .file-tile__name {
+            color: black;
+        }
+    }
+}
+
+.file-tile__fav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4.4rem;
+    height: 3.8rem;
+    z-index: 1;
+
+    opacity: 0;
+    transform: translateX(2rem);
+    transition: opacity @trans-fast, transform @trans-material-fast;
+
+    .icon(star);
+    &:before {
+        color: @color-grey--60;
+        z-index: 1;
+        transition: opacity @trans-fast, color @trans-fast;
+    }
+
+    .icon(star-fill, after);
+    &:after {
+        color: white;
+        transition: color @trans-fast;
+    }
+
+    &:before,
+    &:after {
+        font-size: 2rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: .3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &:hover {
+        &:before {
+            color: @color-secondary;
+        }
+    }
+
+    .file-tile:hover & {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .file-tile.___is-favorite & {
+        opacity: 1;
+        transform: translateX(0);
+
+        &:before {
+            opacity: 0;
+        }
+
+        &:after {
+            color: @color-secondary;
+        }
+    }
+}
+
+.file-tile__image {
+    position: relative;
+    height: 11rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    overflow: hidden;
+
+    transition: color @trans-fast;
+}
+
+.file-tile__name {
+    position: relative;
+    .font(medium);
+    text-align: center;
+
+    span {
+        &:first-child {
+            .ellipsis(2.2rem, 2);
+        }
+
+        &:not(:first-child) {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            padding-bottom: 2rem;
+            z-index: 1;
+            box-shadow: 0 1rem 1.5rem -.5rem fade(black, 10%);
+
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity @trans-fast, visibility @trans-fast;
+
+            .file-tile:hover & {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
+}

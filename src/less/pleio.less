@@ -86,7 +86,6 @@ figure {
 }
 
 body.modal__open {
-    position: fixed;
     overflow: hidden;
 }
 
@@ -373,4 +372,12 @@ body.modal__open {
 
 .button__text {
     word-break: initial;
+}
+
+.toolbar {
+    opacity: 0;
+
+    &.___is-visible {
+        opacity: 1;
+    }
 }

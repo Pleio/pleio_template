@@ -7,10 +7,12 @@
             padding: 0;
 
             &:before {
+                position: relative;
                 display: block;
                 width: 1.6rem;
                 height: 1.6rem;
                 top: auto;
+                left: auto;
                 border-color: @color-grey--50;
                 border-radius: .3rem;
             }
@@ -60,11 +62,16 @@
         width: 0;
         opacity: 0;
 
-        &:checked + label:after {
-            color: @color-primary;
+        &:checked + label {
+            &:before {
+                border-color: @color-secondary;
+            }
+            &:after {
+                color: @color-secondary;
+            }
         }
         &:focus + label:before {
-            border-color: @color-primary;
+            border-color: @color-secondary;
         }
     }
 }

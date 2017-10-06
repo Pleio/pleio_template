@@ -148,11 +148,15 @@
     overflow-x: hidden;
 
     .modal.___small > .modal__wrapper > & {
-        max-width: 40rem;
+        @media ( min-width: @screen-sm ) {
+            max-width: 40rem;
+        }
     }
 
     .modal.___medium > .modal__wrapper > & {
-        max-width: 50rem;
+        @media ( min-width: @screen-sm ) {
+            max-width: 50rem;
+        }
     }
 
     .modal.___full > .modal__wrapper > & {
@@ -179,10 +183,6 @@
     @media ( max-width: @screen-xs-max ) {
         max-width: 100%;
         padding: 5.2rem 2rem 4rem;
-
-        .modal.___small > .modal__wrapper > & {
-            max-width: 100%;
-        }
     }
 
     @media ( min-width: @screen-sm ) {

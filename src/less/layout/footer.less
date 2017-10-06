@@ -1,6 +1,5 @@
 .footer {
-    display: flex;
-    flex-wrap: wrap;
+    padding: 0 .5rem;
 
     @media ( max-width: @screen-md-max ) {
         display: none;
@@ -8,14 +7,17 @@
 }
 
 .footer__link {
-    display: block;
+    display: inline-block;
     font-size: @font-size--medium;
     line-height: 2.4rem;
     color: @color-grey--60;
-    margin: 0 2rem 0 0;
     transition: color @trans-fast;
 
     &:hover {
         color: @color-grey--80;
+    }
+
+    &:not(:last-child) {
+        margin: 0 2rem 0 0;
     }
 }

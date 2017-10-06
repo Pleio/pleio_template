@@ -1,0 +1,17 @@
+.goto {
+    display: block;
+    position: relative;
+    padding: .5rem 1rem .5rem 0;
+    transition: color @trans-fast;
+
+    .icon(angle-right, after);
+    &:after {
+        position: absolute;
+        right: 0;
+        bottom: 1.2rem;
+    }
+
+    &:hover {
+        color: @color-secondary;
+    }
+}

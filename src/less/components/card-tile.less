@@ -54,9 +54,13 @@
 
     @media ( max-width: @screen-xs-max ) {
         &.___no-image {
+            background-color: @color-secondary;
+
             .read-more__circle {
                 background-color: @color-white;
+                color: @color-secondary;
             }
+
             .card-tile__title,
             .read-more {
                 color: @color-white;
@@ -65,59 +69,56 @@
             &.card-tile:hover {
                 .read-more__circle {
                     background-color: @color-quaternary;
-
-                    &:before {
-                        color: @color-white;
-                    }
+                    color: @color-white;
                 }
             }
 
             &.___leren {
                 background-color: @color-leren;
 
-                .read-more__circle:before {
+                .read-more__circle {
                     color: @color-leren;
                 }
             }
             &.___vernieuwing {
                 background-color: @color-vernieuwing;
 
-                .read-more__circle:before {
+                .read-more__circle {
                     color: @color-vernieuwing;
                 }
             }
             &.___arbeidsvoorwaarden {
                 background-color: @color-arbeidsvoorwaarden;
 
-                .read-more__circle:before {
+                .read-more__circle {
                     color: @color-arbeidsvoorwaarden;
                 }
             }
             &.___wetten {
                 background-color: @color-wetten;
 
-                .read-more__circle:before {
+                .read-more__circle {
                     color: @color-wetten;
                 }
             }
             &.___actualiteit {
                 background-color: @color-actualiteit;
 
-                .read-more__circle:before {
+                .read-more__circle {
                     color: @color-actualiteit;
                 }
             }
             &.___overig {
                 background-color: @color-overig;
 
-                .read-more__circle:before {
+                .read-more__circle {
                     color: @color-overig;
                 }
             }
             &.___klas {
                 background-color: @color-klas;
 
-                .read-more__circle:before {
+                .read-more__circle {
                     color: @color-klas;
                 }
             }
@@ -133,7 +134,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
             font-size: 10rem;
             color: @color-secondary--light;
             opacity: .5;
@@ -213,31 +214,32 @@
         }
 
         &.___no-image {
-            &.___leren,
-            &.___vernieuwing,
-            &.___arbeidsvoorwaarden,
-            &.___wetten,
-            &.___actualiteit,
-            &.___overig,
-            &.___klas {
-                &:after {
-                    flex-shrink: 0;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 15rem;
-                    margin: 0 4rem 0 0;
-                    color: fade(@color-black, 40%);
+            background-color: @color-grey;
 
-                    @media ( max-width: @screen-xs-max ) {
-                        display: none;
-                    }
+            &.___no-image:after,
+            .card-tile__icon {
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 15rem;
+                margin: 0 4rem 0 0;
+                color: fade(@color-black, 40%);
+
+                @media ( max-width: @screen-xs-max ) {
+                    display: none;
                 }
+            }
+
+            path {
+                fill: fade(@color-black, 40%);
             }
 
             .read-more__circle {
                 background-color: @color-white;
+                color: @color-grey;
             }
+
             .card-tile__title,
             .read-more {
                 text-shadow: none;
@@ -247,17 +249,26 @@
             &.card-tile:hover {
                 .read-more__circle {
                     background-color: @color-quaternary;
-
-                    &:before {
-                        color: @color-white;
-                    }
+                    color: @color-white !important;
                 }
             }
 
+            &.___nieuws {
+                background-color: @color-secondary;
+
+                .read-more__circle {
+                    color: @color-secondary;
+                }
+
+                .icon(cat-nieuws, after);
+                &:after {
+                    font-size: 11.5rem;
+                }
+            }
             &.___leren {
                 background-color: @color-leren;
 
-                .read-more__circle:before {
+                .read-more__circle {
                     color: @color-leren;
                 }
 
@@ -269,7 +280,7 @@
             &.___vernieuwing {
                 background-color: @color-vernieuwing;
 
-                .read-more__circle:before {
+                .read-more__circle {
                     color: @color-vernieuwing;
                 }
 
@@ -281,7 +292,7 @@
             &.___arbeidsvoorwaarden {
                 background-color: @color-arbeidsvoorwaarden;
 
-                .read-more__circle:before {
+                .read-more__circle {
                     color: @color-arbeidsvoorwaarden;
                 }
 
@@ -293,7 +304,7 @@
             &.___wetten {
                 background-color: @color-wetten;
 
-                .read-more__circle:before {
+                .read-more__circle {
                     color: @color-wetten;
                 }
 
@@ -305,7 +316,7 @@
             &.___actualiteit {
                 background-color: @color-actualiteit;
 
-                .read-more__circle:before {
+                .read-more__circle {
                     color: @color-actualiteit;
                 }
 
@@ -317,7 +328,7 @@
             &.___overig {
                 background-color: @color-overig;
 
-                .read-more__circle:before {
+                .read-more__circle {
                     color: @color-overig;
                 }
 
@@ -329,7 +340,7 @@
             &.___klas {
                 background-color: @color-klas;
 
-                .read-more__circle:before {
+                .read-more__circle {
                     color: @color-klas;
                 }
 
@@ -354,36 +365,72 @@
     }
 }
 
+.card-tile__picture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 4.6rem;
+    height: 4.6rem;
+    line-height: inherit;
+    background-color: fade(@color-black, 40%);
+    top: 3rem;
+    right: 3rem;
+    border-radius: 50%;
+    color: @color-white;
+    text-align: center;
+
+    body.___rijkshuisstijl & {
+        width: 4rem;
+        height: 4rem;
+    }
+}
+
+.card-tile__icon {
+    position: relative;
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    path {
+        fill: white;
+    }
+}
+
 .card-tile__image {
     position: relative;
     width: 100%;
     background-size: cover;
     background-position: center;
 
-    .card-tile.___leren &,
-    .card-tile.___vernieuwing &,
-    .card-tile.___arbeidsvoorwaarden &,
-    .card-tile.___wetten &,
-    .card-tile.___actualiteit &,
-    .card-tile.___overig &,
-    .card-tile.___klas & {
-        &:after {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            width: 4.6rem;
-            height: 4.6rem;
-            line-height: inherit;
-            background-color: fade(@color-black, 40%);
-            top: 3rem;
-            right: 3rem;
-            border-radius: 50%;
-            color: @color-white;
-            text-align: center;
-        }
+    &.card-tile__image.card-tile__image:after {
+        display: flex;
+        //display: none;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        width: 4.6rem;
+        height: 4.6rem;
+        line-height: inherit;
+        background-color: fade(@color-black, 40%);
+        top: 3rem;
+        right: 3rem;
+        border-radius: 50%;
+        color: @color-white;
+        text-align: center;
     }
 
+    .card-tile.___nieuws & {
+        .icon(cat-nieuws, after);
+        &:after {
+            font-size: 1.8rem;
+            width: 4rem;
+            height: 4rem;
+            background-color: @color-secondary;
+        }
+    }
     .card-tile.___leren & {
         .icon(cat-leren, after);
         &:after {

@@ -3,12 +3,35 @@
     color: @color-grey--80;
     font-weight: normal;
 
-    .icon(heart);
-    .icon(heart-fill, after);
-
     @media ( max-width: @screen-xs-max ) {
         padding: 0 0 0 2.5rem;
     }
+
+    &.___thumbs-up {
+        font-weight: bold;
+        .icon(like);
+        .icon(like-fill, after);
+
+        &:before,
+        &:after {
+            position: absolute;
+            width: 2.3rem;
+            left: 0;
+            top: 0.9rem;
+            font-size: 2rem;
+            text-align: center;
+            color: @color-secondary;
+            transition: opacity @trans-fast, color @trans-fast;
+
+            @media ( max-width: @screen-xs-max ) {
+                top: 0.8rem;
+                font-size: 1.8rem;
+            }
+        }
+    }
+
+    .icon(heart);
+    .icon(heart-fill, after);
 
     &:before,
     &:after {

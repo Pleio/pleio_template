@@ -11,10 +11,7 @@
 
         .read-more__circle {
             background-color: @color-white;
-
-            &:before {
-                color: @color-primary;
-            }
+            color: @color-primary;
         }
     }
 
@@ -81,9 +78,10 @@
     height: 2rem;
     margin: 0 0.8rem 0 0;
     background-color: @color-secondary;
+    color: @color-white;
     line-height: 2rem;
     border-radius: 100%;
-    transition: background-color @trans-fast;
+    transition: color @trans-fast, background-color @trans-fast;
 
     @media (max-width: @screen-xs-max) {
         order: 1;
@@ -103,18 +101,13 @@
     .icon(arrow-right-circle-transparent);
     &:before {
         display: block;
-        color: @color-white;
         font-size: 2rem;
         text-shadow: none;
-        transition: color @trans-fast;
     }
 
     .read-more-circle:hover & {
         background-color: @color-secondary--light;
-
-        &:before {
-            color: @color-secondary--light;
-        }
+        color: @color-secondary--light;
     }
 
     .___redicon & {

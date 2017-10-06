@@ -4,10 +4,8 @@
     right: 0;
     bottom: 0;
     background-color: white;
-    box-shadow: @box-shadow-overlay;
     transform: translateY(100%);
-    opacity: 0;
-    transition: opacity @trans-normal, transform @trans-material-normal;
+    transition: transform @trans-material-normal, box-shadow @trans-normal;
     z-index: 11;
 
     &.___blue {
@@ -52,7 +50,7 @@
 
     &.___is-visible {
         transform: translateY(0);
-        opacity: 1;
+        box-shadow: @box-shadow-overlay;
     }
 
 }

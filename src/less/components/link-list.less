@@ -1,0 +1,44 @@
+.link-list {
+    a {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: .5rem 2rem;
+        user-select: none;
+        cursor: pointer;
+        transition: color @trans-fast;
+
+        &:first-child {
+            padding-top: 1.1rem;
+        }
+
+        &:last-child {
+            padding-bottom: 1.1rem;
+        }
+
+        &:hover {
+            color: @color-secondary;
+
+            &:after {
+                color: @color-secondary;
+            }
+        }
+
+        &:after {
+            color: @color-grey--60;
+            transition: color @trans-fast;
+        }
+
+        &.___bookmarks {
+            .icon(bookmark, after);
+            &:after {
+                font-size: 1.6rem;
+            }
+        }
+    }
+
+    + .link-list {
+        border-top: 1px solid @color-grey--20;
+    }
+}

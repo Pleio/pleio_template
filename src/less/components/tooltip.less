@@ -1,0 +1,46 @@
+.tooltip {
+    position: absolute;
+    top: 100%;
+    .font(medium);
+    background-color: white;
+    color: black;
+    cursor: auto;
+    user-select: auto;
+    box-shadow: @box-shadow-tooltip;
+
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-.5rem);
+    transition: visibility @trans-fast, opacity @trans-fast, transform @trans-material-fast;
+
+    &.___is-visible,
+    .navigation__action:hover & {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+        transition: visibility @trans-normal, opacity @trans-normal, transform @trans-material-normal;
+    }
+
+    .navigation__action.___notifications & {
+        width: 47rem;
+        right: -1.3rem;
+    }
+
+    .navigation__action.___account & {
+        width: 16rem;
+        right: -.7rem;
+    }
+
+    &:before {
+        content: '';
+        display: block;
+        width: 0;
+        height: 0;
+        border-bottom: 1rem solid white;
+        border-left: 1rem solid transparent;
+        border-right: 1rem solid transparent;
+        position: absolute;
+        top: -1rem;
+        right: 2.5rem;
+    }
+}

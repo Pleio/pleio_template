@@ -174,111 +174,109 @@
     }
 }
 
-body.___leraar {
-    .navigation__dropdown.___mobile {
-        @media (min-width: @screen-lg) {
-            display: none;
-        }
+.navigation__dropdown.___mobile {
+    @media (min-width: @screen-lg) {
+        display: none;
     }
+}
 
-    .mobile-navigation__trigger {
-        padding: 0 1rem;
-        font-weight: bold;
-        color: @color-secondary--light;
-        overflow: hidden;
-        cursor: pointer;
-        text-align: center;
-        .icon(mobile-menu);
+.mobile-navigation__trigger {
+    padding: 0 1rem;
+    font-weight: bold;
+    color: @color-secondary--light;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: center;
+    .icon(mobile-menu);
 
-        @media (max-width: @screen-xs-max) {
-            line-height: 4.5rem;
-            &:before {
-                font-size: 1.7rem;
-            }
-        }
-
-        @media (min-width: @screen-sm) {
-            line-height: 6rem;
-            &:before {
-                font-size: 2.1rem;
-            }
-        }
-    }
-
-    .mobile-navigation__close {
-        text-align: right;
-
-        @media (min-width: @screen-lg) {
-            display: none;
-        }
-
-        span {
-            font-size: 1.2rem;
-            color: @color-grey--60;
-            padding: 2rem;
-            cursor: pointer;
-            transition: color @trans-fast;
-            &:hover {
-                color: @color-secondary;
-            }
-        }
-    }
-
-    .mobile-navigation__search {
-        position: relative;
-        line-height: 4rem;
-        padding: 0 0 0 2rem;
-        background-color: @color-secondary--lightest;
-
-        @media (min-width: @screen-lg) {
-            display: none;
-        }
-
-        .icon(search);
+    @media (max-width: @screen-xs-max) {
+        line-height: 4.5rem;
         &:before {
-            position: absolute;
-            /* icon height */
-            font-size: 1.2rem;
-            color: @color-primary;
-            line-height: inherit;
+            font-size: 1.7rem;
         }
+    }
 
-        label {
-            display: none;
+    @media (min-width: @screen-sm) {
+        line-height: 6rem;
+        &:before {
+            font-size: 2.1rem;
         }
+    }
+}
 
-        input {
-            background-color: transparent;
-            border: none;
-            width: 100%;
-            height: 4rem;
-            padding: 0 0 0 2rem;
+.mobile-navigation__close {
+    text-align: right;
+
+    @media (min-width: @screen-lg) {
+        display: none;
+    }
+
+    span {
+        font-size: 1.2rem;
+        color: @color-grey--60;
+        padding: 2rem;
+        cursor: pointer;
+        transition: color @trans-fast;
+        &:hover {
+            color: @color-secondary;
         }
-        ::-webkit-input-placeholder {
-            /* Safari, Chrome and Opera */
-            color: @color-secondary--light;
-            font-weight: bold;
-        }
-        :-moz-placeholder {
-            /* Firefox 18- */
-            color: @color-secondary--light;
-            font-weight: bold;
-        }
-        ::-moz-placeholder {
-            /* Firefox 19+ */
-            color: @color-secondary--light;
-            font-weight: bold;
-        }
-        :-ms-input-placeholder {
-            /* IE 10+ */
-            color: @color-secondary--light;
-            font-weight: bold;
-        }
-        :-ms-input-placeholder {
-            /* Edge */
-            color: @color-secondary--light;
-            font-weight: bold;
-        }
+    }
+}
+
+.mobile-navigation__search {
+    position: relative;
+    line-height: 4rem;
+    padding: 0 0 0 2rem;
+    background-color: @color-secondary--lightest;
+
+    @media (min-width: @screen-lg) {
+        display: none;
+    }
+
+    .icon(search);
+    &:before {
+        position: absolute;
+        /* icon height */
+        font-size: 1.2rem;
+        color: @color-primary;
+        line-height: inherit;
+    }
+
+    label {
+        display: none;
+    }
+
+    input {
+        background-color: transparent;
+        border: none;
+        width: 100%;
+        height: 4rem;
+        padding: 0 0 0 2rem;
+    }
+    ::-webkit-input-placeholder {
+        /* Safari, Chrome and Opera */
+        color: @color-secondary--light;
+        font-weight: bold;
+    }
+    :-moz-placeholder {
+        /* Firefox 18- */
+        color: @color-secondary--light;
+        font-weight: bold;
+    }
+    ::-moz-placeholder {
+        /* Firefox 19+ */
+        color: @color-secondary--light;
+        font-weight: bold;
+    }
+    :-ms-input-placeholder {
+        /* IE 10+ */
+        color: @color-secondary--light;
+        font-weight: bold;
+    }
+    :-ms-input-placeholder {
+        /* Edge */
+        color: @color-secondary--light;
+        font-weight: bold;
     }
 }
 

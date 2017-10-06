@@ -71,4 +71,31 @@
     iframe {
         width: 100% !important;
     }
+
+    .quicknav {
+        margin-bottom: 4rem;
+
+        > * {
+            display: block;
+            padding-left: 1.5rem;
+            border-left: .4rem solid @color-secondary;
+        }
+
+        a {
+            display: block;
+            color: @color-primary;
+            border-bottom: none;
+
+            &:hover {
+                color: @color-secondary;
+                border-left-color: @color-primary;
+            }
+        }
+    }
+
+    .quicknav__title {
+        .font(medium);
+        font-weight: bold;
+        color: @color-grey--60;
+    }
 }
