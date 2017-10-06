@@ -45,7 +45,7 @@ class Item extends React.Component {
             <GroupContainer buttons={buttons} match={this.props.match}>
                 <Document title={entity.name} />
                 <section className="section ___grow">
-                    <EventsGroupList type="object" subtype="event" containerGuid={entity.guid} childClass={Card} offset={0} limit={20} match={this.props.match} />
+                    <EventsGroupList type="object" subtype="event" containerGuid={entity.guid} childClass={Card} offset={0} limit={20} match={this.props.match} inGroup />
                 </section>
             </GroupContainer>
         )

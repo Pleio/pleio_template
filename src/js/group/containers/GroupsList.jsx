@@ -14,7 +14,7 @@ const Query = gql`
                     guid
                     name
                     canEdit
-                    description
+                    excerpt
                     isClosed
                     membership
                     members {

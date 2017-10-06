@@ -58,21 +58,15 @@ class MemberItem extends React.Component {
         let editable
         if (this.props.editable && this.state.role !== "owner") {
             editable = (
-                <div className="col-sm-4">
-                    <Select options={{member: "Lid", admin: "Beheerder", removed: "Verwijderen"}} value={this.state.role} onChange={this.onChange} />
-                </div>
+                <Select className="selector ___no-line" options={{member: "Lid", admin: "Beheerder", removed: "Verwijderen"}} value={this.state.role} onChange={this.onChange} />
             )
         }
 
         return (
-            <div className="row">
+            <div className="list-members__member">
                 <Errors errors={this.state.errors} />
-                <div className={this.props.editable ? "col-sm-8" : "col-sm-12"}>
-                    <Link to={member.user.url} className="list-members__member">
-                        <div style={{backgroundImage: `url('${member.user.icon}')`}} className="list-members__picture" />
-                        <div className="list-members__name">{member.user.name}</div>
-                    </Link>
-                </div>
+                <div style={{backgroundImage: `url('${member.user.icon}')`}} className="list-members__picture" />
+                <div className="list-members__name">{member.user.name}</div>
                 {editable}
             </div>
         )

@@ -37,7 +37,7 @@ class FileFolder extends React.Component {
         let link
         switch (entity.subtype) {
             case "file":
-                link = `/file/download/${entity.guid}`
+                link = `/file/download/${entity.guid}/${encodeURIComponent(entity.title)}`
                 break;
             case "folder":
                 link = `/groups/view/${group.guid}/${group.name}/files/${entity.guid}`

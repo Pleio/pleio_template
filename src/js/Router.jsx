@@ -10,7 +10,7 @@ import BlogRoutes from "./blog/Routes"
 import QuestionsRoutes from "./questions/Routes"
 import EventsRoutes from "./events/Routes"
 import GroupRoutes from "./group/Routes"
-import PageRoutes from "./page/Routes"
+import CmsRoutes from "./cms/Routes"
 import TasksRoutes from "./tasks/Routes"
 import ProfileRoutes from "./profile/Routes"
 import SearchRoutes from "./search/Routes"
@@ -28,7 +28,7 @@ export default class Router extends React.Component {
                         <Route path="/questions" component={QuestionsRoutes} />
                         <Route path="/events" component={EventsRoutes} />
                         <Route path="/groups" component={GroupRoutes} />
-                        <Route path="/page" component={PageRoutes} />
+                        <Route path="/cms" component={CmsRoutes} />
                         <Route path="/tasks" component={TasksRoutes} />
                         <Route path="/profile" component={ProfileRoutes} />
                         <Route path="/search" component={SearchRoutes} />

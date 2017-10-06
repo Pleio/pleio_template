@@ -46,14 +46,21 @@ export default class Card extends React.Component {
             )
         }
 
-        return (
-            <div className="card-event">
+        let picture
+        if (!this.props.inGroup) {
+            picture = (
                 <Link to={entity.url} className="card-event__picture" title={entity.title} style={style}>
                     {playButton}
                 </Link>
+            )
+        }
+
+        return (
+            <div className="card-event">
+                {picture}
                 <div className="card-event__content">
                     <div className="date">{showFullDate(entity.startDate)}</div>
-                    <Link to={entity.url} className="title">{entity.title}</Link>
+                    <Link to={entity.url} className="title ___colored">{entity.title}</Link>
                     <div className="card-event__bottom">
                         <Link to={entity.url}>
                             <People users={entity.attendees} />

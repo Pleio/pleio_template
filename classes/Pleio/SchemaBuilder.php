@@ -408,6 +408,9 @@ class SchemaBuilder {
                 "description" => [
                     "type" => Type::string()
                 ],
+                "excerpt" => [
+                    "type" => Type::string()
+                ],
                 "introduction" => [
                     "type" => Type::string()
                 ],
@@ -819,6 +822,27 @@ class SchemaBuilder {
             ]
         ]);
 
+        $notificationType = new ObjectType([
+            "name" => "NotificationType",
+            "fields" => [
+                "type" => [
+                    "type" => Type::string()
+                ]
+            ]
+        ]);
+
+        $notificationsListType = new ObjectType([
+            "name" => "NotificationsListType",
+            "fields" => [
+                "total" => [
+                    "type" => Type::int()
+                ],
+                "notifications" => [
+                    "type" => Type::listOf($notificationType)
+                ]
+            ]
+        ]);
+
         $siteType = new ObjectType([
             "name" => "Site",
             "description" => "The current site",
@@ -848,6 +872,9 @@ class SchemaBuilder {
                     "type" => Type::nonNull(Type::string())
                 ],
                 "initiatorLink" => [
+                    "type" => Type::string()
+                ],
+                "startpage" => [
                     "type" => Type::string()
                 ],
                 "showLogo" => [
@@ -973,6 +1000,18 @@ class SchemaBuilder {
                         ]
                     ],
                     "resolve" => "Pleio\Resolver::getEntities"
+                ],
+                "notifications" => [
+                    "type" => $notificationsListType,
+                    "args" => [
+                        "offset" => [
+                            "type" => Type::int()
+                        ],
+                        "limit" => [
+                            "type" => Type::int()
+                        ]
+                    ],
+                    "resolve" => "Pleio\Resolver::getNotifications"
                 ],
                 "activities" => [
                     "type" => $activityListType,

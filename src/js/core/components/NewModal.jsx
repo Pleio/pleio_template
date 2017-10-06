@@ -13,9 +13,15 @@ export default class Modal extends React.Component {
     }
 
     toggle() {
-        this.setState({
-            isOpen: !this.state.isOpen
-        })
+        const newState = !this.state.isOpen
+
+        if (newState) {
+            document.body.classList.add("modal__open")
+        } else {
+            document.body.classList.remove("modal__open")
+        }
+
+        this.setState({ isOpen: newState })
     }
 
     render() {

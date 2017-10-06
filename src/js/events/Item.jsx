@@ -44,7 +44,7 @@ class Item extends React.Component {
 
     render() {
         let { entity, viewer } = this.props.data
-        let edit, featured, source
+        let edit, source
 
         if (!entity) {
             // Loading...
@@ -78,9 +78,9 @@ class Item extends React.Component {
             )
         }
 
-        return (
-            <div>
-                <Document title={entity.title} />
+        let featured
+        if (!this.props.group) {
+            featured = (
                 <Featured entity={entity} showEmpty event bottom>
                     <div className="container">
                         <div className="row">
@@ -96,6 +96,13 @@ class Item extends React.Component {
                         </div>
                     </div>
                 </Featured>
+            )
+        }
+
+        return (
+            <div>
+                <Document title={entity.title} />
+                {featured}
                 <section className="section">
                     <div className="container">
                         <div className="row">

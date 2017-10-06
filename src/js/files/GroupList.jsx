@@ -104,8 +104,8 @@ class Item extends React.Component {
         if (viewer.canWriteToContainer) {
             add = (
                 <div className="flexer ___gutter ___margin-bottom">
-                    <div className="button ___add ___large ___block-mobile" onClick={(e) => this.refs.addFile.toggle()}><span>Bestand toevoegen</span></div>
-                    <div className="button ___add ___large ___block-mobile" onClick={(e) => this.refs.addFolder.toggle()}><span>Map toevoegen</span></div>
+                    <div className="button ___large" onClick={(e) => this.refs.addFile.toggle()}><span>Upload bestand</span></div>
+                    <div className="button ___large" onClick={(e) => this.refs.addFolder.toggle()}><span>Nieuwe map</span></div>
                 </div>
             )
         }
@@ -119,26 +119,34 @@ class Item extends React.Component {
 
         const containerGuid = match.params.containerGuid ? match.params.containerGuid : match.params.groupGuid
 
+        let subfolder
+        if (match.params.containerGuid) {
+            subfolder = (
+                <a>Submap</a>
+            )
+        }
+
         return (
             <GroupContainer match={this.props.match}>
                 <Document title={entity.name} />
                 <section className="section">
                     <div className={classnames({"container toolbar": true, "___is-visible": this.state.selected.size > 0})}>
-                        <div className="flexer ___gutter">
-                            <strong>{this.state.selected.size} {this.state.selected.size > 1 ? "items" : "item"}</strong>
-                            <div className="button ___link" onClick={this.clearSelection}>Deselecteer</div>
-                        </div>
-                        <div className="flexer ___gutter ___end">
-                            <div className="button   ___move" onClick={() => this.refs.move.toggle()}><span>Verplaatsen</span></div>
-                            {edit}
-                            <div className="button   ___delete" onClick={() => this.refs.delete.toggle()}><span>Verwijderen</span></div>
-                            <div className="button ___download" onClick={this.downloadFiles}><span>Download</span></div>
+                        <div className="flexer ___space-between">
+                            <div className="flexer ___gutter">
+                                <strong>{this.state.selected.size} {this.state.selected.size > 1 ? "items" : "item"}</strong>
+                                <div className="button ___link" onClick={this.clearSelection}>Deselecteer</div>
+                            </div>
+                            <div className="flexer ___gutter ___end">
+                                {edit}
+                                <div className="button   ___delete" onClick={() => this.refs.delete.toggle()}><span>Verwijderen</span></div>
+                                <div className="button ___download" onClick={this.downloadFiles}><span>Download</span></div>
+                            </div>
                         </div>
                     </div>
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-4 col-lg-3">
-                                <Select options={{"all": "Alles", "favorites": "Favorieten", "folders": "Mappen", "files": "Bestanden"}} value="all" />
+                                <Select options={{"all": "Alles", "favorites": "Favorieten", "folders": "Mappen", "files": "Bestanden"}} value="all" className="selector ___margin-bottom-mobile" />
                             </div>
                             <div className="col-sm-8 col-lg-9 end-sm">
                                 {add}
@@ -146,7 +154,8 @@ class Item extends React.Component {
                         </div>
                         <div className="breadcrumb ___large">
                             <a>Bestanden</a>
-                            <a className="___is-active">{entity.name}</a>
+                            <Link to={`/groups/view/${match.params.groupGuid}/${match.params.groupSlug}/files`} className="___is-active">{entity.name}</Link>
+                            {subfolder}
                         </div>
                         <table className="files">
                             <thead>

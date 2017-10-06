@@ -93,7 +93,7 @@ class Menu extends React.Component {
 
         const rootUrl =  `/groups/view/${match.params.groupGuid}/${match.params.groupSlug}`
 
-        const plugins = entity.plugins ? entity.plugins : Object.keys(defaultPlugins)
+        const plugins = entity.plugins.length > 0 ? entity.plugins : Object.keys(defaultPlugins)
 
         let menuOptions = []
         Object.keys(defaultPlugins).forEach((key) => {

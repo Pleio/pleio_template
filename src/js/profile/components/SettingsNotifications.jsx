@@ -33,7 +33,7 @@ class SettingsNotifications extends React.Component {
     render() {
         return (
             <div className="card-profile">
-                <h3 className="card-profile__title">Notificaties</h3>
+                <h3 className="card-profile__title">Meldingen</h3>
                 <CheckField ref="notificationOnReply" name="notificationOnReply" label="Ontvang een melding als iemand op jou reageert" onChange={this.onChange} checked={this.props.entity.getsNotificationOnReply} />
                 <CheckField ref="newsletter" name="newsletter" label="Ik wil de nieuwsbrief ontvangen" onChange={this.onChange} checked={this.props.entity.getsNewsletter} />
             </div>

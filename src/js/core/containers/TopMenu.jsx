@@ -3,6 +3,7 @@ import { NavLink, withRouter } from "react-router-dom"
 import UserMenu from "./UserMenu"
 import UserMobileMenu from "./UserMobileMenu"
 import classnames from "classnames"
+import EditPencil from "../../admin/components/EditPencil"
 
 class TopMenu extends React.Component {
     constructor(props) {
@@ -37,7 +38,7 @@ class TopMenu extends React.Component {
     }
 
     render() {
-        const { site } = this.props.data
+        const { site, viewer } = this.props.data
         let menuItems, footerItems, home, mobileHome, userMenu, pleio
 
         if (!site) {
@@ -99,9 +100,6 @@ class TopMenu extends React.Component {
                                 <input id="mobile-navigation-search" placeholder="Zoeken" name="q" onChange={this.changeSearchField} value={this.state.q} />
                             </form>
                         </div>
-                        <a href="#skip-navigation" title="Volg deze link om de navigatie over te slaan" className="skip-navigation__link">
-                            Rechtstreeks naar content
-                        </a>
                         <ul className="navigation__links">
                             {home}
                             {menuItems}
@@ -126,6 +124,7 @@ class TopMenu extends React.Component {
                         <UserMobileMenu onClick={this.closeMobileMenu} viewer={this.props.data.viewer} />
                     </div>
                 </div>
+                <EditPencil viewer={viewer} />
             </nav>
         )
     }

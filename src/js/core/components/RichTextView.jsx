@@ -1,5 +1,5 @@
 import React from "react"
-import { Editor, EditorState, convertFromRaw, DefaultDraftBlockRenderMap, CompositeDecorator, ContentState, Entity } from "draft-js"
+import { Editor, EditorState, convertFromRaw, convertFromHTML, DefaultDraftBlockRenderMap, CompositeDecorator, ContentState, Entity } from "draft-js"
 import Immutable from "immutable"
 
 import AtomicBlock from "./RichText/AtomicBlock"
@@ -131,10 +131,12 @@ export default class RichTextView extends React.Component {
                 let string = JSON.parse(this.props.richValue)
                 contentState = convertFromRaw(string)
             } catch (e) {
-                contentState = ContentState.createFromText(this.props.value)
+                const blocksFromHTML = convertFromHTML(this.props.value)
+                contentState = ContentState.createFromBlockArray(blocksFromHTML)
             }
         } else {
-            contentState = ContentState.createFromText(this.props.value)
+            const blocksFromHTML = convertFromHTML(this.props.value)
+            contentState = ContentState.createFromBlockArray(blocksFromHTML)
         }
 
         // do not render editor on server-side because it's output is non-deterministic

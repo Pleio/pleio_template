@@ -187,7 +187,17 @@ class Mutations {
                 }
 
                 if ($container) {
-                    $entity->container_guid = $container->guid;
+                    if ($input["subtype"] == "folder") {
+                        if ($container instanceof \ElggGroup || $container instanceof \ElggUser) {
+                            $entity->container_guid = $container->guid;
+                            $entity->parent_guid = 0;
+                        } else {
+                            $entity->container_guid = $container->container_guid;
+                            $entity->parent_guid = $container->guid;
+                        }
+                    } else {
+                        $entity->container_guid = $container->guid;
+                    }
                 }
         }
 
@@ -409,7 +419,15 @@ class Mutations {
         $entity->access_id = get_default_access();
 
         if ($input["containerGuid"]) {
-            $entity->container_guid = $input["containerGuid"];
+            $container = get_entity($input["containerGuid"]);
+        }
+
+        if ($container) {
+            if ($container instanceof \ElggObject) {
+                $entity->container_guid = $container->container_guid;
+            } else {
+                $entity->container_guid = $container->guid;
+            }
         }
 
         $filestorename = elgg_strtolower(time() . basename($file["name"]));
@@ -427,6 +445,10 @@ class Mutations {
         $entity->simpletype = file_get_simple_type($mime_type);
 
         $result = $entity->save();
+
+        if ($container instanceof \ElggObject) {
+            add_entity_relationship($container->guid, "folder_of", $entity->guid);
+        }
 
         if ($result) {
             return [

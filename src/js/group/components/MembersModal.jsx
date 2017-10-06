@@ -39,7 +39,7 @@ export default class MembersModal extends React.Component {
         const { entity } = this.props
 
         return (
-            <Modal ref="modal" title="Leden">
+            <Modal ref="modal" title="Leden" square>
                 <div className="group-info">
                     <div className="group-info__content">
                         <div className="search-bar ___margin-bottom">

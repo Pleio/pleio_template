@@ -41,6 +41,8 @@ class Resolver {
 
         $theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
 
+        $startpage = elgg_get_plugin_setting("startpage", "pleio_template", "activity");
+
         $footer = json_decode(elgg_get_plugin_setting("footer", "pleio_template"));
         if (!$footer) {
             $footer = [];
@@ -71,6 +73,7 @@ class Resolver {
             "footer" => $footer,
             "logo" => "/mod/pleio_template/logo.php?lastcache={$site->logotime}",
             "showLogo" => $showLogo,
+            "startpage" => $startpage,
             "initiatorLink" => $initiatorLink,
             "showLeader" => $showLeader,
             "showLeaderButtons" => $showLeaderButtons,
@@ -91,6 +94,13 @@ class Resolver {
             "colorSecondary" => elgg_get_plugin_setting("color_secondary", "pleio_template"),
             "colorTertiary" => elgg_get_plugin_setting("color_tertiary", "pleio_template"),
             "colorQuaternary" => elgg_get_plugin_setting("color_quaternary", "pleio_template")
+        ];
+    }
+
+    static function getNotifications($a, $args, $c) {
+        return [
+            "total" => 0,
+            "notifications" => []
         ];
     }
 
@@ -378,7 +388,7 @@ class Resolver {
     static function countComments($object) {
         $options = array(
             "type" => "object",
-            "subtype" => "comment",
+            "subtypes" => ["comment", "answer"],
             "container_guid" => (int) $object["guid"],
             "count" => true
         );
@@ -580,7 +590,7 @@ class Resolver {
     static function getComments($object) {
         $options = array(
             "type" => "object",
-            "subtype" => "comment",
+            "subtypes" => ["comment", "answer"],
             "container_guid" => (int) $object['guid']
         );
 
@@ -594,7 +604,7 @@ class Resolver {
             $comments[] = [
                 "guid" => $entity->guid,
                 "ownerGuid" => $entity->owner_guid,
-                "description" => $entity->description,
+                "description" => strip_tags(html_entity_decode($entity->description)),
                 "canEdit" => $entity->canEdit(),
                 "timeCreated" => date("c", $entity->time_created),
                 "timeUpdated" => date("c", $entity->time_updated)
@@ -823,13 +833,22 @@ class Resolver {
                 }
             }
 
-            if ($args["containerGuid"]) {
-                $options["container_guid"] = (int) $args["containerGuid"];
+            $container = get_entity($args["containerGuid"]);
+
+            if ($container) {
+                $options["container_guid"] = $container->guid;
+            }
+
+            if ($args["subtype"] === "file|folder") {
+                list($total, $entities) = Helpers::getFolderContents($container);
+            } else {
+                $total = elgg_get_entities_from_metadata(array_merge($options, ["count" => true]));
+                $entities = elgg_get_entities_from_metadata($options);
             }
 
             $result = [
-                "total" => elgg_get_entities_from_metadata(array_merge($options, ["count" => true])),
-                "entities" => elgg_get_entities_from_metadata($options)
+                "total" => $total,
+                "entities" => $entities
             ];
         }
 

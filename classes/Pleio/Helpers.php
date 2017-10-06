@@ -112,7 +112,7 @@ class Helpers {
                         $root .= "blog";
                         break;
                     case "page":
-                        $root .= "page";
+                        $root .= "cms";
                         break;
                     case "event":
                         $root .= "events";
@@ -435,5 +435,104 @@ class Helpers {
         ));
         
         return notify_user($group->owner_guid, $user->guid, $subject, $body);
+    }
+
+    static function getFiles($parent, $limit = 100, $offset = 0, $count = false) {
+        $dbprefix = elgg_get_config("dbprefix");
+
+        $options = array(
+            'type' => 'object',
+            'subtype' => 'file',
+            'limit' => $limit,
+            'offset' => $offset
+        );
+
+        if (!$count) {
+            $options['joins'] = "JOIN {$dbprefix}objects_entity oe ON e.guid = oe.guid";
+            $options['order_by'] = 'oe.title ASC';
+        } else {
+            $options['count'] = true;
+        }
+
+        if ($parent) {
+            if ($parent instanceof \ElggUser | $parent instanceof \ElggGroup) {
+                $options['container_guid'] = $parent->guid;
+                $options['wheres'] = "NOT EXISTS (
+                        SELECT 1 FROM {$dbprefix}entity_relationships r
+                        WHERE r.guid_two = e.guid AND
+                        r.relationship = 'folder_of')";
+            } else {
+                $options['container_guid'] = $parent->container_guid;
+                $options['relationship'] = "folder_of";
+                $options['relationship_guid'] = $parent->guid;
+            }
+        }
+
+        return elgg_get_entities_from_relationship($options);
+    }
+
+    static function getFolders($parent, $limit = 100, $offset = 0, $count = false) {
+        $dbprefix = elgg_get_config("dbprefix");
+
+        $options = array(
+            'type' => 'object',
+            'subtype' => 'folder',
+            'limit' => $limit,
+            'offset' => $offset
+        );
+
+        if (!$count) {
+            $options['joins'] = "JOIN {$dbprefix}objects_entity oe ON e.guid = oe.guid";
+            $options['order_by'] = 'oe.title ASC';
+        } else {
+            $options['count'] = true;
+        }
+
+        if ($parent) {
+            if ($parent instanceof \ElggUser | $parent instanceof \ElggGroup) {
+                $options['container_guid'] = $parent->guid;
+                $options['metadata_name_value_pairs'] = array(array(
+                    'name' => 'parent_guid',
+                    'value' => 0
+                ));
+            } else {
+                $options['container_guid'] = $parent->container_guid;
+                $options['metadata_name_value_pairs'] = array(array(
+                    'name' => 'parent_guid',
+                    'value' => $parent->guid
+                ));
+            }
+
+            return elgg_get_entities_from_metadata($options);
+        } else {
+            if (!$count) {
+                return array();
+            } else {
+                return 0;
+            }
+        }
+    }
+
+    static function getFolderContents($folder, $limit = 100, $offset = 0) {
+        if ($folder) {
+            $totalFolders = Helpers::getFolders($folder, $limit, $offset, true);
+            $folders = Helpers::getFolders($folder, $limit, $offset, false);
+        } else {
+            // when we are on site-level, we only have files.
+            $totalFolders = 0;
+            $folders = array();
+        }
+
+        $totalFiles = Helpers::getFiles($folder, 1, 0, true);
+
+        if ($limit == 0) {
+            $files = Helpers::getFiles($folder, 0, max(0, $offset-$totalFolders), false);
+        } elseif ($limit > count($folders)) {
+            $files = Helpers::getFiles($folder, $limit-count($folders), max(0, $offset-$totalFolders), false);
+        } else {
+            $files = array();
+        }
+
+        return array($totalFolders + $totalFiles, array_merge($folders, $files));
     }
 }

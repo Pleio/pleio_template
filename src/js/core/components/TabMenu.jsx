@@ -26,7 +26,7 @@ class TabMenu extends React.Component {
         })
 
         let content = this.props.options.map((item, i) => (
-            <Link key={i} to={item.link} className={classnames({"tabmenu__link": true, "___is-active": item.link === selected})}>
+            <Link key={i} to={item.link} className={classnames({"___is-active": item.link === selected})}>
                 {item.title}
             </Link>
         ))
@@ -37,8 +37,12 @@ class TabMenu extends React.Component {
                     {content}
                     {this.props.children}
                 </div>
-                <div className="tabmenu__dropdown">
-                    <Select name="tabmenu" onChange={this.onChange} options={selectOptions} value={selected} className="___is-mobile-only ___margin-top ___margin-bottom" />
+                <div className="row">
+                    <div className="col-sm-4 col-lg-3">
+                        <div className="tabmenu__dropdown ___group">
+                            <Select name="tabmenu" onChange={this.onChange} options={selectOptions} value={selected} className="___is-mobile" />
+                        </div>
+                    </div>
                 </div>
             </div>
         )

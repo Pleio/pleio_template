@@ -5,6 +5,7 @@ import ContentHeader from "../core/components/ContentHeader"
 import Lead from "./components/Lead"
 import ContentFilters from "../core/containers/ContentFilters"
 import UsersOnline from "../core/containers/UsersOnline"
+import StartPage from "../cms/StartPage"
 import Card from "./components/Card"
 import Recommended from "./components/Recommended"
 import Trending from "./components/Trending"
@@ -55,6 +56,13 @@ class Activity extends React.Component {
             )
         }
 
+        if (site.startpage === "cms") {
+            return (
+                <StartPage />
+            )
+        }
+
+
         return (
             <section className={classnames({"section":true, "padding-top": !leader, "___less-padding-top": leader})}>
                 <Document title="Activiteiten" />
@@ -92,6 +100,7 @@ const Query = gql`
             guid
             showLeader
             showInitiative
+            startpage
             logo
             initiatorLink
         }

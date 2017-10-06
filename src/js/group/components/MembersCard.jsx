@@ -19,7 +19,7 @@ export default class MembersCard extends React.Component {
         }
 
         return (
-            <div className="card ___side ___members">
+            <div className="card ___side ___members ___last">
                 <div onClick={() => this.refs.modal.toggle()}>
                     <People users={users} />
                     <div className="card__title">{`${entity.members.total} ${(entity.members.total === 1) ? " lid" : " leden"}`}</div>

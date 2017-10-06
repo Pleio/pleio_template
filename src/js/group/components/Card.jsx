@@ -32,7 +32,7 @@ export default class Card extends React.Component {
                         <div className="card-group__title">
                             {entity.name}
                         </div>
-                        <p>{entity.description}</p>
+                        <p>{entity.excerpt}</p>
                         <div className="flexer ___space-between">
                             <div className="card-group__members">{entity.members.total}{(entity.members.total === 1) ? " lid" : " leden"}</div>
                             {closed}

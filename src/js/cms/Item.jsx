@@ -14,42 +14,30 @@ import DeleteWidgetModal from "./components/DeleteWidgetModal"
 import { DragDropContext } from "react-dnd"
 import HTML5Backend from "react-dnd-html5-backend"
 import update from "immutability-helper"
+import Add from "./components/Add"
 import Row from "./components/Row"
+import autobind from "autobind-decorator"
 
 class Item extends React.Component {
     constructor(props) {
         super(props)
 
-        this.moveWidget = this.moveWidget.bind(this)
-        this.deleteWidget = this.deleteWidget.bind(this)
-        this.afterDelete = this.afterDelete.bind(this)
-
-        this.onDragStart = this.onDragStart.bind(this)
-        this.onDragEnd = this.onDragEnd.bind(this)
-
         this.state = {
-            rows: this.processRows(this.props.data.entity)
+            rows: []
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            rows: this.processRows(nextProps.data.entity)
-        })
-    }
-
+    @autobind
     onDragStart() {
-        this.setState({
-            dragging: true
-        })
+        this.setState({ dragging: true })
     }
 
+    @autobind
     onDragEnd() {
-        this.setState({
-            dragging: false
-        })
+        this.setState({ dragging: false })
     }
 
+    @autobind
     moveWidget(sourceIndex, targetIndex) {
         const dragWidget = this.state.rows[1][sourceIndex]
 
@@ -65,6 +53,7 @@ class Item extends React.Component {
         }))
     }
 
+    @autobind
     deleteWidget(entity) {
         this.setState({
             deleteEntity: entity
@@ -73,10 +62,12 @@ class Item extends React.Component {
         this.refs.deleteWidget.toggle()
     }
 
+    @autobind
     afterDelete() {
         this.refs.deleteWidget.toggle()
     }
 
+    @autobind
     onAddRow() {
         const length = Object.keys(this.state.rows).length
         this.setState({
@@ -86,6 +77,14 @@ class Item extends React.Component {
         })
     }
 
+    @autobind
+    onAdd(row) {
+        this.setState({
+            rows: [...this.state.rows, row]
+        })
+    }
+
+    @autobind
     processRows(entity) {
         if (!entity) {
             return []
@@ -119,40 +118,23 @@ class Item extends React.Component {
             )
         }
 
+        let rows = this.state.rows.map((row, i) => (
+            <Row key={i} layout={row.layout} firstRow={i === 0 ? true : false} />
+        ))
+
+
         let add
         if (entity.canEdit) {
             add = (
-                <div className="widget__add">
-                    <div className="button ___large ___add" onClick={() => this.refs.addWidget.toggle()}>
-                        <span>Widget toevoegen</span>
-                    </div>
-                </div>
-            )
-        }
-
-        const rows = Object.keys(this.state.rows).map((row, i) => {
-            return (
-                <Row key={i} i={i} entities={this.state.rows[row]} canEdit={entity.canEdit} moveWidget={this.moveWidget} deleteWidget={this.deleteWidget} />
-            )
-        })
-
-        let newRow
-        if (this.state.dragging) {
-            newRow = (
-                <Row entities={[]} canEdit={entity.canEdit} />
+                <Add onSubmit={this.onAdd} firstRow={this.state.rows.length === 0 ? true : false} />
             )
         }
 
         return (
-            <div>
+            <div className="page-container">
                 <Document title={entity.title} />
-                    <section className="section padding-top">
-                        <div className="container">
-                            {add}
-                            {rows}
-                            {newRow}
-                        </div>
-                    </section>
+                {rows}
+                {add}
                 <AddWidgetModal ref="addWidget" entity={entity} />
                 <DeleteWidgetModal ref="deleteWidget" entity={this.state.deleteEntity} toggleEdit={this.toggleEdit} afterDelete={this.afterDelete} />
             </div>
