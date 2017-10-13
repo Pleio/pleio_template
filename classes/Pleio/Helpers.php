@@ -536,6 +536,34 @@ class Helpers {
         return array($totalFolders + $totalFiles, array_merge($folders, $files));
     }
 
+    static function generateThumbs($file) {
+		$formats = array(
+			"thumbnail" => 60,
+			"smallthumb" => 153,
+			"largethumb" => 600
+		);
+
+		$file->icontime = time();
+        $filestorename = $file->getFilename();
+        $filestorename = elgg_substr($filestorename, elgg_strlen("file/"));
+
+		foreach ($formats as $name => $size) {
+	        $thumbnail = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), $size, $size, true);
+
+	        if ($thumbnail) {
+	        	$filename = "file/{$name}" . $filestorename;
+	            $thumb = new \ElggFile();
+	            $thumb->setFilename($filename);
+	            $thumb->open("write");
+	            $thumb->write($thumbnail);
+	            $thumb->close();
+
+	            $file->$name = $filename;
+	            unset($thumbnail);
+	        }
+		}
+    }
+
     static function getSettings() {
         return [
             "odtEnabled" => elgg_is_active_plugin("odt_editor")

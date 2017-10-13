@@ -17,6 +17,7 @@ const Query = gql`
                     timeCreated
                     mimeType
                     canEdit
+                    thumbnail
                     owner {
                         guid
                         name

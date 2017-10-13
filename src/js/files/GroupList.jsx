@@ -9,6 +9,7 @@ import Document from "../core/components/Document"
 import FileFolderList from "./containers/FileFolderList"
 import Select from "../core/components/NewSelect"
 import FileFolder from "./components/FileFolder"
+import FileFolderTile from "./components/FileFolderTile"
 import AddFileModal from "./components/AddFileModal"
 import AddFolderModal from "./components/AddFolderModal"
 import EditFileFolderModal from "./components/EditFileFolderModal"
@@ -21,8 +22,11 @@ class Item extends React.Component {
     constructor(props) {
         super(props)
 
+
+
         this.state = {
-            selected: new OrderedSet()
+            selected: new OrderedSet(),
+            viewType: (this.props.location.hash === "#tiles") ? "tiles" : "list"
         }
     }
 
@@ -49,6 +53,12 @@ class Item extends React.Component {
         this.setState({
             selected: newState
         })
+    }
+
+    @autobind
+    toggleViewType(newType) {
+        this.props.history.push('#' + newType)
+        this.setState({ viewType: newType })
     }
 
     @autobind
@@ -112,7 +122,7 @@ class Item extends React.Component {
             }
 
             add = (
-                <div className="flexer ___gutter ___margin-bottom">
+                <div className="flexer ___gutter">
                     {create}
                     <div className="button ___large" onClick={(e) => this.refs.addFile.toggle()}><span>Upload bestand</span></div>
                     <div className="button ___large" onClick={(e) => this.refs.addFolder.toggle()}><span>Nieuwe map</span></div>
@@ -131,6 +141,34 @@ class Item extends React.Component {
         if (match.params.containerGuid) {
             subfolder = (
                 <a>Submap</a>
+            )
+        }
+
+        let list
+        if (this.state.viewType === "list") {
+            list = (
+                <table className="files">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span className="checkbox ___large">
+                                    <input id="file-all" name="file-all" type="checkbox" onClick={this.selectAll} />
+                                    <label htmlFor={`file-${entity.guid}`} />
+                                </span>
+                            </th>
+                            <th></th>
+                            <th><button className="___is-active"><span>Bestandsnaam</span></button></th>
+                            <th></th>
+                            <th><button><span>Aanmaakdatum</span></button></th>
+                            <th><button><span>Eigenaar</span></button></th>
+                        </tr>
+                    </thead>
+                    <FileFolderList containerGuid={containerGuid} containerClassName="" inTable rowClassName="row file__item" childClass={FileFolder} offset={0} limit={50} type="object" subtype="file|folder" selected={this.state.selected} history={this.props.history} />
+                </table>
+            )
+        } else {
+            list = (
+                <FileFolderList containerGuid={containerGuid} containerClassName="file-tiles" childClass={FileFolderTile} offset={0} limit={50} type="object" subtype="file|folder" selected={this.state.selected} history={this.props.history} />
             )
         }
 
@@ -157,7 +195,13 @@ class Item extends React.Component {
                                 <Select options={{"all": "Alles", "favorites": "Favorieten", "folders": "Mappen", "files": "Bestanden"}} value="all" className="selector ___margin-bottom-mobile" />
                             </div>
                             <div className="col-sm-8 col-lg-9 end-sm">
-                                {add}
+                                <div className="flexer ___gutter ___margin-bottom">
+                                    {add}
+                                    <div className="flexer ___gutter">
+                                        <div className={classnames({"button__icon ___large ___list": true, "___is-active": this.state.viewType === "list"})} title="Lijst weergave" onClick={(e) => this.toggleViewType("list")} />
+                                        <div className={classnames({"button__icon ___large ___tiles": true, "___is-active": this.state.viewType === "tiles"})} title="Tegel weergave" onClick={(e) => this.toggleViewType("tiles")} />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className="breadcrumb ___large">
@@ -165,24 +209,7 @@ class Item extends React.Component {
                             <Link to={`/groups/view/${match.params.groupGuid}/${match.params.groupSlug}/files`} className="___is-active">{entity.name}</Link>
                             {subfolder}
                         </div>
-                        <table className="files">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <span className="checkbox ___large">
-                                            <input id="file-all" name="file-all" type="checkbox" onClick={this.selectAll} />
-                                            <label htmlFor={`file-${entity.guid}`} />
-                                        </span>
-                                    </th>
-                                    <th></th>
-                                    <th><button className="___is-active"><span>Bestandsnaam</span></button></th>
-                                    <th></th>
-                                    <th><button><span>Aanmaakdatum</span></button></th>
-                                    <th><button><span>Eigenaar</span></button></th>
-                                </tr>
-                            </thead>
-                            <FileFolderList containerGuid={containerGuid} containerClassName="" inTable rowClassName="row file__item" childClass={FileFolder} offset={0} limit={50} type="object" subtype="file|folder" selected={this.state.selected} history={this.props.history} />
-                        </table>
+                        {list}
                     </div>
                     <AddFileModal ref="addFile" containerGuid={containerGuid} onComplete={this.clearSelection} />
                     <AddFolderModal ref="addFolder" containerGuid={containerGuid} onComplete={this.clearSelection} />

@@ -502,6 +502,9 @@ class SchemaBuilder {
                 "mimeType" => [
                     "type" => Type::string()
                 ],
+                "thumbnail" => [
+                    "type" => Type::string()
+                ],
                 "url" => [
                     "type" => Type::string()
                 ],

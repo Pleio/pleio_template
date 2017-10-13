@@ -427,6 +427,12 @@ class Mutations {
 
         $result = $entity->save();
 
+        if ($entity->simpletype == "image") {
+            Helpers::generateThumbs($entity);
+            $entity->icontime = time();
+            $entity->save();
+        }
+
         if ($container instanceof \ElggObject) {
             add_entity_relationship($container->guid, "folder_of", $entity->guid);
         }

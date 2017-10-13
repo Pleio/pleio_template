@@ -5,8 +5,7 @@ import CheckField from "../../core/components/CheckField"
 import autobind from "autobind-decorator"
 import classnames from "classnames"
 
-class FileFolder extends React.Component {
-
+class FileFolderTile extends React.Component {
     @autobind
     getLink() {
         const { group } = this.context
@@ -31,18 +30,17 @@ class FileFolder extends React.Component {
 
     @autobind
     onClick(e) {
-        const { entity } = this.props
-
-        if (entity.subtype !== "folder") {
-            return
-        }
-
         e.preventDefault()
 
+        const { entity, selected } = this.props
         const { group } = this.context
 
-        this.context.clearSelection()
-        this.props.history.push(`/groups/view/${group.guid}/${group.name}/files/${entity.guid}`)
+        if (entity.subtype === "folder") {
+            this.context.clearSelection()
+            this.props.history.push(`/groups/view/${group.guid}/${group.name}/files/${entity.guid}`)    
+        } else {
+            window.location = this.getLink()
+        }
     }
 
     render () {
@@ -59,11 +57,12 @@ class FileFolder extends React.Component {
             )
         }
 
-        let className
+        let className, style
         if (entity.subtype === "folder") {
             className = "___folder"
         } else if (entity.mimeType.indexOf("image/") !== -1) {
             className = "___img"
+            style = {backgroundImage: `url(${entity.thumbnail})`}
         } else if (entity.mimeType.indexOf("application/pdf") !== -1) {
             className = "___pdf"
         } else {
@@ -71,24 +70,23 @@ class FileFolder extends React.Component {
         }
 
         return (
-            <tr className={classnames({"file": true, "___is-checked": selected.has(entity)})}>
-                <td className="file__check">{checkbox}</td>
-                <td className={classnames({"file__type": true, [className]: true})}></td>
-                <td className="file__name">
-                    <a href={this.getLink()} onClick={this.onClick}>{entity.title}</a>
-                </td>
-                <td className="file__fav"></td>
-                <td className="file__date">{showDate(entity.timeCreated)}</td>
-                <td className="file__owner">{entity.owner.name}</td>
-            </tr>
+            <div className={classnames({"file-tile": true, "___is-checked": selected.has(entity), [className]: true})}>
+                <div className="file-tile__image" style={style}>
+                    {checkbox}
+                </div>
+                <div className="file-tile__name" onClick={this.onClick}>
+                    <span>{entity.title}</span>
+                    <span>{entity.title}</span>
+                </div>
+            </div>
         )
     }
 }
 
-FileFolder.contextTypes = {
+FileFolderTile.contextTypes = {
     onCheck: PropTypes.func,
     clearSelection: PropTypes.func,
     group: PropTypes.object
 }
 
-export default FileFolder
+export default FileFolderTile
