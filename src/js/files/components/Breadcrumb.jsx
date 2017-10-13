@@ -13,7 +13,7 @@ class Breadcrumb extends React.Component {
         let items
         if (breadcrumb) {
             items = breadcrumb.map((item) => (
-                <Link to={`${parentUrl}/${item.guid}`} className="___is-active">{item.title}</Link>
+                <Link key={item.guid} to={`${parentUrl}/${item.guid}`} className="___is-active">{item.title}</Link>
             ))
         }
 

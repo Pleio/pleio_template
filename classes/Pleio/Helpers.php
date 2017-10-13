@@ -437,41 +437,30 @@ class Helpers {
         return notify_user($group->owner_guid, $user->guid, $subject, $body);
     }
 
-    static function getFiles($parent, $limit = 100, $offset = 0, $count = false) {
-        $dbprefix = elgg_get_config("dbprefix");
-
-        $options = array(
-            'type' => 'object',
-            'subtype' => 'file',
-            'limit' => $limit,
-            'offset' => $offset
-        );
-
-        if (!$count) {
-            $options['joins'] = "JOIN {$dbprefix}objects_entity oe ON e.guid = oe.guid";
-            $options['order_by'] = 'oe.title ASC';
+    static function getFolderContents($folder, $limit = 100, $offset = 0, $order_by = "filename", $direction = "asc") {
+        if ($folder) {
+            $totalFolders = Helpers::getFolders($folder, $limit, $offset, true);
+            $folders = Helpers::getFolders($folder, $limit, $offset, false, $order_by, $direction);
         } else {
-            $options['count'] = true;
+            // when we are on site-level, we only have files.
+            $totalFolders = 0;
+            $folders = array();
         }
 
-        if ($parent) {
-            if ($parent instanceof \ElggUser | $parent instanceof \ElggGroup) {
-                $options['container_guid'] = $parent->guid;
-                $options['wheres'] = "NOT EXISTS (
-                        SELECT 1 FROM {$dbprefix}entity_relationships r
-                        WHERE r.guid_two = e.guid AND
-                        r.relationship = 'folder_of')";
-            } else {
-                $options['container_guid'] = $parent->container_guid;
-                $options['relationship'] = "folder_of";
-                $options['relationship_guid'] = $parent->guid;
-            }
+        $totalFiles = Helpers::getFiles($folder, 1, 0, true);
+
+        if ($limit == 0) {
+            $files = Helpers::getFiles($folder, 0, max(0, $offset-$totalFolders), false, $order_by, $direction);
+        } elseif ($limit > count($folders)) {
+            $files = Helpers::getFiles($folder, $limit-count($folders), max(0, $offset-$totalFolders), false, $order_by, $direction);
+        } else {
+            $files = array();
         }
 
-        return elgg_get_entities_from_relationship($options);
+        return array($totalFolders + $totalFiles, array_merge($folders, $files));
     }
 
-    static function getFolders($parent, $limit = 100, $offset = 0, $count = false) {
+    static function getFolders($parent, $limit = 100, $offset = 0, $count = false, $order_by = "filename", $direction = "ASC") {
         $dbprefix = elgg_get_config("dbprefix");
 
         $options = array(
@@ -482,8 +471,27 @@ class Helpers {
         );
 
         if (!$count) {
-            $options['joins'] = "JOIN {$dbprefix}objects_entity oe ON e.guid = oe.guid";
-            $options['order_by'] = 'oe.title ASC';
+            switch ($order_by) {
+                case "timeCreated":
+                    $options['order_by'] = 'e.time_created';
+                    break;
+                case "owner":
+                    $options['joins'] = "JOIN {$dbprefix}users_entity ue ON e.owner_guid = ue.guid";
+                    $options['order_by'] = 'ue.name';
+                    break;
+                default:
+                    $options['joins'] = "JOIN {$dbprefix}objects_entity oe ON e.guid = oe.guid";
+                    $options['order_by'] = 'oe.title';
+            }
+
+            switch ($direction) {
+                case "desc":
+                    $options['order_by'] .= ' DESC';
+                    break;
+                case "asc":
+                    $options['order_by'] .= ' ASC';
+                    break;
+            }
         } else {
             $options['count'] = true;
         }
@@ -513,27 +521,57 @@ class Helpers {
         }
     }
 
-    static function getFolderContents($folder, $limit = 100, $offset = 0) {
-        if ($folder) {
-            $totalFolders = Helpers::getFolders($folder, $limit, $offset, true);
-            $folders = Helpers::getFolders($folder, $limit, $offset, false);
+    static function getFiles($parent, $limit = 100, $offset = 0, $count = false, $order_by = "filename", $direction = "asc") {
+        $dbprefix = elgg_get_config("dbprefix");
+
+        $options = array(
+            'type' => 'object',
+            'subtype' => 'file',
+            'limit' => $limit,
+            'offset' => $offset
+        );
+
+        if (!$count) {
+            switch ($order_by) {
+                case "timeCreated":
+                    $options['order_by'] = 'e.time_created';
+                    break;
+                case "owner":
+                    $options['joins'] = "JOIN {$dbprefix}users_entity ue ON e.owner_guid = ue.guid";
+                    $options['order_by'] = 'ue.name';
+                    break;
+                default:
+                    $options['joins'] = "JOIN {$dbprefix}objects_entity oe ON e.guid = oe.guid";
+                    $options['order_by'] = 'oe.title';
+            }
+
+            switch ($direction) {
+                case "desc":
+                    $options['order_by'] .= ' DESC';
+                    break;
+                case "asc":
+                    $options['order_by'] .= ' ASC';
+                    break;
+            }
         } else {
-            // when we are on site-level, we only have files.
-            $totalFolders = 0;
-            $folders = array();
+            $options['count'] = true;
         }
 
-        $totalFiles = Helpers::getFiles($folder, 1, 0, true);
-
-        if ($limit == 0) {
-            $files = Helpers::getFiles($folder, 0, max(0, $offset-$totalFolders), false);
-        } elseif ($limit > count($folders)) {
-            $files = Helpers::getFiles($folder, $limit-count($folders), max(0, $offset-$totalFolders), false);
-        } else {
-            $files = array();
+        if ($parent) {
+            if ($parent instanceof \ElggUser | $parent instanceof \ElggGroup) {
+                $options['container_guid'] = $parent->guid;
+                $options['wheres'] = "NOT EXISTS (
+                        SELECT 1 FROM {$dbprefix}entity_relationships r
+                        WHERE r.guid_two = e.guid AND
+                        r.relationship = 'folder_of')";
+            } else {
+                $options['container_guid'] = $parent->container_guid;
+                $options['relationship'] = "folder_of";
+                $options['relationship_guid'] = $parent->guid;
+            }
         }
 
-        return array($totalFolders + $totalFiles, array_merge($folders, $files));
+        return elgg_get_entities_from_relationship($options);
     }
 
     static function generateThumbs($file) {

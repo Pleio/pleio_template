@@ -4,8 +4,8 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
 const Query = gql`
-    query FilesList($type: Type!, $subtype: String, $containerGuid: Int, $offset: Int!, $limit: Int!) {
-        entities(type: $type, subtype: $subtype, containerGuid: $containerGuid, offset: $offset, limit: $limit) {
+    query FilesList($containerGuid: String!, $offset: Int!, $limit: Int!, $orderBy: String, $direction: String) {
+        files(containerGuid: $containerGuid, offset: $offset, limit: $limit, orderBy: $orderBy, direction: $direction) {
             total
             canWrite
             edges {

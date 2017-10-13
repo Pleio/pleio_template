@@ -23,11 +23,11 @@ class Item extends React.Component {
     constructor(props) {
         super(props)
 
-
-
         this.state = {
             selected: new OrderedSet(),
-            viewType: (this.props.location.hash === "#tiles") ? "tiles" : "list"
+            viewType: (this.props.location.hash === "#tiles") ? "tiles" : "list",
+            orderBy: "filename",
+            direction: "asc"
         }
     }
 
@@ -60,6 +60,19 @@ class Item extends React.Component {
     toggleViewType(newType) {
         this.props.history.push('#' + newType)
         this.setState({ viewType: newType })
+    }
+
+    @autobind
+    toggleOrderBy(newOrderBy) {
+        if (newOrderBy === this.state.orderBy) {
+            if (this.state.direction == "asc") {
+                this.setState({ direction: "desc" })
+            } else {
+                this.setState({ direction: "asc" })
+            }
+        } else {
+            this.setState({ orderBy: newOrderBy })
+        }
     }
 
     @autobind
@@ -151,18 +164,18 @@ class Item extends React.Component {
                                 </span>
                             </th>
                             <th></th>
-                            <th><button className="___is-active"><span>Bestandsnaam</span></button></th>
+                            <th><button className={classnames({"___is-active": this.state.orderBy === "filename", "___is-descending": this.state.direction === "desc"})} onClick={(e) => this.toggleOrderBy("filename")}><span>Bestandsnaam</span></button></th>
                             <th></th>
-                            <th><button><span>Aanmaakdatum</span></button></th>
-                            <th><button><span>Eigenaar</span></button></th>
+                            <th><button className={classnames({"___is-active": this.state.orderBy === "timeCreated", "___is-descending": this.state.direction === "desc"})} onClick={(e) => this.toggleOrderBy("timeCreated")}><span>Aanmaakdatum</span></button></th>
+                            <th><button className={classnames({"___is-active": this.state.orderBy === "owner", "___is-descending": this.state.direction === "desc"})} onClick={(e) => this.toggleOrderBy("owner")}><span>Eigenaar</span></button></th>
                         </tr>
                     </thead>
-                    <FileFolderList containerGuid={containerGuid} containerClassName="" inTable rowClassName="row file__item" childClass={FileFolder} offset={0} limit={50} type="object" subtype="file|folder" selected={this.state.selected} history={this.props.history} />
+                    <FileFolderList containerGuid={containerGuid} containerClassName="" inTable rowClassName="row file__item" childClass={FileFolder} offset={0} limit={50} orderBy={this.state.orderBy} direction={this.state.direction} selected={this.state.selected} history={this.props.history} />
                 </table>
             )
         } else {
             list = (
-                <FileFolderList containerGuid={containerGuid} containerClassName="file-tiles" childClass={FileFolderTile} offset={0} limit={50} type="object" subtype="file|folder" selected={this.state.selected} history={this.props.history} />
+                <FileFolderList containerGuid={containerGuid} containerClassName="file-tiles" childClass={FileFolderTile} offset={0} limit={50} orderBy={this.state.orderBy} direction={this.state.direction} selected={this.state.selected} history={this.props.history} />
             )
         }
 

@@ -56,9 +56,18 @@ class FileField extends React.Component {
     }
 
     render() {
+        let text = "+ Bestand uploaden"
+        if (this.props.multiple) {
+            text = "+ Bestand(en) uploaden"
+        }
+
+        let amount
+        if (this.state.value) {
+            amount = `(${this.state.value.length})`
+        }
+
         return (
             <div className="editor__upload">
-                <span>+ Bestand(en) uploaden</span>
                 <input
                     ref="field"
                     name={this.props.name}
@@ -67,6 +76,7 @@ class FileField extends React.Component {
                     onChange={this.onChange}
                     multiple={this.props.multiple}
                 />
+                <span>{text} {amount}</span>
             </div>
         )
     }

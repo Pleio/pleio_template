@@ -839,12 +839,8 @@ class Resolver {
                 $options["container_guid"] = $container->guid;
             }
 
-            if ($args["subtype"] === "file|folder") {
-                list($total, $entities) = Helpers::getFolderContents($container);
-            } else {
-                $total = elgg_get_entities_from_metadata(array_merge($options, ["count" => true]));
-                $entities = elgg_get_entities_from_metadata($options);
-            }
+            $total = elgg_get_entities_from_metadata(array_merge($options, ["count" => true]));
+            $entities = elgg_get_entities_from_metadata($options);
 
             $result = [
                 "total" => $total,
@@ -892,6 +888,34 @@ class Resolver {
             "total" => $result["total"],
             "canWrite" => $canWrite,
             "edges" => $entities
+        ];
+    }
+
+    static function getFiles($a, $args, $c) {
+        $container = get_entity($args["containerGuid"]);
+        if ($container) {
+            list($total, $entities) = Helpers::getFolderContents($container, $args["limit"], $args["offset"], $args["orderBy"], $args["direction"]);
+            
+            $edges = [];
+            foreach ($entities as $entity) {
+                $edges[] = Mapper::getObject($entity);
+            }
+        } else {
+            $total = 0;
+            $edges = [];
+        }
+
+        $user = elgg_get_logged_in_user_entity();    
+        if ($user) {
+            $canWrite = $container ? $container->canWriteToContainer(0, "object", "file") : false;
+        } else {
+            $canWrite = false;
+        }
+        
+        return [
+            "total" => $total,
+            "canWrite" => $canWrite,
+            "edges" => $edges
         ];
     }
 

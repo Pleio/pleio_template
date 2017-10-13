@@ -992,6 +992,27 @@ class SchemaBuilder {
                     ],
                     "resolve" => "Pleio\Resolver::getBreadcrumb"  
                 ],
+                "files" => [
+                    "type" => $entityListType,
+                    "args" => [
+                        "containerGuid" => [
+                            "type" => Type::string()
+                        ],
+                        "orderBy" => [
+                            "type" => Type::string()
+                        ],
+                        "direction" => [
+                            "type" => Type::string()
+                        ],
+                        "offset" => [
+                            "type" => Type::int()
+                        ],
+                        "limit" => [
+                            "type" => Type::int()
+                        ]
+                    ],
+                    "resolve" => "Pleio\Resolver::getFiles"
+                ],
                 "entities" => [
                     "type" => $entityListType,
                     "args" => [
