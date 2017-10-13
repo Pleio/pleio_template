@@ -499,6 +499,9 @@ class SchemaBuilder {
                 "excerpt" => [
                     "type" => Type::string()
                 ],
+                "mimeType" => [
+                    "type" => Type::string()
+                ],
                 "url" => [
                     "type" => Type::string()
                 ],

@@ -100,10 +100,20 @@ class Item extends React.Component {
             )
         }
 
+        const containerGuid = match.params.containerGuid ? match.params.containerGuid : match.params.groupGuid
+
         let add
         if (viewer.canWriteToContainer) {
+            let create
+            if (window.__SETTINGS__['odtEnabled']) {
+                create = (
+                    <a href={`/odt_editor/create/${containerGuid}`} className="button ___large"><span>Maak bestand</span></a>
+                )
+            }
+
             add = (
                 <div className="flexer ___gutter ___margin-bottom">
+                    {create}
                     <div className="button ___large" onClick={(e) => this.refs.addFile.toggle()}><span>Upload bestand</span></div>
                     <div className="button ___large" onClick={(e) => this.refs.addFolder.toggle()}><span>Nieuwe map</span></div>
                 </div>
@@ -116,8 +126,6 @@ class Item extends React.Component {
                 <div className="button ___edit" onClick={() => this.refs.edit.toggle()}><span>Bewerken</span></div>
             )
         }
-
-        const containerGuid = match.params.containerGuid ? match.params.containerGuid : match.params.groupGuid
 
         let subfolder
         if (match.params.containerGuid) {

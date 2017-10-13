@@ -34,7 +34,9 @@ $english = array(
     "pleio_template:email:overview" => "What happens on %s? In this overview we will highlight some of the items based on your preferences!",
     "pleio_template:email:visit" => "For all new messages visit %s",
     "pleio_template:email:goto" => "Go to %s",
-    "pleio_template:read_more" => "Read more"
+    "pleio_template:read_more" => "Read more",
+    "file_tools:forms:edit:parent" => "Parent",
+    "file_tools:input:folder_select:main" => "Main folder"
 );
 
 add_translation("en", $english);

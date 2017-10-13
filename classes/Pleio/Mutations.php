@@ -391,27 +391,8 @@ class Mutations {
             throw new Exception("no_file");
         }
 
-        if ($file["size"] === 0 || $file["size"] > 1048576 * 10) {
+        if ($file["size"] === 0) {
             throw new Exception("invalid_filesize");
-        }
-
-        $acceptable_types = [
-            "image/png",
-            "image/jpeg",
-            "application/pdf",
-            "text/plain",
-            "text/csv",
-            "application/msword",
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            "application/vnd.ms-excel",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            "application/vnd.ms-powerpoint",
-            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-        ];
-
-        $mime_type = mime_content_type($file["tmp_name"]);
-        if (!in_array($mime_type, $acceptable_types)) {
-            throw new Exception("invalid_filetype");
         }
 
         $entity = new \FilePluginFile();

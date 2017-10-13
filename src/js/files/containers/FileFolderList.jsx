@@ -15,6 +15,7 @@ const Query = gql`
                     title
                     url
                     timeCreated
+                    mimeType
                     canEdit
                     owner {
                         guid

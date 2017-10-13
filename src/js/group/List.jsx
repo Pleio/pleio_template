@@ -26,11 +26,13 @@ class List extends React.Component {
             <div className="page-container">
                 <Document title="Groepen" />
                 <ContentHeader>
-                    <h3 className="main__title">
-                        Groepen
-                    </h3>
                     <div className="row">
-                        {add}
+                        <div className="col-sm-6">
+                            <h3 className="main__title ___no-margin">Groepen</h3>
+                        </div>
+                        <div className="col-sm-6 end-sm">
+                            {add}
+                        </div>
                     </div>
                 </ContentHeader>
                 <section className="section ___grey ___grow">

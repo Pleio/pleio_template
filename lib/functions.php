@@ -54,3 +54,88 @@ function pleio_template_sanitize_file_name($filename) {
     $filename = mb_ereg_replace("([\.]{2,})", '', $filename);
     return $filename;
 }
+
+// remain API compatible with odt_tools
+if (!function_exists('file_tools_use_folder_structure')) {
+    function file_tools_use_folder_structure() {
+        return true;
+    }
+}
+
+function file_tools_build_select_options($folders, $depth = 0) {
+    $result = array();
+    
+    if(!empty($folders)){
+        foreach($folders as $index => $level){
+            if($folder = elgg_extract("folder", $level)){
+                $result[$folder->getGUID()] = str_repeat("-", $depth) . $folder->title;
+            }
+            
+            if($childen = elgg_extract("children", $level)){
+                $result += file_tools_build_select_options($childen, $depth + 1);
+            }
+        }
+    }
+    
+    return $result;
+}
+
+function file_tools_get_folders($container_guid = 0) {  
+    if(empty($container_guid)) {
+        $container_guid = elgg_get_page_owner_guid();
+    }
+    
+    if(empty($container_guid)) {
+        return false;
+    }
+
+    $db_prefix = elgg_get_config('dbprefix');
+    $options = array(
+        "type" => "object",
+        "subtype" => "folder",
+        "container_guid" => $container_guid,
+        "limit" => false,
+        "joins" => "JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid",
+        "order_by" => "oe.title ASC"
+    );
+
+    $folders = elgg_get_entities($options);
+
+    if (!$folders) {
+        return false;
+    }
+
+    $children = array();
+    foreach($folders as $folder) {
+        $parent_guid = (int) $folder->parent_guid;
+        
+        if(empty($parent_guid)) {
+            $parent_guid = 0;
+        }
+        
+        if(!array_key_exists($parent_guid, $children)) {
+            $children[$parent_guid] = array();
+        }
+        
+        $children[$parent_guid][] = $folder;
+    }
+    
+    $get_folder = function($parent_guid) use (&$get_folder, $children) {
+        $result = array();
+
+        $i = 0;
+        if (array_key_exists($parent_guid, $children)) {
+            foreach ($children[$parent_guid] as $child) {
+                $result[$i] = array(
+                    'folder' => $child,
+                    'children' => $get_folder($child->guid)
+                );
+                $i++;
+            }
+        }
+
+        return $result;
+    };
+
+    return $get_folder(0);
+}

@@ -26,5 +26,6 @@ if ($object) {
 }
 
 echo elgg_view_page($title, $content, "default", [
-    "metas" => $metas
+    "metas" => $metas,
+    "settings" => Pleio\Helpers::getSettings()
 ]);

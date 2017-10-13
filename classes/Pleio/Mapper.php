@@ -65,6 +65,7 @@ class Mapper {
             "url" => Helpers::getURL($entity),
             "description" => $entity->description,
             "richDescription" => $entity->richDescription,
+            "mimeType" => $entity->mimetype,
             "state" => $entity->state ? $entity->state : "NEW",
             "excerpt" => elgg_get_excerpt($entity->description),
             "timeCreated" => date("c", $entity->time_created),

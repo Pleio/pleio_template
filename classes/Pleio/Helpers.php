@@ -535,4 +535,10 @@ class Helpers {
 
         return array($totalFolders + $totalFiles, array_merge($folders, $files));
     }
+
+    static function getSettings() {
+        return [
+            "odtEnabled" => elgg_is_active_plugin("odt_editor")
+        ];
+    }
 }

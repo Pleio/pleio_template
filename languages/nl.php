@@ -34,7 +34,9 @@ $dutch = array(
     "pleio_template:email:overview" => "Wat gebeurt er op %s? In dit overzicht vind je de hoogtepunten voor jouw vakgebied en interesses!",
     "pleio_template:email:visit" => "Voor alle nieuwe berichten bekijk %s",
     "pleio_template:email:goto" => "Ga naar %s",
-    "pleio_template:read_more" => "Lees meer"
+    "pleio_template:read_more" => "Lees meer",
+    "file_tools:forms:edit:parent" => "Map",
+    "file_tools:input:folder_select:main" => "Hoofdmap"
 );
 
 add_translation("nl", $dutch);

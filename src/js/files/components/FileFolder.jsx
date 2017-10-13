@@ -18,16 +18,18 @@ class FileFolder extends React.Component {
     }
 
     onClick(e) {
+        const { entity } = this.props
+
+        if (entity.subtype !== "folder") {
+            return
+        }
+
         e.preventDefault()
 
         const { group } = this.context
-        const { entity } = this.props
-        if (entity.subtype === "file") {
-            window.location.href = `/file/download/${entity.guid}`
-        } else {
-            this.context.clearSelection()
-            this.props.history.push(`/groups/view/${group.guid}/${group.name}/files/${entity.guid}`)
-        }
+
+        this.context.clearSelection()
+        this.props.history.push(`/groups/view/${group.guid}/${group.name}/files/${entity.guid}`)
     }
 
     render () {
@@ -35,13 +37,14 @@ class FileFolder extends React.Component {
         const { entity, selected } = this.props
 
         let link
-        switch (entity.subtype) {
-            case "file":
-                link = `/file/download/${entity.guid}/${encodeURIComponent(entity.title)}`
-                break;
-            case "folder":
-                link = `/groups/view/${group.guid}/${group.name}/files/${entity.guid}`
-                break;
+        if (entity.subtype == "file") {
+            if (entity.mimeType == "application/vnd.oasis.opendocument.text") {
+                link = `/file/view/${entity.guid}`
+            } else {
+                link = `/file/download/${entity.guid}/${entity.title}`
+            }
+        } else {
+            link = `/groups/view/${group.guid}/${group.name}/files/${entity.guid}`
         }
 
         let checkbox
@@ -58,8 +61,8 @@ class FileFolder extends React.Component {
             <tr className={classnames({"file": true, "___is-checked": selected.has(entity)})}>
                 <td className="file__check">{checkbox}</td>
                 <td className={classnames({"file__type": true, "___folder": entity.subtype === "folder", "___doc": entity.subtype === "file"})}></td>
-                <td className="file__name" onClick={this.onClick}>
-                    <a href={link}>{entity.title}</a>
+                <td className="file__name">
+                    <a href={link} onClick={this.onClick}>{entity.title}</a>
                 </td>
                 <td className="file__fav"></td>
                 <td className="file__date">{showDate(entity.timeCreated)}</td>

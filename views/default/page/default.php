@@ -4,6 +4,7 @@ $lang = get_current_language();
 
 $store = elgg_extract("store", $vars);
 $metas = elgg_extract("metas", $vars);
+$settings = elgg_extract("settings", $vars);
 
 $theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
 $font = elgg_get_plugin_setting("font", "pleio_template");
@@ -50,6 +51,11 @@ $custom_js = elgg_is_active_plugin("custom_js");
     <?php if ($store): ?>
         <script>
             window.__STORE__ = <?php echo json_encode($store); ?>;
+        </script>
+    <?php endif; ?>
+    <?php if ($settings): ?>
+        <script>
+            window.__SETTINGS__ = <?php echo json_encode($settings); ?>;
         </script>
     <?php endif; ?>
     <script src="<?php echo elgg_get_simplecache_url("js", "vendor"); ?>"></script>

@@ -17,6 +17,9 @@ function pleio_template_init() {
         setlocale(LC_TIME, "nl_NL");
     }
 
+    elgg_register_action("odt_editor/upload", dirname(__FILE__) . "/actions/odt_editor/upload.php");
+    elgg_register_action("odt_editor/upload_asnew", dirname(__FILE__) . "/actions/odt_editor/upload_asnew.php");
+
     elgg_register_plugin_hook_handler("index", "system", "pleio_template_index_handler");
     elgg_register_plugin_hook_handler("container_permissions_check", "object", "pleio_template_container_permissions_check_hook");
     elgg_register_plugin_hook_handler("action", "plugins/settings/save", "pleio_template_plugins_settings_save");
