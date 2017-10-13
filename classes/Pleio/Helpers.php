@@ -564,6 +564,24 @@ class Helpers {
 		}
     }
 
+    static function getBreadcrumb($folder) {
+        $path = array();
+
+        if ($folder instanceof \ElggUser | $folder instanceof \ElggGroup) {
+            return $path;
+        }
+
+        $path[] = $folder;
+
+        $parent = get_entity($folder->parent_guid);
+        while ($parent) {
+            $path[] = $parent;
+            $parent = get_entity($parent->parent_guid);
+        }
+
+        return array_reverse($path);
+    }
+
     static function getSettings() {
         return [
             "odtEnabled" => elgg_is_active_plugin("odt_editor")

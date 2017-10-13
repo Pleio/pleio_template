@@ -87,7 +87,7 @@ export default class MoveFileFolderModal extends React.Component {
 
     render () {
         return (
-            <Modal ref="modal" title="Verplaatsen">
+            <Modal ref="modal" title="Verplaatsen" medium>
                 <MoveFileFolderWithMutation {...this.props} />
             </Modal>
         )

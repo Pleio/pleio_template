@@ -81,7 +81,7 @@ export default class Modal extends React.Component {
         }
 
         return (
-            <div id={this.props.id} ref="modal" tabIndex="0" className={classNames({"modal":true, "___full":this.props.full, "___blue":this.props.isBlue, "___small": this.props.small, "___square": this.props.square, "___is-open": this.state.isOpen })}>
+            <div id={this.props.id} ref="modal" tabIndex="0" className={classNames({"modal":true, "___full":this.props.full, "___blue":this.props.isBlue, "___small": this.props.small, "___medium": this.props.medium, "___square": this.props.square, "___is-open": this.state.isOpen })}>
                 {modal}
             </div>
         )

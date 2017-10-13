@@ -60,7 +60,7 @@ class AddFile extends React.Component {
                         <FileField label="Naam" name="files" className="form__input" rules="required" multiple={true} autofocus />
                         <div className="buttons ___end ___margin-top">
                             <button className="button" type="submit">
-                                Toevoegen
+                                Uploaden
                             </button>
                         </div>
                     </div>
@@ -93,7 +93,7 @@ export default class AddFileModal extends React.Component {
 
     render() {
         return (
-            <Modal ref="modal" title="Nieuw bestand">
+            <Modal ref="modal" title="Nieuw bestand" medium>
                 <AddFileWithMutation {...this.props} />
             </Modal>
         )

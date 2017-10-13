@@ -8,6 +8,7 @@ import GroupContainer from "../group/components/GroupContainer"
 import Document from "../core/components/Document"
 import FileFolderList from "./containers/FileFolderList"
 import Select from "../core/components/NewSelect"
+import Breadcrumb from "./components/Breadcrumb"
 import FileFolder from "./components/FileFolder"
 import FileFolderTile from "./components/FileFolderTile"
 import AddFileModal from "./components/AddFileModal"
@@ -137,13 +138,6 @@ class Item extends React.Component {
             )
         }
 
-        let subfolder
-        if (match.params.containerGuid) {
-            subfolder = (
-                <a>Submap</a>
-            )
-        }
-
         let list
         if (this.state.viewType === "list") {
             list = (
@@ -204,11 +198,7 @@ class Item extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="breadcrumb ___large">
-                            <a>Bestanden</a>
-                            <Link to={`/groups/view/${match.params.groupGuid}/${match.params.groupSlug}/files`} className="___is-active">{entity.name}</Link>
-                            {subfolder}
-                        </div>
+                        <Breadcrumb guid={containerGuid} />
                         {list}
                     </div>
                     <AddFileModal ref="addFile" containerGuid={containerGuid} onComplete={this.clearSelection} />

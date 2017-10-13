@@ -114,7 +114,7 @@ export default class EditFileFolderModal extends React.Component {
         }
 
         return (
-            <Modal ref="modal" title={title}>
+            <Modal ref="modal" title={title} medium>
                 <EditFileFolderWithMutation onComplete={this.toggle} {...this.props} />
             </Modal>
         )

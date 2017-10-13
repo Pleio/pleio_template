@@ -89,7 +89,7 @@ export default class AddFolderModal extends React.Component {
 
     render() {
         return (
-            <Modal ref="modal" title="Nieuwe map">
+            <Modal ref="modal" title="Nieuwe map" medium>
                 <AddFolderWithMutation {...this.props} />
             </Modal>
         )

@@ -95,7 +95,7 @@ export default class DeleteFileFolderModal extends React.Component {
         const { entity } = this.props
 
         return (
-            <Modal ref="modal" title="Verwijderen">
+            <Modal ref="modal" title="Verwijderen" medium>
                 <DeleteFileFolderWithMutation {...this.props} />
             </Modal>
         )

@@ -1158,4 +1158,17 @@ class Resolver {
             "edges" => $entities
         ];
     }
+
+    static function getBreadcrumb($a, $args, $c) {
+        if (!$args["guid"]) {
+            return [];
+        }
+
+        $entity = get_entity($args["guid"]);
+        if (!$entity) {
+            return [];
+        }
+
+        return Helpers::getBreadcrumb($entity);
+    }
 }

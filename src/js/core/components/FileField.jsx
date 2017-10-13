@@ -57,15 +57,17 @@ class FileField extends React.Component {
 
     render() {
         return (
-            <input
-                ref="field"
-                name={this.props.name}
-                type="file"
-                className={this.props.className}
-                placeholder={this.props.placeholder}
-                onChange={this.onChange}
-                multiple={this.props.multiple}
-            />
+            <div className="editor__upload">
+                <span>+ Bestand(en) uploaden</span>
+                <input
+                    ref="field"
+                    name={this.props.name}
+                    type="file"
+                    className="___is-hidden"
+                    onChange={this.onChange}
+                    multiple={this.props.multiple}
+                />
+            </div>
         )
     }
 }

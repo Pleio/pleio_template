@@ -983,6 +983,15 @@ class SchemaBuilder {
                     "type" => Type::listOf($topType),
                     "resolve" => "Pleio\Resolver::getTop"
                 ],
+                "breadcrumb" => [
+                    "type" => Type::listOf($objectType),
+                    "args" => [
+                        "guid" => [
+                            "type" => Type::string()
+                        ]
+                    ],
+                    "resolve" => "Pleio\Resolver::getBreadcrumb"  
+                ],
                 "entities" => [
                     "type" => $entityListType,
                     "args" => [
