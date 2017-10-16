@@ -6,6 +6,7 @@ import GroupContainer from "./components/GroupContainer"
 import Document from "../core/components/Document"
 import Card from "../activity/components/Card"
 import Introduction from "./components/Introduction"
+import StatusUpdate from "./components/StatusUpdate"
 import MembersCard from "./components/MembersCard"
 import EventsCard from "./components/EventsCard"
 import ActivityList from "./components/ActivityList"
@@ -81,6 +82,7 @@ class Item extends React.Component {
                             </div>
                             <div className="col-sm-12 col-lg-8">
                                 <Introduction entity={entity} />
+                                <StatusUpdate containerGuid={entity.guid} />
                                 <ActivityList containerGuid={entity.guid} containerClassName="" childClass={Card} offset={0} limit={20} tags={[]} />
                             </div>
                         </div>

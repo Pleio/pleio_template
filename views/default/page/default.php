@@ -3,7 +3,7 @@ header("Content-type: text/html; charset=utf-8");
 $lang = get_current_language();
 
 $store = elgg_extract("store", $vars);
-$metas = elgg_extract("metas", $vars);
+$metas = elgg_extract("metas", $vars, []);
 $settings = elgg_extract("settings", $vars);
 
 $theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");

@@ -10,7 +10,7 @@
     },
     "require": {
         "composer/installers": "^1.0.8",
-        "webonyx/graphql-php": "v0.6.4",
-        "ivome/graphql-relay-php": "^0.1.2"
+        "webonyx/graphql-php": "v0.11.2",
+        "ivome/graphql-relay-php": "^0.4.1"
     }
 }
