@@ -63,7 +63,7 @@ class Edit extends React.Component {
 
         return (
             <ActionContainer title="Evenement wijzigen" onClose={this.onClose}>
-                <EditCore subtype="event" viewer={viewer} entity={entity} featured={true} refetchQueries={["InfiniteList"]} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
+                <EditCore subtype="event" viewer={viewer} entity={entity} featured={!match.params.groupGuid} refetchQueries={["InfiniteList"]} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
                 <DeleteCore title="Evenement verwijderen" ref="deleteModal" entity={entity} afterDelete={this.afterDelete} />
             </ActionContainer>
         )

@@ -32,7 +32,7 @@ export default class Add extends React.Component {
         
         return (
             <ActionContainer title="Evenement toevoegen" onClose={this.onClose}>
-                <AddCore subtype="event" featured={true} afterAdd={this.afterAdd} containerGuid={match.params.groupGuid} />
+                <AddCore subtype="event" featured={!match.params.groupGuid} afterAdd={this.afterAdd} containerGuid={match.params.groupGuid} />
             </ActionContainer>
         )
     }
