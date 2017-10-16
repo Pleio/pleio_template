@@ -29,7 +29,7 @@ class Item extends React.Component {
             add = (
                 <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
                     <Link to={`questions/add`} className="right-lg">
-                        <div className="button ___large ___add"><span>Stel een vraag</span></div>
+                        <div className="button ___large ___add"><span>Start een discussie</span></div>
                     </Link>
                 </div>
             )
