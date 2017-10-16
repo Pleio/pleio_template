@@ -5,6 +5,7 @@ import classnames from "classnames"
 import NewsCard from "../../news/components/Card"
 import BlogCard from "../../blog/components/Card"
 import QuestionCard from '../../questions/components/Card'
+import WireCard from "../../group/components/WireCard"
 
 export default class Card extends React.Component {
     constructor(props) {
@@ -30,6 +31,10 @@ export default class Card extends React.Component {
             case "question":
                 return (
                     <QuestionCard entity={this.props.entity.object} inActivityFeed={true} />
+                )
+            case "thewire":
+                return (
+                    <WireCard entity={this.props.entity.object} inActivityFeed={true} />
                 )
             default:
                 return (

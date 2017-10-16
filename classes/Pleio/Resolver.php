@@ -124,7 +124,7 @@ class Resolver {
 
         $options = [
             "type" => "object",
-            "subtype" => ["news", "blog", "question"],
+            "subtype" => ["news", "blog", "question", "thewire"],
             "offset" => (int) $args["offset"],
             "limit" => (int) $args["limit"]
         ];
@@ -134,7 +134,7 @@ class Resolver {
         }
 
         if (count($tags) > 2) {
-            $result = Helpers::getEntitiesFromTags(["news", "blog", "question"], $tags, (int) $args["offset"], (int) $args["limit"]);
+            $result = Helpers::getEntitiesFromTags(["news", "blog", "question", "thewire"], $tags, (int) $args["offset"], (int) $args["limit"]);
         } else {
             if ($tags) {
                 $options["metadata_name_value_pairs"] = [];
