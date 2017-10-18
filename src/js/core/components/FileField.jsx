@@ -66,6 +66,17 @@ class FileField extends React.Component {
             amount = `(${this.state.value.length})`
         }
 
+        if (this.props.isUploading) {
+            return (
+                <div className="editor__upload">
+                    <div className="infinite-scroll__spinner">
+                        <img src="/mod/pleio_template/src/images/spinner.svg" />
+                    </div>
+                </div>
+            )
+        }
+
+
         return (
             <div className="editor__upload">
                 <input

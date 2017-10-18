@@ -1,7 +1,11 @@
 import React from "react"
 import { DropTarget } from "react-dnd"
 import Widget from "./Widget"
+import Delete from "../../core/Delete"
 import classnames from "classnames"
+import autobind from "autobind-decorator"
+import { graphql } from "react-apollo"
+import gql from "graphql-tag"
 
 const translate = {
     "video": "Video",
@@ -9,12 +13,28 @@ const translate = {
     "text": "Tekst"
 }
 
-export default class Row extends React.Component {
+class Row extends React.Component {
+
+    @autobind
+    addWidget(position, type) {
+        this.props.mutate({
+            variables: {
+                input: {
+                    clientMutationId: 1,
+                    rowGuid: this.props.entity.guid,
+                    position,
+                    type,
+                }
+            },
+            refetchQueries: ["PageItem"]
+        })
+    }
+
     render() {
         let cols = []
         let options = ["video", "image", "text"]
 
-        switch (this.props.layout) {
+        switch (this.props.entity.layout) {
             case "full":
                 cols = ["col-sm-12"]
                 break
@@ -36,28 +56,49 @@ export default class Row extends React.Component {
                 break
         }
 
-        const buttons = options.map((option, i) => (
-            <button key={i} className="button" disabled={this.props.disabled}>{translate[option]}</button>
-        ))
+        let definedWidgets = {}
+        this.props.entity.widgets.forEach((widget) => {
+            definedWidgets[widget.position] = widget
+        })
 
-        const widgets = cols.map((col, i) => (
-            <div key={i} className={col}>
-                <div className="cms-block">
-                    <div className="cms-block__buttons">
-                        {buttons}
-                    </div>
-                </div>
-            </div>
-        ))
+        let buttons
 
-        if (this.props.layout === "full") {
-            return (
-                <section className={classnames({"section": true, "___no-padding-top": this.props.firstRow})}>
-                    <div className="cms-block">
-                        <div className="cms-block__buttons">
-                            {buttons}
+        const widgets = cols.map((col, i) => {
+            if (definedWidgets[i]) {
+                return (
+                    <Widget key={i} col={col} entity={definedWidgets[i]} />
+                )
+            } else {
+                buttons = options.map((option, j) => (
+                    <button key={j} className="button" disabled={this.props.disabled} onClick={(e) => this.addWidget(i, option)}>{translate[option]}</button>
+                ))
+
+                return (
+                    <div key={i} className={col}>
+                        <div className="cms-block">
+                            <div className="cms-block__buttons">
+                                {buttons}
+                            </div>
                         </div>
                     </div>
+                )
+            }
+        })
+
+        const overlay = (
+            <div className="overlay">
+                <div className="overlay__buttons">
+                    <button onClick={(e) => this.refs.delete.toggle()}>Delete</button>
+                </div>
+                <Delete ref="delete" entity={this.props.entity} refetchQueries={["PageItem"]} />
+            </div>
+        )
+
+        if (this.props.entity.layout === "full") {
+            return (
+                <section className={classnames({"section": true, "___no-padding-top": this.props.firstRow})}>
+                    {widgets}
+                    {overlay}
                 </section>
             )
         } else {
@@ -68,8 +109,21 @@ export default class Row extends React.Component {
                             {widgets}
                         </div>
                     </div>
+                    {overlay}
                 </section>
             )
         }
     }
 }
+
+const Mutation = gql`
+    mutation AddWidget($input: addWidgetInput!) {
+        addWidget(input: $input) {
+            entity {
+                guid
+            }
+        }
+    }
+`
+
+export default graphql(Mutation)(Row)

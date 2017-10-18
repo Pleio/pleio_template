@@ -90,8 +90,15 @@ class Mapper {
             "title" => $entity->title,
             "timeCreated" => $entity->timeCreated,
             "timeUpdated" => $entity->timeUpdated,
-            "url" => Helpers::getURL($entity),
-            "widgets" => Resolver::getWidgets($entity)
+            "url" => Helpers::getURL($entity)
+        ];
+    }
+
+    static function getRow($entity) {
+        return [
+            "guid" => $entity->guid,
+            "layout" => $entity->layout,
+            "canEdit" => $entity->canEdit()
         ];
     }
 
@@ -99,8 +106,8 @@ class Mapper {
         return [
             "guid" => $entity->guid,
             "type" => $entity->widget_type ? $entity->widget_type : "Empty",
-            "row" => $entity->row ? $entity->row : 1,
-            "width" => $entity->width ? $entity->width : 4,
+            "position" => $entity->position,
+            "canEdit" => $entity->canEdit(),
             "settings" => $entity->getPrivateSetting("settings") ? json_decode($entity->getPrivateSetting("settings")) : []
         ];
     }

@@ -17,7 +17,7 @@ class EventsCard extends React.Component {
 
         const items = data.entities.edges.map((entity) => (
             <Link key={entity.guid} to={entity.url} className="card__item">
-                <div className="card__subtitle">{showFullDate(entity.startDate)}</div>
+                <div className="___colored">{showFullDate(entity.startDate)}</div>
                 <span>{entity.title}</span>
             </Link>
         ))

@@ -9,11 +9,11 @@ export default class Add extends React.Component {
     }
 
     onClose() {
-        this.props.history.push("/page")
+        this.props.history.push("/cms")
     }
 
     afterAdd() {
-        window.location.href = "/page"
+        window.location.href = "/cms"
     }
 
     render() {

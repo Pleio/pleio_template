@@ -453,12 +453,12 @@ class RichTextField extends React.Component {
         )
 
         let toolbarWidth
-        if (this.refs.container) {
+        if (this.refs.container && !this.props.isInline) {
             toolbarWidth = this.refs.container.offsetWidth - 2
         }
 
         return (
-            <div ref="container" className={classnames({"editor": true, "___is-sticky": this.state.isSticky})}>
+            <div ref="container" className={classnames({"editor": true, "___is-sticky": this.state.isSticky && !this.props.isInline, "___is-inline": this.props.isInline})}>
                 <div className="editor__toolbar" style={{width:toolbarWidth}}>
                     {textSize}
                     {inline}

@@ -162,14 +162,35 @@ class SchemaBuilder {
                 "type" => [
                     "type" => Type::nonNull(Type::string())
                 ],
-                "row" => [
-                    "type" => Type::nonNull(Type::int())
-                ],
-                "width" => [
-                    "type" => Type::nonNull(Type::int())
+                "position" => [
+                    "type" => Type::int()
                 ],
                 "settings" => [
                     "type" => Type::listOf($widgetSetting)
+                ],
+                "canEdit" => [
+                    "type" => Type::nonNull(Type::boolean())
+                ]
+            ]
+        ]);
+
+        $rowItem = new ObjectType([
+            "name" => "Row",
+            "fields" => [
+                "guid" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "layout" => [
+                    "type" => Type::nonNull(Type::string())
+                ],
+                "canEdit" => [
+                    "type" => Type::nonNull(Type::boolean())
+                ],
+                "widgets" => [
+                    "type" => Type::listOf($widgetItem),
+                    "resolve" => function($object) {
+                        return Resolver::getWidgets($object);
+                    }
                 ]
             ]
         ]);
@@ -214,8 +235,11 @@ class SchemaBuilder {
                 "timeUpdated" => [
                     "type" => Type::string()
                 ],
-                "widgets" => [
-                    "type" => Type::listOf($widgetItem)
+                "rows" => [
+                    "type" => Type::listOf($rowItem),
+                    "resolve" => function($object) {
+                        return Resolver::getRows($object);
+                    }
                 ]
             ]
         ]);
@@ -1431,6 +1455,23 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::addPage"
         ]);
 
+        $addRowMutation = Relay::mutationWithClientMutationId([
+            "name" => "addRow",
+            "inputFields" => [
+                "layout" => [ "type" => Type::string() ],
+                "containerGuid" => [ "type" => Type::string() ]
+            ],
+            "outputFields" => [
+                "entity" => [
+                    "type" => $objectType,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::addRow"
+        ]);
+
         $widgetSettingInput = new InputObjectType([
             "name" => "WidgetSettingInput",
             "fields" => [
@@ -1446,8 +1487,11 @@ class SchemaBuilder {
         $addWidgetMutation = Relay::mutationWithClientMutationId([
             "name" => "addWidget",
             "inputFields" => [
-                "pageGuid" => [
+                "rowGuid" => [
                     "type" => Type::nonNull(Type::string())
+                ],
+                "position" => [
+                    "type" => Type::nonNull(Type::int())
                 ],
                 "type" => [
                     "type" => Type::nonNull(Type::string())
@@ -1965,6 +2009,7 @@ class SchemaBuilder {
                     "editFileFolder" => $editFileFolderMutation,
                     "addPage" => $addPageMutation,
                     "editPage" => $editPageMutation,
+                    "addRow" => $addRowMutation,
                     "addWidget" => $addWidgetMutation,
                     "editWidget" => $editWidgetMutation,
                     "subscribeNewsletter" => $subscribeNewsletterMutation,

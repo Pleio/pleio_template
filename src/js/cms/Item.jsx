@@ -14,7 +14,7 @@ import DeleteWidgetModal from "./components/DeleteWidgetModal"
 import { DragDropContext } from "react-dnd"
 import HTML5Backend from "react-dnd-html5-backend"
 import update from "immutability-helper"
-import Add from "./components/Add"
+import AddRow from "./components/AddRow"
 import Row from "./components/Row"
 import autobind from "autobind-decorator"
 
@@ -68,16 +68,6 @@ class Item extends React.Component {
     }
 
     @autobind
-    onAddRow() {
-        const length = Object.keys(this.state.rows).length
-        this.setState({
-            rows: Object.assign({}, this.state.rows, {
-                [length+1]: []
-            })
-        })
-    }
-
-    @autobind
     onAdd(row) {
         this.setState({
             rows: [...this.state.rows, row]
@@ -106,9 +96,8 @@ class Item extends React.Component {
         let { entity } = this.props.data
 
         if (!entity) {
-            // Loading...
             return (
-                <div></div>
+                <div />
             )
         }
 
@@ -118,15 +107,15 @@ class Item extends React.Component {
             )
         }
 
-        let rows = this.state.rows.map((row, i) => (
-            <Row key={i} layout={row.layout} firstRow={i === 0 ? true : false} />
+        const rows = entity.rows.map((row, i) => (
+            <Row key={row.guid} entity={row} firstRow={i === 0 ? true : false} />
         ))
 
 
         let add
         if (entity.canEdit) {
             add = (
-                <Add onSubmit={this.onAdd} firstRow={this.state.rows.length === 0 ? true : false} />
+                <AddRow onSubmit={this.onAdd} firstRow={this.state.rows.length === 0 ? true : false} containerGuid={entity.guid} />
             )
         }
 
@@ -150,13 +139,18 @@ const Query = gql`
             ... on Page {
                 title
                 canEdit
-                widgets {
+                rows {
                     guid
-                    type
-                    width
-                    settings {
-                        key
-                        value
+                    layout
+                    widgets {
+                        guid
+                        type
+                        canEdit
+                        position
+                        settings {
+                            key
+                            value
+                        }
                     }
                 }
             }

@@ -16,7 +16,8 @@ class EditFileFolder extends React.Component {
         this.onSubmit = this.onSubmit.bind(this)
 
         this.state = {
-            errors: []
+            errors: [],
+            isUploading: false
         }
     }
 
@@ -24,7 +25,8 @@ class EditFileFolder extends React.Component {
         const { entity } = this.props
 
         this.setState({
-            errors: []
+            errors: [],
+            isUploading: true
         })
 
         const values = this.refs.form.getValues()
@@ -43,7 +45,8 @@ class EditFileFolder extends React.Component {
         }).catch((errors) => {
             logErrors(errors)
             this.setState({
-                errors: errors
+                errors: errors,
+                isUploading: false
             })
         })
     }

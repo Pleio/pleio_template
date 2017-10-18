@@ -844,7 +844,7 @@ class Mutations {
         $entity = new ElggObject();
         $entity->subtype = "page";
         $entity->title = $input["title"];
-
+        $entity->access_id = get_default_access();
         $result = $entity->save();
 
         if ($result) {
@@ -878,25 +878,50 @@ class Mutations {
         throw new Exception("could_not_save");
     }
 
-    static function addWidget($input) {
-        $page = get_entity((int) $input["pageGuid"]);
-        if (!$page) {
+    static function addRow($input) {
+        $container = get_entity($input["containerGuid"]);
+        if (!$container || $container->getSubtype() !== "page") {
             throw new Exception("could_not_find");
         }
 
-        if (!$page->canEdit()) {
+        if (!$container->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        $row = new \ElggObject();
+        $row->subtype = "row";
+        $row->layout = $input["layout"];
+        $row->container_guid = $input["containerGuid"];
+        $row->access_id = get_default_access();
+        $result = $row->save();
+
+        if ($result) {
+            return [
+                "guid" => $row->guid
+            ];    
+        }
+
+        throw new Exception("could_not_save");
+    }
+
+    static function addWidget($input) {
+        $row = get_entity((int) $input["rowGuid"]);
+        if (!$row || $row->getSubtype() !== "row") {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$row->canEdit()) {
             throw new Exception("could_not_save");
         }
 
         $entity = new \ElggObject();
         $entity->subtype = "page_widget";
-        $entity->title = $input["title"];
-        $entity->container_guid = $page->guid;
+        $entity->container_guid = $row->guid;
+        $entity->position = $input["position"];
         $entity->access_id = get_default_access();
-        $result = $entity->save();
-
         $entity->widget_type = $input["type"];
-        $result &= $entity->save();
+
+        $result = $entity->save();
 
         if ($result) {
             return [

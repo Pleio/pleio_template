@@ -13,7 +13,8 @@ class AddFile extends React.Component {
         this.onSubmit = this.onSubmit.bind(this)
 
         this.state = {
-            errors: []
+            errors: [],
+            isUploading: false
         }
     }
 
@@ -31,6 +32,11 @@ class AddFile extends React.Component {
         const values = this.refs.form.getValues()
         const { containerGuid } = this.props
 
+        this.setState({
+            errors: [],
+            isUploading: true
+        })
+
         Promise.all(this.convertFileListToArray(values.files).map((file) => {
             return this.props.mutate({
                 variables: {
@@ -43,6 +49,12 @@ class AddFile extends React.Component {
             })
         })).then(({data}) => {
             location.reload()
+        }).catch((errors) => {
+            logErrors(errors)
+            this.setState({
+                errors: errors,
+                isUploading: false
+            })
         })
     }
 
@@ -57,9 +69,9 @@ class AddFile extends React.Component {
                 <div className="container">
                     {errors}
                     <div className="form">
-                        <FileField label="Naam" name="files" className="form__input" rules="required" multiple={true} autofocus />
+                        <FileField label="Naam" name="files" className="form__input" rules="required" multiple={true} isUploading={this.state.isUploading} autofocus />
                         <div className="buttons ___end ___margin-top">
-                            <button className="button" type="submit">
+                            <button className="button" type="submit" disabled={this.state.isUploading}>
                                 Uploaden
                             </button>
                         </div>

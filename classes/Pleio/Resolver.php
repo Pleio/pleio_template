@@ -614,11 +614,30 @@ class Resolver {
         return $comments;
     }
 
+    static function getRows($entity) {
+        $options = [
+            "container_guid" => (int) $entity["guid"],
+            "type" => "object",
+            "subtype" => "row",
+            "order_by" => "e.guid",
+            "limit" => false
+        ];
+
+        $rows = [];
+        foreach(elgg_get_entities($options) as $row) {
+            $rows[] = Mapper::getRow($row);
+        }
+
+        return $rows;
+    }
+
     static function getWidgets($entity) {
         $options = array(
+            "container_guid" => (int) $entity["guid"],
             "type" => "object",
             "subtype" => "page_widget",
-            "container_guid" => (int) $entity->guid
+            "order_by" => "e.guid",
+            "limit" => false
         );
 
         $widgets = [];

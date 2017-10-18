@@ -26,7 +26,7 @@ class Edit extends React.Component {
     }
 
     afterDelete() {
-        window.location.href = '/page'
+        window.location.href = '/cms'
     }
 
     onDeleteClick(e) {

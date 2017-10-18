@@ -2,8 +2,10 @@ import React from "react"
 import classnames from "classnames"
 import autobind from "autobind-decorator"
 import Row from "./Row"
+import { graphql } from "react-apollo"
+import gql from "graphql-tag"
 
-export default class Add extends React.Component {
+class AddRow extends React.Component {
     constructor(props) {
         super(props)
 
@@ -34,18 +36,25 @@ export default class Add extends React.Component {
 
     @autobind
     onSubmit(e) {
-        this.props.onSubmit({
-            layout: this.state.layout
+        this.props.mutate({
+            variables: {
+                input: {
+                    clientMutationId: 1,
+                    layout: this.state.layout,
+                    containerGuid: this.props.containerGuid
+                }
+            },
+            refetchQueries: ["PageItem"]
+        }).then((data) => {
+            this.hide()
         })
-
-        this.hide()
     }
 
     render() {
         let block
         if (this.state.layout) {
             block = (
-                <Row layout={this.state.layout} disabled={true} firstRow={this.props.firstRow} />
+                <Row entity={{layout: this.state.layout, widgets: []}} disabled={true} firstRow={this.props.firstRow} />
             )
         } else {
             block = (
@@ -108,3 +117,15 @@ export default class Add extends React.Component {
        )
     }
 }
+
+const Mutation = gql`
+    mutation AddRow($input: addRowInput!) {
+        addRow(input: $input) {
+            entity {
+                guid
+            }
+        }
+    }
+`
+
+export default graphql(Mutation)(AddRow)

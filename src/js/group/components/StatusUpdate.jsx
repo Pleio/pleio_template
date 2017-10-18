@@ -51,10 +51,9 @@ class StatusUpdate extends React.Component {
     render() {
         const { viewer } = this.props.data
 
-        let icon
-        if (viewer) {
-            icon = (
-                <div className="picture" style={{backgroundImage:`url(${viewer.user.icon})`}} />
+        if (!viewer || !viewer.canWriteToContainer) {
+            return (
+                <div />
             )
         }
 
@@ -63,9 +62,10 @@ class StatusUpdate extends React.Component {
             errors = ( <Errors errors={this.state.errors} /> );
         }
 
+
         return (
             <div className="card ___indent">
-                {icon}
+                <div className="picture" style={{backgroundImage:`url(${viewer.user.icon})`}} />
                 <div className="card__content">
                     {errors}
                     <Form ref="form" onSubmit={this.onSubmit} className="form">
@@ -81,9 +81,10 @@ class StatusUpdate extends React.Component {
 }
 
 const Query = gql`
-    query addStatusUpdate {
+    query addStatusUpdate($containerGuid: String!) {
         viewer {
             guid
+            canWriteToContainer(containerGuid: $containerGuid, subtype: "thewire")
             user {
                 guid
                 icon
