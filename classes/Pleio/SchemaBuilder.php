@@ -1043,6 +1043,9 @@ class SchemaBuilder {
                         "containerGuid" => [
                             "type" => Type::string()
                         ],
+                        "filter" => [
+                            "type" => Type::string()
+                        ],
                         "orderBy" => [
                             "type" => Type::string()
                         ],

@@ -437,7 +437,7 @@ class Helpers {
         return notify_user($group->owner_guid, $user->guid, $subject, $body);
     }
 
-    static function getFolderContents($folder, $limit = 100, $offset = 0, $order_by = "filename", $direction = "asc") {
+    static function getFolderContents($folder, $limit = 100, $offset = 0, $order_by = "filename", $direction = "asc", $filter = "all") {
         if ($folder) {
             $totalFolders = Helpers::getFolders($folder, $limit, $offset, true);
             $folders = Helpers::getFolders($folder, $limit, $offset, false, $order_by, $direction);
@@ -457,7 +457,17 @@ class Helpers {
             $files = array();
         }
 
-        return array($totalFolders + $totalFiles, array_merge($folders, $files));
+        switch ($filter) {
+            case "files":
+                return array($totalFiles, $files);
+            case "folders":
+                return array($totalFolders, $folders);
+            case "all":
+            default:
+                return array($totalFolders + $totalFiles, array_merge($folders, $files));
+        }
+
+
     }
 
     static function getFolders($parent, $limit = 100, $offset = 0, $count = false, $order_by = "filename", $direction = "ASC") {

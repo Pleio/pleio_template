@@ -26,6 +26,7 @@ class Item extends React.Component {
         this.state = {
             selected: new OrderedSet(),
             viewType: (this.props.location.hash === "#tiles") ? "tiles" : "list",
+            filter: "all",
             orderBy: "filename",
             direction: "asc"
         }
@@ -40,6 +41,11 @@ class Item extends React.Component {
             selected: this.state.selected,
             group: entity
         }
+    }
+
+    @autobind
+    onChangeFilter(nextValue) {
+        this.setState({ filter: nextValue })
     }
 
     @autobind
@@ -170,12 +176,12 @@ class Item extends React.Component {
                             <th><button className={classnames({"___is-active": this.state.orderBy === "owner", "___is-descending": this.state.direction === "desc"})} onClick={(e) => this.toggleOrderBy("owner")}><span>Eigenaar</span></button></th>
                         </tr>
                     </thead>
-                    <FileFolderList containerGuid={containerGuid} containerClassName="" inTable rowClassName="row file__item" childClass={FileFolder} offset={0} limit={50} orderBy={this.state.orderBy} direction={this.state.direction} selected={this.state.selected} history={this.props.history} />
+                    <FileFolderList containerGuid={containerGuid} containerClassName="" inTable rowClassName="row file__item" childClass={FileFolder} filter={this.state.filter} offset={0} limit={50} orderBy={this.state.orderBy} direction={this.state.direction} selected={this.state.selected} history={this.props.history} />
                 </table>
             )
         } else {
             list = (
-                <FileFolderList containerGuid={containerGuid} containerClassName="file-tiles" childClass={FileFolderTile} offset={0} limit={50} orderBy={this.state.orderBy} direction={this.state.direction} selected={this.state.selected} history={this.props.history} />
+                <FileFolderList containerGuid={containerGuid} containerClassName="file-tiles" childClass={FileFolderTile} filter={this.state.filter} offset={0} limit={50} orderBy={this.state.orderBy} direction={this.state.direction} selected={this.state.selected} history={this.props.history} />
             )
         }
 
@@ -199,7 +205,7 @@ class Item extends React.Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-4 col-lg-3">
-                                <Select options={{"all": "Alles", "favorites": "Favorieten", "folders": "Mappen", "files": "Bestanden"}} value="all" className="selector ___margin-bottom-mobile" />
+                                <Select onChange={this.onChangeFilter} options={{"all": "Alles", "folders": "Mappen", "files": "Bestanden"}} value={this.state.filter} className="selector ___margin-bottom-mobile" />
                             </div>
                             <div className="col-sm-8 col-lg-9 end-sm">
                                 <div className="flexer ___gutter ___margin-bottom">

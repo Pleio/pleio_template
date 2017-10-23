@@ -932,7 +932,7 @@ class Resolver {
     static function getFiles($a, $args, $c) {
         $container = get_entity($args["containerGuid"]);
         if ($container) {
-            list($total, $entities) = Helpers::getFolderContents($container, $args["limit"], $args["offset"], $args["orderBy"], $args["direction"]);
+            list($total, $entities) = Helpers::getFolderContents($container, $args["limit"], $args["offset"], $args["orderBy"], $args["direction"], $args["filter"]);
             
             $edges = [];
             foreach ($entities as $entity) {
