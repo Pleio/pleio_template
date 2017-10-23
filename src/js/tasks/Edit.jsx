@@ -70,7 +70,7 @@ class Edit extends React.Component {
 }
 
 const Query = gql`
-    query EditWiki($guid: String!) {
+    query EditWiki($guid: Int!) {
         entity(guid: $guid) {
             guid
             status

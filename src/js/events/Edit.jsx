@@ -20,7 +20,7 @@ class Edit extends React.Component {
     getRootURL() {
         const { match } = this.props
 
-        if (match.params.groupGuid && match.params.groupSlug) {
+        if (match && match.params.groupGuid && match.params.groupSlug) {
             return `/groups/view/${match.params.groupGuid}/${match.params.groupSlug}`
         }
 
@@ -47,6 +47,7 @@ class Edit extends React.Component {
     }
 
     render() {
+        const { match } = this.props
         let { entity, viewer } = this.props.data
 
         if (!entity) {
@@ -63,7 +64,7 @@ class Edit extends React.Component {
 
         return (
             <ActionContainer title="Evenement wijzigen" onClose={this.onClose}>
-                <EditCore subtype="event" viewer={viewer} entity={entity} featured={!match.params.groupGuid} refetchQueries={["InfiniteList"]} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
+                <EditCore subtype="event" viewer={viewer} entity={entity} containerGuid={match.params.groupGuid} featured={!match.params.groupGuid}  refetchQueries={["InfiniteList"]} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
                 <DeleteCore title="Evenement verwijderen" ref="deleteModal" entity={entity} afterDelete={this.afterDelete} />
             </ActionContainer>
         )
@@ -71,7 +72,7 @@ class Edit extends React.Component {
 }
 
 const Query = gql`
-    query EditNews($guid: String!) {
+    query EditNews($guid: Int!) {
         viewer {
             guid
             loggedIn

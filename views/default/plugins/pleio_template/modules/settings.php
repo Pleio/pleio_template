@@ -93,3 +93,15 @@
         ]
     ]); ?>
 </div>
+
+<div>
+    <label><?php echo elgg_echo("pleio_template:advanced_permissions"); ?></label>
+    <?php echo elgg_view("input/dropdown", [
+        "name" => "params[advanced_permissions]",
+        "value" => $vars["plugin"]->advanced_permissions,
+        "options_values" => [
+            "no" => elgg_echo("option:no"),
+            "yes" => elgg_echo("option:yes")
+        ]
+    ]); ?>
+</div>

@@ -41,7 +41,7 @@ class MembersList extends React.Component {
 }
 
 const Query = gql`
-    query MembersList($guid: String!, $q: String) {
+    query MembersList($guid: Int!, $q: String) {
         entity(guid: $guid) {
             ... on Group {
                 guid

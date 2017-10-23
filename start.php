@@ -343,7 +343,6 @@ function pleio_template_email_handler($hook, $type, $return, $params) {
     $subject = preg_replace("/(\r\n|\r|\n)/", " ", $params["subject"]);
 
     $body = $params["body"];
-    $body = preg_replace("!(((f|ht)tp(s)?://)[-a-zA-Zа-яА-Я()0-9@:%_+.~#?&;//=]+)!i", "<a href=\"$1\">$1</a>", $body);
     $body = nl2br($body);
 
     $email_params = [

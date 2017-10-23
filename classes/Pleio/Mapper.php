@@ -75,6 +75,7 @@ class Mapper {
             "endDate" => date("c", $entity->endDate),
             "canEdit" => $entity->canEdit(),
             "accessId" => $entity->access_id,
+            "writeAccessId" => $entity->write_access_id,
             "tags" => Helpers::renderTags($entity->tags)
         ];
     }
@@ -87,7 +88,10 @@ class Mapper {
             "canEdit" => $entity->canEdit(),
             "type" => $entity->type,
             "subtype" => $entity->getSubtype(),
+            "pageType" => $entity->pageType,
             "title" => $entity->title,
+            "description" => $entity->description,
+            "richDescription" => $entity->richDescription,
             "timeCreated" => $entity->timeCreated,
             "timeUpdated" => $entity->timeUpdated,
             "url" => Helpers::getURL($entity)
@@ -97,7 +101,9 @@ class Mapper {
     static function getRow($entity) {
         return [
             "guid" => $entity->guid,
-            "layout" => $entity->layout,
+            "type" => "object",
+            "subtype" => "row",
+            "layout" => $entity->layout ? $entity->layout : "full",
             "canEdit" => $entity->canEdit()
         ];
     }

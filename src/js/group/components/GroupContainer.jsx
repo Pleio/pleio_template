@@ -1,12 +1,13 @@
 import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
-import { Link } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 import Featured from "../../core/components/Featured"
 import Menu from "./Menu"
 import MoreInfoModal from "./MoreInfoModal"
 import LeaveGroupModal from "./LeaveGroupModal"
 import InviteModal from "./InviteModal"
+import SendMessageModal from "./SendMessageModal"
 import JoinGroupButton from "./JoinGroupButton"
 
 class GroupContainer extends React.Component {
@@ -33,7 +34,7 @@ class GroupContainer extends React.Component {
             )
         }
 
-        let join, leave, edit, invite
+        let join, leave, edit, invite, sendMessage
         if (((viewer.loggedIn && !entity.isClosed) || entity.canEdit) && entity.membership === "not_joined") {
             join = (
                 <JoinGroupButton entity={entity} />
@@ -62,6 +63,11 @@ class GroupContainer extends React.Component {
                     Leden uitnodigen
                 </div>
             )
+            sendMessage = (
+                <div className="button ___large" onClick={() => this.refs.sendMessageModal.toggle()}>
+                    Bericht versturen
+                </div>
+            )
         }
 
         let buttons = this.props.buttons
@@ -72,6 +78,7 @@ class GroupContainer extends React.Component {
                     {leave}
                     {edit}
                     {invite}
+                    {sendMessage}
                 </div>
             )
         }
@@ -93,13 +100,14 @@ class GroupContainer extends React.Component {
                 <MoreInfoModal ref="moreInfoModal" entity={entity} />
                 <LeaveGroupModal ref="leaveGroupModal" entity={entity} />
                 <InviteModal ref="inviteModal" entity={entity} />
+                <SendMessageModal ref="sendMessageModal" entity={entity} />
             </div>
         )
     }
 }
 
 const Query = gql`
-    query GroupItem($guid: String!) {
+    query GroupItem($guid: Int!) {
         viewer {
             guid
             loggedIn

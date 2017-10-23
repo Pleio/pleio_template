@@ -54,7 +54,7 @@ class GroupList extends React.Component {
 }
 
 const Query = gql`
-    query GroupList($guid: String!) {
+    query GroupList($guid: Int!) {
         viewer {
             guid
             loggedIn

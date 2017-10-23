@@ -6,27 +6,36 @@ import GroupContainer from "../group/components/GroupContainer"
 import Document from "../core/components/Document"
 import WikiItem from "../wiki/Item"
 
-class Item extends React.Component {
+class GroupItem extends React.Component {
     render() {
-        const { match } = this.props
-        const { entity, viewer } = this.props.data
+        const { viewer } = this.props.data
 
-        if (!entity) {
+        if (!viewer) {
             // Loading...
             return (
                 <div></div>
             )
         }
 
-        if (entity.status == 404) {
-            return (
-                <NotFound />
+        let add
+        if (viewer.canWriteToContainer) {
+            add = (
+                <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
+                    <Link to={`wiki/add`} className="right-lg">
+                        <div className="button ___large ___add"><span>Maak een subpagina</span></div>
+                    </Link>
+                </div>
             )
         }
 
+        const buttons = (
+            <div className="flexer ___gutter ___top">
+                {add}
+            </div>
+        )
+
         return (
-            <GroupContainer buttons="" match={this.props.match}>
-                <Document title={entity.name} />
+            <GroupContainer buttons={buttons} match={this.props.match}>
                 <section className="section ___grow">
                     <WikiItem match={this.props.match} />
                 </section>
@@ -36,44 +45,19 @@ class Item extends React.Component {
 }
 
 const Query = gql`
-    query GroupItem($guid: String!) {
-        viewer {
+query GroupItem($guid: Int!) {
+    viewer {
+        guid
+        loggedIn
+        canWriteToContainer(containerGuid: $guid, type: object, subtype: "wiki")
+        user {
             guid
-            loggedIn
-            user {
-                guid
-                name
-                icon
-                url
-            }
-        }
-        entity(guid: $guid) {
-            guid
-            status
-            ... on Group {
-                guid
-                name
-                description
-                plugins
-                icon
-                isClosed
-                members(limit: 5) {
-                    total
-                    edges {
-                        role
-                        email
-                        user {
-                            guid
-                            username
-                            url
-                            name
-                            icon
-                        }
-                    }
-                }
-            }
+            name
+            icon
+            url
         }
     }
+}
 `
 
 const Settings = {
@@ -86,4 +70,4 @@ const Settings = {
     }
 }
 
-export default graphql(Query, Settings)(Item)
+export default graphql(Query, Settings)(GroupItem)

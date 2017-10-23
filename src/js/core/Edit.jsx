@@ -5,7 +5,6 @@ import { graphql } from "react-apollo"
 import DeleteModal from "./Delete"
 import gql from "graphql-tag"
 import Errors from "./components/Errors"
-import AccessSelect from "./containers/AccessSelect"
 import { getValueFromTags, getValuesFromTags } from "../lib/helpers"
 import RichTextField from "./components/RichTextField"
 import Form from "./components/Form"
@@ -47,6 +46,8 @@ class Edit extends React.Component {
             description: values.description.getPlainText(),
             richDescription: JSON.stringify(convertToRaw(values.description)),
             featured: values.featured,
+            accessId: values.accessId,
+            writeAccessId: values.writeAccessId,
             tags: new Set().merge(values.filters).merge(values.tags).toJS()
         }
 
@@ -131,6 +132,16 @@ class Edit extends React.Component {
                 break
         }
 
+        let permissions
+        if (window.__SETTINGS__['advancedPermissions']) {
+            permissions = (
+                <div>
+                    <SelectField name="accessId" options={window.__SETTINGS__['accessIds']} label="Leesrechten" value={entity.accessId || window.__SETTINGS__['defaultAccessId']} />
+                    <SelectField name="writeAccessId" options={window.__SETTINGS__['accessIds']} label="Schrijfrechten" value={entity.writeAccessId || "0"} />
+                </div>
+            )
+        }
+
         return (
             <Form ref="form" onSubmit={this.onSubmit}>
                 {featured}
@@ -142,6 +153,7 @@ class Edit extends React.Component {
                                 <InputField name="title" type="text" placeholder="Titel" className="form__input" value={entity.title} rules="required" autofocus />
                                 <RichTextField ref="richText" name="description" placeholder="Beschrijving" value={entity.description} richValue={entity.richDescription} rules="required" />
                                 {extraFields}
+                                {permissions}
                                 <ContentFiltersInputField name="filters" className="form__input" value={entity.tags} />
                                 <TagsField name="tags" type="text" className="form__input" value={entity.tags} />
                                 <div className="buttons ___space-between">
@@ -172,6 +184,7 @@ const Mutation = gql`
                     richDescription
                     url
                     accessId
+                    writeAccessId
                     source
                     isFeatured
                     isRecommended

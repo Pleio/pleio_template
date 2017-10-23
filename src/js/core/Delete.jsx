@@ -4,7 +4,6 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Errors from "./components/Errors"
 import Modal from "./components/Modal"
-import AccessSelect from "./containers/AccessSelect"
 
 class DeleteForm extends React.Component {
     constructor(props) {

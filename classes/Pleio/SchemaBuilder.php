@@ -226,6 +226,18 @@ class SchemaBuilder {
                 "title" => [
                     "type" => Type::string()
                 ],
+                "description" => [
+                    "type" => Type::string()
+                ],
+                "hasChildren" => [
+                    "type" => Type::boolean(),
+                    "resolve" => function($object) {
+                        return Resolver::hasChildren($object);
+                    }
+                ],
+                "richDescription" => [
+                    "type" => Type::string()
+                ],
                 "url" => [
                     "type" => Type::string()
                 ],
@@ -233,6 +245,9 @@ class SchemaBuilder {
                     "type" => Type::string()
                 ],
                 "timeUpdated" => [
+                    "type" => Type::string()
+                ],
+                "pageType" => [
                     "type" => Type::string()
                 ],
                 "rows" => [
@@ -456,6 +471,9 @@ class SchemaBuilder {
                 "membership" => [
                     "type" => $membershipEnum
                 ],
+                "accessIds" => [
+                    "type" => Type::listOf($accessIdType)
+                ],
                 "defaultAccessId" => [
                     "type" => Type::int()
                 ],
@@ -584,6 +602,9 @@ class SchemaBuilder {
                     }
                 ],
                 "accessId" => [
+                    "type" => Type::int()
+                ],
+                "writeAccessId" => [
                     "type" => Type::int()
                 ],
                 "isBookmarked" => [
@@ -720,7 +741,7 @@ class SchemaBuilder {
                     "type" => Type::nonNull(Type::boolean()),
                     "args" => [
                         "containerGuid" => [
-                            "type" => Type::string()
+                            "type" => Type::int()
                         ],
                         "type" => [
                             "type" => $typeEnum
@@ -898,6 +919,9 @@ class SchemaBuilder {
                 "accessIds" => [
                     "type" => Type::listOf($accessIdType)
                 ],
+                "defaultAccessId" => [
+                    "type" => Type::nonNull(Type::int())
+                ],
                 "logo" => [
                     "type" => Type::nonNull(Type::string())
                 ],
@@ -937,9 +961,6 @@ class SchemaBuilder {
                 "usersOnline" => [
                     "type" => Type::nonNull(Type::int()),
                     "resolve" => "Pleio\Resolver::getUsersOnline"
-                ],
-                "defaultAccessId" => [
-                    "type" => Type::nonNull(Type::int())
                 ]
             ]
         ]);
@@ -955,7 +976,7 @@ class SchemaBuilder {
                     "type" => $entityInterface,
                     "args" => [
                         "guid" => [
-                            "type" => Type::string()
+                            "type" => Type::int()
                         ],
                         "username" => [
                             "type" => Type::string()
@@ -1011,7 +1032,7 @@ class SchemaBuilder {
                     "type" => Type::listOf($objectType),
                     "args" => [
                         "guid" => [
-                            "type" => Type::string()
+                            "type" => Type::int()
                         ]
                     ],
                     "resolve" => "Pleio\Resolver::getBreadcrumb"  
@@ -1320,6 +1341,9 @@ class SchemaBuilder {
                 "isFeatured" => [
                     "type" => Type::boolean()
                 ],
+                "pageType" => [
+                    "type" => Type::string()
+                ],
                 "featured" => [
                     "type" => $featuredInput
                 ],
@@ -1336,6 +1360,9 @@ class SchemaBuilder {
                     "type" => Type::int()
                 ],
                 "accessId" => [
+                    "type" => Type::int()
+                ],
+                "writeAccessId" => [
                     "type" => Type::int()
                 ],
                 "tags" => [
@@ -1387,6 +1414,9 @@ class SchemaBuilder {
                     "type" => Type::string()
                 ],
                 "accessId" => [
+                    "type" => Type::int()
+                ],
+                "writeAccessId" => [
                     "type" => Type::int()
                 ],
                 "tags" => [
@@ -1912,6 +1942,34 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::inviteToGroup"
         ]);
 
+        $sendMessageToGroupMutation = Relay::mutationWithClientMutationId([
+            "name" => "sendMessageToGroup",
+            "description" => "Send a message to the group members.",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::string(),
+                    "description" => "The guid of the group to send the message to."
+                ],
+                "subject" => [
+                    "type" => Type::string(),
+                    "description" => "The subject of the message."
+                ],
+                "message" => [
+                    "type" => Type::string(),
+                    "description" => "The message to send."
+                ]
+            ],
+            "outputFields" => [
+                "group" => [
+                    "type" => $groupType,
+                    "resolve" => function($group) {
+                        return Resolver::getEntity(null, $group, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::sendMessageToGroup"
+        ]);
+
         $acceptGroupInvitation = Relay::mutationWithClientMutationId([
             "name" => "acceptGroupInvitation",
             "description" => "Accept a group invitation.",
@@ -2028,6 +2086,7 @@ class SchemaBuilder {
                     "joinGroup" => $joinGroupMutation,
                     "leaveGroup" => $leaveGroupMutation,
                     "inviteToGroup" => $inviteToGroupMutation,
+                    "sendMessageToGroup" => $sendMessageToGroupMutation,
                     "acceptGroupInvitation" => $acceptGroupInvitation,
                     "changeGroupRole" => $changeGroupRoleMutation,
                     "editTask" => $editTaskMutation,

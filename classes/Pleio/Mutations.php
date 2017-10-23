@@ -153,14 +153,6 @@ class Mutations {
             throw new Exception("invalid_type");
         }
 
-        $accessId = get_default_access();
-        if ((int) $input["containerGuid"]) {
-            $container = get_entity((int) $input["containerGuid"]);
-            if ($container instanceof \ElggGroup && $container->membership === ACCESS_PRIVATE && $container->group_acl) {
-                $accessId = $container->group_acl;
-            }
-        }
-
         switch ($input["type"]) {
             case "object":
                 if (!in_array($input["subtype"], array("file", "folder", "news", "blog", "question", "comment","page", "wiki", "event", "task", "thewire"))) {
@@ -177,7 +169,27 @@ class Mutations {
                     $entity->richDescription = $input["richDescription"];
                 }
 
-                $entity->access_id = $accessId;
+                if ((int) $input["containerGuid"]) {
+                    $container = get_entity((int) $input["containerGuid"]);
+                    if ($container instanceof \ElggGroup && $container->membership === ACCESS_PRIVATE && $container->group_acl) {
+                        $defaultAccessId = $container->group_acl;
+                    } else {
+                        $defaultAccessId = get_default_access();
+                    }
+                }
+
+                if ((int) $input["accessId"]) {
+                    $entity->access_id = (int) $input["accessId"];
+                } else {
+                    $entity->access_id = $defaultAccessId;
+                }
+
+                if ((int) $input["writeAccessId"]) {
+                    $entity->write_access_id = (int) $input["writeAccessId"];
+                } else {
+                    $entity->write_access_id = ACCESS_PRIVATE;
+                }
+
                 $entity->tags = filter_tags($input["tags"]);
 
                 if (elgg_is_admin_logged_in()) {
@@ -197,6 +209,10 @@ class Mutations {
                         }
                     } else {
                         $entity->container_guid = $container->guid;
+                    }
+                } else {
+                    if ($input["subtype"] == "page") {
+                        $entity->container_guid = $site->guid;
                     }
                 }
         }
@@ -248,6 +264,11 @@ class Mutations {
             $result = $entity->save();
         }
 
+        if ($input["subtype"] == "page") {
+            $entity->pageType = $input["pageType"];
+            $result = $entity->save();
+        }
+
         $view = "river/object/{$input["subtype"]}/create";
         add_to_river($view, 'create', elgg_get_logged_in_user_guid(), $entity->guid);
 
@@ -285,6 +306,12 @@ class Mutations {
 
                 if ((int) $input["accessId"]) {
                     $entity->access_id = (int) $input["accessId"];
+                }
+
+                if ((int) $input["writeAccessId"]) {
+                    $entity->write_access_id = (int) $input["writeAccessId"];
+                } else {
+                    $entity->write_access_id = ACCESS_PRIVATE;
                 }
 
                 if (elgg_is_admin_logged_in()) {
@@ -1118,7 +1145,6 @@ class Mutations {
             throw new Exception("not_logged_in");   
         }
 
-
         if ($group->owner_guid == $user->guid) {
             throw new Exception("could_not_leave");
         }
@@ -1163,6 +1189,34 @@ class Mutations {
                 group_tools_invite_email($group, $email, "", true);
             }
         }
+    }
+
+    static function sendMessageToGroup($input) {
+        set_time_limit(0);
+
+        $group = get_entity((int) $input["guid"]);
+        if (!$group) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$group->canEdit() || !$group instanceof \ElggGroup) {
+            throw new Exception("could_not_save");
+        }
+
+        $site = elgg_get_site_entity();
+
+        foreach ($group->getMembers(0) as $member) {
+            $result = elgg_send_email(
+                $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
+                $member->email,
+                "[{$group->name}] {$input['subject']}",
+                $input['message']
+            );
+        }
+
+        return [
+            "guid" => $group->guid
+        ];
     }
 
     static function acceptGroupInvitation($input) {

@@ -5,7 +5,6 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Errors from "../core/components/Errors"
 import ActionContainer from "../core/components/ActionContainer"
-import AccessSelect from "../core/containers/AccessSelect"
 import TextField from "../core/components/TextField"
 import RichTextField from "../core/components/RichTextField"
 import Form from "../core/components/Form"
@@ -149,7 +148,7 @@ class Edit extends React.Component {
 }
 
 const Query = gql`
-    query getGroupInfo($guid: String!) {
+    query getGroupInfo($guid: Int!) {
         entity(guid: $guid) {
             guid
             status

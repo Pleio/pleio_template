@@ -33,7 +33,7 @@ class AttendeesList extends React.Component {
 }
 
 const Query = gql`
-    query AttendeesList($guid: String!, $state: String) {
+    query AttendeesList($guid: Int!, $state: String) {
         entity(guid: $guid) {
             guid
             ... on Object {

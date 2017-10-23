@@ -81,7 +81,7 @@ class StatusUpdate extends React.Component {
 }
 
 const Query = gql`
-    query addStatusUpdate($containerGuid: String!) {
+    query addStatusUpdate($containerGuid: Int!) {
         viewer {
             guid
             canWriteToContainer(containerGuid: $containerGuid, subtype: "thewire")

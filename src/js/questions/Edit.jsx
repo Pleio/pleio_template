@@ -70,7 +70,7 @@ class Edit extends React.Component {
 }
 
 const Query = gql`
-    query EditQuestion($guid: String!) {
+    query EditQuestion($guid: Int!) {
         viewer {
             guid
             loggedIn

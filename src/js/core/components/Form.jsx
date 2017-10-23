@@ -11,6 +11,7 @@ import RichTextField from "./RichTextField"
 import SelectField from "./SelectField"
 import CheckField from "./CheckField"
 import SwitchField from "./SwitchField"
+import RadioField from "./RadioField"
 import PropTypes from "prop-types"
 
 class Form extends React.Component {
@@ -144,6 +145,7 @@ class Form extends React.Component {
                 case IconField:
                 case SwitchField:
                 case CheckField:
+                case RadioField:
                     if (!child.props.noWrap) {
                         return this.wrapComponent(child)
                     }

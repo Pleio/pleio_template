@@ -42,7 +42,7 @@ class Info extends React.Component {
 }
 
 const Query = gql`
-    query GroupInfo($guid: String!) {
+    query GroupInfo($guid: Int!) {
         viewer {
             guid
             loggedIn

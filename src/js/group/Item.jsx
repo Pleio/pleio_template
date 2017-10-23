@@ -33,37 +33,6 @@ class Item extends React.Component {
             )
         }
 
-        let join, leave, edit, invite
-        if (((viewer.loggedIn && !entity.isClosed) || entity.canEdit) && entity.membership === "not_joined") {
-            join = (
-                <JoinGroupButton entity={entity} />
-            )
-        }
-
-        if (!entity.canEdit && entity.membership === "joined") {
-            leave = (
-                <div className="button" onClick={() => this.refs.leaveGroupModal.toggle()}>Verlaat groep</div>
-            )
-        }
-
-        if (entity.canEdit) {
-            edit = (
-                <Link to={`/groups/edit/${entity.guid}`} >
-                    <div className="button ___large ___line">
-                        <span>Groep bewerken</span>
-                    </div>
-                </Link>
-            )
-        }
-
-        if (entity.membership === "joined" && entity.canEdit) {
-            invite = (
-                <div className="button ___large" onClick={() => this.refs.inviteModal.toggle()}>
-                    Leden uitnodigen
-                </div>
-            )
-        }
-
         return (
             <GroupContainer match={this.props.match}>
                 <Document title={entity.name} />
@@ -94,7 +63,7 @@ class Item extends React.Component {
 }
 
 const Query = gql`
-    query GroupItem($guid: String!) {
+    query GroupItem($guid: Int!) {
         viewer {
             guid
             loggedIn

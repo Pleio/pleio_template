@@ -8,9 +8,8 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
 const translate = {
-    "video": "Video",
-    "image": "Afbeelding",
-    "text": "Tekst"
+    "text": "Tekst",
+    "html": "HTML"
 }
 
 class Row extends React.Component {
@@ -32,7 +31,7 @@ class Row extends React.Component {
 
     render() {
         let cols = []
-        let options = ["video", "image", "text"]
+        let options = ["text", "html"]
 
         switch (this.props.entity.layout) {
             case "full":

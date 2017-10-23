@@ -5,7 +5,6 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Errors from "./components/Errors"
 import Modal from "./components/Modal"
-import AccessSelect from "./containers/AccessSelect"
 import RichTextField from "./components/RichTextField"
 import Form from "./components/Form"
 import ContentFiltersInputField from "./components/ContentFiltersInputField"
@@ -14,6 +13,7 @@ import TagsField from "./components/TagsField"
 import DateTimeField from "./components/DateTimeField"
 import FeaturedField from "./components/FeaturedField"
 import SwitchField from "./components/SwitchField"
+import SelectField from "./components/SelectField"
 import { convertToRaw } from "draft-js"
 import { Set } from "immutable"
 
@@ -45,6 +45,8 @@ class Add extends React.Component {
             richDescription: JSON.stringify(convertToRaw(values.description)),
             featured: values.featured,
             containerGuid: this.props.containerGuid,
+            accessId: values.accessId,
+            writeAccessId: values.writeAccessId,
             tags: new Set().merge(values.filters).merge(values.tags).toJS()
         }
 
@@ -125,6 +127,16 @@ class Add extends React.Component {
                 break
         }
 
+        let permissions
+        if (window.__SETTINGS__['advancedPermissions']) {
+            permissions = (
+                <div>
+                    <SelectField name="accessId" options={window.__SETTINGS__['accessIds']} label="Leesrechten" value={window.__SETTINGS__['defaultAccessId']} />
+                    <SelectField name="writeAccessId" options={window.__SETTINGS__['accessIds']} label="Schrijfrechten" value="0" />
+                </div>
+            )
+        }
+
         return (
             <Form ref="form" onSubmit={this.onSubmit}>
                 {featured}
@@ -136,6 +148,7 @@ class Add extends React.Component {
                                 <InputField name="title" type="text" placeholder="Titel" className="form__input" rules="required" autofocus />
                                 <RichTextField ref="richText" name="description" placeholder="Beschrijving" rules="required" />
                                 {extraFields}
+                                {permissions}
                                 <ContentFiltersInputField name="filters" className="form__input" />
                                 <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" />
                                 <div className="buttons ___end ___margin-top">

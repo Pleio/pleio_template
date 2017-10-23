@@ -30,6 +30,7 @@ $dutch = array(
     "pleio_template:leader_image" => "Leader afbeelding (link)",
     "pleio_template:activity" => "Activiteitenstroom",
     "pleio_template:cms" => "CMS pagina",
+    "pleio_template:advanced_permissions" => "Geavanceerde permissies",
     "pleio_template:show_initiative" => "Toon initiatief widget",
     "pleio_template:email:overview" => "Wat gebeurt er op %s? In dit overzicht vind je de hoogtepunten voor jouw vakgebied en interesses!",
     "pleio_template:email:visit" => "Voor alle nieuwe berichten bekijk %s",

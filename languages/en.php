@@ -30,6 +30,7 @@ $english = array(
     "pleio_template:leader_image" => "Leader image",
     "pleio_template:activity" => "Activity stream",
     "pleio_template:cms" => "CMS page",
+    "pleio_template:advanced_permissions" => "Advanced permissions",
     "pleio_template:show_initiative" => "Show initiative widget",
     "pleio_template:email:overview" => "What happens on %s? In this overview we will highlight some of the items based on your preferences!",
     "pleio_template:email:visit" => "For all new messages visit %s",

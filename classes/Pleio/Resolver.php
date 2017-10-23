@@ -54,14 +54,6 @@ class Resolver {
             }
         }
 
-        $accessIds = [];
-        foreach (get_write_access_array() as $id => $description) {
-            $accessIds[] = [
-                "id" => $id,
-                "description" => $description
-            ];
-        }
-
         $externalLogin = elgg_is_active_plugin("pleio") ? true : false;
 
         return [
@@ -81,10 +73,8 @@ class Resolver {
             "leaderImage" => $leaderImage,
             "showInitiative" => $showInitiative,
             "externalLogin" => $externalLogin,
-            "accessIds" => $accessIds,
             "filters" => $filters,
-            "style" => Resolver::getStyle(),
-            "defaultAccessId" => get_default_access()
+            "style" => Resolver::getStyle()
         ];
     }
 
@@ -102,6 +92,28 @@ class Resolver {
             "total" => 0,
             "notifications" => []
         ];
+    }
+
+    static function getAccessIds($object) {
+        $old_guid = elgg_set_page_owner_guid($object["guid"]);
+
+        $accessIds = [];
+        foreach (get_write_access_array() as $id => $description) {
+            $accessIds[] = [
+                "id" => $id,
+                "description" => $description
+            ];
+        }
+        
+        elgg_set_page_owner_guid($old_guid);
+
+        return $accessIds;
+    }
+
+    static function getDefaultAccess($object) {
+        $entity = get_entity($object["guid"]);
+        
+        return get_default_access();
     }
 
     static function getActivities($a, $args, $c) {
@@ -400,7 +412,7 @@ class Resolver {
         $dbprefix = elgg_get_config("dbprefix");
         $group = get_entity($a["guid"]);
 
-        if (!$group) {
+        if (!$group || !$group instanceof \ElggGroup) {
             throw new Exception("could_not_find");
         }
 
@@ -415,8 +427,7 @@ class Resolver {
             "order_by" => "ue.name",
             "type" => "user",
             "limit" => $limit,
-            "offset" => $offset,
-
+            "offset" => $offset
         ];
 
         if ($args["q"]) {
@@ -424,9 +435,11 @@ class Resolver {
             $options["wheres"] = "ue.name LIKE '{$q}%'";
         }
 
+        $result = get_data_row("SELECT COUNT(guid_one) AS total FROM {$dbprefix}entity_relationships WHERE relationship = 'member' AND guid_two = {$group->guid}");
+
         if ($group->membership === ACCESS_PRIVATE && !$group->canEdit() && !$group->isMember())  {
             return [
-                "total" => $group->getMembers($limit, $offset, true),
+                "total" => $result->total,
                 "canWrite" => false,
                 "edges" => []
             ];
@@ -460,7 +473,7 @@ class Resolver {
         }
 
         return [
-            "total" => $group->getMembers($limit, $offset, true),
+            "total" => $result->total,
             "canWrite" => false,
             "edges" => $members
         ];
@@ -852,7 +865,13 @@ class Resolver {
                 }
             }
 
-            $container = get_entity($args["containerGuid"]);
+            if ($args["containerGuid"]) {
+                if ($args["containerGuid"] === 1) {
+                    $container = elgg_get_site_entity();
+                } else {
+                    $container = get_entity($args["containerGuid"]);
+                }
+            }
 
             if ($container) {
                 $options["container_guid"] = $container->guid;
@@ -1213,5 +1232,22 @@ class Resolver {
         }
 
         return Helpers::getBreadcrumb($entity);
+    }
+
+    static function hasChildren($entity) {
+        $options = [
+            "type" => "object",
+            "subtype" => $entity->subtype,
+            "container_guid" => $entity["guid"],
+            "count" => true
+        ];
+
+        $result = elgg_get_entities($options);
+
+        if ($result !== 0) {
+            return true;
+        }
+
+        return false;
     }
 }

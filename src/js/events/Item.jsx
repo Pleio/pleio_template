@@ -158,7 +158,7 @@ class Item extends React.Component {
 }
 
 const Query = gql`
-    query EventItem($guid: String!) {
+    query EventItem($guid: Int!) {
         viewer {
             guid
             loggedIn

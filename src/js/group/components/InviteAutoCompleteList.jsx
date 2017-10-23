@@ -46,7 +46,7 @@ class InviteAutoCompleteList extends React.Component {
 }
 
 const Query = gql`
-    query InviteAutoCompleteList($guid: String!, $q: String){
+    query InviteAutoCompleteList($guid: Int!, $q: String){
       entity(guid: $guid) {
         guid
         ... on Group {

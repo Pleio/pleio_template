@@ -3,6 +3,7 @@ import { gql, graphql } from "react-apollo"
 import autobind from "autobind-decorator"
 import Delete from "../../core/Delete"
 import Text from "./widgets/Text"
+import HTML from "./widgets/HTML"
 
 class Widget extends React.Component {
     constructor(props) {
@@ -45,6 +46,10 @@ class Widget extends React.Component {
                     <Text ref="widget" entity={entity} isEditing={this.state.isEditing} onSave={this.onSave} />
                 )
                 break;
+            case "html":
+                widget = (
+                    <HTML ref="widget" entity={entity} isEditing={this.state.isEditing} onSave={this.onSave} />
+                )
         }
 
         let settings

@@ -27,7 +27,7 @@ class Breadcrumb extends React.Component {
 }
 
 const Query = gql`
-    query Breadcrumb($guid: String!) {
+    query Breadcrumb($guid: Int!) {
         breadcrumb(guid: $guid) {
             ... on Object {
                 guid

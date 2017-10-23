@@ -7,7 +7,7 @@ import Delete from "../core/Delete"
 import AddComment from "../core/containers/AddComment"
 import NotFound from "../core/NotFound"
 import showDate from "../lib/showDate"
-import { Link } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 import LikeAndBookmark from "../core/components/LikeAndBookmark"
 import RichTextView from "../core/components/RichTextView"
 import Document from "../core/components/Document"
@@ -96,7 +96,7 @@ class Item extends React.Component {
 }
 
 const Query = gql`
-    query BlogItem($guid: String!) {
+    query BlogItem($guid: Int!) {
         viewer {
             guid
             loggedIn
@@ -142,4 +142,4 @@ const Settings = {
     }
 }
 
-export default graphql(Query, Settings)(Item)
+export default graphql(Query, Settings)(withRouter(Item))

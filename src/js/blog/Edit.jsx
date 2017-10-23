@@ -59,7 +59,7 @@ class Edit extends React.Component {
 }
 
 const Query = gql`
-    query EditBlog($guid: String!) {
+    query EditBlog($guid: Int!) {
         viewer {
             guid
             loggedIn

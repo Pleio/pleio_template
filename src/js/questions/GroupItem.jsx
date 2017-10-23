@@ -36,7 +36,7 @@ class Item extends React.Component {
 }
 
 const Query = gql`
-    query GroupItem($guid: String!) {
+    query GroupItem($guid: Int!) {
         viewer {
             guid
             loggedIn

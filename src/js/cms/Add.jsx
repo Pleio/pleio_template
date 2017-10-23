@@ -1,13 +1,28 @@
 import React from "react"
-import AddCore from "../core/Add"
 import Modal from "../core/components/Modal"
+import ActionContainer from "../core/components/ActionContainer"
+import Form from "../core/components/Form"
+import InputField from "../core/components/InputField"
+import RadioField from "../core/components/RadioField"
+import RichTextField from "../core/components/RichTextField"
+import { graphql } from "react-apollo"
+import gql from "graphql-tag"
+import { logErrors } from "../lib/helpers"
+import Errors from "../core/components/Errors"
+import { convertToRaw } from "draft-js"
+import autobind from "autobind-decorator"
 
-export default class Add extends React.Component {
+class Add extends React.Component {
     constructor(props) {
         super(props)
-        this.onClose = this.onClose.bind(this)
+
+        this.state = {
+            errors: [],
+            pageType: "campagne"
+        }
     }
 
+    @autobind
     onClose() {
         this.props.history.push("/cms")
     }
@@ -16,11 +31,81 @@ export default class Add extends React.Component {
         window.location.href = "/cms"
     }
 
+    @autobind
+    onSubmit(e) {
+        this.setState({
+            errors: []
+        })
+
+        const values = this.refs.form.getValues()
+
+        let input = {
+            clientMutationId: 1,
+            title: values.title,
+            type: "object",
+            subtype: "page",
+            pageType: values.pageType
+        }
+
+        if (values.description) {
+            input['description'] = values.description.getPlainText()
+            input['richDescription'] = JSON.stringify(convertToRaw(values.description))
+        }
+
+        this.props.mutate({
+            variables: {
+                input
+            }
+        }).then(({data}) => {
+            window.location.href = "/cms"
+        }).catch((errors) => {
+            logErrors(errors)
+            this.setState({
+                errors: errors
+            })
+        })
+    }
+
     render() {
+        let errors
+        if (this.state.errors) {
+            errors = ( <Errors errors={this.state.errors} /> );
+        }
+
         return (
-            <Modal title="Pagina toevoegen" full={true} noParent={true} onClose={this.onClose}>
-                <AddCore subtype="page" featured={true} refetchQueries={["InfiniteList"]} afterAdd={this.afterAdd} />
-            </Modal>
+            <ActionContainer title="Pagina toevoegen" onClose={this.onClose}>
+                <Form ref="form" onSubmit={this.onSubmit}>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+                                {errors}
+                                <div className="form">
+                                    <InputField label="Titel" name="title" type="text" placeholder="Voeg een korte duidelijke naam toe" className="form__input" rules="required" autofocus />
+                                    <RadioField label="Soort" name="pageType" options={[{name:"Campagne", value:"campagne"}, {name:"Tekst", value: "text"}]} className="form__input" value="campagne" onChange={this.onChangeType} />
+                                    <RichTextField ref="richText" name="description" placeholder="Beschrijving" rules="required" />
+                                    <div className="buttons ___end ___margin-top">
+                                        <button className="button" type="submit">
+                                            Aanmaken
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Form>
+            </ActionContainer>
         )
     }
 }
+
+const Mutation = gql`
+mutation addEntity($input: addEntityInput!) {
+    addEntity(input: $input) {
+        entity {
+            guid
+        }
+    }
+}
+`
+
+export default graphql(Mutation)(Add)

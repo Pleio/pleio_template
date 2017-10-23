@@ -622,7 +622,10 @@ class Helpers {
 
     static function getSettings() {
         return [
-            "odtEnabled" => elgg_is_active_plugin("odt_editor")
+            "odtEnabled" => elgg_is_active_plugin("odt_editor"),
+            "advancedPermissions" => elgg_get_plugin_setting("advanced_permissions", "pleio_template") ? true : false,
+            "accessIds" => get_write_access_array(),
+            "defaultAccessId" => get_default_access()
         ];
     }
 }

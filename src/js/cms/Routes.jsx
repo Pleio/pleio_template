@@ -11,16 +11,18 @@ import NotFound from "../core/NotFound"
 export default class Routes extends React.Component {
     render() {
         return (
-            <Container>
-                <Switch>
-                    <Route exact path="/cms" component={List} />
-                    <Route exact path="/cms/add" component={Add} />
-                    <Route exact path="/cms/edit/:guid" component={Edit} />
-                    <Route exact path="/cms/view/:guid/:slug" component={Item} />
-                    <Route component={NotFound} />
-                </Switch>
-            </Container>
-
+            <Switch>
+                <Route exact path="/cms/add" component={Add} />
+                <Route exact path="/cms/edit/:guid" component={Edit} />
+                <Container>
+                    <Switch>
+                        <Route exact path="/cms" component={List} />
+                        <Route exact path="/cms/view/:guid/:slug" component={Item} />
+                        <Route exact path="/cms/view/:containerGuid/:containerSlug/:guid" component={Item} />
+                        <Route component={NotFound} />
+                    </Switch>
+                </Container>
+            </Switch>
         )
     }
 }

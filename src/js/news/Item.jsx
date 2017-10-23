@@ -99,7 +99,7 @@ class Item extends React.Component {
 }
 
 const Query = gql`
-    query NewsItem($guid: String!) {
+    query NewsItem($guid: Int!) {
         viewer {
             guid
             loggedIn
