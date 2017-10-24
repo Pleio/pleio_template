@@ -9,6 +9,7 @@ import FileField from "./FileField"
 import DateTimeField from "./DateTimeField"
 import RichTextField from "./RichTextField"
 import SelectField from "./SelectField"
+import AccessField from "./AccessField"
 import CheckField from "./CheckField"
 import SwitchField from "./SwitchField"
 import RadioField from "./RadioField"
@@ -138,6 +139,7 @@ class Form extends React.Component {
                 case InputField:
                 case FileField:
                 case SelectField:
+                case AccessField:
                 case TextField:
                 case RichTextField:
                 case DateTimeField:
@@ -173,7 +175,7 @@ class Form extends React.Component {
             )
         }
 
-        if ((component.type == RichTextField || component.type == InputField || component.type == SelectField || component.type == TextField || component.type == DateTimeField) && component.props.label) {
+        if ((component.type == RichTextField || component.type == InputField || component.type == SelectField || component.type == AccessField || component.type == TextField || component.type == DateTimeField) && component.props.label) {
             label = (
                 <div className="form__label">{component.props.label}</div>
             )

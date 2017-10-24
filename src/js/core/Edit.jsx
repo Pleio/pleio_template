@@ -15,7 +15,7 @@ import FeaturedField from "./components/FeaturedField"
 import DateTimeField from "./components/DateTimeField"
 import SwitchField from "./components/SwitchField"
 import SwitchesField from "./components/SwitchesField"
-import SelectField from "./components/SelectField"
+import AccessField from "./components/AccessField"
 import { sectorOptions, categoryOptions } from "../lib/filters"
 import { convertToRaw } from "draft-js"
 import { Set } from "immutable"
@@ -136,11 +136,12 @@ class Edit extends React.Component {
         if (window.__SETTINGS__['advancedPermissions']) {
             permissions = (
                 <div>
-                    <SelectField name="accessId" options={window.__SETTINGS__['accessIds']} label="Leesrechten" value={entity.accessId || window.__SETTINGS__['defaultAccessId']} />
-                    <SelectField name="writeAccessId" options={window.__SETTINGS__['accessIds']} label="Schrijfrechten" value={entity.writeAccessId || "0"} />
+                    <AccessField name="accessId" label="Leesrechten" value={entity.accessId} />
+                    <AccessField name="writeAccessId" label="Schrijfrechten" value={entity.writeAccessId || "0"} />
                 </div>
             )
         }
+
 
         return (
             <Form ref="form" onSubmit={this.onSubmit}>

@@ -11,6 +11,7 @@ import { Link, withRouter } from "react-router-dom"
 import LikeAndBookmark from "../core/components/LikeAndBookmark"
 import RichTextView from "../core/components/RichTextView"
 import Document from "../core/components/Document"
+import SubNav from "./components/SubNav"
 
 class Item extends React.Component {
     constructor(props) {
@@ -36,6 +37,7 @@ class Item extends React.Component {
 
     render() {
         let { entity, viewer } = this.props.data
+        const { match } = this.props
 
         if (!entity) {
             // Loading...
@@ -72,13 +74,23 @@ class Item extends React.Component {
             )
         }
 
+        let subNav
+        if (entity.hasChildren || match.params.containerGuid) {
+            subNav = (
+                <div className="col-sm-4">
+                    <SubNav containerGuid={match.params.containerGuid || match.params.guid} guid={match.params.containerGuid || match.params.guid} />
+                </div>
+            )
+        }
+
         return (
             <div>
                 <Document title={entity.title} />
                 <section className="section">
                     <div className="container">
                         <div className="row">
-                            <div className="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+                            {subNav}
+                            <div className={entity.hasChildren || match.params.containerGuid ? "col-sm-8" : "col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2"}>
                                 <article className="article">
                                     <h3 className="article__title">{entity.title}</h3>
                                     <RichTextView richValue={entity.richDescription} value={entity.description} />
@@ -96,7 +108,7 @@ class Item extends React.Component {
 }
 
 const Query = gql`
-    query BlogItem($guid: Int!) {
+    query WikiItem($guid: Int!) {
         viewer {
             guid
             loggedIn
@@ -116,6 +128,7 @@ const Query = gql`
                 richDescription
                 accessId
                 timeCreated
+                hasChildren
                 featured {
                     image
                     video

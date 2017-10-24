@@ -99,6 +99,10 @@ class Resolver {
 
         $accessIds = [];
         foreach (get_write_access_array() as $id => $description) {
+            if ($id === -2) {
+                continue;
+            }
+
             $accessIds[] = [
                 "id" => $id,
                 "description" => $description
@@ -110,10 +114,11 @@ class Resolver {
         return $accessIds;
     }
 
-    static function getDefaultAccess($object) {
-        $entity = get_entity($object["guid"]);
-        
-        return get_default_access();
+    static function getDefaultAccessId($object) {
+        $old_guid = elgg_set_page_owner_guid($object["guid"]);        
+        $default_access = get_default_access();
+        elgg_set_page_owner_guid($old_guid);
+        return $default_access;
     }
 
     static function getActivities($a, $args, $c) {
@@ -595,8 +600,58 @@ class Resolver {
 
         return [
             "total" => $total,
-            "canWrite" => false,
             "edges" => $invite
+        ];
+    }
+
+    static function getInvited($a, $args, $c) {
+        $dbprefix = elgg_get_config("dbprefix");
+        $site = elgg_get_site_entity();
+
+        $offset = (int) $args["offset"] || 0;
+        $limit = (int) $args["limit"] || 10;
+
+        $group = get_entity($a["guid"]);
+
+        if (!$group->canEdit()) {
+            throw new Exception("could_not_edit");
+        }
+
+        $options = [
+            "guid" => $group->guid,
+            "annotation_names" => "email_invitation",
+            "offset" => $args["offset"] ? (int) $args["offset"] : 0,
+            "limit" => $args["limit"] ? (int) $args["limit"] : 0,
+            "order_by" => "id DESC"
+        ];
+    
+        $total = elgg_get_annotations(array_merge($options, ["count" => true]));
+
+        $invites = [];
+        foreach (elgg_get_annotations($options) as $invite) {
+            $code = explode("|", $invite->value);
+
+            $user = get_user_by_email($code[1]);
+            if ($user) {
+                $user = Mapper::getUser($user[0]);
+                $email = null;
+            } else {
+                $user = null;
+                $email = $code[1];
+            }
+
+            $invites[] = [
+                "id" => $invite->id,
+                "invited" => true,
+                "timeCreated" => date("c", $invite->time_created),
+                "user" => $user,
+                "email" => $email
+            ];
+        }
+
+        return [
+            "total" => $total,
+            "edges" => $invites
         ];
     }
 

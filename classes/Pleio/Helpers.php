@@ -631,11 +631,17 @@ class Helpers {
     }
 
     static function getSettings() {
+        $site = elgg_get_site_entity();
+
         return [
             "odtEnabled" => elgg_is_active_plugin("odt_editor"),
             "advancedPermissions" => elgg_get_plugin_setting("advanced_permissions", "pleio_template") ? true : false,
-            "accessIds" => get_write_access_array(),
-            "defaultAccessId" => get_default_access()
+            "site" => [
+                "guid" => $site->guid,
+                "name" => $site->name,
+                "accessIds" => Resolver::getAccessIds(["guid" => $site->guid]),
+                "defaultAccessId" => Resolver::getDefaultAccessId(["guid" => $site->guid])
+            ]
         ];
     }
 }

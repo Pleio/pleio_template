@@ -63,6 +63,7 @@ export default class Routes extends React.Component {
                         <Route exact path="/groups/view/:groupGuid/:groupSlug/files/:containerGuid" component={FilesGroupList} />
                         <Route exact path="/groups/view/:groupGuid/:groupSlug/wiki" component={WikiGroupList} />
                         <Route exact path="/groups/view/:groupGuid/:groupSlug/wiki/view/:guid/:slug" component={WikiGroupItem} />
+                        <Route exact path="/groups/view/:groupGuid/:groupSlug/wiki/view/:containerGuid/:containerSlug/:guid" component={WikiGroupItem} />
                         <Route exact path="/groups/view/:groupGuid/:groupSlug/tasks" component={TasksGroupList} />
                         <Route exact path="/groups/view/:groupGuid/:groupSlug/search/results" component={SearchGroupResults} />
                         <Route component={NotFound} />

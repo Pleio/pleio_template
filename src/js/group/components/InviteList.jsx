@@ -13,7 +13,7 @@ export default class InviteAutoCompleteList extends React.Component {
         }
 
         return (
-            <div className="list-members" style={{height: "300px"}}>
+            <div className="list-members" style={{height: "300px", paddingTop:"1em"}}>
                 {placeholder}
                 {list}
             </div>

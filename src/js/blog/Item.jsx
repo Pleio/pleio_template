@@ -27,6 +27,15 @@ class Item extends React.Component {
         }
     }
 
+    getRootURL() {
+        const { match } = this.props
+
+        if (match.params.groupGuid && match.params.groupSlug) {
+            return `/groups/view/${match.params.groupGuid}/${match.params.groupSlug}`
+        }
+
+        return ""
+    }
 
     render() {
         const { location } = this.props
@@ -48,7 +57,7 @@ class Item extends React.Component {
         let edit
         if (entity.canEdit) {
             edit = (
-                <Link to={`/blog/edit/${entity.guid}`}>
+                <Link to={`${this.getRootURL()}/blog/edit/${entity.guid}`}>
                     <div className="button__text article-action ___edit-post">
                         Bewerken
                     </div>

@@ -15,9 +15,8 @@ class GroupContainer extends React.Component {
         const { entity, viewer } = this.props.data
 
         if (!entity) {
-            // Loading...
             return (
-                <div></div>
+                <div />
             )
         }
 
@@ -130,6 +129,11 @@ const Query = gql`
                     video
                     image
                     positionY
+                }
+                defaultAccessId
+                accessIds {
+                    id
+                    description
                 }
                 isClosed
                 canEdit

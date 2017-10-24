@@ -351,24 +351,19 @@ class SchemaBuilder {
         $inviteType = new ObjectType([
             "name" => "Invite",
             "fields" => [
-                "invited" => [
-                    "type" => Type::nonNull(Type::boolean())
-                ],
-                "user" => [
-                    "type" => Type::nonNull($userType)
-                ]
+                "id" => [ "type" => Type::int() ],
+                "timeCreated" => [ "type" => Type::string() ],
+                "invited" => [ "type" => Type::nonNull(Type::boolean()) ],
+                "user" => [ "type" => $userType ],
+                "email" => [ "type" => Type::string() ]
             ]
         ]);
 
         $inviteListType = new ObjectType([
             "name" => "InviteList",
             "fields" => [
-                "total" => [
-                    "type" => Type::nonNull(Type::int())
-                ],
-                "edges" => [
-                    "type" => Type::listOf($inviteType)
-                ]
+                "total" => [ "type" => Type::nonNull(Type::int()) ],
+                "edges" => [ "type" => Type::listOf($inviteType) ]
             ]
         ]);
 
@@ -472,10 +467,12 @@ class SchemaBuilder {
                     "type" => $membershipEnum
                 ],
                 "accessIds" => [
-                    "type" => Type::listOf($accessIdType)
+                    "type" => Type::listOf($accessIdType),
+                    "resolve" => "Pleio\Resolver::getAccessIds"
                 ],
                 "defaultAccessId" => [
-                    "type" => Type::int()
+                    "type" => Type::int(),
+                    "resolve" => "Pleio\Resolver::getDefaultAccessId"
                 ],
                 "tags" => [
                     "type" => Type::listOf(Type::string())
@@ -510,6 +507,21 @@ class SchemaBuilder {
                     ],
                     "resolve" => "Pleio\Resolver::getInvite"
                 ],
+                "invited" => [
+                    "type" => $inviteListType,
+                    "args" => [
+                        "q" => [
+                            "type" => Type::string()
+                        ],
+                        "offset" => [
+                            "type" => Type::int()
+                        ],
+                        "limit" => [
+                            "type" => Type::int()
+                        ]
+                    ],
+                    "resolve" => "Pleio\Resolver::getInvited"
+                ],
                 "plugins" => [
                     "type" => Type::listOf($pluginEnum)
                 ]
@@ -537,6 +549,12 @@ class SchemaBuilder {
                 ],
                 "richDescription" => [
                     "type" => Type::string()
+                ],
+                "hasChildren" => [
+                    "type" => Type::boolean(),
+                    "resolve" => function($object) {
+                        return Resolver::hasChildren($object);
+                    }
                 ],
                 "excerpt" => [
                     "type" => Type::string()
@@ -1945,6 +1963,46 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::inviteToGroup"
         ]);
 
+        $resendGroupInvitationMutation = Relay::mutationWithClientMutationId([
+            "name" => "resendGroupInvitation",
+            "description" => "Resend an invitation to join a group.",
+            "inputFields" => [
+                "id" => [
+                    "type" => Type::int(),
+                    "description" => "The id of the invitation to resend."
+                ]
+            ],
+            "outputFields" => [
+                "group" => [
+                    "type" => $groupType,
+                    "resolve" => function($group) {
+                        return Resolver::getEntity(null, $group, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::resendGroupInvitation"
+        ]);
+
+        $deleteGroupInvitationMutation = Relay::mutationWithClientMutationId([
+            "name" => "deleteGroupInvitation",
+            "description" => "Remove an invitation to join a group.",
+            "inputFields" => [
+                "id" => [
+                    "type" => Type::int(),
+                    "description" => "The id of the invitation to delete."
+                ]
+            ],
+            "outputFields" => [
+                "group" => [
+                    "type" => $groupType,
+                    "resolve" => function($group) {
+                        return Resolver::getEntity(null, $group, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::deleteGroupInvitation"
+        ]);
+
         $sendMessageToGroupMutation = Relay::mutationWithClientMutationId([
             "name" => "sendMessageToGroup",
             "description" => "Send a message to the group members.",
@@ -2089,6 +2147,8 @@ class SchemaBuilder {
                     "joinGroup" => $joinGroupMutation,
                     "leaveGroup" => $leaveGroupMutation,
                     "inviteToGroup" => $inviteToGroupMutation,
+                    "resendGroupInvitation" => $resendGroupInvitationMutation,
+                    "deleteGroupInvitation" => $deleteGroupInvitationMutation,
                     "sendMessageToGroup" => $sendMessageToGroupMutation,
                     "acceptGroupInvitation" => $acceptGroupInvitation,
                     "changeGroupRole" => $changeGroupRoleMutation,

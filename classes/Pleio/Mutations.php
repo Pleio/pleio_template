@@ -1166,6 +1166,9 @@ class Mutations {
     }
 
     static function inviteToGroup($input) {
+        $site = elgg_get_site_entity();
+        $current_user = elgg_get_logged_in_user_entity();
+
         $group = get_entity((int) $input["guid"]);
         if (!$group || !$group instanceof \ElggGroup) {
             throw new Exception("could_not_find_group");
@@ -1185,10 +1188,94 @@ class Mutations {
                 $email = "";
             }
 
-            if ($email) {
-                group_tools_invite_email($group, $email, "", true);
+            if (!$email) {
+                throw new Exception("could_not_invite");
             }
+
+            $invite_code = group_tools_generate_email_invite_code($group->guid, $email);
+
+            $earlier_invitation = group_tools_check_group_email_invitation($invite_code, $group->guid);
+            if (!$earlier_invitation) {
+                $group->annotate("email_invitation", $invite_code . "|" . $email, ACCESS_LOGGED_IN, $group->guid);
+            }
+
+            $site_url = elgg_get_site_url();
+            $link = "{$site_url}groups/invitations/?invitecode={$invite_code}";
+
+            $result = elgg_send_email(
+                $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
+                $email,
+                "[{$group->name}] Uitnodiging om lid te worden van de groep",
+                "Je bent uitgenodigd door {$current_user->name} om lid te worden van de groep {$group->name}. Volg de onderstaande link om lid te worden van de groep:<br />
+                <a href=\"{$link}\">$link</a>
+                "
+            );
         }
+    }
+
+    static function resendGroupInvitation($input) {
+        $site = elgg_get_site_entity();
+        $current_user = elgg_get_logged_in_user_entity();
+
+        $annotation = get_annotation((int) $input["id"]);
+
+        if ($annotation->name !== "email_invitation") {
+            throw new Exception("could_not_find");
+        }
+
+        $group = $annotation->getEntity();
+        if (!$group || !$group instanceof \ElggGroup) {
+            throw new Exception("could_not_find_group");
+        }
+
+        if (!$group->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        $code = explode("|", $annotation->value);     
+        
+        $site_url = elgg_get_site_url();
+
+        $link = "{$site_url}groups/invitations/?invitecode={$code[0]}";
+
+        $result = elgg_send_email(
+            $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
+            $code[1],
+            "[{$group->name}] Herinnering om lid te worden van de groep",
+            "Je bent nogmaals uitgenodigd door {$current_user->name} om lid te worden van de groep {$group->name}. Volg de onderstaande link om lid te worden van de groep:<br />
+            <a href=\"{$link}\">$link</a>
+            "
+        );
+
+        return [
+            "guid" => $group->guid
+        ];
+    }
+
+    static function deleteGroupInvitation($input) {
+        $annotation = get_annotation((int) $input["id"]);
+        
+        if ($annotation->name !== "email_invitation") {
+            throw new Exception("could_not_find");
+        }
+
+        $group = $annotation->getEntity();
+        if (!$group || !$group instanceof \ElggGroup) {
+            throw new Exception("could_not_find_group");
+        }
+
+        if (!$group->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        $result = $annotation->delete();
+        if (!$result) {
+            throw new Exception("could_not_save");
+        }
+
+        return [
+            "guid" => $group->guid
+        ];
     }
 
     static function sendMessageToGroup($input) {

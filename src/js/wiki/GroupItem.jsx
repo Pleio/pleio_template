@@ -4,10 +4,13 @@ import gql from "graphql-tag"
 import { Link } from "react-router-dom"
 import GroupContainer from "../group/components/GroupContainer"
 import Document from "../core/components/Document"
+import Modal from "../core/components/NewModal"
+import AddCore from "../core/Add"
 import WikiItem from "../wiki/Item"
 
 class GroupItem extends React.Component {
     render() {
+        const { match } = this.props
         const { viewer } = this.props.data
 
         if (!viewer) {
@@ -21,9 +24,7 @@ class GroupItem extends React.Component {
         if (viewer.canWriteToContainer) {
             add = (
                 <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
-                    <Link to={`wiki/add`} className="right-lg">
-                        <div className="button ___large ___add"><span>Maak een subpagina</span></div>
-                    </Link>
+                    <div className="button ___large ___add" onClick={(e) => this.refs.addModal.toggle()}><span>Maak een subpagina</span></div>
                 </div>
             )
         }
@@ -38,6 +39,9 @@ class GroupItem extends React.Component {
             <GroupContainer buttons={buttons} match={this.props.match}>
                 <section className="section ___grow">
                     <WikiItem match={this.props.match} />
+                    <Modal ref="addModal" full title="Subpagina toevoegen">
+                        <AddCore subtype="wiki" afterAdd={() => location.reload()} containerGuid={match.params.containerGuid || match.params.guid} />
+                    </Modal>
                 </section>
             </GroupContainer>
         )

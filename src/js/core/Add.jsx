@@ -13,7 +13,7 @@ import TagsField from "./components/TagsField"
 import DateTimeField from "./components/DateTimeField"
 import FeaturedField from "./components/FeaturedField"
 import SwitchField from "./components/SwitchField"
-import SelectField from "./components/SelectField"
+import AccessField from "./components/AccessField"
 import { convertToRaw } from "draft-js"
 import { Set } from "immutable"
 
@@ -131,8 +131,8 @@ class Add extends React.Component {
         if (window.__SETTINGS__['advancedPermissions']) {
             permissions = (
                 <div>
-                    <SelectField name="accessId" options={window.__SETTINGS__['accessIds']} label="Leesrechten" value={window.__SETTINGS__['defaultAccessId']} />
-                    <SelectField name="writeAccessId" options={window.__SETTINGS__['accessIds']} label="Schrijfrechten" value="0" />
+                    <AccessField name="accessId" label="Leesrechten" />
+                    <AccessField name="writeAccessId" label="Schrijfrechten" value="0" />
                 </div>
             )
         }

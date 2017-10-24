@@ -59,11 +59,19 @@ export default class Modal extends React.Component {
             modal = (
                 <div className="modal__wrapper">
                     <div className="modal__box">
-                        <div className="modal__close" onClick={this.toggle} />
-                        <div className="container relative">
-                            {title}
-                        </div>
-                        {this.props.children}
+                        <section className="section">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+                                        <div className="flexer ___space-between ___margin-bottom">
+                                            <h3 className="main__title ___no-margin">{this.props.title}</h3>
+                                            <div className="modal__close" onClick={this.toggle} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {this.props.children}
+                        </section>
                     </div>
                 </div>
             )

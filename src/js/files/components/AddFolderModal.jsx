@@ -2,7 +2,9 @@ import React from "react"
 import Modal from "../../core/components/NewModal"
 import Form from "../../core/components/Form"
 import Errors from "../../core/components/Errors"
+import AccessField from "../../core/components/AccessField"
 import InputField from "../../core/components/InputField"
+import { logErrors } from "../../lib/helpers"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
@@ -48,12 +50,23 @@ class AddFolder extends React.Component {
             errors = ( <Errors errors={this.state.errors} /> );
         }
 
+        let permissions
+        if (window.__SETTINGS__['advancedPermissions']) {
+            permissions = (
+                <div>
+                    <AccessField name="accessId" label="Leesrechten" />
+                    <AccessField name="writeAccessId" label="Schrijfrechten" value="0" />
+                </div>
+            )
+        }
+
         return (
             <Form ref="form" onSubmit={this.onSubmit}>
                 <div className="container">
                     {errors}
                     <div className="form">
                         <InputField label="Naam" name="title" type="text" className="form__input" rules="required" autofocus />
+                        {permissions}
                         <div className="buttons ___end ___margin-top">
                             <button className="button" type="submit">
                                 Toevoegen

@@ -27,13 +27,13 @@ class Edit extends React.Component {
     }
 
     onClose() {
-        const { entity } = this.props.data
-        this.props.history.push(`${this.getRootURL()}/wiki/view/${entity.guid}/${entity.title}`)
+        const { history } = this.props
+        history.goBack()
     }
 
     afterEdit() {
-        const { entity } = this.props.data
-        window.location.href = `${this.getRootURL()}/wiki/view/${entity.guid}/${entity.title}`
+        const { history } = this.props
+        history.goBack()
     }
 
     afterDelete() {
@@ -70,7 +70,7 @@ class Edit extends React.Component {
 }
 
 const Query = gql`
-    query EditWiki($guid: String!) {
+    query EditWiki($guid: Int!) {
         entity(guid: $guid) {
             guid
             status

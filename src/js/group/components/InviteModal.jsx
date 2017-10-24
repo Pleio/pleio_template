@@ -2,12 +2,14 @@ import React from "react"
 import Modal from "../../core/components/NewModal"
 import InviteAutoComplete from "./InviteAutoComplete"
 import InviteList from "./InviteList"
+import InvitedList from "./InvitedList"
 import autobind from "autobind-decorator"
 import { Set } from "immutable"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { logErrors } from "../../lib/helpers"
 import Errors from "../../core/components/Errors"
+import Tabber from "../../core/components/Tabber"
 import classnames from "classnames"
 
 class InviteForm extends React.Component {
@@ -45,7 +47,8 @@ class InviteForm extends React.Component {
         this.props.mutate({
             variables: {
                 input
-            }
+            },
+            refetchQueries: ["InvitedList"]
         }).then(({data}) => {
             this.setState({
                 users: new Set(),
@@ -65,7 +68,9 @@ class InviteForm extends React.Component {
         let list
         if (this.state.completed) {
             list = (
-                "De gebruikers zijn succesvol uitgenodigd."
+                <div style={{paddingTop:"1em"}}>
+                    De gebruikers zijn succesvol uitgenodigd.
+                </div>
             )
         } else {
             list = (
@@ -108,11 +113,16 @@ export default class InviteModal extends React.Component {
     }
 
     render() {
+        const items = [
+            { title: "Nieuwe leden", content: <InviteFormWithMutation group={this.props.entity} /> },
+            { title: "Reeds uitgenodigd", content: <InvitedList group={this.props.entity} /> }
+        ]
+
         return (
             <Modal ref="modal" title="Leden uitnodigen">
                 <div className="group-info">
                     <div className="group-info__content">
-                        <InviteFormWithMutation group={this.props.entity} />
+                        <Tabber items={items} />
                     </div>
                 </div>
             </Modal>
