@@ -23,6 +23,15 @@
 </div>
 
 <div>
+    <label><?php echo elgg_echo("pleio_template:startpage:cms"); ?></label>
+    <?php echo elgg_view("input/dropdown", [
+        "name" => "params[startpage_cms]",
+        "value" => $vars["plugin"]->startpage_cms,
+        "options_values" => pleio_template_get_cms_pages()
+    ]); ?>
+</div>
+
+<div>
     <label><?php echo elgg_echo("pleio_template:show_logo"); ?></label>
     <?php echo elgg_view("input/dropdown", [
         "name" => "params[show_logo]",

@@ -132,7 +132,7 @@ class Item extends React.Component {
             if (entity.hasChildren || match.params.containerGuid) {
                 subNav = (
                     <div className="col-sm-4">
-                        <SubNav containerGuid={match.params.containerGuid || match.params.guid} guid={match.params.containerGuid || match.params.guid} />
+                        <SubNav match={match} containerGuid={match.params.containerGuid || match.params.guid} guid={match.params.containerGuid || match.params.guid} />
                     </div>
                 )
             }
@@ -189,6 +189,7 @@ const Query = gql`
                 rows {
                     guid
                     layout
+                    canEdit
                     widgets {
                         guid
                         type

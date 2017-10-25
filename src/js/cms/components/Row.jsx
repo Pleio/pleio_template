@@ -30,10 +30,12 @@ class Row extends React.Component {
     }
 
     render() {
+        const { entity } = this.props
+
         let cols = []
         let options = ["text", "html"]
 
-        switch (this.props.entity.layout) {
+        switch (entity.layout) {
             case "full":
                 cols = ["col-sm-12"]
                 break
@@ -56,7 +58,7 @@ class Row extends React.Component {
         }
 
         let definedWidgets = {}
-        this.props.entity.widgets.forEach((widget) => {
+        entity.widgets.forEach((widget) => {
             definedWidgets[widget.position] = widget
         })
 
@@ -68,9 +70,11 @@ class Row extends React.Component {
                     <Widget key={i} col={col} entity={definedWidgets[i]} />
                 )
             } else {
-                buttons = options.map((option, j) => (
-                    <button key={j} className="button" disabled={this.props.disabled} onClick={(e) => this.addWidget(i, option)}>{translate[option]}</button>
-                ))
+                if (entity.canEdit) {
+                    buttons = options.map((option, j) => (
+                        <button key={j} className="button" disabled={this.props.disabled} onClick={(e) => this.addWidget(i, option)}>{translate[option]}</button>
+                    ))
+                }
 
                 return (
                     <div key={i} className={col}>
@@ -84,14 +88,17 @@ class Row extends React.Component {
             }
         })
 
-        const overlay = (
-            <div className="overlay">
-                <div className="overlay__buttons">
-                    <button onClick={(e) => this.refs.delete.toggle()}>Delete</button>
+        let overlay
+        if (entity.canEdit) {
+            overlay = (
+                <div className="overlay">
+                    <div className="overlay__buttons">
+                        <button onClick={(e) => this.refs.delete.toggle()}>Delete</button>
+                    </div>
+                    <Delete ref="delete" entity={this.props.entity} refetchQueries={["PageItem"]} />
                 </div>
-                <Delete ref="delete" entity={this.props.entity} refetchQueries={["PageItem"]} />
-            </div>
-        )
+            )
+        }
 
         if (this.props.entity.layout === "full") {
             return (

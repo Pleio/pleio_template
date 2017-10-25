@@ -13,6 +13,7 @@ $dutch = array(
     "pleio_template:logo" => "Logo",
     "pleio_template:style" => "Stijl",
     "pleio_template:startpage" => "Startpagina",
+    "pleio_template:startpage:cms" => "CMS startpagina",
     "pleio_template:font" => "Font",
     "pleio_template:color:primary" => "Primair",
     "pleio_template:color:secondary" => "Secundair",

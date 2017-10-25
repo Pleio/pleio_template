@@ -4,6 +4,7 @@ import Container from "./components/Container"
 
 import Campagne from "../Campagne"
 import ActivityList from "../activity/List"
+import Index from "./Index"
 import Privacy from "./Privacy"
 import Terms from "./Terms"
 import Contact from "./Contact"
@@ -21,7 +22,7 @@ export default class Routes extends React.Component {
         return (
                 <Container>
                     <Switch>
-                        <Route exact path="/" component={ActivityList} />
+                        <Route exact path="/" component={Index} />
                         <Route exact path="/campagne" component={Campagne} />
                         <Route exact path="/activity" component={ActivityList} />
                         <Route exact path="/pages/privacy" component={Privacy} />

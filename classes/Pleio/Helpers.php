@@ -640,7 +640,9 @@ class Helpers {
                 "guid" => $site->guid,
                 "name" => $site->name,
                 "accessIds" => Resolver::getAccessIds(["guid" => $site->guid]),
-                "defaultAccessId" => Resolver::getDefaultAccessId(["guid" => $site->guid])
+                "defaultAccessId" => Resolver::getDefaultAccessId(["guid" => $site->guid]),
+                "startPage" => elgg_get_plugin_setting("startpage", "pleio_template") ?: "activity",
+                "startPageCms" => elgg_get_plugin_setting("startpage_cms", "pleio_template")
             ]
         ];
     }

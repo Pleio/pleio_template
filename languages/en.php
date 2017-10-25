@@ -13,6 +13,7 @@ $english = array(
     "pleio_template:logo" => "Logo",
     "pleio_template:style" => "Style",
     "pleio_template:startpage" => "Startpage",
+    "pleio_template:startpage:cms" => "CMS startpage",
     "pleio_template:font" => "Font",
     "pleio_template:color:primary" => "Primary",
     "pleio_template:color:secondary" => "Secondary",

@@ -63,18 +63,25 @@ class Widget extends React.Component {
             )
         }
 
+        let overlay
+        if (entity.canEdit) {
+            overlay = (
+                <div className="cms-overlay">
+                    <div className="cms-overlay__actions">
+                        <div className="cms-overlay__buttons">
+                            {settings}
+                            <button className="___delete" onClick={(e) => this.refs.delete.toggle()}></button>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+
         return (
             <div className={this.props.col} onBlur={this.onBlur}>
                 <div className="cms-block ___is-filled">
                     {widget}
-                    <div className="cms-overlay">
-                        <div className="cms-overlay__actions">
-                            <div className="cms-overlay__buttons">
-                                {settings}
-                                <button className="___delete" onClick={(e) => this.refs.delete.toggle()}></button>
-                            </div>
-                        </div>
-                    </div>
+                    {overlay}
                 </div>
                 <Delete ref="delete" entity={entity} refetchQueries={["PageItem"]} />
             </div>

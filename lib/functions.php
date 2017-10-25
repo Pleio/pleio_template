@@ -1,7 +1,23 @@
 <?php
+function pleio_template_get_cms_pages() {
+    $site = elgg_get_site_entity();
+
+    $options = [
+        "type" => "object",
+        "subtype" => "page",
+        "container_guid" => $site->guid,
+        "limit" => 50
+    ];
+
+    $return = [0 => "---"];
+    foreach (elgg_get_entities($options) as $entity) {
+        $return[$entity->guid] = $entity->title;
+    }
+
+    return $return;
+}
 
 function pleio_template_add_folder_to_zip(ZipArchive &$zip_archive, ElggObject $folder, $folder_path = ""){
-
     if(!empty($zip_archive) && !empty($folder) && elgg_instanceof($folder, "object", "folder")){
         $folder_title = elgg_get_friendly_title($folder->title);
 

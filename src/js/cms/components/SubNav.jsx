@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, withRouter } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
@@ -53,4 +53,4 @@ const Query = gql`
     }
 `
 
-export default graphql(Query)(withRouter(SubNav))
+export default graphql(Query)(SubNav)
