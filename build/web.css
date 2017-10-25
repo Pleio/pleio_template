@@ -13987,6 +13987,91 @@ body.modal__open {
 .toolbar.___is-visible {
   opacity: 1;
 }
+.file-tile__name span:first-child {
+  /* autoprefixer: off */
+  -webkit-box-orient: vertical;
+  /* autoprefixer: on */
+}
+.cms-block.___is-filled {
+  background-color: initial;
+  -ms-flex-pack: initial;
+      justify-content: initial;
+  -ms-flex-align: initial;
+      align-items: initial;
+  min-height: 200px;
+  height: initial;
+}
+.cms-block .form {
+  width: 100%;
+  height: 100%;
+}
+.editor.___is-inline {
+  padding-top: 0;
+}
+.editor.___is-inline .editor__toolbar {
+  top: -4em;
+  left: 0;
+  width: 70rem;
+  border: 1px solid #CCCCCC;
+  z-index: 20;
+}
+.editor.___is-inline .editor__input {
+  height: 100%;
+}
+.editor.___is-inline .content {
+  margin: 0;
+}
+.overlay {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  opacity: 0;
+}
+:hover > .overlay {
+  opacity: 1;
+}
+.overlay__buttons {
+  margin: 1em;
+}
+.section {
+  position: relative;
+}
+.subnav__parent > a:after {
+  display: none;
+}
+.tree-view__folder:hover > .tree-view__folder {
+  margin-left: 4rem;
+  transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tree-view__folder:hover > .tree-view__folder > span {
+  opacity: 0;
+  height: 0;
+  transition: opacity 0.35s ease, height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tree-view__folder:hover > span:before {
+  transform: rotate(-90deg);
+}
+.tree-view__folder.___is-open > .tree-view__folder {
+  margin-left: 4rem;
+  transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tree-view__folder.___is-open > .tree-view__folder > span {
+  opacity: 1;
+  height: 3.8rem;
+  transition: opacity 0.35s ease, height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tree-view__folder.___is-open > span:before {
+  transform: rotate(0);
+}
+.tree-view__folder.___selected > span {
+  background-color: #f2fafe;
+}
 #__bs_notify__ {
   opacity: .15 !important;
   pointer-events: none;
