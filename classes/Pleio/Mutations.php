@@ -526,7 +526,7 @@ class Mutations {
         }
 
         $container = get_entity((int) $input["containerGuid"]);
-        if (!$container) {
+        if (!$container && ($entity->container_guid !== $container->guid && $entity->container_guid !== $container->container_guid)) {
             throw new Exception("invalid_new_container");
         }
 
