@@ -447,3 +447,50 @@ body.modal__open {
 .subnav__parent > a:after {
     display: none;
 }
+
+.tree-view__folder {
+    &:hover {
+        > .tree-view__folder {
+            margin-left: 4rem;
+            transition: margin-left @trans-material-normal;
+
+            > span {
+                opacity: 0;
+                height: 0;
+                transition: opacity @trans-normal, height @trans-material-normal;
+            }
+        }
+
+        > span {
+            &:before {
+                transform: rotate(-90deg);
+            }
+        }
+    }
+
+    &.___is-open {
+        > .tree-view__folder {
+            margin-left: 4rem;
+            transition: margin-left @trans-material-normal;
+
+            > span {
+                opacity: 1;
+                height: 3.8rem;
+                transition: opacity @trans-normal, height @trans-material-normal;
+            }
+        }
+
+        > span {
+            &:before {
+                transform: rotate(0);
+            }
+        }
+    }
+
+    &.___selected {
+        > span {
+            background-color: @color-secondary--bright;
+        }
+    }
+    
+}

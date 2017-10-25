@@ -1,13 +1,14 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import autobind from "autobind-decorator"
 import { getVideoFromUrl, getVideoThumbnail } from "../../lib/helpers"
 import { getClassFromTags } from "../../lib/helpers"
 import { showFullDate } from "../../lib/showDate"
 import classnames from "classnames"
+import AttendButtons from "./AttendButtons"
 import VideoModal from "../../core/components/VideoModal"
 import Select from "../../core/components/NewSelect"
 import People from "../../core/components/People"
-import autobind from "autobind-decorator"
 
 export default class Card extends React.Component {
     @autobind
@@ -47,11 +48,18 @@ export default class Card extends React.Component {
         }
 
         let picture
-        if (!this.props.inGroup) {
+        if (!entity.inGroup) {
             picture = (
                 <Link to={entity.url} className="card-event__picture" title={entity.title} style={style}>
                     {playButton}
                 </Link>
+            )
+        }
+
+        let attendButtons
+        if (entity.inGroup) {
+            attendButtons = (
+                <AttendButtons entity={entity} />
             )
         }
 

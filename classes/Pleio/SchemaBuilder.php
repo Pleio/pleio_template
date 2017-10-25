@@ -556,6 +556,12 @@ class SchemaBuilder {
                         return Resolver::hasChildren($object);
                     }
                 ],
+                "inGroup" => [
+                    "type" => Type::boolean(),
+                    "resolve" => function($object) {
+                        return Resolver::inGroup($object);
+                    }
+                ],
                 "excerpt" => [
                     "type" => Type::string()
                 ],
@@ -1321,6 +1327,27 @@ class SchemaBuilder {
                 ]
             ],
             "mutateAndGetPayload" => "Pleio\Mutations::editFileFolder"
+        ]);
+
+        $moveFileFolderMutation = Relay::mutationWithClientMutationId([
+            "name" => "moveFileFolder",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::int()
+                ],
+                "containerGuid" => [
+                    "type" => Type::int()
+                ]
+            ],
+            "outputFields" => [
+                "entity" => [
+                    "type" => $entityInterface,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::moveFileFolder"
         ]);
 
         $featuredInput = new InputObjectType([
@@ -2126,6 +2153,7 @@ class SchemaBuilder {
                     "deleteEntity" => $deleteEntityMutation,
                     "addFile" => $addFileMutation,
                     "editFileFolder" => $editFileFolderMutation,
+                    "moveFileFolder" => $moveFileFolderMutation,
                     "addPage" => $addPageMutation,
                     "editPage" => $editPageMutation,
                     "addRow" => $addRowMutation,

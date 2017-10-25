@@ -24,8 +24,12 @@ class Item extends React.Component {
             )
         }
 
+        const buttons = (
+            <div />
+        )
+
         return (
-            <GroupContainer buttons="" match={this.props.match}>
+            <GroupContainer buttons={buttons} match={this.props.match}>
                 <Document title={entity.name} />
                 <section className="section ___grow">
                     <EventsItem match={this.props.match} group={entity} />

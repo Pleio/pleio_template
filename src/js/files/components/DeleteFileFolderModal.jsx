@@ -84,7 +84,13 @@ const DeleteFileFolderWithMutation = graphql(Mutation)(DeleteFileFolder)
 export default class DeleteFileFolderModal extends React.Component {
     constructor(props) {
         super(props)
+        this.onComplete = this.onComplete.bind(this)
         this.toggle = this.toggle.bind(this)
+    }
+
+    onComplete() {
+        this.props.onComplete()
+        this.toggle()
     }
 
     toggle() {
@@ -96,7 +102,7 @@ export default class DeleteFileFolderModal extends React.Component {
 
         return (
             <Modal ref="modal" title="Verwijderen" medium>
-                <DeleteFileFolderWithMutation {...this.props} />
+                <DeleteFileFolderWithMutation {...this.props} onComplete={this.onComplete} />
             </Modal>
         )
     }

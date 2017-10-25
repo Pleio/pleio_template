@@ -33,9 +33,11 @@ class AddFolder extends React.Component {
                     description: "",
                     containerGuid: containerGuid
                 }
-            }
+            },
+            refetchQueries: ["FilesList"]
         }).then(({data}) => {
-            location.reload()
+            this.refs.form.clearValues()
+            this.props.onComplete()
         }).catch((errors) => {
             logErrors(errors)
             this.setState({
@@ -93,7 +95,13 @@ const AddFolderWithMutation = graphql(Mutation)(AddFolder)
 export default class AddFolderModal extends React.Component {
     constructor(props) {
         super(props)
+        this.onComplete = this.onComplete.bind(this)
         this.toggle = this.toggle.bind(this)
+    }
+
+    onComplete() {
+        this.props.onComplete()
+        this.toggle()
     }
 
     toggle() {
@@ -103,7 +111,7 @@ export default class AddFolderModal extends React.Component {
     render() {
         return (
             <Modal ref="modal" title="Nieuwe map" medium>
-                <AddFolderWithMutation {...this.props} />
+                <AddFolderWithMutation {...this.props} onComplete={this.onComplete} />
             </Modal>
         )
     }

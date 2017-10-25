@@ -511,6 +511,45 @@ class Mutations {
         throw new Exception("could_not_save");
     }
 
+    static function moveFileFolder($input) {
+        $entity = get_entity((int) $input["guid"]);
+        if (!$entity) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$entity->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        if (!in_array($entity->getSubtype(), array("file", "folder"))) {
+            throw new Exception("invalid_object_subtype");
+        }
+
+        $container = get_entity((int) $input["containerGuid"]);
+        if (!$container) {
+            throw new Exception("invalid_new_container");
+        }
+
+        switch ($entity->getSubtype()) {
+            case "file":
+                remove_entity_relationships($entity->guid, "folder_of", true);
+
+                if ($entity->container_guid != $container->guid) { // not in root directory
+                    add_entity_relationship($container->guid, "folder_of", $entity->guid);
+                }
+                break;
+            case "folder":
+                if ($entity->container_guid != $container->guid) { // in root directory
+                    $entity->parent_guid = $container->guid;
+                } else {
+                    $entity->parent_guid = 0;
+                }
+
+                $entity->save();
+                break;
+        }
+    }
+
     static function bookmark($input) {
         $entity = get_entity((int) $input["guid"]);
         if (!$entity) {
@@ -1255,6 +1294,12 @@ class Mutations {
     static function deleteGroupInvitation($input) {
         $annotation = get_annotation((int) $input["id"]);
         
+        if (!$annotation) {
+            return [
+                "guid" => $group->guid
+            ];
+        }
+
         if ($annotation->name !== "email_invitation") {
             throw new Exception("could_not_find");
         }

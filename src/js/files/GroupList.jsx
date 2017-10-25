@@ -197,7 +197,8 @@ class Item extends React.Component {
                             </div>
                             <div className="flexer ___gutter ___end">
                                 {edit}
-                                <div className="button   ___delete" onClick={() => this.refs.delete.toggle()}><span>Verwijderen</span></div>
+                                <div className="button ___move" onClick={() => this.refs.move.toggle()}><span>Verplaatsen</span></div>
+                                <div className="button ___delete" onClick={() => this.refs.delete.toggle()}><span>Verwijderen</span></div>
                                 <div className="button ___download" onClick={this.downloadFiles}><span>Download</span></div>
                             </div>
                         </div>
@@ -223,7 +224,7 @@ class Item extends React.Component {
                     <AddFileModal ref="addFile" containerGuid={containerGuid} onComplete={this.clearSelection} />
                     <AddFolderModal ref="addFolder" containerGuid={containerGuid} onComplete={this.clearSelection} />
                     <EditFileFolderModal ref="edit" entity={this.state.selected.first()} onComplete={this.clearSelection} />
-                    <MoveFileFolderModal ref="move" entities={this.state.selected} onComplete={this.clearSelection} />
+                    <MoveFileFolderModal ref="move" entities={this.state.selected} containerGuid={match.params.groupGuid} onComplete={this.clearSelection} />
                     <DeleteFileFolderModal ref="delete" entities={this.state.selected} onComplete={this.clearSelection} />
                 </section>
             </GroupContainer>

@@ -18,6 +18,7 @@ const Query = gql`
                     votes
                     hasVoted
                     isBookmarked
+                    inGroup
                     canBookmark
                     tags
                     isFeatured

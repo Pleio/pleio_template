@@ -570,7 +570,7 @@ class Resolver {
         $group = get_entity($a["guid"]);
 
         if (!$group->canEdit()) {
-            throw new Exception("could_not_edit");
+            return [ "total" => 0, "edges" => [] ];
         }
 
         $options = [
@@ -613,8 +613,8 @@ class Resolver {
 
         $group = get_entity($a["guid"]);
 
-        if (!$group->canEdit()) {
-            throw new Exception("could_not_edit");
+        if (!$group || !$group->canEdit()) {
+            return [ "total" => 0, "edges" => [] ];
         }
 
         $options = [
@@ -1274,6 +1274,19 @@ class Resolver {
             "total" => $total,
             "edges" => $entities
         ];
+    }
+
+    static function inGroup($object) {
+        $entity = get_entity($object["guid"]);
+        if (!$entity) {
+            return false;
+        }
+
+        if ($entity->getContainerEntity() instanceof \ElggGroup) {
+            return true;
+        }
+
+        return false;
     }
 
     static function getBreadcrumb($a, $args, $c) {

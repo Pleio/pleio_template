@@ -110,7 +110,13 @@ const AddFileWithMutation = graphql(Mutation)(AddFile)
 export default class AddFileModal extends React.Component {
     constructor(props) {
         super(props)
+        this.onComplete = this.onComplete.bind(this)
         this.toggle = this.toggle.bind(this)
+    }
+
+    onComplete() {
+        this.props.onComplete()
+        this.toggle()
     }
 
     toggle() {
@@ -120,7 +126,7 @@ export default class AddFileModal extends React.Component {
     render() {
         return (
             <Modal ref="modal" title="Nieuw bestand" medium>
-                <AddFileWithMutation {...this.props} />
+                <AddFileWithMutation {...this.props} onComplete={this.toggle} />
             </Modal>
         )
     }

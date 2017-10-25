@@ -16,6 +16,7 @@ const Query = gql`
                     startDate
                     endDate
                     url
+                    inGroup
                     excerpt
                     featured {
                         image

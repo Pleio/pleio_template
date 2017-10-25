@@ -93,7 +93,13 @@ const EditFileFolderWithMutation = graphql(Mutation)(EditFileFolder)
 export default class EditFileFolderModal extends React.Component {
     constructor(props) {
         super(props)
+        this.onComplete = this.onComplete.bind(this)
         this.toggle = this.toggle.bind(this)
+    }
+
+    onComplete() {
+        this.props.onComplete()
+        this.toggle()
     }
 
     toggle() {
@@ -118,7 +124,7 @@ export default class EditFileFolderModal extends React.Component {
 
         return (
             <Modal ref="modal" title={title} medium>
-                <EditFileFolderWithMutation onComplete={this.toggle} {...this.props} />
+                <EditFileFolderWithMutation {...this.props} onComplete={this.onComplete} />
             </Modal>
         )
     }

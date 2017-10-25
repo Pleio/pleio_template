@@ -28,6 +28,12 @@ class InfiniteList extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps !== this.props) {
+            if (nextProps.onChange) {
+                nextProps.onChange()
+            }
+        }
+
         if (nextProps.tags !== this.props.tags) {
             this.setState({
                 offset: 0

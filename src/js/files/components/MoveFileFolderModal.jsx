@@ -2,7 +2,7 @@ import React from "react"
 import Modal from "../../core/components/NewModal"
 import Errors from "../../core/components/Errors"
 import Form from "../../core/components/Form"
-import FolderField from "../../core/components/InputField"
+import FolderField from "./FolderField"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { logErrors } from "../../lib/helpers"
@@ -19,7 +19,7 @@ class MoveFileFolder extends React.Component {
     }
 
     onSubmit(e) {
-        const { entity } = this.props
+        const { entities } = this.props
 
         this.setState({
             errors: []
@@ -27,17 +27,18 @@ class MoveFileFolder extends React.Component {
 
         const values = this.refs.form.getValues()
 
-        this.props.mutate({
-            variables: {
-                input: {
-                    clientMutationId: 1,
-                    guid: entity.guid,
-                    title: values.title,
-                    file: values.file
+        Promise.all(entities.map((entity) => {
+            return this.props.mutate({
+                variables: {
+                    input: {
+                        clientMutationId: 1,
+                        guid: entity.guid,
+                        containerGuid: values.folder
+                    }
                 }
-            }
-        }).then(({data}) => {
-            this.props.onComplete()
+            })
+        })).then(({data}) => {
+            location.reload()
         }).catch((errors) => {
             logErrors(errors)
             this.setState({
@@ -51,7 +52,7 @@ class MoveFileFolder extends React.Component {
             <Form ref="form" onSubmit={this.onSubmit}>
                 <Errors errors={this.state.errors} />
                 <div className="form">
-                    <FolderField name="folder" className="form__input" />
+                    <FolderField name="folder" className="form__input" excludeGuids={this.props.entities.map((entity) => entity.guid).toJS()} containerGuid={this.props.containerGuid} />
                     <button className="button" type="submit">
                         Verplaatsen
                     </button>
@@ -62,8 +63,8 @@ class MoveFileFolder extends React.Component {
 }
 
 const Mutation = gql`
-    mutation editFileFolder($input: editFileFolderInput!) {
-        editFileFolder(input: $input) {
+    mutation MoveFileFolderModal($input: moveFileFolderInput!) {
+        moveFileFolder(input: $input) {
             entity {
                 guid
                 ... on Object {
@@ -87,7 +88,7 @@ export default class MoveFileFolderModal extends React.Component {
 
     render () {
         return (
-            <Modal ref="modal" title="Verplaatsen" medium>
+            <Modal ref="modal" title="Verplaatsen naar" medium>
                 <MoveFileFolderWithMutation {...this.props} />
             </Modal>
         )

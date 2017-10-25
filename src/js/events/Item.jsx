@@ -43,6 +43,7 @@ class Item extends React.Component {
     }
 
     render() {
+        const { match } = this.props
         let { entity, viewer } = this.props.data
         let edit, source
 
@@ -99,6 +100,13 @@ class Item extends React.Component {
             )
         }
 
+        let attendButtons
+        if (this.props.group) {
+            attendButtons = (
+                <AttendButtons viewer={viewer} entity={entity} />
+            )
+        }
+
         return (
             <div>
                 <Document title={entity.title} />
@@ -131,11 +139,12 @@ class Item extends React.Component {
                                             </a>
                                         </div>
                                     </div>
+                                    {attendButtons}
                                     <AttendeesModal ref="modal" entity={entity} />
                                 </div>
                             </div>
                             <div className="col-sm-8">
-                                <h2 className="title">{showFullDate(entity.startDate)}<small>Den Haag</small></h2>
+                                <h2 className="title">{showFullDate(entity.startDate)}<small></small></h2>
                                 {tickets}
                                 <RichTextView richValue={entity.richDescription} value={entity.description} />
                                     <div className="article-actions">
