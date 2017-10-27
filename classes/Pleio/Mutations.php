@@ -259,8 +259,13 @@ class Mutations {
         }
 
         if ($input["subtype"] === "event") {
-            $entity->startDate = date("U", strtotime($input["startDate"]));
-            $entity->endDate = date("U", strtotime($input["endDate"]));
+            $startDate = strtotime($input["startDate"]);
+            $endDate = strtotime($input["endDate"]);
+
+            $entity->start_day = $startDate;
+            $entity->start_time = $startDate;
+            $entity->end_ts = $endDate;
+
             $result = $entity->save();
         }
 
@@ -369,8 +374,13 @@ class Mutations {
         }
 
         if ($entity->getSubtype() === "event") {
-            $entity->startDate = date("U", strtotime($input["startDate"]));
-            $entity->endDate = date("U", strtotime($input["endDate"]));
+            $startDate = strtotime($input["startDate"]);
+            $endDate = strtotime($input["endDate"]);
+
+            $entity->start_day = $startDate;
+            $entity->start_time = $startDate;
+            $entity->end_ts = $endDate;
+
             $result &= $entity->save();
         }
 
@@ -929,7 +939,7 @@ class Mutations {
         }
 
         if (!$entity->canEdit()) {
-            throw new Eception("could_not_save");
+            throw new Exception("could_not_save");
         }
 
         $entity->title = $input["title"];
@@ -1005,7 +1015,7 @@ class Mutations {
         }
 
         if (!$entity->canEdit()) {
-            throw new Eception("could_not_save");
+            throw new Exception("could_not_save");
         }
 
         if ($input["title"]) {

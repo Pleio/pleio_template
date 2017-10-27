@@ -21,7 +21,7 @@ class DateTimeField extends React.Component {
 
     toMoment(value) {
         const start = moment(value)
-        const remainder = 30 - start.minute() % 30
+        const remainder = start.minute() % 30
         return moment(start).add(remainder, "minutes")
     }
 

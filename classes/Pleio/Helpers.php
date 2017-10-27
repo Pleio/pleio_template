@@ -635,7 +635,7 @@ class Helpers {
 
         return [
             "odtEnabled" => elgg_is_active_plugin("odt_editor"),
-            "advancedPermissions" => elgg_get_plugin_setting("advanced_permissions", "pleio_template") ? true : false,
+            "advancedPermissions" => elgg_get_plugin_setting("advanced_permissions", "pleio_template") === "yes" ? true : false,
             "site" => [
                 "guid" => $site->guid,
                 "name" => $site->name,
@@ -645,5 +645,33 @@ class Helpers {
                 "startPageCms" => elgg_get_plugin_setting("startpage_cms", "pleio_template")
             ]
         ];
+    }
+
+    static function getEventStartDate($entity) {
+        $start_day = $entity->start_day;
+        $start_time = $entity->start_time;
+
+        if (!$start_day) {
+            return null;
+        }
+
+        $date = mktime(
+            date("H", $start_time),
+            date("i", $start_time),
+            date("s", $start_time),
+            date("n", $start_day),
+            date("j", $start_day),
+            date("Y", $start_day)
+        );
+
+        return date("c", $date);
+    }
+
+    static function getEventEndDate($entity) {
+        if (!$entity->end_ts) {
+            return null;
+        }
+
+        return date("c", $entity->end_ts);
     }
 }

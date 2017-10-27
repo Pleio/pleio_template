@@ -894,7 +894,7 @@ class Resolver {
             ];
 
             if ($args["subtype"] === "event") {
-                $msid = get_metastring_id("startDate");
+                $msid = get_metastring_id("start_day");
                 $yesterday = (int) mktime(0, 0, 0, date("n"), date("j") - 1, date("Y"));
 
                 if ($msid) {
