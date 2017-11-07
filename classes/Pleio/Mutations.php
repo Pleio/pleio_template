@@ -176,6 +176,8 @@ class Mutations {
                     } else {
                         $defaultAccessId = get_default_access();
                     }
+                } else {
+                    $defaultAccessId = get_default_access();
                 }
 
                 if ((int) $input["accessId"]) {
