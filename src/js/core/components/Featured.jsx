@@ -23,9 +23,9 @@ export default class Featured extends React.Component {
 
         let background
         if (featured.image) {
-            background = { backgroundImage: `url(${featured.image}`, "backgroundPositionY": featured.positionY + "%"}
+            background = { backgroundImage: `url('${featured.image}')`, "backgroundPositionY": featured.positionY + "%"}
         } else if (featured.video) {
-            background = { backgroundImage: `url(${getVideoThumbnail(featured.video)}`, "backgroundPositionY": featured.positionY + "%"}
+            background = { backgroundImage: `url('${getVideoThumbnail(featured.video)}')`, "backgroundPositionY": featured.positionY + "%"}
         } else if (showEmpty) {
             if (group) {
                 background = { backgroundColor: "#fafafa" }
