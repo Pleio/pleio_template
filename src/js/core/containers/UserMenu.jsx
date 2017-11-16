@@ -27,8 +27,8 @@ class UserMenu extends React.Component {
 
             return (
                 <div className="navigation__actions">
-                    <NotificationsTop />
                     <NavLink to="/search" title="Zoeken" className="navigation__action ___search" />
+                    <NotificationsTop />
                     <div className="navigation__action ___account">
                         <div style={{backgroundImage: "url('" + viewer.user.icon + "')"}} className="navigation__picture"></div>
                         <span>{viewer.user.name}</span>
