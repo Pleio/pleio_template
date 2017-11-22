@@ -95,8 +95,8 @@ class Helpers {
 
                 $container = $entity->getContainerEntity();
                 if ($container instanceof \ElggGroup) {
-                    $containerFriendlytitle = elgg_get_friendly_title($container->name);
-                    $root = "/groups/view/{$container->guid}/{$container->name}/";
+                    $container_friendlytitle = elgg_get_friendly_title($container->name);
+                    $root = "/groups/view/{$container->guid}/{$container_friendlytitle}/";
                 } else {
                     $root = "/";
                 }
