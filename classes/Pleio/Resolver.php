@@ -665,12 +665,14 @@ class Resolver {
         $entities = elgg_get_entities([
             "type" => "object",
             "subtypes" => ["comment", "answer"],
-            "container_guid" => (int) $object["guid"]
+            "container_guid" => (int) $object["guid"],
+            "limit" => 0
         ]);
 
         $annotations = elgg_get_annotations([
             "guid" => (int) $object["guid"],
-            "annotation_names" => ["group_topic_post", "generic_comment"]
+            "annotation_names" => ["group_topic_post", "generic_comment"],
+            "limit" => 0
         ]);
 
         if (!$entities) {
@@ -684,7 +686,7 @@ class Resolver {
         $comments = array_merge($entities, $annotations);
 
         usort($comments, function($a, $b) {
-            return ($a->time_created < $b->time_created) ? -1 : 1;
+            return ($a->time_created > $b->time_created) ? -1 : 1;
         });
 
         $mapped_comments = [];
