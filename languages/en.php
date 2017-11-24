@@ -38,7 +38,13 @@ $english = array(
     "pleio_template:email:goto" => "Go to %s",
     "pleio_template:read_more" => "Read more",
     "file_tools:forms:edit:parent" => "Parent",
-    "file_tools:input:folder_select:main" => "Main folder"
+    "file_tools:input:folder_select:main" => "Main folder",
+    'admin:users:all' => 'All users',
+    'admin:users:edit' => 'Edit user',
+    'admin:profile:details' => 'Profile details',
+    'admin:profile:edit' => 'Edit profile',
+    'members:search' => 'Search user',
+    'view_profile' => 'View profile'
 );
 
 add_translation("en", $english);

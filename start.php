@@ -69,6 +69,11 @@ function pleio_template_init() {
     elgg_register_simplecache_view("js/web");
     elgg_register_simplecache_view("js/vendor");
 
+    elgg_register_admin_menu_item("administer", "all", "users");
+    if (elgg_in_context("admin")) {
+        elgg_register_plugin_hook_handler("register", "menu:entity", "pleio_template_user_setup_menu", 502);
+    }
+
     if (!isset($_COOKIE["CSRF_TOKEN"])) {
         $token = md5(openssl_random_pseudo_bytes(32));
         $domain = ini_get("session.cookie_domain");
@@ -369,4 +374,25 @@ function pleio_template_format_date($datetime, $type = "default") {
         default:
             return strftime("%d-%m-%y", $datetime);
     }
+}
+
+function pleio_template_user_setup_menu($hook, $type, $items, $params) {
+    $entity = elgg_extract("entity", $params);
+    if (!$entity || !$entity instanceof ElggUser) {
+        return $items;
+    }
+
+    foreach ($items as $key => $item) {
+        if (in_array($item->getName(), ["add_friend"])) {
+            unset($items[$key]);
+        }
+    }
+
+    $items[] = ElggMenuItem::factory([
+        "name" => "edit",
+        "text" => elgg_echo("edit"),
+        "href" => "/admin/users/edit?guid={$entity->guid}"
+    ]);
+
+    return $items;
 }

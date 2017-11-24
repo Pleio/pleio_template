@@ -38,7 +38,13 @@ $dutch = array(
     "pleio_template:email:goto" => "Ga naar %s",
     "pleio_template:read_more" => "Lees meer",
     "file_tools:forms:edit:parent" => "Map",
-    "file_tools:input:folder_select:main" => "Hoofdmap"
+    "file_tools:input:folder_select:main" => "Hoofdmap",
+    'admin:users:all' => 'Alle gebruikers',
+    'members:search' => 'Zoek gebruiker',
+    'admin:users:edit' => 'Wijzig gebruiker',
+    'admin:profile:details' => 'Profiel details',
+    'admin:profile:edit' => 'Wijzig profiel',
+    'view_profile' => 'Bekijk profiel'
 );
 
 add_translation("nl", $dutch);
