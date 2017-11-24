@@ -27,5 +27,5 @@ if ($object) {
 
 echo elgg_view_page($title, $content, "default", [
     "metas" => $metas,
-    "settings" => Pleio\Helpers::getSettings()
+    "is_react" => true
 ]);

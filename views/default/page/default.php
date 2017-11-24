@@ -4,7 +4,9 @@ $lang = get_current_language();
 
 $store = elgg_extract("store", $vars);
 $metas = elgg_extract("metas", $vars, []);
-$settings = elgg_extract("settings", $vars);
+$is_react = elgg_extract("is_react", $vars, false);
+
+$settings = Pleio\Helpers::getSettings();
 
 $theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
 $font = elgg_get_plugin_setting("font", "pleio_template");
@@ -58,8 +60,11 @@ $custom_js = elgg_is_active_plugin("custom_js");
             window.__SETTINGS__ = <?php echo json_encode($settings); ?>;
         </script>
     <?php endif; ?>
-    <script src="<?php echo elgg_get_simplecache_url("js", "vendor"); ?>"></script>
-    <script src="<?php echo elgg_get_simplecache_url("js", "web"); ?>"></script>
+
+    <?php if ($is_react): ?>
+        <script src="<?php echo elgg_get_simplecache_url("js", "vendor"); ?>"></script>
+        <script src="<?php echo elgg_get_simplecache_url("js", "web"); ?>"></script>
+    <?php endif; ?>
 
     <?php if ($custom_js): ?>
         <script src="<?php echo elgg_get_simplecache_url("js", "custom"); ?>"></script>
