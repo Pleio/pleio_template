@@ -115,7 +115,7 @@ class Resolver {
     }
 
     static function getDefaultAccessId($object) {
-        $old_guid = elgg_set_page_owner_guid($object["guid"]);        
+        $old_guid = elgg_set_page_owner_guid($object["guid"]);
         $default_access = get_default_access();
         elgg_set_page_owner_guid($old_guid);
         return $default_access;
@@ -403,14 +403,20 @@ class Resolver {
     }
 
     static function countComments($object) {
-        $options = array(
+        $total_comments = elgg_get_entities([
             "type" => "object",
             "subtypes" => ["comment", "answer"],
             "container_guid" => (int) $object["guid"],
             "count" => true
-        );
+        ]);
 
-        return elgg_get_entities($options);
+        $total_annotations = elgg_get_annotations([
+            "guid" => (int) $object["guid"],
+            "annotation_names" => ["group_topic_post", "generic_comment"],
+            "count" => true
+        ]);
+
+        return $total_comments + $total_annotations;
     }
 
     static function getMembers($a, $args, $c) {
@@ -624,7 +630,7 @@ class Resolver {
             "limit" => $args["limit"] ? (int) $args["limit"] : 0,
             "order_by" => "id DESC"
         ];
-    
+
         $total = elgg_get_annotations(array_merge($options, ["count" => true]));
 
         $invites = [];
@@ -656,30 +662,37 @@ class Resolver {
     }
 
     static function getComments($object) {
-        $options = array(
+        $entities = elgg_get_entities([
             "type" => "object",
             "subtypes" => ["comment", "answer"],
-            "container_guid" => (int) $object['guid']
-        );
+            "container_guid" => (int) $object["guid"]
+        ]);
 
-        $entities = elgg_get_entities($options);
+        $annotations = elgg_get_annotations([
+            "guid" => (int) $object["guid"],
+            "annotation_names" => ["group_topic_post", "generic_comment"]
+        ]);
+
         if (!$entities) {
-            return [];
+            $entities = [];
         }
 
-        $comments = [];
-        foreach ($entities as $entity) {
-            $comments[] = [
-                "guid" => $entity->guid,
-                "ownerGuid" => $entity->owner_guid,
-                "description" => strip_tags(html_entity_decode($entity->description)),
-                "canEdit" => $entity->canEdit(),
-                "timeCreated" => date("c", $entity->time_created),
-                "timeUpdated" => date("c", $entity->time_updated)
-            ];
+        if (!$annotations) {
+            $annotations = [];
         }
 
-        return $comments;
+        $comments = array_merge($entities, $annotations);
+
+        usort($comments, function($a, $b) {
+            return ($a->time_created < $b->time_created) ? -1 : 1;
+        });
+
+        $mapped_comments = [];
+        foreach ($comments as $comment) {
+            $mapped_comments[] = Mapper::getComment($comment);
+        }
+
+        return $mapped_comments;
     }
 
     static function getRows($entity) {
@@ -868,6 +881,8 @@ class Resolver {
                 $subtypes = ["blog", "news", "question"];
             } elseif ($args["subtype"] === "file|folder") {
                 $subtypes = ["file", "folder"];
+            } elseif ($args["subtype"] === "question") {
+                $subtypes = ["question", "discussion", "groupforumtopic"];
             } elseif ($args["subtype"]) {
                 $subtypes = $args["subtype"];
             }

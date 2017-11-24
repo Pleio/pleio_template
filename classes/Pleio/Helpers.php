@@ -108,6 +108,9 @@ class Helpers {
                     case "question":
                         $root .= "questions";
                         break;
+                    case "groupforumtopic":
+                        $root .= "questions";
+                        break;
                     case "blog":
                         $root .= "blog";
                         break;
@@ -282,10 +285,10 @@ class Helpers {
             ON DUPLICATE KEY UPDATE views = views + 1;
         ");
 
-        insert_data("
+        /*insert_data("
             INSERT INTO elgg_entity_views_log (entity_guid, type, subtype, container_guid, site_guid, performed_by_guid, time_created)
             VALUES ({$guid}, '${type}', {$subtype}, {$entity->container_guid}, {$entity->site_guid}, {$user_guid}, NOW());
-        ");
+        ");*/
 
         if (is_memcache_available()) {
             $cache = new \ElggMemcache('entity_view_counter');

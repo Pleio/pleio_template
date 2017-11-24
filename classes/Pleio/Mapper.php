@@ -80,6 +80,17 @@ class Mapper {
         ];
     }
 
+    static function getComment($entity) {
+        return [
+            "guid" => $entity->guid ? $entity->guid : "annotation:" . $entity->id,
+            "ownerGuid" => $entity->owner_guid,
+            "description" => $entity->description ? strip_tags(html_entity_decode($entity->description)) : strip_tags(html_entity_decode($entity->value)),
+            "canEdit" => $entity->canEdit(),
+            "timeCreated" => date("c", $entity->time_created),
+            "timeUpdated" => date("c", $entity->time_updated)
+        ];
+    }
+
     static function getPage($entity) {
         return [
             "guid" => $entity->guid,
