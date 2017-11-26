@@ -63,19 +63,19 @@ class Login extends React.Component {
 
         let title, errors
 
-        if (data.loading) {
-            return (
-                <div />
-            )
-        }
-
-        if (data.site.externalLogin) {
+        if (window.__SETTINGS__['externalLogin']) {
             if (location.state.next) {
                 window.location.href = `/login?returnto=${location.state.next}`
             } else {
                 window.location.href = "/login"
             }
 
+            return (
+                <div />
+            )
+        }
+
+        if (data.loading) {
             return (
                 <div />
             )
@@ -146,7 +146,6 @@ const Query = gql`
         site {
             guid
             name
-            externalLogin
         }
     }
 `

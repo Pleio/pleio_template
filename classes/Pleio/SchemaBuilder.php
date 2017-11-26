@@ -973,9 +973,6 @@ class SchemaBuilder {
                 "showInitiative" => [
                     "type" => Type::nonNull(Type::boolean())
                 ],
-                "externalLogin" => [
-                    "type" => Type::nonNull(Type::boolean())
-                ],
                 "style" => [
                     "type" => Type::nonNull($styleType)
                 ],

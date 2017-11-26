@@ -140,15 +140,15 @@ class Register extends React.Component {
     render() {
         const { data } = this.props
 
-        if (data.loading) {
+        if (window.__SETTINGS__['externalLogin']) {
+            window.location.href = "/register"
+
             return (
                 <div />
             )
         }
 
-        if (data.site.externalLogin) {
-            window.location.href = "/register"
-
+        if (data.loading) {
             return (
                 <div />
             )
@@ -168,7 +168,6 @@ const Query = gql`
         site {
             guid
             name
-            externalLogin
         }
     }
 `
@@ -184,4 +183,4 @@ const Mutation = gql`
     }
 `
 
-export default graphql(Query)(graphql(Mutation)(Register))
+export default graphql(Mutation)(graphql(Query)(Register))

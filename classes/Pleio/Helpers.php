@@ -637,7 +637,8 @@ class Helpers {
         $site = elgg_get_site_entity();
 
         return [
-            "odtEnabled" => elgg_is_active_plugin("odt_editor"),
+            "odtEnabled" => elgg_is_active_plugin("odt_editor") ? true : false,
+            "externalLogin" => elgg_is_active_plugin("pleio") ? true : false,
             "advancedPermissions" => elgg_get_plugin_setting("advanced_permissions", "pleio_template") === "yes" ? true : false,
             "site" => [
                 "guid" => $site->guid,
