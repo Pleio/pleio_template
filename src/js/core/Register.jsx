@@ -147,7 +147,7 @@ class Register extends React.Component {
         }
 
         if (data.site.externalLogin) {
-            window.location.href = "/login"
+            window.location.href = "/register"
 
             return (
                 <div />
