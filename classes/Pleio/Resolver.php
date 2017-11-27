@@ -37,16 +37,10 @@ class Resolver {
             $filters = [];
         }
 
-        $initiatorLink = elgg_get_plugin_setting("initiator_link", "pleio_template");
-
-        $theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
-
-        $startpage = elgg_get_plugin_setting("startpage", "pleio_template", "activity");
-
-        $footer = json_decode(elgg_get_plugin_setting("footer", "pleio_template"));
-        if (!$footer) {
-            $footer = [];
-        }
+        $initiatorLink = elgg_get_plugin_setting("initiator_link", "pleio_template") ?: "";
+        $theme = elgg_get_plugin_setting("theme", "pleio_template") ?: "leraar";
+        $startpage = elgg_get_plugin_setting("startpage", "pleio_template") ?: "activity";
+        $footer = json_decode(elgg_get_plugin_setting("footer", "pleio_template")) ?: [];
 
         if ($user && Helpers::isUser()) {
             if (Helpers::canJoin()) {
@@ -77,10 +71,10 @@ class Resolver {
 
     static function getStyle() {
         return [
-            "colorPrimary" => elgg_get_plugin_setting("color_primary", "pleio_template"),
-            "colorSecondary" => elgg_get_plugin_setting("color_secondary", "pleio_template"),
-            "colorTertiary" => elgg_get_plugin_setting("color_tertiary", "pleio_template"),
-            "colorQuaternary" => elgg_get_plugin_setting("color_quaternary", "pleio_template")
+            "colorPrimary" => elgg_get_plugin_setting("color_primary", "pleio_template") ?: "#01689b",
+            "colorSecondary" => elgg_get_plugin_setting("color_secondary", "pleio_template") ?: "#009ee3",
+            "colorTertiary" => elgg_get_plugin_setting("color_tertiary", "pleio_template") ?: "#00c6ff",
+            "colorQuaternary" => elgg_get_plugin_setting("color_quaternary", "pleio_template") ?: "#154273"
         ];
     }
 
