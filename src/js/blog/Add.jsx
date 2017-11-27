@@ -31,7 +31,7 @@ export default class Add extends React.Component {
         const { match } = this.props
 
         return (
-            <ActionContainer title="Schrijf een verhaal" onClose={this.onClose}>
+            <ActionContainer title="Maak een blog" onClose={this.onClose}>
                 <AddCore ref="add" subtype="blog" featured={true} afterAdd={this.afterAdd} containerGuid={match.params.groupGuid} />
             </ActionContainer>
         )

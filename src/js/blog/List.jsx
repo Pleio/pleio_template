@@ -30,7 +30,7 @@ class List extends React.Component {
             add = (
                 <div className="col-right">
                     <Link to={`blog/add`} className="button ___large ___add">
-                        <span>Schrijf een verhaal</span>
+                        <span>Maak een blog</span>
                     </Link>
                 </div>
             )
