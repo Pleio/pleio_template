@@ -363,14 +363,20 @@ class Helpers {
         if (!$user) {
             return false;
         }
+
+        $site = elgg_get_site_entity();
         // method exposed in subsite_manager
-
-
         if (method_exists($site, "isUser")) {
             return $site->isUser();
         }
 
-        return check_entity_relationship($user->guid, "member_of_site", $site->guid);
+        $result = check_entity_relationship($user->guid, "member_of_site", $site->guid);
+
+        if ($result) {
+            return true;
+        }
+
+        return false;
     }
 
     static function canJoin() {
