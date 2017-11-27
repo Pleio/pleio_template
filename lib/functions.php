@@ -10,8 +10,13 @@ function pleio_template_get_cms_pages() {
     ];
 
     $return = [0 => "---"];
-    foreach (elgg_get_entities($options) as $entity) {
-        $return[$entity->guid] = $entity->title;
+
+    $entities = elgg_get_entities($options);
+
+    if ($entities) {
+        foreach ($entities as $entity) {
+            $return[$entity->guid] = $entity->title;
+        }
     }
 
     return $return;
