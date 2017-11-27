@@ -9,7 +9,7 @@ import gql from "graphql-tag"
 class Edit extends React.Component {
     constructor(props) {
         super(props)
-        
+
         this.onClose = this.onClose.bind(this)
         this.afterEdit = this.afterEdit.bind(this)
         this.afterDelete = this.afterDelete.bind(this)
@@ -63,9 +63,9 @@ class Edit extends React.Component {
         }
 
         return (
-            <ActionContainer title="Evenement wijzigen" onClose={this.onClose}>
+            <ActionContainer title="Agenda-item wijzigen" onClose={this.onClose}>
                 <EditCore subtype="event" viewer={viewer} entity={entity} containerGuid={match.params.groupGuid} featured={!match.params.groupGuid}  refetchQueries={["InfiniteList"]} afterEdit={this.afterEdit} onDeleteClick={this.onDeleteClick} />
-                <DeleteCore title="Evenement verwijderen" ref="deleteModal" entity={entity} afterDelete={this.afterDelete} />
+                <DeleteCore title="Agenda-item verwijderen" ref="deleteModal" entity={entity} afterDelete={this.afterDelete} />
             </ActionContainer>
         )
     }

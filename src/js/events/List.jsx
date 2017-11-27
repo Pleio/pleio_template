@@ -29,7 +29,7 @@ class List extends React.Component {
             add = (
                 <div className="col-right">
                     <Link to={`events/add`} className="button ___large ___add">
-                        <span>Nieuw evenement</span>
+                        <span>Nieuw agenda-item</span>
                     </Link>
                 </div>
             )
@@ -37,9 +37,9 @@ class List extends React.Component {
 
         return (
             <div className="page-container">
-                <Document title="Evenementen" />
+                <Document title="Agenda" />
                 <ContentHeader>
-                    <h3 className="main__title">Evenementen</h3>
+                    <h3 className="main__title">Agenda</h3>
                     <ContentFilters page="events" onChange={this.onChangeFilter} value={this.state.tags}>
                         {add}
                     </ContentFilters>

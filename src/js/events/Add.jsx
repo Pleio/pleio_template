@@ -29,9 +29,9 @@ export default class Add extends React.Component {
 
     render() {
         const { match } = this.props
-        
+
         return (
-            <ActionContainer title="Evenement toevoegen" onClose={this.onClose}>
+            <ActionContainer title="Agenda-item toevoegen" onClose={this.onClose}>
                 <AddCore subtype="event" featured={!match.params.groupGuid} afterAdd={this.afterAdd} containerGuid={match.params.groupGuid} />
             </ActionContainer>
         )
