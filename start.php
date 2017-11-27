@@ -128,15 +128,15 @@ function pleio_template_plugins_settings_save($hook, $type, $return_value, $para
         return $return_value;
     }
 
-    $name = get_input("filterName");
-    $values = get_input("filterValues");
-    $required = get_input("filterRequired");
+    $name = get_input("filterName", []);
+    $values = get_input("filterValues", []);
+    $required = get_input("filterRequired", []);
 
-    $menuTitle = get_input("menuTitle");
-    $menuLink = get_input("menuLink");
+    $menuTitle = get_input("menuTitle", []);
+    $menuLink = get_input("menuLink", []);
 
-    $profileKey = get_input("profileKey");
-    $profileName = get_input("profileName");
+    $profileKey = get_input("profileKey", []);
+    $profileName = get_input("profileName", []);
 
     $menu = [];
     foreach ($menuLink as $i => $link) {
@@ -171,8 +171,8 @@ function pleio_template_plugins_settings_save($hook, $type, $return_value, $para
         ];
     }
 
-    $footerTitle = get_input("footerTitle");
-    $footerLink = get_input("footerLink");
+    $footerTitle = get_input("footerTitle", []);
+    $footerLink = get_input("footerLink", []);
 
     $footer = [];
     foreach ($footerLink as $i => $link) {
