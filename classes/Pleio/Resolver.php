@@ -22,11 +22,6 @@ class Resolver {
 
         $showInitiative = (elgg_get_plugin_setting("show_initiative", "pleio_template") === "yes") ? true : false;
 
-        $menu = json_decode(elgg_get_plugin_setting("menu", "pleio_template"));
-        if (!$menu) {
-            $menu = [];
-        }
-
         $profile = json_decode(elgg_get_plugin_setting("profile", "pleio_template"));
         if (!$profile) {
             $profile = [];
@@ -51,7 +46,7 @@ class Resolver {
         return [
             "guid" => $site->guid,
             "name" => $site->name,
-            "menu" => $menu,
+            "menu" => Resolver::getMenu(),
             "profile" => $profile,
             "theme" => $theme,
             "footer" => $footer,
@@ -76,6 +71,22 @@ class Resolver {
             "colorTertiary" => elgg_get_plugin_setting("color_tertiary", "pleio_template") ?: "#00c6ff",
             "colorQuaternary" => elgg_get_plugin_setting("color_quaternary", "pleio_template") ?: "#154273"
         ];
+    }
+
+    static function getMenu() {
+        $menu = json_decode(elgg_get_plugin_setting("menu", "pleio_template"));
+
+        if (!$menu) {
+            $menu = [
+                ["title" => "Blog", "link" => "/blog"],
+                ["title" => "Nieuws", "link" => "/news"],
+                ["title" => "Discussies", "link" => "/questions"],
+                ["title" => "Agenda", "link" => "/events"],
+                ["title" => "Groepen", "link" => "/groups"]
+            ];
+        }
+
+        return $menu;
     }
 
     static function getNotifications($a, $args, $c) {
