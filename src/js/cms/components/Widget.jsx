@@ -83,7 +83,7 @@ class Widget extends React.Component {
                     {widget}
                     {overlay}
                 </div>
-                <Delete ref="delete" entity={entity} refetchQueries={["PageItem"]} />
+                <Delete ref="delete" entity={entity} refetchQueries={["PageItem"]} message="Weet je zeker dat je de widget wil legen?" />
             </div>
         )
     }

@@ -40,7 +40,7 @@ class DeleteForm extends React.Component {
     }
 
     render() {
-        let title = ""
+        let title
         if (this.props.entity) {
             if (this.props.entity.title) {
                 title = this.props.entity.title
@@ -48,9 +48,21 @@ class DeleteForm extends React.Component {
                 title = this.props.entity.name
             }
         }
+
+        let message
+        if (this.props.message) {
+            message = (
+                <p>{this.props.message}</p>
+            )
+        } else {
+            message = (
+                <p>Weet je zeker dat je het item {title} wil verwijderen?</p>
+            )
+        }
+
         return (
             <form className="form" onSubmit={this.onSubmit}>
-                <p>Weet je zeker dat je het item {title} wil verwijderen?</p>
+                {message}
                 <button className="button">Verwijder</button>
             </form>
         )
@@ -81,7 +93,12 @@ export default class DeleteModal extends React.Component {
     render() {
         return (
             <Modal ref="deleteModal" id="delete" title={this.props.title}>
-                <DeleteFormWithMutation entity={this.props.entity} refetchQueries={this.props.refetchQueries} afterDelete={this.props.afterDelete} />
+                <DeleteFormWithMutation
+                    entity={this.props.entity}
+                    refetchQueries={this.props.refetchQueries}
+                    afterDelete={this.props.afterDelete}
+                    message={this.props.message}
+                />
             </Modal>
         )
     }
