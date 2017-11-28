@@ -70,11 +70,11 @@ class FileFolderTile extends React.Component {
         }
 
         return (
-            <div className={classnames({"file-tile": true, "___is-checked": selected.has(entity), [className]: true})}>
+            <div className={classnames({"file-tile": true, "___is-checked": selected.has(entity), [className]: true})} onDoubleClick={this.onClick}>
                 <div className="file-tile__image" style={style}>
                     {checkbox}
                 </div>
-                <div className="file-tile__name" onClick={this.onClick}>
+                <div className="file-tile__name">
                     <span>{entity.title}</span>
                     <span>{entity.title}</span>
                 </div>
