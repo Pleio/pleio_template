@@ -268,6 +268,14 @@ class Mutations {
             $entity->start_time = $startDate;
             $entity->end_ts = $endDate;
 
+            if ($input["location"]) {
+                $entity->location = $input["location"];
+            }
+
+            if ($input["rsvp"]) {
+                $entity->rsvp = true;
+            }
+
             $result = $entity->save();
         }
 
@@ -378,10 +386,19 @@ class Mutations {
         if ($entity->getSubtype() === "event") {
             $startDate = strtotime($input["startDate"]);
             $endDate = strtotime($input["endDate"]);
-
             $entity->start_day = $startDate;
             $entity->start_time = $startDate;
             $entity->end_ts = $endDate;
+
+            if ($input["location"]) {
+                $entity->location = $input["location"];
+            }
+
+            if ($input["rsvp"]) {
+                $entity->rsvp = true;
+            } else {
+                unset($entity->rsvp);
+            }
 
             $result &= $entity->save();
         }

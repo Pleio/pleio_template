@@ -57,9 +57,18 @@ export default class Card extends React.Component {
         }
 
         let attendButtons
-        if (entity.inGroup) {
+        if (entity.rsvp && entity.inGroup) {
             attendButtons = (
                 <AttendButtons entity={entity} />
+            )
+        }
+
+        let attendees
+        if (entity.rsvp) {
+            attendees = (
+                <Link to={entity.url}>
+                    <People users={entity.attendees} />
+                </Link>
             )
         }
 
@@ -70,9 +79,7 @@ export default class Card extends React.Component {
                     <div className="date">{showFullDate(entity.startDate)}</div>
                     <Link to={entity.url} className="title ___colored">{entity.title}</Link>
                     <div className="card-event__bottom">
-                        <Link to={entity.url}>
-                            <People users={entity.attendees} />
-                        </Link>
+                        {attendees}
                     </div>
                 </div>
                 {videoModal}

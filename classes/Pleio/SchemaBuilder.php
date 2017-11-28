@@ -550,24 +550,12 @@ class SchemaBuilder {
             "name" => "Object",
             "interfaces" => [$entityInterface],
             "fields" => [
-                "guid" => [
-                    "type" => Type::nonNull(Type::string())
-                ],
-                "status" => [
-                    "type" => Type::int()
-                ],
-                "subtype" => [
-                    "type" => Type::string()
-                ],
-                "title" => [
-                    "type" => Type::string()
-                ],
-                "description" => [
-                    "type" => Type::string()
-                ],
-                "richDescription" => [
-                    "type" => Type::string()
-                ],
+                "guid" => [ "type" => Type::nonNull(Type::string()) ],
+                "status" => [ "type" => Type::int() ],
+                "subtype" => [ "type" => Type::string() ],
+                "title" => [ "type" => Type::string() ],
+                "description" => [ "type" => Type::string() ],
+                "richDescription" => [ "type" => Type::string() ],
                 "hasChildren" => [
                     "type" => Type::boolean(),
                     "resolve" => function($object) {
@@ -580,57 +568,29 @@ class SchemaBuilder {
                         return Resolver::inGroup($object);
                     }
                 ],
-                "excerpt" => [
-                    "type" => Type::string()
-                ],
-                "mimeType" => [
-                    "type" => Type::string()
-                ],
-                "thumbnail" => [
-                    "type" => Type::string()
-                ],
-                "url" => [
-                    "type" => Type::string()
-                ],
-                "tags" => [
-                    "type" => Type::listOf(Type::string())
-                ],
-                "timeCreated" => [
-                    "type" => Type::string()
-                ],
-                "timeUpdated" => [
-                    "type" => Type::string()
-                ],
-                "startDate" => [
-                    "type" => Type::string()
-                ],
-                "endDate" => [
-                    "type" => Type::string()
-                ],
-                "source" => [
-                    "type" => Type::string()
-                ],
-                "isFeatured" => [
-                    "type" => Type::boolean()
-                ],
-                "isHighlighted" => [
-                    "type" => Type::boolean()
-                ],
-                "state" => [
-                    "type" => Type::string()
-                ],
+                "excerpt" => [ "type" => Type::string() ],
+                "mimeType" => [ "type" => Type::string() ],
+                "thumbnail" => [ "type" => Type::string() ],
+                "url" => [ "type" => Type::string() ],
+                "tags" => [ "type" => Type::listOf(Type::string()) ],
+                "timeCreated" => [ "type" => Type::string() ],
+                "timeUpdated" => [ "type" => Type::string() ],
+                "startDate" => [ "type" => Type::string() ],
+                "endDate" => [ "type" => Type::string() ],
+                "source" => [ "type" => Type::string() ],
+                "location" => [ "type" => Type::string() ],
+                "rsvp" => [ "type" => Type::boolean() ],
+                "isFeatured" => [ "type" => Type::boolean() ],
+                "isHighlighted" => [ "type" => Type::boolean() ],
+                "state" => [ "type" => Type::string() ],
                 "isRecommended" => [
                     "type" => Type::boolean(),
                     "resolve" => function($object) {
                         return Resolver::isRecommended($object);
                     }
                 ],
-                "featured" => [
-                    "type" => $featured
-                ],
-                "canEdit" => [
-                    "type" => Type::boolean()
-                ],
+                "featured" => [ "type" => $featured ],
+                "canEdit" => [ "type" => Type::boolean() ],
                 "canComment" => [
                     "type" => Type::boolean(),
                     "resolve" => function($object) {
@@ -643,12 +603,8 @@ class SchemaBuilder {
                         return Resolver::canVote($object);
                     }
                 ],
-                "accessId" => [
-                    "type" => Type::int()
-                ],
-                "writeAccessId" => [
-                    "type" => Type::int()
-                ],
+                "accessId" => [ "type" => Type::int() ],
+                "writeAccessId" => [ "type" => Type::int() ],
                 "isBookmarked" => [
                     "type" => Type::boolean(),
                     "resolve" => function($object) {
@@ -1446,54 +1402,24 @@ class SchemaBuilder {
         $addEntityMutation = Relay::mutationWithClientMutationId([
             "name" => "addEntity",
             "inputFields" => [
-                "type" => [
-                    "type" => Type::nonNull($typeEnum)
-                ],
-                "subtype" => [
-                    "type" => Type::nonNull(Type::string())
-                ],
-                "title" => [
-                    "type" => Type::string()
-                ],
-                "description" => [
-                    "type" => Type::nonNull(Type::string())
-                ],
-                "richDescription" => [
-                    "type" => Type::string()
-                ],
-                "isRecommended" => [
-                    "type" => Type::boolean()
-                ],
-                "isFeatured" => [
-                    "type" => Type::boolean()
-                ],
-                "pageType" => [
-                    "type" => Type::string()
-                ],
-                "featured" => [
-                    "type" => $featuredInput
-                ],
-                "startDate" => [
-                    "type" => Type::string()
-                ],
-                "endDate" => [
-                    "type" => Type::string()
-                ],
-                "source" => [
-                    "type" => Type::string()
-                ],
-                "containerGuid" => [
-                    "type" => Type::int()
-                ],
-                "accessId" => [
-                    "type" => Type::int()
-                ],
-                "writeAccessId" => [
-                    "type" => Type::int()
-                ],
-                "tags" => [
-                    "type" => Type::listOf(Type::string())
-                ]
+                "type" => [ "type" => Type::nonNull($typeEnum) ],
+                "subtype" => [ "type" => Type::nonNull(Type::string()) ],
+                "title" => [ "type" => Type::string() ],
+                "description" => [ "type" => Type::nonNull(Type::string()) ],
+                "richDescription" => [ "type" => Type::string() ],
+                "isRecommended" => [ "type" => Type::boolean() ],
+                "isFeatured" => [ "type" => Type::boolean() ],
+                "pageType" => [ "type" => Type::string() ],
+                "featured" => [ "type" => $featuredInput ],
+                "startDate" => [ "type" => Type::string() ],
+                "endDate" => [ "type" => Type::string() ],
+                "source" => [ "type" => Type::string() ],
+                "location" => [ "type" => Type::string() ],
+                "rsvp" => [ "type" => Type::boolean() ],
+                "containerGuid" => [ "type" => Type::int() ],
+                "accessId" => [ "type" => Type::int() ],
+                "writeAccessId" => [ "type" => Type::int() ],
+                "tags" => [ "type" => Type::listOf(Type::string()) ]
             ],
             "outputFields" => [
                 "entity" => [
@@ -1509,45 +1435,21 @@ class SchemaBuilder {
         $editEntityMutation = Relay::mutationWithClientMutationId([
             "name" => "editEntity",
             "inputFields" => [
-                "guid" => [
-                    "type" => Type::nonNull(Type::string())
-                ],
-                "title" => [
-                    "type" => Type::string()
-                ],
-                "description" => [
-                    "type" => Type::nonNull(Type::string())
-                ],
-                "richDescription" => [
-                    "type" => Type::string()
-                ],
-                "isRecommended" => [
-                    "type" => Type::boolean()
-                ],
-                "isFeatured" => [
-                    "type" => Type::boolean()
-                ],
-                "featured" => [
-                    "type" => $featuredInput
-                ],
-                "startDate" => [
-                    "type" => Type::string()
-                ],
-                "endDate" => [
-                    "type" => Type::string()
-                ],
-                "source" => [
-                    "type" => Type::string()
-                ],
-                "accessId" => [
-                    "type" => Type::int()
-                ],
-                "writeAccessId" => [
-                    "type" => Type::int()
-                ],
-                "tags" => [
-                    "type" => Type::listOf(Type::string())
-                ]
+                "guid" => [ "type" => Type::nonNull(Type::string()) ],
+                "title" => [ "type" => Type::string() ],
+                "description" => [ "type" => Type::nonNull(Type::string()) ],
+                "richDescription" => [ "type" => Type::string() ],
+                "isRecommended" => [ "type" => Type::boolean() ],
+                "isFeatured" => [ "type" => Type::boolean() ],
+                "featured" => [ "type" => $featuredInput ],
+                "startDate" => [ "type" => Type::string() ],
+                "endDate" => [ "type" => Type::string() ],
+                "source" => [ "type" => Type::string() ],
+                "location" => [ "type" => Type::string() ],
+                "rsvp" => [ "type" => Type::boolean() ],
+                "accessId" => [ "type" => Type::int() ],
+                "writeAccessId" => [ "type" => Type::int() ],
+                "tags" => [ "type" => Type::listOf(Type::string()) ]
             ],
             "outputFields" => [
                 "entity" => [

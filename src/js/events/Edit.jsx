@@ -94,6 +94,8 @@ const Query = gql`
                 accessId
                 timeCreated
                 source
+                location
+                rsvp
                 isFeatured
                 featured {
                     image

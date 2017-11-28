@@ -45,7 +45,7 @@ class Item extends React.Component {
     render() {
         const { match } = this.props
         let { entity, viewer } = this.props.data
-        let edit, source
+        let edit
 
         if (!entity) {
             // Loading...
@@ -72,10 +72,52 @@ class Item extends React.Component {
             )
         }
 
-        let tickets
+        let source
         if (entity.source) {
-            tickets = (
-                <a className="link" href={entity.source} target="_blank">Tickets</a>
+            source = (
+                <a className="link" href={entity.source} target="_blank">Externe link</a>
+            )
+        }
+
+        let attendees, attendButtons, attendButtonsWithAttendees
+
+        if (entity.rsvp) {
+            attendButtons = (
+                <AttendButtons viewer={viewer} entity={entity} />
+            )
+
+            if (this.props.group) {
+                attendButtonsWithAttendees = attendButtons
+            }
+
+            attendees = (
+                <div className="card">
+                    <a onClick={() => this.refs.modal.toggle()}>
+                        <People users={entity.attendees} />
+                    </a>
+                    <div className="flexer ___space-between">
+                        <div className="attendees">
+                            <a onClick={() => this.refs.modal.toggle(0)}>
+                                <div className="attendees__number">{entity.attendees.total}</div>
+                                <div className="attendees__label">aanwezig</div>
+                            </a>
+                        </div>
+                        <div className="attendees">
+                            <a onClick={() => this.refs.modal.toggle(1)}>
+                                <div className="attendees__number">{entity.attendees.totalMaybe}</div>
+                                <div className="attendees__label">misschien</div>
+                            </a>
+                        </div>
+                        <div className="attendees">
+                            <a onClick={() => this.refs.modal.toggle(2)}>
+                                <div className="attendees__number">{entity.attendees.totalReject}</div>
+                                <div className="attendees__label">afwezig</div>
+                            </a>
+                        </div>
+                    </div>
+                    {attendButtonsWithAttendees}
+                    <AttendeesModal ref="modal" entity={entity} />
+                </div>
             )
         }
 
@@ -92,18 +134,11 @@ class Item extends React.Component {
                                 </div>
                             </div>
                             <div className="col-sm-3 end-sm bottom-sm col-lg-6">
-                                <AttendButtons viewer={viewer} entity={entity} />
+                                {attendButtons}
                             </div>
                         </div>
                     </div>
                 </Featured>
-            )
-        }
-
-        let attendButtons
-        if (this.props.group) {
-            attendButtons = (
-                <AttendButtons viewer={viewer} entity={entity} />
             )
         }
 
@@ -115,37 +150,11 @@ class Item extends React.Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-4 last-sm top-sm">
-                                <div className="card">
-                                    <a onClick={() => this.refs.modal.toggle()}>
-                                        <People users={entity.attendees} />
-                                    </a>
-                                    <div className="flexer ___space-between">
-                                        <div className="attendees">
-                                            <a onClick={() => this.refs.modal.toggle(0)}>
-                                                <div className="attendees__number">{entity.attendees.total}</div>
-                                                <div className="attendees__label">aanwezig</div>
-                                            </a>
-                                        </div>
-                                        <div className="attendees">
-                                            <a onClick={() => this.refs.modal.toggle(1)}>
-                                                <div className="attendees__number">{entity.attendees.totalMaybe}</div>
-                                                <div className="attendees__label">misschien</div>
-                                            </a>
-                                        </div>
-                                        <div className="attendees">
-                                            <a onClick={() => this.refs.modal.toggle(2)}>
-                                                <div className="attendees__number">{entity.attendees.totalReject}</div>
-                                                <div className="attendees__label">afwezig</div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    {attendButtons}
-                                    <AttendeesModal ref="modal" entity={entity} />
-                                </div>
+                                {attendees}
                             </div>
                             <div className="col-sm-8">
-                                <h2 className="title">{showFullDate(entity.startDate)}<small></small></h2>
-                                {tickets}
+                                <h2 className="title">{showFullDate(entity.startDate)}<small>{entity.location}</small></h2>
+                                {source}
                                 <RichTextView richValue={entity.richDescription} value={entity.description} />
                                     <div className="article-actions">
                                         {edit}
@@ -190,6 +199,8 @@ const Query = gql`
                 accessId
                 timeCreated
                 source
+                location
+                rsvp
                 isFeatured
                 owner {
                     guid

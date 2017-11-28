@@ -18,6 +18,7 @@ const Query = gql`
                     url
                     inGroup
                     excerpt
+                    rsvp
                     featured {
                         image
                         video

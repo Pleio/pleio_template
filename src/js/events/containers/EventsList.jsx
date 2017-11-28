@@ -21,6 +21,7 @@ const Query = gql`
                     inGroup
                     canBookmark
                     tags
+                    rsvp
                     isFeatured
                     featured {
                         image

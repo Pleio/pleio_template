@@ -60,6 +60,8 @@ class Add extends React.Component {
                 break
             case "event":
                 input["source"] = values.source
+                input["location"] = values.location
+                input["rsvp"] = values.rsvp
                 input["startDate"] = values.start
                 input["endDate"] = values.end
         }
@@ -119,7 +121,9 @@ class Add extends React.Component {
             case "event":
                 extraFields = (
                     <div>
-                        <InputField name="source" type="text" placeholder="Tickets (link)" className="form__input" />
+                        <InputField name="source" type="text" placeholder="Externe link" className="form__input" />
+                        <InputField name="location" type="text" placeholder="Locatie" className="form__input" />
+                        <SwitchField name="rsvp" type="text" className="form__input" label="Aanwezigheid registeren" value={true} />
                         <DateTimeField name="start" className="form__input" label="Startdatum" />
                         <DateTimeField name="end" className="form__input" label="Einddatum" />
                     </div>
