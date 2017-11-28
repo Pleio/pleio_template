@@ -44,25 +44,12 @@ class InfiniteList extends React.Component {
     getRootFieldName() {
         const { data } = this.props
 
-        if (data.entities) {
-            return "entities"
-        }
-
-        if (data.files) {
-            return "files"
-        }
-        
-        if (data.activities) {
-            return "activities"
-        }
-        
-        if (data.bookmarks) {
-            return "bookmarks"
-        }
-
-        if (data.search) {
-            return "search"
-        }
+        if (data.entities) { return "entities" }
+        if (data.groups) { return "groups" }
+        if (data.files) { return "files" }
+        if (data.activities) { return "activities" }
+        if (data.bookmarks) { return "bookmarks" }
+        if (data.search) { return "search" }
     }
 
     onScroll(e) {

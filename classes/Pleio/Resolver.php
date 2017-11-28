@@ -843,31 +843,36 @@ class Resolver {
     }
 
     static function getGroups($a, $args, $c) {
+        $user = elgg_get_logged_in_user_entity();
+
         $options = array(
             "type" => "group",
             "limit" => (int) $args["limit"],
             "offset" => (int) $args["offset"]
         );
 
-        $total = elgg_get_entities(array_merge($options, array(
-            "count" => true
-        )));
+        if ($user && $args["filter"] === "mine") {
+            $options["relationship"] = "member";
+            $options["relationship_guid"] = $user->guid;
+        }
 
-        $entities = [];
-        foreach (elgg_get_entities($options) as $entity) {
-            $entities[] = [
-                "guid" => $entity->guid,
-                "name" => $entity->name,
-                "timeCreated" => date("c", $entity->time_created),
-                "timeUpdated" => date("c", $entity->time_updated),
-                "tags" => Helpers::renderTags($entity->tags)
-            ];
+        $total = elgg_get_entities_from_relationship(array_merge($options, array( "count" => true )));
+
+        $edges = [];
+        foreach (elgg_get_entities_from_relationship($options) as $entity) {
+            $edges[] = Mapper::getGroup($entity);
+        }
+
+        if ($user) {
+            $canWrite = $user->canWriteToContainer(0, "object", $args["subtype"]);
+        } else {
+            $canWrite = false;
         }
 
         return [
             "total" => $total,
-            "canWrite" => $site->canWriteToContainer(0, "group"),
-            "entities" => $entities
+            "canWrite" => $canWrite,
+            "edges" => $edges
         ];
     }
 
@@ -1007,7 +1012,7 @@ class Resolver {
         $container = get_entity($args["containerGuid"]);
         if ($container) {
             list($total, $entities) = Helpers::getFolderContents($container, $args["limit"], $args["offset"], $args["orderBy"], $args["direction"], $args["filter"]);
-            
+
             $edges = [];
             foreach ($entities as $entity) {
                 $edges[] = Mapper::getObject($entity);

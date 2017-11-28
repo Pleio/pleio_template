@@ -30,6 +30,15 @@ class SchemaBuilder {
             ]
         ]);
 
+        $groupFilterEnum = new EnumType([
+            "name" => "GroupFilter",
+            "description" => "Show all groups or only mine",
+            "values" => [
+                "all" => [ "value" => "all" ],
+                "mine" => [ "value" => "mine" ]
+            ]
+        ]);
+
         $overviewEnum = new EnumType([
             "name" => "Overview",
             "values" => [
@@ -745,6 +754,21 @@ class SchemaBuilder {
             ]
         ]);
 
+        $groupListType = new ObjectType([
+            "name" => "GroupList",
+            "fields" => [
+                "total" => [
+                    "type" => Type::nonNull(Type::int())
+                ],
+                "canWrite" => [
+                    "type" => Type::nonNull(Type::boolean())
+                ],
+                "edges" => [
+                    "type" => Type::listOf($groupType)
+                ]
+            ]
+        ]);
+
         $viewerType = new ObjectType([
             "name" => "Viewer",
             "description" => "The current viewer",
@@ -1081,6 +1105,21 @@ class SchemaBuilder {
                         ]
                     ],
                     "resolve" => "Pleio\Resolver::getFiles"
+                ],
+                "groups" => [
+                    "type" => $groupListType,
+                    "args" => [
+                        "filter" => [
+                            "type" => $groupFilterEnum
+                        ],
+                        "offset" => [
+                            "type" => Type::int()
+                        ],
+                        "limit" => [
+                            "type" => Type::int()
+                        ]
+                    ],
+                    "resolve" => "Pleio\Resolver::getGroups"
                 ],
                 "entities" => [
                     "type" => $entityListType,

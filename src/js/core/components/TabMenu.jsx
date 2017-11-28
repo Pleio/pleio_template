@@ -39,8 +39,8 @@ class TabMenu extends React.Component {
                 </div>
                 <div className="row">
                     <div className="col-sm-4 col-lg-3">
-                        <div className="tabmenu__dropdown ___group">
-                            <Select name="tabmenu" onChange={this.onChange} options={selectOptions} value={selected} className="___is-mobile" />
+                        <div className={classnames({"tabmenu__dropdown": true, "___group": this.props.group})}>
+                            <Select name="tabmenu" onChange={this.onChange} options={selectOptions} value={selected} className={classnames({"___is-mobile": true, "___is-mobile-only": true, "___margin-bottom": this.props.marginBottom})} />
                         </div>
                     </div>
                 </div>

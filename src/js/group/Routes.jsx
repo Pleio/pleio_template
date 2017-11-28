@@ -50,6 +50,7 @@ export default class Routes extends React.Component {
                 <Container>
                     <Switch>
                         <Route exact path="/groups" component={List} />
+                        <Route exact path="/groups/mine" component={List} />
                         <Route exact path="/groups/info/:guid" component={Info} />
                         <Route exact path="/groups/invitations" component={Invitations} />
                         <Route exact path="/groups/view/:groupGuid/:groupSlug" component={Item} />
