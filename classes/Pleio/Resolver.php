@@ -916,7 +916,7 @@ class Resolver {
                         "md.name_id = {$msid}",
                         "msv.string <= $yesterday"
                     ];
-                    $options["order_by"] = "msv.string ASC";
+                    $options["order_by"] = "msv.string DESC";
                     break;
                 case "upcoming":
                 default:
@@ -924,7 +924,7 @@ class Resolver {
                         "md.name_id = {$msid}",
                         "msv.string > $yesterday"
                     ];
-                    $options["order_by"] = "msv.string DESC";
+                    $options["order_by"] = "msv.string ASC";
                     break;
             }
         }
