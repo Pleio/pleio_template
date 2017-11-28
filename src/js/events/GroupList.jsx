@@ -1,13 +1,28 @@
 import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
+import autobind from "autobind-decorator"
 import { Link } from "react-router-dom"
 import GroupContainer from "../group/components/GroupContainer"
 import Document from "../core/components/Document"
+import Select from "../core/components/NewSelect"
 import EventsGroupList from "./containers/EventsGroupList"
 import Card from "./components/Card"
 
-class Item extends React.Component {
+class GroupList extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            filter: "upcoming"
+        }
+    }
+
+    @autobind
+    onChange(value) {
+        this.setState({ filter: value })
+    }
+
     render() {
         const { entity, viewer } = this.props.data
 
@@ -27,25 +42,27 @@ class Item extends React.Component {
         let add
         if (viewer.canWriteToContainer) {
             add = (
-                <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
-                    <Link to={`events/add`} className="right-lg">
-                        <div className="button ___large ___add"><span>Agenda-item toevoegen</span></div>
-                    </Link>
-                </div>
+                <Link to={`events/add`} className="button ___add ___large ___margin-bottom">
+                    Agenda-item toevoegen
+                </Link>
             )
         }
 
-        const buttons = (
-            <div className="flexer ___gutter ___top">
-                {add}
-            </div>
-        )
-
         return (
-            <GroupContainer buttons={buttons} match={this.props.match}>
+            <GroupContainer match={this.props.match}>
                 <Document title={entity.name} />
                 <section className="section ___grow">
-                    <EventsGroupList type="object" subtype="event" containerGuid={entity.guid} childClass={Card} offset={0} limit={20} match={this.props.match} inGroup />
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-sm-4 col-lg-3">
+                                <Select name="filter" options={{ upcoming: "Aankomend", previous: "Afgelopen" }} onChange={this.onChange} value={this.state.filter} />
+                            </div>
+                            <div className="col-sm-8 end-sm col-lg-9">
+                                {add}
+                            </div>
+                        </div>
+                    </div>
+                    <EventsGroupList filter={this.state.filter} containerGuid={entity.guid} childClass={Card} offset={0} limit={20} inGroup />
                 </section>
             </GroupContainer>
         )
@@ -103,4 +120,4 @@ const Settings = {
     }
 }
 
-export default graphql(Query, Settings)(Item)
+export default graphql(Query, Settings)(GroupList)

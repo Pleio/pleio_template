@@ -864,7 +864,80 @@ class Resolver {
         }
 
         if ($user) {
-            $canWrite = $user->canWriteToContainer(0, "object", $args["subtype"]);
+            $canWrite = $user->canWriteToContainer(0, "group");
+        } else {
+            $canWrite = false;
+        }
+
+        return [
+            "total" => $total,
+            "canWrite" => $canWrite,
+            "edges" => $edges
+        ];
+    }
+
+    static function getEvents($a, $args, $c) {
+        $user = elgg_get_logged_in_user_entity();
+
+        $options = array(
+            "type" => "object",
+            "subtype" => "event",
+            "limit" => (int) $args["limit"],
+            "offset" => (int) $args["offset"]
+        );
+
+        if ($args["containerGuid"]) {
+            if ($args["containerGuid"] === 1) {
+                $container = elgg_get_site_entity();
+            } else {
+                $container = get_entity($args["containerGuid"]);
+            }
+        }
+
+        if ($container) {
+            $options["container_guid"] = $container->guid;
+        }
+
+
+        $msid = get_metastring_id("start_day");
+        if ($msid) {
+            $dbprefix = elgg_get_config("dbprefix");
+
+            $options["joins"] = [
+                "JOIN {$dbprefix}metadata md ON e.guid = md.entity_guid",
+                "JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id"
+            ];
+
+            $yesterday = (int) mktime(0, 0, 0, date("n"), date("j") - 1, date("Y"));
+
+            switch ($args["filter"]) {
+                case "previous":
+                    $options["wheres"] = [
+                        "md.name_id = {$msid}",
+                        "msv.string <= $yesterday"
+                    ];
+                    $options["order_by"] = "msv.string ASC";
+                    break;
+                case "upcoming":
+                default:
+                    $options["wheres"] = [
+                        "md.name_id = {$msid}",
+                        "msv.string > $yesterday"
+                    ];
+                    $options["order_by"] = "msv.string DESC";
+                    break;
+            }
+        }
+
+        $total = elgg_get_entities(array_merge($options, array( "count" => true )));
+
+        $edges = [];
+        foreach (elgg_get_entities($options) as $entity) {
+            $edges[] = Mapper::getObject($entity);
+        }
+
+        if ($user) {
+            $canWrite = $user->canWriteToContainer(0, "object", "event");
         } else {
             $canWrite = false;
         }
@@ -916,23 +989,6 @@ class Resolver {
                 "offset" => (int) $args["offset"],
                 "limit" => (int) $args["limit"]
             ];
-
-            if ($args["subtype"] === "event") {
-                $msid = get_metastring_id("start_day");
-                $yesterday = (int) mktime(0, 0, 0, date("n"), date("j") - 1, date("Y"));
-
-                if ($msid) {
-                    $options["joins"] = [
-                        "JOIN {$dbprefix}metadata md ON e.guid = md.entity_guid",
-                        "JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id"
-                    ];
-                    $options["wheres"] = [
-                        "md.name_id = {$msid}",
-                        "msv.string > $yesterday"
-                    ];
-                    $options["order_by"] = "msv.string ASC";
-                }
-            }
 
             if ($tags) {
                 $options["metadata_name_value_pairs"] = [];

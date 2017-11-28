@@ -39,6 +39,15 @@ class SchemaBuilder {
             ]
         ]);
 
+        $eventFilterEnum = new EnumType([
+            "name" => "EventFilter",
+            "description" => "Show upcoming events or previous events",
+            "values" => [
+                "upcoming" => [ "value" => "upcoming" ],
+                "previous" => [ "value" => "previous" ]
+            ]
+        ]);
+
         $overviewEnum = new EnumType([
             "name" => "Overview",
             "values" => [
@@ -769,6 +778,21 @@ class SchemaBuilder {
             ]
         ]);
 
+        $eventListType = new ObjectType([
+            "name" => "EventList",
+            "fields" => [
+                "total" => [
+                    "type" => Type::nonNull(Type::int())
+                ],
+                "canWrite" => [
+                    "type" => Type::nonNull(Type::boolean())
+                ],
+                "edges" => [
+                    "type" => Type::listOf($objectType)
+                ]
+            ]
+        ]);
+
         $viewerType = new ObjectType([
             "name" => "Viewer",
             "description" => "The current viewer",
@@ -1120,6 +1144,24 @@ class SchemaBuilder {
                         ]
                     ],
                     "resolve" => "Pleio\Resolver::getGroups"
+                ],
+                "events" => [
+                    "type" => $eventListType,
+                    "args" => [
+                        "filter" => [
+                            "type" => $eventFilterEnum
+                        ],
+                        "containerGuid" => [
+                            "type" => Type::int()
+                        ],
+                        "offset" => [
+                            "type" => Type::int()
+                        ],
+                        "limit" => [
+                            "type" => Type::int()
+                        ]
+                    ],
+                    "resolve" => "Pleio\Resolver::getEvents"
                 ],
                 "entities" => [
                     "type" => $entityListType,

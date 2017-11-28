@@ -1,24 +1,28 @@
 import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
+import autobind from "autobind-decorator"
 import { Link } from "react-router-dom"
 import ContentHeader from "../core/components/ContentHeader"
 import EventsList from "./containers/EventsList"
 import Card from "./components/Card"
 import ContentFilters from "../core/containers/ContentFilters"
 import Document from "../core/components/Document"
+import Select from "../core/components/NewSelect"
 import Add from "../core/Add"
 
 class List extends React.Component {
     constructor(props) {
         super(props)
 
-        this.onChangeCanWrite = (canWrite) => this.setState({canWrite})
-        this.onChangeFilter = (tags) => this.setState({ tags })
-
         this.state = {
-            tags: []
+            filter: "upcoming"
         }
+    }
+
+    @autobind
+    onChange(value) {
+        this.setState ({ filter: value })
     }
 
     render() {
@@ -40,12 +44,17 @@ class List extends React.Component {
                 <Document title="Agenda" />
                 <ContentHeader>
                     <h3 className="main__title">Agenda</h3>
-                    <ContentFilters page="events" onChange={this.onChangeFilter} value={this.state.tags}>
-                        {add}
-                    </ContentFilters>
+                    <div className="row">
+                        <div className="col-sm-4 col-lg-3">
+                            <Select name="filter" options={{upcoming: "Aankomend", previous: "Afgelopen"}} onChange={this.onChange} value={this.state.filter} />
+                        </div>
+                        <div className="col-sm-8 end-sm col-lg-9">
+                            {add}
+                        </div>
+                    </div>
                 </ContentHeader>
                 <section className="section ___grey ___grow">
-                    <EventsList childClass={Card} subtype="event" offset={0} limit={20} tags={this.state.tags} />
+                    <EventsList childClass={Card} filter={this.state.filter} offset={0} limit={20} />
                 </section>
             </div>
         )

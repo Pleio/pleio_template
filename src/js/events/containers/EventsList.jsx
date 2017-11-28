@@ -4,8 +4,8 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
 const Query = gql`
-    query EventsList($offset: Int!, $limit: Int!, $tags: [String!], $subtype: String!) {
-        entities(offset: $offset, limit: $limit, tags: $tags, subtype: $subtype) {
+    query EventsList($filter: EventFilter, $offset: Int, $limit: Int) {
+        events(filter: $filter, offset: $offset, limit: $limit) {
             total
             canWrite
             edges {

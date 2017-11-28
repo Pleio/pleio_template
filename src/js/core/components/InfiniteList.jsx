@@ -46,6 +46,7 @@ class InfiniteList extends React.Component {
 
         if (data.entities) { return "entities" }
         if (data.groups) { return "groups" }
+        if (data.events) { return "events" }
         if (data.files) { return "files" }
         if (data.activities) { return "activities" }
         if (data.bookmarks) { return "bookmarks" }
