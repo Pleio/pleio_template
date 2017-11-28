@@ -27,9 +27,7 @@ export default class InviteItem extends React.Component {
                     <div className="col-sm-8">
                         <div className="list-members__member">
                             <div className="list-members__picture" style={{backgroundImage: user.icon ? `url(${user.icon})` : "url(/mod/pleio_template/src/images/user.png)"}} />
-                            <div className="list-members__name">
-                                {user.name}
-                            </div>
+                            <div className="list-members__name"><b>{user.name}</b></div>
                         </div>
                     </div>
                     <div className="col-sm-4">
@@ -44,8 +42,8 @@ export default class InviteItem extends React.Component {
                         <div className="list-members__member">
                             <div className="list-members__picture" style={{backgroundImage: user.icon ? `url(${user.icon})` : "url(/mod/pleio_template/src/images/user.png)"}} />
                             <div className="list-members__name">
-                                {user.name}<br />
-                                <i>{showDate(this.props.timeCreated)}</i>
+                                <b>{user.name}</b><br />
+                                {showDate(this.props.timeCreated)}
                             </div>
                         </div>
                     </div>
@@ -60,9 +58,7 @@ export default class InviteItem extends React.Component {
                     <div className="col-sm-12">
                         <div className="list-members__member">
                             <div className="list-members__picture" style={{backgroundImage: user.icon ? `url(${user.icon})` : "url(/mod/pleio_template/src/images/user.png)"}} />
-                            <div className="list-members__name">
-                                {user.name}
-                            </div>
+                            <div className="list-members__name"><b>{user.name}</b></div>
                             <div className="button ___square ___grey list-members__add">
                                 <div className="list-members__add-icons">
                                     <span className="___check" />

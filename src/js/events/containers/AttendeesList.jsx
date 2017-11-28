@@ -16,7 +16,7 @@ class AttendeesList extends React.Component {
                 <Link to={attendee.url}>
                     <div className="list-members__member">
                         <div className="list-members__picture" style={{backgroundImage: `url(${attendee.icon})`}} />
-                        <div className="list-members__name">{attendee.name}</div>
+                        <div className="list-members__name"><b>{attendee.name}</b></div>
                     </div>
                 </Link>
             </div>

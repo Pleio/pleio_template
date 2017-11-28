@@ -66,7 +66,7 @@ class MemberItem extends React.Component {
             <div className="list-members__member">
                 <Errors errors={this.state.errors} />
                 <div style={{backgroundImage: `url('${member.user.icon}')`}} className="list-members__picture" />
-                <div className="list-members__name">{member.user.name}</div>
+                <div className="list-members__name"><b>{member.user.name}</b></div>
                 {editable}
             </div>
         )
