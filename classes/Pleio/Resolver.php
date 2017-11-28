@@ -1196,8 +1196,8 @@ class Resolver {
             $args["type"] = "object";
         }
 
-        if (!$args["subtype"] || !in_array($args["subtype"], ["blog","news","question"])) {
-            $args["subtype"] = ["blog","news","question"];
+        if (!$args["subtype"] || !in_array($args["subtype"], ["blog","news","question","event"])) {
+            $args["subtype"] = ["blog","news","question","event"];
         }
 
         $es_results = $es->search(
@@ -1217,7 +1217,7 @@ class Resolver {
         }
 
         $searchTotals = [];
-        $totals = $es->search($args["q"], null, $args["type"], ["blog","news","question"], null, null, "", "", $args["containerGuid"]);
+        $totals = $es->search($args["q"], null, $args["type"], ["blog","news","question","event"], null, null, "", "", $args["containerGuid"]);
 
         foreach ($totals["count_per_subtype"] as $subtype => $total) {
             $searchTotals[] = [

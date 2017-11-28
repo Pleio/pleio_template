@@ -27,6 +27,7 @@ const Query = gql`
                     subtype
                     tags
                     timeCreated
+                    startDate
                     isBookmarked
                     canBookmark
                     commentCount

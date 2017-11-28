@@ -6,7 +6,10 @@ import classnames from "classnames"
 const subtypes = [
     {title:"Blog", subtype:"blog"},
     {title:"Forum", subtype:"question"},
-    {title:"Nieuws", subtype:"news"}
+    {title:"Nieuws", subtype:"news"},
+    {title:"Discussies", subtype:"discussion"},
+    {title:"Agenda", subtype:"event"},
+    {title:"Wiki", subtype:"wiki"}
 ]
 
 export default class Header extends React.Component {

@@ -35,18 +35,6 @@ export default class Card extends React.Component {
             )
         }
 
-        let tags
-        if (entity.tags) {
-            tags = (
-                <span>
-                    &nbsp;in&nbsp;
-                    <Link to={entity.url} className="card-topic__subject">
-                        {displayTags(entity.tags)}
-                    </Link>
-                </span>
-            )
-        }
-
         return (
             <div className={classnames({"card-topic": true, "___feed": inActivityFeed})}>
                 <Link to={entity.owner.url} title={entity.owner.name} style={{backgroundImage: "url(" + entity.owner.icon + ")"}} className="card-topic__picture"></Link>
@@ -60,7 +48,6 @@ export default class Card extends React.Component {
                             {entity.owner.name}
                         </Link>
                         <span>&nbsp;{showDate(entity.timeCreated)}&nbsp;</span>
-                        {tags}
                     </div>
                     <div className="card-topic__content">
                         {entity.excerpt}

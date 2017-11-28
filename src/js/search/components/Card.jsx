@@ -4,18 +4,13 @@ import { getClassFromTags } from "../../lib/helpers"
 import classnames from "classnames"
 import NewsCard from "../../news/components/Card"
 import BlogCard from "../../blog/components/Card"
-import QuestionCard from '../../questions/components/Card'
+import QuestionCard from "../../questions/components/Card"
+import EventCard from "../../events/components/Card"
 
 export default class Card extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.renderNews = this.renderNews.bind(this)
-        this.renderBlog = this.renderBlog.bind(this)
-        this.renderQuestion = this.renderQuestion.bind(this)
-    }
-
     render() {
+        const { entity } = this.props
+
         if (!this.props.entity) {
             return (
                 <div></div>
@@ -24,36 +19,25 @@ export default class Card extends React.Component {
 
         switch (this.props.entity.subtype) {
             case "news":
-                return this.renderNews()
+                return (
+                    <NewsCard entity={this.props.entity} inActivityFeed={true} />
+                )
             case "blog":
-                return this.renderBlog()
+                return (
+                    <BlogCard entity={this.props.entity} inActivityFeed={true} />
+                )
             case "question":
-                return this.renderQuestion()
+                return (
+                    <QuestionCard entity={this.props.entity} inActivityFeed={true} />
+                )
+            case "event":
+                return (
+                    <EventCard entity={this.props.entity} inActivityFeed={true} />
+                )
             default:
                 return (
                     <div></div>
                 )
         }
-    }
-
-    renderNews() {
-        const activity = this.props.entity
-        const { object } = activity
-
-        return (
-            <NewsCard entity={this.props.entity} inActivityFeed={true} />
-        )
-    }
-
-    renderBlog() {
-        return (
-            <BlogCard entity={this.props.entity} inActivityFeed={true} />
-        )
-    }
-
-    renderQuestion() {
-        return (
-            <QuestionCard entity={this.props.entity} inActivityFeed={true} />
-        )
     }
 }
