@@ -80,11 +80,6 @@ class TopMenu extends React.Component {
             userMenu = (
                 <UserMenu onClick={this.closeMobileMenu} viewer={this.props.data.viewer} />
             )
-            pleio = (
-                <a href="https://www.pleio.nl" title="Pleio" className="navigation__link ___pleio">
-                    Pleio
-                </a>
-            )
         }
 
         return (
@@ -116,7 +111,6 @@ class TopMenu extends React.Component {
                             </li>
                         </ul>
                         {userMenu}
-                        {pleio}
                     </div>
                     <div className="mobile-navigation__bar">
                         <div className="mobile-navigation__trigger" onClick={this.toggleMobileMenu} />

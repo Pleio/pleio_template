@@ -22,7 +22,10 @@ class UserMenu extends React.Component {
                     { title: "Interesses", link: `/profile/${viewer.user.username}/interests` },
                     { title: "Instellingen", link: `/profile/${viewer.user.username}/settings` }
                 ],
-                [ { title: "Uitloggen", link: "/logout" } ]
+                [
+                    { title: "Naar Pleio.nl", link: `https://www.pleio.nl`, external:true },
+                    { title: "Uitloggen", link: "/logout" }
+                ]
             ]
 
             return (

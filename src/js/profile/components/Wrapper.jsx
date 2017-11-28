@@ -50,9 +50,6 @@ class Wrapper extends React.Component {
                             <ProfileField type="h3" entity={entity} canEdit={entity.canEdit} dataKey="name" name="Naam" value={entity.name} />
                         </div>
                         <div className="col-sm-6 end-sm">
-                            <a href="https://www.pleio.nl" target="_blank" className="button ___large ___line ___margin-right ___pleio">
-                                Pleio
-                            </a>
                             {logout}
                         </div>
                     </div>
