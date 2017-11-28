@@ -1,6 +1,6 @@
 import React from "react"
 import TabMenu from "../../core/components/TabMenu"
-import { groupPlugins as defaultPlugins } from "../../lib/constants"
+import { groupPlugins, defaultGroupPlugins } from "../../lib/constants"
 import { getQueryVariable } from "../../lib/helpers"
 import { withRouter } from "react-router"
 import autobind from "autobind-decorator"
@@ -93,14 +93,14 @@ class Menu extends React.Component {
 
         const rootUrl =  `/groups/view/${match.params.groupGuid}/${match.params.groupSlug}`
 
-        const plugins = entity.plugins.length > 0 ? entity.plugins : Object.keys(defaultPlugins)
+        const plugins = entity.plugins.length > 0 ? entity.plugins : defaultGroupPlugins
 
         let menuOptions = []
-        Object.keys(defaultPlugins).forEach((key) => {
+        Object.keys(groupPlugins).forEach((key) => {
             if (plugins.includes(key)) {
                 menuOptions.push({
                     link: `${rootUrl}/${key}`,
-                    title: defaultPlugins[key]
+                    title: groupPlugins[key]
                 })
             }
         })

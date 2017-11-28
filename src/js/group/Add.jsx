@@ -14,7 +14,7 @@ import TagsField from "../core/components/TagsField"
 import SelectField from "../core/components/SelectField"
 import SwitchField from "../core/components/SwitchField"
 import IconField from "../core/components/IconField"
-import { groupPlugins as defaultPlugins } from "../lib/constants"
+import { defaultGroupPlugins } from "../lib/constants"
 import { convertToRaw } from "draft-js"
 import { Set } from "immutable"
 
@@ -50,7 +50,7 @@ class Add extends React.Component {
             featured: values.featured,
             isClosed: (values.membership === "closed") ? true : false,
             tags: values.tags,
-            plugins: Object.keys(defaultPlugins)
+            plugins: defaultGroupPlugins
         }
 
         this.props.mutate({

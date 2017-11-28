@@ -18,7 +18,7 @@ import { convertToRaw } from "draft-js"
 import { Link } from "react-router-dom"
 import NotFound from "../core/NotFound"
 import DeleteModal from "../core/Delete"
-import { groupPlugins as defaultPlugins } from "../lib/constants"
+import { groupPlugins, defaultGroupPlugins } from "../lib/constants"
 import { Set } from "immutable"
 
 class Edit extends React.Component {
@@ -107,7 +107,7 @@ class Edit extends React.Component {
             errors = ( <Errors errors={this.state.errors} /> );
         }
 
-        const selectedPlugins = entity.plugins.length > 0 ? entity.plugins : Object.keys(defaultPlugins)
+        const selectedPlugins = entity.plugins.length > 0 ? entity.plugins : defaultGroupPlugins
 
         let membership = (entity.isClosed) ? "closed" : "open"
 
@@ -126,7 +126,7 @@ class Edit extends React.Component {
                                             <TextField label="Beschrijving" name="description" type="text" placeholder="Vertel wat over de groep voor leden die nog geen lid zijn" className="form__input" rules="required" value={entity.description} />
                                             <RichTextField label="Introductie" name="introduction" type="text" placeholder="Hier kun je een korte introductie geven aan de leden van de groep" className="form__input" richValue={entity.introduction} />
                                             <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" value={entity.tags}/>
-                                            <SwitchesField label="Plugins" name="plugins" options={defaultPlugins} values={selectedPlugins} />
+                                            <SwitchesField label="Plugins" name="plugins" options={groupPlugins} values={selectedPlugins} />
 
                                             <div className="buttons ___space-between">
                                                 <button className="button" type="submit" name="update">
