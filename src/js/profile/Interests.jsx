@@ -43,7 +43,7 @@ const Query = gql`
             status
             ... on User {
                 canEdit
-                getsNotificationOnReply
+                emailNotifications
                 getsNewsletter
                 emailOverview
                 tags

@@ -1105,7 +1105,7 @@ class Resolver {
         return $user->getPrivateSetting("email_overview");
     }
 
-    static function getsNotificationOnReply($user) {
+    static function getEmailNotifications($user) {
         $user = get_entity($user["guid"]);
         if (!$user || !$user instanceof \ElggUser) {
             return false;
@@ -1115,7 +1115,12 @@ class Resolver {
             return false;
         }
 
-        return $user->getPrivateSetting("notificationOnReply") ? true : false;
+        $settings = get_user_notification_settings($user->guid);
+        if ($settings && $settings->email) {
+            return ($settings->email === "1") ? true : false;
+        }
+
+        return false;
     }
 
     static function getsNewsletter($user) {

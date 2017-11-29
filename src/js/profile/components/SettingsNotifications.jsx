@@ -23,7 +23,7 @@ class SettingsNotifications extends React.Component {
                 input: {
                     clientMutationId: 1,
                     guid: this.props.entity.guid,
-                    notificationOnReply: this.refs.notificationOnReply.getValue(),
+                    emailNotifications: this.refs.emailNotifications.getValue(),
                     newsletter: this.refs.newsletter.getValue()
                 }
             }
@@ -31,11 +31,13 @@ class SettingsNotifications extends React.Component {
     }
 
     render() {
+        const { entity } = this.props
+
         return (
             <div className="card-profile">
                 <h3 className="card-profile__title">Meldingen</h3>
-                <CheckField ref="notificationOnReply" name="notificationOnReply" label="Ontvang een melding als iemand op jou reageert" onChange={this.onChange} checked={this.props.entity.getsNotificationOnReply} />
-                <CheckField ref="newsletter" name="newsletter" label="Ik wil de nieuwsbrief ontvangen" onChange={this.onChange} checked={this.props.entity.getsNewsletter} />
+                <CheckField ref="emailNotifications" name="emailNotifications" label="Stuur mij meldingen per e-mail" onChange={this.onChange} checked={entity.emailNotifications} />
+                <CheckField ref="newsletter" name="newsletter" label="Ik wil de nieuwsbrief ontvangen" onChange={this.onChange} checked={entity.getsNewsletter} />
             </div>
         )
     }
@@ -47,7 +49,7 @@ const Query = gql`
             user {
                 guid
                 getsNewsletter
-                getsNotificationOnReply
+                emailNotifications
             }
         }
     }

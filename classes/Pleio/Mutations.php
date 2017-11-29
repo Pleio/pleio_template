@@ -746,7 +746,7 @@ class Mutations {
         }
 
         $site = elgg_get_site_entity();
-        $notificationOnReply = (bool) $input["notificationOnReply"];
+        $emailNotifications = (bool) $input["emailNotifications"];
         $newsletter = (bool) $input["newsletter"];
 
         if ($newsletter) {
@@ -755,10 +755,10 @@ class Mutations {
             $result &= newsletter_unsubscribe_user($entity, $site);
         }
 
-        if ($notificationOnReply) {
-            $entity->setPrivateSetting("notificationOnReply", "yes");
+        if ($emailNotifications) {
+            set_user_notification_setting($entity->guid, "email", true);
         } else {
-            $entity->removePrivateSetting("notificationOnReply");
+            set_user_notification_setting($entity->guid, "email", false);
         }
 
         $result = $entity->save();

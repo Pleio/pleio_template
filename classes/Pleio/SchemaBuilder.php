@@ -299,10 +299,10 @@ class SchemaBuilder {
                         return Resolver::getEmail($user);
                     }
                 ],
-                "getsNotificationOnReply" => [
+                "emailNotifications" => [
                     "type" => Type::boolean(),
                     "resolve" => function($user) {
-                        return Resolver::getsNotificationOnReply($user);
+                        return Resolver::getEmailNotifications($user);
                     }
                 ],
                 "getsNewsletter" => [
@@ -1737,7 +1737,7 @@ class SchemaBuilder {
                 "guid" => [
                     "type" => Type::string()
                 ],
-                "notificationOnReply" => [
+                "emailNotifications" => [
                     "type" => Type::boolean()
                 ],
                 "newsletter" => [
