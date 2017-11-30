@@ -14072,6 +14072,9 @@ body.modal__open {
 .tree-view__folder.___selected > span {
   background-color: #f2fafe;
 }
+.list-members__name {
+  font-weight: normal;
+}
 #__bs_notify__ {
   opacity: .15 !important;
   pointer-events: none;
