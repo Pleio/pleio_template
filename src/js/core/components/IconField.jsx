@@ -69,7 +69,7 @@ class IconField extends React.Component {
             <div className="row">
                 <div className="col-sm-6">
                     <div className="edit-picture__upload" onClick={this.startFilePicker}>
-                        + Foto uploaden
+                        + Afbeelding uploaden
                         <input ref="iconFile" name="iconFile" type="file" onChange={this.onChange} className="___is-hidden" />
                     </div>
                 </div>
