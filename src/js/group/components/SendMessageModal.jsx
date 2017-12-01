@@ -55,7 +55,7 @@ class SendMessageForm extends React.Component {
     render() {
         if (this.state.completed) {
             return (
-                <p>Het bericht is succesvol verstuurd.</p>
+                <p>De e-mail is succesvol verstuurd.</p>
             )
         }
 
@@ -71,8 +71,8 @@ class SendMessageForm extends React.Component {
         return (
             <Form ref="form" className="form" method="POST" onSubmit={this.onSubmit}>
                 <Errors errors={this.state.errors} />
-                <p>Vul hieronder een bericht in dat je naar alle leden wil versturen.</p>
-                <InputField name="subject" type="text" className="form__input" rules="required" autofocus placeholder="Vul hier een onderwerp in..." />
+                <p>Stuur hieronder een e-mail naar alle leden.</p>
+                <InputField name="subject" type="text" className="form__input" rules="required" autofocus placeholder="Vul hier het onderwerp in..." />
                 <RichTextField name="message" className="form__input" rules="required" placeholder="Vul hier het bericht in..." />
                 <div className="buttons ___end ___margin-top">
                     {loading}
@@ -105,7 +105,7 @@ export default class SendMessageModal extends React.Component {
 
     render() {
         return (
-            <Modal ref="modal" title="Bericht versturen">
+            <Modal ref="modal" title="E-mail versturen">
                 <div className="group-info">
                     <div className="group-info__content">
                         <SendMessageFormWithMutation group={this.props.entity} />

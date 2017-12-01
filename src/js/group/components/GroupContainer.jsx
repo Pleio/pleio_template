@@ -64,7 +64,7 @@ class GroupContainer extends React.Component {
             )
             sendMessage = (
                 <div className="button ___large" onClick={() => this.refs.sendMessageModal.toggle()}>
-                    Bericht versturen
+                    E-mail versturen
                 </div>
             )
         }
