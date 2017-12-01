@@ -182,23 +182,23 @@ class FeaturedField extends React.Component {
                     <div className="upload-image__boxes">
                         <div className="upload-image__box ___image" onClick={this.selectImage}>
                             <div className="upload-image__placeholder">
-                                <div className="upload-image__title">Upload een afbeelding</div>
+                                <div className="upload-image__title">Upload een omslagfoto</div>
                                 <div className="upload-image__subtitle">(1.400 x 396 pixels)</div>
                             </div>
                         </div>
                         <div className="upload-image__box ___video" onClick={this.selectVideo}>
                             <div className="upload-image__placeholder">
-                                <div className="upload-image__title">Upload een video</div>
+                                <div className="upload-image__title">Upload een omslagvideo</div>
                                 <div className="upload-image__subtitle">(link invoeren)</div>
                             </div>
                         </div>
                     </div>
                     <div className="upload-image__actions ___image">
                         <div className="button ___primary upload-image__edit" onClick={this.selectImage}>
-                            <span>Afbeelding wijzigen</span>
+                            <span>Foto wijzigen</span>
                         </div>
                         <div className="button ___primary upload-image__delete" onClick={this.clearValue}>
-                            <span>Afbeelding verwijderen</span>
+                            <span>Foto verwijderen</span>
                         </div>
                     </div>
                     <div className="upload-image__actions ___video">
