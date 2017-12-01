@@ -1072,13 +1072,6 @@ class Mutations {
         $group = new \ElggGroup();
         $user = elgg_get_logged_in_user_entity();
 
-        if ($input["icon"]) {
-            Helpers::saveToIcon($input["icon"], $entity);
-            $group->icontime = time();
-        } else {
-            unset($group->icontime);
-        }
-
         $group->name = $input["name"];
         $group->membership = $input["isClosed"] ? ACCESS_PRIVATE : ACCESS_PUBLIC;
         $group->description = $input["description"];
@@ -1088,6 +1081,11 @@ class Mutations {
         $group->access_id = get_default_access();
 
         $result = $group->save();
+
+        if ($input["icon"]) {
+            Helpers::saveToIcon($input["icon"], $group);
+            $group->icontime = time();
+        }
 
         if ($input["featured"]) {
             if ($input["featured"]["image"]) {
