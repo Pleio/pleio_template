@@ -49,7 +49,7 @@ class GroupList extends React.Component {
         }
 
         return (
-            <GroupContainer match={this.props.match}>
+            <GroupContainer match={this.props.match} buttons=" ">
                 <Document title={entity.name} />
                 <section className="section ___grow">
                     <div className="container">

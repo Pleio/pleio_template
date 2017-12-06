@@ -3,6 +3,7 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { Link, withRouter } from "react-router-dom"
 import Featured from "../../core/components/Featured"
+import DropdownButton from "../../core/components/DropdownButton"
 import Menu from "./Menu"
 import MoreInfoModal from "./MoreInfoModal"
 import LeaveGroupModal from "./LeaveGroupModal"
@@ -33,39 +34,30 @@ class GroupContainer extends React.Component {
             )
         }
 
-        let join, leave, edit, invite, sendMessage
+        let join
         if (((viewer.loggedIn && !entity.isClosed) || entity.canEdit) && entity.membership === "not_joined") {
             join = (
                 <JoinGroupButton entity={entity} />
             )
         }
 
+        let leave
         if (!entity.canEdit && entity.membership === "joined") {
             leave = (
                 <div className="button" onClick={() => this.refs.leaveGroupModal.toggle()}>Verlaat groep</div>
             )
         }
 
-        if (entity.canEdit) {
-            edit = (
-                <Link to={`/groups/edit/${entity.guid}`} >
-                    <div className="button ___large">
-                        <span>Groep bewerken</span>
-                    </div>
-                </Link>
-            )
-        }
-
+        let edit
         if (entity.membership === "joined" && entity.canEdit) {
-            invite = (
-                <div className="button ___large" onClick={() => this.refs.inviteModal.toggle()}>
-                    Leden uitnodigen
-                </div>
-            )
-            sendMessage = (
-                <div className="button ___large" onClick={() => this.refs.sendMessageModal.toggle()}>
-                    E-mail versturen
-                </div>
+            const options = [
+                { to: `/groups/edit/${entity.guid}`, name: "Groep bewerken" }, 
+                { onClick: () => this.refs.inviteModal.toggle(), name: "Leden uitnodigen" },
+                { onClick: () => this.refs.sendMessageModal.toggle(), name: "E-mail versturen" }
+            ]
+
+            edit = (
+                <DropdownButton options={options} name="Beheer" line colored />
             )
         }
 
@@ -76,8 +68,6 @@ class GroupContainer extends React.Component {
                     {join}
                     {leave}
                     {edit}
-                    {invite}
-                    {sendMessage}
                 </div>
             )
         }

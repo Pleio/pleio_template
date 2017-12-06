@@ -20,7 +20,7 @@ class JoinGroupButton extends React.Component {
                 input
             }
         }).then(({data}) => {
-            // do nothing
+            location.reload()
         }).catch((errors) => {
             logErrors(errors)
             this.setState({
