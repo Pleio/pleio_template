@@ -611,6 +611,12 @@ class SchemaBuilder {
                         return Resolver::isBookmarked($object);
                     }
                 ],
+                "isFollowing" => [
+                    "type" => Type::boolean(),
+                    "resolve" => function($object) {
+                        return Resolver::isFollowing($object);
+                    }
+                ],
                 "canBookmark" => [
                     "type" => Type::boolean(),
                     "resolve" => function($object) {
@@ -904,21 +910,22 @@ class SchemaBuilder {
         $notificationType = new ObjectType([
             "name" => "NotificationType",
             "fields" => [
-                "type" => [
-                    "type" => Type::string()
-                ]
+                "id" => [ "type" => Type::int() ],
+                "action" => [ "type" => Type::string() ],
+                "performer" => [ "type" => $userType ],
+                "entity" => [ "type" => $entityInterface ],
+                "container" => [ "type" => $entityInterface ],
+                "timeCreated" => [ "type" => Type::string() ],
+                "isUnread" => [ "type" => Type::boolean() ]
             ]
         ]);
 
         $notificationsListType = new ObjectType([
             "name" => "NotificationsListType",
             "fields" => [
-                "total" => [
-                    "type" => Type::int()
-                ],
-                "notifications" => [
-                    "type" => Type::listOf($notificationType)
-                ]
+                "total" => [ "type" => Type::int() ],
+                "totalUnread" => [ "type" => Type::int() ],
+                "notifications" => [ "type" => Type::listOf($notificationType) ]
             ]
         ]);
 
@@ -1664,6 +1671,30 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::vote"
         ]);
 
+        $followMutation = Relay::mutationWithClientMutationId([
+            "name" => "follow",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::nonNull((Type::string())),
+                    "description" => "The guid of the entity to follow."
+                ],
+                "isFollowing" => [
+                    "type" => Type::nonNull(Type::boolean()),
+                    "description" => "True for following, false for not following."
+                ]
+            ],
+            "outputFields" => [
+                "object" => [
+                    "type" => Type::nonNull($objectType),
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::follow"
+        ]);
+
+
         $editProfileFieldMutation = Relay::mutationWithClientMutationId([
             "name" => "editProfileField",
             "inputFields" => [
@@ -2120,6 +2151,29 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::attendEvent"
         ]);
 
+        $markAsReadMutation = Relay::mutationWithClientMutationId([
+            "name" => "markAsRead",
+            "inputFields" => [
+                "id" => [ "type" => Type::string() ]
+            ],
+            "outputFields" => [
+                "success" => [ "type" => Type::boolean() ],
+                "notification" => [ "type" => $notificationType ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::markAsRead"
+        ]);
+
+        $markAllAsReadMutation = Relay::mutationWithClientMutationId([
+            "name" => "markAllAsRead",
+            "inputFields" => [
+                "id" => [ "type" => Type::string() ]
+            ],
+            "outputFields" => [
+                "success" => [ "type" => Type::boolean() ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::markAllAsRead"
+        ]);
+
         $mutationType = new ObjectType([
             "name" => "Mutation",
             "fields" => [
@@ -2147,6 +2201,7 @@ class SchemaBuilder {
                     "editPassword" => $editPasswordMutation,
                     "bookmark" => $bookmarkMutation,
                     "vote" => $voteMutation,
+                    "follow" => $followMutation,
                     "editAvatar" => $editAvatarMutation,
                     "editProfileField" => $editProfileFieldMutation,
                     "addImage" => $addImageMutation,
@@ -2161,7 +2216,9 @@ class SchemaBuilder {
                     "acceptGroupInvitation" => $acceptGroupInvitation,
                     "changeGroupRole" => $changeGroupRoleMutation,
                     "editTask" => $editTaskMutation,
-                    "attendEvent" => $attendEventMutation
+                    "attendEvent" => $attendEventMutation,
+                    "markAsRead" => $markAsReadMutation,
+                    "markAllAsRead" => $markAllAsReadMutation
             ]
         ]);
 

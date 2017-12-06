@@ -89,7 +89,6 @@ class GroupContainer extends React.Component {
                         {icon}
                         <span>{entity.name}</span>
                     </h1>
-                    <div className="button ___options"></div>
                     {buttons}
                 </Featured>
                 <div className="container">

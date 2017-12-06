@@ -74,6 +74,9 @@ const AddComment = gql`
         addEntity(input: $input) {
             entity {
                 guid
+                ... on Object {
+                    isFollowing
+                }
             }
         }
     }

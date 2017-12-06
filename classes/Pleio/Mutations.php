@@ -149,7 +149,7 @@ class Mutations {
             }
         }
 
-        if (!in_array($input["type"], array("group", "object"))) {
+        if (!in_array($input["type"], array("object"))) {
             throw new Exception("invalid_type");
         }
 
@@ -283,6 +283,9 @@ class Mutations {
             $entity->pageType = $input["pageType"];
             $result = $entity->save();
         }
+
+        $user = elgg_get_logged_in_user_entity();
+        add_entity_relationship($user->guid, "content_subscription", $entity->guid);
 
         $view = "river/object/{$input["subtype"]}/create";
         add_to_river($view, 'create', elgg_get_logged_in_user_guid(), $entity->guid);
@@ -639,6 +642,32 @@ class Mutations {
             $result = $past_vote->delete();
         } else {
             $result = $entity->annotate("vote", $score, $entity->access_id);
+        }
+
+        if ($result) {
+            return [
+                "guid" => $entity->guid
+            ];
+        }
+
+        throw new Exception("could_not_save");
+    }
+
+    static function follow($input) {
+        $entity = get_entity((int) $input["guid"]);
+        if (!$entity) {
+            throw new Exception("could_not_find");
+        }
+
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            throw new Exception("not_logged_in");
+        }
+
+        if ($input["isFollowing"]) {
+            $result = add_entity_relationship($user->guid, "content_subscription", $entity->guid);
+        } else {
+            $result = remove_entity_relationship($user->guid, "content_subscription", $entity->guid);
         }
 
         if ($result) {
@@ -1514,5 +1543,60 @@ class Mutations {
         return [
             "guid" => $event->guid
         ];
+    }
+
+    static function markAsRead($input) {
+        $dbprefix = elgg_get_config("dbprefix");
+
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            return [
+                "success" => false,
+                "notification" => null
+            ];
+        }
+
+        $id = (int) $input["id"];
+        if (!$id) {
+            throw new Exception("could_not_find");
+        }
+
+        $sql = "SELECT * FROM {$dbprefix}notifications WHERE id = {$id} AND user_guid = {$user->guid}";
+        $notification = get_data_row($sql);
+
+        if (!$notification) {
+            throw new Exception("could_not_find");
+        }
+
+        $result = update_data("UPDATE {$dbprefix}notifications SET unread = 'no' WHERE id = {$id} AND user_guid = {$user->guid}");
+        if ($result) {
+            $notification = get_data_row($sql);
+
+            return [
+                "success" => true,
+                "notification" => Mapper::getNotification($notification)
+            ];
+        }
+
+        return [
+            "success" => false,
+            "notification" => null
+        ];
+    }
+
+    static function markAllAsRead($input) {
+        $dbprefix = elgg_get_config("dbprefix");
+
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            return [ "success" => false ];
+        }
+
+        $result = update_data("UPDATE {$dbprefix}notifications SET unread = 'no' WHERE user_guid = {$user->guid}");
+        if ($result) {
+            return [ "success" => true ];
+        }
+
+        return [ "success" => false ];
     }
 }

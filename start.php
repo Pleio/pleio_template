@@ -1,5 +1,6 @@
 <?php
 require_once(dirname(__FILE__) . "/lib/functions.php");
+require_once(dirname(__FILE__) . "/lib/events.php");
 require_once(dirname(__FILE__) . "/../../vendor/autoload.php");
 spl_autoload_register("pleio_template_autoloader");
 function pleio_template_autoloader($class) {
@@ -23,6 +24,8 @@ function pleio_template_init() {
     elgg_register_plugin_hook_handler("index", "system", "pleio_template_index_handler");
     elgg_register_plugin_hook_handler("container_permissions_check", "object", "pleio_template_container_permissions_check_hook");
     elgg_register_plugin_hook_handler("action", "plugins/settings/save", "pleio_template_plugins_settings_save");
+
+    elgg_register_event_handler("create", "object", "pleio_template_create_object_handler");
 
     elgg_register_page_handler("campagne", "pleio_template_page_handler");
     elgg_register_page_handler("activity", "pleio_template_page_handler");
@@ -290,7 +293,7 @@ function webpack_dev_server_is_available() {
         return false;
     }
 
-    $fp = @fsockopen("localhost", "9001", $errno, $errstr, 0.05);
+    $fp = @fsockopen("localhost", "9001", $errno, $errstr, 0.5);
     if (is_resource($fp)) {
         fclose($fp);
         return true;

@@ -90,9 +90,37 @@ class Resolver {
     }
 
     static function getNotifications($a, $args, $c) {
+        $dbprefix = elgg_get_config("dbprefix");
+        $site = elgg_get_site_entity();
+
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            return [
+                "total" => 0,
+                "notifications" => []
+            ];
+        }
+
+        $limit = (int) ($args["offset"] ?: 20);
+        $offset = (int) ($args["limit"] ?: 0);
+
+        $sql = "SELECT * FROM {$dbprefix}notifications WHERE user_guid = {$user->guid} AND site_guid = {$site->guid} ORDER BY id DESC LIMIT {$offset}, {$limit}";
+
+        $result = get_data_row("SELECT COUNT(*) AS total FROM {$dbprefix}notifications WHERE user_guid = {$user->guid} AND site_guid = {$site->guid}");
+        $total = $result->total;
+
+        $result = get_data_row("SELECT COUNT(*) AS total FROM {$dbprefix}notifications WHERE user_guid = {$user->guid} AND site_guid = {$site->guid} AND unread = 'yes'");
+        $totalUnread = $result->total;
+
+        $notifications = [];
+        foreach (get_data($sql) as $notification) {
+            $notifications[] = Mapper::getNotification($notification);
+        }
+
         return [
-            "total" => 0,
-            "notifications" => []
+            "total" => $total,
+            "totalUnread" => $totalUnread,
+            "notifications" => $notifications
         ];
     }
 
@@ -110,7 +138,7 @@ class Resolver {
                 "description" => $description
             ];
         }
-        
+
         elgg_set_page_owner_guid($old_guid);
 
         return $accessIds;
@@ -1157,6 +1185,19 @@ class Resolver {
 
         $user = elgg_get_logged_in_user_entity();
         if (check_entity_relationship($user->guid, "bookmarked", $object['guid'])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    static function isFollowing($object) {
+        if (!elgg_is_logged_in()) {
+            return false;
+        }
+
+        $user = elgg_get_logged_in_user_entity();
+        if (check_entity_relationship($user->guid, "content_subscription", $object['guid'])) {
             return true;
         }
 

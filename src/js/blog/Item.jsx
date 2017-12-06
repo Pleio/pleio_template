@@ -14,6 +14,7 @@ import LoggedInButton from "../core/components/LoggedInButton"
 import RichTextView from "../core/components/RichTextView"
 import Document from "../core/components/Document"
 import Featured from "../core/components/Featured"
+import Follow from "../core/components/Follow"
 
 class Item extends React.Component {
     constructor(props) {
@@ -96,6 +97,7 @@ class Item extends React.Component {
                                             </LoggedInButton>
                                             <SocialShare />
                                         </div>
+                                        <Follow viewer={viewer} entity={entity} />
                                     </div>
                                 </article>
                                 <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["BlogItem"]} />
@@ -142,6 +144,7 @@ const Query = gql`
                 votes
                 hasVoted
                 isBookmarked
+                isFollowing
                 canBookmark
                 owner {
                     guid

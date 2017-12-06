@@ -2,6 +2,15 @@
 namespace Pleio;
 
 class Mapper {
+    static function getEntity($entity) {
+        if ($entity instanceof \ElggUser) {
+            return Mapper::getUser($entity);
+        } elseif ($entity instanceof \ElggGroup) {
+            return Mapper::getGroup($entity);
+        } elseif ($entity instanceof \ElggObject) {
+            return Mapper::getObject($entity);
+        }
+    }
 
     static function getUser($entity) {
         return [
@@ -128,6 +137,21 @@ class Mapper {
             "position" => $entity->position,
             "canEdit" => $entity->canEdit(),
             "settings" => $entity->getPrivateSetting("settings") ? json_decode($entity->getPrivateSetting("settings")) : []
+        ];
+    }
+
+    static function getNotification($notification) {
+        $performer = get_entity($notification->performer_guid);
+        $entity = get_entity($notification->entity_guid);
+        $container = get_entity($notification->container_guid);
+
+        return [
+            "id" => $notification->id,
+            "action" => $notification->action,
+            "performer" => $performer ? Mapper::getUser($performer) : null,
+            "entity" => $entity ? Mapper::getEntity($entity) : null,
+            "container" => $container ? Mapper::getEntity($container) : null,
+            "isUnread" => $notification->unread === "yes" ? true : false
         ];
     }
 }

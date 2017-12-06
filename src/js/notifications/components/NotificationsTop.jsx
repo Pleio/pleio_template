@@ -2,8 +2,20 @@ import React from "react"
 import { Link } from "react-router-dom"
 import { graphql, gql } from "react-apollo"
 import classnames from "classnames"
+import Notification from "./Notification"
+import autobind from "autobind-decorator"
 
 class NotificationsList extends React.Component {
+    @autobind
+    markAllAsRead(e) {
+        this.props.mutate({
+            variables: {
+                input: { clientMutationId: "1" }
+            },
+            refetchQueries: ["NotificationsList"]
+        })
+    }
+
     render() {
         const { notifications, viewer } = this.props.data
 
@@ -14,26 +26,23 @@ class NotificationsList extends React.Component {
         }
 
         const list = notifications.notifications.map((notification, i) => (
-            <div className={classnames({notification:true, "___is-unread": true})}>
-                <div className="face" style={{backgroundImage: `url()`}} />
-                <div>
-                    <strong>Piet</strong> heeft iets gedaan
-                    <span className="___greyed">1 uur geleden</span>
-                </div>
-            </div>
+            <Notification key={i} notification={notification} />
         ))
 
-        let placeholder, markAll, badge
-        if (list.length !== 0) {
-            markAll = (
-                <div className="button__text ___grey">Alles gelezen</div>
-            )
-            badge = (
-                <div className="navigation__badge">{list.length}</div>
-            )
-        } else {
+        let placeholder
+        if (notifications.total === 0) {
             placeholder = (
                 <div className="notification">Er zijn momenteel geen meldingen.</div>
+            )
+        }
+
+        let markAll, badge
+        if (notifications.totalUnread !== 0) {
+            markAll = (
+                <div className="button__text ___grey" onClick={this.markAllAsRead}>Alles gelezen</div>
+            )
+            badge = (
+                <div className="navigation__badge">{notifications.totalUnread }</div>
             )
         }
 
@@ -72,11 +81,38 @@ const Query = gql`
         }
         notifications {
             total
+            totalUnread
             notifications {
-                type
+                id
+                action
+                performer {
+                    guid
+                    name
+                    icon
+                }
+                entity {
+                    guid
+                    ... on Object {
+                        title
+                        url
+                    }
+                }
+                isUnread
             }
         }
     }
 `
 
-export default graphql(Query)(NotificationsList)
+const Mutation = gql`
+    mutation NotificationsTop($input: markAllAsReadInput!) {
+        markAllAsRead(input: $input) {
+            success
+        }
+    }
+`
+
+export default graphql(Query, {
+    options: {
+        pollInterval: 5*60*1000
+    }
+})(graphql(Mutation)(NotificationsList))
