@@ -1,0 +1,58 @@
+.cms-section {
+    position: relative;
+}
+
+.cms-section__buttons {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 0 2rem;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+
+    button {
+        width: 4.4rem;
+        height: 4.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: @color-grey--60;
+
+        opacity: 0;
+        transform: translateX(calc(~'100% + 2rem'));
+        transition: opacity @trans-fast, color @trans-fast, transform @trans-material-fast;
+
+        &:nth-child(2) {
+            transition: color @trans-fast, opacity @trans-fast .05s, transform @trans-material-fast .05s;
+        }
+
+        &:hover {
+            color: @color-grey--80;
+        }
+
+        .cms-section:hover & {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        &.___move {
+            .icon(move);
+            &:before {
+                font-size: 2rem;
+                margin-right: .3rem;
+            }
+        }
+
+        &.___delete {
+            .icon(delete-fill);
+            &:before {
+                font-size: 2rem;
+            }
+        }
+    }
+}

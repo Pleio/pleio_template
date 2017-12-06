@@ -208,7 +208,11 @@ button.button {
     &:hover,
     &:focus {
         color: @color-secondary;
-        border-color: @color-secondary;
+        border-color: tint(@color-secondary, 20%);
+    }
+
+    &.___colored {
+        color: @color-secondary;
     }
 }
 
@@ -323,15 +327,35 @@ button.button {
 }
 
 .button.___options {
-    width: 3.6rem;
+    padding: 0;
 
     .icon(options);
-    &:before {
-        font-size: .5rem;
+    @media ( max-width: @screen-xs-max ) {
+        width: 3.8rem;
+        &:before {
+            font-size: .5rem;
+        }
     }
 
     @media ( min-width: @screen-sm ) {
-        display: none;
+        width: 4.2rem;
+        &:before {
+            font-size: .55rem;
+        }
+    }
+}
+
+.button.___dropdown {
+    .icon(angle-down-fill, after);
+    &:after {
+        font-size: .5rem;
+        margin-left: .7rem;
+        margin-right: -.4rem;
+        margin-bottom: .1rem;
+    }
+
+    &.___is-open {
+        border-color: tint(@color-secondary, 20%);
     }
 }
 
@@ -357,6 +381,11 @@ button.button {
     &.___large {
         width: 4.6rem;
         height: 4.6rem;
+
+        @media ( max-width: @screen-xs-max ) {
+            width: 4rem;
+            height: 4rem;
+        }
     }
 
     &.___settings {
@@ -372,6 +401,7 @@ button.button {
     }
 
     &.___list {
+        margin-left: auto;
         .icon(list);
         &:before {
             font-size: 1.8rem;

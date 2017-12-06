@@ -14,8 +14,9 @@ This file contains the styling for the main navigation.
     visibility: hidden;
     opacity: 0;
     transition: visibility @trans-normal, opacity @trans-normal;
-    background: fade(black, 15%);
-    z-index: 10;
+    background: fade(black, 25%);
+    z-index: 1;
+    cursor: pointer;
 
     @media (max-width: @screen-md-max) {
         body.mobile-nav-open & {
@@ -96,8 +97,6 @@ This file contains the styling for the main navigation.
 
 // This wrapper turns into the mobile navigation panel when screen < 1024px
 .navigation__wrapper {
-    z-index: 1;
-
     // MOBILE
     @media (max-width: @screen-md-max) {
         position: fixed;
@@ -110,6 +109,7 @@ This file contains the styling for the main navigation.
         max-width: 94%;
         height: 100%;
         background-color: @color-white;
+        z-index: 2;
         transform: translate(-100%, 0);
         transition: transform @trans-normal, box-shadow @trans-normal;
 
@@ -349,6 +349,7 @@ This file contains the styling for the main navigation.
         }
 
         @media (max-width: @screen-md-max) {
+            padding-right: 4rem;
             &:before {
                 display: none;
             }
@@ -423,8 +424,7 @@ This file contains the styling for the main navigation.
 
 .navigation__badge {
     position: absolute;
-    top: 1.5rem;
-    left: calc(~"100% - 2rem");
+
     min-width: 1.8rem;
     height: 1.8rem;
     border-radius: .9rem;
@@ -438,6 +438,16 @@ This file contains the styling for the main navigation.
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @media (max-width: @screen-md-max) {
+        top: .7rem;
+        right: 1rem;
+    }
+
+    @media (min-width: @screen-lg) {
+        top: 1.5rem;
+        left: calc(~"100% - 2rem");
+    }
 }
 
 .navigation__picture {
@@ -449,11 +459,6 @@ This file contains the styling for the main navigation.
         background-repeat: no-repeat;
         background-position: center center;
         background-size: cover;
-        box-shadow: inset 0 0 0 0.1rem transparent;
-        transition: box-shadow @trans-fast;
-        .navigation__action:hover & {
-            box-shadow: inset 0 0 0 0.1rem @color-grey;
-        }
     }
 }
 

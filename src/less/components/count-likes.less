@@ -4,7 +4,7 @@
     font-weight: normal;
 
     @media ( max-width: @screen-xs-max ) {
-        padding: 0 0 0 2.5rem;
+        padding: 0 0 0 2.8rem;
     }
 
     &.___thumbs-up {
@@ -15,11 +15,12 @@
         &:before,
         &:after {
             position: absolute;
-            width: 2.3rem;
+            width: 2.4rem;
             left: 0;
             top: 0.9rem;
             font-size: 2rem;
-            text-align: center;
+            display: flex;
+            justify-content: center;
             color: @color-secondary;
             transition: opacity @trans-fast, color @trans-fast;
 
@@ -36,11 +37,12 @@
     &:before,
     &:after {
         position: absolute;
-        width: 2.3rem;
+        width: 2.4rem;
         left: 0;
         top: 0.9rem;
         font-size: 2rem;
-        text-align: center;
+        display: flex;
+        justify-content: center;
         color: @color-secondary;
         transition: opacity @trans-fast, color @trans-fast;
 
