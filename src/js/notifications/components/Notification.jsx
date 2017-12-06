@@ -4,6 +4,7 @@ import { graphql, gql, withApollo } from "react-apollo"
 import classnames from "classnames"
 import autobind from "autobind-decorator"
 import { withRouter } from "react-router-dom"
+import { timeSince } from "../../lib/showDate"
 
 class Notification extends React.Component {
     @autobind
@@ -46,7 +47,7 @@ class Notification extends React.Component {
                         <strong>{notification.performer.name}</strong>
                         &nbsp;{message}&nbsp;
                             {notification.entity.title || notification.entity.name}
-                        <span className="___greyed">&nbsp;{notification.timeCreated}</span>
+                        <span className="___greyed">&nbsp;{timeSince(notification.timeCreated)}</span>
                     </div>
                 </div>
             </a>

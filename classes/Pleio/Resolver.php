@@ -101,8 +101,8 @@ class Resolver {
             ];
         }
 
-        $limit = (int) ($args["offset"] ?: 20);
-        $offset = (int) ($args["limit"] ?: 0);
+        $limit = (int) ($args["limit"] ?: 20);
+        $offset = (int) ($args["offset"] ?: 0);
 
         $sql = "SELECT * FROM {$dbprefix}notifications WHERE user_guid = {$user->guid} AND site_guid = {$site->guid} ORDER BY id DESC LIMIT {$offset}, {$limit}";
 
@@ -120,7 +120,7 @@ class Resolver {
         return [
             "total" => $total,
             "totalUnread" => $totalUnread,
-            "notifications" => $notifications
+            "edges" => $notifications
         ];
     }
 

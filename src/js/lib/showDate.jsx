@@ -63,6 +63,33 @@ export function showFullDate(isoDate) {
     return `${d} ${mFull} ${y}, ${h}:${i}`
 }
 
+export function timeSince(isoDate) {
+    const seconds = Math.floor((new Date() - new Date(isoDate)) / 1000)
+
+    let interval = Math.floor(seconds / 31536000)
+    if (interval > 1) {
+        return interval + " jaren geleden"
+    }
+    interval = Math.floor(seconds / 2592000)
+    if (interval > 1) {
+        return interval + " maanden geleden"
+    }
+    interval = Math.floor(seconds / 86400)
+    if (interval > 1) {
+        return interval + " dagen geleden"
+    }
+    interval = Math.floor(seconds / 3600)
+    if (interval > 1) {
+        return interval + " uren geleden"
+    }
+    interval = Math.floor(seconds / 60)
+    if (interval > 9) {
+        return interval + " minuten geleden"
+    }
+
+    return "zojuist"
+}
+
 export default function showDate(isoDate) {
     const date = new Date(isoDate)
     const d = date.getDate()

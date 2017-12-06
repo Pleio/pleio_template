@@ -925,7 +925,7 @@ class SchemaBuilder {
             "fields" => [
                 "total" => [ "type" => Type::int() ],
                 "totalUnread" => [ "type" => Type::int() ],
-                "notifications" => [ "type" => Type::listOf($notificationType) ]
+                "edges" => [ "type" => Type::listOf($notificationType) ]
             ]
         ]);
 

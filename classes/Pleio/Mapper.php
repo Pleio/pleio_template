@@ -151,7 +151,8 @@ class Mapper {
             "performer" => $performer ? Mapper::getUser($performer) : null,
             "entity" => $entity ? Mapper::getEntity($entity) : null,
             "container" => $container ? Mapper::getEntity($container) : null,
-            "isUnread" => $notification->unread === "yes" ? true : false
+            "isUnread" => $notification->unread === "yes" ? true : false,
+            "timeCreated" => date("c", $notification->time_created)
         ];
     }
 }
