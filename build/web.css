@@ -991,8 +991,8 @@ hr {
 }
 @font-face {
   font-family: "icons-webfont";
-  src: url(/mod/pleio_template/build/865cb8170b3dc03914517dbd227c3c0c.eot);
-  src: url(/mod/pleio_template/build/865cb8170b3dc03914517dbd227c3c0c.eot?#iefix) format('eot'), url(/mod/pleio_template/build/1f9745ef01a93418ea1e4f658e155f08.woff2) format('woff2'), url(/mod/pleio_template/build/f16e84148db83154e6a1087dea8105e8.woff) format('woff'), url(/mod/pleio_template/build/f9f1301e7ec7e6e6f1a03e4d1df9bc2e.ttf) format('truetype'), url(/mod/pleio_template/build/df093e86356ef456745c8d27a9ac8abf.svg#icons-webfont) format('svg');
+  src: url(/mod/pleio_template/build/171a79d8895bcccbac4c99a9d89a4eca.eot);
+  src: url(/mod/pleio_template/build/171a79d8895bcccbac4c99a9d89a4eca.eot?#iefix) format('eot'), url(/mod/pleio_template/build/b38532efe72ba4dcc51fe05fe468b7ed.woff2) format('woff2'), url(/mod/pleio_template/build/4f9d1173560fec2092f80cc4182b6d2f.woff) format('woff'), url(/mod/pleio_template/build/0d8d22bec81698eb63a4b496a8016db4.ttf) format('truetype'), url(/mod/pleio_template/build/10192da15d50c9353918c48f9ff49513.svg#icons-webfont) format('svg');
 }
 [class^="icon-"],
 [class*=" icon-"],
@@ -1028,6 +1028,7 @@ body.___rijkshuisstijl .navigation__search button:before,
 .button__share.___linkedin:before,
 .button__share.___mail:before,
 .button.___options:before,
+.button.___dropdown:after,
 .button__icon.___settings:before,
 .button__icon.___list:before,
 .button__icon.___tiles:before,
@@ -1151,6 +1152,8 @@ body.___rijkshuisstijl .navigation__search button:before,
 .accordion__trigger:after,
 .article-action.___share:before,
 .article-action.___comment:before,
+.article-actions__follow:before,
+.article-actions__follow:after,
 .article-links-list__link a:before,
 .article-links__link a:before,
 .article-comments__count:before,
@@ -1182,11 +1185,12 @@ body.___rijkshuisstijl .navigation__search button:before,
 .upload-image__preview:before,
 .cms__panel button.___close:before,
 .cms__panel button.___settings:before,
-.cms-overlay__buttons button.___add:before,
-.cms-overlay__buttons button.___settings:before,
+.cms-overlay__buttons button.___edit:before,
+.cms-overlay__buttons button.___save:before,
 .cms-overlay__buttons button.___delete:before,
-.cms-overlay__buttons button.___more:before,
 .cms-block.___add:before,
+.cms-section__buttons button.___move:before,
+.cms-section__buttons button.___delete:before,
 .widget__admin .___edit:before,
 .widget__admin .___delete:before,
 .widget__admin .___close:before {
@@ -1215,266 +1219,278 @@ body.___rijkshuisstijl .navigation__search button:before,
 .icon-align:before {
   content: "\E004";
 }
-.icon-angle-down:before {
+.icon-angle-down-fill:before {
   content: "\E005";
 }
-.icon-angle-left:before {
+.icon-angle-down:before {
   content: "\E006";
 }
-.icon-angle-right:before {
+.icon-angle-left:before {
   content: "\E007";
 }
-.icon-arrow-right-circle-transparent:before {
+.icon-angle-right:before {
   content: "\E008";
 }
-.icon-arrow-right-circle:before {
+.icon-arrow-right-circle-transparent:before {
   content: "\E009";
 }
-.icon-bold:before {
+.icon-arrow-right-circle:before {
   content: "\E00A";
 }
-.icon-bookmark-line:before {
+.icon-bold:before {
   content: "\E00B";
 }
-.icon-bookmark:before {
+.icon-bookmark-line:before {
   content: "\E00C";
 }
-.icon-calendar:before {
+.icon-bookmark:before {
   content: "\E00D";
 }
-.icon-camera:before {
+.icon-calendar:before {
   content: "\E00E";
 }
-.icon-cat-actualiteit:before {
+.icon-camera:before {
   content: "\E00F";
 }
-.icon-cat-arbeidsvoorwaarden:before {
+.icon-cat-actualiteit:before {
   content: "\E010";
 }
-.icon-cat-klas:before {
+.icon-cat-arbeidsvoorwaarden:before {
   content: "\E011";
 }
-.icon-cat-leren:before {
+.icon-cat-klas:before {
   content: "\E012";
 }
-.icon-cat-nieuws:before {
+.icon-cat-leren:before {
   content: "\E013";
 }
-.icon-cat-overig:before {
+.icon-cat-nieuws:before {
   content: "\E014";
 }
-.icon-cat-vernieuwing:before {
+.icon-cat-overig:before {
   content: "\E015";
 }
-.icon-cat-wetten-2:before {
+.icon-cat-vernieuwing:before {
   content: "\E016";
 }
-.icon-cat-wetten:before {
+.icon-cat-wetten-2:before {
   content: "\E017";
 }
-.icon-check:before {
+.icon-cat-wetten:before {
   content: "\E018";
 }
-.icon-chevron-down:before {
+.icon-check:before {
   content: "\E019";
 }
-.icon-clock:before {
+.icon-chevron-down:before {
   content: "\E01A";
 }
-.icon-code:before {
+.icon-clock:before {
   content: "\E01B";
 }
-.icon-comments:before {
+.icon-code:before {
   content: "\E01C";
 }
-.icon-cross:before {
+.icon-comments:before {
   content: "\E01D";
 }
-.icon-delete-fill:before {
+.icon-cross:before {
   content: "\E01E";
 }
-.icon-delete:before {
+.icon-delete-fill:before {
   content: "\E01F";
 }
-.icon-doc-pdf:before {
+.icon-delete:before {
   content: "\E020";
 }
-.icon-doc:before {
+.icon-doc-pdf:before {
   content: "\E021";
 }
-.icon-download:before {
+.icon-doc:before {
   content: "\E022";
 }
-.icon-dropdown:before {
+.icon-download:before {
   content: "\E023";
 }
-.icon-envelope:before {
+.icon-dropdown:before {
   content: "\E024";
 }
-.icon-external:before {
+.icon-envelope:before {
   content: "\E025";
 }
-.icon-eye-fill:before {
+.icon-external:before {
   content: "\E026";
 }
-.icon-eye:before {
+.icon-eye-fill:before {
   content: "\E027";
 }
-.icon-folder:before {
+.icon-eye:before {
   content: "\E028";
 }
-.icon-heart-fill:before {
+.icon-folder:before {
   content: "\E029";
 }
-.icon-heart:before {
+.icon-heart-fill:before {
   content: "\E02A";
 }
-.icon-home:before {
+.icon-heart:before {
   content: "\E02B";
 }
-.icon-hyperlink:before {
+.icon-home:before {
   content: "\E02C";
 }
-.icon-image-inline:before {
+.icon-hyperlink:before {
   content: "\E02D";
 }
-.icon-image:before {
+.icon-image-inline:before {
   content: "\E02E";
 }
-.icon-indent-left:before {
+.icon-image:before {
   content: "\E02F";
 }
-.icon-indent-right:before {
+.icon-indent-left:before {
   content: "\E030";
 }
-.icon-info-circle:before {
+.icon-indent-right:before {
   content: "\E031";
 }
-.icon-info:before {
+.icon-info-circle:before {
   content: "\E032";
 }
-.icon-italic:before {
+.icon-info:before {
   content: "\E033";
 }
-.icon-like-fill:before {
+.icon-italic:before {
   content: "\E034";
 }
-.icon-like:before {
+.icon-like-fill:before {
   content: "\E035";
 }
-.icon-list:before {
+.icon-like:before {
   content: "\E036";
 }
-.icon-lock:before {
+.icon-list:before {
   content: "\E037";
 }
-.icon-logout:before {
+.icon-lock:before {
   content: "\E038";
 }
-.icon-mobile-menu:before {
+.icon-logout:before {
   content: "\E039";
 }
-.icon-next:before {
+.icon-mobile-menu:before {
   content: "\E03A";
 }
-.icon-not-found:before {
+.icon-move:before {
   content: "\E03B";
 }
-.icon-notification:before {
+.icon-next:before {
   content: "\E03C";
 }
-.icon-ol:before {
+.icon-not-found:before {
   content: "\E03D";
 }
-.icon-options:before {
+.icon-notification-fill:before {
   content: "\E03E";
 }
-.icon-pdf:before {
+.icon-notification:before {
   content: "\E03F";
 }
-.icon-pencil:before {
+.icon-ol:before {
   content: "\E040";
 }
-.icon-play:before {
+.icon-options:before {
   content: "\E041";
 }
-.icon-plus-large:before {
+.icon-pdf:before {
   content: "\E042";
 }
-.icon-plus:before {
+.icon-pencil:before {
   content: "\E043";
 }
-.icon-prev:before {
+.icon-play:before {
   content: "\E044";
 }
-.icon-print:before {
+.icon-plus-large:before {
   content: "\E045";
 }
-.icon-quote:before {
+.icon-plus:before {
   content: "\E046";
 }
-.icon-recommendation:before {
+.icon-prev:before {
   content: "\E047";
 }
-.icon-resize:before {
+.icon-print:before {
   content: "\E048";
 }
-.icon-school:before {
+.icon-quote:before {
   content: "\E049";
 }
-.icon-search:before {
+.icon-recommendation:before {
   content: "\E04A";
 }
-.icon-send:before {
+.icon-resize:before {
   content: "\E04B";
 }
-.icon-settings:before {
+.icon-save:before {
   content: "\E04C";
 }
-.icon-share:before {
+.icon-school:before {
   content: "\E04D";
 }
-.icon-social-facebook:before {
+.icon-search:before {
   content: "\E04E";
 }
-.icon-social-google:before {
+.icon-send:before {
   content: "\E04F";
 }
-.icon-social-linkedin:before {
+.icon-settings:before {
   content: "\E050";
 }
-.icon-social-twitter:before {
+.icon-share:before {
   content: "\E051";
 }
-.icon-star-fill:before {
+.icon-social-facebook:before {
   content: "\E052";
 }
-.icon-star:before {
+.icon-social-google:before {
   content: "\E053";
 }
-.icon-tiles:before {
+.icon-social-linkedin:before {
   content: "\E054";
 }
-.icon-topic:before {
+.icon-social-twitter:before {
   content: "\E055";
 }
-.icon-trending:before {
+.icon-star-fill:before {
   content: "\E056";
 }
-.icon-ul:before {
+.icon-star:before {
   content: "\E057";
 }
-.icon-underlined:before {
+.icon-tiles:before {
   content: "\E058";
 }
-.icon-unlink:before {
+.icon-topic:before {
   content: "\E059";
 }
-.icon-upload:before {
+.icon-trending:before {
   content: "\E05A";
 }
-.icon-users:before {
+.icon-ul:before {
   content: "\E05B";
+}
+.icon-underlined:before {
+  content: "\E05C";
+}
+.icon-unlink:before {
+  content: "\E05D";
+}
+.icon-upload:before {
+  content: "\E05E";
+}
+.icon-users:before {
+  content: "\E05F";
 }
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
@@ -1721,7 +1737,7 @@ strong {
   transition: color 0.2s ease;
 }
 .___is-editable-field .editable-field:after {
-  content: "\E040";
+  content: "\E043";
 }
 .___is-editable-field .editable-field:after {
   margin: 0 0 .2rem .5rem;
@@ -1780,7 +1796,7 @@ strong {
   display: none;
 }
 .___is-empty .card-profile__fill:after {
-  content: "\E040";
+  content: "\E043";
 }
 .___is-empty .card-profile__fill:after {
   margin: 0 0 .2rem .5rem;
@@ -1802,6 +1818,16 @@ strong {
 }
 .___is-empty.___is-filled .card-profile__fill {
   display: none;
+}
+.___is-grabbable {
+  cursor: move;
+  /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -webkit-grab;
+}
+.___is-grabbable:active {
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
 }
 .footer {
   padding: 0 .5rem;
@@ -1898,7 +1924,7 @@ strong {
   text-align: center;
 }
 .mobile-navigation__home:before {
-  content: "\E02B";
+  content: "\E02C";
 }
 .mobile-navigation__home:before {
   width: 100%;
@@ -1952,7 +1978,7 @@ strong {
   }
 }
 .mobile-navigation__action.___bookmarks:before {
-  content: "\E00C";
+  content: "\E00D";
 }
 .mobile-navigation__action.___bookmarks:hover {
   color: #b4b4b4;
@@ -1972,7 +1998,7 @@ strong {
   }
 }
 .mobile-navigation__action.___search:before {
-  content: "\E04A";
+  content: "\E04E";
 }
 .mobile-navigation__action.___search:hover {
   color: #b4b4b4;
@@ -2060,7 +2086,7 @@ strong {
   text-align: center;
 }
 .mobile-navigation__trigger:before {
-  content: "\E039";
+  content: "\E03A";
 }
 @media (max-width: 679px) {
   .mobile-navigation__trigger {
@@ -2108,7 +2134,7 @@ strong {
   }
 }
 .mobile-navigation__search:before {
-  content: "\E04A";
+  content: "\E04E";
 }
 .mobile-navigation__search:before {
   position: absolute;
@@ -2162,13 +2188,13 @@ body.___rijkshuisstijl .mobile-navigation__trigger {
   text-align: center;
 }
 body.___rijkshuisstijl .mobile-navigation__trigger:before {
-  content: "\E039";
+  content: "\E03A";
 }
 body.___rijkshuisstijl .mobile-navigation__trigger:before {
   line-height: inherit;
 }
 body.___rijkshuisstijl .mobile-navigation__trigger.___closed:before {
-  content: "\E01D";
+  content: "\E01E";
 }
 body.___rijkshuisstijl .mobile-navigation__trigger.___closed:before {
   line-height: inherit;
@@ -2221,7 +2247,7 @@ body.___rijkshuisstijl .mobile-navigation__search {
   }
 }
 body.___rijkshuisstijl .mobile-navigation__search:before {
-  content: "\E04A";
+  content: "\E04E";
 }
 body.___rijkshuisstijl .mobile-navigation__search:before {
   position: absolute;
@@ -2279,8 +2305,9 @@ This file contains the styling for the main navigation.
   visibility: hidden;
   opacity: 0;
   transition: visibility 0.35s ease, opacity 0.35s ease;
-  background: rgba(0, 0, 0, 0.15);
-  z-index: 10;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 1;
+  cursor: pointer;
 }
 @media (max-width: 1023px) {
   body.mobile-nav-open .navigation-overlay {
@@ -2324,7 +2351,7 @@ body.___campagne .navigation {
   border-left: 60px solid transparent;
 }
 .navigation__cms:after {
-  content: "\E040";
+  content: "\E043";
 }
 .navigation__cms:after {
   position: absolute;
@@ -2348,7 +2375,7 @@ body.___campagne .navigation {
   transition: background-color 0.2s ease;
 }
 .navigation__add-page:before {
-  content: "\E042";
+  content: "\E045";
 }
 .navigation__add-page:before {
   font-size: 1.6rem;
@@ -2357,9 +2384,6 @@ body.___campagne .navigation {
 }
 .navigation__add-page:hover {
   background-color: #00acff;
-}
-.navigation__wrapper {
-  z-index: 1;
 }
 @media (max-width: 1023px) {
   .navigation__wrapper {
@@ -2373,6 +2397,7 @@ body.___campagne .navigation {
     max-width: 94%;
     height: 100%;
     background-color: #fff;
+    z-index: 2;
     transform: translate(-100%, 0);
     transition: transform 0.35s ease, box-shadow 0.35s ease;
   }
@@ -2467,7 +2492,7 @@ body.___campagne .navigation {
   }
 }
 .navigation__link.___home:before {
-  content: "\E02B";
+  content: "\E02C";
 }
 .navigation__link.___home:before {
   width: 100%;
@@ -2508,7 +2533,7 @@ body.___campagne .navigation {
   }
 }
 .navigation__link.___dropdown:after {
-  content: "\E007";
+  content: "\E008";
 }
 .navigation__link.___dropdown:after {
   position: absolute;
@@ -2517,7 +2542,7 @@ body.___campagne .navigation {
 }
 @media (min-width: 1024px) {
   .navigation__link.___dropdown:after {
-    content: "\E019";
+    content: "\E01A";
   }
   .navigation__link.___dropdown:after {
     position: relative;
@@ -2595,13 +2620,16 @@ body.___campagne .navigation {
   position: relative;
 }
 .navigation__action.___notifications:before {
-  content: "\E03C";
+  content: "\E03F";
 }
 .navigation__action.___notifications:before {
   font-size: 2.1rem;
   margin-top: .1rem;
 }
 @media (max-width: 1023px) {
+  .navigation__action.___notifications {
+    padding-right: 4rem;
+  }
   .navigation__action.___notifications:before {
     display: none;
   }
@@ -2615,7 +2643,7 @@ body.___campagne .navigation {
   }
 }
 .navigation__action.___search:before {
-  content: "\E04A";
+  content: "\E04E";
 }
 .navigation__action.___search:before {
   font-size: 1.9rem;
@@ -2669,8 +2697,6 @@ body.___campagne .navigation {
 }
 .navigation__badge {
   position: absolute;
-  top: 1.5rem;
-  left: calc(100% - 2rem);
   min-width: 1.8rem;
   height: 1.8rem;
   border-radius: .9rem;
@@ -2688,6 +2714,18 @@ body.___campagne .navigation {
   -ms-flex-pack: center;
       justify-content: center;
 }
+@media (max-width: 1023px) {
+  .navigation__badge {
+    top: .7rem;
+    right: 1rem;
+  }
+}
+@media (min-width: 1024px) {
+  .navigation__badge {
+    top: 1.5rem;
+    left: calc(100% - 2rem);
+  }
+}
 @media (min-width: 1024px) {
   .navigation__picture {
     width: 4rem;
@@ -2697,11 +2735,6 @@ body.___campagne .navigation {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    box-shadow: inset 0 0 0 0.1rem transparent;
-    transition: box-shadow 0.2s ease;
-  }
-  .navigation__action:hover .navigation__picture {
-    box-shadow: inset 0 0 0 0.1rem #b4b4b4;
   }
 }
 body.___rijkshuisstijl .navigation {
@@ -2781,7 +2814,7 @@ body.___rijkshuisstijl .navigation__search button {
   padding: 0 2rem;
 }
 body.___rijkshuisstijl .navigation__search button:before {
-  content: "\E04A";
+  content: "\E04E";
 }
 body.___rijkshuisstijl .navigation__search button:before {
   font-size: 1.8rem;
@@ -2928,7 +2961,7 @@ body.___no-nav .page-layout__header {
   position: relative;
 }
 .submenu a.___dropdown:after {
-  content: "\E007";
+  content: "\E008";
 }
 .submenu a.___dropdown:after {
   position: absolute;
@@ -3021,7 +3054,7 @@ body.___no-nav .page-layout__header {
   transition: color 0.2s ease, background-color 0.2s ease;
 }
 .submenu__back:after {
-  content: "\E006";
+  content: "\E007";
 }
 .submenu__back:after {
   position: absolute;
@@ -3122,7 +3155,7 @@ body.___no-nav .page-layout__header {
       justify-content: space-between;
 }
 .subnav__parent > a:after {
-  content: "\E005";
+  content: "\E006";
 }
 .subnav__parent > a:after {
   font-size: .6rem;
@@ -3247,7 +3280,7 @@ body.___no-nav .page-layout__header {
   margin-bottom: 2rem;
 }
 .button.___logout:before {
-  content: "\E038";
+  content: "\E039";
 }
 .button.___logout:before {
   display: none;
@@ -3380,10 +3413,13 @@ button.button {
 .button.___line:hover,
 .button.___line:focus {
   color: #009ee3;
-  border-color: #009ee3;
+  border-color: #33b1e9;
+}
+.button.___line.___colored {
+  color: #009ee3;
 }
 .button.___move:before {
-  content: "\E028";
+  content: "\E029";
 }
 .button.___move:before {
   font-size: 1.1rem;
@@ -3392,7 +3428,7 @@ button.button {
   margin-bottom: .2rem;
 }
 .button.___edit:before {
-  content: "\E040";
+  content: "\E043";
 }
 .button.___edit:before {
   font-size: 1.3rem;
@@ -3401,7 +3437,7 @@ button.button {
   margin-bottom: .1rem;
 }
 .button.___download:before {
-  content: "\E022";
+  content: "\E023";
 }
 .button.___download:before {
   font-size: 1.4rem;
@@ -3409,7 +3445,7 @@ button.button {
   margin-right: .9rem;
 }
 .button.___add:before {
-  content: "\E043";
+  content: "\E046";
 }
 .button.___add:before {
   font-size: 1rem;
@@ -3448,7 +3484,7 @@ button.button {
   background-color: #55acee;
 }
 .button__share.___twitter:before {
-  content: "\E051";
+  content: "\E055";
 }
 .button__share.___twitter:before {
   font-size: 1.4rem;
@@ -3457,7 +3493,7 @@ button.button {
   background-color: #3664a2;
 }
 .button__share.___facebook:before {
-  content: "\E04E";
+  content: "\E052";
 }
 .button__share.___facebook:before {
   font-size: 1.8rem;
@@ -3466,7 +3502,7 @@ button.button {
   background-color: #db4f3f;
 }
 .button__share.___google:before {
-  content: "\E04F";
+  content: "\E053";
 }
 .button__share.___google:before {
   font-size: 1.4rem;
@@ -3475,7 +3511,7 @@ button.button {
   background-color: #0073b2;
 }
 .button__share.___linkedin:before {
-  content: "\E050";
+  content: "\E054";
 }
 .button__share.___linkedin:before {
   font-size: 1.8rem;
@@ -3484,24 +3520,44 @@ button.button {
   background-color: #535353;
 }
 .button__share.___mail:before {
-  content: "\E024";
+  content: "\E025";
 }
 .button__share.___mail:before {
   font-size: 1.2rem;
 }
 .button.___options {
-  width: 3.6rem;
+  padding: 0;
 }
 .button.___options:before {
-  content: "\E03E";
+  content: "\E041";
 }
-.button.___options:before {
-  font-size: .5rem;
+@media (max-width: 679px) {
+  .button.___options {
+    width: 3.8rem;
+  }
+  .button.___options:before {
+    font-size: .5rem;
+  }
 }
 @media (min-width: 680px) {
   .button.___options {
-    display: none;
+    width: 4.2rem;
   }
+  .button.___options:before {
+    font-size: .55rem;
+  }
+}
+.button.___dropdown:after {
+  content: "\E005";
+}
+.button.___dropdown:after {
+  font-size: .5rem;
+  margin-left: .7rem;
+  margin-right: -0.4rem;
+  margin-bottom: .1rem;
+}
+.button.___dropdown.___is-open {
+  border-color: #33b1e9;
 }
 .button__icon {
   position: relative;
@@ -3527,8 +3583,14 @@ button.button {
   width: 4.6rem;
   height: 4.6rem;
 }
+@media (max-width: 679px) {
+  .button__icon.___large {
+    width: 4rem;
+    height: 4rem;
+  }
+}
 .button__icon.___settings:before {
-  content: "\E04C";
+  content: "\E050";
 }
 .button__icon.___settings:before {
   font-size: 1.8rem;
@@ -3537,14 +3599,17 @@ button.button {
 .button__icon.___settings:not(.___is-active):hover {
   color: #009ee3;
 }
+.button__icon.___list {
+  margin-left: auto;
+}
 .button__icon.___list:before {
-  content: "\E036";
+  content: "\E037";
 }
 .button__icon.___list:before {
   font-size: 1.8rem;
 }
 .button__icon.___tiles:before {
-  content: "\E054";
+  content: "\E058";
 }
 .button__icon.___tiles:before {
   font-size: 1.8rem;
@@ -3576,7 +3641,7 @@ button.button {
   color: #B4B4B4;
 }
 .button__text.___edit-post:before {
-  content: "\E040";
+  content: "\E043";
 }
 .button__text.___edit-post:before {
   margin: 0 .8rem .1rem 0;
@@ -3711,7 +3776,7 @@ button.button {
   transition: color 0.2s ease;
 }
 .breadcrumb a:not(:first-child):before {
-  content: "\E007";
+  content: "\E008";
 }
 .breadcrumb a:not(:first-child):before {
   font-size: 1rem;
@@ -3782,7 +3847,6 @@ button.button {
   bottom: 0;
   width: .4rem;
   background-color: #00c6ff;
-  z-index: 1;
 }
 @media (min-width: 680px) {
   .card .selector {
@@ -3841,7 +3905,7 @@ button.button {
   border-radius: 0;
 }
 .card.___info .picture:before {
-  content: "\E032";
+  content: "\E033";
 }
 .card.___info .picture:before {
   font-size: 3rem;
@@ -3907,7 +3971,7 @@ a.card {
   color: #009ee3;
 }
 .card__close:before {
-  content: "\E01D";
+  content: "\E01E";
 }
 .card__close:before {
   font-size: 1.4rem;
@@ -3968,13 +4032,13 @@ a.card {
   transition: color 0.2s ease;
 }
 .calendar__months button:first-child:before {
-  content: "\E044";
+  content: "\E047";
 }
 .calendar__months button:first-child:before {
   font-size: 1.2rem;
 }
 .calendar__months button:last-child:before {
-  content: "\E03A";
+  content: "\E03C";
 }
 .calendar__months button:last-child:before {
   font-size: 1.2rem;
@@ -4251,7 +4315,7 @@ a.card {
   transition: color 0.2s ease;
 }
 .card-contact__delete:before {
-  content: "\E01F";
+  content: "\E020";
 }
 .card-contact__delete:before {
   font-size: 2rem;
@@ -4296,14 +4360,14 @@ a.card {
   overflow: hidden;
 }
 .card-document__format:before {
-  content: "\E021";
+  content: "\E022";
 }
 .card-document__format:before {
   color: #fff;
   font-size: 2rem;
 }
 .card-document__format.___pdf:before {
-  content: "\E020";
+  content: "\E021";
 }
 .card-document__format.___pdf:before {
   color: #fff;
@@ -4347,7 +4411,7 @@ a.card {
   }
 }
 .card-document__download:before {
-  content: "\E022";
+  content: "\E023";
 }
 .card-document__download:before {
   margin: 0 0.8rem 0.1rem 0;
@@ -4384,7 +4448,7 @@ a.card {
     padding: 3rem;
   }
 }
-.card-event.___is-highlighted:before {
+.card-event.___is-highlighted:after {
   content: '';
   position: absolute;
   left: 0;
@@ -4392,7 +4456,6 @@ a.card {
   bottom: 0;
   width: .4rem;
   background-color: #00c6ff;
-  z-index: 1;
 }
 @media (min-width: 680px) {
   .card-event .selector {
@@ -4474,14 +4537,15 @@ a.card {
   color: #01689b;
 }
 .card-initiative__line {
+  position: relative;
   height: 1px;
   margin-left: -3rem;
   margin-right: -3rem;
+  margin-bottom: -1px;
   background-color: #E6E6E6;
 }
 .card-initiative__logo {
   width: 100%;
-  margin-top: -1px;
 }
 .card-initiative__link {
   display: -ms-flexbox;
@@ -4493,14 +4557,14 @@ a.card {
   color: #01689b;
 }
 .card-initiative__link:before {
-  content: "\E007";
+  content: "\E008";
 }
 .card-initiative__link:before {
   font-size: 0.9rem;
   margin: 0 0.5rem 0.1rem 0;
 }
 .card-initiative__link:after {
-  content: "\E025";
+  content: "\E026";
 }
 .card-initiative__link:after {
   font-size: 1.2rem;
@@ -4605,7 +4669,7 @@ a.card {
   color: #535353;
 }
 .card-list-bloggers__likes:before {
-  content: "\E02A";
+  content: "\E02B";
 }
 .card-list-bloggers__likes:before {
   margin: 0 0.5rem 0.2rem 0;
@@ -4721,7 +4785,7 @@ a.card {
   color: #535353;
 }
 .card-list-recommended__likes:before {
-  content: "\E02A";
+  content: "\E02B";
 }
 .card-list-recommended__likes:before {
   margin: 0 0.5rem 0.2rem 0;
@@ -4771,7 +4835,7 @@ a.card {
   font-weight: bold;
 }
 .card-list-topics__title:after {
-  content: "\E005";
+  content: "\E006";
 }
 .card-list-topics__title:after {
   font-size: 0.8rem;
@@ -4884,7 +4948,7 @@ a.card {
   color: #B4B4B4;
 }
 .card-list-topics__comments:before {
-  content: "\E01C";
+  content: "\E01D";
 }
 .card-list-topics__comments:before {
   font-size: 1.4rem;
@@ -4947,7 +5011,7 @@ a.card {
   right: 2.7rem;
 }
 .card-list-trending__icon:before {
-  content: "\E056";
+  content: "\E05A";
 }
 .card-list-trending__icon:before {
   display: -ms-flexbox;
@@ -5006,7 +5070,7 @@ a.card {
   color: #535353;
 }
 .card-list-trending__likes:before {
-  content: "\E02A";
+  content: "\E02B";
 }
 .card-list-trending__likes:before {
   margin: 0 0.5rem 0.2rem 0;
@@ -5040,7 +5104,7 @@ a.card {
   transition: color 0.2s ease;
 }
 .card-profile .___is-editable .editable-field:after {
-  content: "\E040";
+  content: "\E043";
 }
 .card-profile .___is-editable .editable-field:after {
   margin: 0 0 .2rem .5rem;
@@ -5099,7 +5163,7 @@ a.card {
   display: none;
 }
 .card-profile .___is-empty .card-profile__fill:after {
-  content: "\E040";
+  content: "\E043";
 }
 .card-profile .___is-empty .card-profile__fill:after {
   margin: 0 0 .2rem .5rem;
@@ -5190,7 +5254,7 @@ a.card {
   }
 }
 .card-profile__icon:before {
-  content: "\E049";
+  content: "\E04D";
 }
 .card-profile__icon:before {
   font-size: 6.3rem;
@@ -5330,7 +5394,7 @@ a.card {
     min-height: 9rem;
   }
 }
-.card-tile.___is-highlighted:before {
+.card-tile.___is-highlighted:after {
   content: '';
   position: absolute;
   left: 0;
@@ -5338,7 +5402,6 @@ a.card {
   bottom: 0;
   width: .4rem;
   background-color: #00c6ff;
-  z-index: 1;
 }
 .card-tile .read-more {
   margin-top: auto;
@@ -5561,7 +5624,7 @@ a.card {
 }
 .card-tile.___full-image.___no-image.___nieuws:after,
 .card-tile.___full-video.___no-image.___nieuws:after {
-  content: "\E013";
+  content: "\E014";
 }
 .card-tile.___full-image.___no-image.___nieuws:after,
 .card-tile.___full-video.___no-image.___nieuws:after {
@@ -5577,7 +5640,7 @@ a.card {
 }
 .card-tile.___full-image.___no-image.___leren:after,
 .card-tile.___full-video.___no-image.___leren:after {
-  content: "\E012";
+  content: "\E013";
 }
 .card-tile.___full-image.___no-image.___leren:after,
 .card-tile.___full-video.___no-image.___leren:after {
@@ -5593,7 +5656,7 @@ a.card {
 }
 .card-tile.___full-image.___no-image.___vernieuwing:after,
 .card-tile.___full-video.___no-image.___vernieuwing:after {
-  content: "\E015";
+  content: "\E016";
 }
 .card-tile.___full-image.___no-image.___vernieuwing:after,
 .card-tile.___full-video.___no-image.___vernieuwing:after {
@@ -5609,7 +5672,7 @@ a.card {
 }
 .card-tile.___full-image.___no-image.___arbeidsvoorwaarden:after,
 .card-tile.___full-video.___no-image.___arbeidsvoorwaarden:after {
-  content: "\E010";
+  content: "\E011";
 }
 .card-tile.___full-image.___no-image.___arbeidsvoorwaarden:after,
 .card-tile.___full-video.___no-image.___arbeidsvoorwaarden:after {
@@ -5625,7 +5688,7 @@ a.card {
 }
 .card-tile.___full-image.___no-image.___wetten:after,
 .card-tile.___full-video.___no-image.___wetten:after {
-  content: "\E016";
+  content: "\E017";
 }
 .card-tile.___full-image.___no-image.___wetten:after,
 .card-tile.___full-video.___no-image.___wetten:after {
@@ -5641,7 +5704,7 @@ a.card {
 }
 .card-tile.___full-image.___no-image.___actualiteit:after,
 .card-tile.___full-video.___no-image.___actualiteit:after {
-  content: "\E00F";
+  content: "\E010";
 }
 .card-tile.___full-image.___no-image.___actualiteit:after,
 .card-tile.___full-video.___no-image.___actualiteit:after {
@@ -5657,7 +5720,7 @@ a.card {
 }
 .card-tile.___full-image.___no-image.___overig:after,
 .card-tile.___full-video.___no-image.___overig:after {
-  content: "\E014";
+  content: "\E015";
 }
 .card-tile.___full-image.___no-image.___overig:after,
 .card-tile.___full-video.___no-image.___overig:after {
@@ -5673,7 +5736,7 @@ a.card {
 }
 .card-tile.___full-image.___no-image.___klas:after,
 .card-tile.___full-video.___no-image.___klas:after {
-  content: "\E011";
+  content: "\E012";
 }
 .card-tile.___full-image.___no-image.___klas:after,
 .card-tile.___full-video.___no-image.___klas:after {
@@ -5748,7 +5811,7 @@ body.___rijkshuisstijl .card-tile__picture {
   text-align: center;
 }
 .card-tile.___nieuws .card-tile__image:after {
-  content: "\E013";
+  content: "\E014";
 }
 .card-tile.___nieuws .card-tile__image:after {
   font-size: 1.8rem;
@@ -5757,43 +5820,43 @@ body.___rijkshuisstijl .card-tile__picture {
   background-color: #009ee3;
 }
 .card-tile.___leren .card-tile__image:after {
-  content: "\E012";
+  content: "\E013";
 }
 .card-tile.___leren .card-tile__image:after {
   font-size: 3rem;
 }
 .card-tile.___vernieuwing .card-tile__image:after {
-  content: "\E015";
+  content: "\E016";
 }
 .card-tile.___vernieuwing .card-tile__image:after {
   font-size: 3.1rem;
 }
 .card-tile.___arbeidsvoorwaarden .card-tile__image:after {
-  content: "\E010";
+  content: "\E011";
 }
 .card-tile.___arbeidsvoorwaarden .card-tile__image:after {
   font-size: 3rem;
 }
 .card-tile.___wetten .card-tile__image:after {
-  content: "\E017";
+  content: "\E018";
 }
 .card-tile.___wetten .card-tile__image:after {
   font-size: 2.6rem;
 }
 .card-tile.___actualiteit .card-tile__image:after {
-  content: "\E00F";
+  content: "\E010";
 }
 .card-tile.___actualiteit .card-tile__image:after {
   font-size: 2.8rem;
 }
 .card-tile.___overig .card-tile__image:after {
-  content: "\E014";
+  content: "\E015";
 }
 .card-tile.___overig .card-tile__image:after {
   font-size: 2.5rem;
 }
 .card-tile.___klas .card-tile__image:after {
-  content: "\E011";
+  content: "\E012";
 }
 .card-tile.___klas .card-tile__image:after {
   font-size: 2.7rem;
@@ -5862,7 +5925,7 @@ body.___rijkshuisstijl .card-tile__picture {
   background-color: #ffb612;
 }
 .card-tile.___leren .card-tile__placeholder:after {
-  content: "\E012";
+  content: "\E013";
 }
 .card-tile.___leren .card-tile__placeholder:after {
   font-size: 7.2rem;
@@ -5871,7 +5934,7 @@ body.___rijkshuisstijl .card-tile__picture {
   background-color: #fa6e00;
 }
 .card-tile.___vernieuwing .card-tile__placeholder:after {
-  content: "\E015";
+  content: "\E016";
 }
 .card-tile.___vernieuwing .card-tile__placeholder:after {
   font-size: 7.2rem;
@@ -5880,7 +5943,7 @@ body.___rijkshuisstijl .card-tile__picture {
   background-color: #ca005d;
 }
 .card-tile.___arbeidsvoorwaarden .card-tile__placeholder:after {
-  content: "\E010";
+  content: "\E011";
 }
 .card-tile.___arbeidsvoorwaarden .card-tile__placeholder:after {
   font-size: 7rem;
@@ -5889,7 +5952,7 @@ body.___rijkshuisstijl .card-tile__picture {
   background-color: #76d2b6;
 }
 .card-tile.___wetten .card-tile__placeholder:after {
-  content: "\E017";
+  content: "\E018";
 }
 .card-tile.___wetten .card-tile__placeholder:after {
   font-size: 6rem;
@@ -5898,7 +5961,7 @@ body.___rijkshuisstijl .card-tile__picture {
   background-color: #73b62a;
 }
 .card-tile.___actualiteit .card-tile__placeholder:after {
-  content: "\E00F";
+  content: "\E010";
 }
 .card-tile.___actualiteit .card-tile__placeholder:after {
   font-size: 6.4rem;
@@ -5907,7 +5970,7 @@ body.___rijkshuisstijl .card-tile__picture {
   background-color: #009ee3;
 }
 .card-tile.___overig .card-tile__placeholder:after {
-  content: "\E014";
+  content: "\E015";
 }
 .card-tile.___overig .card-tile__placeholder:after {
   font-size: 6rem;
@@ -5916,7 +5979,7 @@ body.___rijkshuisstijl .card-tile__picture {
   background-color: #8fcae7;
 }
 .card-tile.___klas .card-tile__placeholder:after {
-  content: "\E011";
+  content: "\E012";
 }
 .card-tile.___klas .card-tile__placeholder:after {
   font-size: 6.2rem;
@@ -6131,7 +6194,7 @@ body.___rijkshuisstijl .card-tile__picture {
       align-items: center;
 }
 .card-group__secret:before {
-  content: "\E037";
+  content: "\E038";
 }
 .card-group__secret:before {
   margin: 0 0.5rem 0.2rem 0;
@@ -6324,7 +6387,7 @@ body.___rijkshuisstijl .card-tile__picture {
       align-items: center;
 }
 .card-topic__views:before {
-  content: "\E027";
+  content: "\E028";
 }
 .card-topic__views:before {
   width: 2.4rem;
@@ -6341,7 +6404,7 @@ body.___rijkshuisstijl .card-tile__picture {
   font-weight: normal;
 }
 .card-topic__comments:before {
-  content: "\E01C";
+  content: "\E01D";
 }
 .card-topic__comments:before {
   margin: 0 0.7rem 0 0;
@@ -6402,7 +6465,7 @@ body.___rijkshuisstijl .card-tile__picture {
   transition: border-color 0.2s ease;
 }
 .checkbox label:after {
-  content: "\E018";
+  content: "\E019";
 }
 .checkbox label:after {
   position: absolute;
@@ -6434,24 +6497,27 @@ body.___rijkshuisstijl .card-tile__picture {
   font-weight: normal;
 }
 .count-bookmarks:before {
-  content: "\E00B";
+  content: "\E00C";
 }
 .count-bookmarks:after {
-  content: "\E00C";
+  content: "\E00D";
 }
 @media (max-width: 679px) {
   .count-bookmarks {
-    padding: 0 0 0 2.5rem;
+    padding: 0 0 0 2.8rem;
   }
 }
 .count-bookmarks:before,
 .count-bookmarks:after {
   position: absolute;
-  width: 2.3rem;
+  width: 2.2rem;
   left: 0;
   top: 0.8rem;
-  font-size: 2.3rem;
-  text-align: center;
+  font-size: 2.2rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
   transition: opacity 0.2s ease, color 0.2s ease;
 }
 @media (max-width: 679px) {
@@ -6475,6 +6541,7 @@ body.___rijkshuisstijl .card-tile__picture {
   opacity: 1;
 }
 .count-bookmarks span {
+  white-space: nowrap;
   transition: opacity 0.2s ease;
 }
 .count-bookmarks span.___save {
@@ -6515,26 +6582,29 @@ body.___rijkshuisstijl .card-tile__picture {
 }
 @media (max-width: 679px) {
   .count-likes {
-    padding: 0 0 0 2.5rem;
+    padding: 0 0 0 2.8rem;
   }
 }
 .count-likes.___thumbs-up {
   font-weight: bold;
 }
 .count-likes.___thumbs-up:before {
-  content: "\E035";
+  content: "\E036";
 }
 .count-likes.___thumbs-up:after {
-  content: "\E034";
+  content: "\E035";
 }
 .count-likes.___thumbs-up:before,
 .count-likes.___thumbs-up:after {
   position: absolute;
-  width: 2.3rem;
+  width: 2.4rem;
   left: 0;
   top: 0.9rem;
   font-size: 2rem;
-  text-align: center;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
   color: #009ee3;
   transition: opacity 0.2s ease, color 0.2s ease;
 }
@@ -6546,19 +6616,22 @@ body.___rijkshuisstijl .card-tile__picture {
   }
 }
 .count-likes:before {
-  content: "\E02A";
+  content: "\E02B";
 }
 .count-likes:after {
-  content: "\E029";
+  content: "\E02A";
 }
 .count-likes:before,
 .count-likes:after {
   position: absolute;
-  width: 2.3rem;
+  width: 2.4rem;
   left: 0;
   top: 0.9rem;
   font-size: 2rem;
-  text-align: center;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
   color: #009ee3;
   transition: opacity 0.2s ease, color 0.2s ease;
 }
@@ -6637,7 +6710,7 @@ body.___rijkshuisstijl .card-tile__picture {
   color: #81d9ff;
 }
 .file-tile.___folder .file-tile__image:before {
-  content: "\E028";
+  content: "\E029";
 }
 .file-tile.___folder .file-tile__image:before {
   font-size: 4rem;
@@ -6652,7 +6725,7 @@ body.___rijkshuisstijl .card-tile__picture {
   color: #d7d7d7;
 }
 .file-tile.___doc .file-tile__image:before {
-  content: "\E021";
+  content: "\E022";
 }
 .file-tile.___doc .file-tile__image:before {
   font-size: 4.5rem;
@@ -6667,7 +6740,7 @@ body.___rijkshuisstijl .card-tile__picture {
   color: #eeaaa5;
 }
 .file-tile.___pdf .file-tile__image:before {
-  content: "\E03F";
+  content: "\E042";
 }
 .file-tile.___pdf .file-tile__image:before {
   font-size: 4.2rem;
@@ -6695,7 +6768,7 @@ body.___rijkshuisstijl .card-tile__picture {
   transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .file-tile__fav:before {
-  content: "\E053";
+  content: "\E057";
 }
 .file-tile__fav:before {
   color: #B4B4B4;
@@ -6703,7 +6776,7 @@ body.___rijkshuisstijl .card-tile__picture {
   transition: opacity 0.2s ease, color 0.2s ease;
 }
 .file-tile__fav:after {
-  content: "\E052";
+  content: "\E056";
 }
 .file-tile__fav:after {
   color: white;
@@ -6843,7 +6916,7 @@ body.___rijkshuisstijl .card-tile__picture {
   padding-bottom: .3rem;
 }
 .file__type.___folder:before {
-  content: "\E028";
+  content: "\E029";
 }
 .file__type.___folder:before {
   font-size: 1.4rem;
@@ -6851,7 +6924,7 @@ body.___rijkshuisstijl .card-tile__picture {
   padding-bottom: .3rem;
 }
 .file__type.___doc:before {
-  content: "\E021";
+  content: "\E022";
 }
 .file__type.___doc:before {
   font-size: 1.7rem;
@@ -6868,14 +6941,14 @@ body.___rijkshuisstijl .card-tile__picture {
   }
 }
 .file__type.___pdf:before {
-  content: "\E03F";
+  content: "\E042";
 }
 .file__type.___pdf:before {
   font-size: 1.6rem;
   color: #d52b1e;
 }
 .file__type.___img:before {
-  content: "\E02E";
+  content: "\E02F";
 }
 .file__type.___img:before {
   font-size: 1.6rem;
@@ -6885,7 +6958,7 @@ body.___rijkshuisstijl .card-tile__picture {
   position: relative;
 }
 .file__fav button:before {
-  content: "\E053";
+  content: "\E057";
 }
 .file__fav button:before {
   color: #B4B4B4;
@@ -6893,7 +6966,7 @@ body.___rijkshuisstijl .card-tile__picture {
   transition: color 0.2s ease, opacity 0.2s ease;
 }
 .file__fav button:after {
-  content: "\E052";
+  content: "\E056";
 }
 .file__fav button:after {
   color: white;
@@ -7003,7 +7076,7 @@ body.___rijkshuisstijl .card-tile__picture {
   white-space: nowrap;
 }
 .files thead button span:after {
-  content: "\E023";
+  content: "\E024";
 }
 .files thead button span:after {
   font-size: .5rem;
@@ -7185,14 +7258,14 @@ body.___rijkshuisstijl .card-tile__picture {
   margin-bottom: .3rem;
 }
 .document.___doc a:before {
-  content: "\E021";
+  content: "\E022";
 }
 .document.___doc a:before {
   font-size: 1.6rem;
   color: #009ee3;
 }
 .document.___pdf a:before {
-  content: "\E020";
+  content: "\E021";
 }
 .document.___pdf a:before {
   font-size: 1.6rem;
@@ -7209,7 +7282,7 @@ body.___rijkshuisstijl .card-tile__picture {
   transition: color 0.2s ease;
 }
 .goto:after {
-  content: "\E007";
+  content: "\E008";
 }
 .goto:after {
   position: absolute;
@@ -7245,8 +7318,6 @@ body.___rijkshuisstijl .card-tile__picture {
 }
 .lead.___rounded:before {
   border-radius: .5rem;
-}
-@media (max-width: 679px) {
 }
 @media (min-width: 680px) {
   .lead.___rounded .lead__justify {
@@ -7310,7 +7381,12 @@ body.___rijkshuisstijl .card-tile__picture {
       flex-direction: row;
   -ms-flex-align: start;
       align-items: flex-start;
+  -ms-flex-pack: stretch;
+      justify-content: stretch;
   text-align: left;
+}
+.lead.___group .lead__justify .button.___options {
+  margin-left: auto;
 }
 @media (min-width: 680px) {
   .lead.___group .lead__justify {
@@ -7328,13 +7404,11 @@ body.___rijkshuisstijl .card-tile__picture {
   }
 }
 .lead.___group .lead__title {
-  -ms-flex: 1 1 auto;
-      flex: 1 1 auto;
   margin: 0;
   cursor: pointer;
 }
 .lead.___group .lead__title span:after {
-  content: "\E032";
+  content: "\E033";
 }
 .lead.___group .lead__title span:after {
   margin-left: 1.5rem;
@@ -7533,7 +7607,7 @@ body.___rijkshuisstijl .card-tile__picture {
   color: #009ee3;
 }
 .lead__close:before {
-  content: "\E01D";
+  content: "\E01E";
 }
 .lead__close:before {
   font-size: 1.4rem;
@@ -7667,7 +7741,7 @@ body.___rijkshuisstijl .card-tile__picture {
   color: #009ee3;
 }
 .link:before {
-  content: "\E007";
+  content: "\E008";
 }
 .link:before {
   margin-right: .7rem;
@@ -7706,7 +7780,7 @@ body.___rijkshuisstijl .card-tile__picture {
   transition: color 0.2s ease;
 }
 .link-list a.___bookmarks:after {
-  content: "\E00C";
+  content: "\E00D";
 }
 .link-list a.___bookmarks:after {
   font-size: 1.6rem;
@@ -7805,20 +7879,20 @@ body.___rijkshuisstijl .card-tile__picture {
   height: 100%;
 }
 .list-members__add-icons span.___plus:before {
-  content: "\E043";
+  content: "\E046";
 }
 .list-members__add-icons span.___plus:before {
   font-size: 1.1rem;
 }
 .list-members__add-icons span.___check:before {
-  content: "\E018";
+  content: "\E019";
 }
 .list-members__add-icons span.___check:before {
   margin: 0.1rem 0 0 0.2rem;
   font-size: 1.2rem;
 }
 .list-members__add-icons span.___send:before {
-  content: "\E04B";
+  content: "\E04F";
 }
 .list-members__add-icons span.___send:before {
   margin: 0 0 .1rem .3rem;
@@ -7888,7 +7962,7 @@ body.___rijkshuisstijl .card-tile__picture {
   background-color: white;
   transform: translateY(100%);
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease;
-  z-index: 11;
+  z-index: 10;
 }
 .toolbar.___blue {
   background-color: #2196f3;
@@ -8026,7 +8100,7 @@ body.___rijkshuisstijl .card-tile__picture {
   background-color: #f2fafe;
 }
 .tree-view__folder span:before {
-  content: "\E023";
+  content: "\E024";
 }
 .tree-view__folder span:before {
   font-size: .5rem;
@@ -8066,13 +8140,13 @@ body.___rijkshuisstijl .card-tile__picture {
   color: #009ee3;
 }
 .mini-tabmenu__tab.___upload:before {
-  content: "\E05A";
+  content: "\E05E";
 }
 .mini-tabmenu__tab.___upload:before {
   font-size: 1.5rem;
 }
 .mini-tabmenu__tab.___hyperlink:before {
-  content: "\E02C";
+  content: "\E02D";
 }
 .mini-tabmenu__tab.___hyperlink:before {
   font-size: 1rem;
@@ -8208,13 +8282,13 @@ body.___rijkshuisstijl .card-tile__picture {
   font-size: 0.4rem;
 }
 .contextual__tool.___edit:before {
-  content: "\E040";
+  content: "\E043";
 }
 .contextual__tool.___edit:before {
   font-size: 1.4rem;
 }
 .contextual__tool.___unlink:before {
-  content: "\E059";
+  content: "\E05D";
 }
 .contextual__tool.___unlink:before {
   font-size: 1.5rem;
@@ -8226,31 +8300,31 @@ body.___rijkshuisstijl .card-tile__picture {
   font-size: 1.4rem;
 }
 .contextual__tool.___delete:before {
-  content: "\E01E";
+  content: "\E01F";
 }
 .contextual__tool.___delete:before {
   font-size: 1.5rem;
 }
 .contextual__tool.___link:before {
-  content: "\E02C";
+  content: "\E02D";
 }
 .contextual__tool.___link:before {
   font-size: 0.9rem;
 }
 .contextual__tool.___inline:before {
-  content: "\E02D";
+  content: "\E02E";
 }
 .contextual__tool.___inline:before {
   font-size: 1.6rem;
 }
 .contextual__tool.___info:before {
-  content: "\E031";
+  content: "\E032";
 }
 .contextual__tool.___info:before {
   font-size: 1.6rem;
 }
 .contextual__tool.___resize:before {
-  content: "\E048";
+  content: "\E04B";
 }
 .contextual__tool.___resize:before {
   font-size: 1.4rem;
@@ -8445,7 +8519,7 @@ body.___rijkshuisstijl .card-tile__picture {
   transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 .comment__edit:before {
-  content: "\E040";
+  content: "\E043";
 }
 .comment__edit:before {
   font-size: 1.5rem;
@@ -8684,7 +8758,7 @@ body.___rijkshuisstijl .card-tile__picture {
   color: #009ee3;
 }
 .comment-add__close:before {
-  content: "\E01D";
+  content: "\E01E";
 }
 .comment-add__close:before {
   font-size: 1.2rem;
@@ -8873,7 +8947,7 @@ body.___rijkshuisstijl .card-tile__picture {
   color: #009ee3;
 }
 .comment-edit__close:before {
-  content: "\E01D";
+  content: "\E01E";
 }
 .comment-edit__close:before {
   font-size: 1.2rem;
@@ -9088,7 +9162,7 @@ body.___rijkshuisstijl .card-tile__picture {
   color: #009ee3;
 }
 .modal__close:before {
-  content: "\E01D";
+  content: "\E01E";
 }
 .modal__close:before {
   font-size: 1.4rem;
@@ -9197,21 +9271,35 @@ body.___rijkshuisstijl .card-tile__picture {
   display: flex;
   -ms-flex-direction: column;
       flex-direction: column;
-  width: 23rem;
   max-height: 17.6rem;
-  padding: 0.8rem 0;
+  padding: 1rem 0 .9rem;
   background-color: #fff;
   text-align: left;
   box-shadow: 0 0.1rem 0.5rem 0 rgba(0, 0, 0, 0.11), 0 1.5rem 3rem -2rem rgba(0, 0, 0, 0.16);
   overflow-y: auto;
+  cursor: default;
   z-index: 1;
   visibility: hidden;
   opacity: 0;
   transition: visibility 0.2s ease, opacity 0.2s ease;
 }
-.option-list.___is-open {
+.option-list.___is-open,
+.button.___dropdown.___is-open > .option-list {
   visibility: visible;
   opacity: 1;
+}
+.button.___line > .option-list {
+  top: -1px;
+  right: -1px;
+}
+@media (max-width: 679px) {
+  .button.___line > .option-list {
+    right: auto;
+    left: -1px;
+  }
+}
+.button.___large > .option-list {
+  top: calc(100% + 1px);
 }
 .___show-options .option-list {
   visibility: visible;
@@ -9237,10 +9325,11 @@ body.___rijkshuisstijl .card-tile__picture {
   display: flex;
   -ms-flex-align: center;
       align-items: center;
-  padding: 0.4rem 2rem;
+  padding: .5rem 2rem;
   line-height: 2.4rem;
   color: #000;
   font-weight: normal;
+  cursor: pointer;
   transition: color 0.2s ease;
 }
 .contextual__tool .option-list > * {
@@ -9285,7 +9374,7 @@ body.___rijkshuisstijl .card-tile__picture {
   text-shadow: none;
 }
 .play-button:before {
-  content: "\E041";
+  content: "\E044";
 }
 .play-button:before {
   position: relative;
@@ -9566,7 +9655,7 @@ a.card-tile:hover .read-more__circle {
   background-color: #154273;
 }
 .read-more__circle:before {
-  content: "\E008";
+  content: "\E009";
 }
 .read-more__circle:before {
   display: block;
@@ -9695,7 +9784,7 @@ a.card-tile:hover .read-more__circle {
   color: #B4B4B4;
 }
 .editor__tool-group#editor-insert .selector__select:before {
-  content: "\E043";
+  content: "\E046";
 }
 .editor__tool-group#editor-insert .selector__select:before {
   font-size: 1.4rem;
@@ -9711,7 +9800,7 @@ a.card-tile:hover .read-more__circle {
   }
 }
 .selector__select:after {
-  content: "\E005";
+  content: "\E006";
 }
 .selector__select:after {
   position: absolute;
@@ -9740,7 +9829,7 @@ a.card-tile:hover .read-more__circle {
   border: none;
 }
 .editor__toolbar .selector__select:after {
-  content: "\E023";
+  content: "\E024";
 }
 .editor__toolbar .selector__select:after {
   position: absolute;
@@ -9817,7 +9906,7 @@ a.card-tile:hover .read-more__circle {
   color: #B4B4B4;
 }
 .editor__tool-group#editor-insert .selector__option.___is-disabled:before {
-  content: "\E043";
+  content: "\E046";
 }
 .editor__tool-group#editor-insert .selector__option.___is-disabled:before {
   font-size: 1.4rem;
@@ -9887,7 +9976,7 @@ a.card-tile:hover .read-more__circle {
   padding-right: 1.4rem;
 }
 .top-navigation .single-dropdown__trigger:after {
-  content: "\E005";
+  content: "\E006";
 }
 .top-navigation .single-dropdown__trigger:after {
   position: absolute;
@@ -9978,7 +10067,7 @@ a.card-tile:hover .read-more__circle {
   border-bottom: 0.1rem solid #CCCCCC;
 }
 .single-dropdown__back:after {
-  content: "\E006";
+  content: "\E007";
 }
 .single-dropdown__back:after {
   position: absolute;
@@ -10178,7 +10267,7 @@ a.card-tile:hover .read-more__circle {
   transition: color 0.2s ease;
 }
 .tabmenu__search-button:before {
-  content: "\E04A";
+  content: "\E04E";
 }
 .tabmenu__search-button:before {
   font-size: 1.8rem;
@@ -10205,7 +10294,7 @@ a.card-tile:hover .read-more__circle {
   opacity: 1;
 }
 .tabmenu__search:before {
-  content: "\E04A";
+  content: "\E04E";
 }
 .tabmenu__search:before {
   position: absolute;
@@ -10254,7 +10343,7 @@ a.card-tile:hover .read-more__circle {
   width: 6.4rem;
 }
 .tabmenu__search button:before {
-  content: "\E01D";
+  content: "\E01E";
 }
 .tabmenu__search button:before {
   font-size: 1.6rem;
@@ -10294,7 +10383,7 @@ a.card-tile:hover .read-more__circle {
   cursor: pointer;
 }
 .search-bar__button:before {
-  content: "\E04A";
+  content: "\E04E";
 }
 .search-bar__button:before {
   font-size: 1.8rem;
@@ -10349,7 +10438,7 @@ a.card-tile:hover .read-more__circle {
   cursor: pointer;
 }
 .tag__remove:before {
-  content: "\E01D";
+  content: "\E01E";
 }
 .tag__remove:before {
   font-size: 1.4rem;
@@ -10387,7 +10476,7 @@ a.card-tile:hover .read-more__circle {
           user-select: none;
 }
 .users-online:after {
-  content: "\E05B";
+  content: "\E05F";
 }
 .users-online:after {
   font-size: 2.3rem;
@@ -10452,7 +10541,7 @@ a.card-tile:hover .read-more__circle {
   box-shadow: 0 0.1rem 0.5rem 0 rgba(0, 0, 0, 0.11), 0 1.5rem 3rem -2rem rgba(0, 0, 0, 0.16);
 }
 .video__close:before {
-  content: "\E01D";
+  content: "\E01E";
 }
 .video__close:before {
   font-size: 1.3rem;
@@ -10470,7 +10559,7 @@ a.card-tile:hover .read-more__circle {
           user-select: none;
 }
 .accordion__trigger:after {
-  content: "\E005";
+  content: "\E006";
 }
 .accordion__trigger:after {
   font-size: 0.8rem;
@@ -10641,7 +10730,7 @@ a.card-tile:hover .read-more__circle {
   background-color: #CCCCCC;
 }
 .article-action.___share:before {
-  content: "\E04D";
+  content: "\E051";
 }
 .article-action.___share:before {
   font-size: 1.4rem;
@@ -10668,7 +10757,7 @@ a.card-tile:hover .read-more__circle {
   }
 }
 .article-action.___comment:before {
-  content: "\E040";
+  content: "\E043";
 }
 .article-action.___comment:before {
   font-size: 1.5rem;
@@ -10734,6 +10823,8 @@ a.card-tile:hover .read-more__circle {
 .article-actions__side {
   display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 @media (max-width: 1023px) {
   .article-actions__side {
@@ -10756,6 +10847,79 @@ a.card-tile:hover .read-more__circle {
     right: 0;
     transform: translateX(calc(100% + 7rem));
   }
+}
+.article-actions__follow {
+  padding: 0 0 0 3rem;
+  color: #535353;
+  font-weight: normal;
+}
+.article-actions__follow:before {
+  content: "\E03F";
+}
+.article-actions__follow:after {
+  content: "\E03E";
+}
+@media (max-width: 679px) {
+  .article-actions__follow {
+    padding: 0 0 0 2.8rem;
+  }
+}
+.article-actions__follow:before,
+.article-actions__follow:after {
+  position: absolute;
+  width: 2.3rem;
+  left: 0;
+  top: .9rem;
+  font-size: 2.1rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+@media (max-width: 679px) {
+  .article-actions__follow:before,
+  .article-actions__follow:after {
+    top: 0.7rem;
+    font-size: 2rem;
+  }
+}
+.article-actions__follow:before {
+  color: #B4B4B4;
+}
+.article-actions__follow:after {
+  color: #B4B4B4;
+  opacity: 0;
+}
+.article-actions__follow:hover:before {
+  opacity: 0;
+}
+.article-actions__follow:hover:after {
+  opacity: 1;
+}
+.article-actions__follow span {
+  transition: opacity 0.2s ease;
+}
+.article-actions__follow span.___save {
+  position: absolute;
+  left: 3rem;
+  opacity: 1;
+}
+.article-actions__follow span.___saved {
+  opacity: 0;
+}
+.article-actions__follow.___is-saved:before {
+  opacity: 0;
+}
+.article-actions__follow.___is-saved:after {
+  color: #009ee3;
+  opacity: 1;
+}
+.article-actions__follow.___is-saved .___save {
+  opacity: 0;
+}
+.article-actions__follow.___is-saved .___saved {
+  opacity: 1;
 }
 .article-author {
   display: -ms-flexbox;
@@ -10878,7 +11042,7 @@ a.card-tile:hover .read-more__circle {
   border: none;
 }
 .article-links-list__link a:before {
-  content: "\E007";
+  content: "\E008";
 }
 .article-links-list__link a:before {
   margin: 0 1rem 0.25rem 0;
@@ -10927,7 +11091,7 @@ a.tooltip span {
   transition: color 0.2s ease;
 }
 .article-links__link a:before {
-  content: "\E007";
+  content: "\E008";
 }
 .article-links__link a:before {
   margin: 0 1rem 0.25rem 0;
@@ -10958,7 +11122,7 @@ a.tooltip span {
   color: #535353;
 }
 .article-comments__count:before {
-  content: "\E01C";
+  content: "\E01D";
 }
 .article-comments__count:before {
   margin: 0 1rem 0 0;
@@ -10973,7 +11137,7 @@ a.tooltip span {
   transition: all .25s;
 }
 .article-comments__more:before {
-  content: "\E005";
+  content: "\E006";
 }
 .article-comments__more:before {
   font-size: 0.6rem;
@@ -11147,6 +11311,7 @@ a.tooltip span {
 }
 .editor {
   position: relative;
+  width: 100%;
   border: 1px solid #CCCCCC;
   padding-top: 4.6rem;
 }
@@ -11226,38 +11391,38 @@ a.tooltip span {
   }
 }
 .editor__tool.___bold:before {
-  content: "\E00A";
+  content: "\E00B";
 }
 .editor__tool.___bold:before {
   font-size: 1.4rem;
 }
 .editor__tool.___italic:before {
-  content: "\E033";
+  content: "\E034";
 }
 .editor__tool.___italic:before {
   font-size: 1.4rem;
 }
 .editor__tool.___underlined:before {
-  content: "\E058";
+  content: "\E05C";
 }
 .editor__tool.___underlined:before {
   margin: 0.1rem 0 0 0;
   font-size: 1.6rem;
 }
 .editor__tool.___ol:before {
-  content: "\E03D";
+  content: "\E040";
 }
 .editor__tool.___ol:before {
   font-size: 1.6rem;
 }
 .editor__tool.___ul:before {
-  content: "\E057";
+  content: "\E05B";
 }
 .editor__tool.___ul:before {
   font-size: 1.47rem;
 }
 .editor__tool.___hyperlink:before {
-  content: "\E02C";
+  content: "\E02D";
 }
 .editor__tool.___hyperlink:before {
   font-size: 1rem;
@@ -11266,13 +11431,13 @@ a.tooltip span {
   margin-left: auto;
 }
 .editor__tool.___image:before {
-  content: "\E00E";
+  content: "\E00F";
 }
 .editor__tool.___image:before {
   font-size: 1.7rem;
 }
 .editor__tool.___quote:before {
-  content: "\E046";
+  content: "\E049";
 }
 .editor__tool.___quote:before {
   font-size: 1.3rem;
@@ -11631,10 +11796,10 @@ textarea:-moz-placeholder {
   line-height: 2.2rem;
 }
 .form__date:before {
-  content: "\E00D";
+  content: "\E00E";
 }
 .form__time:before {
-  content: "\E01A";
+  content: "\E01B";
 }
 .form__date,
 .form__time {
@@ -11808,7 +11973,7 @@ body.navigation-search-open .navigation-search {
   padding: 0 0 0 2rem;
 }
 .navigation-search__icon:before {
-  content: "\E04A";
+  content: "\E04E";
 }
 .navigation-search__icon:before {
   /* icon height */
@@ -11858,7 +12023,7 @@ body.navigation-search-open .navigation-search {
   color: #99d8f4;
 }
 .navigation-search__close:before {
-  content: "\E01D";
+  content: "\E01E";
 }
 .navigation-search__close:before {
   font-size: 1.4rem;
@@ -11946,7 +12111,7 @@ body.___rijkshuisstijl .navigation-search-results {
   transition: color 0.2s ease;
 }
 .navigation-search-results__show-all:before {
-  content: "\E007";
+  content: "\E008";
 }
 .navigation-search-results__show-all:before {
   position: absolute;
@@ -11975,7 +12140,7 @@ body.___rijkshuisstijl .navigation-search-results {
   transition: color 0.2s ease;
 }
 .navigation-search-results__list a:before {
-  content: "\E007";
+  content: "\E008";
 }
 .navigation-search-results__list a:before {
   position: absolute;
@@ -12037,14 +12202,14 @@ body.___rijkshuisstijl .navigation-search-results {
   margin: 0 1rem 0 0;
 }
 .pagination__previous:before {
-  content: "\E044";
+  content: "\E047";
 }
 .pagination__previous:before {
   font-size: 1.8rem;
   margin-right: 0.2rem;
 }
 .pagination__next:before {
-  content: "\E03A";
+  content: "\E03C";
 }
 .pagination__next:before {
   font-size: 1.8rem;
@@ -12311,7 +12476,7 @@ body.___rijkshuisstijl .navigation-search-results {
   color: #00c6ff;
 }
 .main__title.___trending:before {
-  content: "\E056";
+  content: "\E05A";
 }
 .main__title.___trending:before {
   display: -ms-flexbox;
@@ -12351,7 +12516,7 @@ body.___rijkshuisstijl .navigation-search-results {
   transition: color 0.2s ease;
 }
 .main__title.___info > div:before {
-  content: "\E032";
+  content: "\E033";
 }
 .main__title.___info > div:before {
   font-size: 2.4rem;
@@ -12646,7 +12811,7 @@ body.___rijkshuisstijl .navigation-search-results {
   left: -1rem;
 }
 .slick-prev:before {
-  content: "\E044";
+  content: "\E047";
 }
 .slick-prev:before {
   margin-right: 0.2rem;
@@ -12655,7 +12820,7 @@ body.___rijkshuisstijl .navigation-search-results {
   right: -1rem;
 }
 .slick-next:before {
-  content: "\E03A";
+  content: "\E03C";
 }
 .slick-next:before {
   margin-left: 0.2rem;
@@ -12776,7 +12941,7 @@ body.___rijkshuisstijl .navigation-search-results {
           user-select: none;
 }
 .upload-image__box.___image .upload-image__placeholder:before {
-  content: "\E00E";
+  content: "\E00F";
 }
 .upload-image__box.___image .upload-image__placeholder:before {
   display: -ms-flexbox;
@@ -12791,7 +12956,7 @@ body.___rijkshuisstijl .navigation-search-results {
   }
 }
 .upload-image__box.___video .upload-image__placeholder:before {
-  content: "\E041";
+  content: "\E044";
 }
 .upload-image__box.___video .upload-image__placeholder:before {
   display: -ms-flexbox;
@@ -12876,21 +13041,21 @@ body.___rijkshuisstijl .navigation-search-results {
   }
 }
 .upload-image__edit:before {
-  content: "\E040";
+  content: "\E043";
 }
 .upload-image__edit:before {
   font-size: 1.5rem;
   color: #fff;
 }
 .upload-image__delete:before {
-  content: "\E01F";
+  content: "\E020";
 }
 .upload-image__delete:before {
   font-size: 1.8rem;
   color: #fff;
 }
 .upload-image__preview:before {
-  content: "\E026";
+  content: "\E027";
 }
 .upload-image__preview:before {
   font-size: 1.5rem;
@@ -13236,13 +13401,13 @@ body.___rijkshuisstijl .navigation-search-results {
   margin-bottom: .3rem;
 }
 .cms__panel button.___close:before {
-  content: "\E01D";
+  content: "\E01E";
 }
 .cms__panel button.___close:before {
   font-size: 1.8rem;
 }
 .cms__panel button.___settings:before {
-  content: "\E04C";
+  content: "\E050";
 }
 .cms__panel button.___settings:before {
   font-size: 2.2rem;
@@ -13351,30 +13516,23 @@ body.___rijkshuisstijl .navigation-search-results {
   height: 1px;
   background-color: rgba(255, 255, 255, 0.5);
 }
-.cms-overlay__buttons button.___add:before {
-  content: "\E042";
+.cms-overlay__buttons button.___edit:before {
+  content: "\E043";
 }
-.cms-overlay__buttons button.___add:before {
-  font-size: 1.6rem;
+.cms-overlay__buttons button.___edit:before {
+  font-size: 1.8rem;
 }
-.cms-overlay__buttons button.___settings:before {
+.cms-overlay__buttons button.___save:before {
   content: "\E04C";
 }
-.cms-overlay__buttons button.___settings:before {
-  font-size: 1.9rem;
+.cms-overlay__buttons button.___save:before {
+  font-size: 1.8rem;
 }
 .cms-overlay__buttons button.___delete:before {
-  content: "\E01E";
+  content: "\E01F";
 }
 .cms-overlay__buttons button.___delete:before {
   font-size: 1.8rem;
-  margin-bottom: .1rem;
-}
-.cms-overlay__buttons button.___more:before {
-  content: "\E03E";
-}
-.cms-overlay__buttons button.___more:before {
-  font-size: .4rem;
   margin-bottom: .1rem;
 }
 .cms-block {
@@ -13401,7 +13559,7 @@ body.___rijkshuisstijl .navigation-search-results {
   height: 6rem;
 }
 .cms-block.___add:before {
-  content: "\E042";
+  content: "\E045";
 }
 .cms-block.___add:before {
   font-size: 1.8rem;
@@ -13421,6 +13579,61 @@ body.___rijkshuisstijl .navigation-search-results {
 }
 .cms-block__buttons > *:not(:last-child) {
   margin-bottom: 1rem;
+}
+.cms-section {
+  position: relative;
+}
+.cms-section__buttons {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 0 2rem;
+  z-index: 2;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  -ms-flex-pack: center;
+      justify-content: center;
+  overflow: hidden;
+}
+.cms-section__buttons button {
+  width: 4.4rem;
+  height: 4.4rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+  color: #B4B4B4;
+  opacity: 0;
+  transform: translateX(calc(100% + 2rem));
+  transition: opacity 0.2s ease, color 0.2s ease, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.cms-section__buttons button:nth-child(2) {
+  transition: color 0.2s ease, opacity 0.2s ease 0.05s, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.05s;
+}
+.cms-section__buttons button:hover {
+  color: #535353;
+}
+.cms-section:hover .cms-section__buttons button {
+  transform: translateX(0);
+  opacity: 1;
+}
+.cms-section__buttons button.___move:before {
+  content: "\E03B";
+}
+.cms-section__buttons button.___move:before {
+  font-size: 2rem;
+  margin-right: .3rem;
+}
+.cms-section__buttons button.___delete:before {
+  content: "\E01F";
+}
+.cms-section__buttons button.___delete:before {
+  font-size: 2rem;
 }
 .content h1 {
   font-size: 3.6rem;
@@ -13794,7 +14007,7 @@ body.modal__open {
   cursor: pointer;
 }
 .widget__admin .___edit:before {
-  content: "\E040";
+  content: "\E043";
 }
 .widget__admin .___edit:before {
   margin: 0 0.5rem 0.2rem 0;
@@ -13810,7 +14023,7 @@ body.modal__open {
   cursor: pointer;
 }
 .widget__admin .___delete:before {
-  content: "\E01F";
+  content: "\E020";
 }
 .widget__admin .___delete:before {
   margin: 0 0.5rem 0.2rem 0;
@@ -13826,7 +14039,7 @@ body.modal__open {
   cursor: pointer;
 }
 .widget__admin .___close:before {
-  content: "\E01D";
+  content: "\E01E";
 }
 .widget__admin .___close:before {
   margin: 0 0.5rem 0.2rem 0;
@@ -13891,41 +14104,6 @@ body.modal__open {
   top: 0.4rem;
   transition: transform 0.25s ease;
   margin-left: -2.8rem;
-}
-.file__item {
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  border-bottom: 1px solid #ccc;
-}
-.file__item .file__check {
-  display: none;
-}
-.file__item .file__check .checkbox label:before {
-  top: 0rem;
-}
-.file__item .file__check .checkbox label:after {
-  top: 0.4rem;
-}
-.file__item:hover {
-  background-color: #fff;
-}
-.file__item:hover .file__check {
-  display: inline-block;
-}
-.file__item:hover .file__icon {
-  display: none;
-}
-.file__item.___selected {
-  background-color: #fff;
-}
-.file__item a {
-  color: black;
-}
-.___show-checkboxes .file__item .file__check {
-  display: inline-block;
-}
-.___show-checkboxes .file__item .file__icon {
-  display: none;
 }
 .document a span {
   color: #009ee3;
@@ -14074,6 +14252,12 @@ body.modal__open {
 }
 .list-members__name {
   font-weight: normal;
+}
+.checkbox input[type="checkbox"] {
+  display: none;
+}
+.lead.___group .flexer {
+  margin-left: auto;
 }
 #__bs_notify__ {
   opacity: .15 !important;
