@@ -259,55 +259,6 @@ body.modal__open {
     margin-left: -2.8rem;
 }
 
-.file__item {
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    border-bottom: 1px solid #ccc;
-
-    .file__check {
-        display: none;
-
-        .checkbox label:before {
-            top:0rem;
-        }
-
-        .checkbox label:after {
-            top:0.4rem;
-        }
-    }
-
-    &:hover {
-        background-color: #fff;
-
-        .file__check {
-            display: inline-block;
-        }
-
-        .file__icon {
-            display: none;
-        }
-    }
-
-    &.___selected {
-        background-color: #fff;
-    }
-}
-
-.file__item a {
-    color: black;
-}
-
-.___show-checkboxes {
-    .file__item {
-        .file__check {
-            display: inline-block;
-        }
-        .file__icon {
-            display: none;
-        }
-    }
-}
-
 .document a span {
     color: @color-secondary;
 }
@@ -496,4 +447,8 @@ body.modal__open {
 
 .list-members__name {
     font-weight: normal;
+}
+
+.checkbox input[type="checkbox"] {
+    display: none;
 }
