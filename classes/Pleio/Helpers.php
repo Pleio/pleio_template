@@ -108,8 +108,11 @@ class Helpers {
                     case "question":
                         $root .= "questions";
                         break;
+                    case "discussion":
+                        $root .= "discussions";
+                        break;
                     case "groupforumtopic":
-                        $root .= "questions";
+                        $root .= "discussions";
                         break;
                     case "blog":
                         $root .= "blog";

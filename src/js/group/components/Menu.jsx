@@ -72,6 +72,9 @@ class Menu extends React.Component {
             case "/groups/view/:groupGuid/:groupSlug/questions":
                 subtype = "question"
                 break
+            case "/groups/view/:groupGuid/:groupSlug/discussions":
+                subtype = "discussion"
+                break
             case "/groups/view/:groupGuid/:groupSlug/files":
                 subtype = "file"
                 break

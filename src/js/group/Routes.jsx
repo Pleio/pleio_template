@@ -16,6 +16,10 @@ import QuestionsGroupList from "../questions/GroupList"
 import QuestionsAdd from "../questions/Add"
 import QuestionsEdit from "../questions/Edit"
 import QuestionsGroupItem from "../questions/GroupItem"
+import DiscussionsGroupList from "../discussions/GroupList"
+import DiscussionsAdd from "../discussions/Add"
+import DiscussionsEdit from "../discussions/Edit"
+import DiscussionsGroupItem from "../discussions/GroupItem"
 import EventsGroupList from "../events/GroupList"
 import EventsAdd from "../events/Add"
 import EventsEdit from "../events/Edit"
@@ -41,6 +45,8 @@ export default class Routes extends React.Component {
                 <Route exact path="/groups/view/:groupGuid/:groupSlug/blog/edit/:guid" component={BlogEdit} />
                 <Route exact path="/groups/view/:groupGuid/:groupSlug/questions/add" component={QuestionsAdd} />
                 <Route exact path="/groups/view/:groupGuid/:groupSlug/questions/edit/:guid" component={QuestionsEdit} />
+                <Route exact path="/groups/view/:groupGuid/:groupSlug/discussions/add" component={DiscussionsAdd} />
+                <Route exact path="/groups/view/:groupGuid/:groupSlug/discussions/edit/:guid" component={DiscussionsEdit} />
                 <Route exact path="/groups/view/:groupGuid/:groupSlug/events/add" component={EventsAdd} />
                 <Route exact path="/groups/view/:groupGuid/:groupSlug/events/edit/:guid" component={EventsEdit} />
                 <Route exact path="/groups/view/:groupGuid/:groupSlug/wiki/add" component={WikiAdd} />
@@ -58,6 +64,8 @@ export default class Routes extends React.Component {
                         <Route exact path="/groups/view/:groupGuid/:groupSlug/blog/view/:guid/:slug" component={BlogGroupItem} />
                         <Route exact path="/groups/view/:groupGuid/:groupSlug/questions" component={QuestionsGroupList} />
                         <Route exact path="/groups/view/:groupGuid/:groupSlug/questions/view/:guid/:slug" component={QuestionsGroupItem} />
+                        <Route exact path="/groups/view/:groupGuid/:groupSlug/discussions" component={DiscussionsGroupList} />
+                        <Route exact path="/groups/view/:groupGuid/:groupSlug/discussions/view/:guid/:slug" component={DiscussionsGroupItem} />
                         <Route exact path="/groups/view/:groupGuid/:groupSlug/events" component={EventsGroupList} />
                         <Route exact path="/groups/view/:groupGuid/:groupSlug/events/view/:guid/:slug" component={EventsGroupItem} />
                         <Route exact path="/groups/view/:groupGuid/:groupSlug/files" component={FilesGroupList} />

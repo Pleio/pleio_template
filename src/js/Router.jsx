@@ -9,6 +9,7 @@ import ScrollToTop from "./core/components/ScrollToTop"
 import NewsRoutes from "./news/Routes"
 import BlogRoutes from "./blog/Routes"
 import QuestionsRoutes from "./questions/Routes"
+import DiscussionsRoutes from "./discussions/Routes"
 import EventsRoutes from "./events/Routes"
 import GroupRoutes from "./group/Routes"
 import CmsRoutes from "./cms/Routes"
@@ -28,6 +29,7 @@ export default class Router extends React.Component {
                             <Route path="/news" component={NewsRoutes} />
                             <Route path="/blog" component={BlogRoutes} />
                             <Route path="/questions" component={QuestionsRoutes} />
+                            <Route path="/discussions" component={DiscussionsRoutes} />
                             <Route path="/events" component={EventsRoutes} />
                             <Route path="/groups" component={GroupRoutes} />
                             <Route path="/cms" component={CmsRoutes} />

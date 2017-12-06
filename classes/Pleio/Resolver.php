@@ -171,7 +171,7 @@ class Resolver {
 
         $options = [
             "type" => "object",
-            "subtype" => ["news", "blog", "question", "thewire"],
+            "subtype" => ["news", "blog", "question", "discussion", "thewire"],
             "offset" => (int) $args["offset"],
             "limit" => (int) $args["limit"]
         ];
@@ -181,7 +181,7 @@ class Resolver {
         }
 
         if (count($tags) > 2) {
-            $result = Helpers::getEntitiesFromTags(["news", "blog", "question", "thewire"], $tags, (int) $args["offset"], (int) $args["limit"]);
+            $result = Helpers::getEntitiesFromTags(["news", "blog", "question", "discussion", "thewire"], $tags, (int) $args["offset"], (int) $args["limit"]);
         } else {
             if ($tags) {
                 $options["metadata_name_value_pairs"] = [];
@@ -988,11 +988,11 @@ class Resolver {
 
         if ($type == "object") {
             if (!$args["subtype"] || $args["subtype"] == "all") {
-                $subtypes = ["blog", "news", "question"];
+                $subtypes = ["blog", "news", "question", "discussion", "groupforumtopic"];
             } elseif ($args["subtype"] === "file|folder") {
                 $subtypes = ["file", "folder"];
-            } elseif ($args["subtype"] === "question") {
-                $subtypes = ["question", "discussion", "groupforumtopic"];
+            } elseif ($args["subtype"] === "discussion") {
+                $subtypes = ["discussion", "groupforumtopic"];
             } elseif ($args["subtype"]) {
                 $subtypes = $args["subtype"];
             }
