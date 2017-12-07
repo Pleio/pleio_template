@@ -9,12 +9,6 @@ import QuestionCard from '../../questions/components/Card'
 import WireCard from "../../group/components/WireCard"
 
 export default class Card extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.renderNews = this.renderNews.bind(this)
-    }
-
     render() {
         if (!this.props.entity) {
             return (
@@ -24,7 +18,9 @@ export default class Card extends React.Component {
 
         switch (this.props.entity.object.subtype) {
             case "news":
-                return this.renderNews()
+                return (
+                    <NewsCard entity={this.props.entity.object} inActivityFeed={true} />
+                )
             case "blog":
                 return (
                     <BlogCard entity={this.props.entity.object} inActivityFeed={true} />
@@ -46,14 +42,5 @@ export default class Card extends React.Component {
                     <div></div>
                 )
         }
-    }
-
-    renderNews() {
-        const activity = this.props.entity
-        const { object } = activity
-
-        return (
-            <NewsCard entity={this.props.entity.object} inActivityFeed={true} />
-        )
     }
 }
