@@ -1193,7 +1193,8 @@ body.___rijkshuisstijl .navigation__search button:before,
 .cms-section__buttons button.___delete:before,
 .widget__admin .___edit:before,
 .widget__admin .___delete:before,
-.widget__admin .___close:before {
+.widget__admin .___close:before,
+.card-document__format.___folder:before {
   display: inline-block;
   vertical-align: middle;
   font-family: "icons-webfont";
@@ -14258,6 +14259,21 @@ body.modal__open {
 }
 .lead.___group .flexer {
   margin-left: auto;
+}
+.card-document__format.___folder:before {
+  content: "\E029";
+}
+.card-document__format.___folder:before {
+  color: #fff;
+  font-size: 2rem;
+}
+@media screen and (max-width: 680px) {
+  .card .picture {
+    display: none;
+  }
+}
+.comment-add__wrapper.___is-open {
+  z-index: 12;
 }
 #__bs_notify__ {
   opacity: .15 !important;
