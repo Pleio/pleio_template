@@ -55,9 +55,16 @@ class Item extends React.Component {
             )
         }
 
+        let featured
+        if (!this.props.inGroup) {
+            featured = (
+                <Featured entity={entity} />
+            )
+        }
+
         return (
             <div>
-                <Featured entity={entity} />
+                {featured}
                 <Document title={entity.title} />
                 <section className="section">
                     <div className="container">
