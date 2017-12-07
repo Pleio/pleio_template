@@ -1,11 +1,12 @@
 import React from "react"
 import Form from "../../core/components/Form"
-import TextField from "../../core/components/TextField"
+import RichTextField from "../../core/components/RichTextField"
 import Errors from "../../core/components/Errors"
 import autobind from "autobind-decorator"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { logErrors } from "../../lib/helpers"
+import { convertToRaw } from "draft-js"
 
 class StatusUpdate extends React.Component {
     constructor(props) {
@@ -28,7 +29,8 @@ class StatusUpdate extends React.Component {
             clientMutationId: 1,
             type: "object",
             subtype: "thewire",
-            description: values.description,
+            description: values.description.getPlainText(),
+            richDescription: JSON.stringify(convertToRaw(values.description)),
             containerGuid: this.props.containerGuid
         }
 
@@ -69,7 +71,7 @@ class StatusUpdate extends React.Component {
                 <div className="card__content">
                     {errors}
                     <Form ref="form" onSubmit={this.onSubmit} className="form">
-                        <TextField name="description" placeholder="Deel een tip of update" />
+                        <RichTextField name="description" placeholder="Deel een tip of update" minimal rules="required" />
                         <div className="flexer ___end ___gutter">
                             <button className="button" type="submit">Plaatsen</button>
                         </div>

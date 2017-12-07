@@ -17,6 +17,8 @@ const Query = gql`
                         title
                         url
                         excerpt
+                        description
+                        richDescription
                         featured {
                             image
                             video

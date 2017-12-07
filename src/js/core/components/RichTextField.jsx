@@ -277,7 +277,7 @@ class RichTextField extends React.Component {
     }
 
     clearValue() {
-        let contentState = ContentState.createFromText(nextProps.value || "")
+        let contentState = ContentState.createFromText(this.props.value || "")
 
         this.setState({
             editorState: EditorState.createWithContent(contentState, decorator)
@@ -377,18 +377,21 @@ class RichTextField extends React.Component {
             hidePlaceholder = true
         }
 
-        const textSizeValue = (currentBlockType === "unstyled" || currentBlockType === "intro" || currentBlockType === "paragraph" || currentBlockType === "header-two" || currentBlockType == "header-three") ? currentBlockType : "unstyled"
-        const textSize = (
-            <div className="editor__tool-group ___no-padding" id="editor-format">
-                <Select options={{
-                        "unstyled": "Normale tekst",
-                        "paragraph": "Paragraaf",
-                        "intro": "Introtekst",
-                        "header-two": "Subkop 1",
-                        "header-three": "Subkop 2"
-                }} onChange={this.changeTextSize} value={textSizeValue} />
-            </div>
-        )
+        let textSize
+        if (!this.props.minimal) {
+            const textSizeValue = (currentBlockType === "unstyled" || currentBlockType === "intro" || currentBlockType === "paragraph" || currentBlockType === "header-two" || currentBlockType == "header-three") ? currentBlockType : "unstyled"
+            textSize = (
+                <div className="editor__tool-group ___no-padding" id="editor-format">
+                    <Select options={{
+                            "unstyled": "Normale tekst",
+                            "paragraph": "Paragraaf",
+                            "intro": "Introtekst",
+                            "header-two": "Subkop 1",
+                            "header-three": "Subkop 2"
+                    }} onChange={this.changeTextSize} value={textSizeValue} />
+                </div>
+            )
+        }
 
         const inline = (
             <div className="editor__tool-group">
@@ -416,15 +419,18 @@ class RichTextField extends React.Component {
             </div>
         )
 
-        const quote = (
-            <div className="editor__tool-group">
-                <div onMouseDown={(e) => { e.preventDefault(); this.toggleBlockType("blockquote"); }} className={classnames({
-                    "editor__tool": true,
-                    "___quote": true,
-                    "___is-active": (currentBlockType === "blockquote")
-                })} />
-            </div>
-        )
+        let quote
+        if (!this.props.minimal) {
+            quote = (
+                <div className="editor__tool-group">
+                    <div onMouseDown={(e) => { e.preventDefault(); this.toggleBlockType("blockquote"); }} className={classnames({
+                        "editor__tool": true,
+                        "___quote": true,
+                        "___is-active": (currentBlockType === "blockquote")
+                    })} />
+                </div>
+            )
+        }
 
         const lists = (
             <div className="editor__tool-group">
@@ -441,14 +447,23 @@ class RichTextField extends React.Component {
             </div>
         )
 
+        let options
+        if (this.props.minimal) {
+            options = {
+                "document": "Document(en)",
+            }
+        } else {
+            options = {
+                "image": "Afbeelding",
+                "video": "Video",
+                "document": "Document(en)",
+                "social": "Social media post"
+            }
+        }
+
         const embed = (
             <div className="editor__tool-group" id="editor-insert">
-                <Select options={{
-                    "image": "Afbeelding",
-                    "video": "Video",
-                    "document": "Document(en)",
-                    "social": "Social media post"
-                }} name="embed" placeholder="Invoegen" onChange={this.onEmbed} />
+                <Select options={options} name="embed" placeholder="Invoegen" onChange={this.onEmbed} />
             </div>
         )
 
@@ -467,7 +482,7 @@ class RichTextField extends React.Component {
                     {lists}
                     {embed}
                 </div>
-                <div className={classnames({"content editor__input": true, "___hide-placeholder":hidePlaceholder})} onClick={this.focus}>
+                <div className={classnames({"content editor__input": true, "___hide-placeholder":hidePlaceholder})} onClick={this.focus} style={{minHeight:this.props.minimal ? 150 : 300}}>
                     <Editor
                         ref="editor"
                         handleKeyCommand={this.handleKeyCommand}

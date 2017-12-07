@@ -6,6 +6,7 @@ import showDate from "../../lib/showDate"
 import Likes from "../../core/components/Likes"
 import Bookmark from "../../bookmarks/components/Bookmark"
 import { displayTags } from "../../lib/helpers"
+import RichTextView from "../../core/components/RichTextView"
 
 export default class WireCard extends React.Component {
     render() {
@@ -32,7 +33,7 @@ export default class WireCard extends React.Component {
                     </div>
 
                     <div className="card__content">
-                        {entity.excerpt}
+                        <RichTextView richValue={entity.richDescription} value={entity.description} />
                     </div>
                 </div>
 
