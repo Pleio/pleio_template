@@ -29,7 +29,7 @@ export default class DropdownButton extends React.Component {
             } else if (option.to) {
                 return (<Link key={i} to={option.to}>{option.name}</Link>)
             } else {
-                return (<a key={i} href={option.href} target={option.target}>{option.name}</a>)
+                return (<a key={i} href={option.href} target={option.target} download={option.download}>{option.name}</a>)
             }
         })
 

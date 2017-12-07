@@ -89,8 +89,10 @@ export default class AddToCalendarButton extends React.Component {
     }
 
     render() {
+        const { event } = this.getEvent()
+
         const options = [
-            { href: this.getIcal(), name: 'iCal' },
+            { href: this.getIcal(), name: 'iCal', download: 'event.ics' },
             { href: this.getGoogle(), name: 'Google', target: 'blank' },
             { href: this.getOutlook(), name: 'Outlook.com', target: 'blank' }
         ]
