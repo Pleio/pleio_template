@@ -31,7 +31,7 @@ export default class WireCard extends React.Component {
                         </div>
                     </div>
 
-                    <div className="card-blog-post__content">
+                    <div className="card__content">
                         {entity.excerpt}
                     </div>
                 </div>
