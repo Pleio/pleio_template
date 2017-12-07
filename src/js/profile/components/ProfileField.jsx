@@ -45,7 +45,9 @@ class ProfileField extends React.Component {
         })
 
         setTimeout(() => {
-            this.refs.input.focus()
+            if (this.refs.input) {
+                this.refs.input.focus()
+            }
         }, 0)
     }
 
@@ -251,17 +253,30 @@ class ProfileField extends React.Component {
             } catch (e) {
                 value = this.state.value
 
+                if (this.state.isEditing) {
+                    field = (
+                        <div>
+                            <RichTextField ref="input" value={this.state.value} className="profile__textarea" minimal />
+                            <div className="buttons">
+                                <button className="button" onClick={this.onBlur}>Opslaan</button>
+                            </div>
+                        </div>
+                    )
+                }
+            }
+        } else {
+            value = "..."
+
+            if (this.state.isEditing) {
                 field = (
                     <div>
-                        <RichTextField ref="input" value={this.state.value} className="profile__textarea" minimal />
+                        <RichTextField ref="input" richValue={this.state.value} className="profile__textarea" minimal />
                         <div className="buttons">
                             <button className="button" onClick={this.onBlur}>Opslaan</button>
                         </div>
                     </div>
                 )
             }
-        } else {
-            value = "..."
         }
 
         return (
