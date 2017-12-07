@@ -1045,7 +1045,7 @@ class Resolver {
 
             $result = [
                 "total" => $total,
-                "entities" => $entities
+                "entities" => $entities ?: []
             ];
         }
 
