@@ -135,7 +135,7 @@ export default class RichTextView extends React.Component {
                 contentState = ContentState.createFromBlockArray(blocksFromHTML)
             }
         } else {
-            const blocksFromHTML = convertFromHTML(this.props.value)
+            const blocksFromHTML = convertFromHTML(this.props.value || "")
             contentState = ContentState.createFromBlockArray(blocksFromHTML)
         }
 

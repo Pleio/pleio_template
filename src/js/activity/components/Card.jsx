@@ -10,32 +10,34 @@ import WireCard from "../../group/components/WireCard"
 
 export default class Card extends React.Component {
     render() {
-        if (!this.props.entity) {
+        const { entity } = this.props
+
+        if (!entity) {
             return (
-                <div></div>
+                <div />
             )
         }
 
-        switch (this.props.entity.object.subtype) {
+        switch (entity.object.subtype) {
             case "news":
                 return (
-                    <NewsCard entity={this.props.entity.object} inActivityFeed={true} />
+                    <NewsCard entity={entity.object} inActivityFeed={true} />
                 )
             case "blog":
                 return (
-                    <BlogCard entity={this.props.entity.object} inActivityFeed={true} />
+                    <BlogCard entity={entity.object} group={entity.group} inActivityFeed={true} />
                 )
             case "discussion":
                 return (
-                    <DiscussionCard entity={this.props.entity.object} inActivityFeed={true} />
+                    <DiscussionCard entity={entity.object} group={entity.group} inActivityFeed={true} />
                 )
             case "question":
                 return (
-                    <QuestionCard entity={this.props.entity.object} inActivityFeed={true} />
+                    <QuestionCard entity={entity.object} group={entity.group} inActivityFeed={true} />
                 )
             case "thewire":
                 return (
-                    <WireCard entity={this.props.entity.object} inActivityFeed={true} />
+                    <WireCard entity={entity.object} group={entity.group} inActivityFeed={true} />
                 )
             default:
                 return (

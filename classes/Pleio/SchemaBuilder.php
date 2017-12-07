@@ -850,6 +850,29 @@ class SchemaBuilder {
                     "resolve" => function($activity) {
                         return Mapper::getObject($activity["object"], isset($activity["isHighlighted"]));
                     }
+                ],
+                "group" => [
+                    "type" => $groupType,
+                    "resolve" => function($activity) {
+                        if (!$activity["object"]) {
+                            return null;
+                        }
+
+                        $container = $activity["object"]->getContainerEntity();
+                        if (!$container) {
+                            return null;
+                        }
+
+                        if ($container instanceof \ElggGroup) {
+                            return [
+                                "guid" => $container->guid,
+                                "name" => $container->name,
+                                "url" => Helpers::getURL($container)
+                            ];
+                        }
+
+                        return null;
+                    }
                 ]
             ]
         ]);

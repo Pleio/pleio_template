@@ -7,7 +7,14 @@ import classnames from "classnames"
 
 export default class Card extends React.Component {
     render () {
-        const { entity, inActivityFeed } = this.props
+        const { entity, group, inActivityFeed } = this.props
+
+        let inGroup
+        if (group) {
+            inGroup = (
+                <span>&nbsp;in <Link to={group.url}>{group.name}</Link></span>
+            )
+        }
 
         let actions
         if (inActivityFeed) {
@@ -47,7 +54,8 @@ export default class Card extends React.Component {
                         <Link to={entity.owner.url} className="card-topic__user">
                             {entity.owner.name}
                         </Link>
-                        <span>&nbsp;{showDate(entity.timeCreated)}&nbsp;</span>
+                        <span>&nbsp;{showDate(entity.timeCreated)}</span>
+                        {inGroup}
                     </div>
                     <div className="card-topic__content">
                         {entity.excerpt}

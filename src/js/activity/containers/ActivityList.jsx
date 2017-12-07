@@ -13,10 +13,11 @@ const Query = gql`
                 object {
                     guid
                     ... on Object {
-                        guid
                         title
                         url
                         excerpt
+                        description
+                        richDescription
                         isHighlighted
                         featured {
                             image
@@ -38,6 +39,13 @@ const Query = gql`
                             icon
                             url
                         }
+                    }
+                }
+                group {
+                    guid
+                    ... on Group {
+                        name
+                        url
                     }
                 }
             }
