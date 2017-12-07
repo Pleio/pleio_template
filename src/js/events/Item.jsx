@@ -73,6 +73,20 @@ class Item extends React.Component {
             )
         }
 
+        let title, subtitle
+        if (this.props.group) {
+            title = (
+                <h2 className="title">{entity.title}</h2>
+            )
+            subtitle = (
+                <p>{showFullDate(entity.startDate)}<small>{entity.location}</small></p>
+            )
+        } else {
+            subtitle = (
+                <h2 className="title">{showFullDate(entity.startDate)}<small>{entity.location}</small></h2>
+            )
+        }
+
         let source
         if (entity.source) {
             source = (
@@ -154,7 +168,8 @@ class Item extends React.Component {
                                 {attendees}
                             </div>
                             <div className="col-sm-8">
-                                <h2 className="title">{showFullDate(entity.startDate)}<small>{entity.location}</small></h2>
+                                {title}
+                                {subtitle}
                                 {source}
                                 <RichTextView richValue={entity.richDescription} value={entity.description} />
                                     <div className="article-actions">
