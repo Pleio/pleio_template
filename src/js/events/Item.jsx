@@ -20,19 +20,6 @@ import LoggedInButton from "../core/components/LoggedInButton"
 import AddToCalendarButton from "./components/AddToCalendarButton"
 
 class Item extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.onEdit = () => this.props.dispatch(showModal("edit"))
-        this.onDelete = () => this.props.dispatch(showModal("delete"))
-        this.toggleAddComment = () => this.setState({showAddComment: !this.state.showAddComment})
-        this.closeAddComment = () => this.setState({showAddComment: false})
-
-        this.state = {
-            showAddComment: false
-        }
-    }
-
     getRootURL() {
         const { match } = this.props
 
@@ -175,13 +162,13 @@ class Item extends React.Component {
                                     <div className="article-actions">
                                         {edit}
                                         <div className="article-actions__buttons">
-                                            <LoggedInButton title="Schrijf een reactie" className="button article-action ___comment" viewer={viewer} onClick={this.toggleAddComment} fromComment>
+                                        <LoggedInButton title="Schrijf een reactie" className="button article-action ___comment" viewer={viewer} onClick={(e) => this.refs.addComment.toggle()} fromComment>
                                                 Schrijf een reactie
                                             </LoggedInButton>
                                             <AddToCalendarButton entity={entity}>Toevoegen aan agenda</AddToCalendarButton>
                                         </div>
                                     </div>
-                                <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["EventItem"]} />
+                                <AddComment ref="addComment" viewer={viewer} object={entity} refetchQueries={["EventItem"]} />
                                 <CommentList comments={entity.comments} />
                             </div>
                         </div>

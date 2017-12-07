@@ -4,7 +4,6 @@ import gql from "graphql-tag"
 import CommentList from "../core/components/CommentList"
 import Edit from "../core/Edit"
 import Delete from "../core/Delete"
-import AddComment from "../core/containers/AddComment"
 import NotFound from "../core/NotFound"
 import showDate from "../lib/showDate"
 import { Link, withRouter } from "react-router-dom"
@@ -14,17 +13,6 @@ import Document from "../core/components/Document"
 import SubNav from "./components/SubNav"
 
 class Item extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.toggleAddComment = () => this.setState({showAddComment: !this.state.showAddComment})
-        this.closeAddComment = () => this.setState({showAddComment: false})
-
-        this.state = {
-            showAddComment: false
-        }
-    }
-
     getRootURL() {
         const { match } = this.props
 

@@ -17,17 +17,6 @@ import Featured from "../core/components/Featured"
 import Follow from "../core/components/Follow"
 
 class Item extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.toggleAddComment = () => this.setState({showAddComment: !this.state.showAddComment})
-        this.closeAddComment = () => this.setState({showAddComment: false})
-
-        this.state = {
-            showAddComment: false
-        }
-    }
-
     getRootURL() {
         const { match } = this.props
 
@@ -92,7 +81,7 @@ class Item extends React.Component {
                                     <div className="article-actions">
                                         {edit}
                                         <div className="article-actions__buttons">
-                                            <LoggedInButton title="Schrijf een reactie" className="button article-action ___comment" viewer={viewer} onClick={this.toggleAddComment} fromComment>
+                                            <LoggedInButton title="Schrijf een reactie" className="button article-action ___comment" viewer={viewer} onClick={(e) => this.refs.addComment.toggle()} fromComment>
                                                 Schrijf een reactie
                                             </LoggedInButton>
                                             <SocialShare />
@@ -100,7 +89,7 @@ class Item extends React.Component {
                                         <Follow viewer={viewer} entity={entity} />
                                     </div>
                                 </article>
-                                <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["BlogItem"]} />
+                                <AddComment ref="addComment" viewer={viewer} object={entity} refetchQueries={["BlogItem"]} />
                                 <CommentList comments={entity.comments} />
                             </div>
                         </div>

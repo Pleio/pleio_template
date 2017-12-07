@@ -55,7 +55,7 @@ class AddCommentForm extends React.Component {
         return (
             <form className="comment-add" onSubmit={this.onSubmit}>
                 <h3 className="comment-add__title">Geef antwoord</h3>
-                <div title="Terug naar forum" className="comment-add__close ___is-active"></div>
+                <div title="Terug naar forum" className="comment-add__close ___is-active" onClick={this.props.toggle}></div>
                 <div className="comment-add__top">
                     <img src={icon} className="comment-add__image" />
                     <div href={url} title="Bekijk profiel" className="comment-add__name">{name}</div>
