@@ -98,7 +98,7 @@ class Item extends React.Component {
 
         if (entity.rsvp) {
             attendButtons = (
-                <AttendButtons viewer={viewer} entity={entity} />
+                <AttendButtons viewer={viewer} entity={entity} marginTop={this.props.group} />
             )
 
             if (this.props.group) {
