@@ -17,6 +17,7 @@ import Featured from "../core/components/Featured"
 import AttendButtons from "./components/AttendButtons"
 import AttendeesModal from "./components/AttendeesModal"
 import LoggedInButton from "../core/components/LoggedInButton"
+import AddToCalendarButton from "./components/AddToCalendarButton"
 
 class Item extends React.Component {
     constructor(props) {
@@ -162,6 +163,7 @@ class Item extends React.Component {
                                             <LoggedInButton title="Schrijf een reactie" className="button article-action ___comment" viewer={viewer} onClick={this.toggleAddComment} fromComment>
                                                 Schrijf een reactie
                                             </LoggedInButton>
+                                            <AddToCalendarButton entity={entity}>Toevoegen aan agenda</AddToCalendarButton>
                                         </div>
                                     </div>
                                 <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["EventItem"]} />
@@ -199,6 +201,7 @@ const Query = gql`
                 accessId
                 timeCreated
                 source
+                excerpt
                 location
                 rsvp
                 isFeatured
