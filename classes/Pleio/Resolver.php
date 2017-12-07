@@ -1106,13 +1106,13 @@ class Resolver {
             $edges = [];
         }
 
-        $user = elgg_get_logged_in_user_entity();    
+        $user = elgg_get_logged_in_user_entity();
         if ($user) {
             $canWrite = $container ? $container->canWriteToContainer(0, "object", "file") : false;
         } else {
             $canWrite = false;
         }
-        
+
         return [
             "total" => $total,
             "canWrite" => $canWrite,
@@ -1121,6 +1121,8 @@ class Resolver {
     }
 
     static function emailOverview($user) {
+        $site = elgg_get_site_entity();
+
         $user = get_entity($user["guid"]);
         if (!$user || !$user instanceof \ElggUser) {
             return "none";
@@ -1130,7 +1132,7 @@ class Resolver {
             return "none";
         }
 
-        return $user->getPrivateSetting("email_overview");
+        return $user->getPrivateSetting("email_overview_{$site->guid}");
     }
 
     static function getEmailNotifications($user) {

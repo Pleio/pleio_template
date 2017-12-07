@@ -20,7 +20,7 @@ class EmailOverviewHandler {
                 {$dbprefix}private_settings ps ON r.guid_one = ps.entity_guid
             WHERE r.relationship = 'member_of_site'
                 AND r.guid_two = {$site_guid}
-                AND ps.name = 'email_overview'
+                AND ps.name = 'email_overview_{$site_guid}'
                 AND ps.value = '{$interval}'
         ";
 
