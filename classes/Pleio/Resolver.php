@@ -1238,19 +1238,11 @@ class Resolver {
 
         $results = array();
 
-        if (!$args["type"]) {
-            $args["type"] = "object";
-        }
-
-        if (!$args["subtype"] || !in_array($args["subtype"], ["blog","news","question","event"])) {
-            $args["subtype"] = ["blog","news","question","event"];
-        }
-
         $es_results = $es->search(
             $args["q"],
             null,
-            $args["type"],
-            $args["subtype"],
+            $args["type"] ?: null,
+            $args["subtype"] ?: null,
             $args["limit"],
             $args["offset"],
             "",
@@ -1259,11 +1251,32 @@ class Resolver {
         );
 
         foreach ($es_results["hits"] as $hit) {
-            $results[] = Mapper::getObject($hit);
+            $results[] = Mapper::getEntity($hit);
         }
 
         $searchTotals = [];
-        $totals = $es->search($args["q"], null, $args["type"], ["blog","news","question","event"], null, null, "", "", $args["containerGuid"]);
+        $totals = $es->search(
+            $args["q"],
+            null,
+            null,
+            null,
+            null,
+            null,
+            "",
+            "",
+            $args["containerGuid"]
+        );
+
+        foreach ($totals["count_per_type"] as $type => $total) {
+            if ($type === "object") {
+                continue;
+            }
+
+            $searchTotals[] = [
+                "subtype" => $type,
+                "total" => $total
+            ];
+        }
 
         foreach ($totals["count_per_subtype"] as $subtype => $total) {
             $searchTotals[] = [

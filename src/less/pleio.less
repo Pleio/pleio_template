@@ -456,3 +456,19 @@ body.modal__open {
 .lead.___group .flexer {
     margin-left: auto;
 }
+
+.card-document__format {
+    &.___folder {
+        .icon(folder);
+        &:before {
+            color: @color-white;
+            font-size: 2rem;
+        }
+    }
+}
+
+@media screen and (max-width: @screen-sm) {
+    .card .picture {
+        display: none;
+    }
+}

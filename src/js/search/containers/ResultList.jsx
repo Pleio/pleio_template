@@ -15,8 +15,24 @@ const Query = gql`
             }
             edges {
                 guid
+                ... on User {
+                    name
+                    url
+                    icon
+                }
+                ... on Group {
+                    name
+                    canEdit
+                    excerpt
+                    isClosed
+                    membership
+                    members {
+                        total
+                    }
+                    icon
+                    url
+                }
                 ... on Object {
-                    guid
                     title
                     url
                     featured {
@@ -26,6 +42,7 @@ const Query = gql`
                     }
                     subtype
                     tags
+                    excerpt
                     timeCreated
                     startDate
                     isBookmarked

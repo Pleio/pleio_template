@@ -3,7 +3,14 @@ import { Link } from "react-router-dom"
 import TabMenu from "../../core/components/TabMenu"
 import classnames from "classnames"
 
+const types = [
+    {title: "Gebruikers", type: "user"},
+    {title: "Groepen", type: "group"}
+]
+
 const subtypes = [
+    {title:"Mappen", subtype:"folder"},
+    {title:"Bestanden", subtype:"file"},
     {title:"Blog", subtype:"blog"},
     {title:"Forum", subtype:"question"},
     {title:"Nieuws", subtype:"news"},
@@ -58,6 +65,18 @@ export default class Header extends React.Component {
             link: `results?q=${this.state.q}`,
             title: `Alles (${total})`
         }]
+
+        types.forEach((type) => {
+            const total = searchTotals[type.type]
+            if (!total) {
+                return
+            }
+
+            options.push({
+                link: `results?q=${this.state.q}&type=${type.type}`,
+                title: `${type.title} (${total})`
+            })
+        })
 
         subtypes.forEach((subtype) => {
             const total = searchTotals[subtype.subtype]

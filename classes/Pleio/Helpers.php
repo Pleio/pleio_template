@@ -102,6 +102,18 @@ class Helpers {
                 }
 
                 switch ($entity->getSubtype()) {
+                    case "folder":
+                        return "{$root}files/{$entity->guid}";
+                        break;
+                    case "file":
+                        $folder = $entity->getEntitiesFromRelationship("folder_of", true, 1);
+                        if (!$folder) {
+                            return "{$root}files";
+                        } else {
+                            $folder = $folder[0];
+                            return "{$root}files/{$folder->guid}";
+                        }
+                        break;
                     case "news":
                         $root .= "news";
                         break;
@@ -122,6 +134,9 @@ class Helpers {
                         break;
                     case "event":
                         $root .= "events";
+                        break;
+                    case "wiki":
+                        $root .= "wiki2";
                         break;
                     default:
                         $root .= $entity->getSubtype();
