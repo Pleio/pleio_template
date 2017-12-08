@@ -136,7 +136,7 @@ class Helpers {
                         $root .= "events";
                         break;
                     case "wiki":
-                        $root .= "wiki2";
+                        $root .= "wiki";
                         break;
                     default:
                         $root .= $entity->getSubtype();
