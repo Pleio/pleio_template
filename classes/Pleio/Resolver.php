@@ -169,41 +169,31 @@ class Resolver {
             }
         }
 
+        list ($joins, $wheres) = Helpers::getTagFilterJoin($tags);
+
         $options = [
             "type" => "object",
             "subtype" => ["news", "blog", "question", "discussion", "thewire"],
             "offset" => (int) $args["offset"],
-            "limit" => (int) $args["limit"]
+            "limit" => (int) $args["limit"],
+            "joins" => $joins,
+            "wheres" => $wheres
         ];
 
         if ($args["containerGuid"]) {
             $options["container_guid"] = (int) $args["containerGuid"];
         }
 
-        if (count($tags) > 2) {
-            $result = Helpers::getEntitiesFromTags(["news", "blog", "question", "discussion", "thewire"], $tags, (int) $args["offset"], (int) $args["limit"]);
-        } else {
-            if ($tags) {
-                $options["metadata_name_value_pairs"] = [];
-                foreach ($tags as $tag) {
-                    $options["metadata_name_value_pairs"][] = [
-                        "name" => "tags",
-                        "value" => $tag
-                    ];
-                }
-            }
-
-            $result = [
-                "total" => elgg_get_entities_from_metadata(array_merge($options, ["count" => true])),
-                "entities" => elgg_get_entities_from_metadata($options)
-            ];
-        }
+        $result = [
+            "total" => elgg_get_entities_from_metadata(array_merge($options, ["count" => true])),
+            "entities" => elgg_get_entities_from_metadata($options)
+        ];
 
         if ((int) $args["offset"] === 0) {
             $featured = Helpers::getFeaturedEntity($options, $tags);
         }
 
-        $activities = array();
+        $activities = [];
 
         if ($featured) {
             $activities[] = [
@@ -999,55 +989,50 @@ class Resolver {
         }
 
         $tags = $args["tags"];
-        if ($tags == ["mine"]) {
-            $user = elgg_get_logged_in_user_entity();
-            if ($user && $user->tags) {
+
+        $user = elgg_get_logged_in_user_entity();
+        if ($user && $tags == ["mine"]) {
+            if ($user->tags) {
                 if (is_array($user->tags)) {
                     $tags = $user->tags;
                 } else {
                     $tags = [$user->tags];
                 }
+            } else {
+                $tags = [];
             }
-
-            $result = Helpers::getEntitiesFromTags($subtype, $tags, (int) $args["offset"], (int) $args["limit"]);
-        } else {
-            $options = [
-                "type" => $type,
-                "subtypes" => $subtypes,
-                "offset" => (int) $args["offset"],
-                "limit" => (int) $args["limit"]
-            ];
-
-            if ($tags) {
-                $options["metadata_name_value_pairs"] = [];
-                foreach ($tags as $tag) {
-                    $options["metadata_name_value_pairs"][] = [
-                        "name" => "tags",
-                        "value" => $tag
-                    ];
-                }
-            }
-
-            if ($args["containerGuid"]) {
-                if ($args["containerGuid"] === 1) {
-                    $container = elgg_get_site_entity();
-                } else {
-                    $container = get_entity($args["containerGuid"]);
-                }
-            }
-
-            if ($container) {
-                $options["container_guid"] = $container->guid;
-            }
-
-            $total = elgg_get_entities_from_metadata(array_merge($options, ["count" => true]));
-            $entities = elgg_get_entities_from_metadata($options);
-
-            $result = [
-                "total" => $total,
-                "entities" => $entities ?: []
-            ];
         }
+
+        list ($joins, $wheres) = Helpers::getTagFilterJoin($tags);
+
+        $options = [
+            "type" => $type,
+            "subtypes" => $subtypes,
+            "offset" => (int) $args["offset"],
+            "limit" => (int) $args["limit"],
+            "joins" => $joins,
+            "wheres" => $wheres
+        ];
+
+        if ($args["containerGuid"]) {
+            if ($args["containerGuid"] === 1) {
+                $container = elgg_get_site_entity();
+            } else {
+                $container = get_entity($args["containerGuid"]);
+            }
+        }
+
+        if ($container) {
+            $options["container_guid"] = $container->guid;
+        }
+
+        $total = elgg_get_entities_from_metadata(array_merge($options, ["count" => true]));
+        $entities = elgg_get_entities_from_metadata($options);
+
+        $result = [
+            "total" => $total,
+            "entities" => $entities ?: []
+        ];
 
         if ((int) $args["offset"] === 0) {
             $featured = Helpers::getFeaturedEntity($options, $tags);
@@ -1060,21 +1045,7 @@ class Resolver {
         }
 
         foreach ($result["entities"] as $entity) {
-            switch ($entity->type) {
-                case "object":
-                    if ($featured && $entity->guid === $featured->guid) {
-                        continue;
-                    }
-
-                    $entities[] = Mapper::getObject($entity);
-                    break;
-                case "group":
-                    $entities[] = Mapper::getGroup($entity);
-                    break;
-                case "user":
-                    $entities[] = Mapper::getUser($entity);
-                    break;
-            }
+            $entities[] = Mapper::getEntity($entity);
         }
 
         $user = elgg_get_logged_in_user_entity();

@@ -67,7 +67,7 @@ class Helpers {
         if (count(array_intersect($entityTags, $tags)) > 0) {
             return $entity;
         }
-        
+
         return null;
     }
 
@@ -303,10 +303,10 @@ class Helpers {
             ON DUPLICATE KEY UPDATE views = views + 1;
         ");
 
-        /*insert_data("
+        insert_data("
             INSERT INTO elgg_entity_views_log (entity_guid, type, subtype, container_guid, site_guid, performed_by_guid, time_created)
             VALUES ({$guid}, '${type}', {$subtype}, {$entity->container_guid}, {$entity->site_guid}, {$user_guid}, NOW());
-        ");*/
+        ");
 
         if (is_memcache_available()) {
             $cache = new \ElggMemcache('entity_view_counter');
@@ -315,64 +315,27 @@ class Helpers {
         }
     }
 
-    static function getEntitiesFromTags($subtypes, $tags, $offset = 0, $limit = 20) {
-        global $CONFIG;
+    static function getTagFilterJoin($tags) {
+        $dbprefix = elgg_get_config("dbprefix");
+        $tags_id = get_metastring_id("tags");
 
-        $bools = [
-            ["term" => [ "type" => "object" ]],
-            ["term" => [ "site_guid" => $CONFIG->site_guid ]]
-        ];
+        if (!$tags || !$tags_id) {
+            return [[], []];
+        }
 
-        if ($subtypes) {
-            if (is_array($subtypes)) {
-                $get_subtype_id = function($subtype) { return get_subtype_id("object", $subtype); };
-                $bools[] = ["terms" => [ "subtype" => array_map($get_subtype_id, $subtypes)]];
-            } else {
-                $bools[] = ["term" => [ "subtype" => get_subtype_id("object", $subtypes) ]];
+        $filtered_tags_ids = [];
+        foreach ($tags as $tag) {
+            $tag_id = get_metastring_id($tag);
+            if ($tag) {
+                $filtered_tags_ids[] = $tag_id;
             }
         }
 
-        $user = elgg_get_logged_in_user_guid();
-
-        $ignore_access = elgg_check_access_overrides($user);
-        if ($ignore_access != true && !elgg_is_admin_logged_in()) {
-            $bools[] = ["terms" => [ "access_id" => get_access_array() ]];
-        }
-
-        if ($tags && is_array($tags) && count($tags) > 0) {
-            $bools[] = ["terms" => [ "tags" => array_map("strtolower", $tags) ]];
-        }
-
-        $results = \ESInterface::get()->client->search([
-            "index" => $CONFIG->elasticsearch_index,
-            "body" => [
-                "query" => [
-                    "bool" => [
-                        "must" => $bools
-                    ]
-                ],
-                "from" => (int) $offset,
-                "size" => (int) $limit,
-                "sort" => [
-                    "time_created" => "desc"
-                ]
-            ]
-        ]);
-
-        $total = $results['hits']['total'];
-
-        $entities = [];
-
-        foreach ($results["hits"]["hits"] as $hit) {
-            $entity = get_entity($hit["_id"]);
-            if ($entity) {
-                $entities[] = get_entity($hit["_id"]);
-            }
-        }
+        $filtered_tags_ids = implode(", ", $filtered_tags_ids);
 
         return [
-            "total" => $total,
-            "entities" => $entities
+            ["JOIN {$dbprefix}metadata md ON md.entity_guid = e.guid AND md.name_id = {$tags_id}"],
+            ["md.value_id IN ({$filtered_tags_ids})"]
         ];
     }
 
