@@ -294,7 +294,7 @@ function webpack_dev_server_is_available() {
         return false;
     }
 
-    $fp = @fsockopen("localhost", "9001", $errno, $errstr, 0.5);
+    $fp = @fsockopen("127.0.0.1", "9001", $errno, $errstr, 0.25);
     if (is_resource($fp)) {
         fclose($fp);
         return true;
