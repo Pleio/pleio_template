@@ -275,6 +275,8 @@ class Helpers {
     }
 
     static function addView(\ElggEntity $entity) {
+        $dbprefix = elgg_get_config("dbprefix");
+
         if (isset($_SERVER["HTTP_USER_AGENT"]) && preg_match('/bot|crawl|slurp|spider/i', $_SERVER["HTTP_USER_AGENT"])) {
             return true;
         }
@@ -298,7 +300,7 @@ class Helpers {
         $subtype = (int) $entity->subtype;
 
         insert_data("
-            INSERT INTO elgg_entity_views (guid, type, subtype, container_guid, site_guid, views)
+            INSERT INTO {$dbprefix}entity_views (guid, type, subtype, container_guid, site_guid, views)
             VALUES ({$guid}, '{$type}', {$subtype}, {$entity->container_guid}, {$entity->site_guid}, 1)
             ON DUPLICATE KEY UPDATE views = views + 1;
         ");
