@@ -316,16 +316,22 @@ class Helpers {
         $dbprefix = elgg_get_config("dbprefix");
         $tags_id = get_metastring_id("tags");
 
-        if (!$tags || !$tags_id) {
+        if (!$tags_id || !$tags) {
+            // we are not filtering on tags or the tags list is empty
             return [[], []];
         }
 
         $filtered_tags_ids = [];
         foreach ($tags as $tag) {
             $tag_id = get_metastring_id($tag);
-            if ($tag) {
+            if ($tag_id) {
                 $filtered_tags_ids[] = $tag_id;
             }
+        }
+
+        if (!$filtered_tags_ids) {
+            // return an empty list because we are filtering on tags that do not exist in the database yet
+            return [[], ["(1 = 2)"]];
         }
 
         $filtered_tags_ids = implode(", ", $filtered_tags_ids);
