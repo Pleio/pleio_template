@@ -1194,7 +1194,8 @@ body.___rijkshuisstijl .navigation__search button:before,
 .widget__admin .___edit:before,
 .widget__admin .___delete:before,
 .widget__admin .___close:before,
-.card-document__format.___folder:before {
+.card-document__format.___folder:before,
+.card-edit:before {
   display: inline-block;
   vertical-align: middle;
   font-family: "icons-webfont";
@@ -14274,6 +14275,40 @@ body.modal__open {
 }
 .comment-add__wrapper.___is-open {
   z-index: 12;
+}
+.card-edit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+  color: #01689b;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+.card-edit:before {
+  content: "\E043";
+}
+.card-edit:before {
+  font-size: 1.5rem;
+  margin: 0 0.5rem 0.2rem 0;
+}
+@media (max-width: 679px) {
+  .___can-edit .card-edit {
+    opacity: 1;
+    visibility: visible;
+  }
+  .card-edit span {
+    display: none;
+  }
+}
+@media (min-width: 680px) {
+  .card-blog-post.___can-edit:hover .card-edit {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 #__bs_notify__ {
   opacity: .15 !important;
