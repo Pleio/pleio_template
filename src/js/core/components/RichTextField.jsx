@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 import { Editor, EditorState, ContentState, RichUtils, AtomicBlockUtils, DefaultDraftBlockRenderMap, CompositeDecorator, Entity, Modifier, convertToRaw, convertFromRaw } from "draft-js"
 import { stateFromHTML } from "draft-js-import-html"
 import { stateToHTML } from "draft-js-export-html"
+import { humanFileSize } from "../../lib/helpers"
 import classnames from "classnames"
 import Validator from "validatorjs"
 import Select from "./NewSelect"
@@ -61,7 +62,7 @@ const decorator = new CompositeDecorator([
         strategy: findDocumentEntities,
         component: (props) => {
             const data = Entity.get(props.entityKey).getData()
-            const size = Math.round(data.size / 10000) / 100
+            const size = humanFileSize(data.size)
 
             let type
             switch (data.mimeType) {
@@ -75,7 +76,7 @@ const decorator = new CompositeDecorator([
             return (
                 <div className={`document ${type}`}>
                     <a href={data.url} target="_blank">{props.children}</a>
-                    <span contentEditable="false" suppressContentEditableWarning>({size}MB)</span>
+                    <span contentEditable="false" suppressContentEditableWarning>{size}</span>
                 </div>
             )
         }

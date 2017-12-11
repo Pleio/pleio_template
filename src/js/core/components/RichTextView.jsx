@@ -1,7 +1,7 @@
 import React from "react"
 import { Editor, EditorState, convertFromRaw, convertFromHTML, DefaultDraftBlockRenderMap, CompositeDecorator, ContentState, Entity } from "draft-js"
 import Immutable from "immutable"
-
+import { humanFileSize } from "../../lib/helpers"
 import AtomicBlock from "./RichText/AtomicBlock"
 import IntroBlock from "./RichText/IntroBlock"
 
@@ -50,7 +50,7 @@ const decorator = new CompositeDecorator([
         strategy: findDocumentEntities,
         component: (props) => {
             const data = Entity.get(props.entityKey).getData()
-            const size = Math.round(data.size / 10000) / 100
+            const size = humanFileSize(data.size)
 
             let type
             switch (data.mimeType) {
@@ -64,7 +64,7 @@ const decorator = new CompositeDecorator([
             return (
                 <div className={`document ${type}`}>
                     <a href={data.url} target="_blank">{props.children}</a>
-                    <span>({size}MB)</span>
+                    <span>{size}</span>
                 </div>
             )
         }
