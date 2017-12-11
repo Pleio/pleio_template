@@ -73,13 +73,20 @@ class SlideTwo extends React.Component {
             )
         }
 
+        let newsletter
+        if (window.__SETTINGS__['newsletter']) {
+            newsletter = (
+                <CheckField id="newsletter" name="newsletter" type="checkbox" label="Ik wil de nieuwsbrief ontvangen" />
+            )
+        }
+
         return (
             <Form ref="form" className="form login" onSubmit={this.props.onRegister}>
                 <Errors errors={this.props.errors} />
                 <ContentFiltersInputField name="filters" label="Vul hier je interesses in" />
                 <div className="form__conditions">
                     <CheckField id="terms" name="terms" type="checkbox" label="Ik ga akkoord met de Algemene Voorwaarden*" rules="required" />
-                    <CheckField id="newsletter" name="newsletter" type="checkbox" label="Ik wil de nieuwsbrief ontvangen" />
+                    {newsletter}
                 </div>
                 <div className="buttons ___margin-top ___end ___gutter">
                     <div href="#" onClick={() => this.props.previousSlide()} className="button__underline">Vorige</div>

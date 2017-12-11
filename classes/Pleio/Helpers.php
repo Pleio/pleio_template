@@ -633,7 +633,8 @@ class Helpers {
                 "accessIds" => Resolver::getAccessIds(["guid" => $site->guid]),
                 "defaultAccessId" => Resolver::getDefaultAccessId(["guid" => $site->guid]),
                 "startPage" => elgg_get_plugin_setting("startpage", "pleio_template") ?: "activity",
-                "startPageCms" => elgg_get_plugin_setting("startpage_cms", "pleio_template")
+                "startPageCms" => elgg_get_plugin_setting("startpage_cms", "pleio_template"),
+                "newsletter" => elgg_get_plugin_setting("newsletter", "pleio_template") === "no" ? false : true
             ]
         ];
     }
