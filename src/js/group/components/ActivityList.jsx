@@ -29,6 +29,7 @@ const Query = gql`
                         timeCreated
                         isBookmarked
                         canBookmark
+                        canEdit
                         commentCount
                         hasVoted
                         votes

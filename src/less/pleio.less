@@ -476,3 +476,38 @@ body.modal__open {
 .comment-add__wrapper.___is-open {
     z-index: 12;
 }
+
+.card-edit {
+    position: absolute;
+    top: 0;
+    right: 0;
+    .font(medium);
+    color: @color-primary;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity @trans-fast, visibility @trans-fast;
+
+    .icon(pencil);
+    &:before {
+        font-size: 1.5rem;
+        margin: 0 0.5rem 0.2rem 0;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        .___can-edit & {
+            opacity: 1;
+            visibility: visible;
+        }
+        span {
+            display: none;
+        }
+    }
+
+    @media ( min-width: @screen-sm ) {
+        .card-blog-post.___can-edit:hover & {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}

@@ -4,9 +4,9 @@ import { getClassFromTags } from "../../lib/helpers"
 import classnames from "classnames"
 import NewsCard from "../../news/components/Card"
 import BlogCard from "../../blog/components/Card"
-import DiscussionCard from '../../discussions/components/Card'
-import QuestionCard from '../../questions/components/Card'
-import WireCard from "../../group/components/WireCard"
+import DiscussionCard from "../../discussions/components/Card"
+import QuestionCard from "../../questions/components/Card"
+import StatusUpdateCard from "../../group/components/StatusUpdateCard"
 
 export default class Card extends React.Component {
     render() {
@@ -37,7 +37,7 @@ export default class Card extends React.Component {
                 )
             case "thewire":
                 return (
-                    <WireCard entity={entity.object} group={entity.group} inActivityFeed={true} />
+                    <StatusUpdateCard entity={entity.object} group={entity.group} inActivityFeed={true} />
                 )
             default:
                 return (
