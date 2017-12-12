@@ -207,17 +207,20 @@ class Resolver {
         foreach ($result["entities"] as $object) {
             $object = get_entity($object->guid);
             $subject = $object->getOwnerEntity();
-            if ($object && $subject) {
-                if ($featured && $object->guid === $featured->guid) {
-                    continue;
-                }
 
-                $activities[] = array(
-                    "guid" => "activity:" . $object->guid,
-                    "type" => "create",
-                    "object" => $object
-                );
+            if (!$object || !$subject) {
+                continue;
             }
+
+            if ($featured && $object->guid === $featured->guid) {
+                continue;
+            }
+
+            $activities[] = array(
+                "guid" => "activity:" . $object->guid,
+                "type" => "create",
+                "object" => $object
+            );
         }
 
         return [
@@ -1045,6 +1048,10 @@ class Resolver {
         }
 
         foreach ($result["entities"] as $entity) {
+            if ($featured && $entity->guid === $featured->guid) {
+                continue;
+            }
+
             $entities[] = Mapper::getEntity($entity);
         }
 

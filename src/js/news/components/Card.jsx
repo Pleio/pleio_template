@@ -122,7 +122,7 @@ export default class Card extends React.Component {
         if (inActivityFeed) {
             return (
                 <div className="card-tile-container">
-                    <Link to={entity.url} className={classnames({"card-tile ___small-card":true, "___full-video":featured.video, "___full-image":!featured.video, "___no-image": !backgroundImage, "___is-highlighted": entity.isHighlighted, [getClassFromTags(entity.tags)]: true})}>
+                    <Link to={entity.url} className={classnames({"card-tile ___small-card":true, "___full-video":featured.video, "___full-image":!featured.video, "___no-image": !backgroundImage, "___is-highlighted": (entity.isHighlighted && backgroundImage), [getClassFromTags(entity.tags)]: true})}>
                         {activityContainer}
                         {videoModal}
                     </Link>
