@@ -54,3 +54,23 @@ function pleio_template_create_object_handler($event, $type, $object) {
             ({$subscriber->guid}, 'commented', {$performer->guid}, {$entity->guid}, {$container->guid}, {$site->guid}, {$time})");
     }
 }
+
+function pleio_template_create_member_of_site_handler($event, $type, $relationship) {
+    $dbprefix = elgg_get_config("dbprefix");
+
+    $user = get_entity($relationship->guid_one);
+    if (!$user) {
+        return;
+    }
+
+    $site = get_entity($relationship->guid_two);
+    if (!$site) {
+        return;
+    }
+
+    $time = time();
+
+    insert_data("INSERT INTO {$dbprefix}notifications (user_guid, action, performer_guid, entity_guid, container_guid, site_guid, time_created)
+        VALUES
+        ({$user->guid}, 'welcome', {$user->guid}, {$user->guid}, 0, {$site->guid}, {$time})");
+}

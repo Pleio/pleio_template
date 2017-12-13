@@ -26,6 +26,7 @@ function pleio_template_init() {
     elgg_register_plugin_hook_handler("action", "plugins/settings/save", "pleio_template_plugins_settings_save");
 
     elgg_register_event_handler("create", "object", "pleio_template_create_object_handler");
+    elgg_register_event_handler("create", "member_of_site", "pleio_template_create_member_of_site_handler");
 
     elgg_register_page_handler("campagne", "pleio_template_page_handler");
     elgg_register_page_handler("activity", "pleio_template_page_handler");

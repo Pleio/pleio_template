@@ -146,6 +146,7 @@ const Query = gql`
                 performer {
                     guid
                     name
+                    username
                     icon
                 }
                 entity {

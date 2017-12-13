@@ -8,7 +8,7 @@ import { timeSince } from "../../lib/showDate"
 
 class Notification extends React.Component {
     @autobind
-    navigateTo(e) {
+    navigateTo(e, url) {
         e.preventDefault()
 
         const { notification, client } = this.props
@@ -22,33 +22,39 @@ class Notification extends React.Component {
                     }
                 }
             }).then(() => {
-                window.location = notification.entity.url
+                window.location = url
             })
         } else {
-            this.props.history.push(notification.entity.url)
+            this.props.history.push(url)
         }
     }
 
     render() {
         const { notification } = this.props
 
-        let message
+        let url, message
         switch (notification.action) {
             case "commented":
-                message = "heeft gereageerd op"
+                url = notification.entity.url
+                message = (
+                    <div>
+                        <strong>{notification.performer.name}</strong>
+                        & nbsp; {message}& nbsp;
+                        {notification.entity.title || notification.entity.name}
+                        <span className="___greyed">&nbsp;{timeSince(notification.timeCreated)}</span>
+                    </div>
+                )
                 break
+            case "welcome":
+                url = `/profile/${notification.performer.username}/interests`
+                message = "Welkom op deze site. Klik hier om je meldingen in te stellen."
         }
 
         return (
-            <a onClick={this.navigateTo} href={notification.entity.url}>
+            <a onClick={(e) => this.navigateTo(e, url)} href={url}>
                 <div className={classnames({ notification: true, "___is-unread": notification.isUnread })}>
                     <div className="face" style={{ backgroundImage: `url('${notification.performer.icon}')` }} />
-                    <div>
-                        <strong>{notification.performer.name}</strong>
-                        &nbsp;{message}&nbsp;
-                            {notification.entity.title || notification.entity.name}
-                        <span className="___greyed">&nbsp;{timeSince(notification.timeCreated)}</span>
-                    </div>
+                    {message}
                 </div>
             </a>
         )
