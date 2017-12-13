@@ -101,8 +101,8 @@ class Resolver {
             ];
         }
 
-        $limit = (int) ($args["offset"] ?: 20);
-        $offset = (int) ($args["limit"] ?: 0);
+        $limit = (int) ($args["limit"] ?: 20);
+        $offset = (int) ($args["offset"] ?: 0);
 
         $sql = "SELECT * FROM {$dbprefix}notifications WHERE user_guid = {$user->guid} AND site_guid = {$site->guid} ORDER BY id DESC LIMIT {$offset}, {$limit}";
 
@@ -120,7 +120,7 @@ class Resolver {
         return [
             "total" => $total,
             "totalUnread" => $totalUnread,
-            "notifications" => $notifications
+            "edges" => $notifications
         ];
     }
 
@@ -169,41 +169,31 @@ class Resolver {
             }
         }
 
+        list ($joins, $wheres) = Helpers::getTagFilterJoin($tags);
+
         $options = [
             "type" => "object",
-            "subtype" => ["news", "blog", "question", "thewire"],
+            "subtype" => ["news", "blog", "question", "discussion", "thewire"],
             "offset" => (int) $args["offset"],
-            "limit" => (int) $args["limit"]
+            "limit" => (int) $args["limit"],
+            "joins" => $joins,
+            "wheres" => $wheres
         ];
 
         if ($args["containerGuid"]) {
             $options["container_guid"] = (int) $args["containerGuid"];
         }
 
-        if (count($tags) > 2) {
-            $result = Helpers::getEntitiesFromTags(["news", "blog", "question", "thewire"], $tags, (int) $args["offset"], (int) $args["limit"]);
-        } else {
-            if ($tags) {
-                $options["metadata_name_value_pairs"] = [];
-                foreach ($tags as $tag) {
-                    $options["metadata_name_value_pairs"][] = [
-                        "name" => "tags",
-                        "value" => $tag
-                    ];
-                }
-            }
-
-            $result = [
-                "total" => elgg_get_entities_from_metadata(array_merge($options, ["count" => true])),
-                "entities" => elgg_get_entities_from_metadata($options)
-            ];
-        }
+        $result = [
+            "total" => elgg_get_entities_from_metadata(array_merge($options, ["count" => true])),
+            "entities" => elgg_get_entities_from_metadata($options)
+        ];
 
         if ((int) $args["offset"] === 0) {
             $featured = Helpers::getFeaturedEntity($options, $tags);
         }
 
-        $activities = array();
+        $activities = [];
 
         if ($featured) {
             $activities[] = [
@@ -217,17 +207,20 @@ class Resolver {
         foreach ($result["entities"] as $object) {
             $object = get_entity($object->guid);
             $subject = $object->getOwnerEntity();
-            if ($object && $subject) {
-                if ($featured && $object->guid === $featured->guid) {
-                    continue;
-                }
 
-                $activities[] = array(
-                    "guid" => "activity:" . $object->guid,
-                    "type" => "create",
-                    "object" => $object
-                );
+            if (!$object || !$subject) {
+                continue;
             }
+
+            if ($featured && $object->guid === $featured->guid) {
+                continue;
+            }
+
+            $activities[] = array(
+                "guid" => "activity:" . $object->guid,
+                "type" => "create",
+                "object" => $object
+            );
         }
 
         return [
@@ -988,66 +981,61 @@ class Resolver {
 
         if ($type == "object") {
             if (!$args["subtype"] || $args["subtype"] == "all") {
-                $subtypes = ["blog", "news", "question"];
+                $subtypes = ["blog", "news", "question", "discussion", "groupforumtopic"];
             } elseif ($args["subtype"] === "file|folder") {
                 $subtypes = ["file", "folder"];
-            } elseif ($args["subtype"] === "question") {
-                $subtypes = ["question", "discussion", "groupforumtopic"];
+            } elseif ($args["subtype"] === "discussion") {
+                $subtypes = ["discussion", "groupforumtopic"];
             } elseif ($args["subtype"]) {
                 $subtypes = $args["subtype"];
             }
         }
 
         $tags = $args["tags"];
-        if ($tags == ["mine"]) {
-            $user = elgg_get_logged_in_user_entity();
-            if ($user && $user->tags) {
+
+        $user = elgg_get_logged_in_user_entity();
+        if ($user && $tags == ["mine"]) {
+            if ($user->tags) {
                 if (is_array($user->tags)) {
                     $tags = $user->tags;
                 } else {
                     $tags = [$user->tags];
                 }
+            } else {
+                $tags = [];
             }
-
-            $result = Helpers::getEntitiesFromTags($subtype, $tags, (int) $args["offset"], (int) $args["limit"]);
-        } else {
-            $options = [
-                "type" => $type,
-                "subtypes" => $subtypes,
-                "offset" => (int) $args["offset"],
-                "limit" => (int) $args["limit"]
-            ];
-
-            if ($tags) {
-                $options["metadata_name_value_pairs"] = [];
-                foreach ($tags as $tag) {
-                    $options["metadata_name_value_pairs"][] = [
-                        "name" => "tags",
-                        "value" => $tag
-                    ];
-                }
-            }
-
-            if ($args["containerGuid"]) {
-                if ($args["containerGuid"] === 1) {
-                    $container = elgg_get_site_entity();
-                } else {
-                    $container = get_entity($args["containerGuid"]);
-                }
-            }
-
-            if ($container) {
-                $options["container_guid"] = $container->guid;
-            }
-
-            $total = elgg_get_entities_from_metadata(array_merge($options, ["count" => true]));
-            $entities = elgg_get_entities_from_metadata($options);
-
-            $result = [
-                "total" => $total,
-                "entities" => $entities
-            ];
         }
+
+        list ($joins, $wheres) = Helpers::getTagFilterJoin($tags);
+
+        $options = [
+            "type" => $type,
+            "subtypes" => $subtypes,
+            "offset" => (int) $args["offset"],
+            "limit" => (int) $args["limit"],
+            "joins" => $joins,
+            "wheres" => $wheres
+        ];
+
+        if ($args["containerGuid"]) {
+            if ($args["containerGuid"] === 1) {
+                $container = elgg_get_site_entity();
+            } else {
+                $container = get_entity($args["containerGuid"]);
+            }
+        }
+
+        if ($container) {
+            $options["container_guid"] = $container->guid;
+        }
+
+        $total = elgg_get_entities_from_metadata(array_merge($options, ["count" => true]));
+        $entities = elgg_get_entities_from_metadata($options);
+
+        $result = [
+            "total" => $total,
+            "entities" => $entities ?: []
+        ];
 
         if ((int) $args["offset"] === 0) {
             $featured = Helpers::getFeaturedEntity($options, $tags);
@@ -1060,21 +1048,11 @@ class Resolver {
         }
 
         foreach ($result["entities"] as $entity) {
-            switch ($entity->type) {
-                case "object":
-                    if ($featured && $entity->guid === $featured->guid) {
-                        continue;
-                    }
-
-                    $entities[] = Mapper::getObject($entity);
-                    break;
-                case "group":
-                    $entities[] = Mapper::getGroup($entity);
-                    break;
-                case "user":
-                    $entities[] = Mapper::getUser($entity);
-                    break;
+            if ($featured && $entity->guid === $featured->guid) {
+                continue;
             }
+
+            $entities[] = Mapper::getEntity($entity);
         }
 
         $user = elgg_get_logged_in_user_entity();
@@ -1106,13 +1084,13 @@ class Resolver {
             $edges = [];
         }
 
-        $user = elgg_get_logged_in_user_entity();    
+        $user = elgg_get_logged_in_user_entity();
         if ($user) {
             $canWrite = $container ? $container->canWriteToContainer(0, "object", "file") : false;
         } else {
             $canWrite = false;
         }
-        
+
         return [
             "total" => $total,
             "canWrite" => $canWrite,
@@ -1121,6 +1099,8 @@ class Resolver {
     }
 
     static function emailOverview($user) {
+        $site = elgg_get_site_entity();
+
         $user = get_entity($user["guid"]);
         if (!$user || !$user instanceof \ElggUser) {
             return "none";
@@ -1130,7 +1110,7 @@ class Resolver {
             return "none";
         }
 
-        return $user->getPrivateSetting("email_overview");
+        return $user->getPrivateSetting("email_overview_{$site->guid}");
     }
 
     static function getEmailNotifications($user) {
@@ -1238,19 +1218,11 @@ class Resolver {
 
         $results = array();
 
-        if (!$args["type"]) {
-            $args["type"] = "object";
-        }
-
-        if (!$args["subtype"] || !in_array($args["subtype"], ["blog","news","question","event"])) {
-            $args["subtype"] = ["blog","news","question","event"];
-        }
-
         $es_results = $es->search(
             $args["q"],
             null,
-            $args["type"],
-            $args["subtype"],
+            $args["type"] ?: null,
+            $args["subtype"] ?: null,
             $args["limit"],
             $args["offset"],
             "",
@@ -1259,11 +1231,32 @@ class Resolver {
         );
 
         foreach ($es_results["hits"] as $hit) {
-            $results[] = Mapper::getObject($hit);
+            $results[] = Mapper::getEntity($hit);
         }
 
         $searchTotals = [];
-        $totals = $es->search($args["q"], null, $args["type"], ["blog","news","question","event"], null, null, "", "", $args["containerGuid"]);
+        $totals = $es->search(
+            $args["q"],
+            null,
+            null,
+            null,
+            null,
+            null,
+            "",
+            "",
+            $args["containerGuid"]
+        );
+
+        foreach ($totals["count_per_type"] as $type => $total) {
+            if ($type === "object") {
+                continue;
+            }
+
+            $searchTotals[] = [
+                "subtype" => $type,
+                "total" => $total
+            ];
+        }
 
         foreach ($totals["count_per_subtype"] as $subtype => $total) {
             $searchTotals[] = [

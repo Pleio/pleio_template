@@ -10,8 +10,15 @@ import { displayTags } from "../../lib/helpers"
 
 export default class Card extends React.Component {
     render() {
-        const { entity } = this.props
+        const { entity, group } = this.props
         const { owner } = entity
+
+        let inGroup
+        if (group) {
+            inGroup = (
+                <span>&nbsp;in <Link to={group.url}>{group.name}</Link></span>
+            )
+        }
 
         return (
             <div className="card-blog-post">
@@ -22,10 +29,7 @@ export default class Card extends React.Component {
                             {owner.name}
                         </Link>
 
-                        { entity.tags.length > 0 ? ( <span>&nbsp;over&nbsp;</span> ) : "" }
-                        <Link to={entity.url} className="card-blog-post__subject">
-                            {displayTags(entity.tags)}
-                        </Link>
+                        {inGroup}
 
                         <div className="card-blog-post__date">
                             {showDate(entity.timeCreated)}

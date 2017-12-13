@@ -23,6 +23,7 @@ $english = array(
     "pleio_template:minimalistic" => "Minimal",
     "pleio_template:rijkshuisstijl" => "Rijkshuistijl",
     "pleio_template:show_logo" => "Show logo",
+    "pleio_template:newsletter" => "Newsletter",
     "pleio_template:initiator_link" => "Link to page of initiator",
     "pleio_template:initiator_link:example" => "e.g. https://www.pleio.nl/...",
     "pleio_template:show_leader" => "Show leader",

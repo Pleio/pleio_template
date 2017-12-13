@@ -437,6 +437,7 @@ class SchemaBuilder {
             "values" => [
                 "events" => [ "value" => "events" ],
                 "blog" => [ "value" => "blog" ],
+                "discussions" => [ "value" => "discussions" ],
                 "questions" => [ "value" => "questions" ],
                 "files" => [ "value" => "files" ],
                 "wiki" => [ "value" => "wiki" ],
@@ -849,6 +850,29 @@ class SchemaBuilder {
                     "resolve" => function($activity) {
                         return Mapper::getObject($activity["object"], isset($activity["isHighlighted"]));
                     }
+                ],
+                "group" => [
+                    "type" => $groupType,
+                    "resolve" => function($activity) {
+                        if (!$activity["object"]) {
+                            return null;
+                        }
+
+                        $container = $activity["object"]->getContainerEntity();
+                        if (!$container) {
+                            return null;
+                        }
+
+                        if ($container instanceof \ElggGroup) {
+                            return [
+                                "guid" => $container->guid,
+                                "name" => $container->name,
+                                "url" => Helpers::getURL($container)
+                            ];
+                        }
+
+                        return null;
+                    }
                 ]
             ]
         ]);
@@ -925,7 +949,7 @@ class SchemaBuilder {
             "fields" => [
                 "total" => [ "type" => Type::int() ],
                 "totalUnread" => [ "type" => Type::int() ],
-                "notifications" => [ "type" => Type::listOf($notificationType) ]
+                "edges" => [ "type" => Type::listOf($notificationType) ]
             ]
         ]);
 

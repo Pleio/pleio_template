@@ -4,51 +4,45 @@ import { getClassFromTags } from "../../lib/helpers"
 import classnames from "classnames"
 import NewsCard from "../../news/components/Card"
 import BlogCard from "../../blog/components/Card"
-import QuestionCard from '../../questions/components/Card'
-import WireCard from "../../group/components/WireCard"
+import DiscussionCard from "../../discussions/components/Card"
+import QuestionCard from "../../questions/components/Card"
+import StatusUpdateCard from "../../group/components/StatusUpdateCard"
 
 export default class Card extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.renderNews = this.renderNews.bind(this)
-    }
-
     render() {
-        if (!this.props.entity) {
+        const { entity } = this.props
+
+        if (!entity) {
             return (
-                <div></div>
+                <div />
             )
         }
 
-        switch (this.props.entity.object.subtype) {
+        switch (entity.object.subtype) {
             case "news":
-                return this.renderNews()
+                return (
+                    <NewsCard entity={entity.object} inActivityFeed={true} />
+                )
             case "blog":
                 return (
-                    <BlogCard entity={this.props.entity.object} inActivityFeed={true} />
+                    <BlogCard entity={entity.object} group={entity.group} inActivityFeed={true} />
+                )
+            case "discussion":
+                return (
+                    <DiscussionCard entity={entity.object} group={entity.group} inActivityFeed={true} />
                 )
             case "question":
                 return (
-                    <QuestionCard entity={this.props.entity.object} inActivityFeed={true} />
+                    <QuestionCard entity={entity.object} group={entity.group} inActivityFeed={true} />
                 )
             case "thewire":
                 return (
-                    <WireCard entity={this.props.entity.object} inActivityFeed={true} />
+                    <StatusUpdateCard entity={entity.object} group={entity.group} inActivityFeed={true} />
                 )
             default:
                 return (
                     <div></div>
                 )
         }
-    }
-
-    renderNews() {
-        const activity = this.props.entity
-        const { object } = activity
-
-        return (
-            <NewsCard entity={this.props.entity.object} inActivityFeed={true} />
-        )
     }
 }

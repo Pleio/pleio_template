@@ -8,6 +8,16 @@ import TabMenu from "../core/components/TabMenu"
 import GroupsList from "./containers/GroupsList"
 import Card from "./components/Card"
 
+class GroupCard extends React.Component {
+    render() {
+        return (
+            <div className="col-lg-6">
+                <Card {...this.props} />
+            </div>
+        )
+    }
+}
+
 class List extends React.Component {
     render() {
         const { match } = this.props
@@ -47,10 +57,10 @@ class List extends React.Component {
                             {add}
                         </div>
                     </div>
-                    <TabMenu options={[{link:"/groups", title: "Alle groepen"}, {link:"/groups/mine", title: "Mijn groepen"}]} marginBottom />
+                    <TabMenu options={[{link:"/groups", title: "Alle groepen"}, {link:"/groups/mine", title: "Mijn groepen"}]} marginBottom isMobile isMobileOnly />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
-                    <GroupsList type="group" childClass={Card} offset={0} limit={20} filter={filter} hasRows />
+                    <GroupsList type="group" childClass={GroupCard} offset={0} limit={20} filter={filter} hasRows />
                 </section>
             </div>
         )

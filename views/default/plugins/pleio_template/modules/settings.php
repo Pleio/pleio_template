@@ -44,6 +44,18 @@
 </div>
 
 <div>
+    <label><?php echo elgg_echo("pleio_template:newsletter"); ?></label>
+    <?php echo elgg_view("input/dropdown", [
+        "name" => "params[newsletter]",
+        "value" => $vars["plugin"]->newsletter,
+        "options_values" => [
+            "yes" => elgg_echo("option:yes"),
+            "no" => elgg_echo("option:no")
+        ]
+    ]); ?>
+</div>
+
+<div>
     <label><?php echo elgg_echo("pleio_template:show_leader"); ?></label>
     <?php echo elgg_view("input/dropdown", [
         "name" => "params[show_leader]",

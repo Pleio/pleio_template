@@ -259,55 +259,6 @@ body.modal__open {
     margin-left: -2.8rem;
 }
 
-.file__item {
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    border-bottom: 1px solid #ccc;
-
-    .file__check {
-        display: none;
-
-        .checkbox label:before {
-            top:0rem;
-        }
-
-        .checkbox label:after {
-            top:0.4rem;
-        }
-    }
-
-    &:hover {
-        background-color: #fff;
-
-        .file__check {
-            display: inline-block;
-        }
-
-        .file__icon {
-            display: none;
-        }
-    }
-
-    &.___selected {
-        background-color: #fff;
-    }
-}
-
-.file__item a {
-    color: black;
-}
-
-.___show-checkboxes {
-    .file__item {
-        .file__check {
-            display: inline-block;
-        }
-        .file__icon {
-            display: none;
-        }
-    }
-}
-
 .document a span {
     color: @color-secondary;
 }
@@ -496,4 +447,67 @@ body.modal__open {
 
 .list-members__name {
     font-weight: normal;
+}
+
+.checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.lead.___group .flexer {
+    margin-left: auto;
+}
+
+.card-document__format {
+    &.___folder {
+        .icon(folder);
+        &:before {
+            color: @color-white;
+            font-size: 2rem;
+        }
+    }
+}
+
+@media screen and (max-width: @screen-sm) {
+    .card .picture {
+        display: none;
+    }
+}
+
+.comment-add__wrapper.___is-open {
+    z-index: 12;
+}
+
+.card-edit {
+    position: absolute;
+    top: 0;
+    right: 0;
+    .font(medium);
+    color: @color-primary;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity @trans-fast, visibility @trans-fast;
+
+    .icon(pencil);
+    &:before {
+        font-size: 1.5rem;
+        margin: 0 0.5rem 0.2rem 0;
+    }
+
+    @media ( max-width: @screen-xs-max ) {
+        .___can-edit & {
+            opacity: 1;
+            visibility: visible;
+        }
+        span {
+            display: none;
+        }
+    }
+
+    @media ( min-width: @screen-sm ) {
+        .card-blog-post.___can-edit:hover & {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
 }

@@ -32,7 +32,7 @@ class Item extends React.Component {
             <GroupContainer buttons={buttons} match={this.props.match}>
                 <Document title={entity.name} />
                 <section className="section ___grow">
-                    <BlogItem match={this.props.match} />
+                    <BlogItem match={this.props.match} inGroup={true} />
                 </section>
             </GroupContainer>
         )

@@ -4,6 +4,7 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import Select from "../../core/components/NewSelect"
 import LoggedInButton from "../../core/components/LoggedInButton"
+import classnames from "classnames"
 
 class AttendButtons extends React.Component {
     @autobind
@@ -26,7 +27,7 @@ class AttendButtons extends React.Component {
 
         if (entity.isAttending) {
             return (
-                <Select name="attending" options={{accept: "Aanwezig", maybe: "Misschien", reject: "Afwijzen"}} onChange={this.onSubmit} value={entity.isAttending} className="___attend-select" />
+                <Select name="attending" options={{accept: "Aanwezig", maybe: "Misschien", reject: "Afwijzen"}} onChange={this.onSubmit} value={entity.isAttending} className={classnames({"___attend-select": true, "___margin-top": this.props.marginTop})} />
             )
         } else {
             return (

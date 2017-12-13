@@ -155,7 +155,7 @@ class Mutations {
 
         switch ($input["type"]) {
             case "object":
-                if (!in_array($input["subtype"], array("file", "folder", "news", "blog", "question", "comment","page", "wiki", "event", "task", "thewire"))) {
+                if (!in_array($input["subtype"], array("file", "folder", "news", "blog", "question", "discussion", "comment","page", "wiki", "event", "task", "thewire"))) {
                     throw new Exception("invalid_subtype");
                 }
 
@@ -802,7 +802,10 @@ class Mutations {
     }
 
     static function editEmailOverview($input) {
+        $site = elgg_get_site_entity();
         $entity = get_entity(((int) $input["guid"]));
+
+
         if (!$entity) {
             throw new Exception("could_not_find");
         }
@@ -820,9 +823,9 @@ class Mutations {
         }
 
         if ($updates === "never") {
-            $entity->removePrivateSetting("email_overview");
+            $entity->removePrivateSetting("email_overview_{$site->guid}");
         } else {
-            $entity->setPrivateSetting("email_overview", $input["overview"]);
+            $entity->setPrivateSetting("email_overview_{$site->guid}", $input["overview"]);
         }
 
         return [

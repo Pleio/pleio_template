@@ -17,6 +17,8 @@ const Query = gql`
                         title
                         url
                         excerpt
+                        description
+                        richDescription
                         featured {
                             image
                             video
@@ -27,6 +29,7 @@ const Query = gql`
                         timeCreated
                         isBookmarked
                         canBookmark
+                        canEdit
                         commentCount
                         hasVoted
                         votes

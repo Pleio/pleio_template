@@ -26,12 +26,14 @@ function pleio_template_init() {
     elgg_register_plugin_hook_handler("action", "plugins/settings/save", "pleio_template_plugins_settings_save");
 
     elgg_register_event_handler("create", "object", "pleio_template_create_object_handler");
+    elgg_register_event_handler("create", "member_of_site", "pleio_template_create_member_of_site_handler");
 
     elgg_register_page_handler("campagne", "pleio_template_page_handler");
     elgg_register_page_handler("activity", "pleio_template_page_handler");
     elgg_register_page_handler("blog", "pleio_template_page_handler");
     elgg_register_page_handler("news", "pleio_template_page_handler");
     elgg_register_page_handler("questions", "pleio_template_page_handler");
+    elgg_register_page_handler("discussions", "pleio_template_page_handler");
     elgg_register_page_handler("profile", "pleio_template_page_handler");
     elgg_register_page_handler("groups", "pleio_template_page_handler");
     elgg_register_page_handler("cms", "pleio_template_page_handler");
@@ -291,7 +293,7 @@ function webpack_dev_server_is_available() {
         return false;
     }
 
-    $fp = @fsockopen("localhost", "9001", $errno, $errstr, 0.5);
+    $fp = @fsockopen("127.0.0.1", "9001", $errno, $errstr, 0.25);
     if (is_resource($fp)) {
         fclose($fp);
         return true;

@@ -17,21 +17,9 @@ import Featured from "../core/components/Featured"
 import AttendButtons from "./components/AttendButtons"
 import AttendeesModal from "./components/AttendeesModal"
 import LoggedInButton from "../core/components/LoggedInButton"
+import AddToCalendarButton from "./components/AddToCalendarButton"
 
 class Item extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.onEdit = () => this.props.dispatch(showModal("edit"))
-        this.onDelete = () => this.props.dispatch(showModal("delete"))
-        this.toggleAddComment = () => this.setState({showAddComment: !this.state.showAddComment})
-        this.closeAddComment = () => this.setState({showAddComment: false})
-
-        this.state = {
-            showAddComment: false
-        }
-    }
-
     getRootURL() {
         const { match } = this.props
 
@@ -72,6 +60,20 @@ class Item extends React.Component {
             )
         }
 
+        let title, subtitle
+        if (this.props.group) {
+            title = (
+                <h2 className="title">{entity.title}</h2>
+            )
+            subtitle = (
+                <p>{showFullDate(entity.startDate)}<small>{entity.location}</small></p>
+            )
+        } else {
+            subtitle = (
+                <h2 className="title">{showFullDate(entity.startDate)}<small>{entity.location}</small></h2>
+            )
+        }
+
         let source
         if (entity.source) {
             source = (
@@ -83,7 +85,7 @@ class Item extends React.Component {
 
         if (entity.rsvp) {
             attendButtons = (
-                <AttendButtons viewer={viewer} entity={entity} />
+                <AttendButtons viewer={viewer} entity={entity} marginTop={this.props.group} />
             )
 
             if (this.props.group) {
@@ -153,18 +155,20 @@ class Item extends React.Component {
                                 {attendees}
                             </div>
                             <div className="col-sm-8">
-                                <h2 className="title">{showFullDate(entity.startDate)}<small>{entity.location}</small></h2>
+                                {title}
+                                {subtitle}
                                 {source}
                                 <RichTextView richValue={entity.richDescription} value={entity.description} />
                                     <div className="article-actions">
                                         {edit}
                                         <div className="article-actions__buttons">
-                                            <LoggedInButton title="Schrijf een reactie" className="button article-action ___comment" viewer={viewer} onClick={this.toggleAddComment} fromComment>
+                                        <LoggedInButton title="Schrijf een reactie" className="button article-action ___comment" viewer={viewer} onClick={(e) => this.refs.addComment.toggle()} fromComment>
                                                 Schrijf een reactie
                                             </LoggedInButton>
+                                            <AddToCalendarButton entity={entity}>Toevoegen aan agenda</AddToCalendarButton>
                                         </div>
                                     </div>
-                                <AddComment viewer={viewer} isOpen={this.state.showAddComment} object={entity} onSuccess={this.closeAddComment} refetchQueries={["EventItem"]} />
+                                <AddComment ref="addComment" viewer={viewer} object={entity} refetchQueries={["EventItem"]} />
                                 <CommentList comments={entity.comments} />
                             </div>
                         </div>
@@ -199,6 +203,7 @@ const Query = gql`
                 accessId
                 timeCreated
                 source
+                excerpt
                 location
                 rsvp
                 isFeatured

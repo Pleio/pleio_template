@@ -9,6 +9,7 @@ import Document from "../core/components/Document"
 import FileFolderList from "./containers/FileFolderList"
 import Select from "../core/components/NewSelect"
 import Breadcrumb from "./components/Breadcrumb"
+import DropdownButton from "../core/components/DropdownButton"
 import FileFolder from "./components/FileFolder"
 import FileFolderTile from "./components/FileFolderTile"
 import AddFileModal from "./components/AddFileModal"
@@ -134,18 +135,23 @@ class Item extends React.Component {
 
         let add
         if (viewer.canWriteToContainer) {
-            let create
+            let options
             if (window.__SETTINGS__['odtEnabled']) {
-                create = (
-                    <a href={`/odt_editor/create/${containerGuid}`} className="button ___large"><span>Maak bestand</span></a>
-                )
+                options = [
+                    { href: `/odt_editor/create/${containerGuid}`, name: "Maak een bestand" },
+                    { onClick: (e) => this.refs.addFile.toggle(), name: "Upload bestand" },
+                    { onClick: (e) => this.refs.addFolder.toggle(), name: "Nieuwe map" }
+                ]
+            } else {
+                options = [
+                    { onClick: (e) => this.refs.addFile.toggle(), name: "Upload bestand" },
+                    { onClick: (e) => this.refs.addFolder.toggle(), name: "Nieuwe map" }
+                ]
             }
 
             add = (
                 <div className="flexer ___gutter">
-                    {create}
-                    <div className="button ___large" onClick={(e) => this.refs.addFile.toggle()}><span>Upload bestand</span></div>
-                    <div className="button ___large" onClick={(e) => this.refs.addFolder.toggle()}><span>Nieuwe map</span></div>
+                    <DropdownButton name="Voeg toe" options={options} />
                 </div>
             )
         }

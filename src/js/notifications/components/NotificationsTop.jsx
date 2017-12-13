@@ -5,7 +5,16 @@ import classnames from "classnames"
 import Notification from "./Notification"
 import autobind from "autobind-decorator"
 
+let isFetchingMore = false
+
 class NotificationsList extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            offset: 0
+        }
+    }
+
     @autobind
     markAllAsRead(e) {
         this.props.mutate({
@@ -14,6 +23,55 @@ class NotificationsList extends React.Component {
             },
             refetchQueries: ["NotificationsList"]
         })
+    }
+
+    @autobind
+    onScroll(e) {
+        if (!this.refs.list) {
+            return
+        }
+
+        if (this.props.data.loading || isFetchingMore) {
+            return
+        }
+
+        if (this.props.data.notifications.total === 0) {
+            return
+        }
+
+        if (this.props.data.notifications.total === this.props.data.notifications.edges.length) {
+            return
+        }
+
+        if ((e.target.scrollHeight - (e.target.scrollTop + e.target.offsetHeight)) > 200) {
+            return
+        }
+
+        isFetchingMore = true
+        this.fetchMore()
+    }
+
+    @autobind
+    fetchMore() {
+        let offset = this.state.offset + 20
+
+        this.setState({
+            offset
+        })
+
+        this.props.data.fetchMore({
+            variables: { offset },
+            updateQuery: (previousResult, { fetchMoreResult }) => {
+                isFetchingMore = false
+
+                return Object.assign({}, previousResult, {
+                    notifications: Object.assign({}, previousResult.notifications, {
+                        edges: [...previousResult.notifications.edges, ...fetchMoreResult.notifications.edges]
+                    })
+                });
+            }
+        })
+
     }
 
     render() {
@@ -25,7 +83,7 @@ class NotificationsList extends React.Component {
             )
         }
 
-        const list = notifications.notifications.map((notification, i) => (
+        const list = notifications.edges.map((notification, i) => (
             <Notification key={i} notification={notification} />
         ))
 
@@ -42,7 +100,7 @@ class NotificationsList extends React.Component {
                 <div className="button__text ___grey" onClick={this.markAllAsRead}>Alles gelezen</div>
             )
             badge = (
-                <div className="navigation__badge">{notifications.totalUnread }</div>
+                <div className="navigation__badge">{notifications.totalUnread}</div>
             )
         }
 
@@ -60,7 +118,7 @@ class NotificationsList extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="notifications__scroll">
+                    <div ref="list" className="notifications__scroll" onScroll={this.onScroll}>
                         {placeholder}
                         {list}
                     </div>
@@ -71,7 +129,7 @@ class NotificationsList extends React.Component {
 }
 
 const Query = gql`
-    query NotificationsList {
+    query NotificationsList($offset: Int) {
         viewer {
             guid
             user {
@@ -79,15 +137,16 @@ const Query = gql`
                 username
             }
         }
-        notifications {
+        notifications(offset: $offset, limit: 20) {
             total
             totalUnread
-            notifications {
+            edges {
                 id
                 action
                 performer {
                     guid
                     name
+                    username
                     icon
                 }
                 entity {
@@ -98,6 +157,7 @@ const Query = gql`
                     }
                 }
                 isUnread
+                timeCreated
             }
         }
     }
@@ -111,8 +171,4 @@ const Mutation = gql`
     }
 `
 
-export default graphql(Query, {
-    options: {
-        pollInterval: 5*60*1000
-    }
-})(graphql(Mutation)(NotificationsList))
+export default graphql(Query, { options: { pollInterval: 5*60*1000 } })(graphql(Mutation)(NotificationsList))

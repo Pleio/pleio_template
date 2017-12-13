@@ -148,3 +148,8 @@ export function loadScript(src, cb) {
     script.onload = cb
     document.body.appendChild(script)
 }
+
+export function humanFileSize(size) {
+    const i = Math.floor(Math.log(size) / Math.log(1024))
+    return (size / Math.pow(1024, i)).toFixed(1) * 1 + ['B', 'kB', 'MB', 'GB', 'TB'][i]
+}

@@ -13,20 +13,20 @@ export default class Card extends React.Component {
 
         return `/groups/view/${match.params.groupGuid}/${match.params.groupSlug}`
     }
-    
+
     render() {
         const { guid, title, excerpt } = this.props.entity
 
         return (
-            <div className="card-blog-post">
-                <div className="card-blog-post__post">
+            <div className="card">
+                <div className="card__title">
                     <Link to={`${this.getRootURL()}/wiki/view/${guid}/${title}`} className="card-blog-post__title">
                         {title}
                     </Link>
+                </div>
 
-                    <div className="card-blog-post__content">
-                        {excerpt}
-                    </div>
+                <div className="card__content">
+                    {excerpt}
                 </div>
             </div>
         )

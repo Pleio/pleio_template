@@ -5,7 +5,6 @@ import gql from "graphql-tag"
 import CommentList from "../core/components/CommentList"
 import EditModal from "../core/Edit"
 import DeleteModal from "../core/Delete"
-import AddComment from "../core/containers/AddComment"
 import SocialShare from "../core/components/SocialShare"
 import NotFound from "../core/NotFound"
 import showDate from "../lib/showDate"
@@ -15,20 +14,6 @@ import Document from "../core/components/Document"
 import Featured from "../core/components/Featured"
 
 class Item extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.onEdit = () => this.props.dispatch(showModal("edit"))
-        this.onDelete = () => this.props.dispatch(showModal("delete"))
-        this.toggleAddComment = () => this.setState({showAddComment: !this.state.showAddComment})
-        this.closeAddComment = () => this.setState({showAddComment: false})
-
-        this.state = {
-            showAddComment: false
-        }
-    }
-
-
     render() {
         let { entity, viewer } = this.props.data
         let edit, featured, source

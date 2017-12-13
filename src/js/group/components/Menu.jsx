@@ -72,6 +72,9 @@ class Menu extends React.Component {
             case "/groups/view/:groupGuid/:groupSlug/questions":
                 subtype = "question"
                 break
+            case "/groups/view/:groupGuid/:groupSlug/discussions":
+                subtype = "discussion"
+                break
             case "/groups/view/:groupGuid/:groupSlug/files":
                 subtype = "file"
                 break
@@ -109,7 +112,7 @@ class Menu extends React.Component {
             <TabMenu className="tabmenu ___group" options={[
                 ...[{ link: `${rootUrl}`, title:"Overzicht" }],
                 ...menuOptions
-            ]}>
+            ]} group>
                 <button className="tabmenu__search-button" onClick={this.openSearch}></button>
                 <div className={classnames({"tabmenu__search": true, "___is-visible": this.state.searchActive})}>
                     <input ref="search" placeholder="Zoeken in groep" onKeyDown={this.onKeyDown} onChange={this.onChange} value={this.state.value} />

@@ -8,7 +8,7 @@ import ProfileField from "./components/ProfileField"
 import ProfileScore from "./components/ProfileScore"
 import Modal from "../core/components/Modal"
 import Wrapper from "./components/Wrapper"
-import { Set } from "immutable"
+import { OrderedSet } from "immutable"
 
 class Profile extends React.Component {
     constructor(props) {
@@ -52,10 +52,10 @@ class Profile extends React.Component {
             }
         })
 
-        const allFields = new Set(Object.keys(profileByKey))
+        const allFields = new OrderedSet(Object.keys(profileByKey))
 
-        const defaultFields = new Set(["emailaddress", "site", "phone", "mobile", "description"])
-        const topFields = new Set(["emailaddress", "site", "phone", "mobile"])
+        const defaultFields = new OrderedSet(["emailaddress", "site", "phone", "mobile", "description"])
+        const topFields = new OrderedSet(["emailaddress", "site", "phone", "mobile"])
 
         const contactData = topFields.intersect(defaultFields).map((key, i) => (
             <ProfileField key={i} entity={entity} canEdit={entity.canEdit} dataKey={key} name={profileByKey[key].name} value={profileByKey[key].value} />
@@ -128,7 +128,7 @@ class Profile extends React.Component {
                                     <ul className="card-profile__details">
                                         {siteProfile}
                                     </ul>
-                                    <ProfileField type="textarea" entity={entity} canEdit={entity.canEdit} dataKey="description" name={profileByKey.description.name} value={profileByKey.description.value || ""} className="card-profile__about" />
+                                    <ProfileField type="richTextarea" entity={entity} canEdit={entity.canEdit} dataKey="description" name={profileByKey.description.name} value={profileByKey.description.value || ""} className="card-profile__about" />
                                 </div>
                                 <div className="col-lg-3"></div>
                             </div>

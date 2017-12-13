@@ -45,7 +45,7 @@ class ContentFilters extends React.Component {
                 options[value] = value
             })
 
-            if (i === (site.filters.length - 1) && viewer.loggedIn) {
+            if (viewer.loggedIn) {
                 options["mine"] = `Mijn ${filter.name}`
             }
 
@@ -68,7 +68,7 @@ class ContentFilters extends React.Component {
             }
 
             let value = this.state.filters[i] || "all"
-            if (i === (site.filters.length - 1) && !this.state.filters[i] && this.props.onActivity && viewer.loggedIn) {
+            if (!this.state.filters[i] && this.props.onActivity && viewer.loggedIn) {
                 value = "mine"
             }
 

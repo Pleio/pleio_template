@@ -67,7 +67,7 @@ class Helpers {
         if (count(array_intersect($entityTags, $tags)) > 0) {
             return $entity;
         }
-        
+
         return null;
     }
 
@@ -102,14 +102,29 @@ class Helpers {
                 }
 
                 switch ($entity->getSubtype()) {
+                    case "folder":
+                        return "{$root}files/{$entity->guid}";
+                        break;
+                    case "file":
+                        $folder = $entity->getEntitiesFromRelationship("folder_of", true, 1);
+                        if (!$folder) {
+                            return "{$root}files";
+                        } else {
+                            $folder = $folder[0];
+                            return "{$root}files/{$folder->guid}";
+                        }
+                        break;
                     case "news":
                         $root .= "news";
                         break;
                     case "question":
                         $root .= "questions";
                         break;
+                    case "discussion":
+                        $root .= "discussions";
+                        break;
                     case "groupforumtopic":
-                        $root .= "questions";
+                        $root .= "discussions";
                         break;
                     case "blog":
                         $root .= "blog";
@@ -119,6 +134,9 @@ class Helpers {
                         break;
                     case "event":
                         $root .= "events";
+                        break;
+                    case "wiki":
+                        $root .= "wiki";
                         break;
                     default:
                         $root .= $entity->getSubtype();
@@ -257,6 +275,8 @@ class Helpers {
     }
 
     static function addView(\ElggEntity $entity) {
+        $dbprefix = elgg_get_config("dbprefix");
+
         if (isset($_SERVER["HTTP_USER_AGENT"]) && preg_match('/bot|crawl|slurp|spider/i', $_SERVER["HTTP_USER_AGENT"])) {
             return true;
         }
@@ -280,15 +300,10 @@ class Helpers {
         $subtype = (int) $entity->subtype;
 
         insert_data("
-            INSERT INTO elgg_entity_views (guid, type, subtype, container_guid, site_guid, views)
+            INSERT INTO {$dbprefix}entity_views (guid, type, subtype, container_guid, site_guid, views)
             VALUES ({$guid}, '{$type}', {$subtype}, {$entity->container_guid}, {$entity->site_guid}, 1)
             ON DUPLICATE KEY UPDATE views = views + 1;
         ");
-
-        /*insert_data("
-            INSERT INTO elgg_entity_views_log (entity_guid, type, subtype, container_guid, site_guid, performed_by_guid, time_created)
-            VALUES ({$guid}, '${type}', {$subtype}, {$entity->container_guid}, {$entity->site_guid}, {$user_guid}, NOW());
-        ");*/
 
         if (is_memcache_available()) {
             $cache = new \ElggMemcache('entity_view_counter');
@@ -297,64 +312,33 @@ class Helpers {
         }
     }
 
-    static function getEntitiesFromTags($subtypes, $tags, $offset = 0, $limit = 20) {
-        global $CONFIG;
+    static function getTagFilterJoin($tags) {
+        $dbprefix = elgg_get_config("dbprefix");
+        $tags_id = get_metastring_id("tags");
 
-        $bools = [
-            ["term" => [ "type" => "object" ]],
-            ["term" => [ "site_guid" => $CONFIG->site_guid ]]
-        ];
+        if (!$tags_id || !$tags) {
+            // we are not filtering on tags or the tags list is empty
+            return [[], []];
+        }
 
-        if ($subtypes) {
-            if (is_array($subtypes)) {
-                $get_subtype_id = function($subtype) { return get_subtype_id("object", $subtype); };
-                $bools[] = ["terms" => [ "subtype" => array_map($get_subtype_id, $subtypes)]];
-            } else {
-                $bools[] = ["term" => [ "subtype" => get_subtype_id("object", $subtypes) ]];
+        $filtered_tags_ids = [];
+        foreach ($tags as $tag) {
+            $tag_id = get_metastring_id($tag);
+            if ($tag_id) {
+                $filtered_tags_ids[] = $tag_id;
             }
         }
 
-        $user = elgg_get_logged_in_user_guid();
-
-        $ignore_access = elgg_check_access_overrides($user);
-        if ($ignore_access != true && !elgg_is_admin_logged_in()) {
-            $bools[] = ["terms" => [ "access_id" => get_access_array() ]];
+        if (!$filtered_tags_ids) {
+            // return an empty list because we are filtering on tags that do not exist in the database yet
+            return [[], ["(1 = 2)"]];
         }
 
-        if ($tags && is_array($tags) && count($tags) > 0) {
-            $bools[] = ["terms" => [ "tags" => array_map("strtolower", $tags) ]];
-        }
-
-        $results = \ESInterface::get()->client->search([
-            "index" => $CONFIG->elasticsearch_index,
-            "body" => [
-                "query" => [
-                    "bool" => [
-                        "must" => $bools
-                    ]
-                ],
-                "from" => (int) $offset,
-                "size" => (int) $limit,
-                "sort" => [
-                    "time_created" => "desc"
-                ]
-            ]
-        ]);
-
-        $total = $results['hits']['total'];
-
-        $entities = [];
-
-        foreach ($results["hits"]["hits"] as $hit) {
-            $entity = get_entity($hit["_id"]);
-            if ($entity) {
-                $entities[] = get_entity($hit["_id"]);
-            }
-        }
+        $filtered_tags_ids = implode(", ", $filtered_tags_ids);
 
         return [
-            "total" => $total,
-            "entities" => $entities
+            ["JOIN {$dbprefix}metadata md ON md.entity_guid = e.guid AND md.name_id = {$tags_id}"],
+            ["md.value_id IN ({$filtered_tags_ids})"]
         ];
     }
 
@@ -652,7 +636,8 @@ class Helpers {
                 "accessIds" => Resolver::getAccessIds(["guid" => $site->guid]),
                 "defaultAccessId" => Resolver::getDefaultAccessId(["guid" => $site->guid]),
                 "startPage" => elgg_get_plugin_setting("startpage", "pleio_template") ?: "activity",
-                "startPageCms" => elgg_get_plugin_setting("startpage_cms", "pleio_template")
+                "startPageCms" => elgg_get_plugin_setting("startpage_cms", "pleio_template"),
+                "newsletter" => elgg_get_plugin_setting("newsletter", "pleio_template") === "no" ? false : true
             ]
         ];
     }
