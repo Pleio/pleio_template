@@ -26,14 +26,6 @@ $header = elgg_view('admin/header', $vars);
 $body = $vars['body'];
 $footer = elgg_view('admin/footer', $vars);
 
-if (webpack_dev_server_is_available()) {
-    $path = "http://localhost:9001/";
-} else {
-    $path = "/";
-}
-
-$path .= "mod/pleio_template/build/";
-
 // Set the content type
 header("Content-type: text/html; charset=UTF-8");
 
@@ -68,8 +60,13 @@ header("Content-type: text/html; charset=UTF-8");
         </div>
     </div>
     <?php echo elgg_view('page/elements/foot'); ?>
-    <script src="<?php echo $path; ?>vendor.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
-    <script src="<?php echo $path; ?>admin.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
+    <?php if (webpack_dev_server_is_available()): ?>
+        <script src="http://localhost:9001/mod/pleio_template/build/vendor.js"></script>
+        <script src="http://localhost:9001/mod/pleio_template/build/web.js"></script>
+    <?php else: ?>
+        <script src="/mod/pleio_template/build/vendor.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
+        <script src="/mod/pleio_template/build/web.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
+    <?php endif; ?>
 </body>
 
 </html>

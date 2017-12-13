@@ -69,8 +69,6 @@ function pleio_template_init() {
     elgg_extend_view("css/admin", "pleio_template/css/admin");
 
     elgg_register_simplecache_view("css/web");
-    elgg_register_simplecache_view("js/web");
-    elgg_register_simplecache_view("js/vendor");
 
     elgg_register_admin_menu_item("administer", "all", "users");
     if (elgg_in_context("admin")) {
