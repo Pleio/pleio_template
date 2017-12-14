@@ -62,7 +62,7 @@ header("Content-type: text/html; charset=UTF-8");
     <?php echo elgg_view('page/elements/foot'); ?>
     <?php if (webpack_dev_server_is_available()): ?>
         <script src="http://localhost:9001/mod/pleio_template/build/vendor.js"></script>
-        <script src="http://localhost:9001/mod/pleio_template/build/web.js"></script>
+        <script src="http://localhost:9001/mod/pleio_template/build/admin.js"></script>
     <?php else: ?>
         <script src="/mod/pleio_template/build/vendor.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
         <script src="/mod/pleio_template/build/web.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
