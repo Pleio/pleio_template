@@ -65,7 +65,7 @@ header("Content-type: text/html; charset=UTF-8");
         <script src="http://localhost:9001/mod/pleio_template/build/admin.js"></script>
     <?php else: ?>
         <script src="/mod/pleio_template/build/vendor.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
-        <script src="/mod/pleio_template/build/web.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
+        <script src="/mod/pleio_template/build/admin.js?v=<?php echo $CONFIG->lastcache; ?>"></script>
     <?php endif; ?>
 </body>
 
