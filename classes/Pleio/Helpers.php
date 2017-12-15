@@ -433,7 +433,7 @@ class Helpers {
             $user->getURL(),
             $url,
         ));
-        
+
         return notify_user($group->owner_guid, $user->guid, $subject, $body);
     }
 

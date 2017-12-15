@@ -10,7 +10,7 @@ $entity = elgg_extract("entity", $vars);
                     <td class="section" style="padding:24px 50px" bgcolor="#bfe7f8">
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tr>
-                                <td class="h3" style="color:#01689b; font-family:Arial,sans-serif; font-size:22px; line-height:26px; text-align:left"><?php echo pleio_template_format_date($entity->startDate, "event"); ?></td>
+                                <td class="h3" style="color:#01689b; font-family:Arial,sans-serif; font-size:22px; line-height:26px; text-align:left"><?php echo pleio_template_format_date($entity->start_day, "event"); ?></td>
                             </tr>
                             <tr>
                                 <td class="h4" style="color:#01689b; font-family:Arial,sans-serif; font-size:24px; line-height:28px; text-align:left; font-weight:bold"><?php echo $entity->title; ?></td>
