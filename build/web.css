@@ -1195,7 +1195,9 @@ body.___rijkshuisstijl .navigation__search button:before,
 .widget__admin .___delete:before,
 .widget__admin .___close:before,
 .card-document__format.___folder:before,
-.card-edit:before {
+.card-edit:before,
+body.___leraar .navigation__search button:before,
+.tabmenu__search-container button:before {
   display: inline-block;
   vertical-align: middle;
   font-family: "icons-webfont";
@@ -14308,6 +14310,115 @@ body.modal__open {
   .card-blog-post.___can-edit:hover .card-edit {
     opacity: 1;
     visibility: visible;
+  }
+}
+.group-info__content.___scrollable {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+}
+.list-members.___scrollable {
+  overflow-y: auto;
+}
+.navigation__links {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+body.___leraar .navigation__search {
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 14rem;
+  background-color: #418eb4;
+}
+@media (max-width: 679px) {
+  body.___leraar .navigation__search {
+    display: none;
+  }
+}
+body.___leraar .navigation__search input {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  padding-left: 2rem;
+  color: #fff;
+}
+body.___leraar .navigation__search input::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #99d8f4;
+}
+body.___leraar .navigation__search input::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #99d8f4;
+}
+body.___leraar .navigation__search input:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #99d8f4;
+}
+body.___leraar .navigation__search input:-moz-placeholder {
+  /* Firefox 18- */
+  color: #99d8f4;
+}
+body.___leraar .navigation__search button {
+  padding: 0 2rem;
+}
+body.___leraar .navigation__search button:before {
+  content: "\E04E";
+}
+body.___leraar .navigation__search button:before {
+  font-size: 1.8rem;
+  color: #99d8f4;
+  margin-bottom: .1rem;
+}
+.tabmenu__search-container {
+  margin-left: auto;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 20rem;
+  background-color: #f2fafe;
+}
+@media (max-width: 679px) {
+  .tabmenu__search-container {
+    display: none;
+  }
+}
+.tabmenu__search-container input {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  padding-left: 2rem;
+  color: #000;
+}
+.tabmenu__search-container input::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #99d8f4;
+}
+.tabmenu__search-container input::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #99d8f4;
+}
+.tabmenu__search-container input:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #99d8f4;
+}
+.tabmenu__search-container input:-moz-placeholder {
+  /* Firefox 18- */
+  color: #99d8f4;
+}
+.tabmenu__search-container button {
+  padding: 0 2rem;
+}
+.tabmenu__search-container button:before {
+  content: "\E04E";
+}
+.tabmenu__search-container button:before {
+  font-size: 1.8rem;
+  color: #99d8f4;
+  margin-bottom: .1rem;
+}
+@media (max-width: 679px) {
+  .___not-visible-on-mobile {
+    display: none;
   }
 }
 #__bs_notify__ {
