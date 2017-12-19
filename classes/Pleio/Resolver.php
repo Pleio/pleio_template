@@ -467,13 +467,19 @@ class Resolver {
         if ($args["q"]) {
             $q = sanitize_string($args["q"]);
             $options["wheres"] = "ue.name LIKE '{$q}%'";
-        }
 
-        $result = get_data_row("SELECT COUNT(guid_one) AS total FROM {$dbprefix}entity_relationships WHERE relationship = 'member' AND guid_two = {$group->guid}");
+            $total = elgg_get_entities_from_relationship(array_merge(
+                $options,
+                ["count" => true]
+            ));
+        } else {
+            $result = get_data_row("SELECT COUNT(guid_one) AS total FROM {$dbprefix}entity_relationships WHERE relationship = 'member' AND guid_two = {$group->guid}");
+            $total = $result->total;
+        }
 
         if ($group->membership === ACCESS_PRIVATE && !$group->canEdit() && !$group->isMember())  {
             return [
-                "total" => $result->total,
+                "total" => $total,
                 "canWrite" => false,
                 "edges" => []
             ];
@@ -507,7 +513,7 @@ class Resolver {
         }
 
         return [
-            "total" => $result->total,
+            "total" => $total,
             "canWrite" => false,
             "edges" => $members
         ];
