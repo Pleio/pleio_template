@@ -520,3 +520,9 @@ body.modal__open {
 .list-members.___scrollable {
     overflow-y: auto;
 }
+
+.___not-visible-on-mobile {
+    @media ( max-width: @screen-xs-max ) {
+        display: none;
+    }
+}
