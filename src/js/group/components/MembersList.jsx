@@ -18,10 +18,6 @@ class MembersList extends React.Component {
         }
     }
 
-    componentWillUpdate(nextProps) {
-        console.log(nextProps)
-    }
-
     @autobind
     onScroll(e) {
         if (!this.refs.list) {

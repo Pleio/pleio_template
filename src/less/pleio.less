@@ -521,6 +521,105 @@ body.modal__open {
     overflow-y: auto;
 }
 
+@color-primary--superlight: tint(@color-primary, 25%);
+
+.navigation__links {
+    flex-shrink: 0;
+}
+
+body.___leraar {
+    .navigation__search {
+        display: flex;
+        @media ( max-width: @screen-xs-max ) {
+            display: none;
+        }
+
+        max-width: 14rem;
+        background-color: @color-primary--superlight;
+
+        input {
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            padding-left: 2rem;
+            color: @color-white;
+
+            &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+                color: @color-secondary--light;
+            }
+
+            &::-moz-placeholder { /* Firefox 19+ */
+                color: @color-secondary--light;
+            }
+
+            &:-ms-input-placeholder { /* IE 10+ */
+                color: @color-secondary--light;
+            }
+
+            &:-moz-placeholder { /* Firefox 18- */
+                color: @color-secondary--light;
+            }
+        }
+
+        button {
+            padding: 0 2rem;
+
+            .icon(search);
+            &:before {
+                font-size: 1.8rem;
+                color: @color-secondary--light;
+                margin-bottom: .1rem;
+            }
+        }
+    }
+}
+
+.tabmenu__search-container {
+    margin-left: auto;
+    display: flex;
+    @media ( max-width: @screen-xs-max ) {
+        display: none;
+    }
+
+    max-width: 20rem;
+    background-color: tint(@color-secondary, 95%);
+
+    input {
+        width: 100%;
+        background-color: transparent;
+        border: none;
+        padding-left: 2rem;
+        color: @color-black;
+
+        &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: @color-secondary--light;
+        }
+
+        &::-moz-placeholder { /* Firefox 19+ */
+            color: @color-secondary--light;
+        }
+
+        &:-ms-input-placeholder { /* IE 10+ */
+            color: @color-secondary--light;
+        }
+
+        &:-moz-placeholder { /* Firefox 18- */
+            color: @color-secondary--light;
+        }
+    }
+
+    button {
+        padding: 0 2rem;
+
+        .icon(search);
+        &:before {
+            font-size: 1.8rem;
+            color: @color-secondary--light;
+            margin-bottom: .1rem;
+        }
+    }
+}
+
 .___not-visible-on-mobile {
     @media ( max-width: @screen-xs-max ) {
         display: none;
