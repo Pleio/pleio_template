@@ -534,42 +534,16 @@ body.___leraar {
             display: none;
         }
 
+        margin-top: auto;
+        margin-bottom: auto;
         max-width: 14rem;
-        background-color: @color-primary--superlight;
 
         input {
+            border-radius: 0.2rem;
             width: 100%;
-            background-color: transparent;
-            border: none;
-            padding-left: 2rem;
-            color: @color-white;
-
-            &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-                color: @color-secondary--light;
-            }
-
-            &::-moz-placeholder { /* Firefox 19+ */
-                color: @color-secondary--light;
-            }
-
-            &:-ms-input-placeholder { /* IE 10+ */
-                color: @color-secondary--light;
-            }
-
-            &:-moz-placeholder { /* Firefox 18- */
-                color: @color-secondary--light;
-            }
-        }
-
-        button {
-            padding: 0 2rem;
-
-            .icon(search);
-            &:before {
-                font-size: 1.8rem;
-                color: @color-secondary--light;
-                margin-bottom: .1rem;
-            }
+            height: 4.6rem;
+            background-color: tint(@color-primary, 95%);
+            border: tint(@color-primary, 75%);
         }
     }
 }
@@ -581,42 +555,18 @@ body.___leraar {
         display: none;
     }
 
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 1rem;
     max-width: 20rem;
-    background-color: tint(@color-secondary, 95%);
 
     input {
+        border-radius: 0.2rem;
         width: 100%;
-        background-color: transparent;
+        height: 4.6rem;
         border: none;
-        padding-left: 2rem;
-        color: @color-black;
-
-        &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-            color: @color-secondary--light;
-        }
-
-        &::-moz-placeholder { /* Firefox 19+ */
-            color: @color-secondary--light;
-        }
-
-        &:-ms-input-placeholder { /* IE 10+ */
-            color: @color-secondary--light;
-        }
-
-        &:-moz-placeholder { /* Firefox 18- */
-            color: @color-secondary--light;
-        }
-    }
-
-    button {
-        padding: 0 2rem;
-
-        .icon(search);
-        &:before {
-            font-size: 1.8rem;
-            color: @color-secondary--light;
-            margin-bottom: .1rem;
-        }
+        background-color: tint(@color-secondary, 99%);
+        border: tint(@color-secondary, 95%);
     }
 }
 

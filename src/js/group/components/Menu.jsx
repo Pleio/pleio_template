@@ -114,8 +114,10 @@ class Menu extends React.Component {
                 ...menuOptions
             ]} group>
                 <div className="tabmenu__search-container">
-                    <input ref="search" placeholder="Zoeken in groep" onKeyDown={this.onKeyDown} onChange={this.onChange} value={this.state.value} />
-                    <button className="tabmenu__search-button" onClick={this.openSearch}></button>
+                    <div className="search-bar">
+                        <input name="q" onKeyDown={this.onKeyDown} onChange={this.onChange} value={this.state.value} placeholder="Zoeken in groep" />
+                        <div className="search-bar__button" />
+                    </div>
                 </div>
             </TabMenu>
         )

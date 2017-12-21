@@ -50,8 +50,10 @@ class UserMenu extends React.Component {
             return (
                 <div className="navigation__actions">
                     <form className="navigation__search" onSubmit={this.onSearch}>
-                        <input name="q" onChange={this.onChange} value={this.state.q} placeholder="Zoeken" />
-                        <button />
+                        <div className="search-bar">
+                            <input name="q" onChange={this.onChange} value={this.state.q} placeholder="Zoeken" />
+                            <div className="search-bar__button" />
+                        </div>
                     </form>
                     <NotificationsTop />
                     <div className="navigation__action ___account">
