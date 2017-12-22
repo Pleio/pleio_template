@@ -362,12 +362,16 @@ function pleio_template_email_handler($hook, $type, $return, $params) {
         $params["params"] = [];
     }
 
-    return mail(
-        $params["to"],
-        $subject,
-        elgg_view("emails/default", array_merge($email_params, $params["params"])),
-        $headers
-    );
+	if (!isset($CONFIG->block_mail)) {
+        return mail(
+            $params["to"],
+            $subject,
+            elgg_view("emails/default", array_merge($email_params, $params["params"])),
+            $headers
+        );
+	} else {
+		return true;
+	}
 }
 
 function pleio_template_format_date($datetime, $type = "default") {
