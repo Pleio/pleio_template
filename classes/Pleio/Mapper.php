@@ -82,7 +82,7 @@ class Mapper {
             "excerpt" => elgg_get_excerpt(html_entity_decode($entity->description)),
             "timeCreated" => date("c", $entity->time_created),
             "timeUpdated" => date("c", $entity->time_updated),
-            "startDate" =>Helpers::getEventStartDate($entity),
+            "startDate" => Helpers::getEventStartDate($entity),
             "endDate" => Helpers::getEventEndDate($entity),
             "canEdit" => $entity->canEdit(),
             "accessId" => $entity->access_id,

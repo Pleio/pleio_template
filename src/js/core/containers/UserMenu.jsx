@@ -3,8 +3,27 @@ import { graphql } from "react-apollo"
 import { NavLink, withRouter } from "react-router-dom"
 import NotificationsTop from "../../notifications/components/NotificationsTop"
 import Tooltip from "../../core/components/Tooltip"
+import autobind from "autobind-decorator"
 
 class UserMenu extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            q: ""
+        }
+
+        this.onChange = (e) => this.setState({ q: e.target.value })
+    }
+
+    @autobind
+    onSearch(e) {
+        e.preventDefault()
+
+        const { history } = this.props
+        history.push(`/search/results?q=${this.state.q}`)
+    }
+
     render() {
         const { viewer } = this.props
 
@@ -30,7 +49,12 @@ class UserMenu extends React.Component {
 
             return (
                 <div className="navigation__actions">
-                    <NavLink to="/search" title="Zoeken" className="navigation__action ___search" />
+                    <form className="navigation__search" onSubmit={this.onSearch}>
+                        <div className="search-bar">
+                            <input name="q" onChange={this.onChange} value={this.state.q} placeholder="Zoeken" />
+                            <div className="search-bar__button" />
+                        </div>
+                    </form>
                     <NotificationsTop />
                     <div className="navigation__action ___account">
                         <div style={{backgroundImage: "url('" + viewer.user.icon + "')"}} className="navigation__picture"></div>

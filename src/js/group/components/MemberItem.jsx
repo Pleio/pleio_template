@@ -58,7 +58,7 @@ class MemberItem extends React.Component {
         let editable
         if (this.props.editable && this.state.role !== "owner") {
             editable = (
-                <Select className="selector ___no-line" options={{member: "Lid", admin: "Beheerder", removed: "Verwijderen"}} value={this.state.role} onChange={this.onChange} />
+                <Select className="selector ___no-line ___not-visible-on-mobile" options={{member: "Lid", admin: "Beheerder", removed: "Verwijderen"}} value={this.state.role} onChange={this.onChange} />
             )
         }
 

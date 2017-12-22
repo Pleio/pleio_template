@@ -305,6 +305,13 @@ class Helpers {
             ON DUPLICATE KEY UPDATE views = views + 1;
         ");
 
+        $time = time();
+
+        insert_data("
+            INSERT INTO elgg_entity_views_log (entity_guid, type, subtype, container_guid, site_guid, performed_by_guid, time_created)
+            VALUES ({$guid}, '${type}', {$subtype}, {$entity->container_guid}, {$entity->site_guid}, {$user_guid}, {$time});
+        ");
+
         if (is_memcache_available()) {
             $cache = new \ElggMemcache('entity_view_counter');
             $key = "view_" . session_id() . "_" . $entity->guid;
@@ -426,7 +433,7 @@ class Helpers {
             $user->getURL(),
             $url,
         ));
-        
+
         return notify_user($group->owner_guid, $user->guid, $subject, $body);
     }
 

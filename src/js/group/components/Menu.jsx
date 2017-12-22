@@ -113,10 +113,11 @@ class Menu extends React.Component {
                 ...[{ link: `${rootUrl}`, title:"Overzicht" }],
                 ...menuOptions
             ]} group>
-                <button className="tabmenu__search-button" onClick={this.openSearch}></button>
-                <div className={classnames({"tabmenu__search": true, "___is-visible": this.state.searchActive})}>
-                    <input ref="search" placeholder="Zoeken in groep" onKeyDown={this.onKeyDown} onChange={this.onChange} value={this.state.value} />
-                    <button onClick={this.closeSearch} />
+                <div className="tabmenu__search-container">
+                    <div className="search-bar">
+                        <input name="q" onKeyDown={this.onKeyDown} onChange={this.onChange} value={this.state.value} placeholder="Zoeken in groep" />
+                        <div className="search-bar__button" />
+                    </div>
                 </div>
             </TabMenu>
         )
