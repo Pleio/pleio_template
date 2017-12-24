@@ -1195,9 +1195,7 @@ body.___rijkshuisstijl .navigation__search button:before,
 .widget__admin .___delete:before,
 .widget__admin .___close:before,
 .card-document__format.___folder:before,
-.card-edit:before,
-body.___leraar .navigation__search button:before,
-.tabmenu__search-container button:before {
+.card-edit:before {
   display: inline-block;
   vertical-align: middle;
   font-family: "icons-webfont";
@@ -14328,8 +14326,9 @@ body.modal__open {
 body.___leraar .navigation__search {
   display: -ms-flexbox;
   display: flex;
+  margin-top: auto;
+  margin-bottom: auto;
   max-width: 14rem;
-  background-color: #418eb4;
 }
 @media (max-width: 679px) {
   body.___leraar .navigation__search {
@@ -14337,45 +14336,20 @@ body.___leraar .navigation__search {
   }
 }
 body.___leraar .navigation__search input {
+  border-radius: 0.2rem;
   width: 100%;
-  background-color: transparent;
-  border: none;
-  padding-left: 2rem;
-  color: #fff;
-}
-body.___leraar .navigation__search input::-webkit-input-placeholder {
-  /* Chrome/Opera/Safari */
-  color: #99d8f4;
-}
-body.___leraar .navigation__search input::-moz-placeholder {
-  /* Firefox 19+ */
-  color: #99d8f4;
-}
-body.___leraar .navigation__search input:-ms-input-placeholder {
-  /* IE 10+ */
-  color: #99d8f4;
-}
-body.___leraar .navigation__search input:-moz-placeholder {
-  /* Firefox 18- */
-  color: #99d8f4;
-}
-body.___leraar .navigation__search button {
-  padding: 0 2rem;
-}
-body.___leraar .navigation__search button:before {
-  content: "\E04E";
-}
-body.___leraar .navigation__search button:before {
-  font-size: 1.8rem;
-  color: #99d8f4;
-  margin-bottom: .1rem;
+  height: 4.6rem;
+  background-color: #f2f7fa;
+  border: #c0d9e6;
 }
 .tabmenu__search-container {
   margin-left: auto;
   display: -ms-flexbox;
   display: flex;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 1rem;
   max-width: 20rem;
-  background-color: #f2fafe;
 }
 @media (max-width: 679px) {
   .tabmenu__search-container {
@@ -14383,38 +14357,12 @@ body.___leraar .navigation__search button:before {
   }
 }
 .tabmenu__search-container input {
+  border-radius: 0.2rem;
   width: 100%;
-  background-color: transparent;
+  height: 4.6rem;
   border: none;
-  padding-left: 2rem;
-  color: #000;
-}
-.tabmenu__search-container input::-webkit-input-placeholder {
-  /* Chrome/Opera/Safari */
-  color: #99d8f4;
-}
-.tabmenu__search-container input::-moz-placeholder {
-  /* Firefox 19+ */
-  color: #99d8f4;
-}
-.tabmenu__search-container input:-ms-input-placeholder {
-  /* IE 10+ */
-  color: #99d8f4;
-}
-.tabmenu__search-container input:-moz-placeholder {
-  /* Firefox 18- */
-  color: #99d8f4;
-}
-.tabmenu__search-container button {
-  padding: 0 2rem;
-}
-.tabmenu__search-container button:before {
-  content: "\E04E";
-}
-.tabmenu__search-container button:before {
-  font-size: 1.8rem;
-  color: #99d8f4;
-  margin-bottom: .1rem;
+  background-color: #fcfeff;
+  border: #f2fafe;
 }
 @media (max-width: 679px) {
   .___not-visible-on-mobile {
