@@ -144,10 +144,15 @@ class Resolver {
         return $accessIds;
     }
 
-    static function getDefaultAccessId($object) {
-        $old_guid = elgg_set_page_owner_guid($object["guid"]);
-        $default_access = get_default_access();
-        elgg_set_page_owner_guid($old_guid);
+    static function getDefaultAccessId($container) {
+        $container = get_entity($container["guid"]);
+
+        if ($container instanceof \ElggGroup && $container->membership === ACCESS_PRIVATE && $container->group_acl) {
+            $default_access = $container->group_acl;
+        } else {
+            $default_access = get_default_access();
+        }
+
         return $default_access;
     }
 
