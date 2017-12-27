@@ -1352,12 +1352,10 @@ class SchemaBuilder {
         $addFileMutation = Relay::mutationWithClientMutationId([
             "name" => "addFile",
             "inputFields" => [
-                "containerGuid" => [
-                    "type" => Type::string()
-                ],
-                "file" => [
-                    "type" => Type::string()
-                ]
+                "containerGuid" => [ "type" => Type::string() ],
+                "file" => [ "type" => Type::string() ],
+                "accessId" => [ "type" => Type::int() ],
+                "writeAccessId" => [ "type" => Type::int() ],
             ],
             "outputFields" => [
                 "entity" => [
@@ -1373,15 +1371,12 @@ class SchemaBuilder {
         $editFileFolderMutation = Relay::mutationWithClientMutationId([
             "name" => "editFileFolder",
             "inputFields" => [
-                "guid" => [
-                    "type" => Type::string()
-                ],
-                "title" => [
-                    "type" => Type::string()
-                ],
-                "file" => [
-                    "type" => Type::string()
-                ]
+                "guid" => [ "type" => Type::string() ],
+                "title" => [ "type" => Type::string() ],
+                "file" => [ "type" => Type::string() ],
+                "accessId" => [ "type" => Type::int() ],
+                "writeAccessId" => [ "type" => Type::int() ],
+
             ],
             "outputFields" => [
                 "entity" => [

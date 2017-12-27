@@ -31,7 +31,9 @@ class AddFolder extends React.Component {
                     subtype: "folder",
                     title: values.title,
                     description: "",
-                    containerGuid: containerGuid
+                    containerGuid: containerGuid,
+                    accessId: values.accessId,
+                    writeAccessId: values.writeAccessId,
                 }
             },
             refetchQueries: ["FilesList"]
@@ -57,7 +59,7 @@ class AddFolder extends React.Component {
             permissions = (
                 <div>
                     <AccessField name="accessId" label="Leesrechten" />
-                    <AccessField name="writeAccessId" label="Schrijfrechten" value="0" />
+                    <AccessField write name="writeAccessId" label="Schrijfrechten" />
                 </div>
             )
         }

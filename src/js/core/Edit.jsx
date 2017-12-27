@@ -136,12 +136,18 @@ class Edit extends React.Component {
                 break
         }
 
-        let permissions
+        let permissions, write
         if (window.__SETTINGS__['advancedPermissions']) {
+            if (this.props.subtype === "wiki") {
+                write = (
+                    <AccessField write name="writeAccessId" label="Schrijfrechten" value={entity.writeAccessId} />
+                )
+            }
+
             permissions = (
                 <div>
                     <AccessField name="accessId" label="Leesrechten" value={entity.accessId} />
-                    <AccessField name="writeAccessId" label="Schrijfrechten" value={entity.writeAccessId || "0"} />
+                    {write}
                 </div>
             )
         }

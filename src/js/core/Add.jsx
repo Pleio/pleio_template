@@ -131,12 +131,18 @@ class Add extends React.Component {
                 break
         }
 
-        let permissions
+        let permissions, write
         if (window.__SETTINGS__['advancedPermissions']) {
+            if (this.props.subtype === "wiki") {
+                write = (
+                    <AccessField write name="writeAccessId" label="Schrijfrechten" />
+                )
+            }
+
             permissions = (
                 <div>
                     <AccessField name="accessId" label="Leesrechten" />
-                    <AccessField name="writeAccessId" label="Schrijfrechten" value="0" />
+                    {write}
                 </div>
             )
         }

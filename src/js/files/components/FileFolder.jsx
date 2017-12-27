@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import showDate from "../../lib/showDate"
 import CheckField from "../../core/components/CheckField"
+import AccessField from "../../core/components/AccessField"
 import autobind from "autobind-decorator"
 import classnames from "classnames"
 
@@ -79,7 +80,8 @@ class FileFolder extends React.Component {
                 </td>
                 <td className="file__fav"></td>
                 <td className="file__date">{showDate(entity.timeCreated)}</td>
-                <td className="file__owner">{entity.owner.name}</td>
+                <td className="file__owner"><AccessField readOnly value={entity.accessId} /></td>
+                <td className="file__owner"><AccessField readOnly value={entity.writeAccessId} /></td>
             </tr>
         )
     }

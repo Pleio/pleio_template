@@ -180,13 +180,13 @@ class Mutations {
                     $defaultAccessId = get_default_access();
                 }
 
-                if ((int) $input["accessId"]) {
+                if (isset($input["accessId"])) {
                     $entity->access_id = (int) $input["accessId"];
                 } else {
                     $entity->access_id = $defaultAccessId;
                 }
 
-                if ((int) $input["writeAccessId"]) {
+                if (isset($input["writeAccessId"])) {
                     $entity->write_access_id = (int) $input["writeAccessId"];
                 } else {
                     $entity->write_access_id = ACCESS_PRIVATE;
@@ -322,14 +322,12 @@ class Mutations {
                     $entity->richDescription = $input["richDescription"];
                 }
 
-                if ((int) $input["accessId"]) {
+                if (isset($input["accessId"])) {
                     $entity->access_id = (int) $input["accessId"];
                 }
 
-                if ((int) $input["writeAccessId"]) {
+                if (isset($input["writeAccessId"])) {
                     $entity->write_access_id = (int) $input["writeAccessId"];
-                } else {
-                    $entity->write_access_id = ACCESS_PRIVATE;
                 }
 
                 if (elgg_is_admin_logged_in()) {
@@ -456,7 +454,18 @@ class Mutations {
 
         $entity = new \FilePluginFile();
         $entity->title = $file["name"];
-        $entity->access_id = get_default_access();
+
+        if (isset($input["accessId"])) {
+            $entity->access_id = $input["accessId"];
+        } else {
+            $entity->access_id = get_default_access();
+        }
+
+        if (isset($input["writeAccessId"])) {
+            $entity->write_access_id = $input["writeAccessId"];
+        } else {
+            $entity->write_access_id = ACCESS_PRIVATE;
+        }
 
         if ($input["containerGuid"]) {
             $container = get_entity($input["containerGuid"]);
@@ -521,6 +530,18 @@ class Mutations {
 
         if ($input["title"]) {
             $entity->title = $input["title"];
+        }
+
+        if (isset($input["accessId"])) {
+            $entity->access_id = $input["accessId"];
+        } else {
+            $entity->access_id = get_default_access();
+        }
+
+        if (isset($input["writeAccessId"])) {
+            $entity->write_access_id = $input["writeAccessId"];
+        } else {
+            $entity->write_access_id = ACCESS_PRIVATE;
         }
 
         if ($entity->getSubtype() === "file" && $input["file"]) {
@@ -1025,7 +1046,7 @@ class Mutations {
         if ($result) {
             return [
                 "guid" => $row->guid
-            ];    
+            ];
         }
 
         throw new Exception("could_not_save");

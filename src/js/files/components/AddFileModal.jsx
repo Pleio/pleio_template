@@ -72,7 +72,7 @@ class AddFile extends React.Component {
             permissions = (
                 <div>
                     <AccessField name="accessId" label="Leesrechten" />
-                    <AccessField name="writeAccessId" label="Schrijfrechten" value="0" />
+                    <AccessField write name="writeAccessId" label="Schrijfrechten" />
                 </div>
             )
         }

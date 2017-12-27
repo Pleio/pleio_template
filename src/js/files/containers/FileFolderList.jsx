@@ -18,6 +18,8 @@ const Query = gql`
                     mimeType
                     canEdit
                     thumbnail
+                    accessId
+                    writeAccessId
                     owner {
                         guid
                         name

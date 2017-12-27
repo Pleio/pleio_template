@@ -1,6 +1,8 @@
 <?php
 require_once(dirname(__FILE__) . "/lib/functions.php");
 require_once(dirname(__FILE__) . "/lib/events.php");
+require_once(dirname(__FILE__) . "/lib/hooks.php");
+
 require_once(dirname(__FILE__) . "/../../vendor/autoload.php");
 spl_autoload_register("pleio_template_autoloader");
 function pleio_template_autoloader($class) {
@@ -24,6 +26,7 @@ function pleio_template_init() {
     elgg_register_plugin_hook_handler("index", "system", "pleio_template_index_handler");
     elgg_register_plugin_hook_handler("container_permissions_check", "object", "pleio_template_container_permissions_check_hook");
     elgg_register_plugin_hook_handler("action", "plugins/settings/save", "pleio_template_plugins_settings_save");
+    elgg_register_plugin_hook_handler("permissions_check", "all", "pleio_template_permissions_check");
 
     elgg_register_event_handler("create", "object", "pleio_template_create_object_handler");
     elgg_register_event_handler("create", "member_of_site", "pleio_template_create_member_of_site_handler");

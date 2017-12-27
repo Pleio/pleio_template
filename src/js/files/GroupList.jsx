@@ -27,10 +27,23 @@ class Item extends React.Component {
         this.state = {
             selected: new OrderedSet(),
             viewType: (this.props.location.hash === "#tiles") ? "tiles" : "list",
+            selectAll: false,
             filter: "all",
             orderBy: "filename",
             direction: "asc"
         }
+
+        this.selectables = {}
+    }
+
+    @autobind
+    attachSelectable(guid, component) {
+        this.selectables[guid] = component
+    }
+
+    @autobind
+    detachSelectable(guid) {
+        delete this.selectables[guid]
     }
 
     getChildContext() {
@@ -39,6 +52,8 @@ class Item extends React.Component {
         return {
             onCheck: this.onCheck,
             clearSelection: this.clearSelection,
+            detachSelectable: this.detachSelectable,
+            attachSelectable: this.attachSelectable,
             selected: this.state.selected,
             group: entity
         }
@@ -67,6 +82,11 @@ class Item extends React.Component {
     toggleViewType(newType) {
         this.props.history.push('#' + newType)
         this.setState({ viewType: newType })
+    }
+
+    @autobind
+    toggleSelectAll(e) {
+        this.setState({ selectAll: !this.state.selectAll })
     }
 
     @autobind
@@ -171,15 +191,16 @@ class Item extends React.Component {
                         <tr>
                             <th>
                                 <span className="checkbox ___large">
-                                    <input id="file-all" name="file-all" type="checkbox" onClick={this.selectAll} />
-                                    <label htmlFor={`file-${entity.guid}`} />
+                                    <input id="file-all" name="file-all" type="checkbox" onClick={this.toggleSelectAll} value={this.state.selectAll} />
+                                    <label htmlFor="file-all" />
                                 </span>
                             </th>
                             <th></th>
                             <th><button className={classnames({"___is-active": this.state.orderBy === "filename", "___is-descending": this.state.direction === "desc"})} onClick={(e) => this.toggleOrderBy("filename")}><span>Bestandsnaam</span></button></th>
                             <th></th>
                             <th><button className={classnames({"___is-active": this.state.orderBy === "timeCreated", "___is-descending": this.state.direction === "desc"})} onClick={(e) => this.toggleOrderBy("timeCreated")}><span>Aanmaakdatum</span></button></th>
-                            <th><button className={classnames({"___is-active": this.state.orderBy === "owner", "___is-descending": this.state.direction === "desc"})} onClick={(e) => this.toggleOrderBy("owner")}><span>Eigenaar</span></button></th>
+                            <th><button className={classnames({"___is-active": this.state.orderBy === "owner", "___is-descending": this.state.direction === "desc"})} onClick={(e) => this.toggleOrderBy("owner")}><span>Gedeeld met</span></button></th>
+                            <th><button className={classnames({ "___is-active": this.state.orderBy === "owner", "___is-descending": this.state.direction === "desc" })} onClick={(e) => this.toggleOrderBy("owner")}><span>Schrijfrechten voor</span></button></th>
                         </tr>
                     </thead>
                     <FileFolderList containerGuid={containerGuid} containerClassName="" inTable rowClassName="row file__item" childClass={FileFolder} filter={this.state.filter} offset={0} limit={50} orderBy={this.state.orderBy} direction={this.state.direction} selected={this.state.selected} history={this.props.history} />
@@ -241,6 +262,8 @@ class Item extends React.Component {
 Item.childContextTypes = {
     onCheck: PropTypes.func,
     clearSelection: PropTypes.func,
+    attachSelectable: PropTypes.func,
+    detachSelectable: PropTypes.func,
     selected: PropTypes.object,
     group: PropTypes.object
 }

@@ -80,6 +80,7 @@ const Query = gql`
                 richDescription
                 url
                 accessId
+                writeAccessId
                 timeCreated
                 source
                 isFeatured

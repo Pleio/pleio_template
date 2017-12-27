@@ -3,6 +3,7 @@ import Modal from "../../core/components/NewModal"
 import Errors from "../../core/components/Errors"
 import Form from "../../core/components/Form"
 import InputField from "../../core/components/InputField"
+import AccessField from "../../core/components/AccessField"
 import FileField from "../../core/components/FileField"
 import TagsField from "../../core/components/TagsField"
 import { graphql } from "react-apollo"
@@ -12,7 +13,7 @@ import { logErrors } from "../../lib/helpers"
 class EditFileFolder extends React.Component {
     constructor(props) {
         super(props)
-        
+
         this.onSubmit = this.onSubmit.bind(this)
 
         this.state = {
@@ -37,7 +38,9 @@ class EditFileFolder extends React.Component {
                     clientMutationId: 1,
                     guid: entity.guid,
                     title: values.title,
-                    file: values.file
+                    file: values.file,
+                    accessId: values.accessId,
+                    writeAccessId: values.writeAccessId,
                 }
             }
         }).then(({data}) => {
@@ -61,12 +64,23 @@ class EditFileFolder extends React.Component {
             )
         }
 
+        let permissions
+        if (window.__SETTINGS__['advancedPermissions']) {
+            permissions = (
+                <div>
+                    <AccessField name="accessId" label="Leesrechten" value={entity.accessId} />
+                    <AccessField write name="writeAccessId" label="Schrijfrechten" value={entity.writeAccessId} />
+                </div>
+            )
+        }
+
         return (
             <Form ref="form" onSubmit={this.onSubmit}>
                 <Errors errors={this.state.errors} />
                 <div className="form">
                     <InputField name="title" type="text" label="Naam" className="form__input" value={entity.title} />
                     {file}
+                    {permissions}
                     <button className="button" type="submit">
                         Wijzigen
                     </button>
@@ -83,6 +97,8 @@ const Mutation = gql`
                 guid
                 ... on Object {
                     title
+                    accessId
+                    writeAccessId
                 }
             }
         }

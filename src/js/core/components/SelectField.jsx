@@ -11,7 +11,7 @@ class SelectField extends React.Component {
         this.onChange = this.onChange.bind(this)
 
         this.state = {
-            value: this.props.value || ""
+            value: this.props.value
         }
     }
 
