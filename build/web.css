@@ -14328,7 +14328,9 @@ body.___leraar .navigation__search {
   display: flex;
   margin-top: auto;
   margin-bottom: auto;
-  max-width: 14rem;
+  max-width: 15rem;
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
 }
 @media (max-width: 679px) {
   body.___leraar .navigation__search {
