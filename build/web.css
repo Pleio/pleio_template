@@ -14173,10 +14173,11 @@ body.modal__open {
   /* autoprefixer: on */
 }
 .cms-block-filled {
-  position: relative;
-  min-height: 200px;
   display: -ms-flexbox;
   display: flex;
+  position: relative;
+  width: 100%;
+  min-height: 200px;
 }
 .cms-block .form {
   width: 100%;
@@ -14313,6 +14314,9 @@ body.modal__open {
   -ms-flex-direction: column;
       flex-direction: column;
 }
+.list-members {
+  padding-top: 1em;
+}
 .list-members.___scrollable {
   overflow-y: auto;
 }
@@ -14367,6 +14371,10 @@ body.___leraar .navigation__search input {
   .___not-visible-on-mobile {
     display: none;
   }
+}
+.lead__justify {
+  -ms-flex-pack: start;
+      justify-content: flex-start;
 }
 #__bs_notify__ {
   opacity: .15 !important;
