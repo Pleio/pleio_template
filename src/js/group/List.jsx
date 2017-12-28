@@ -43,6 +43,11 @@ class List extends React.Component {
             )
         }
 
+        let options = [{ link: "/groups", title: "Alle groepen" }]
+        if (viewer && viewer.loggedIn) {
+            options.push({ link: "/groups/mine", title: "Mijn groepen" })
+        }
+
         return (
             <div className="page-container">
                 <Document title={title} />
@@ -55,7 +60,7 @@ class List extends React.Component {
                             {add}
                         </div>
                     </div>
-                    <TabMenu options={[{link:"/groups", title: "Alle groepen"}, {link:"/groups/mine", title: "Mijn groepen"}]} marginBottom isMobile isMobileOnly />
+                    <TabMenu options={options} marginBottom isMobile isMobileOnly />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
                     <GroupsList type="group" childClass={GroupCard} offset={0} limit={20} filter={filter} hasRows />
