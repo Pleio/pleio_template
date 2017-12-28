@@ -55,11 +55,11 @@ class Widget extends React.Component {
         let settings
         if (this.state.isEditing) {
             settings = (
-                <button className="___add" onClick={(e) => this.refs.widget.onSave()}></button>
+                <button className="___save" onClick={(e) => this.refs.widget.onSave()}></button>
             )
         } else {
             settings = (
-                <button className="___settings" onClick={this.onEdit}></button>
+                <button className="___edit" onClick={this.onEdit}></button>
             )
         }
 

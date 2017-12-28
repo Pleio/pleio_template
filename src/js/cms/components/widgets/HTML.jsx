@@ -49,7 +49,7 @@ export default class HTML extends React.Component {
         }
 
         return (
-            <div dangerouslySetInnerHTML={this.getHTML()} />
+            <div className="cms-block-html" dangerouslySetInnerHTML={this.getHTML()} />
         )
     }
 }
