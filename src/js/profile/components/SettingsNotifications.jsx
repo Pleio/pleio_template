@@ -18,14 +18,19 @@ class SettingsNotifications extends React.Component {
     }
 
     submit() {
+        let input = {
+            clientMutationId: 1,
+            guid: this.props.entity.guid,
+            emailNotifications: this.refs.emailNotifications.getValue(),
+        }
+
+        if (this.refs.newsletter) {
+            input['newsletter'] = this.refs.newsletter.getValue()
+        }
+
         this.props.mutate({
             variables: {
-                input: {
-                    clientMutationId: 1,
-                    guid: this.props.entity.guid,
-                    emailNotifications: this.refs.emailNotifications.getValue(),
-                    newsletter: this.refs.newsletter.getValue()
-                }
+                input
             }
         })
     }
@@ -34,7 +39,7 @@ class SettingsNotifications extends React.Component {
         const { entity } = this.props
 
         let newsletter
-        if (window.__SETTINGS__['newsletter']) {
+        if (window.__SETTINGS__.site['newsletter']) {
             newsletter = (
                 <CheckField ref="newsletter" name="newsletter" label="Ik wil de nieuwsbrief ontvangen" onChange={this.onChange} checked={entity.getsNewsletter} />
             )
