@@ -157,8 +157,10 @@ class Item extends React.Component {
         if (viewer.canWriteToContainer) {
             let options
             if (window.__SETTINGS__['odtEnabled']) {
+                const folder = match.params.containerGuid ? `?folder_guid=${match.params.containerGuid}` : ""
+
                 options = [
-                    { href: `/odt_editor/create/${containerGuid}`, name: "Maak een bestand" },
+                    { href: `/odt_editor/create/${match.params.groupGuid}${folder}`, name: "Maak een bestand" },
                     { onClick: (e) => this.refs.addFile.toggle(), name: "Upload bestand" },
                     { onClick: (e) => this.refs.addFolder.toggle(), name: "Nieuwe map" }
                 ]
