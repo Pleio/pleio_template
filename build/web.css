@@ -14172,14 +14172,11 @@ body.modal__open {
   -webkit-box-orient: vertical;
   /* autoprefixer: on */
 }
-.cms-block.___is-filled {
-  background-color: initial;
-  -ms-flex-pack: initial;
-      justify-content: initial;
-  -ms-flex-align: initial;
-      align-items: initial;
+.cms-block-filled {
+  position: relative;
   min-height: 200px;
-  height: initial;
+  display: -ms-flexbox;
+  display: flex;
 }
 .cms-block .form {
   width: 100%;
