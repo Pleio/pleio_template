@@ -7,14 +7,8 @@ export default class InviteAutoCompleteList extends React.Component {
             <InviteItem key={i} group={this.props.group} user={user} added onDeselect={this.props.onDeselect} />
         ))
 
-        let placeholder
-        if (list.length === 0) {
-            placeholder = "Gebruik het zoekveld om een gebruiker te zoeken..."
-        }
-
         return (
-            <div className="list-members" style={{height: "300px", paddingTop:"1em"}}>
-                {placeholder}
+            <div className="list-members">
                 {list}
             </div>
         )
