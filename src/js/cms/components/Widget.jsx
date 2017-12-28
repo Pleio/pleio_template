@@ -79,7 +79,7 @@ class Widget extends React.Component {
 
         return (
             <div className={this.props.col} onBlur={this.onBlur}>
-                <div className="cms-block ___is-filled">
+                <div className="cms-block-filled">
                     {widget}
                     {overlay}
                 </div>
