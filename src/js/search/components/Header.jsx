@@ -12,7 +12,7 @@ const subtypes = [
     {title:"Mappen", subtype:"folder"},
     {title:"Bestanden", subtype:"file"},
     {title:"Blog", subtype:"blog"},
-    {title:"Forum", subtype:"question"},
+    {title:"Vragen", subtype:"question"},
     {title:"Nieuws", subtype:"news"},
     {title:"Discussies", subtype:"discussion"},
     {title:"Agenda", subtype:"event"},

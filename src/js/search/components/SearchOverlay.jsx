@@ -1,7 +1,7 @@
 import React from "react"
 import AutocompleteList from "../containers/AutocompleteList"
 
-const subtypes = [{title:"Blog", subtype:"blog"}, {title:"Forum", subtype:"question"}, {title:"Nieuws", subtype:"news"}]
+const subtypes = [{title:"Blog", subtype:"blog"}, {title:"Vragen", subtype:"question"}, {title:"Nieuws", subtype:"news"}]
 
 class SearchOverlay extends React.Component {
     render() {

@@ -28,11 +28,9 @@ class List extends React.Component {
         let add
         if (viewer && viewer.canWriteToContainer) {
             add = (
-                <div className="col-right">
-                    <Link to={`blog/add`} className="button ___large ___add ___stick">
-                        <span>Maak een blog</span>
-                    </Link>
-                </div>
+                <Link to={`blog/add`} className="button ___large ___add ___stick">
+                    <span>Maak een blog</span>
+                </Link>
             )
         }
 
@@ -40,12 +38,15 @@ class List extends React.Component {
             <div className="page-container">
                 <Document title="Blog" />
                 <ContentHeader>
-                    <h3 className="main__title">
-                        Blog
-                    </h3>
-                    <ContentFilters page="blog" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags}>
-                        {add}
-                    </ContentFilters>
+                    <div className="row">
+                        <div className="col-sm-6">
+                            <h3 className="main__title">Blog</h3>
+                        </div>
+                        <div className="col-sm-6 end-sm">
+                            {add}
+                        </div>
+                    </div>
+                    <ContentFilters page="blog" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags} />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
                     <div className="container">

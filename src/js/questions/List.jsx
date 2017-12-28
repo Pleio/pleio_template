@@ -20,10 +20,10 @@ class List extends React.Component {
     render() {
         return (
             <div className="page-container">
-                <Document title="Forum" />
+                <Document title="Vragen" />
                 <ContentHeader>
                     <h3 className="main__title">
-                        Forum
+                        Vragen
                     </h3>
                     <ContentFilters page="questions" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags}>
                         <Link to="/questions/add" className="right-lg">

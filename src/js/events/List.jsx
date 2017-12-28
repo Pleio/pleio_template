@@ -31,11 +31,9 @@ class List extends React.Component {
         let add
         if (viewer && viewer.canWriteToContainer) {
             add = (
-                <div className="col-right">
-                    <Link to={`events/add`} className="button ___large ___add ___stick">
-                        <span>Nieuw agenda-item</span>
-                    </Link>
-                </div>
+                <Link to={`events/add`} className="button ___large ___add ___stick">
+                    <span>Nieuw agenda-item</span>
+                </Link>
             )
         }
 
@@ -43,13 +41,17 @@ class List extends React.Component {
             <div className="page-container">
                 <Document title="Agenda" />
                 <ContentHeader>
-                    <h3 className="main__title">Agenda</h3>
+                    <div className="row">
+                        <div className="col-sm-6">
+                            <h3 className="main__title">Agenda</h3>
+                        </div>
+                        <div className="col-sm-6 end-sm">
+                            {add}
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="col-sm-4 col-lg-3">
                             <Select name="filter" options={{upcoming: "Aankomend", previous: "Afgelopen"}} onChange={this.onChange} value={this.state.filter} />
-                        </div>
-                        <div className="col-sm-8 end-sm col-lg-9">
-                            {add}
                         </div>
                     </div>
                 </ContentHeader>

@@ -2,9 +2,9 @@ import React from "react"
 import Select from "../../core/components/Select"
 
 const subtypeOptions = {
-    blog: "Blogberichten",
-    news: "Nieuwsberichten",
-    question: "Forumberichten",
+    blog: "Blog",
+    news: "Nieuws",
+    question: "Vragen",
     all: "Alle soorten"
 }
 
