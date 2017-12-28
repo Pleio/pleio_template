@@ -14326,11 +14326,11 @@ body.modal__open {
 body.___leraar .navigation__search {
   display: -ms-flexbox;
   display: flex;
-  margin-top: auto;
-  margin-bottom: auto;
   max-width: 15rem;
   padding-left: 1.2rem;
   padding-right: 1.2rem;
+  -ms-flex-align: center;
+      align-items: center;
 }
 @media (max-width: 679px) {
   body.___leraar .navigation__search {
@@ -14345,11 +14345,11 @@ body.___leraar .navigation__search input {
   border: #c0d9e6;
 }
 .tabmenu__search-container {
-  margin-left: auto;
   display: -ms-flexbox;
   display: flex;
-  margin-top: auto;
-  margin-bottom: auto;
+  -ms-flex-align: center;
+      align-items: center;
+  margin-left: auto;
   margin-right: 1rem;
   max-width: 20rem;
 }
