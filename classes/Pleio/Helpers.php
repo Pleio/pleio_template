@@ -146,6 +146,47 @@ class Helpers {
         }
     }
 
+    static function editAvatar($filename, $entity) {
+        if (elgg_is_active_plugin("pleio")) {
+            Helpers::saveToPleio($filename, $entity);
+        } else {
+            Helpers::saveToIcon($filename, $entity);
+        }
+    }
+
+    static function saveToPleio($filename, $entity) {
+        global $CONFIG;
+
+        $client = new \GuzzleHttp\Client();
+
+        $token = $entity->getPrivateSetting("pleio_token");
+        if (!$token) {
+            return false;
+        }
+
+        $filename = str_replace(".", "_", $filename);
+
+        try {
+            $result = $client->request("POST", "{$CONFIG->pleio->url}api/users/me/change_avatar", [
+                "headers" => [
+                    "Authorization" => "Bearer {$token}"
+                ],
+                "multipart" => [
+                    [
+                        "name" => "avatar",
+                        "contents" => fopen($_FILES[$filename]['tmp_name'], 'r'),
+                        "filename" => $_FILES[$filename]['name']
+                    ]
+                ]
+            ]);
+        } catch (GuzzleHttp\Exception\ServerException $e) {
+            return false;
+        }
+
+        $entity->icontime = time();
+        $entity->save();
+    }
+
     static function saveToIcon($filename, $entity) {
         $filename = str_replace(".", "_", $filename);
         $icon_sizes = elgg_get_config("icon_sizes");
@@ -156,7 +197,7 @@ class Helpers {
                 $owner_guid = $entity->owner_guid;
                 $target_filename = "groups/{$entity->guid}";
                 break;
-            case "ElggUser":                
+            case "ElggUser":
                 $owner_guid = $entity->guid;
                 $target_filename = "profile/{$entity->guid}";
                 break;

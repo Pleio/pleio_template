@@ -955,7 +955,7 @@ class Mutations {
         }
 
         if ($input["avatar"]) {
-            Helpers::saveToIcon($input["avatar"], $entity);
+            Helpers::editAvatar($input["avatar"], $entity);
             $entity->icontime = time();
         } else {
             unset($entity->icontime);
