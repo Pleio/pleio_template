@@ -127,7 +127,7 @@ export default class AtomicBlock extends React.Component {
         if (isEditor) {
             return (
                 <div className="editor__image" onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut} style={divStyle}>
-                    <div style={{margin:"0 auto"}}>
+                    <div style={{margin:"0 auto", flex: "1"}}>
                         {content}
                         <ImageContextualMenu
                             isVisible={this.state.showMenu}
