@@ -3,7 +3,7 @@ import Select from "../../core/components/Select"
 import { categoryOptions } from "../../lib/filters"
 
 const subtypeOptions = {
-    blog: "Blog,
+    blog: "Blog",
     news: "Nieuws",
     question: "Vragen",
     all: "Alle soorten"
