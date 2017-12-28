@@ -3,6 +3,9 @@ $site = elgg_get_site_entity();
 
 $subject = elgg_extract("subject", $vars);
 $overview = elgg_extract("overview", $vars);
+
+$primary = elgg_get_plugin_setting("color_primary", "pleio_template") ?: "#01689b";
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -101,7 +104,7 @@ $overview = elgg_extract("overview", $vars);
                                 </tr>
                                 <!-- Header -->
                                 <tr>
-                                    <td class="header" style="color:#ffffff; font-family:Arial,sans-serif; font-size:26px; line-height:30px; text-align:left; padding:15px 50px; font-weight:bold" bgcolor="#01689b">
+                                    <td class="header" style="color:#ffffff; font-family:Arial,sans-serif; font-size:26px; line-height:30px; text-align:left; padding:15px 50px; font-weight:bold" bgcolor="<?php echo $primary; ?>">
                                         <a href="<?php echo $site->url; ?>" target="_blank" class="link-white" style="color:#ffffff; text-decoration:none"><span class="link-white" style="color:#ffffff; text-decoration:none"><?php echo $site->name; ?></span></a>
                                     </td>
                                 </tr>
