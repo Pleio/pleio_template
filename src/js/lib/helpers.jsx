@@ -141,12 +141,20 @@ export function getVideoThumbnail(input) {
     return ""
 }
 
+const loadedScripts = {}
+
 export function loadScript(src, cb) {
+    if (loadedScripts[src]) {
+        return
+    }
+
     const script = document.createElement("script")
     script.setAttribute("src", src)
     script.async = true
     script.onload = cb
     document.body.appendChild(script)
+
+    loadedScripts[src] = true
 }
 
 export function humanFileSize(size) {

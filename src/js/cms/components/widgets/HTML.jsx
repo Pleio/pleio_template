@@ -3,6 +3,7 @@ import Form from "../../../core/components/Form"
 import TextField from "../../../core/components/TextField"
 import { convertToRaw } from "draft-js"
 import autobind from "autobind-decorator"
+import { loadScript } from "../../../lib/helpers"
 
 export default class HTML extends React.Component {
     @autobind
@@ -37,6 +38,17 @@ export default class HTML extends React.Component {
         }
     }
 
+    @autobind
+    loadScripts() {
+        const el = document.createElement("html")
+        el.innerHTML = this.getSetting("description")
+
+        const scripts = el.getElementsByTagName("script")
+        for (let i=0; i < scripts.length; i++) {
+            loadScript(scripts[i].src)
+        }
+    }
+
     render() {
         const { entity, isEditing } = this.props
 
@@ -47,6 +59,8 @@ export default class HTML extends React.Component {
                 </Form>
             )
         }
+
+        this.loadScripts()
 
         return (
             <div className="cms-block-html" dangerouslySetInnerHTML={this.getHTML()} />
