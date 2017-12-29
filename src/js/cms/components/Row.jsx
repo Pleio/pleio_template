@@ -9,7 +9,7 @@ import gql from "graphql-tag"
 
 const translate = {
     "text": "Tekst",
-    "html": "HTML"
+    "html": "Code"
 }
 
 class Row extends React.Component {
