@@ -31,7 +31,7 @@ class AttendButtons extends React.Component {
             )
         } else {
             return (
-                <div className="flexer ___gutter">
+                <div className="flexer ___gutter ___padding-top">
                     <LoggedInButton className="button" viewer={viewer} onClick={(e) => this.onSubmit("accept")}>Accepteren</LoggedInButton>
                     <LoggedInButton className="button ___grey" viewer={viewer} onClick={(e) => this.onSubmit("maybe")}>Misschien</LoggedInButton>
                     <LoggedInButton className="button ___grey" viewer={viewer} onClick={(e) => this.onSubmit("reject")}>Afwijzen</LoggedInButton>
