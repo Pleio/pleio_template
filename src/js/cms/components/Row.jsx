@@ -91,9 +91,9 @@ class Row extends React.Component {
         let overlay
         if (entity.canEdit) {
             overlay = (
-                <div className="overlay">
-                    <div className="overlay__buttons">
-                        <button onClick={(e) => this.refs.delete.toggle()}>Delete</button>
+                <div>
+                    <div className="cms-section__buttons">
+                        <button className="___delete" onClick={(e) => this.refs.delete.toggle()} />
                     </div>
                     <Delete ref="delete" entity={this.props.entity} refetchQueries={["PageItem"]} />
                 </div>
@@ -109,7 +109,7 @@ class Row extends React.Component {
             )
         } else {
             return (
-                <section className="section">
+                <section className="section cms-section">
                     <div className="container">
                         <div className="row">
                             {widgets}

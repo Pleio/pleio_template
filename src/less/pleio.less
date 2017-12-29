@@ -14,10 +14,6 @@
     z-index: 0;
 }
 
-.editor__input {
-    min-height: 300px;
-}
-
 .___hide-placeholder .public-DraftEditorPlaceholder-root {
     display: none;
 }
@@ -343,16 +339,28 @@ body.modal__open {
     display: flex;
     position: relative;
     width: 100%;
-    min-height: 200px;
+    min-height: 30rem;
+}
+
+.cms-block-filled .form {
+    width: 100%;
+}
+
+.cms-block-filled .form textarea {
+    min-height: 30rem;
+}
+
+.cms-block-filled .form__item,
+.cms-block-filled .content {
+    margin: 0;
+}
+
+.cms-block-filled .content {
+    padding: 1.4rem 1.6rem;
 }
 
 .cms-block-html {
     width: 100%;
-}
-
-.cms-block .form {
-    width: 100%;
-    height: 100%;
 }
 
 .editor.___is-inline {
@@ -373,25 +381,6 @@ body.modal__open {
     .content {
         margin: 0;
     }
-}
-
-.overlay {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    opacity: 0;
-
-    :hover > & {
-        opacity: 1;
-    }
-}
-
-.overlay__buttons {
-    margin: 1em;
 }
 
 .section {

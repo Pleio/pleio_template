@@ -483,7 +483,7 @@ class RichTextField extends React.Component {
                     {lists}
                     {embed}
                 </div>
-                <div className={classnames({"content editor__input": true, "___hide-placeholder":hidePlaceholder})} onClick={this.focus} style={{minHeight:this.props.minimal ? 150 : 300}}>
+                <div className={classnames({"content editor__input": true, "___hide-placeholder":hidePlaceholder})} onClick={this.focus} style={{minHeight:this.props.minimal ? "15rem" : "30rem"}}>
                     <Editor
                         ref="editor"
                         handleKeyCommand={this.handleKeyCommand}
