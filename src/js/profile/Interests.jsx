@@ -8,11 +8,18 @@ import Wrapper from "./components/Wrapper"
 
 class Settings extends React.Component {
     render() {
-        const { entity } = this.props.data
+        const { entity, site } = this.props.data
 
         if (!entity || !entity.canEdit) {
             return (
-                <div></div>
+                <div />
+            )
+        }
+
+        let interests
+        if (site.filters.length > 0) {
+            interests = (
+                <SettingsInterests entity={entity} />
             )
         }
 
@@ -22,7 +29,7 @@ class Settings extends React.Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-md-8">
-                                <SettingsInterests entity={entity} />
+                                {interests}
                                 <SettingsNotifications entity={entity} />
                             </div>
                             <div className="col-md-4">
@@ -49,10 +56,17 @@ const Query = gql`
                 tags
             }
         }
+        site {
+            guid
+            filters {
+                name
+                values
+            }
+        }
     }
 `;
 
-const withQuery = graphql(Query, {
+export default graphql(Query, {
     options: (ownProps) => {
         return {
             variables: {
@@ -60,6 +74,4 @@ const withQuery = graphql(Query, {
             }
         }
     }
-})
-
-export default withQuery(Settings)
+})(Settings)
