@@ -35,12 +35,14 @@ class List extends React.Component {
             <div className="page-container">
                 <Document title="Pagina's" />
                 <ContentHeader>
-                    <h3 className="main__title">
-                        Pagina's
-                    </h3>
-                    <ContentFilters page="news" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags}>
-                        {add}
-                    </ContentFilters>
+                    <div className="row">
+                        <div className="col-sm-6">
+                            <h3 className="main__title">Pagina's</h3>
+                        </div>
+                        <div className="col-sm-6 end-sm">
+                            {add}
+                        </div>
+                    </div>
                 </ContentHeader>
                 <section className="section ___grey ___grow">
                     <PageList childClass={Card} subtype="page" offset={0} limit={20} tags={this.state.tags} />

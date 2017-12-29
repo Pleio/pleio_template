@@ -114,7 +114,7 @@ class Item extends React.Component {
             let addPage
             if (entity.pageType == "text") {
                 addPage = (
-                    <button className="___add" onClick={(e) => this.refs.addModal.toggle()}>+</button>
+                    <button className="___add" onClick={(e) => this.refs.addModal.toggle()} />
                 )
             }
 
