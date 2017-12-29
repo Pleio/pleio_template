@@ -5,10 +5,12 @@ export default class LinkModal extends React.Component {
     constructor(props) {
         super(props)
 
+        const { data } = this.props
+
         this.state = {
             isOpen: false,
-            url: "https://",
-            isTargetBlank: false
+            url: data.url || "https://",
+            isTargetBlank: (data.target && data.target === "_blank") ? true : false
         }
 
         this.changeUrl = (e) => this.setState({ url: e.target.value })
@@ -16,6 +18,19 @@ export default class LinkModal extends React.Component {
         this.onKeyPress = this.onKeyPress.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
         this.toggle = this.toggle.bind(this)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps === this.props) {
+            return
+        }
+
+        const { data } = nextProps
+
+        this.setState({
+            url: data.url || "https://",
+            isTargetBlank: (data.target && data.target === "_blank") ? true : false
+        })
     }
 
     toggle() {
@@ -36,16 +51,17 @@ export default class LinkModal extends React.Component {
     }
 
     onSubmit(e) {
-        this.toggle()
+        let url = this.state.url
 
-        this.setState({
-            url: "https://",
-            isTargetBlank: false
-        })
+        if (!/^(f|ht)tps?:\/\//i.test(url)) {
+            url = "https://" + url;
+        }
 
         if (this.props.onSubmit) {
-            this.props.onSubmit(this.state.url, this.state.isTargetBlank)
+            this.props.onSubmit(url, this.state.isTargetBlank)
         }
+
+        this.toggle()
     }
 
     render() {

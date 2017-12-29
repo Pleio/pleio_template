@@ -202,6 +202,27 @@ class RichTextField extends React.Component {
         }
     }
 
+    getFirstSelectedEntity() {
+        const contentState = this.state.editorState.getCurrentContent()
+        const selectionState = this.state.editorState.getSelection()
+        const startKey = selectionState.getStartKey()
+        const startOffset = selectionState.getStartOffset()
+        const contentBlock = contentState.getBlockForKey(startKey)
+        const entityKey = contentBlock.getEntityAt(startOffset)
+
+        if (entityKey) {
+            const entity = contentState.getEntity(entityKey)
+            // create our own data-structure as Draft.js does not save the key within the Entity object
+            return {
+                key: entityKey,
+                type: entity.type,
+                data: entity.data
+            }
+        } else {
+            return {}
+        }
+    }
+
     onChange(editorState) {
         this.setState({
             editorState
@@ -315,31 +336,36 @@ class RichTextField extends React.Component {
 
     submitLink(url, isTargetBlank) {
         const { editorState } = this.state
+
         let contentState = editorState.getCurrentContent()
+        const selectionState = editorState.getSelection()
 
-        contentState = contentState.createEntity("LINK", "MUTABLE", {
-            url,
-            target: isTargetBlank ? "_blank" : null
-        })
-        const entityKey = contentState.getLastCreatedEntityKey()
-
-        if (editorState.getSelection().getAnchorOffset() === editorState.getSelection().getFocusOffset()) {
-            contentState = Modifier.insertText(
-                contentState,
-                editorState.getSelection(),
+        const selectedEntity = this.getFirstSelectedEntity()
+        if (selectedEntity && selectedEntity.type === "LINK") {
+            // update an existing link
+            contentState = contentState.mergeEntityData(selectedEntity.key, {
                 url,
-                null,
-                entityKey
-            )
+                target: isTargetBlank ? "_blank" : null
+            })
+            this.onChange(EditorState.push(this.state.editorState, contentState, "apply-entity"))
         } else {
-            contentState = Modifier.applyEntity(
-                contentState,
-                editorState.getSelection(),
-                entityKey
-            )
+            // create a new link
+            contentState = contentState.createEntity("LINK", "MUTABLE", {
+                url,
+                target: isTargetBlank ? "_blank" : null
+            })
+            const entityKey = contentState.getLastCreatedEntityKey()
+
+            if (selectionState.isCollapsed()) {
+                // also add URL as text, when no text is selected prior to applying link
+                contentState = Modifier.insertText(contentState, selectionState, url, null, entityKey)
+                this.onChange(EditorState.push(this.state.editorState, contentState, "apply-entity"))
+            } else {
+                contentState = Modifier.applyEntity(contentState, selectionState, entityKey)
+                this.onChange(EditorState.push(this.state.editorState, contentState, "apply-entity"))
+            }
         }
 
-        this.onChange(EditorState.push(this.state.editorState, contentState, "apply-entity"))
         setTimeout(() => this.focus(), 0)
     }
 
@@ -376,6 +402,8 @@ class RichTextField extends React.Component {
 
     render() {
         const { editorState } = this.state
+
+        const selectedEntity = this.getFirstSelectedEntity()
 
         const currentInlineStyles = editorState.getCurrentInlineStyle()
         const currentBlockType = editorState.getCurrentContent().getBlockForKey(editorState.getSelection().getStartKey()).getType()
@@ -424,7 +452,7 @@ class RichTextField extends React.Component {
 
         const richMedia = (
             <div className="editor__tool-group">
-                <div className="editor__tool ___hyperlink" onClick={() => this.refs.linkModal.toggle()} />
+                <div className={classnames({ "editor__tool ___hyperlink": true, "___is-active": (selectedEntity && selectedEntity.type === "LINK")})} onClick={() => this.refs.linkModal.toggle()} />
             </div>
         )
 
@@ -508,7 +536,7 @@ class RichTextField extends React.Component {
                     />
                     <div style={{clear:"both"}} />
                 </div>
-                <LinkModal ref="linkModal" onSubmit={this.submitLink} />
+                <LinkModal ref="linkModal" onSubmit={this.submitLink} data={selectedEntity && selectedEntity.type === "LINK" ? selectedEntity.data : {}} />
                 <ImageModal ref="imageModal" onSubmit={this.submitMedia} />
                 <VideoModal ref="videoModal" onSubmit={this.submitMedia} />
                 <DocumentModal ref="documentModal" onSubmit={this.submitDocument} />

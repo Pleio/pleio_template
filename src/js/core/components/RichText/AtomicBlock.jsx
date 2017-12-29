@@ -63,15 +63,17 @@ export default class AtomicBlock extends React.Component {
 
     @autobind
     onSubmitInfo(alt) {
-        const { makeReadOnly } = this.props.blockProps
+        const { editorState, contentState, block } = this.props
+        const { makeReadOnly, onChange } = this.props.blockProps
         makeReadOnly(false)
 
-        const { block, contentState } = this.props
         const entityKey = block.getEntityAt(0)
 
-        contentState.mergeEntityData(entityKey, {
-            alt: alt
+        const newContentState = contentState.mergeEntityData(entityKey, {
+            alt
         })
+
+        onChange(EditorState.push(editorState, contentState, "apply-entity"))
     }
 
     @autobind
