@@ -49,7 +49,7 @@ class AccessField extends React.Component {
 }
 
 const Query = gql`
-    query AccessField($guid: Int!) {
+    query AccessField($guid: Int) {
         entity(guid: $guid) {
             guid
             status

@@ -5,28 +5,28 @@ import { humanFileSize } from "../../lib/helpers"
 import AtomicBlock from "./RichText/AtomicBlock"
 import IntroBlock from "./RichText/IntroBlock"
 
-function findLinkEntities(contentBlock, callback) {
+function findLinkEntities(contentBlock, callback, contentState) {
     contentBlock.findEntityRanges(
         (character) => {
             const entityKey = character.getEntity()
 
             return (
                 entityKey !== null &&
-                Entity.get(entityKey).getType() === "LINK"
+                contentState.getEntity(entityKey).getType() === "LINK"
             );
         },
         callback
     )
 }
 
-function findDocumentEntities(contentBlock, callback) {
+function findDocumentEntities(contentBlock, callback, contentState) {
     contentBlock.findEntityRanges(
         (character) => {
             const entityKey = character.getEntity()
 
             return (
                 entityKey !== null &&
-                Entity.get(entityKey).getType() === "DOCUMENT"
+                contentState.getEntity(entityKey).getType() === "DOCUMENT"
             );
         },
         callback
@@ -37,7 +37,7 @@ const decorator = new CompositeDecorator([
     {
         strategy: findLinkEntities,
         component: (props) => {
-            const { url, target } = Entity.get(props.entityKey).getData()
+            const { url, target } = props.contentState.getEntity(props.entityKey).getData()
 
             return (
                 <a href={url} target={target}>
@@ -49,7 +49,7 @@ const decorator = new CompositeDecorator([
     {
         strategy: findDocumentEntities,
         component: (props) => {
-            const data = Entity.get(props.entityKey).getData()
+            const data = props.contentState.getEntity(props.entityKey).getData()
             const size = humanFileSize(data.size)
 
             let type

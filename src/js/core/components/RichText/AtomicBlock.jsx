@@ -1,6 +1,6 @@
 import React from "react"
 import autobind from "autobind-decorator"
-import { Entity, EditorState, Modifier, SelectionState } from "draft-js"
+import { EditorState, Modifier, SelectionState } from "draft-js"
 import ImageContextualMenu from "./ImageContextualMenu"
 import classnames from "classnames"
 import ImageContextualInfoModal from "./ImageContextualInfoModal"
@@ -17,8 +17,15 @@ export default class AtomicBlock extends React.Component {
     }
 
     render() {
-        const { block } = this.props
-        const entity = Entity.get(block.getEntityAt(0))
+        const { block, contentState } = this.props
+
+        const entityKey = block.getEntityAt(0)
+        if (!entityKey) {
+            console.error(`Could not find atomic block entity.`)
+            return ( <div /> )
+        }
+
+        const entity = contentState.getEntity(entityKey)
         const type = entity.getType()
 
         switch (type) {
@@ -30,20 +37,20 @@ export default class AtomicBlock extends React.Component {
                 return this.renderSocial(entity.getData())
             default:
                 console.error(`Trying to render an unknown atomic block type ${type}.`)
-                return (<div></div>)
+                return ( <div /> )
         }
     }
 
     @autobind
     onDelete() {
-        const { block } = this.props
-        const { editorState, onChange } = this.props.blockProps
+        const { block, editorState } = this.props
+        const { onChange } = this.props.blockProps
         const contentState = editorState.getCurrentContent()
 
         const newContentState = contentState.merge({
             blockMap: contentState.blockMap.delete(block.key)
         })
-        
+
         onChange(EditorState.push(editorState, newContentState, "remove-range"))
     }
 
@@ -59,22 +66,18 @@ export default class AtomicBlock extends React.Component {
         const { makeReadOnly } = this.props.blockProps
         makeReadOnly(false)
 
-        const { block } = this.props
+        const { block, contentState } = this.props
         const entityKey = block.getEntityAt(0)
-        Entity.mergeData(entityKey, { alt: alt })
-        this.forceStateUpdate()
+
+        contentState.mergeEntityData(entityKey, {
+            alt: alt
+        })
     }
 
     @autobind
     onCloseModal() {
         const { makeReadOnly } = this.props.blockProps
         makeReadOnly(false)
-    }
-
-    @autobind
-    forceStateUpdate() {
-        const { editorState, onChange } = this.props.blockProps
-        onChange(EditorState.forceSelection(editorState, editorState.getSelection()))
     }
 
     @autobind

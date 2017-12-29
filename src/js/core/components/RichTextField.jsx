@@ -1,7 +1,7 @@
 import React from "react"
 import autobind from "autobind-decorator"
 import PropTypes from "prop-types"
-import { Editor, EditorState, ContentState, RichUtils, AtomicBlockUtils, DefaultDraftBlockRenderMap, CompositeDecorator, Entity, Modifier, convertToRaw, convertFromRaw } from "draft-js"
+import { Editor, EditorState, ContentState, RichUtils, AtomicBlockUtils, DefaultDraftBlockRenderMap, CompositeDecorator, Modifier, convertToRaw, convertFromRaw } from "draft-js"
 import { stateFromHTML } from "draft-js-import-html"
 import { stateToHTML } from "draft-js-export-html"
 import { humanFileSize } from "../../lib/helpers"
@@ -17,28 +17,28 @@ import VideoModal from "./RichText/VideoModal"
 import DocumentModal from "./RichText/DocumentModal"
 import SocialModal from "./RichText/SocialModal"
 
-function findLinkEntities(contentBlock, callback) {
+function findLinkEntities(contentBlock, callback, contentState) {
     contentBlock.findEntityRanges(
         (character) => {
             const entityKey = character.getEntity()
 
             return (
                 entityKey !== null &&
-                Entity.get(entityKey).getType() === "LINK"
+                contentState.getEntity(entityKey).getType() === "LINK"
             );
         },
         callback
     )
 }
 
-function findDocumentEntities(contentBlock, callback) {
+function findDocumentEntities(contentBlock, callback, contentState) {
     contentBlock.findEntityRanges(
         (character) => {
             const entityKey = character.getEntity()
 
             return (
                 entityKey !== null &&
-                Entity.get(entityKey).getType() === "DOCUMENT"
+                contentState.getEntity(entityKey).getType() === "DOCUMENT"
             );
         },
         callback
@@ -49,7 +49,7 @@ const decorator = new CompositeDecorator([
     {
         strategy: findLinkEntities,
         component: (props) => {
-            const { url, target } = Entity.get(props.entityKey).getData()
+            const { url, target } = props.contentState.getEntity(props.entityKey).getData()
 
             return (
                 <a href={url} target={target}>
@@ -61,7 +61,7 @@ const decorator = new CompositeDecorator([
     {
         strategy: findDocumentEntities,
         component: (props) => {
-            const data = Entity.get(props.entityKey).getData()
+            const data = props.contentState.getEntity(props.entityKey).getData()
             const size = humanFileSize(data.size)
 
             let type
@@ -315,26 +315,27 @@ class RichTextField extends React.Component {
 
     submitLink(url, isTargetBlank) {
         const { editorState } = this.state
+        let contentState = editorState.getCurrentContent()
 
-        const entity = Entity.create("LINK", "MUTABLE", {
+        contentState = contentState.createEntity("LINK", "MUTABLE", {
             url,
             target: isTargetBlank ? "_blank" : null
         })
+        const entityKey = contentState.getLastCreatedEntityKey()
 
-        let contentState
         if (editorState.getSelection().getAnchorOffset() === editorState.getSelection().getFocusOffset()) {
             contentState = Modifier.insertText(
-                editorState.getCurrentContent(),
+                contentState,
                 editorState.getSelection(),
                 url,
                 null,
-                entity
+                entityKey
             )
         } else {
             contentState = Modifier.applyEntity(
-                editorState.getCurrentContent(),
+                contentState,
                 editorState.getSelection(),
-                entity
+                entityKey
             )
         }
 
@@ -344,14 +345,17 @@ class RichTextField extends React.Component {
 
     submitDocument(name, data) {
         const { editorState } = this.state
-        const entity = Entity.create("DOCUMENT", "MUTABLE", data)
+        let contentState = editorState.getCurrentContent()
 
-        let contentState = Modifier.insertText(
-            editorState.getCurrentContent(),
+        contentState = contentState.createEntity("DOCUMENT", "MUTABLE", data)
+        const entityKey = contentState.getLastCreatedEntityKey()
+
+        contentState = Modifier.insertText(
+            contentState,
             editorState.getSelection(),
             name,
             null,
-            entity
+            entityKey
         )
 
         this.onChange(EditorState.push(this.state.editorState, contentState, "apply-entity"))
@@ -360,7 +364,11 @@ class RichTextField extends React.Component {
 
     submitMedia(type, data) {
         const { editorState } = this.state
-        const entityKey = Entity.create(type, "IMMUTABLE", data)
+        let contentState = editorState.getCurrentContent()
+
+        contentState = contentState.createEntity(type, "IMMUTABLE", data)
+        const entityKey = contentState.getLastCreatedEntityKey()
+
         const newEditorState = AtomicBlockUtils.insertAtomicBlock(this.state.editorState, entityKey, " ")
         this.onChange(newEditorState)
         setTimeout(() => this.focus(), 0)
