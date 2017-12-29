@@ -38,15 +38,22 @@ export default class HTML extends React.Component {
         }
     }
 
-    @autobind
-    loadScripts() {
+    componentDidMount() {
         const el = document.createElement("html")
         el.innerHTML = this.getSetting("description")
 
         const scripts = el.getElementsByTagName("script")
-        for (let i=0; i < scripts.length; i++) {
-            loadScript(scripts[i].src)
+        for (let i = 0; i < scripts.length; i++) {
+            if (scripts[i].src) {
+                loadScript(scripts[i].src)
+            } else {
+                window.eval(scripts[i].innerText)
+            }
         }
+    }
+
+    componentDidUpdate() {
+        this.componentDidMount()
     }
 
     render() {
@@ -59,8 +66,6 @@ export default class HTML extends React.Component {
                 </Form>
             )
         }
-
-        this.loadScripts()
 
         return (
             <div className="cms-block-html" dangerouslySetInnerHTML={this.getHTML()} />
