@@ -1324,7 +1324,7 @@ class Mutations {
             $result = elgg_send_email(
                 $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
                 $email,
-                "[{$group->name}] Uitnodiging om lid te worden van de groep",
+                "Uitnodiging om lid te worden van de groep {$group->name}",
                 "Je bent uitgenodigd door {$current_user->name} om lid te worden van de groep {$group->name}. Volg de onderstaande link om lid te worden van de groep:<br />
                 <a href=\"{$link}\">$link</a>
                 "
@@ -1351,8 +1351,8 @@ class Mutations {
             throw new Exception("could_not_save");
         }
 
-        $code = explode("|", $annotation->value);     
-        
+        $code = explode("|", $annotation->value);
+
         $site_url = elgg_get_site_url();
 
         $link = "{$site_url}groups/invitations/?invitecode={$code[0]}";
@@ -1360,7 +1360,7 @@ class Mutations {
         $result = elgg_send_email(
             $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
             $code[1],
-            "[{$group->name}] Herinnering om lid te worden van de groep",
+            "Herinnering om lid te worden van de groep {$group->name}",
             "Je bent nogmaals uitgenodigd door {$current_user->name} om lid te worden van de groep {$group->name}. Volg de onderstaande link om lid te worden van de groep:<br />
             <a href=\"{$link}\">$link</a>
             "
@@ -1373,7 +1373,7 @@ class Mutations {
 
     static function deleteGroupInvitation($input) {
         $annotation = get_annotation((int) $input["id"]);
-        
+
         if (!$annotation) {
             return [
                 "guid" => $group->guid
@@ -1421,7 +1421,7 @@ class Mutations {
             $result = elgg_send_email(
                 $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
                 $member->email,
-                "[{$group->name}] {$input['subject']}",
+                "Bericht van {$group->name}: {$input['subject']}",
                 $input['message']
             );
         }
