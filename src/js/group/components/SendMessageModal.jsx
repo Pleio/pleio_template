@@ -15,7 +15,7 @@ import classnames from "classnames"
 class SendMessageForm extends React.Component {
     constructor(props) {
         super(props)
-    
+
         this.state = {
             completed: false,
             working: false,

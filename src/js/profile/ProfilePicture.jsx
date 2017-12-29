@@ -9,10 +9,17 @@ class ProfilePicture extends React.Component {
     constructor(props) {
         super(props)
         this.onSubmit = this.onSubmit.bind(this)
+
+        this.state = {
+            working: false
+        }
     }
 
     onSubmit(e) {
         const values = this.refs.form.getValues()
+
+        this.setState({ working: true })
+
         this.props.mutate({
             variables: {
                 input: {
@@ -26,18 +33,29 @@ class ProfilePicture extends React.Component {
         }).catch((errors) => {
             logErrors(errors)
             this.setState({
-                errors: errors
+                errors: errors,
+                working: false
             })
         })
     }
 
     render() {
+        let loading
+        if (this.state.working) {
+            loading = (
+                <div className="infinite-scroll__spinner">
+                    <img src="/mod/pleio_template/src/images/spinner.svg" />
+                </div>
+            )
+        }
+
         return (
             <Form ref="form" onSubmit={this.onSubmit}>
                 <IconField name="avatar" />
-                <button className="button ___primary" type="submit">
+                <button className="button ___primary" type="submit" disabled={this.state.working}>
                     Opslaan
                 </button>
+                {loading}
             </Form>
         )
     }
