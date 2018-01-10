@@ -86,7 +86,7 @@ class Mapper {
             "endDate" => Helpers::getEventEndDate($entity),
             "canEdit" => $entity->canEdit(),
             "accessId" => $entity->access_id,
-            "writeAccessId" => $entity->write_access_id,
+            "writeAccessId" => $entity->write_access_id ? $entity->write_access_id : ACCESS_PRIVATE,
             "tags" => Helpers::renderTags($entity->tags)
         ];
     }
