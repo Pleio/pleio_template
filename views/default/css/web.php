@@ -1,11 +1,9 @@
 <?php
 if (webpack_dev_server_is_available()) {
-    $path = "http://localhost:9001/";
+    $path = "http://localhost:9001/mod/pleio_template/build/web.css";
 } else {
-    $path = elgg_get_site_url();
+    $path = dirname(__FILE__) . "/../../../build/web.css";
 }
-
-$path .= "mod/pleio_template/build/web.css";
 
 $contents = file_get_contents($path);
 
