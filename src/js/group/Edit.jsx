@@ -123,8 +123,8 @@ class Edit extends React.Component {
                                             <InputField value={entity.name} label="Naam" name="name" type="text" placeholder="Voeg een korte duidelijke naam toe" className="form__input" rules="required" autofocus />
                                             <IconField name="icon" value={entity.icon} />
                                             <SelectField label="Lidmaatschap" name="membership" type="text" className="form__input" options={{open: "Open", "closed": "Besloten"}} value={membership} />
-                                            <TextField label="Beschrijving" name="description" type="text" placeholder="Vertel wat over de groep voor leden die nog geen lid zijn" className="form__input" rules="required" value={entity.description} />
-                                            <RichTextField label="Introductie" name="introduction" type="text" placeholder="Hier kun je een korte introductie geven aan de leden van de groep" className="form__input" richValue={entity.introduction} />
+                                            <TextField label="Beschrijving voor niet-leden" name="description" type="text" placeholder="Vertel wat over de groep voor niet-leden" className="form__input" rules="required" value={entity.description} />
+                                            <RichTextField label="Memo voor leden" name="introduction" type="text" placeholder="Hier kun je een korte introductie geven aan de leden van de groep" className="form__input" richValue={entity.introduction} />
                                             <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" value={entity.tags}/>
                                             <SwitchesField label="Plugins" name="plugins" options={groupPlugins} values={selectedPlugins} />
 

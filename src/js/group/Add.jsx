@@ -85,8 +85,8 @@ class Add extends React.Component {
                                     <InputField label="Naam" name="name" type="text" placeholder="Voeg een korte duidelijke naam toe" className="form__input" rules="required" autofocus />
                                     <IconField name="icon" />
                                     <SelectField label="Lidmaatschap" name="membership" type="text" className="form__input" options={{open: "Open", "closed": "Besloten"}} value="open" />
-                                    <TextField label="Beschrijving" name="description" type="text" placeholder="Vertel wat over de groep" className="form__input" rules="required" />
-                                    <RichTextField label="Introductie" name="introduction" type="text" placeholder="Hier kun je een korte introductie geven aan de leden van de groep" className="form__input" />
+                                    <TextField label="Beschrijving voor niet-leden" name="description" type="text" placeholder="Vertel wat over de groep voor niet-leden" className="form__input" rules="required" />
+                                    <RichTextField label="Memo voor leden" name="introduction" type="text" placeholder="Hier kun je een korte introductie geven aan de leden van de groep" className="form__input" />
                                     <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" />
                                     <div className="buttons ___end ___margin-top">
                                         <button className="button" type="submit">
