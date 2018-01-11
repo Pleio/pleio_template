@@ -48,13 +48,11 @@ export default class Card extends React.Component {
         }
 
         let picture
-        if (!entity.inGroup) {
-            picture = (
-                <Link to={entity.url} className="card-event__picture" title={entity.title} style={style}>
-                    {playButton}
-                </Link>
-            )
-        }
+        picture = (
+            <Link to={entity.url} className="card-event__picture" title={entity.title} style={style}>
+                {playButton}
+            </Link>
+        )
 
         let attendButtons
         if (entity.rsvp && entity.inGroup) {
