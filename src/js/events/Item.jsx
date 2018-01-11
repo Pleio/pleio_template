@@ -127,17 +127,15 @@ class Item extends React.Component {
         if (!this.props.group) {
             featured = (
                 <Featured entity={entity} showEmpty event bottom>
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-sm-9 bottom-sm col-lg-6">
-                                <div>
-                                    <h1 className="lead__title">{entity.title}</h1>
-                                    <span>Georganiseerd door {entity.owner.name}</span>
-                                </div>
+                    <div className="row">
+                        <div className="col-sm-9 bottom-sm col-lg-6">
+                            <div>
+                                <h1 className="lead__title">{entity.title}</h1>
+                                <span>Georganiseerd door {entity.owner.name}</span>
                             </div>
-                            <div className="col-sm-3 end-sm bottom-sm col-lg-6">
-                                {attendButtons}
-                            </div>
+                        </div>
+                        <div className="col-sm-3 end-sm bottom-sm col-lg-6">
+                            {attendButtons}
                         </div>
                     </div>
                 </Featured>
