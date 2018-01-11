@@ -25,7 +25,7 @@ if ($object) {
     $metas = [ "og:title" => $site->name ];
 }
 
-echo elgg_view_page($title, $content, "default", [
+echo elgg_view_page($title, $content, "react-default", [
     "metas" => $metas,
     "is_react" => true
 ]);
