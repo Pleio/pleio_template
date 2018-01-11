@@ -14,6 +14,7 @@ const Query = gql`
                     guid
                     title
                     excerpt
+                    url
                 }
             }
         }
