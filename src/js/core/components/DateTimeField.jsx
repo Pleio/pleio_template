@@ -27,21 +27,25 @@ class DateTimeField extends React.Component {
 
     @autobind
     openDate(e) {
+        e.preventDefault()
         this.setState({ isOpenDate: true })
     }
 
     @autobind
     closeDate(e) {
+        e.preventDefault()
         this.setState({ isOpenDate: false })
     }
 
     @autobind
     openTime(e) {
+        e.preventDefault()
         this.setState({ isOpenTime: true })
     }
 
     @autobind
     closeTime(e) {
+        e.preventDefault()
         this.setState({ isOpenTime: false })
     }
 
@@ -95,6 +99,9 @@ class DateTimeField extends React.Component {
     }
 
     render() {
+        console.log(this.state.isOpenDate)
+        console.log(this.state.isOpenTime)
+
         const days = moment.weekdaysMin(true).map((i) => (
             <span key={i}>{i}</span>
         ))
