@@ -39,7 +39,7 @@ class Notification extends React.Component {
                 message = (
                     <div>
                         <strong>{notification.performer.name}</strong>
-                        &nbsp;{message}&nbsp;
+                        &nbsp;heeft gereageerd op&nbsp;
                         {notification.entity.title || notification.entity.name}
                         <span className="___greyed">&nbsp;{timeSince(notification.timeCreated)}</span>
                     </div>
