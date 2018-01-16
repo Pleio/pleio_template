@@ -68,7 +68,7 @@ class Mapper {
             "isFeatured" => $entity->isFeatured,
             "isHighlighted" => $is_highlighted ? true : false,
             "featured" => [
-                "image" => $entity->featuredIcontime ? "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}" : "",
+                "image" => Helpers::getFeaturedImage($entity),
                 "positionY" => $entity->featuredPositionY ? $entity->featuredPositionY : 50,
                 "video" => $entity->featuredVideo ? $entity->featuredVideo : ""
             ],

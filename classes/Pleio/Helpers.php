@@ -717,4 +717,16 @@ class Helpers {
 
         return date("c", $entity->end_ts);
     }
+
+    static function getFeaturedImage($entity) {
+        if ($entity->featuredIcontime) {
+            return "/mod/pleio_template/featuredimage.php?guid={$entity->guid}&lastcache={$entity->featuredIcontime}";
+        }
+
+        if ($entity->icontime) {
+            return $entity->getIconURL();
+        }
+
+        return "";
+    }
 }
