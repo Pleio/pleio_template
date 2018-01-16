@@ -8027,8 +8027,7 @@ body.___rijkshuisstijl .card-tile__picture {
   transform: translateY(-0.5rem);
   transition: visibility 0.2s ease, opacity 0.2s ease, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.tooltip.___is-visible,
-.navigation__action:hover .tooltip {
+.tooltip.___is-visible {
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
@@ -14364,10 +14363,6 @@ body.___leraar .navigation__search input {
     display: none;
   }
 }
-.lead__justify {
-  -ms-flex-pack: start;
-      justify-content: flex-start;
-}
 .cms__panel button.___add:before {
   content: "\E046";
 }
@@ -14376,6 +14371,10 @@ body.___leraar .navigation__search input {
 }
 .___padding-top {
   padding-top: 2rem;
+}
+.users-online {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 #__bs_notify__ {
   opacity: .15 !important;
