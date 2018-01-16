@@ -17,7 +17,7 @@ class SubNav extends React.Component {
         const children = entities.edges.map((child) => (
             <Link key={child.guid} to={`/cms/view/${match.params.containerGuid || match.params.guid}/${match.params.containerSlug || match.params.slug}/${child.guid}`}>{child.title}</Link>
         ))
-        
+
         return (
             <div className="subnav">
                 <div className="subnav__parent ___is-open">

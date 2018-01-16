@@ -7,11 +7,6 @@ import autobind from "autobind-decorator"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
-const translate = {
-    "text": "Tekst",
-    "html": "Code"
-}
-
 class Row extends React.Component {
 
     @autobind
@@ -33,7 +28,7 @@ class Row extends React.Component {
         const { entity } = this.props
 
         let cols = []
-        let options = ["text", "html"]
+        let options = ["text", "html", "other"]
 
         switch (entity.layout) {
             case "full":
@@ -62,30 +57,10 @@ class Row extends React.Component {
             definedWidgets[widget.position] = widget
         })
 
-        let buttons
-
         const widgets = cols.map((col, i) => {
-            if (definedWidgets[i]) {
-                return (
-                    <Widget key={i} col={col} entity={definedWidgets[i]} />
-                )
-            } else {
-                if (entity.canEdit) {
-                    buttons = options.map((option, j) => (
-                        <button key={j} className="button" disabled={this.props.disabled} onClick={(e) => this.addWidget(i, option)}>{translate[option]}</button>
-                    ))
-                }
-
-                return (
-                    <div key={i} className={col}>
-                        <div className="cms-block">
-                            <div className="cms-block__buttons">
-                                {buttons}
-                            </div>
-                        </div>
-                    </div>
-                )
-            }
+            return (
+                <Widget key={i} index={i} container={entity} options={options} col={col} entity={definedWidgets[i]} addWidget={this.addWidget} />
+            )
         })
 
         let overlay
@@ -100,25 +75,16 @@ class Row extends React.Component {
             )
         }
 
-        if (this.props.entity.layout === "full") {
-            return (
-                <section className={classnames({"section": true, "___no-padding-top": this.props.firstRow})}>
-                    {widgets}
-                    {overlay}
-                </section>
-            )
-        } else {
-            return (
-                <section className="section cms-section">
-                    <div className="container">
-                        <div className="row">
-                            {widgets}
-                        </div>
+        return (
+            <section className="section cms-section">
+                <div className="container">
+                    <div className="row">
+                        {widgets}
                     </div>
-                    {overlay}
-                </section>
-            )
-        }
+                </div>
+                {overlay}
+            </section>
+        )
     }
 }
 
