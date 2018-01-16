@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import classnames from "classnames"
 
 export default class Tooltip extends React.Component {
     render() {
@@ -28,7 +29,7 @@ export default class Tooltip extends React.Component {
         })
 
         return (
-            <div className="tooltip">
+            <div className={classnames({"tooltip": true, "___is-visible": this.props.isVisible})}>
                 {lists}
             </div>
         )

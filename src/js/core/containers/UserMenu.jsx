@@ -10,10 +10,21 @@ class UserMenu extends React.Component {
         super(props)
 
         this.state = {
-            q: ""
+            q: "",
+            isVisible: false
         }
 
         this.onChange = (e) => this.setState({ q: e.target.value })
+    }
+
+    @autobind
+    toggleVisibility(e) {
+        this.setState({ isVisible: !this.state.isVisible })
+    }
+
+    @autobind
+    onBlur(e) {
+        this.setState({ isVisible: false })
     }
 
     @autobind
@@ -56,10 +67,10 @@ class UserMenu extends React.Component {
                         </div>
                     </form>
                     <NotificationsTop />
-                    <div className="navigation__action ___account">
+                    <div tabIndex="0" className="navigation__action ___account" onClick={this.toggleVisibility} onBlur={this.onBlur}>
                         <div style={{backgroundImage: "url('" + viewer.user.icon + "')"}} className="navigation__picture"></div>
                         <span>{viewer.user.name}</span>
-                        <Tooltip lists={userMenu} />
+                        <Tooltip lists={userMenu} isVisible={this.state.isVisible} />
                     </div>
                 </div>
             )

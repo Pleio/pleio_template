@@ -11,8 +11,19 @@ class NotificationsList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            offset: 0
+            offset: 0,
+            isVisible: false
         }
+    }
+
+    @autobind
+    onBlur(e) {
+        this.setState({ isVisible: false })
+    }
+
+    @autobind
+    toggleVisiblity(e) {
+        this.setState({ isVisible: !this.state.isVisible })
     }
 
     @autobind
@@ -105,10 +116,10 @@ class NotificationsList extends React.Component {
         }
 
         return (
-            <div className="navigation__action ___notifications" title="Meldingen">
+            <div tabIndex="0" className="navigation__action ___notifications" title="Meldingen" onClick={this.toggleVisiblity} onBlur={this.onBlur}>
                 {badge}
                 <span>Meldingen</span>
-                <div className="tooltip">
+                <div className={classnames({"tooltip": true, "___is-visible": this.state.isVisible})}>
                     <div className="notifications__header">
                         <div className="flexer ___space-between">
                             <div className="notifications__title">Meldingen</div>
