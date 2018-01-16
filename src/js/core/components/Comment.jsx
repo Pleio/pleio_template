@@ -3,6 +3,7 @@ import showDate from "../../lib/showDate"
 import Likes from "./Likes"
 import CommentEdit from "./CommentEdit"
 import classnames from "classnames"
+import RichTextView from "../../core/components/RichTextView"
 
 export default class Comment extends React.Component {
     constructor(props) {
@@ -40,6 +41,20 @@ export default class Comment extends React.Component {
                 </div>
             )
         } else {
+            let description
+
+            try {
+                JSON.parse(entity.description)
+                description = (
+                    <RichTextView richValue={entity.description} />
+                )
+            } catch (e) {
+                description = (
+                    <RichTextView value={entity.description} />
+                )
+            }
+
+
             return (
                 <div className={classnames({"comment-container": true, " ___is-editable": entity.canEdit})}>
                     <div className={classnames({comment: true, "___can-edit": entity.canEdit})}>
@@ -60,7 +75,7 @@ export default class Comment extends React.Component {
                             </div>
                         </div>
                         <div className="comment__body">
-                            {entity.description}
+                            {description}
                         </div>
                         {vote}
                     </div>

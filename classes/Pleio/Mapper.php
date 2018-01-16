@@ -95,7 +95,7 @@ class Mapper {
         return [
             "guid" => $entity->guid ? $entity->guid : "annotation:" . $entity->id,
             "ownerGuid" => $entity->owner_guid,
-            "description" => $entity->description ? strip_tags(html_entity_decode($entity->description, ENT_COMPAT | ENT_QUOTES, 'UTF-8')) : strip_tags(html_entity_decode($entity->value, ENT_COMPAT | ENT_QUOTES, 'UTF-8')),
+            "description" => $entity->description ?: $entity->value,
             "canEdit" => $entity->canEdit(),
             "timeCreated" => date("c", $entity->time_created),
             "timeUpdated" => date("c", $entity->time_updated)
