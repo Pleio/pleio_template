@@ -55,6 +55,8 @@ export default class Leader extends React.Component {
         let style = {
             height: this.state.height,
             width: "100%",
+            marginLeft: 0,
+            marginRight: 0,
             backgroundImage: `url(${this.getSetting("leaderImage", "/mod/pleio_template/src/images/lead-home2.png")})`
         }
 
@@ -77,8 +79,7 @@ export default class Leader extends React.Component {
                 <div className="lead__close" onClick={this.onClose}>
                 </div>
                 <div className="lead__justify">
-                    <div className="container">
-                    </div>
+                    <div className="container" />
                 </div>
             </div>
         )
