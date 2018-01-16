@@ -66,7 +66,7 @@ class Item extends React.Component {
                 <h2 className="title">{entity.title}</h2>
             )
             subtitle = (
-                <p>{showFullDate(entity.startDate)}<small>{entity.location}</small></p>
+                <h2 className="title">{showFullDate(entity.startDate)}<small>{entity.location}</small></h2>
             )
         } else {
             subtitle = (
