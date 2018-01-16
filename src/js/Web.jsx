@@ -1,5 +1,4 @@
 import "../less/style.less"
-import "core-js/shim"
 
 import React from "react"
 import ReactDOM from "react-dom"
