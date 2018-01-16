@@ -2,7 +2,8 @@
 $dutch = array(
     "pleio_template:analytics" => "Statistieken",
     "pleio_template:google_analytics" => "Google Analytics",
-    "pleio_template:piwik" => "Piwik",
+    "pleio_template:piwik:host" => "Piwik server",
+    "pleio_template:piwik:site" => "Piwik site ID",
     "pleio_template:sentry" => "Sentry",
     "pleio_template:settings" => "Instellingen",
     "pleio_template:profile" => "Profiel",

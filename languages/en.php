@@ -2,7 +2,8 @@
 $english = array(
     "pleio_template:analytics" => "Analytics",
     "pleio_template:google_analytics" => "Google Analytics",
-    "pleio_template:piwik" => "Piwik",
+    "pleio_template:piwik:host" => "Piwik host",
+    "pleio_template:piwik:site" => "Piwik site ID",
     "pleio_template:sentry" => "Sentry",
     "pleio_template:settings" => "Settings",
     "pleio_template:profile" => "Profile",
@@ -45,7 +46,7 @@ $english = array(
     'admin:profile:details' => 'Profile details',
     'admin:profile:edit' => 'Edit profile',
     'members:search' => 'Search user',
-    'view_profile' => 'View profile'
+    'view_profile' => 'View profile',
 );
 
 add_translation("en", $english);
