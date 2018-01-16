@@ -121,7 +121,7 @@ class Widget extends React.Component {
 
             return (
                 <div className={this.props.col}>
-                    <div className="cms-block-filled">
+                    <div className={entity.canEdit ? "cms-block-filled" : ""}>
                         {widget}
                         {overlay}
                     </div>
