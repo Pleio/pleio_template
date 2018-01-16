@@ -39,10 +39,6 @@
     </requires>
     <conflicts>
         <type>plugin</type>
-        <name>blog_tools</name>
-    </conflicts>
-    <conflicts>
-        <type>plugin</type>
         <name>widget_manager</name>
     </conflicts>
     <conflicts>
