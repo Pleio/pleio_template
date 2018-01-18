@@ -61,7 +61,7 @@ $custom_js = elgg_is_active_plugin("custom_js");
         </script>
     <?php endif; ?>
 
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Array.prototype.includes"></script>
     <?php if ($is_react): ?>
         <?php if (webpack_dev_server_is_available()): ?>
             <script src="http://localhost:9001/mod/pleio_template/build/vendor.js"></script>
