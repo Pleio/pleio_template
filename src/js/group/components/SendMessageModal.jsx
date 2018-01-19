@@ -24,6 +24,37 @@ class SendMessageForm extends React.Component {
     }
 
     @autobind
+    sendTestMessage(e) {
+        e.preventDefault()
+
+        this.setState({ working: true })
+
+        const values = this.refs.form.getValues()
+        const { group, viewer } = this.props
+
+        this.props.mutate({
+            variables: {
+                input: {
+                    clientMutationId: 1,
+                    guid: group.guid,
+                    subject: `${values.subject} (test)`,
+                    message: stateToHTML(values.message),
+                    recipients: [viewer.user.guid]
+                }
+            }
+        }).then(({data}) => {
+            this.setState({
+                working: false
+            })
+        }).catch((errors) => {
+            logErrors(errors)
+            this.setState({
+                errors: errors
+            })
+        })
+    }
+
+    @autobind
     onSubmit(e) {
         const values = this.refs.form.getValues()
         const { group } = this.props
@@ -76,6 +107,7 @@ class SendMessageForm extends React.Component {
                 <RichTextField name="message" className="form__input" rules="required" placeholder="Vul hier het bericht in..." />
                 <div className="buttons ___end ___margin-top">
                     {loading}
+                    <button className="button ___line ___colored" onClick={this.sendTestMessage} disabled={this.state.working}>Verstuur test aan mij</button>
                     <button className="button" type="submit" disabled={this.state.working}>Verstuur</button>
                 </div>
             </Form>
@@ -108,7 +140,7 @@ export default class SendMessageModal extends React.Component {
             <Modal ref="modal" title="E-mail versturen">
                 <div className="group-info">
                     <div className="group-info__content">
-                        <SendMessageFormWithMutation group={this.props.entity} />
+                        <SendMessageFormWithMutation group={this.props.entity} viewer={this.props.viewer} />
                     </div>
                 </div>
             </Modal>

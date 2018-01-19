@@ -403,6 +403,7 @@ class Resolver {
             $subtype = $entity->getSubtype();
             switch ($subtype) {
                 case "page":
+                case "static":
                     return Mapper::getPage($entity);
                 case "page_widget":
                     return Mapper::getWidget($entity);
@@ -997,6 +998,8 @@ class Resolver {
                 $subtypes = ["file", "folder"];
             } elseif ($args["subtype"] === "discussion") {
                 $subtypes = ["discussion", "groupforumtopic"];
+            } elseif ($args["subtype"] === "page") {
+                $subtypes = ["page", "static"];
             } elseif ($args["subtype"]) {
                 $subtypes = $args["subtype"];
             }

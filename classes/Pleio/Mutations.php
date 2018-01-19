@@ -1406,6 +1406,8 @@ class Mutations {
     static function sendMessageToGroup($input) {
         set_time_limit(0);
 
+        $site = elgg_get_site_entity();
+
         $group = get_entity((int) $input["guid"]);
         if (!$group) {
             throw new Exception("could_not_find");
@@ -1415,15 +1417,34 @@ class Mutations {
             throw new Exception("could_not_save");
         }
 
-        $site = elgg_get_site_entity();
+        $recipients = $input["recipients"];
+        if ($recipients) {
+            foreach ($recipients as $guid) {
+                if (!$group->isMember($guid)) {
+                    continue;
+                }
 
-        foreach ($group->getMembers(0) as $member) {
-            $result = elgg_send_email(
-                $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
-                $member->email,
-                "Bericht van {$group->name}: {$input['subject']}",
-                $input['message']
-            );
+                $member = get_entity($guid);
+                if (!$member) {
+                    continue;
+                }
+
+                $result = elgg_send_email(
+                    $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
+                    $member->email,
+                    "Bericht van {$group->name}: {$input['subject']}",
+                    $input['message']
+                );
+            }
+        } else {
+            foreach ($group->getMembers(0) as $member) {
+                $result = elgg_send_email(
+                    $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
+                    $member->email,
+                    "Bericht van {$group->name}: {$input['subject']}",
+                    $input['message']
+                );
+            }
         }
 
         return [

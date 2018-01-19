@@ -96,6 +96,7 @@ class SchemaBuilder {
                         return $groupType;
                     case "object":
                         switch ($object["subtype"]) {
+                            case "static":
                             case "page":
                                 return $pageType;
                             default:
@@ -2075,6 +2076,10 @@ class SchemaBuilder {
                 "message" => [
                     "type" => Type::string(),
                     "description" => "The message to send."
+                ],
+                "recipients" => [
+                    "type" => Type::listOf(Type::int()),
+                    "description" => "An (optional) list of recipients to send the message to."
                 ]
             ],
             "outputFields" => [

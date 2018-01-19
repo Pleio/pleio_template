@@ -88,7 +88,7 @@ class GroupContainer extends React.Component {
                 <MoreInfoModal ref="moreInfoModal" entity={entity} />
                 <LeaveGroupModal ref="leaveGroupModal" entity={entity} />
                 <InviteModal ref="inviteModal" entity={entity} />
-                <SendMessageModal ref="sendMessageModal" entity={entity} />
+                <SendMessageModal ref="sendMessageModal" entity={entity} viewer={viewer} />
             </div>
         )
     }

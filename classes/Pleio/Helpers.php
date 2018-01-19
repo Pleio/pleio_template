@@ -129,6 +129,7 @@ class Helpers {
                     case "blog":
                         $root .= "blog";
                         break;
+                    case "static":
                     case "page":
                         $root .= "cms";
                         break;
