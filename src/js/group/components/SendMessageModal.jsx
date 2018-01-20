@@ -11,6 +11,7 @@ import { logErrors } from "../../lib/helpers"
 import { stateToHTML } from "draft-js-export-html"
 import Errors from "../../core/components/Errors"
 import classnames from "classnames"
+import MembersModal from "./MembersModal"
 
 class SendMessageForm extends React.Component {
     constructor(props) {
@@ -19,7 +20,22 @@ class SendMessageForm extends React.Component {
         this.state = {
             completed: false,
             working: false,
-            errors: []
+            errors: [],
+            recipients: new Set()
+        }
+    }
+
+    @autobind
+    toggleSelectMembers(e) {
+        this.refs.selectMembers.toggle()
+    }
+
+    @autobind
+    onSelect(e, guid) {
+        if (!this.state.recipients.has(guid)) {
+            this.setState({ recipients: this.state.recipients.add(guid) })
+        } else {
+            this.setState({ recipients: this.state.recipients.delete(guid) })
         }
     }
 
@@ -61,14 +77,20 @@ class SendMessageForm extends React.Component {
 
         this.setState({ working: true })
 
+        const input = {
+            clientMutationId: 1,
+            guid: group.guid,
+            subject: values.subject,
+            message: stateToHTML(values.message)
+        }
+
+        if (this.state.recipients.size > 0) {
+            input['recipients'] = this.state.recipients.toJS()
+        }
+
         this.props.mutate({
             variables: {
-                input: {
-                    clientMutationId: 1,
-                    guid: group.guid,
-                    subject: values.subject,
-                    message: stateToHTML(values.message)
-                }
+                input
             }
         }).then(({data}) => {
             this.setState({
@@ -99,10 +121,21 @@ class SendMessageForm extends React.Component {
             )
         }
 
+        let text
+        if (this.state.recipients.size > 0) {
+            text = (
+                <span>Stuur een e-mail naar {this.state.recipients.size} {this.state.recipients.size === 1 ? "lid" : "leden"}</span>
+            )
+        } else {
+            text = (
+                <span>Stuur hieronder een e-mail naar alle leden</span>
+            )
+        }
+
         return (
             <Form ref="form" className="form" method="POST" onSubmit={this.onSubmit}>
                 <Errors errors={this.state.errors} />
-                <p>Stuur hieronder een e-mail naar alle leden.</p>
+                <p>{text}&nbsp;<a href="#" onClick={this.toggleSelectMembers}>(selecteer)</a></p>
                 <InputField name="subject" type="text" className="form__input" rules="required" autofocus placeholder="Vul hier het onderwerp in..." />
                 <RichTextField name="message" className="form__input" rules="required" placeholder="Vul hier het bericht in..." />
                 <div className="buttons ___end ___margin-top">
@@ -110,6 +143,7 @@ class SendMessageForm extends React.Component {
                     <button className="button ___line ___colored" onClick={this.sendTestMessage} disabled={this.state.working}>Verstuur test aan mij</button>
                     <button className="button" type="submit" disabled={this.state.working}>Verstuur</button>
                 </div>
+                <MembersModal ref="selectMembers" entity={this.props.group} selectable onSelect={this.onSelect} selected={this.state.recipients} />
             </Form>
         )
     }

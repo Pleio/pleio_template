@@ -3,6 +3,7 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { Link } from "react-router-dom"
 import Select from "../../core/components/NewSelect"
+import CheckField from "../../core/components/CheckField"
 import { logErrors } from "../../lib/helpers"
 import Errors from "../../core/components/Errors"
 import classnames from "classnames"
@@ -62,9 +63,20 @@ class MemberItem extends React.Component {
             )
         }
 
+        let selectable
+        if (this.props.selectable) {
+            selectable = (
+                <CheckField
+                    onChange={(e) => this.props.onSelect(e, member.user.guid)}
+                    value={this.props.selected.has(member.user.guid)}
+                />
+            )
+        }
+
         return (
             <div className="list-members__member">
                 <Errors errors={this.state.errors} />
+                {selectable}
                 <div style={{backgroundImage: `url('${member.user.icon}')`}} className="list-members__picture" />
                 <div className="list-members__name"><b>{member.user.name}</b></div>
                 {editable}

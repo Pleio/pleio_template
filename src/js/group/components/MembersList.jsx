@@ -79,7 +79,7 @@ class MembersList extends React.Component {
         }
 
         const members = entity.members.edges.map((member, i) => (
-            <MemberItem key={member.user.guid} group={entity} member={member} editable={entity.canEdit} />
+            <MemberItem key={member.user.guid} group={entity} member={member} editable={entity.canEdit} selectable={this.props.selectable} onSelect={this.props.onSelect} selected={this.props.selected} />
         ))
 
         let placeholder

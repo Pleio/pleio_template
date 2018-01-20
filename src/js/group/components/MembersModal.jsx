@@ -46,7 +46,7 @@ export default class MembersModal extends React.Component {
                             <input type="text" name="q" onChange={this.onChange} placeholder="Zoek op naam..." autoComplete="off" value={this.state.q} />
                             <div className="search-bar__button" />
                         </div>
-                        <MembersList entity={entity} q={this.state.search} scrollable />
+                        <MembersList entity={entity} q={this.state.search} selectable={this.props.selectable} onSelect={this.props.onSelect} selected={this.props.selected} scrollable />
                     </div>
                 </div>
             </Modal>
