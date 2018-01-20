@@ -45,5 +45,8 @@
         <type>plugin</type>
         <name>pleiofile</name>
     </conflicts>
-
+    <conflicts>
+        <type>plugin</type>
+        <name>file_tools</name>
+    </conflicts>
 </plugin_manifest>
