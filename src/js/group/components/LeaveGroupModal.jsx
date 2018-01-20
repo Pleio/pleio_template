@@ -49,7 +49,7 @@ class LeaveGroupForm extends React.Component {
             <form method="POST" onSubmit={this.onSubmit}>
                 <Errors errors={this.state.errors} />
                 <div className="buttons ___margin-top">
-                    <button className="button" type="submit">Verlaat groep</button>
+                    <button className="button" type="submit">Uitschrijven groep</button>
                 </div>
             </form>
         )

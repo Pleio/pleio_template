@@ -44,7 +44,7 @@ class GroupContainer extends React.Component {
         let leave
         if (!entity.canEdit && entity.membership === "joined") {
             leave = (
-                <div className="button" onClick={() => this.refs.leaveGroupModal.toggle()}>Verlaat groep</div>
+                <div className="button" onClick={() => this.refs.leaveGroupModal.toggle()}>Uitschrijven groep</div>
             )
         }
 
