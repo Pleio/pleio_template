@@ -2,7 +2,8 @@
 $dutch = array(
     "pleio_template:analytics" => "Statistieken",
     "pleio_template:google_analytics" => "Google Analytics",
-    "pleio_template:piwik:host" => "Piwik server",
+    "pleio_template:piwik:host" => "Piwik URL",
+    "pleio_template:piwik:explanation" => "Voeg op het einde van de URL een afsluitende slash toe, zoals: https://statistieken.rijksoverheid.nl/piwik/",
     "pleio_template:piwik:site" => "Piwik site ID",
     "pleio_template:sentry" => "Sentry",
     "pleio_template:settings" => "Instellingen",

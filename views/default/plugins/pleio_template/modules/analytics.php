@@ -7,11 +7,12 @@
 </div>
 
 <div>
-    <label><?php echo elgg_echo("pleio_template:piwik:host"); ?></label>
+    <label><?php echo elgg_echo("pleio_template:piwik:url"); ?></label>
     <?php echo elgg_view("input/text", [
-        "name" => "params[piwik_host]",
-        "value" => $vars["plugin"]->piwik_host ?: "stats.pleio.nl"
+        "name" => "params[piwik_url]",
+        "value" => $vars["plugin"]->piwik_url ?: "https://stats.pleio.nl/"
     ]); ?>
+    <span class="elgg-subtext"><?php echo elgg_echo("pleio_template:piwik:explanation"); ?></span>
 </div>
 
 <div>

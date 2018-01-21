@@ -2,7 +2,8 @@
 $english = array(
     "pleio_template:analytics" => "Analytics",
     "pleio_template:google_analytics" => "Google Analytics",
-    "pleio_template:piwik:host" => "Piwik host",
+    "pleio_template:piwik:url" => "Piwik URL",
+    "pleio_template:piwik:explanation" => "Please make sure to add a trailing slash to the URL, like: https://statistieken.rijksoverheid.nl/piwik/",
     "pleio_template:piwik:site" => "Piwik site ID",
     "pleio_template:sentry" => "Sentry",
     "pleio_template:settings" => "Settings",

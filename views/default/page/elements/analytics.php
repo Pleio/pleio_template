@@ -1,6 +1,6 @@
 <?php
 $google_analytics = elgg_get_plugin_setting("google_analytics", "pleio_template");
-$piwik_host = elgg_get_plugin_setting("piwik_host", "pleio_template") ?: "stats.pleio.nl";
+$piwik_url = elgg_get_plugin_setting("piwik_url", "pleio_template") ?: "https://stats.pleio.nl/";
 $piwik_site = elgg_get_plugin_setting("piwik", "pleio_template");
 $sentry = elgg_get_plugin_setting("sentry", "pleio_template");
 ?>
@@ -19,21 +19,22 @@ $sentry = elgg_get_plugin_setting("sentry", "pleio_template");
     <!-- End Google Analytics -->
 <?php endif; ?>
 
-<?php if ($piwik_host && $piwik_site): ?>
+<?php if ($piwik_url && $piwik_site && parse_url($piwik_url)): ?>
+    <?php $piwik_url = parse_url($piwik_url); ?>
     <!-- Piwik -->
     <script type="text/javascript">
       var _paq = _paq || [];
       _paq.push(['trackPageView']);
       _paq.push(['enableLinkTracking']);
       (function() {
-        var u="//<?php echo $piwik_host; ?>/";
+        var u="//<?php echo $piwik_url['host']; ?><?php echo $piwik_url['path']; ?>";
         _paq.push(['setTrackerUrl', u+'piwik.php']);
         _paq.push(['setSiteId', '<?php echo $piwik_site; ?>']);
         var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
         g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
       })();
     </script>
-    <noscript><p><img src="//<?php echo $piwik_host; ?>/piwik.php?idsite=<?php echo $piwik_site; ?>" style="border:0;" alt="" /></p></noscript>
+    <noscript><p><img src="//<?php echo $piwik_url['host']; ?><?php echo $piwik_url['path']; ?>piwik.php?idsite=<?php echo $piwik_site; ?>" style="border:0;" alt="" /></p></noscript>
     <!-- End Piwik Code -->
 <?php endif; ?>
 
