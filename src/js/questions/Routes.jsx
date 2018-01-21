@@ -2,7 +2,6 @@ import React from "react"
 import { Route, Switch } from "react-router-dom"
 import Container from "../core/components/Container"
 
-import Index from "./Index"
 import List from "./List"
 import Add from "./Add"
 import Edit from "./Edit"
@@ -17,8 +16,7 @@ export default class Routes extends React.Component {
                 <Route exact path="/questions/edit/:guid" component={Edit} />
                 <Container>
                     <Switch>
-                        <Route exact path="/questions" component={Index} />
-                        <Route exact path="/questions/all" component={List} />
+                        <Route exact path="/questions" component={List} />
                         <Route exact path="/questions/view/:guid/:slug" component={Item} />
                         <Route component={NotFound} />
                     </Switch>
