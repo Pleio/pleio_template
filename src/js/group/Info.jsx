@@ -1,13 +1,39 @@
 import React from "react"
 import Modal from "../core/components/Modal"
+import Errors from "../core/components/Errors"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import autobind from "autobind-decorator"
+import { logErrors } from "../lib/helpers"
 
 class Info extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            errors: []
+        }
+    }
     @autobind
     onClose(e) {
         this.props.history.push("/groups")
+    }
+
+    @autobind
+    requestAccess(e) {
+        const { entity } = this.props.data
+
+        this.props.mutate({
+            variables: {
+                input: {
+                    clientMutationId: 1,
+                    guid: entity.guid
+                }
+            }
+        }).catch((errors) => {
+            logErrors(errors)
+            this.setState({ errors: errors })
+        })
     }
 
     render() {
@@ -19,6 +45,36 @@ class Info extends React.Component {
             )
         }
 
+        let requestAccess
+        if (entity.isClosed) {
+            switch (entity.membership) {
+                case "not_joined":
+                    requestAccess = (
+                        <p>
+                            <button className="button" onClick={this.requestAccess}>Vraag lidmaatschap aan</button>
+                        </p>
+                    )
+                    break
+                case "requested":
+                    requestAccess = (
+                        <p><b>Lidmaatschap is aangevraagd, wacht op goedkeuring van de groepsbeheerder.</b></p>
+                    )
+                    break
+                case "joined":
+                    requestAccess = (
+                        <div>
+                            <p>Je bent lid van deze groep.</p>
+                            <button className="button" onClick={(e) => window.location = entity.url}>Ga naar de groep</button>
+                        </div>
+                    )
+            }
+        }
+
+        let errors
+        if (this.state.errors) {
+            errors = ( <Errors errors={this.state.errors} /> );
+        }
+
         return (
             <Modal ref="modal" noParent={true} onClose={this.onClose}>
                 <div className="group-info">
@@ -27,7 +83,13 @@ class Info extends React.Component {
                         <h3 className="main__title ___no-margin">{entity.name}</h3>
                         <div className="group-info__state">{entity.isClosed ? "Gesloten groep" : "Openbare groep"}</div>
                         <div className="group-info__title">Beschrijving</div>
-                        <div className="group-info__description">{entity.description}</div>
+                        <div className="group-info__description">
+                            {entity.description}
+                        </div>
+                        <div className="group-info__access">
+                            {errors}
+                            {requestAccess}
+                        </div>
                     </div>
                 </div>
             </Modal>
@@ -61,6 +123,7 @@ const Query = gql`
                 plugins
                 description
                 icon
+                url
                 isClosed
                 canEdit
                 membership
@@ -93,4 +156,15 @@ const Settings = {
     }
 }
 
-export default graphql(Query, Settings)(Info)
+const Mutation = gql`
+    mutation GroupInfo($input: joinGroupInput!) {
+        joinGroup(input: $input) {
+            group {
+                guid
+                membership
+            }
+        }
+    }
+`
+
+export default graphql(Mutation)(graphql(Query, Settings)(Info))

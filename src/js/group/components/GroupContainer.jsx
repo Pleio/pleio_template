@@ -8,6 +8,7 @@ import Menu from "./Menu"
 import MoreInfoModal from "./MoreInfoModal"
 import LeaveGroupModal from "./LeaveGroupModal"
 import InviteModal from "./InviteModal"
+import MembershipRequestsModal from "./MembershipRequestsModal"
 import SendMessageModal from "./SendMessageModal"
 import JoinGroupButton from "./JoinGroupButton"
 
@@ -51,8 +52,9 @@ class GroupContainer extends React.Component {
         let edit
         if (entity.membership === "joined" && entity.canEdit) {
             const options = [
-                { to: `/groups/edit/${entity.guid}`, name: "Groep bewerken" }, 
+                { to: `/groups/edit/${entity.guid}`, name: "Groep bewerken" },
                 { onClick: () => this.refs.inviteModal.toggle(), name: "Leden uitnodigen" },
+                { onClick: () => this.refs.membershipRequestsModal.toggle(), name: "Toegangsaanvragen" },
                 { onClick: () => this.refs.sendMessageModal.toggle(), name: "E-mail versturen" }
             ]
 
@@ -88,6 +90,7 @@ class GroupContainer extends React.Component {
                 <MoreInfoModal ref="moreInfoModal" entity={entity} />
                 <LeaveGroupModal ref="leaveGroupModal" entity={entity} />
                 <InviteModal ref="inviteModal" entity={entity} />
+                <MembershipRequestsModal ref="membershipRequestsModal" entity={entity} />
                 <SendMessageModal ref="sendMessageModal" entity={entity} viewer={viewer} />
             </div>
         )

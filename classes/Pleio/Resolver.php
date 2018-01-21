@@ -696,6 +696,31 @@ class Resolver {
         ];
     }
 
+    static function getMembershipRequests($a, $args, $c) {
+        $group = get_entity($a["guid"]);
+
+        if (!$group || !$group->canEdit()) {
+            return [ "total" => 0, "edges" => [] ];
+        }
+
+        $options = [
+            "type" => "user",
+            "relationship_guid" => $group->guid,
+            "relationship" => "membership_request",
+            "inverse_relationship" => true
+        ];
+
+        $edges = [];
+        foreach (elgg_get_entities_from_relationship($options) as $user) {
+            $edges[] = Mapper::getUser($user);
+       }
+
+        return [
+            "total" => elgg_get_entities_from_relationship(array_merge($options, ["count" => true])),
+            "edges" => $edges
+        ];
+    }
+
     static function getComments($object) {
         $entities = elgg_get_entities([
             "type" => "object",

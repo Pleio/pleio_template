@@ -83,22 +83,27 @@ class Helpers {
         }
     }
 
-    static function getURL($entity) {
+    static function getURL($entity, $absolute = false) {
+        $site = elgg_get_site_entity();
+        if ($absolute) {
+            $root = $site->url;
+        } else {
+            $root = "/";
+        }
+
         switch ($entity->type) {
             case "group":
                 $friendlytitle = elgg_get_friendly_title($entity->name);
-                return "/groups/view/{$entity->guid}/{$friendlytitle}";
+                return "{$root}groups/view/{$entity->guid}/{$friendlytitle}";
             case "user":
-                return "/profile/{$entity->username}";
+                return "{$root}profile/{$entity->username}";
             case "object":
                 $friendlytitle = elgg_get_friendly_title($entity->title);
 
                 $container = $entity->getContainerEntity();
                 if ($container instanceof \ElggGroup) {
                     $container_friendlytitle = elgg_get_friendly_title($container->name);
-                    $root = "/groups/view/{$container->guid}/{$container_friendlytitle}/";
-                } else {
-                    $root = "/";
+                    $root .= "groups/view/{$container->guid}/{$container_friendlytitle}/";
                 }
 
                 switch ($entity->getSubtype()) {

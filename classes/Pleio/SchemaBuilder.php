@@ -386,6 +386,14 @@ class SchemaBuilder {
             ]
         ]);
 
+        $membershipRequestsListType = new ObjectType([
+            "name" => "MembershipRequestList",
+            "fields" => [
+                "total" => [ "type" => Type::nonNull(Type::int()) ],
+                "edges" => [ "type" => Type::listOf($userType) ]
+            ]
+        ]);
+
         $memberType = new ObjectType([
             "name" => "Member",
             "fields" => [
@@ -541,6 +549,10 @@ class SchemaBuilder {
                         ]
                     ],
                     "resolve" => "Pleio\Resolver::getInvited"
+                ],
+                "membershipRequests" => [
+                    "type" => $membershipRequestsListType,
+                    "resolve" => "Pleio\Resolver::getMembershipRequests"
                 ],
                 "plugins" => [
                     "type" => Type::listOf($pluginEnum)
@@ -2061,6 +2073,54 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::deleteGroupInvitation"
         ]);
 
+        $acceptMembershipRequestMutation = Relay::mutationWithClientMutationId([
+            "name" => "acceptMembershipRequest",
+            "description" => "Accept a membership request to a group.",
+            "inputFields" => [
+                "userGuid" => [
+                    "type" => Type::int(),
+                    "description" => "The guid of the user."
+                ],
+                "groupGuid" => [
+                    "type" => Type::int(),
+                    "description" => "The guid of the group."
+                ]
+            ],
+            "outputFields" => [
+                "group" => [
+                    "type" => $groupType,
+                    "resolve" => function($group) {
+                        return Resolver::getEntity(null, $group, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::acceptMembershipRequest"
+        ]);
+
+        $rejectMembershipRequestMutation = Relay::mutationWithClientMutationId([
+            "name" => "rejectMembershipRequest",
+            "description" => "Reject a membership request to a group.",
+            "inputFields" => [
+                "userGuid" => [
+                    "type" => Type::int(),
+                    "description" => "The guid of the user."
+                ],
+                "groupGuid" => [
+                    "type" => Type::int(),
+                    "description" => "The guid of the group."
+                ]
+            ],
+            "outputFields" => [
+                "group" => [
+                    "type" => $groupType,
+                    "resolve" => function($group) {
+                        return Resolver::getEntity(null, $group, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::rejectMembershipRequest"
+        ]);
+
         $sendMessageToGroupMutation = Relay::mutationWithClientMutationId([
             "name" => "sendMessageToGroup",
             "description" => "Send a message to the group members.",
@@ -2236,6 +2296,8 @@ class SchemaBuilder {
                     "inviteToGroup" => $inviteToGroupMutation,
                     "resendGroupInvitation" => $resendGroupInvitationMutation,
                     "deleteGroupInvitation" => $deleteGroupInvitationMutation,
+                    "acceptMembershipRequest" => $acceptMembershipRequestMutation,
+                    "rejectMembershipRequest" => $rejectMembershipRequestMutation,
                     "sendMessageToGroup" => $sendMessageToGroupMutation,
                     "acceptGroupInvitation" => $acceptGroupInvitation,
                     "changeGroupRole" => $changeGroupRoleMutation,

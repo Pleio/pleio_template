@@ -44,7 +44,7 @@ class MemberItem extends React.Component {
             variables: {
                 input
             },
-            refetchQueries: ["MembersList"]
+            refetchQueries: ["MembersList", "GroupItem"]
         }).catch((errors) => {
             logErrors(errors)
             this.setState({

@@ -1231,6 +1231,8 @@ class Mutations {
     }
 
     static function joinGroup($input) {
+        $site = elgg_get_site_entity();
+
         $group = get_entity((int) $input["guid"]);
         if (!$group || !$group instanceof \ElggGroup) {
             throw new Exception("could_not_find");
@@ -1245,7 +1247,18 @@ class Mutations {
             groups_join_group($group, $user);
         } else {
             add_entity_relationship($user->guid, "membership_request", $group->guid);
-            Helpers::sendGroupMembershipRequestNotification($group, $user);
+
+            $owner = get_entity($group->owner_guid);
+            $link = Helpers::getURL($group, true);
+
+            $result = elgg_send_email(
+                $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
+                $owner->email,
+                "Toegangsaanvraag voor de groep {$group->name}",
+                "De gebruiker {$user->name} heeft toegang aangevraagd tot de {$group->name}. Volg de onderstaande link en ga via het menu Beheer naar toegangsaanvragen om de aanvraag te beoordelen:<br />
+                <a href=\"{$link}\">$link</a>
+                "
+            );
         }
 
         return [
@@ -1261,7 +1274,7 @@ class Mutations {
 
         $user = elgg_get_logged_in_user_entity();
         if (!$user) {
-            throw new Exception("not_logged_in");   
+            throw new Exception("not_logged_in");
         }
 
         if ($group->owner_guid == $user->guid) {
@@ -1269,7 +1282,7 @@ class Mutations {
         }
 
         if (!$group->leave($user)) {
-            throw new Exception("could_not_leave");   
+            throw new Exception("could_not_leave");
         }
 
         if ($group->group_acl) {
@@ -1397,6 +1410,82 @@ class Mutations {
         if (!$result) {
             throw new Exception("could_not_save");
         }
+
+        return [
+            "guid" => $group->guid
+        ];
+    }
+
+    static function acceptMembershipRequest($input) {
+        $site = elgg_get_site_entity();
+        $logged_in_user = elgg_get_logged_in_user_entity();
+
+        $group = get_entity($input["groupGuid"]);
+        $user = get_entity($input["userGuid"]);
+
+        if (!$group || !$group instanceof \ElggGroup) {
+            throw new Exception("could_not_find_group");
+        }
+
+        if (!$user || !$user instanceof \ElggUser) {
+            throw new Exception("could_not_find_group");
+        }
+
+        if (!$group->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        $relationship = check_entity_relationship($user->guid, "membership_request", $group->guid);
+        if (!$relationship) {
+            throw new Exception("could_not_find_membership_request");
+        }
+
+        groups_join_group($group, $user);
+        remove_entity_relationship($user->guid, "membership_request", $group->guid);
+
+        $link = Helpers::getURL($group, true);
+
+        $result = elgg_send_email(
+            $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
+            $user->email,
+            "Toegangsaanvraag voor de groep {$group->name} goedgekeurd",
+            "De beheerder {$logged_in_user->name} heeft jouw aangevraagd tot de groep {$group->name} goedgekeurd. Volg de onderstaande link om direct naar de groep te gaan:<br />
+            <a href=\"{$link}\">$link</a>
+            "
+        );
+
+        return [
+            "guid" => $group->guid
+        ];
+    }
+
+    static function rejectMembershipRequest($input) {
+        $site = elgg_get_site_entity();
+        $logged_in_user = elgg_get_logged_in_user_entity();
+
+        $group = get_entity($input["groupGuid"]);
+        $user = get_entity($input["userGuid"]);
+
+        if (!$group || !$group instanceof \ElggGroup) {
+            throw new Exception("could_not_find_group");
+        }
+
+        if (!$user || !$user instanceof \ElggUser) {
+            throw new Exception("could_not_find_group");
+        }
+
+        if (!$group->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        remove_entity_relationship($user->guid, "membership_request", $group->guid);
+
+        $result = elgg_send_email(
+            $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
+            $user->email,
+            "Toegangsaanvraag voor de groep {$group->name} afgewezen",
+            "De beheerder {$logged_in_user->name} heeft jouw aangevraagd tot de groep {$group->name} afgewezen. Neem contact op met de beheerder voor meer informatie."
+        );
 
         return [
             "guid" => $group->guid
