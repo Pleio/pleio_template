@@ -136,7 +136,13 @@ class Helpers {
                         break;
                     case "static":
                     case "page":
-                        $root .= "cms";
+                        $container = $entity->getContainerEntity();
+                        if ($container->guid != $site->guid) {
+                            $container_friendlytitle = elgg_get_friendly_title($container->title);
+                            return "/cms/view/{$container->guid}/{$container_friendlytitle}/{$entity->guid}";
+                        } else {
+                            $root .= "cms";
+                        }
                         break;
                     case "event":
                         $root .= "events";
@@ -734,5 +740,34 @@ class Helpers {
         }
 
         return "";
+    }
+
+    static function getChildren($entity, $subtype) {
+        if (!$entity) {
+            return [];
+        }
+
+        if (!$subtype) {
+            throw new Exception("Subtype is required.");
+            return [];
+        }
+
+        $result = elgg_get_entities([
+            "type" => "object",
+            "subtype" => $subtype,
+            "container_guid" => $entity->guid,
+            "limit" => false
+        ]);
+
+        if (!$result) {
+            return [];
+        }
+
+        $children = [];
+        foreach ($result as $child) {
+            $children[] = $child;
+        }
+
+        return $children;
     }
 }

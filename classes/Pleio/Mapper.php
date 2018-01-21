@@ -116,6 +116,7 @@ class Mapper {
             "richDescription" => $entity->richDescription,
             "timeCreated" => $entity->timeCreated,
             "timeUpdated" => $entity->timeUpdated,
+            "accessId" => $entity->access_id,
             "url" => Helpers::getURL($entity)
         ];
     }

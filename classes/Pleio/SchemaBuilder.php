@@ -266,6 +266,9 @@ class SchemaBuilder {
                 "timeUpdated" => [
                     "type" => Type::string()
                 ],
+                "accessId" => [
+                    "type" => Type::int()
+                ],
                 "pageType" => [
                     "type" => Type::string()
                 ],
@@ -1448,7 +1451,6 @@ class SchemaBuilder {
                 "richDescription" => [ "type" => Type::string() ],
                 "isRecommended" => [ "type" => Type::boolean() ],
                 "isFeatured" => [ "type" => Type::boolean() ],
-                "pageType" => [ "type" => Type::string() ],
                 "featured" => [ "type" => $featuredInput ],
                 "startDate" => [ "type" => Type::string() ],
                 "endDate" => [ "type" => Type::string() ],
@@ -1504,15 +1506,12 @@ class SchemaBuilder {
         $addPageMutation = Relay::mutationWithClientMutationId([
             "name" => "addPage",
             "inputFields" => [
-                "title" => [
-                    "type" => Type::string()
-                ],
-                "accessId" => [
-                    "type" => Type::int()
-                ],
-                "tags" => [
-                    "type" => Type::listOf(Type::string())
-                ]
+                "title" => [ "type" => Type::string() ],
+                "description" => [ "type" => Type::nonNull(Type::string()) ],
+                "richDescription" => [ "type" => Type::string() ],
+                "pageType" => [ "type" => Type::string() ],
+                "containerGuid" => [ "type" => Type::int() ],
+                "accessId" => [ "type" => Type::int() ]
             ],
             "outputFields" => [
                 "entity" => [
@@ -1528,18 +1527,11 @@ class SchemaBuilder {
         $editPageMutation = Relay::mutationWithClientMutationId([
             "name" => "editPage",
             "inputFields" => [
-                "guid" => [
-                    "type" => Type::nonNull(Type::string())
-                ],
-                "title" => [
-                    "type" => Type::string()
-                ],
-                "accessId" => [
-                    "type" => Type::int()
-                ],
-                "tags" => [
-                    "type" => Type::listOf(Type::string())
-                ]
+                "guid" => [ "type" => Type::nonNull(Type::string()) ],
+                "title" => [ "type" => Type::string() ],
+                "description" => [ "type" => Type::nonNull(Type::string()) ],
+                "richDescription" => [ "type" => Type::string() ],
+                "accessId" => [ "type" => Type::int() ]
             ],
             "outputFields" => [
                 "entity" => [
@@ -1549,7 +1541,7 @@ class SchemaBuilder {
                     }
                 ]
             ],
-            "mutateAndGetPayload" => "Pleio\Mutations::addPage"
+            "mutateAndGetPayload" => "Pleio\Mutations::editPage"
         ]);
 
         $addRowMutation = Relay::mutationWithClientMutationId([

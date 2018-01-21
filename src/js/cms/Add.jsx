@@ -5,6 +5,7 @@ import Form from "../core/components/Form"
 import InputField from "../core/components/InputField"
 import RadioField from "../core/components/RadioField"
 import RichTextField from "../core/components/RichTextField"
+import AccessField from "../core/components/AccessField"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { logErrors } from "../lib/helpers"
@@ -42,9 +43,8 @@ class Add extends React.Component {
         let input = {
             clientMutationId: 1,
             title: values.title,
-            type: "object",
-            subtype: "page",
-            pageType: values.pageType
+            pageType: values.pageType,
+            accessId: values.accessId
         }
 
         if (values.description) {
@@ -72,6 +72,13 @@ class Add extends React.Component {
             errors = ( <Errors errors={this.state.errors} /> );
         }
 
+        let permissions
+        if (window.__SETTINGS__['advancedPermissions']) {
+            permissions = (
+                <AccessField name="accessId" label="Leesrechten" />
+            )
+        }
+
         return (
             <ActionContainer title="Pagina toevoegen" onClose={this.onClose}>
                 <Form ref="form" onSubmit={this.onSubmit}>
@@ -83,6 +90,7 @@ class Add extends React.Component {
                                     <InputField label="Titel" name="title" type="text" placeholder="Voeg een korte duidelijke naam toe" className="form__input" rules="required" autofocus />
                                     <RadioField label="Soort" name="pageType" options={[{name:"Campagne", value:"campagne"}, {name:"Tekst", value: "text"}]} className="form__input" value="campagne" onChange={this.onChangeType} />
                                     <RichTextField ref="richText" name="description" placeholder="Beschrijving" rules="required" />
+                                    {permissions}
                                     <div className="buttons ___end ___margin-top">
                                         <button className="button" type="submit">
                                             Aanmaken
@@ -99,8 +107,8 @@ class Add extends React.Component {
 }
 
 const Mutation = gql`
-mutation addEntity($input: addEntityInput!) {
-    addEntity(input: $input) {
+mutation AddPage($input: addPageInput!) {
+    addPage(input: $input) {
         entity {
             guid
         }

@@ -33,8 +33,6 @@ class Add extends React.Component {
             clientMutationId: 1,
             title: values.title,
             containerGuid: this.props.containerGuid,
-            type: "object",
-            subtype: "page",
             pageType: "text"
         }
 
@@ -87,8 +85,8 @@ class Add extends React.Component {
 }
 
 const Mutation = gql`
-mutation addEntity($input: addEntityInput!) {
-    addEntity(input: $input) {
+mutation AddPageModal($input: addPageInput!) {
+    addPage(input: $input) {
         entity {
             guid
         }

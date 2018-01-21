@@ -212,10 +212,6 @@ class Mutations {
                     } else {
                         $entity->container_guid = $container->guid;
                     }
-                } else {
-                    if ($input["subtype"] == "page") {
-                        $entity->container_guid = $site->guid;
-                    }
                 }
         }
 
@@ -276,11 +272,6 @@ class Mutations {
                 $entity->rsvp = true;
             }
 
-            $result = $entity->save();
-        }
-
-        if ($input["subtype"] == "page") {
-            $entity->pageType = $input["pageType"];
             $result = $entity->save();
         }
 
@@ -989,10 +980,29 @@ class Mutations {
     }
 
     static function addPage($input) {
-        $entity = new ElggObject();
+        $site = elgg_get_site_entity();
+
+        $entity = new \ElggObject();
         $entity->subtype = "page";
         $entity->title = $input["title"];
-        $entity->access_id = get_default_access();
+
+        if (isset($input["accessId"])) {
+            $entity->access_id = $input["accessId"];
+        } else {
+            $entity->access_id = get_default_access();
+        }
+
+        $entity->description = $input["description"];
+        $entity->richDescription = $input["richDescription"];
+
+        $entity->pageType = $input["pageType"];
+
+        if (isset($input["containerGuid"])) {
+            $entity->container_guid = $input["containerGuid"];
+        } else {
+            $entity->container_guid = $site->guid;
+        }
+
         $result = $entity->save();
 
         if ($result) {
@@ -1015,6 +1025,23 @@ class Mutations {
         }
 
         $entity->title = $input["title"];
+
+        $entity->description = $input["description"];
+        $entity->richDescription = $input["richDescription"];
+
+        if (isset($input["accessId"]) && $input["accessId"] != $entity->access_id) {
+            $entity->access_id = $input["accessId"];
+
+            foreach (Helpers::getChildren($entity, "row") as $child) {
+                $child->access_id = $input["accessId"];
+                $child->save();
+                foreach (Helpers::getChildren($child, "page_widget") as $subchild) {
+                    $subchild->access_id = $input["accessId"];
+                    $subchild->save();
+                }
+            }
+        }
+
         $result = $entity->save();
 
         if ($result) {
@@ -1040,7 +1067,7 @@ class Mutations {
         $row->subtype = "row";
         $row->layout = $input["layout"];
         $row->container_guid = $input["containerGuid"];
-        $row->access_id = get_default_access();
+        $row->access_id = $container->access_id;
         $result = $row->save();
 
         if ($result) {
@@ -1066,7 +1093,7 @@ class Mutations {
         $entity->subtype = "page_widget";
         $entity->container_guid = $row->guid;
         $entity->position = $input["position"];
-        $entity->access_id = get_default_access();
+        $entity->access_id = $row->access_id;
         $entity->widget_type = $input["type"];
 
         $result = $entity->save();

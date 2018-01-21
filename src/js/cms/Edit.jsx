@@ -7,6 +7,7 @@ import Form from "../core/components/Form"
 import DeleteCore from "../core/Delete"
 import InputField from "../core/components/InputField"
 import RichTextField from "../core/components/RichTextField"
+import AccessField from "../core/components/AccessField"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { logErrors } from "../lib/helpers"
@@ -26,7 +27,7 @@ class Edit extends React.Component {
     @autobind
     onClose() {
         const { entity } = this.props.data
-        this.props.history.push(entity.url)
+        //this.props.history.push(entity.url)
     }
 
     @autobind
@@ -53,8 +54,15 @@ class Edit extends React.Component {
             clientMutationId: 1,
             guid: entity.guid,
             title: values.title,
-            description: values.description.getPlainText(),
-            richDescription: JSON.stringify(convertToRaw(values.description))
+            accessId: values.accessId
+        }
+
+        if (values.description) {
+            input['description'] = values.description.getPlainText()
+            input['richDescription'] = JSON.stringify(convertToRaw(values.description))
+        } else {
+            input['description'] = entity.description
+            input['richDescription'] = entity.richDescription
         }
 
         this.props.mutate({
@@ -73,7 +81,7 @@ class Edit extends React.Component {
 
     render() {
         let { entity, viewer } = this.props.data
-        
+
         if (!entity) {
             return (
                 <div />
@@ -98,6 +106,13 @@ class Edit extends React.Component {
             )
         }
 
+        let permissions
+        if (window.__SETTINGS__['advancedPermissions']) {
+            permissions = (
+                <AccessField name="accessId" label="Leesrechten" value={entity.accessId} />
+            )
+        }
+
         return (
             <ActionContainer title="Pagina wijzigen" onClose={this.onClose}>
                 <Form ref="form" onSubmit={this.onSubmit}>
@@ -108,6 +123,7 @@ class Edit extends React.Component {
                                 <div className="form">
                                     <InputField label="Title" name="title" type="text" placeholder="Voeg een korte duidelijke naam toe" className="form__input" rules="required" autofocus value={entity.title} />
                                     {description}
+                                    {permissions}
                                     <div className="buttons ___space-between">
                                         <button className="button" type="submit">Wijzigen</button>
                                         <button className="button ___link" onClick={this.onDeleteClick}>Verwijderen</button>
@@ -143,6 +159,7 @@ const Query = gql`
                 richDescription
                 pageType
                 url
+                accessId
             }
         }
     }
@@ -159,8 +176,8 @@ const Settings = {
 }
 
 const Mutation = gql`
-mutation editEntity($input: editEntityInput!) {
-    editEntity(input: $input) {
+mutation EditPage($input: editPageInput!) {
+    editPage(input: $input) {
         entity {
             guid
         }
