@@ -2107,6 +2107,10 @@ class SchemaBuilder {
                     "type" => Type::string(),
                     "description" => "The message to send."
                 ],
+                "isTest" => [
+                    "type" => Type::boolean(),
+                    "description" => "Is this a test message (send only to current user)"
+                ],
                 "recipients" => [
                     "type" => Type::listOf(Type::int()),
                     "description" => "An (optional) list of recipients to send the message to."

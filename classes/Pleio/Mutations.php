@@ -1545,33 +1545,43 @@ class Mutations {
             throw new Exception("could_not_save");
         }
 
-        $recipients = $input["recipients"];
-        if ($recipients) {
-            foreach ($recipients as $guid) {
-                if (!$group->isMember($guid)) {
-                    continue;
-                }
-
-                $member = get_entity($guid);
-                if (!$member) {
-                    continue;
-                }
-
-                $result = elgg_send_email(
-                    $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
-                    $member->email,
-                    "Bericht van {$group->name}: {$input['subject']}",
-                    $input['message']
-                );
-            }
+        if ($input["isTest"]) {
+            $current_user = elgg_get_logged_in_user_entity();
+            $result =   elgg_send_email(
+                $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
+                $current_user->email,
+                "Bericht van {$group->name}: {$input['subject']}",
+                $input['message']
+            );
         } else {
-            foreach ($group->getMembers(0) as $member) {
-                $result = elgg_send_email(
-                    $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
-                    $member->email,
-                    "Bericht van {$group->name}: {$input['subject']}",
-                    $input['message']
-                );
+            $recipients = $input["recipients"];
+            if ($recipients) {
+                foreach ($recipients as $guid) {
+                    if (!$group->isMember($guid)) {
+                        continue;
+                    }
+
+                    $member = get_entity($guid);
+                    if (!$member) {
+                        continue;
+                    }
+
+                    $result = elgg_send_email(
+                        $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
+                        $member->email,
+                        "Bericht van {$group->name}: {$input['subject']}",
+                        $input['message']
+                    );
+                }
+            } else {
+                foreach ($group->getMembers(0) as $member) {
+                    $result = elgg_send_email(
+                        $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
+                        $member->email,
+                        "Bericht van {$group->name}: {$input['subject']}",
+                        $input['message']
+                    );
+                }
             }
         }
 

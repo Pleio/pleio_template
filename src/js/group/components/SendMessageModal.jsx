@@ -55,7 +55,7 @@ class SendMessageForm extends React.Component {
                     guid: group.guid,
                     subject: `${values.subject} (test)`,
                     message: stateToHTML(values.message),
-                    recipients: [viewer.user.guid]
+                    isTest: true
                 }
             }
         }).then(({data}) => {
