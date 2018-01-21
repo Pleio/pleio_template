@@ -4,18 +4,18 @@ This repository is the base of the new responsive Pleio subsite theme. It contai
 ## Installing a development environment
 Install all the required Javascript dependencies with
 
-    npm install
+    yarn install
 
 ## Building
 Building the code is done by Webpack using the following function
 
-    npm build
+    yarn run build
 
 When developing use the watch function
 
-    npm watch
+    yarn run watch
 
 ## Testing
 The template comes with a test suite running Jest. Run the test suite with
 
-    npm test
+    yarn run test
