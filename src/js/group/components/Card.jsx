@@ -26,7 +26,7 @@ export default class Card extends React.Component {
         }
 
         return (
-            <Link to={url} className={classnames({"card-group": true})}>
+            <Link to={url} className={classnames({"card-group": true, "___is-highlighted": entity.isFeatured})}>
                     <div style={{backgroundImage: `url('${entity.icon}')`}} className="card-group__picture" />
                     <div className="card-group__title">
                         {entity.name}

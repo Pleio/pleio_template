@@ -49,6 +49,7 @@ class Add extends React.Component {
             icon: values.icon,
             featured: values.featured,
             isClosed: (values.membership === "closed") ? true : false,
+            isFeatured: values.isFeatured,
             tags: values.tags,
             plugins: defaultGroupPlugins
         }
@@ -68,9 +69,18 @@ class Add extends React.Component {
     }
 
     render() {
+        const { viewer } = this.props.data
+
         let errors
         if (this.state.errors) {
             errors = ( <Errors errors={this.state.errors} /> );
+        }
+
+        let extraFields
+        if (viewer && viewer.isAdmin) {
+            extraFields = (
+                <SwitchField name="isFeatured" type="text" className="form__input" label="Deze groep is aanbevolen" />
+            )
         }
 
         return (
@@ -85,9 +95,12 @@ class Add extends React.Component {
                                     <InputField label="Naam" name="name" type="text" placeholder="Voeg een korte duidelijke naam toe" className="form__input" rules="required" autofocus />
                                     <IconField name="icon" />
                                     <SelectField label="Lidmaatschap" name="membership" type="text" className="form__input" options={{open: "Open", "closed": "Besloten"}} value="open" />
+                                    {extraFields}
+
                                     <TextField label="Beschrijving voor niet-leden" name="description" type="text" placeholder="Vertel wat over de groep voor niet-leden" className="form__input" rules="required" />
                                     <RichTextField label="Memo voor leden" name="introduction" type="text" placeholder="Hier kun je een korte introductie geven aan de leden van de groep" className="form__input" />
                                     <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" />
+
                                     <div className="buttons ___end ___margin-top">
                                         <button className="button" type="submit">
                                             Aanmaken
@@ -103,6 +116,15 @@ class Add extends React.Component {
     }
 }
 
+const Query = gql`
+    query AddGroup {
+        viewer {
+            guid
+            isAdmin
+        }
+    }
+`
+
 const Mutation = gql`
     mutation addGroup($input: addGroupInput!) {
         addGroup(input: $input) {
@@ -113,4 +135,4 @@ const Mutation = gql`
     }
 `
 
-export default graphql(Mutation)(Add)
+export default graphql(Mutation)(graphql(Query)(Add))

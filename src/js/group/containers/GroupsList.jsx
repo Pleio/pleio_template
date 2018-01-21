@@ -14,6 +14,7 @@ const Query = gql`
                 canEdit
                 excerpt
                 isClosed
+                isFeatured
                 membership
                 members {
                     total

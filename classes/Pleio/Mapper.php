@@ -36,6 +36,7 @@ class Mapper {
             "type" => $entity->type,
             "name" => html_entity_decode($entity->name, ENT_COMPAT | ENT_QUOTES, 'UTF-8'),
             "isClosed" => ($entity->membership === ACCESS_PRIVATE) ? true : false,
+            "isFeatured" => $entity->isFeatured ? true : false,
             "membership" => Helpers::getGroupMembership($entity),
             "description" => strip_tags($entity->description),
             "excerpt" => elgg_get_excerpt(html_entity_decode($entity->description, ENT_COMPAT | ENT_QUOTES, 'UTF-8'), 150),

@@ -12,6 +12,7 @@ import FeaturedField from "../core/components/FeaturedField"
 import InputField from "../core/components/InputField"
 import TagsField from "../core/components/TagsField"
 import SelectField from "../core/components/SelectField"
+import SwitchField from "../core/components/SwitchField"
 import SwitchesField from "../core/components/SwitchesField"
 import IconField from "../core/components/IconField"
 import { convertToRaw } from "draft-js"
@@ -64,6 +65,7 @@ class Edit extends React.Component {
             description: values.description,
             introduction: JSON.stringify(convertToRaw(values.introduction)),
             isClosed: (values.membership === "closed") ? true : false,
+            isFeatured: values.isFeatured,
             icon: values.icon,
             featured: values.featured,
             tags: values.tags,
@@ -85,7 +87,7 @@ class Edit extends React.Component {
     }
 
     render() {
-        const { entity } = this.props.data
+        const { entity, viewer } = this.props.data
 
         if (!entity) {
             // Loading...
@@ -111,6 +113,13 @@ class Edit extends React.Component {
 
         let membership = (entity.isClosed) ? "closed" : "open"
 
+        let extraFields
+        if (viewer && viewer.isAdmin) {
+            extraFields = (
+                <SwitchField name="isFeatured" type="text" className="form__input" label="Deze groep is aanbevolen" value={entity.isFeatured} />
+            )
+        }
+
         return (
             <ActionContainer title="Bewerk groep" onClose={this.onClose}>
                 <Form ref="form" onSubmit={this.onSubmit}>
@@ -123,6 +132,8 @@ class Edit extends React.Component {
                                             <InputField value={entity.name} label="Naam" name="name" type="text" placeholder="Voeg een korte duidelijke naam toe" className="form__input" rules="required" autofocus />
                                             <IconField name="icon" value={entity.icon} />
                                             <SelectField label="Lidmaatschap" name="membership" type="text" className="form__input" options={{open: "Open", "closed": "Besloten"}} value={membership} />
+                                            {extraFields}
+
                                             <TextField label="Beschrijving voor niet-leden" name="description" type="text" placeholder="Vertel wat over de groep voor niet-leden" className="form__input" rules="required" value={entity.description} />
                                             <RichTextField label="Memo voor leden" name="introduction" type="text" placeholder="Hier kun je een korte introductie geven aan de leden van de groep" className="form__input" richValue={entity.introduction} />
                                             <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" value={entity.tags}/>
@@ -148,7 +159,11 @@ class Edit extends React.Component {
 }
 
 const Query = gql`
-    query getGroupInfo($guid: Int!) {
+    query EditGroup($guid: Int!) {
+        viewer {
+            guid
+            isAdmin
+        }
         entity(guid: $guid) {
             guid
             status
@@ -163,6 +178,7 @@ const Query = gql`
                     positionY
                 }
                 isClosed
+                isFeatured
                 plugins
                 canEdit
                 url

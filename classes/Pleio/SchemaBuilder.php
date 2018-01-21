@@ -476,6 +476,7 @@ class SchemaBuilder {
                     "resolve" => "Pleio\Resolver::canChangeOwnership"
                 ],
                 "isClosed" => [ "type" => Type::boolean() ],
+                "isFeatured" => [ "type" => Type::boolean() ],
                 "membership" => [ "type" => $membershipEnum ],
                 "accessIds" => [
                     "type" => Type::listOf($accessIdType),
@@ -1883,6 +1884,7 @@ class SchemaBuilder {
                     "type" => $featuredInput
                 ],
                 "isClosed" => [ "type" => Type::boolean() ],
+                "isFeatured" => [ "type" => Type::boolean() ],
                 "description" => [ "type" => Type::string() ],
                 "introduction" => [ "type" => Type::string() ],
                 "tags" => [ "type" => Type::listOf(Type::string()) ],
@@ -1905,13 +1907,9 @@ class SchemaBuilder {
                 "guid" => [ "type" => Type::string() ],
                 "name" => [ "type" => Type::string() ],
                 "icon" => [ "type" => Type::string() ],
-                "featured" => [
-                    "type" => $featuredInput
-                ],
-                "isClosed" => [
-                    "type" => Type::boolean(),
-                    "description" => "True when membership has to be requested by the user, False when every user can join the group."
-                ],
+                "featured" => [ "type" => $featuredInput ],
+                "isClosed" => [ "type" => Type::boolean(), "description" => "True when membership has to be requested by the user, False when every user can join the group." ],
+                "isFeatured" => [ "type" => Type::boolean() ],
                 "description" => [ "type" => Type::string() ],
                 "introduction" => [ "type" => Type::string() ],
                 "tags" => [ "type" => Type::listOf(Type::string()) ],

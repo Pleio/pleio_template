@@ -1160,6 +1160,10 @@ class Mutations {
         $group->tags = filter_tags($input["tags"]);
         $group->access_id = get_default_access();
 
+        if (elgg_is_admin_logged_in() && isset($input["isFeatured"])) {
+            $group->isFeatured = $input["isFeatured"];
+        }
+
         $result = $group->save();
 
         if ($input["icon"]) {
@@ -1218,6 +1222,14 @@ class Mutations {
         $group->introduction = $input["introduction"];
         $group->tags = filter_tags($input["tags"]);
         $group->plugins = array_unique($input["plugins"]);
+
+        if (elgg_is_admin_logged_in() && isset($input["isFeatured"])) {
+            if ($input["isFeatured"]) {
+                $group->isFeatured = $input["isFeatured"];
+            } else {
+                unset($group->isFeatured);
+            }
+        }
 
         if ($input["featured"]) {
             if ($input["featured"]["image"]) {

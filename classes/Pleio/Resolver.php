@@ -920,23 +920,40 @@ class Resolver {
     }
 
     static function getGroups($a, $args, $c) {
+        $dbprefix = elgg_get_config("dbprefix");
         $user = elgg_get_logged_in_user_entity();
 
-        $options = array(
+        $options = [
             "type" => "group",
             "limit" => (int) $args["limit"],
             "offset" => (int) $args["offset"]
-        );
+        ];
 
         if ($user && $args["filter"] === "mine") {
             $options["relationship"] = "member";
             $options["relationship_guid"] = $user->guid;
+            $options["joins"] = ["JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"];
+            $options["order_by"] = "ge.name";
+
+            $total = elgg_get_entities_from_relationship(array_merge($options, array( "count" => true )));
+            $entities = elgg_get_entities_from_relationship($options);
+        } else {
+            $options["joins"] = [
+                "JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid",
+            ];
+
+            $msid = get_metastring_id("isFeatured");
+            if ($msid) {
+                $options["joins"][] = "LEFT JOIN {$dbprefix}metadata md ON e.guid = md.entity_guid AND md.name_id = {$msid}";
+                $options["order_by"] = "md.name_id DESC, ge.name";
+            }
+
+            $total = elgg_get_entities(array_merge($options, array( "count" => true )));
+            $entities = elgg_get_entities($options);
         }
 
-        $total = elgg_get_entities_from_relationship(array_merge($options, array( "count" => true )));
-
         $edges = [];
-        foreach (elgg_get_entities_from_relationship($options) as $entity) {
+        foreach ($entities as $entity) {
             $edges[] = Mapper::getGroup($entity);
         }
 
