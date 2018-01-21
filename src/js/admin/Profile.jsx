@@ -2,13 +2,12 @@ import React from "react"
 import { List } from "immutable"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
+import autobind from "autobind-decorator"
 
 class Profile extends React.Component {
     constructor(props) {
         super(props)
-
-        this.addField = this.addField.bind(this)
-        this.removeField = this.removeField.bind(this)
 
         this.state = {
             profile: List()
@@ -27,6 +26,7 @@ class Profile extends React.Component {
         })
     }
 
+    @autobind
     addField(e) {
         e.preventDefault()
 
@@ -38,6 +38,7 @@ class Profile extends React.Component {
         })
     }
 
+    @autobind
     onChangeField(i, fieldName, e, transformToKey) {
         e.preventDefault()
 
@@ -53,6 +54,7 @@ class Profile extends React.Component {
         })
     }
 
+    @autobind
     removeField(i, e) {
         e.preventDefault()
 
@@ -61,14 +63,34 @@ class Profile extends React.Component {
         })
     }
 
+    @autobind
+    onDragEnd(result) {
+        if (!result.destination) {
+            return
+        }
+
+        const sourceRemoved = this.state.profile.splice(result.source.index, 1)
+        const newProfile = sourceRemoved.splice(result.destination.index, 0, this.state.profile.get(result.source.index))
+
+        this.setState({ profile: newProfile })
+    }
+
     render() {
         const fields = this.state.profile.map((field, i) => {
             return (
-                <div key={i}>
-                    <input type="text" name={`profileKey[${i}]`} onChange={(e) => this.onChangeField(i, "key", e, true)} value={field.key} />
-                    <input type="text" name={`profileName[${i}]`} onChange={(e) => this.onChangeField(i, "name", e, false)} value={field.name} />
-                    <span className="elgg-icon elgg-icon-delete" onClick={(e) => this.removeField(i, e)} />
-                </div>
+                <Draggable key={i} draggableId={i.toString()} index={i}>
+                    {(provided, snapshot) => (
+                        <div>
+                            <div ref={provided.innerRef} {...provided.draggableProps}>
+                                <span {...provided.dragHandleProps} className="elgg-icon elgg-icon-drag-arrow"></span>
+                                <input type="text" name={`profileKey[${i}]`} onChange={(e) => this.onChangeField(i, "key", e, true)} value={field.key} />
+                                <input type="text" name={`profileName[${i}]`} onChange={(e) => this.onChangeField(i, "name", e, false)} value={field.name} />
+                                <span className="elgg-icon elgg-icon-delete" onClick={(e) => this.removeField(i, e)} />
+                            </div>
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Draggable>
             )
         })
 
@@ -80,7 +102,16 @@ class Profile extends React.Component {
                     </button><br />
                     <b>Sleutel</b>&nbsp;<b>Omschrijving</b><br />
                     <i>Let op: de sleutel mag alleen de karakters a-z bevatten en mag maximaal 8 tekens lang zijn.</i>
-                    {fields}
+                    <DragDropContext onDragEnd={this.onDragEnd}>
+                        <Droppable droppableId="droppable-1">
+                            {(provided, snapshot) => (
+                                <div ref={provided.innerRef}>
+                                {fields}
+                                {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
                 </div>
             </div>
         )

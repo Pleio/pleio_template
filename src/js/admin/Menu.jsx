@@ -9,9 +9,6 @@ class Menu extends React.Component {
     constructor(props) {
         super(props)
 
-        this.addLink = this.addLink.bind(this)
-        this.removeLink = this.removeLink.bind(this)
-
         this.state = {
             menu: List()
         }
@@ -29,6 +26,7 @@ class Menu extends React.Component {
         })
     }
 
+    @autobind
     addLink(e) {
         e.preventDefault()
 
@@ -40,6 +38,7 @@ class Menu extends React.Component {
         })
     }
 
+    @autobind
     onChangeField(i, fieldName, e) {
         e.preventDefault()
 
@@ -50,6 +49,7 @@ class Menu extends React.Component {
         })
     }
 
+    @autobind
     removeLink(i, e) {
         e.preventDefault()
 
@@ -96,13 +96,13 @@ class Menu extends React.Component {
                         Link toevoegen
                     </button>
                     <DragDropContext onDragEnd={this.onDragEnd}>
-                    <Droppable droppableId="droppable-1">
-                        {(provided, snapshot) => (
-                            <div ref={provided.innerRef}>
-                            {menu}
-                            {provided.placeholder}
-                            </div>
-                        )}
+                        <Droppable droppableId="droppable-1">
+                            {(provided, snapshot) => (
+                                <div ref={provided.innerRef}>
+                                {menu}
+                                {provided.placeholder}
+                                </div>
+                            )}
                         </Droppable>
                     </DragDropContext>
                 </div>

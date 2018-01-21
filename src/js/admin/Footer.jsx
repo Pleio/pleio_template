@@ -2,13 +2,12 @@ import React from "react"
 import { List } from "immutable"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
+import autobind from "autobind-decorator"
 
 class Footer extends React.Component {
     constructor(props) {
         super(props)
-
-        this.addLink = this.addLink.bind(this)
-        this.removeLink = this.removeLink.bind(this)
 
         this.state = {
             footer: List()
@@ -27,6 +26,7 @@ class Footer extends React.Component {
         })
     }
 
+    @autobind
     addLink(e) {
         e.preventDefault()
 
@@ -38,6 +38,7 @@ class Footer extends React.Component {
         })
     }
 
+    @autobind
     onChangeField(i, fieldName, e) {
         e.preventDefault()
 
@@ -48,6 +49,7 @@ class Footer extends React.Component {
         })
     }
 
+    @autobind
     removeLink(i, e) {
         e.preventDefault()
 
@@ -56,14 +58,34 @@ class Footer extends React.Component {
         })
     }
 
+    @autobind
+    onDragEnd(result) {
+        if (!result.destination) {
+            return
+        }
+
+        const sourceRemoved = this.state.footer.splice(result.source.index, 1)
+        const newFooter = sourceRemoved.splice(result.destination.index, 0, this.state.footer.get(result.source.index))
+
+        this.setState({ footer: newFooter })
+    }
+
     render() {
         const footer = this.state.footer.map((link, i) => {
             return (
-                <div key={i}>
-                    <input type="text" name={`footerTitle[${i}]`} onChange={(e) => this.onChangeField(i, "title", e)} value={link.title} />
-                    <input type="text" name={`footerLink[${i}]`} onChange={(e) => this.onChangeField(i, "link", e)} value={link.link} />
-                    <span className="elgg-icon elgg-icon-delete" onClick={(e) => this.removeLink(i, e)} />
-                </div>
+                <Draggable key={i} draggableId={i.toString()} index={i}>
+                    {(provided, snapshot) => (
+                        <div>
+                            <div ref={provided.innerRef} {...provided.draggableProps}>
+                                <span {...provided.dragHandleProps} className="elgg-icon elgg-icon-drag-arrow"></span>
+                                <input type="text" name={`footerTitle[${i}]`} onChange={(e) => this.onChangeField(i, "title", e)} value={link.title} />
+                                <input type="text" name={`footerLink[${i}]`} onChange={(e) => this.onChangeField(i, "link", e)} value={link.link} />
+                                <span className="elgg-icon elgg-icon-delete" onClick={(e) => this.removeLink(i, e)} />
+                            </div>
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Draggable>
             )
         })
 
@@ -73,7 +95,16 @@ class Footer extends React.Component {
                     <button className="elgg-button elgg-button-submit" onClick={this.addLink}>
                         Link toevoegen
                     </button>
-                    {footer}
+                    <DragDropContext onDragEnd={this.onDragEnd}>
+                        <Droppable droppableId="droppable-1">
+                            {(provided, snapshot) => (
+                                <div ref={provided.innerRef}>
+                                {footer}
+                                {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
                 </div>
             </div>
         )
