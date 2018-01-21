@@ -14299,6 +14299,9 @@ body.modal__open {
     visibility: visible;
   }
 }
+.group-info {
+  height: 100%;
+}
 .group-info__content.___scrollable {
   display: -ms-flexbox;
   display: flex;
@@ -14372,9 +14375,43 @@ body.___leraar .navigation__search input {
 .___padding-top {
   padding-top: 2rem;
 }
+.___no-padding {
+  padding: 0;
+}
 .users-online {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+}
+.modal__box p a {
+  color: #009ee3;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+.modal__box p a:hover {
+  border-color: #009ee3;
+}
+.list-members__owner {
+  width: 100%;
+  padding: 0 3rem 0 1.6rem;
+  line-height: 4.4rem;
+  max-width: 14rem;
+  margin-left: 2rem;
+  color: #535353;
+}
+.group-info__description {
+  margin-bottom: 1rem;
+}
+.option-list {
+  max-height: 40rem;
+}
+.card-group.___is-highlighted:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: .4rem;
+  background-color: #00c6ff;
 }
 #__bs_notify__ {
   opacity: .15 !important;
