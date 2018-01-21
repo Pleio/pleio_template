@@ -770,4 +770,65 @@ class Helpers {
 
         return $children;
     }
+
+    static function transferGroupOwnership($group, $new_owner) {
+        $ia = elgg_set_ignore_access(true);
+
+        $old_owner = $group->getOwnerEntity();
+
+        $group->owner_guid = $new_owner->guid;
+        $group->container_guid = $new_owner->guid;
+
+        // make sure user is added to the group
+        $group->join($new_owner);
+
+        $group->save();
+
+        // remove existing group administrator role for new owner
+        remove_entity_relationship($new_owner->guid, "group_admin", $group->guid);
+        add_entity_relationship($old_owner->guid, "group_admin", $group->guid);
+
+        // check for group icon
+        if (!empty($group->icontime)) {
+            $prefix = "groups/" . $group->guid;
+
+            $sizes = array("tiny", "small", "medium", "large");
+
+            $ofh = new \ElggFile();
+            $ofh->owner_guid = $old_owner->guid;
+
+            $nfh = new \ElggFile();
+            $nfh->owner_guid = $group->getOwnerGUID();
+
+            foreach ($sizes as $size) {
+                $ofh->setFilename($prefix . $size . ".jpg");
+                $nfh->setFilename($prefix . $size . ".jpg");
+                $ofh->open("read");
+                $nfh->open("write");
+                $nfh->write($ofh->grabFile());
+                $ofh->close();
+                $nfh->close();
+                $ofh->delete();
+            }
+
+            $group->icontime = time();
+        }
+
+        $options = array(
+            "guid" => $group->guid,
+            "limit" => false
+        );
+
+        $metadata = elgg_get_metadata($options);
+        if (!empty($metadata)) {
+            foreach ($metadata as $md) {
+                if ($md->owner_guid == $old_owner->guid) {
+                    $md->owner_guid = $new_owner->guid;
+                    $md->save();
+                }
+            }
+        }
+
+        elgg_set_ignore_access($ia);
+    }
 }

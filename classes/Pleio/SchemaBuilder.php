@@ -461,42 +461,22 @@ class SchemaBuilder {
             "name" => "Group",
             "interfaces" => [$entityInterface],
             "fields" => [
-                "guid" => [
-                    "type" => Type::nonNull(Type::string())
+                "guid" => [ "type" => Type::nonNull(Type::string()) ],
+                "status" => [ "type" => Type::int() ],
+                "name" => [ "type" => Type::string() ],
+                "description" => [ "type" => Type::string() ],
+                "excerpt" => [ "type" => Type::string() ],
+                "introduction" => [ "type" => Type::string() ],
+                "icon" => [ "type" => Type::string() ],
+                "featured" => [ "type" => $featured ],
+                "url" => [ "type" => Type::string() ],
+                "canEdit" => [ "type" => Type::boolean() ],
+                "canChangeOwnership" => [
+                    "type" => Type::boolean(),
+                    "resolve" => "Pleio\Resolver::canChangeOwnership"
                 ],
-                "status" => [
-                    "type" => Type::int()
-                ],
-                "name" => [
-                    "type" => Type::string()
-                ],
-                "description" => [
-                    "type" => Type::string()
-                ],
-                "excerpt" => [
-                    "type" => Type::string()
-                ],
-                "introduction" => [
-                    "type" => Type::string()
-                ],
-                "icon" => [
-                    "type" => Type::string()
-                ],
-                "featured" => [
-                    "type" => $featured
-                ],
-                "url" => [
-                    "type" => Type::string()
-                ],
-                "canEdit" => [
-                    "type" => Type::boolean()
-                ],
-                "isClosed" => [
-                    "type" => Type::boolean()
-                ],
-                "membership" => [
-                    "type" => $membershipEnum
-                ],
+                "isClosed" => [ "type" => Type::boolean() ],
+                "membership" => [ "type" => $membershipEnum ],
                 "accessIds" => [
                     "type" => Type::listOf($accessIdType),
                     "resolve" => "Pleio\Resolver::getAccessIds"

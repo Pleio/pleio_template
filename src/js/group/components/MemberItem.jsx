@@ -21,12 +21,24 @@ class MemberItem extends React.Component {
         }
     }
 
+    componentWillUpdate(nextProps) {
+        if (nextProps !== this.props) {
+            this.setState({ role: nextProps.member.role })
+        }
+    }
+
     @autobind
     onChange(role) {
         const { group, member } = this.props
 
         if (role == "removed") {
             if (!confirm("Weet je zeker dat je deze gebruiker wil verwijderen?")) {
+                return
+            }
+        }
+
+        if (role == "owner") {
+            if (!confirm("Weet je zeker dat je het eigenaarschap van de groep wil overdragen aan deze gebruiker?")) {
                 return
             }
         }
@@ -54,13 +66,20 @@ class MemberItem extends React.Component {
     }
 
     render() {
-        const { member } = this.props
+        const { member, group } = this.props
 
         let editable
         if (this.props.editable) {
             if (this.state.role !== "owner") {
+                let options = { member: "Lid", admin: "Beheerder" }
+                if (group.canChangeOwnership) {
+                    options['owner'] = "Eigenaar"
+                }
+
+                options['removed'] = "Verwijderen"
+
                 editable = (
-                    <Select className="selector ___no-line ___not-visible-on-mobile" options={{member: "Lid", admin: "Beheerder", removed: "Verwijderen"}} value={this.state.role} onChange={this.onChange} />
+                    <Select className="selector ___no-line ___not-visible-on-mobile" options={options} value={this.state.role} onChange={this.onChange} />
                 )
             } else {
                 editable = (

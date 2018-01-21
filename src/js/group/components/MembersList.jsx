@@ -78,9 +78,19 @@ class MembersList extends React.Component {
             )
         }
 
-        const members = entity.members.edges.map((member, i) => (
-            <MemberItem key={member.user.guid} group={entity} member={member} editable={entity.canEdit} selectable={this.props.selectable} onSelect={this.props.onSelect} selected={this.props.selected} />
-        ))
+        const members = entity.members.edges.map((member) => {
+            return (
+                <MemberItem
+                    key={member.user.guid}
+                    group={entity}
+                    member={member}
+                    editable={entity.canEdit}
+                    selectable={this.props.selectable}
+                    onSelect={this.props.onSelect}
+                    selected={this.props.selected}
+                />
+            )
+        })
 
         let placeholder
         if (members.length === 0) {
@@ -102,6 +112,7 @@ const Query = gql`
             ... on Group {
                 guid
                 canEdit
+                canChangeOwnership
                 members(q: $q, offset: $offset, limit: 20) {
                     total
                     edges {

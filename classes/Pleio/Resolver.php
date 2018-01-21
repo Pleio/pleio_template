@@ -124,6 +124,28 @@ class Resolver {
         ];
     }
 
+    static function canChangeOwnership($object) {
+        $entity = get_entity($object["guid"]);
+        if (!$entity) {
+            return false;
+        }
+
+        $logged_in_user = elgg_get_logged_in_user_entity();
+        if (!$logged_in_user) {
+            return false;
+        }
+
+        if ($logged_in_user->guid == $entity->owner_guid) {
+            return true;
+        }
+
+        if ($logged_in_user->isAdmin()) {
+            return true;
+        }
+
+        return false;
+    }
+
     static function getAccessIds($object) {
         $old_guid = elgg_set_page_owner_guid($object["guid"]);
 
@@ -499,12 +521,9 @@ class Resolver {
             "limit" => 0
         ]);
 
-        $owner = $group->getOwnerEntity();
-        $admins[] = $owner;
-
         $members = [];
         foreach (elgg_get_entities_from_relationship($options) as $member) {
-            if ($member == $owner) {
+            if ($member->guid == $group->owner_guid) {
                 $role = "owner";
             } else if (in_array($member, $admins)) {
                 $role = "admin";

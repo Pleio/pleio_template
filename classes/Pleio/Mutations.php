@@ -1622,12 +1622,19 @@ class Mutations {
         }
 
         if (!$group->isMember($user)) {
-           throw new Exception("user_not_member_of_group"); 
+           throw new Exception("user_not_member_of_group");
         }
 
         $role = $input["role"];
 
         switch ($role) {
+            case "owner":
+                if (!$current_user->isAdmin() && $current_user->guid != $group->owner_guid) {
+                    throw new Exception("user_not_group_owner_or_site_admin");
+                }
+
+                Helpers::transferGroupOwnership($group, $user);
+                break;
             case "admin":
                 add_entity_relationship($user->guid, "group_admin", $group->guid);
                 break;

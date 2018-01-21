@@ -18,7 +18,7 @@ class Item extends React.Component {
     }
 
     render() {
-        const { entity, viewer } = this.props.data
+        const { entity } = this.props.data
 
         if (!entity) {
             // Loading...
