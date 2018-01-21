@@ -13,7 +13,21 @@ import SendMessageModal from "./SendMessageModal"
 import JoinGroupButton from "./JoinGroupButton"
 
 class GroupContainer extends React.Component {
+    componentWillReceiveProps(nextProps) {
+        const { entity } = nextProps.data
+        const { history } = nextProps
+
+        if (!entity) {
+            return
+        }
+
+        if (entity.isClosed && (!entity.canEdit && entity.membership !== "joined")) {
+            history.push(`/groups/info/${entity.guid}`)
+        }
+    }
+
     render() {
+        const { match, history } = this.props
         const { entity, viewer } = this.props.data
 
         if (!entity) {
@@ -25,6 +39,12 @@ class GroupContainer extends React.Component {
         if (entity.status == 404) {
             return (
                 <NotFound />
+            )
+        }
+
+        if (entity.isClosed && (!entity.canEdit && entity.membership !== "joined")) {
+            return (
+                <div />
             )
         }
 
@@ -50,13 +70,17 @@ class GroupContainer extends React.Component {
         }
 
         let edit
-        if (entity.membership === "joined" && entity.canEdit) {
+        if (entity.canEdit) {
             const options = [
                 { to: `/groups/edit/${entity.guid}`, name: "Groep bewerken" },
                 { onClick: () => this.refs.inviteModal.toggle(), name: "Leden uitnodigen" },
                 { onClick: () => this.refs.membershipRequestsModal.toggle(), name: "Toegangsaanvragen" },
-                { onClick: () => this.refs.sendMessageModal.toggle(), name: "E-mail versturen" }
+                { onClick: () => this.refs.sendMessageModal.toggle(), name: "E-mail versturen" },
             ]
+
+            if (window.__SETTINGS__['groupMemberExport']) {
+                options.push({ href: `/csv-export/group/${entity.guid}`, name: "Ledenlijst exporteren" })
+            }
 
             edit = (
                 <DropdownButton options={options} name="Beheer" line colored />
@@ -159,4 +183,4 @@ const Settings = {
     }
 }
 
-export default graphql(Query, Settings)(GroupContainer)
+export default graphql(Query, Settings)(withRouter(GroupContainer))

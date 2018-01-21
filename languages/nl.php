@@ -39,6 +39,7 @@ $dutch = array(
     "pleio_template:email:visit" => "Voor alle nieuwe berichten bekijk %s",
     "pleio_template:email:goto" => "Ga naar %s",
     "pleio_template:read_more" => "Lees meer",
+    "pleio_template:member_export" => "Sta groepsbeheerders toe om een export te maken van de leden (inclusief naam en e-mail)",
     "file_tools:forms:edit:parent" => "Map",
     "file_tools:input:folder_select:main" => "Hoofdmap",
     'admin:users:all' => 'Alle gebruikers',

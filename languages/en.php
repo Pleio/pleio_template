@@ -39,6 +39,7 @@ $english = array(
     "pleio_template:email:visit" => "For all new messages visit %s",
     "pleio_template:email:goto" => "Go to %s",
     "pleio_template:read_more" => "Read more",
+    "pleio_template:member_export" => "Allow group admins to export the memberslist (including name and email)",
     "file_tools:forms:edit:parent" => "Parent",
     "file_tools:input:folder_select:main" => "Main folder",
     'admin:users:all' => 'All users',
