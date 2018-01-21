@@ -99,9 +99,6 @@ class DateTimeField extends React.Component {
     }
 
     render() {
-        console.log(this.state.isOpenDate)
-        console.log(this.state.isOpenTime)
-
         const days = moment.weekdaysMin(true).map((i) => (
             <span key={i}>{i}</span>
         ))
