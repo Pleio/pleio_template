@@ -926,27 +926,27 @@ class Resolver {
         $options = [
             "type" => "group",
             "limit" => (int) $args["limit"],
-            "offset" => (int) $args["offset"]
+            "offset" => (int) $args["offset"],
+            "joins" => []
         ];
+
+        $msid = get_metastring_id("isFeatured");
+        if ($msid) {
+            $options["joins"][] = "LEFT JOIN {$dbprefix}metadata md ON e.guid = md.entity_guid AND md.name_id = {$msid}";
+            $options["order_by"] = "md.name_id DESC, ge.name";
+        } else {
+            $options["order_by"] = "ge.name";
+        }
 
         if ($user && $args["filter"] === "mine") {
             $options["relationship"] = "member";
             $options["relationship_guid"] = $user->guid;
-            $options["joins"] = ["JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"];
-            $options["order_by"] = "ge.name";
+            $options["joins"][] = "JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid";
 
             $total = elgg_get_entities_from_relationship(array_merge($options, array( "count" => true )));
             $entities = elgg_get_entities_from_relationship($options);
         } else {
-            $options["joins"] = [
-                "JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid",
-            ];
-
-            $msid = get_metastring_id("isFeatured");
-            if ($msid) {
-                $options["joins"][] = "LEFT JOIN {$dbprefix}metadata md ON e.guid = md.entity_guid AND md.name_id = {$msid}";
-                $options["order_by"] = "md.name_id DESC, ge.name";
-            }
+            $options["joins"][] = "JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid";
 
             $total = elgg_get_entities(array_merge($options, array( "count" => true )));
             $entities = elgg_get_entities($options);
