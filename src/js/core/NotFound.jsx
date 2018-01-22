@@ -1,8 +1,23 @@
 import React from "react"
 import Document from "./components/Document"
+import { graphql } from "react-apollo"
+import gql from "graphql-tag"
 
-export default class NotFound extends React.Component {
+class NotFound extends React.Component {
     render() {
+        const { viewer } = this.props.data
+
+        let message
+        if (viewer.loggedIn) {
+            message = (
+                <span>De link waarop je hebt geklikt, is mogelijk buiten werking of de pagina is verwijderd.</span>
+            )
+        } else {
+            message = (
+                <span>De pagina is momenteel beschikbaar, dit kan zijn omdat je hier geen rechten tot hebt of omdat de pagina niet meer bestaat. Probeer in te loggen om de pagina te bekijken.</span>
+            )
+        }
+
         return (
             <section className="section">
                 <Document title="Pagina is niet beschikbaar" />
@@ -14,7 +29,7 @@ export default class NotFound extends React.Component {
                                     Sorry, deze pagina is niet beschikbaar
                                 </div>
                                 <div className="http-error-page__text">
-                                    De link waarop je hebt geklikt, is mogelijk buiten werking of de pagina is verwijderd.
+                                    {message}
                                 </div>
                                 <div className="http-error-page__icon">
                                     <div className="icon-not-found"></div>
@@ -27,3 +42,14 @@ export default class NotFound extends React.Component {
         )
     }
 }
+
+const Query = gql`
+    query NotFound {
+        viewer {
+            guid
+            loggedIn
+        }
+    }
+`
+
+export default graphql(Query)(NotFound)
