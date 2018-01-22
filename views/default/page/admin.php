@@ -61,7 +61,7 @@ header("Content-type: text/html; charset=UTF-8");
     </div>
     <?php echo elgg_view('page/elements/foot'); ?>
 
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Array.prototype.includes,Array.prototype.fill"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Array.prototype.includes,Array.prototype.fill,Array.prototype.find"></script>
     <?php if (webpack_dev_server_is_available()): ?>
         <script src="http://localhost:9001/mod/pleio_template/build/vendor.js"></script>
         <script src="http://localhost:9001/mod/pleio_template/build/admin.js"></script>
