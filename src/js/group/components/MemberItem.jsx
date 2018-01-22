@@ -88,6 +88,12 @@ class MemberItem extends React.Component {
                     </div>
                 )
             }
+        } else {
+            if (member.role === "admin") {
+                editable = (<span>Beheerder</span>)
+            } else if (member.role === "owner") {
+                editable = (<span>Eigenaar</span>)
+            }
         }
 
         let selectable
