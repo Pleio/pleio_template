@@ -1,6 +1,7 @@
 import React from "react"
 import Modal from "../core/components/Modal"
 import Errors from "../core/components/Errors"
+import LoggedInButton from "../core/components/LoggedInButton"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import autobind from "autobind-decorator"
@@ -37,7 +38,7 @@ class Info extends React.Component {
     }
 
     render() {
-        const { entity } = this.props.data
+        const { entity, viewer } = this.props.data
 
         if (!entity) {
             return (
@@ -51,7 +52,7 @@ class Info extends React.Component {
                 case "not_joined":
                     requestAccess = (
                         <p>
-                            <button className="button" onClick={this.requestAccess}>Vraag lidmaatschap aan</button>
+                            <LoggedInButton className="button" onClick={this.requestAccess} viewer={viewer}>Vraag lidmaatschap aan</LoggedInButton>
                         </p>
                     )
                     break
