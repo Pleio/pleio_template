@@ -14413,6 +14413,14 @@ body.___leraar .navigation__search input {
   width: .4rem;
   background-color: #00c6ff;
 }
+.file__owner span {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 1rem 0;
+  transition: color 0.2s ease;
+}
 #__bs_notify__ {
   opacity: .15 !important;
   pointer-events: none;
