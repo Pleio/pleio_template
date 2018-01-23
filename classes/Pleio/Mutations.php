@@ -1624,6 +1624,8 @@ class Mutations {
     }
 
     static function changeGroupRoleMutation($input) {
+        $site = elgg_get_site_entity();
+
         $current_user = elgg_get_logged_in_user_entity();
         if (!$current_user) {
             throw new Exception("not_logged_in");
@@ -1656,6 +1658,18 @@ class Mutations {
                 }
 
                 Helpers::transferGroupOwnership($group, $user);
+
+                $link = Helpers::getURL($group, true);
+
+                $result = elgg_send_email(
+                    $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
+                    $user->email,
+                    "Eigenaarschap van de groep {$group->name} overgedragen",
+                    "De beheerder {$logged_in_user->name} heeft het eigenaarschap van de groep {$group->name} aan jou overgedragen. Bekijk de groep op:<br />
+                    <a href=\"{$link}\">$link</a>
+                    "
+                );
+
                 break;
             case "admin":
                 add_entity_relationship($user->guid, "group_admin", $group->guid);
