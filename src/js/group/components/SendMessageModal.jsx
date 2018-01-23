@@ -20,6 +20,7 @@ class SendMessageForm extends React.Component {
         this.state = {
             completed: false,
             working: false,
+            testSent: false,
             errors: [],
             recipients: new Set()
         }
@@ -43,7 +44,10 @@ class SendMessageForm extends React.Component {
     sendTestMessage(e) {
         e.preventDefault()
 
-        this.setState({ working: true })
+        this.setState({
+            working: true,
+            testSent: false
+        })
 
         const values = this.refs.form.getValues()
         const { group, viewer } = this.props
@@ -60,7 +64,8 @@ class SendMessageForm extends React.Component {
             }
         }).then(({data}) => {
             this.setState({
-                working: false
+                working: false,
+                testSent: true
             })
         }).catch((errors) => {
             logErrors(errors)
@@ -75,7 +80,10 @@ class SendMessageForm extends React.Component {
         const values = this.refs.form.getValues()
         const { group } = this.props
 
-        this.setState({ working: true })
+        this.setState({
+            working: true,
+            testSent: false
+        })
 
         const input = {
             clientMutationId: 1,
@@ -132,14 +140,22 @@ class SendMessageForm extends React.Component {
             )
         }
 
+        let testSentMessage
+        if (this.state.testSent) {
+            testSentMessage = (
+                <p>Het testbericht is succesvol verstuurd.</p>
+            )
+        }
+
         return (
             <Form ref="form" className="form" method="POST" onSubmit={this.onSubmit}>
                 <Errors errors={this.state.errors} />
                 <p>{text}&nbsp;<a href="#" onClick={this.toggleSelectMembers}>(selecteer)</a></p>
                 <InputField name="subject" type="text" className="form__input" rules="required" autofocus placeholder="Vul hier het onderwerp in..." />
                 <RichTextField name="message" className="form__input" rules="required" placeholder="Vul hier het bericht in..." />
+                {loading}
+                {testSentMessage}
                 <div className="buttons ___end ___margin-top">
-                    {loading}
                     <button className="button ___line ___colored" onClick={this.sendTestMessage} disabled={this.state.working}>Verstuur test aan mij</button>
                     <button className="button" type="submit" disabled={this.state.working}>Verstuur</button>
                 </div>
