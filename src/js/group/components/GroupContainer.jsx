@@ -10,6 +10,7 @@ import LeaveGroupModal from "./LeaveGroupModal"
 import InviteModal from "./InviteModal"
 import MembershipRequestsModal from "./MembershipRequestsModal"
 import SendMessageModal from "./SendMessageModal"
+import SubgroupsModal from "./SubgroupsModal"
 import JoinGroupButton from "./JoinGroupButton"
 
 class GroupContainer extends React.Component {
@@ -69,13 +70,14 @@ class GroupContainer extends React.Component {
             )
         }
 
-        let edit
+        let edit, modals
         if (entity.canEdit) {
             const options = [
                 { to: `/groups/edit/${entity.guid}`, name: "Groep bewerken" },
                 { onClick: () => this.refs.inviteModal.toggle(), name: "Leden uitnodigen" },
                 { onClick: () => this.refs.membershipRequestsModal.toggle(), name: "Toegangsaanvragen" },
                 { onClick: () => this.refs.sendMessageModal.toggle(), name: "E-mail versturen" },
+                { onClick: () => this.refs.subgroupsModal.toggle(), name: "Subgroepen" },
             ]
 
             if (window.__SETTINGS__['groupMemberExport']) {
@@ -84,6 +86,15 @@ class GroupContainer extends React.Component {
 
             edit = (
                 <DropdownButton options={options} name="Beheer" line colored />
+            )
+
+            modals  = (
+                <div>
+                    <InviteModal ref="inviteModal" entity={entity} />
+                    <MembershipRequestsModal ref="membershipRequestsModal" entity={entity} />
+                    <SendMessageModal ref="sendMessageModal" entity={entity} viewer={viewer} />
+                    <SubgroupsModal ref="subgroupsModal" entity={entity} viewer={viewer} />
+                </div>
             )
         }
 
@@ -113,9 +124,7 @@ class GroupContainer extends React.Component {
                 {this.props.children}
                 <MoreInfoModal ref="moreInfoModal" entity={entity} />
                 <LeaveGroupModal ref="leaveGroupModal" entity={entity} />
-                <InviteModal ref="inviteModal" entity={entity} />
-                <MembershipRequestsModal ref="membershipRequestsModal" entity={entity} />
-                <SendMessageModal ref="sendMessageModal" entity={entity} viewer={viewer} />
+                {modals}
             </div>
         )
     }

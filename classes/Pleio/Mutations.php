@@ -1269,6 +1269,110 @@ class Mutations {
         throw new Exception("could_not_save");
     }
 
+    static function addSubgroup($input) {
+        $group = get_entity($input["groupGuid"]);
+        if (!$group || !$group instanceof \ElggGroup) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$group->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        $id = create_access_collection($input["name"], $group->guid);
+
+        if ($group->subpermissions) {
+            $subpermissions = unserialize($group->subpermissions);
+        }
+
+        if (!is_array($subpermissions)) {
+            $subpermissions = array();
+        }
+
+        array_push($subpermissions, $id);
+
+        $group->subpermissions = serialize($subpermissions);
+        $group->save();
+
+        update_access_collection($id, $input["members"]);
+
+        return [
+            "success" => true
+        ];
+    }
+
+    static function editSubgroup($input) {
+        $access_collection = get_access_collection($input["id"]);
+        if (!$access_collection) {
+            throw new Exception("could_not_find");
+        }
+
+        $group = get_entity($access_collection->owner_guid);
+        if (!$group || !$group instanceof \ElggGroup) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$group->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        if ($group->subpermissions) {
+            $subpermissions = unserialize($group->subpermissions);
+        }
+
+        if (!is_array($subpermissions)) {
+            $subpermissions = array();
+        }
+
+        if (!in_array($input["id"], $subpermissions)) {
+            throw new Exception("could_not_find");
+        }
+
+        $dbprefix = elgg_get_config("dbprefix");
+
+        if ($access_collection->name !== $input["name"]) {
+            $id = sanitise_int($access_collection->id);
+            $name = sanitize_string($input["name"]);
+            update_data("UPDATE {$dbprefix}access_collections SET name = '{$name}' WHERE id = {$id}");
+        }
+
+        update_access_collection($access_collection->id, $input["members"]);
+    }
+
+    static function deleteSubgroup($input) {
+        $access_collection = get_access_collection($input["id"]);
+        if (!$access_collection) {
+            throw new Exception("could_not_find");
+        }
+
+        $group = get_entity($access_collection->owner_guid);
+        if (!$group || !$group instanceof \ElggGroup) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$group->canEdit()) {
+            throw new Exception("could_not_save");
+        }
+
+        if ($group->subpermissions) {
+            $subpermissions = unserialize($group->subpermissions);
+        }
+
+        if (!is_array($subpermissions)) {
+            $subpermissions = array();
+        }
+
+        if (!in_array($input["id"], $subpermissions)) {
+            throw new Exception("could_not_find");
+        }
+
+        if (delete_access_collection($access_collection->id)) {
+            $subpermissions = array_diff($subpermissions, [$access_collection->id]);
+            $group->subpermissions = serialize($subpermissions);
+            $group->save();
+        }
+    }
+
     static function joinGroup($input) {
         $site = elgg_get_site_entity();
 

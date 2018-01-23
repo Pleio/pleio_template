@@ -101,7 +101,7 @@ class MemberItem extends React.Component {
             selectable = (
                 <CheckField
                     onChange={(e) => this.props.onSelect(e, member.user.guid)}
-                    value={this.props.selected.has(member.user.guid)}
+                    checked={this.props.selected.has(member.user.guid)}
                 />
             )
         }

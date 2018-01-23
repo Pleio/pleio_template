@@ -1512,4 +1512,49 @@ class Resolver {
 
         return false;
     }
+
+    static function getSubgroups($group) {
+        $group = get_entity($group["guid"]);
+        if (!$group || !$group->canEdit()) {
+            return [
+                "total" => 0,
+                "edges" => []
+            ];
+        }
+
+        if (!$group->subpermissions) {
+            return [
+                "total" => 0,
+                "edges" => []
+            ];
+        }
+
+        $subgroups = [];
+        foreach (unserialize($group->subpermissions) as $subpermission) {
+            $access_collection = get_access_collection($subpermission);
+            if (!$access_collection) {
+                continue;
+            }
+
+            $members = [];
+            foreach (get_members_of_access_collection($access_collection->id) as $member) {
+                $members[] = Mapper::getUser($member);
+            }
+
+            $subgroups[] = [
+                "id" => $access_collection->id,
+                "name" => $access_collection->name,
+                "members" => $members
+            ];
+        }
+
+        usort($subgroups, function($a, $b) {
+            return ($a["name"] > $b["name"]) ? -1 : 1;
+        });
+
+        return [
+            "total" => count($subgroups),
+            "edges" => $subgroups
+        ];
+    }
 }

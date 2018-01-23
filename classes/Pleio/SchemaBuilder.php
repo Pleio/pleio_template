@@ -360,6 +360,27 @@ class SchemaBuilder {
             ]
         ]);
 
+        $subgroupType = new ObjectType([
+            "name" => "Subgroup",
+            "fields" => [
+                "id" => [ "type" => Type::int() ],
+                "name" => [ "type" => Type::string() ],
+                "members" => [ "type" => Type::listOf($userType) ]
+            ]
+        ]);
+
+        $subgroupListType = new ObjectType([
+            "name" => "SubgroupList",
+            "fields" => [
+                "total" => [
+                    "type" => Type::nonNull(Type::int())
+                ],
+                "edges" => [
+                    "type" => Type::listOf($subgroupType)
+                ]
+            ]
+        ]);
+
         $attendeesListType = new ObjectType([
             "name" => "AttendeesList",
             "fields" => [
@@ -540,6 +561,10 @@ class SchemaBuilder {
                 ],
                 "plugins" => [
                     "type" => Type::listOf($pluginEnum)
+                ],
+                "subgroups" => [
+                    "type" => $subgroupListType,
+                    "resolve" => "Pleio\Resolver::getSubgroups"
                 ]
             ]
         ]);
@@ -1926,6 +1951,43 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::editGroup"
         ]);
 
+        $addSubgroupMutation = Relay::mutationWithClientMutationId([
+            "name" => "addSubgroup",
+            "inputFields" => [
+                "name" => [ "type" => Type::string() ],
+                "groupGuid" => [ "type" => Type::int() ],
+                "members" => [ "type" => Type::listOf(Type::int()) ]
+            ],
+            "outputFields" => [
+                "success" => [ "type" => Type::boolean() ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::addSubgroup"
+        ]);
+
+        $editSubgroupMutation = Relay::mutationWithClientMutationId([
+            "name" => "editSubgroup",
+            "inputFields" => [
+                "id" => [ "type" => Type::int() ],
+                "name" => [ "type" => Type::string() ],
+                "members" => [ "type" => Type::listOf(Type::int()) ]
+            ],
+            "outputFields" => [
+                "success" => [ "type" => Type::boolean() ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::editSubgroup"
+        ]);
+
+        $deleteSubgroupMutation = Relay::mutationWithClientMutationId([
+            "name" => "deleteSubgroup",
+            "inputFields" => [
+                "id" => [ "type" => Type::int() ]
+            ],
+            "outputFields" => [
+                "success" => [ "type" => Type::boolean() ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::deleteSubgroup"
+        ]);
+
         $joinGroupMutation = Relay::mutationWithClientMutationId([
             "name" => "joinGroup",
             "description" => "Join a group. In the case of a closed group a membership request will be send, in the case of an open group the user will be joined immediately.",
@@ -2265,6 +2327,9 @@ class SchemaBuilder {
                     "addImage" => $addImageMutation,
                     "addGroup" => $addGroupMutation,
                     "editGroup" => $editGroupMutation,
+                    "addSubgroup" => $addSubgroupMutation,
+                    "editSubgroup" => $editSubgroupMutation,
+                    "deleteSubgroup" => $deleteSubgroupMutation,
                     "joinGroup" => $joinGroupMutation,
                     "leaveGroup" => $leaveGroupMutation,
                     "inviteToGroup" => $inviteToGroupMutation,
