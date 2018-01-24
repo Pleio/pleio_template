@@ -14434,6 +14434,21 @@ body.___leraar .navigation__search input {
 .tree-view__folder.___is-file > span:before {
   content: "";
 }
+.please-wait__container {
+  -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+}
+.please-wait__text {
+  -ms-flex: none;
+      flex: none;
+  max-width: 50%;
+}
 #__bs_notify__ {
   opacity: .15 !important;
   pointer-events: none;
