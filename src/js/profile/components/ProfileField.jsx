@@ -238,11 +238,23 @@ class ProfileField extends React.Component {
         }
 
         if (!this.props.canEdit) {
+            let value
+
+            try {
+                JSON.parse(this.state.value)
+
+                value = (
+                    <RichTextView richValue={this.state.value} />
+                )
+            } catch (e) {
+                value = this.state.value
+            }
+
             return (
                 <div className={className}>
                     <ul>
                         <li><strong>{this.props.field.name}</strong></li>
-                        <li><div>{this.state.value}</div></li>
+                        <li><div>{value}</div></li>
                     </ul>
                 </div>
             )
