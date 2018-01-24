@@ -10,11 +10,11 @@ class NotFound extends React.Component {
         let message
         if (viewer.loggedIn) {
             message = (
-                <span>De link waarop je hebt geklikt, is mogelijk buiten werking of de pagina is verwijderd.</span>
+                <span>Dit kan zijn omdat je hiertoe geen rechten meer hebt of omdat deze pagina niet meer bestaat.</span>
             )
         } else {
             message = (
-                <span>De pagina is momenteel beschikbaar, dit kan zijn omdat je hier geen rechten tot hebt of omdat de pagina niet meer bestaat. Probeer in te loggen om de pagina te bekijken.</span>
+                <span>Dit kan zijn omdat je eerst moet inloggen om deze pagina te bekijken of omdat deze pagina niet meer bestaat.</span>
             )
         }
 
@@ -26,7 +26,7 @@ class NotFound extends React.Component {
                         <div className="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
                             <div className="http-error-page">
                                 <div className="http-error-page__title">
-                                    Sorry, deze pagina is niet beschikbaar
+                                    Sorry, deze pagina is nu niet beschikbaar
                                 </div>
                                 <div className="http-error-page__text">
                                     {message}
