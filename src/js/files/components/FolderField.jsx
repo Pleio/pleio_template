@@ -9,27 +9,33 @@ import { Set } from "immutable"
 class OpenFolderWithoutQuery extends React.Component {
     render() {
         const { files } = this.props.data
-        
+
         let contents
         if (files) {
-            contents = files.edges.map((folder) => {
-                if (!this.props.excludeGuids.contains(folder.guid)) {
+            contents = files.edges.map((item) => {
+                if (!this.props.excludeGuids.contains(item.guid)) {
                     return (
-                        <Folder 
-                            key={folder.guid}
-                            guid={folder.guid}
-                            title={folder.title}
+                        <Folder
+                            key={item.guid}
+                            guid={item.guid}
+                            title={item.title}
+                            subtype={item.subtype}
+                            mimeType={item.mimeType}
                             onSelect={this.props.onSelect}
-                            value={this.props.value}
+                            selected={this.props.selected}
                             excludeGuids={this.props.excludeGuids}
-                        ><span>{folder.title}</span></Folder>
+                        ><span>{item.title}</span></Folder>
                     )
                 }
             })
         }
 
         return (
-            <div className={classnames({"tree-view__folder ___is-open": true, "___selected": this.props.value == this.props.guid})}>
+            <div className={classnames({
+                    "tree-view__folder ___is-open": true,
+                    "___selected": this.props.selected ? (this.props.selected.guid == this.props.guid) : false,
+                    "___is-file": this.props.subtype === "file"
+            })}>
                 <span onClick={this.props.onClick}>{this.props.title}</span>
                 {contents}
             </div>
@@ -38,25 +44,43 @@ class OpenFolderWithoutQuery extends React.Component {
 }
 
 const Query = gql`
-    query FilesList($guid: String) {
-        files(filter: "folders", containerGuid: $guid) {
+    query FilesList($guid: String, $filter: String) {
+        files(containerGuid: $guid, filter: $filter) {
             edges {
                 guid
                 ... on Object {
                     hasChildren
                     title
+                    subtype
+                    url
+                    mimeType
                 }
             }
         }
     }
 `
 
+const Settings = {
+    options: (ownProps) => {
+        return {
+            variables: {
+                filter: !ownProps.showFiles ? "folders" : ""
+            }
+        }
+    }
+}
+
+
 const OpenFolder = graphql(Query)(OpenFolderWithoutQuery)
 
 class ClosedFolder extends React.Component {
     render() {
         return (
-            <div className={classnames({"tree-view__folder": true, "___selected": this.props.value == this.props.guid})}>
+            <div className={classnames({
+                "tree-view__folder": true,
+                "___is-file": (this.props.subtype === "file"),
+                "___selected": this.props.selected ? (this.props.selected.guid == this.props.guid) : false
+            })}>
                 <span onClick={this.props.onClick}>{this.props.title}</span>
             </div>
         )
@@ -75,7 +99,7 @@ class Folder extends React.Component {
     @autobind
     onClick(e) {
         this.setState({ isOpen: !this.state.isOpen })
-        this.props.onSelect(this.props.guid)
+        this.props.onSelect(this.props)
     }
 
     render() {
@@ -85,9 +109,11 @@ class Folder extends React.Component {
                 <OpenFolder
                     guid={this.props.guid}
                     title={this.props.title}
+                    subtype={this.props.subtype}
+                    mimeType={this.props.mimeType}
                     onClick={this.onClick}
                     onSelect={this.props.onSelect}
-                    value={this.props.value}
+                    selected={this.props.selected}
                     excludeGuids={this.props.excludeGuids}
                 />
             )
@@ -96,9 +122,11 @@ class Folder extends React.Component {
                 <ClosedFolder
                     guid={this.props.guid}
                     title={this.props.title}
+                    subtype={this.props.subtype}
+                    mimeType={this.props.mimeType}
                     onClick={this.onClick}
                     onSelect={this.props.onSelect}
-                    value={this.props.value}
+                    selected={this.props.selected}
                     excludeGuids={this.props.excludeGuids}
                 />
             )
@@ -110,9 +138,12 @@ class FolderField extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = { value: null }
+        this.state = {
+            value: null,
+
+        }
     }
-    
+
     componentWillReceiveProps(nextProps) {
         const excludeGuidsChanged = !(new Set(nextProps.excludeGuids).equals(new Set(this.props.excludeGuids)))
         if (nextProps.containerGuid !== this.props.containerGuid || excludeGuidsChanged) {
@@ -134,7 +165,23 @@ class FolderField extends React.Component {
 
     @autobind
     getValue() {
-        return this.state.value
+        return this.state.selected ? this.state.selected.guid : null
+    }
+
+    @autobind
+    getRichValue() {
+        const { selected } = this.state
+
+        if (!selected) {
+            return null
+        }
+
+        return {
+            guid: selected.guid,
+            name: selected.title,
+            mimeType: selected.mimeType,
+            url: `/file/download/${selected.guid}`
+        }
     }
 
     @autobind
@@ -144,18 +191,25 @@ class FolderField extends React.Component {
 
     @autobind
     isValid() {
-        return this.state.value ? true : false
+        return this.state.selected ? true : false
     }
 
     @autobind
-    onSelect(guid) {
-        this.setState({ value: guid })
+    onSelect(item) {
+        this.setState({ selected: item })
     }
 
     render() {
         return (
             <div className="tree-view">
-                <Folder title="Hoofdmap" guid={this.props.containerGuid} isOpen={true} onSelect={this.onSelect} value={this.state.value} excludeGuids={new Set(this.props.excludeGuids)} />
+                <Folder
+                    title="Hoofdmap"
+                    guid={this.props.containerGuid}
+                    isOpen={true}
+                    onSelect={this.onSelect}
+                    selected={this.state.selected}
+                    excludeGuids={new Set(this.props.excludeGuids)}
+                />
             </div>
         )
     }

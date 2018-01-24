@@ -62,7 +62,11 @@ const decorator = new CompositeDecorator([
         strategy: findDocumentEntities,
         component: (props) => {
             const data = props.contentState.getEntity(props.entityKey).getData()
-            const size = humanFileSize(data.size)
+
+            let size
+            if (data.size) {
+                size = humanFileSize(data.size)
+            }
 
             let type
             switch (data.mimeType) {
@@ -487,13 +491,13 @@ class RichTextField extends React.Component {
         let options
         if (this.props.minimal) {
             options = {
-                "document": "Document(en)",
+                "document": "Bestand(en)",
             }
         } else {
             options = {
                 "image": "Afbeelding",
                 "video": "Video",
-                "document": "Document(en)",
+                "document": "Bestand(en)",
                 "social": "Social media post"
             }
         }

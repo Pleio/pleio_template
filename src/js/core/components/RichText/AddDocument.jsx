@@ -86,7 +86,7 @@ class AddDocument extends React.Component {
                     <div className="editor__upload" onClick={this.triggerFileSelect}>
                         <Errors errors={this.state.errors} />
                         <input ref="file" type="file" name="document" onChange={this.onChange} className="___is-hidden" multiple accept=".pdf,.csv,.png,.jpg,.doc,.docx,.xls,.xlsx,.ppt,.pptx" />
-                        <span>+ Document(en) uploaden</span>
+                        <span>+ Bestand(en) uploaden</span>
                     </div>
                 </div>
             )

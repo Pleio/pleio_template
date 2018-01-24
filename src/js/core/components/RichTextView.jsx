@@ -50,7 +50,11 @@ const decorator = new CompositeDecorator([
         strategy: findDocumentEntities,
         component: (props) => {
             const data = props.contentState.getEntity(props.entityKey).getData()
-            const size = humanFileSize(data.size)
+
+            let size
+            if (data.size) {
+                size = humanFileSize(data.size)
+            }
 
             let type
             switch (data.mimeType) {
