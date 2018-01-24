@@ -38,7 +38,7 @@ class AccessField extends React.Component {
 
         if (this.props.readOnly) {
             return (
-                <span>{selectOptions[value]}</span>
+                <span>{selectOptions[value] || "Gelimiteerd"}</span>
             )
         }
 
