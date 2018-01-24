@@ -71,7 +71,11 @@ class Login extends React.Component {
             }
 
             return (
-                <div />
+                <div className="please-wait__container">
+                    <div className="please-wait__text">
+                        Een ogenblik geduld...
+                    </div>
+                </div>
             )
         }
 

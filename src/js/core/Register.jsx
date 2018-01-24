@@ -151,7 +151,11 @@ class Register extends React.Component {
             window.location.href = "/register"
 
             return (
-                <div />
+                <div className="please-wait__container">
+                    <div className="please-wait__text">
+                        Een ogenblik geduld...
+                    </div>
+                </div>
             )
         }
 
