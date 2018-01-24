@@ -14421,6 +14421,19 @@ body.___leraar .navigation__search input {
   padding: 1rem 0;
   transition: color 0.2s ease;
 }
+.___is-private span {
+  color: #B4B4B4;
+}
+.lead.___group .lead__justify {
+  -ms-flex-pack: start;
+      justify-content: flex-start;
+}
+.tree-view__folder.___is-file {
+  margin-left: 6rem;
+}
+.tree-view__folder.___is-file > span:before {
+  content: "";
+}
 #__bs_notify__ {
   opacity: .15 !important;
   pointer-events: none;
