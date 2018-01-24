@@ -574,7 +574,7 @@ class Mutations {
             throw new Exception("invalid_new_container");
         }
 
-        if ($container->getSubtype() !== "folder") {
+        if (!$container instanceof \ElggGroup && $container->getSubtype() !== "folder") {
             throw new Exception("invalid_new_container");
         }
 
