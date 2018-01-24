@@ -76,9 +76,12 @@ class GroupContainer extends React.Component {
                 { to: `/groups/edit/${entity.guid}`, name: "Groep bewerken" },
                 { onClick: () => this.refs.inviteModal.toggle(), name: "Leden uitnodigen" },
                 { onClick: () => this.refs.membershipRequestsModal.toggle(), name: "Toegangsaanvragen" },
-                { onClick: () => this.refs.sendMessageModal.toggle(), name: "E-mail versturen" },
-                { onClick: () => this.refs.subgroupsModal.toggle(), name: "Subgroepen" },
+                { onClick: () => this.refs.sendMessageModal.toggle(), name: "E-mail versturen" }
             ]
+
+            if (window.__SETTINGS__['subgroups']) {
+                options.push({ onClick: () => this.refs.subgroupsModal.toggle(), name: "Subgroepen" })
+            }
 
             if (window.__SETTINGS__['groupMemberExport']) {
                 options.push({ href: `/csv-export/group/${entity.guid}`, name: "Ledenlijst exporteren" })

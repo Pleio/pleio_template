@@ -699,7 +699,8 @@ class Helpers {
             "odtEnabled" => elgg_is_active_plugin("odt_editor") ? true : false,
             "externalLogin" => elgg_is_active_plugin("pleio") ? true : false,
             "advancedPermissions" => elgg_get_plugin_setting("advanced_permissions", "pleio_template") === "yes" ? true : false,
-            "groupMemberExport" => elgg_get_plugin_setting("member_export", "pleio_template") === "yes" ? true : false
+            "groupMemberExport" => elgg_get_plugin_setting("member_export", "pleio_template") === "yes" ? true : false,
+            "subgroups" => elgg_get_plugin_setting("subgroups", "pleio_template") === "yes" ? true : false,
         ];
     }
 
