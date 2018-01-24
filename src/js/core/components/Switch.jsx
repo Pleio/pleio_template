@@ -34,7 +34,7 @@ export default class Switch extends React.Component {
     render() {
         return (
             <div className="switch" onClick={this.onChange}>
-                <input ref="checkbox" tabIndex={0} type="checkbox" id={this.props.id} name={this.props.name} checked={this.state.checked} readOnly={true} />
+                <input tabIndex={0} ref="checkbox" type="checkbox" id={this.props.id} name={this.props.name} checked={this.state.checked} readOnly={true} />
                 <label htmlFor={this.props.id}>
                     {this.props.label}
                 </label>

@@ -730,7 +730,7 @@ class Mutations {
                 $entity->$key = $value;
                 $result = $entity->save();
             } else {
-                $accessId = $input["accessId"] ?: get_default_access();
+                $accessId = isset($input["accessId"]) ? $input["accessId"] : get_default_access();
                 $result = create_metadata($entity->guid, $key, $value, "", 0, $accessId, false, $site->guid);
             }
         } else {

@@ -85,13 +85,15 @@ class ProfileField extends React.Component {
             return
         }
 
-        this.setState({
-            isEditing: false
-        })
+        let accessId = 2
+        if (this.refs.accessId) {
+            accessId = this.refs.accessId.getValue() ? 2 : 0
+        }
 
         if (this.isMutating) {
             return
         }
+
 
         this.isMutating = true
 
@@ -101,12 +103,16 @@ class ProfileField extends React.Component {
                     clientMutationId: 1,
                     guid: this.props.entity.guid,
                     key: this.props.dataKey,
-                    accessId: 2,
+                    accessId,
                     value
                 }
             }
         }).then((data) => {
             this.isMutating = false
+        })
+
+        this.setState({
+            isEditing: false
         })
     }
 
@@ -140,13 +146,26 @@ class ProfileField extends React.Component {
             )
         }
 
+        let field
+        if (this.props.editAcl && this.state.isEditing) {
+            field = (
+                <div tabIndex={0} onBlur={this.onBlur}>
+                    <SwitchField ref="accessId" name="accessId" label="Maak publiek" value={this.state.accessId !== 0} />
+                </div>
+            )
+        } else {
+            field = (
+                <input type="text" ref="input" onChange={(e) => this.onChange(e.target.value)} onKeyPress={this.onKeyPress} onBlur={this.onBlur} value={this.state.value || ""} />
+            )
+        }
+
         return (
             <li>
                 <label>{this.props.field.name}</label>
                 <span className={classnames({"___is-editable-field": true, "___is-editing": this.state.isEditing, "___is-empty": !this.state.value, "___is-private": (this.state.accessId === 0)})} onClick={this.onClick}>
                     <span className="editable-field">{this.state.value || "..."}</span>
                     {fillNow}
-                    <input type="text" ref="input" onChange={(e) => this.onChange(e.target.value)} onKeyPress={this.onKeyPress} onBlur={this.onBlur} value={this.state.value || ""} />
+                    {field}
                 </span>
             </li>
         )
