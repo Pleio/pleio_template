@@ -24,6 +24,7 @@ class OpenFolderWithoutQuery extends React.Component {
                             onSelect={this.props.onSelect}
                             selected={this.props.selected}
                             excludeGuids={this.props.excludeGuids}
+                            showFiles={this.props.showFiles}
                         ><span>{item.title}</span></Folder>
                     )
                 }
@@ -64,6 +65,7 @@ const Settings = {
     options: (ownProps) => {
         return {
             variables: {
+                guid: ownProps.guid,
                 filter: !ownProps.showFiles ? "folders" : ""
             }
         }
@@ -71,7 +73,7 @@ const Settings = {
 }
 
 
-const OpenFolder = graphql(Query)(OpenFolderWithoutQuery)
+const OpenFolder = graphql(Query, Settings)(OpenFolderWithoutQuery)
 
 class ClosedFolder extends React.Component {
     render() {
@@ -115,6 +117,7 @@ class Folder extends React.Component {
                     onSelect={this.props.onSelect}
                     selected={this.props.selected}
                     excludeGuids={this.props.excludeGuids}
+                    showFiles={this.props.showFiles}
                 />
             )
         } else {
@@ -128,6 +131,7 @@ class Folder extends React.Component {
                     onSelect={this.props.onSelect}
                     selected={this.props.selected}
                     excludeGuids={this.props.excludeGuids}
+                    showFiles={this.props.showFiles}
                 />
             )
         }
@@ -139,15 +143,14 @@ class FolderField extends React.Component {
         super(props)
 
         this.state = {
-            value: null,
-
+            selected: null
         }
     }
 
     componentWillReceiveProps(nextProps) {
         const excludeGuidsChanged = !(new Set(nextProps.excludeGuids).equals(new Set(this.props.excludeGuids)))
         if (nextProps.containerGuid !== this.props.containerGuid || excludeGuidsChanged) {
-            this.setState({ value: null })
+            this.setState({ selected: null })
         }
     }
 
@@ -186,7 +189,7 @@ class FolderField extends React.Component {
 
     @autobind
     clearValue() {
-        this.setState({ value: null })
+        this.setState({ selected: null })
     }
 
     @autobind
@@ -209,6 +212,7 @@ class FolderField extends React.Component {
                     onSelect={this.onSelect}
                     selected={this.state.selected}
                     excludeGuids={new Set(this.props.excludeGuids)}
+                    showFiles={this.props.showFiles}
                 />
             </div>
         )

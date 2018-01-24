@@ -574,6 +574,10 @@ class Mutations {
             throw new Exception("invalid_new_container");
         }
 
+        if ($container->getSubtype() !== "folder") {
+            throw new Exception("invalid_new_container");
+        }
+
         switch ($entity->getSubtype()) {
             case "file":
                 remove_entity_relationships($entity->guid, "folder_of", true);
