@@ -48,7 +48,8 @@ class Profile extends React.Component {
         entity.profile.forEach((item) => {
             profileByKey[item.key] = {
                 name: item.name,
-                value: item.value
+                value: item.value,
+                accessId: item.accessId
             }
         })
 
@@ -58,11 +59,11 @@ class Profile extends React.Component {
         const topFields = new OrderedSet(["emailaddress", "site", "phone", "mobile"])
 
         const contactData = topFields.intersect(defaultFields).map((key, i) => (
-            <ProfileField key={i} entity={entity} canEdit={entity.canEdit} dataKey={key} name={profileByKey[key].name} value={profileByKey[key].value} />
+            <ProfileField key={i} entity={entity} canEdit={entity.canEdit} dataKey={key} field={profileByKey[key]} />
         ))
 
         const siteProfile = allFields.subtract(defaultFields).map((key, i) => (
-            <ProfileField key={i} entity={entity} canEdit={entity.canEdit} dataKey={key} name={profileByKey[key].name} value={profileByKey[key].value} />
+            <ProfileField key={i} entity={entity} canEdit={entity.canEdit} dataKey={key} field={profileByKey[key]} />
         ))
 
         let editProfile, profileScore
@@ -128,7 +129,7 @@ class Profile extends React.Component {
                                     <ul className="card-profile__details">
                                         {siteProfile}
                                     </ul>
-                                    <ProfileField type="richTextarea" entity={entity} canEdit={entity.canEdit} dataKey="description" name={profileByKey.description.name} value={profileByKey.description.value || ""} className="card-profile__about" />
+                                    <ProfileField type="richTextarea" entity={entity} canEdit={entity.canEdit} dataKey="description" field={profileByKey.description} className="card-profile__about" />
                                 </div>
                                 <div className="col-lg-3"></div>
                             </div>
@@ -156,6 +157,7 @@ const Query = gql`
                     key
                     name
                     value
+                    accessId
                 }
                 stats {
                     key

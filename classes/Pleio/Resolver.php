@@ -902,18 +902,30 @@ class Resolver {
             "metadata_names" => array_map(function($f) { return $f["key"]; }, $allFields)
         ]);
 
-        $profile = [];
+        $metadata_by_key = [];
         foreach ($raw_results as $result) {
-            $profile[$result["name"]] = $result["value"];
+            $metadata_by_key[$result["name"]] = $result;
+        }
+
+        if (!isset($metadata_by_key["emailaddress"]) && $user->canEdit()) {
+            $emailaddress = new \stdClass();
+            $emailaddress->name = "emailaddress";
+            $emailaddress->value = $user->email;
+            $emailaddress->access_id = ACCESS_PRIVATE;
+            $metadata_by_key["emailaddress"] = $emailaddress;
         }
 
         $result = [];
         foreach ($allFields as $item) {
-            $result[] = [
-                "key" => $item["key"],
-                "name" => $item["name"],
-                "value" => $profile[$item["key"]]
-            ];
+            if (isset($metadata_by_key[$item["key"]])) {
+                $item["value"] = $metadata_by_key[$item["key"]]->value;
+                $item["accessId"] = $metadata_by_key[$item["key"]]->access_id;
+            } else {
+                $item["value"] = "";
+                $item["accessId"] = ACCESS_PRIVATE;
+            }
+
+            $result[] = $item;
         }
 
         return $result;

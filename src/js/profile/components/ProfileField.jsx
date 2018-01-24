@@ -4,37 +4,42 @@ import gql from "graphql-tag"
 import classnames from "classnames"
 import RichTextField from "../../core/components/RichTextField"
 import RichTextView from "../../core/components/RichTextView"
+import SwitchField from "../../core/components/SwitchField"
 import { convertToRaw } from "draft-js"
+import autobind from "autobind-decorator"
 
 class ProfileField extends React.Component {
     constructor(props) {
         super(props)
 
+        const { field } = this.props
+
         this.state = {
             isEditing: false,
-            value: this.props.value || ""
+            accessId: field ? field.accessId : 0,
+            value: field ? field.value : ""
         }
-
-
-        this.onBlur = this.onBlur.bind(this)
-        this.onClick = this.onClick.bind(this)
-        this.onChange = this.onChange.bind(this)
-        this.onKeyPress = this.onKeyPress.bind(this)
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps === this.props) {
+            return
+        }
+
+        const { field } = nextProps
+
+        this.setState({
+            accessId: field.accessId || 0,
+            value: field.value || ""
+        })
+    }
+
+    @autobind
     onChange(value) {
         this.setState({ value: value })
     }
 
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.value !== this.props.value) {
-            this.setState({
-                value: nextProps.value
-            })
-        }
-    }
-
+    @autobind
     onClick(e) {
         if (!this.props.canEdit) {
             return
@@ -51,6 +56,7 @@ class ProfileField extends React.Component {
         }, 0)
     }
 
+    @autobind
     onKeyPress(e) {
         const keyCode = e.keyCode ? e.keyCode : e.which
         if (keyCode !== 13) { // Enter button
@@ -60,6 +66,7 @@ class ProfileField extends React.Component {
         this.submitField()
     }
 
+    @autobind
     onBlur(e) {
         let value
         if (this.props.type == "richTextarea") {
@@ -71,6 +78,7 @@ class ProfileField extends React.Component {
         this.submitField(value)
     }
 
+    @autobind
     submitField(value) {
         // do not save an empty h3 field
         if (this.props.type == "h3" && !value) {
@@ -93,6 +101,7 @@ class ProfileField extends React.Component {
                     clientMutationId: 1,
                     guid: this.props.entity.guid,
                     key: this.props.dataKey,
+                    accessId: 2,
                     value
                 }
             }
@@ -118,8 +127,8 @@ class ProfileField extends React.Component {
         if (!this.props.canEdit) {
             return (
                 <li>
-                    <label>{this.props.name}</label>
-                    <span>{this.props.value}</span>
+                    <label>{this.props.field.name}</label>
+                    <span>{this.state.value}</span>
                 </li>
             )
         }
@@ -133,8 +142,8 @@ class ProfileField extends React.Component {
 
         return (
             <li>
-                <label>{this.props.name}</label>
-                <span className={classnames({"___is-editable-field": true, "___is-editing": this.state.isEditing, "___is-empty": !this.state.value})} onClick={this.onClick}>
+                <label>{this.props.field.name}</label>
+                <span className={classnames({"___is-editable-field": true, "___is-editing": this.state.isEditing, "___is-empty": !this.state.value, "___is-private": (this.state.accessId === 0)})} onClick={this.onClick}>
                     <span className="editable-field">{this.state.value || "..."}</span>
                     {fillNow}
                     <input type="text" ref="input" onChange={(e) => this.onChange(e.target.value)} onKeyPress={this.onKeyPress} onBlur={this.onBlur} value={this.state.value || ""} />
@@ -169,8 +178,8 @@ class ProfileField extends React.Component {
             return (
                 <div className={className}>
                     <ul>
-                        <li><strong>{this.props.name}</strong></li>
-                        <li><div>{this.props.value}</div></li>
+                        <li><strong>{this.props.field.name}</strong></li>
+                        <li><div>{this.state.value}</div></li>
                     </ul>
                 </div>
             )
@@ -183,12 +192,12 @@ class ProfileField extends React.Component {
             )
         }
 
-        className += " " + classnames({"___is-editable-field": true, "___is-editing": this.state.isEditing})
+        className += " " + classnames({"___is-editable-field": true, "___is-editing": this.state.isEditing, "___is-private": (this.state.accessId === 0)})
 
         return (
             <div className={className}>
                 <ul>
-                    <li><strong>{this.props.name}</strong></li>
+                    <li><strong>{this.props.field.name}</strong></li>
                     <li>
                         <span className={classnames({"___is-editable-field": true, "___is-editing": this.state.isEditing, "___is-empty": !this.state.value})} onClick={this.onClick} style={{width:"100%"}}>
                             <span className="editable-field">{this.state.value || "..."}</span>
@@ -213,8 +222,8 @@ class ProfileField extends React.Component {
             return (
                 <div className={className}>
                     <ul>
-                        <li><strong>{this.props.name}</strong></li>
-                        <li><div>{this.props.value}</div></li>
+                        <li><strong>{this.props.field.name}</strong></li>
+                        <li><div>{this.state.value}</div></li>
                     </ul>
                 </div>
             )
@@ -282,7 +291,7 @@ class ProfileField extends React.Component {
         return (
             <div className={className}>
                 <ul>
-                    <li><strong>{this.props.name}</strong></li>
+                    <li><strong>{this.props.field.name}</strong></li>
                     <li>
                         <span className={classnames({ "___is-editable-field": true, "___is-editing": this.state.isEditing, "___is-empty": !this.state.value })} onClick={this.onClick} style={{ width: "100%" }}>
                             <span className="editable-field">{value}</span>
@@ -296,7 +305,7 @@ class ProfileField extends React.Component {
     }
 }
 
-const Query = gql`
+const Mutation = gql`
     mutation editProfileField($input: editProfileFieldInput!) {
         editProfileField(input: $input) {
             user {
@@ -306,11 +315,11 @@ const Query = gql`
                     key
                     name
                     value
+                    accessId
                 }
             }
         }
     }
 `
 
-const withQuery = graphql(Query)
-export default withQuery(ProfileField)
+export default graphql(Mutation)(ProfileField)

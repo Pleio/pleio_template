@@ -141,6 +141,9 @@ class SchemaBuilder {
                 ],
                 "value" => [
                     "type" => Type::string()
+                ],
+                "accessId" => [
+                    "type" => Type::int()
                 ]
             ]
         ]);
@@ -1730,6 +1733,9 @@ class SchemaBuilder {
             "inputFields" => [
                 "guid" => [
                     "type" => Type::string()
+                ],
+                "accessId" => [
+                    "type" => Type::int()
                 ],
                 "key" => [
                     "type" => Type::nonNull(Type::string())

@@ -730,7 +730,8 @@ class Mutations {
                 $entity->$key = $value;
                 $result = $entity->save();
             } else {
-                $result = create_metadata($entity->guid, $key, $value, "", 0, get_default_access(), false, $site->guid);
+                $accessId = $input["accessId"] ?: get_default_access();
+                $result = create_metadata($entity->guid, $key, $value, "", 0, $accessId, false, $site->guid);
             }
         } else {
             $entity->deleteMetadata($key);
