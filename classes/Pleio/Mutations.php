@@ -714,6 +714,7 @@ class Mutations {
         $value = $input["value"];
 
         $defaultFields = [
+            [ "key" => "name", "name" => "Naam" ],
             [ "key" => "phone", "name" => "Telefoonnummer" ],
             [ "key" => "mobile", "name" => "Mobiel nummer" ],
             [ "key" => "emailaddress", "name" => "E-mailadres" ],

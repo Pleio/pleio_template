@@ -47,7 +47,7 @@ class Wrapper extends React.Component {
                 <ContentHeader className={classnames({"___no-padding-bottom":entity.canEdit})}>
                     <div className="row">
                         <div className="col-sm-6 middle-sm">
-                            <ProfileField type="h3" entity={entity} canEdit={entity.canEdit} dataKey="name" name="Naam" value={entity.name} />
+                            <ProfileField type="h3" entity={entity} canEdit={entity.canEdit} dataKey="name" name="Naam" field={{accessId: 2, value: entity.name}} />
                         </div>
                         <div className="col-sm-6 end-sm">
                             {logout}
