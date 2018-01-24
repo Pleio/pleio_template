@@ -9,13 +9,13 @@ class EventsCard extends React.Component {
     render() {
         const { data } = this.props
 
-        if (!data.entities || data.entities.edges.length === 0) {
+        if (!data.events || data.events.edges.length === 0) {
             return (
                 <div />
             )
         }
 
-        const items = data.entities.edges.map((entity) => (
+        const items = data.events.edges.map((entity) => (
             <Link key={entity.guid} to={entity.url} className="card__item">
                 <div className="___colored">{showFullDate(entity.startDate)}</div>
                 <span>{entity.title}</span>
@@ -35,7 +35,7 @@ class EventsCard extends React.Component {
 
 const Query = gql`
     query EventsCard($containerGuid: Int!) {
-        entities(containerGuid: $containerGuid, subtype: "event", offset: 0, limit: 5) {
+        events(containerGuid: $containerGuid, offset: 0, limit: 5) {
             edges {
                 ... on Object {
                     guid
