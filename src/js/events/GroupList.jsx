@@ -4,6 +4,7 @@ import gql from "graphql-tag"
 import autobind from "autobind-decorator"
 import { Link } from "react-router-dom"
 import GroupContainer from "../group/components/GroupContainer"
+import JoinGroupButton from "../group/components/JoinGroupButton"
 import Document from "../core/components/Document"
 import Select from "../core/components/NewSelect"
 import EventsGroupList from "./containers/EventsGroupList"
@@ -48,8 +49,21 @@ class GroupList extends React.Component {
             )
         }
 
+        let join
+        if (((viewer.loggedIn && !entity.isClosed) || entity.canEdit) && entity.membership === "not_joined") {
+            join = (
+                <JoinGroupButton entity={entity} />
+            )
+        }
+
+        const buttons = (
+            <div className="flexer ___gutter ___top">
+                {join}
+            </div>
+        )
+
         return (
-            <GroupContainer match={this.props.match} buttons=" ">
+            <GroupContainer match={this.props.match} buttons={buttons}>
                 <Document title={entity.name} />
                 <section className="section ___grow">
                     <div className="container">
@@ -88,9 +102,11 @@ const Query = gql`
             ... on Group {
                 name
                 description
+                canEdit
                 plugins
                 icon
                 isClosed
+                membership
                 members(limit: 5) {
                     total
                     edges {

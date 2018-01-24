@@ -3,6 +3,7 @@ import { graphql } from "react-apollo"
 import { Link } from "react-router-dom"
 import gql from "graphql-tag"
 import GroupContainer from "../group/components/GroupContainer"
+import JoinGroupButton from "../group/components/JoinGroupButton"
 import Document from "../core/components/Document"
 import DiscussionList from "./containers/DiscussionList"
 import Card from "./components/Card"
@@ -35,8 +36,16 @@ class Item extends React.Component {
             )
         }
 
+        let join
+        if (((viewer.loggedIn && !entity.isClosed) || entity.canEdit) && entity.membership === "not_joined") {
+            join = (
+                <JoinGroupButton entity={entity} />
+            )
+        }
+
         const buttons = (
             <div className="flexer ___gutter ___top">
+                {join}
                 {add}
             </div>
         )
@@ -75,6 +84,8 @@ const Query = gql`
                 plugins
                 icon
                 isClosed
+                membership
+                canEdit
                 members(limit: 5) {
                     total
                     edges {

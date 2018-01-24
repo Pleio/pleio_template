@@ -3,6 +3,7 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { Link } from "react-router-dom"
 import GroupContainer from "../group/components/GroupContainer"
+import JoinGroupButton from "../group/components/JoinGroupButton"
 import Document from "../core/components/Document"
 import Modal from "../core/components/NewModal"
 import AddCore from "../core/Add"
@@ -29,9 +30,17 @@ class GroupItem extends React.Component {
             )
         }
 
+        let join
+        if (((viewer.loggedIn && !entity.isClosed) || entity.canEdit) && entity.membership === "not_joined") {
+            join = (
+                <JoinGroupButton entity={entity} />
+            )
+        }
+
         const buttons = (
             <div className="flexer ___gutter ___top">
                 {add}
+                {join}
             </div>
         )
 
@@ -49,19 +58,47 @@ class GroupItem extends React.Component {
 }
 
 const Query = gql`
-query GroupItem($guid: Int!) {
-    viewer {
-        guid
-        loggedIn
-        canWriteToContainer(containerGuid: $guid, type: object, subtype: "wiki")
-        user {
+    query GroupItem($guid: Int!) {
+        viewer {
             guid
-            name
-            icon
-            url
+            loggedIn
+            canWriteToContainer(containerGuid: $guid, type: object, subtype: "wiki")
+            user {
+                guid
+                name
+                icon
+                url
+            }
+        }
+        entity(guid: $guid) {
+            guid
+            status
+            ... on Group {
+                guid
+                name
+                description
+                canEdit
+                plugins
+                icon
+                isClosed
+                membership
+                members(limit: 5) {
+                    total
+                    edges {
+                        role
+                        email
+                        user {
+                            guid
+                            username
+                            url
+                            name
+                            icon
+                        }
+                    }
+                }
+            }
         }
     }
-}
 `
 
 const Settings = {

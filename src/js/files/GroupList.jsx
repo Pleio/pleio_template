@@ -17,6 +17,7 @@ import AddFolderModal from "./components/AddFolderModal"
 import EditFileFolderModal from "./components/EditFileFolderModal"
 import MoveFileFolderModal from "./components/MoveFileFolderModal"
 import DeleteFileFolderModal from "./components/DeleteFileFolderModal"
+import JoinGroupButton from "../group/components/JoinGroupButton"
 import autobind from "autobind-decorator"
 import { OrderedSet } from "immutable"
 
@@ -178,6 +179,8 @@ class Item extends React.Component {
             )
         }
 
+
+
         let edit
         if (this.state.selected.size === 1) {
             edit = (
@@ -214,8 +217,21 @@ class Item extends React.Component {
             )
         }
 
+        let join
+        if (((viewer.loggedIn && !entity.isClosed) || entity.canEdit) && entity.membership === "not_joined") {
+            join = (
+                <JoinGroupButton entity={entity} />
+            )
+        }
+
+        const buttons = (
+            <div className="flexer ___gutter ___top">
+                {join}
+            </div>
+        )
+
         return (
-            <GroupContainer match={this.props.match} buttons=" ">
+            <GroupContainer match={this.props.match} buttons={buttons}>
                 <Document title={entity.name} />
                 <section className="section">
                     <div className={classnames({"container toolbar": true, "___is-visible": this.state.selected.size > 0})}>
@@ -290,9 +306,11 @@ const Query = gql`
                 guid
                 name
                 description
+                canEdit
                 plugins
                 icon
                 isClosed
+                membership
                 members(limit: 5) {
                     total
                     edges {
