@@ -7,6 +7,12 @@ class NotFound extends React.Component {
     render() {
         const { viewer } = this.props.data
 
+        if (!viewer) {
+            return (
+                <div />
+            )
+        }
+
         let message
         if (viewer.loggedIn) {
             message = (
