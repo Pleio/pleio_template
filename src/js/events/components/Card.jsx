@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import autobind from "autobind-decorator"
 import { getVideoFromUrl, getVideoThumbnail } from "../../lib/helpers"
 import { getClassFromTags } from "../../lib/helpers"
-import { showFullDate } from "../../lib/showDate"
+import { showFullDate, showTimeDiff } from "../../lib/showDate"
 import classnames from "classnames"
 import AttendButtons from "./AttendButtons"
 import VideoModal from "../../core/components/VideoModal"
@@ -74,7 +74,7 @@ export default class Card extends React.Component {
             <div className="card-event">
                 {picture}
                 <div className="card-event__content">
-                    <div className="date">{showFullDate(entity.startDate)}</div>
+                    <div className="date">{showFullDate(entity.startDate)} tot {showTimeDiff(entity.endDate, entity.startDate)}</div>
                     <Link to={entity.url} className="title ___colored">{entity.title}</Link>
                     <div className="card-event__bottom">
                         {attendees}

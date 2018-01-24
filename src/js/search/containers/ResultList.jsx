@@ -45,6 +45,8 @@ const Query = gql`
                     excerpt
                     timeCreated
                     startDate
+                    endDate
+                    location
                     isBookmarked
                     canBookmark
                     commentCount

@@ -10,7 +10,7 @@ export default class AddToCalendarButton extends React.Component {
 
         return {
             startDate: this.formatTime(entity.startDate),
-            endDate: entity.endDate ? this.formatTime(entity.startDate) : "",
+            endDate: entity.endDate ? this.formatTime(entity.endDate) : "",
             title: entity.title,
             excerpt: entity.excerpt || "",
             location: entity.location || ""
@@ -20,24 +20,13 @@ export default class AddToCalendarButton extends React.Component {
     getIcal() {
         const event = this.getEvent()
 
-        let calendarUrl = [
-            "BEGIN:VCALENDAR",
-            "VERSION:2.0",
-            "BEGIN:VEVENT",
-            "URL:" + document.URL,
-            "DTSTART:" + event.startDate,
-            "DTEND:" + event.endDate,
-            "SUMMARY:" + event.title,
-            "DESCRIPTION:" + event.excerpt,
-            "LOCATION:" + event.location,
-            "END:VEVENT",
-            "END:VCALENDAR"
-        ].join("\n")
-
-        calendarUrl = encodeURI(
-            "data:text/calendar;charset=utf8," + calendarUrl
-        )
-
+        let calendarUrl = "/exporting/calendar/"
+        calendarUrl += "?startDate=" + event.startDate
+        calendarUrl += "&endDate=" + event.endDate
+        calendarUrl += "&location=" + encodeURIComponent(event.location)
+        calendarUrl += "&text=" + encodeURIComponent(event.title)
+        calendarUrl += "&details=" + encodeURIComponent(event.excerpt)
+        calendarUrl += "&url=" + encodeURIComponent(window.location.href)
         return calendarUrl
     }
 
@@ -51,7 +40,7 @@ export default class AddToCalendarButton extends React.Component {
         calendarUrl += "/" + event.endDate
         calendarUrl += "&location=" + encodeURIComponent(event.location)
         calendarUrl += "&text=" + encodeURIComponent(event.title)
-        calendarUrl += "&details=" + encodeURIComponent(event.excerpt)
+        calendarUrl += "&details=" + encodeURIComponent(event.excerpt + "\n\n" + window.location.href)
 
         return calendarUrl
     }
@@ -65,7 +54,7 @@ export default class AddToCalendarButton extends React.Component {
         calendarUrl += "&enddt=" + event.endDate
         calendarUrl += "&subject=" + encodeURIComponent(event.title)
         calendarUrl += "&location=" + encodeURIComponent(event.location)
-        calendarUrl += "&body=" + encodeURIComponent(event.excerpt)
+        calendarUrl += "&body=" + encodeURIComponent(event.excerpt + "\n\n" + window.location.href)
         calendarUrl += "&allday=false"
         calendarUrl += "&uid=" + this.getRandomKey()
         calendarUrl += "&path=/calendar/view/Month"
@@ -92,8 +81,9 @@ export default class AddToCalendarButton extends React.Component {
         const { event } = this.getEvent()
 
         const options = [
-            { href: this.getIcal(), name: 'iCal', download: 'event.ics' },
+            { href: this.getIcal(), name: 'iCal', target: 'blank' },
             { href: this.getGoogle(), name: 'Google', target: 'blank' },
+            { href: this.getIcal(), name: 'Outlook', target: 'blank' },
             { href: this.getOutlook(), name: 'Outlook.com', target: 'blank' }
         ]
 

@@ -8,7 +8,7 @@ import DeleteModal from "../core/Delete"
 import AddComment from "../core/containers/AddComment"
 import SocialShare from "../core/components/SocialShare"
 import NotFound from "../core/NotFound"
-import { showFullDate } from "../lib/showDate"
+import { showFullDate, showTimeDiff } from "../lib/showDate"
 import RichTextView from "../core/components/RichTextView"
 import LikeAndBookmark from "../core/components/LikeAndBookmark"
 import Document from "../core/components/Document"
@@ -66,11 +66,11 @@ class Item extends React.Component {
                 <h2 className="title">{entity.title}</h2>
             )
             subtitle = (
-                <h2 className="title">{showFullDate(entity.startDate)}<small>{entity.location}</small></h2>
+                <h2 className="title">{showFullDate(entity.startDate)} tot {showTimeDiff(entity.endDate, entity.startDate)}&nbsp;<small>{entity.location}</small></h2>
             )
         } else {
             subtitle = (
-                <h2 className="title">{showFullDate(entity.startDate)}<small>{entity.location}</small></h2>
+                <h2 className="title">{showFullDate(entity.startDate)} tot {showTimeDiff(entity.endDate, entity.startDate)}&nbsp;<small>{entity.location}</small></h2>
             )
         }
 

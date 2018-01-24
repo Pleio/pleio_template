@@ -63,6 +63,27 @@ export function showFullDate(isoDate) {
     return `${d} ${mFull} ${y}, ${h}:${i}`
 }
 
+export function showTimeDiff(isoDate, startIsoDate) {
+    const date = new Date(isoDate)
+    const startDate = new Date(startIsoDate)
+
+    if (date.getDate() == startDate.getDate() && date.getMonth() == startDate.getMonth() && date.getFullYear() == startDate.getFullYear()) {
+        const h = pad(date.getHours(), 2)
+        const i = pad(date.getMinutes(), 2)
+
+        return `${h}:${i}`
+    } else {
+        const d = date.getDate()
+        const m = date.getMonth() + 1
+        const mFull = getFullMonth(m)
+        const y = date.getFullYear()
+        const h = pad(date.getHours(), 2)
+        const i = pad(date.getMinutes(), 2)
+
+        return `${d} ${mFull} ${y}, ${h}:${i}`
+    }
+}
+
 export function timeSince(isoDate) {
     const seconds = Math.floor((new Date() - new Date(isoDate)) / 1000)
 

@@ -30,6 +30,7 @@ const Query = gql`
                     }
                     startDate
                     endDate
+                    location
                     timeCreated
                     owner {
                         guid

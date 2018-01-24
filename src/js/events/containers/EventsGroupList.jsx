@@ -15,6 +15,7 @@ const Query = gql`
                     title
                     startDate
                     endDate
+                    location
                     url
                     inGroup
                     excerpt

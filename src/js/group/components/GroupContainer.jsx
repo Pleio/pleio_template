@@ -84,7 +84,7 @@ class GroupContainer extends React.Component {
             }
 
             if (window.__SETTINGS__['groupMemberExport']) {
-                options.push({ href: `/csv-export/group/${entity.guid}`, name: "Ledenlijst exporteren" })
+                options.push({ href: `/exporting/group/${entity.guid}`, name: "Ledenlijst exporteren" })
             }
 
             edit = (

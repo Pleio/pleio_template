@@ -56,7 +56,7 @@ function pleio_template_init() {
 
     elgg_register_page_handler("bulk_download", "pleio_template_bulk_download");
 
-    elgg_register_page_handler("csv-export", "pleio_template_export_handler");
+    elgg_register_page_handler("exporting", "pleio_template_export_handler");
 
     elgg_unregister_plugin_hook_handler("register", "user", "newsletter_register_user_handler");
     elgg_unregister_event_handler("create", "member_of_site", "newsletter_join_site_event_handler");
@@ -281,7 +281,10 @@ function pleio_template_export_handler($page) {
     switch ($page[0]) {
         case "group":
             set_input("group_guid", $page[1]);
-            include("pages/export/group.php");
+            include("pages/exporting/group.php");
+            return true;
+        case "calendar":
+            include("pages/exporting/calendar.php");
             return true;
     }
 }
