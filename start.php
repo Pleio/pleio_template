@@ -68,9 +68,10 @@ function pleio_template_init() {
 
     elgg_unregister_plugin_hook_handler("route", "groups", "group_tools_route_groups_handler");
 
-    elgg_register_plugin_hook_handler("cron", "daily", "pleio_template_cron_handler");
-    elgg_register_plugin_hook_handler("cron", "weekly", "pleio_template_cron_handler");
-    elgg_register_plugin_hook_handler("cron", "monthly", "pleio_template_cron_handler");
+    elgg_register_plugin_hook_handler("cron", "hourly", "pleio_template_notifications_handler");
+    elgg_register_plugin_hook_handler("cron", "daily", "pleio_template_email_overview_handler");
+    elgg_register_plugin_hook_handler("cron", "weekly", "pleio_template_email_overview_handler");
+    elgg_register_plugin_hook_handler("cron", "monthly", "pleio_template_email_overview_handler");
 
     elgg_unregister_plugin_hook_handler("email", "system", "html_email_handler_email_hook");
     elgg_register_plugin_hook_handler("email", "system", "pleio_template_email_handler");
@@ -339,7 +340,11 @@ function pleio_template_get_object($guid) {
     return $object;
 }
 
-function pleio_template_cron_handler($hook, $period, $return, $params) {
+function pleio_template_notifications_handler($hook, $period, $return, $params) {
+    Pleio\NotificationsHandler::sendToAll();
+}
+
+function pleio_template_email_overview_handler($hook, $period, $return, $params) {
     Pleio\EmailOverviewHandler::sendToAll(true, $period);
 }
 
