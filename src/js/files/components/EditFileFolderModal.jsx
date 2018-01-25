@@ -119,7 +119,9 @@ export default class EditFileFolderModal extends React.Component {
     }
 
     toggle() {
-        this.refs.modal.toggle()
+        if (this.refs.modal) {
+            this.refs.modal.toggle()
+        }
     }
 
     render () {
