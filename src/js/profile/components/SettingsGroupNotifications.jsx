@@ -3,7 +3,7 @@ import CheckField from "../../core/components/CheckField"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
-class SettingsNotifications extends React.Component {
+class SettingsGroupNotifications extends React.Component {
     constructor(props) {
         super(props)
 
@@ -36,20 +36,24 @@ class SettingsNotifications extends React.Component {
     }
 
     render() {
-        const { entity } = this.props
+        const { entity, groups } = this.props
 
-        let newsletter
-        if (window.__SETTINGS__.site['newsletter']) {
-            newsletter = (
-                <CheckField ref="newsletter" name="newsletter" label="Ik wil de nieuwsbrief ontvangen" onChange={this.onChange} checked={entity.getsNewsletter} />
+        if (groups.total === 0) {
+            return (
+                <div />
             )
         }
 
+        const groupList = groups.edges.map((group) => (
+            <GroupNotificationSetting group={group} />
+        ))
+
         return (
             <div className="card-profile">
-                <h3 className="card-profile__title">Meldingen</h3>
-                <CheckField ref="emailNotifications" name="emailNotifications" label="Stuur mij meldingen per e-mail" onChange={this.onChange} checked={entity.emailNotifications} />
-                {newsletter}
+                <h3 className="card-profile__title">Groepsmeldingen</h3>
+                <div className="row">
+                    {groupList}
+                </div>
             </div>
         )
     }
@@ -67,4 +71,4 @@ const Mutation = gql`
     }
 `
 
-export default graphql(Mutation)(SettingsNotifications)
+export default graphql(Mutation)(SettingsGroupNotifications)

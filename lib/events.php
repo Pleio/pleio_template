@@ -82,6 +82,9 @@ function pleio_template_create_group_object_handler($object) {
     $site = elgg_get_site_entity();
 
     $container = $object->getContainerEntity();
+    if (!$container instanceof ElggGroup) {
+        return;
+    }
 
     $time = time();
 
@@ -100,6 +103,11 @@ function pleio_template_create_group_object_handler($object) {
     foreach ($subscribers as $subscriber) {
         if ($subscriber->guid === $performer->guid) {
             // do not notify user of own actions
+            continue;
+        }
+
+        if (!$container->isMember($subscriber)) {
+            // do not notify users that are not member any more
             continue;
         }
 
@@ -127,4 +135,16 @@ function pleio_template_create_member_of_site_handler($event, $type, $relationsh
     insert_data("INSERT INTO {$dbprefix}notifications (user_guid, action, performer_guid, entity_guid, container_guid, site_guid, time_created)
         VALUES
         ({$user->guid}, 'welcome', {$user->guid}, {$user->guid}, 0, {$site->guid}, {$time})");
+}
+
+function pleio_template_join_group_handler($event, $type, $params) {
+    $group = elgg_extract("group", $params);
+    $user = elgg_extract("user", $params);
+    add_entity_relationship($user->guid, "subscribed", $group->guid);
+}
+
+function pleio_template_leave_group_handler($event, $type, $params) {
+    $group = elgg_extract("group", $params);
+    $user = elgg_extract("user", $params);
+    remove_entity_relationship($user->guid, "subscribed", $group->guid);
 }

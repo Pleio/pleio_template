@@ -30,6 +30,8 @@ function pleio_template_init() {
 
     elgg_register_event_handler("create", "object", "pleio_template_create_object_handler");
     elgg_register_event_handler("create", "member_of_site", "pleio_template_create_member_of_site_handler");
+    elgg_register_event_handler("join", "group", "pleio_template_join_group_handler");
+    elgg_register_event_handler("leave", "group", "pleio_template_leave_group_handler");
 
     elgg_register_page_handler("campagne", "pleio_template_page_handler");
     elgg_register_page_handler("activity", "pleio_template_page_handler");

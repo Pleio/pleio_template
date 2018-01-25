@@ -3,12 +3,13 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import SettingsInterests from "./components/SettingsInterests"
 import SettingsNotifications from "./components/SettingsNotifications"
+import SettingsGroupNotifications from "./components/SettingsGroupNotifications"
 import SettingsEmailOverview from "./components/SettingsEmailOverview"
 import Wrapper from "./components/Wrapper"
 
-class Settings extends React.Component {
+class Interests extends React.Component {
     render() {
-        const { entity, site } = this.props.data
+        const { entity, groups, site } = this.props.data
 
         if (!entity || !entity.canEdit) {
             return (
@@ -31,6 +32,7 @@ class Settings extends React.Component {
                             <div className="col-md-8">
                                 {interests}
                                 <SettingsNotifications entity={entity} />
+                                <SettingsGroupNotifications entity={entity} groups={groups} />
                             </div>
                             <div className="col-md-4">
                                 <SettingsEmailOverview entity={entity} />
@@ -44,7 +46,7 @@ class Settings extends React.Component {
 }
 
 const Query = gql`
-    query ProfileSettings($username: String!) {
+    query ProfileSettings($username: String!, $filter: GroupFilter) {
         entity(username: $username) {
             guid
             status
@@ -56,6 +58,14 @@ const Query = gql`
                 tags
             }
         }
+        groups(filter: $filter, limit: 50) {
+            total
+            edges {
+                guid
+                name
+                getsNotifications
+            }
+        }
         site {
             guid
             filters {
@@ -64,14 +74,19 @@ const Query = gql`
             }
         }
     }
-`;
+`
 
-export default graphql(Query, {
+const Settings = {
     options: (ownProps) => {
         return {
             variables: {
-                username: ownProps.match.params.username
+                username: ownProps.match.params.username,
+                filter: "mine"
             }
         }
     }
-})(Settings)
+}
+
+
+
+export default graphql(Query, Settings)(Interests)
