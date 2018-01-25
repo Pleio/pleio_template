@@ -6,6 +6,7 @@ import autobind from "autobind-decorator"
 import gql from "graphql-tag"
 import AddDocument from "./AddDocument"
 import Tabber from "../Tabber"
+import Form from "../Form"
 import FolderField from "../../../files/components/FolderField"
 
 class DocumentSelect extends React.Component {
@@ -33,14 +34,14 @@ class DocumentSelect extends React.Component {
 
         if (match.params.groupGuid) {
             const selectDocument = (
-                <div className="form">
+                <Form className="form">
                     <div style={{maxHeight:"20em", overflow:"scroll"}}>
                         <FolderField ref="folderField" containerGuid={match.params.groupGuid} showFiles />
                     </div>
                     <div className="buttons ___end">
                         <div className="button" onClick={this.onSelectDocument}>Invoegen</div>
                     </div>
-                </div>
+                </Form>
             )
 
             const items = [
