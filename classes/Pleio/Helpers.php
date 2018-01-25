@@ -150,6 +150,9 @@ class Helpers {
                     case "wiki":
                         $root .= "wiki";
                         break;
+                    case "thewire":
+                        return $root . "#{$entity->guid}";
+                        break;
                     default:
                         $root .= $entity->getSubtype();
                 }

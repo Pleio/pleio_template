@@ -4,12 +4,28 @@ function pleio_template_create_object_handler($event, $type, $object) {
         return;
     }
 
-    $dbprefix = elgg_get_config("dbprefix");
+    $container = $object->getContainerEntity();
     $subtype = $object->getSubtype();
 
-    if (!in_array($subtype, ["comment"])) {
-        return;
+    switch ($subtype) {
+        case "comment":
+            pleio_template_create_comment_handler($object);
+            break;
+        case "event":
+        case "thewire":
+        case "blog":
+        case "question":
+        case "discussion":
+        case "wiki":
+            if ($container instanceof ElggGroup) {
+                pleio_template_create_group_object_handler($object);
+            }
+            break;
     }
+}
+
+function pleio_template_create_comment_handler($object) {
+    $dbprefix = elgg_get_config("dbprefix");
 
     $performer = elgg_get_logged_in_user_entity();
     if (!$performer) {
@@ -52,6 +68,44 @@ function pleio_template_create_object_handler($event, $type, $object) {
         insert_data("INSERT INTO {$dbprefix}notifications (user_guid, action, performer_guid, entity_guid, container_guid, site_guid, time_created)
             VALUES
             ({$subscriber->guid}, 'commented', {$performer->guid}, {$entity->guid}, {$container->guid}, {$site->guid}, {$time})");
+    }
+}
+
+function pleio_template_create_group_object_handler($object) {
+    $dbprefix = elgg_get_config("dbprefix");
+
+    $performer = elgg_get_logged_in_user_entity();
+    if (!$performer) {
+        return;
+    }
+
+    $site = elgg_get_site_entity();
+
+    $container = $object->getContainerEntity();
+
+    $time = time();
+
+    $subscribers = elgg_get_entities_from_relationship([
+        "type" => "user",
+        "relationship_guid" => $container->guid,
+        "relationship" => "subscribed",
+        "inverse_relationship" => true,
+        "limit" => false
+    ]);
+
+    if (!$subscribers) {
+        return;
+    }
+
+    foreach ($subscribers as $subscriber) {
+        if ($subscriber->guid === $performer->guid) {
+            // do not notify user of own actions
+            continue;
+        }
+
+        insert_data("INSERT INTO {$dbprefix}notifications (user_guid, action, performer_guid, entity_guid, container_guid, site_guid, time_created)
+            VALUES
+            ({$subscriber->guid}, 'created', {$performer->guid}, {$object->guid}, {$container->guid}, {$site->guid}, {$time})");
     }
 }
 

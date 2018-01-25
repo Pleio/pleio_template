@@ -7,6 +7,7 @@ import DropdownButton from "../../core/components/DropdownButton"
 import Menu from "./Menu"
 import MoreInfoModal from "./MoreInfoModal"
 import LeaveGroupModal from "./LeaveGroupModal"
+import NotificationsModal from "./NotificationsModal"
 import InviteModal from "./InviteModal"
 import MembershipRequestsModal from "./MembershipRequestsModal"
 import SendMessageModal from "./SendMessageModal"
@@ -63,10 +64,15 @@ class GroupContainer extends React.Component {
             )
         }
 
-        let leave
-        if (!entity.canEdit && entity.membership === "joined") {
-            leave = (
-                <div className="button" onClick={() => this.refs.leaveGroupModal.toggle()}>Uitschrijven groep</div>
+        let actions
+        if (entity.membership === "joined") {
+            const options = [
+                { onClick: () => this.refs.notificationsModal.toggle(), name: "Notificaties" },
+                { onClick: () => this.refs.leaveGroupModal.toggle(), name: "Uitschrijven groep" }
+            ]
+
+            actions = (
+                <DropdownButton options={options} name="Acties" line colored />
             )
         }
 
@@ -106,7 +112,7 @@ class GroupContainer extends React.Component {
             buttons = (
                 <div className="flexer ___gutter ___top">
                     {join}
-                    {leave}
+                    {actions}
                     {edit}
                 </div>
             )
@@ -126,6 +132,7 @@ class GroupContainer extends React.Component {
                 </div>
                 {this.props.children}
                 <MoreInfoModal ref="moreInfoModal" entity={entity} />
+                <NotificationsModal ref="notificationsModal" entity={entity} />
                 <LeaveGroupModal ref="leaveGroupModal" entity={entity} />
                 {modals}
             </div>
@@ -166,6 +173,7 @@ const Query = gql`
                 isClosed
                 canEdit
                 membership
+                getsNotifications
                 members(limit: 5) {
                     total
                     edges {

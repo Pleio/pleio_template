@@ -510,6 +510,10 @@ class SchemaBuilder {
                     "type" => Type::int(),
                     "resolve" => "Pleio\Resolver::getDefaultAccessId"
                 ],
+                "getsNotifications" => [
+                    "type" => Type::boolean(),
+                    "resolve" => "Pleio\Resolver::getsNotifications"
+                ],
                 "tags" => [
                     "type" => Type::listOf(Type::string())
                 ],
@@ -1822,6 +1826,27 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::editNotifications"
         ]);
 
+        $editGroupNotificationsMutation = Relay::mutationWithClientMutationId([
+            "name" => "editGroupNotifications",
+            "inputFields" => [
+                "guid" => [
+                    "type" => Type::string()
+                ],
+                "getsNotifications" => [
+                    "type" => Type::boolean()
+                ]
+            ],
+            "outputFields" => [
+                "group" => [
+                    "type" => $groupType,
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ]
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::editGroupNotifications"
+        ]);
+
         $editEmailOverviewMutation = Relay::mutationWithClientMutationId([
             "name" => "editEmailOverview",
             "inputFields" => [
@@ -2322,6 +2347,7 @@ class SchemaBuilder {
                     "subscribeNewsletter" => $subscribeNewsletterMutation,
                     "editInterests" => $editInterestsMutation,
                     "editNotifications" => $editNotificationsMutation,
+                    "editGroupNotifications" => $editGroupNotificationsMutation,
                     "editEmailOverview" => $editEmailOverviewMutation,
                     "editEmail" => $editEmailMutation,
                     "editPassword" => $editPasswordMutation,

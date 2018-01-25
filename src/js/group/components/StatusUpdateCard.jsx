@@ -123,6 +123,7 @@ class StatusUpdateCard extends React.Component {
 
         return (
             <div className={classnames({"card-blog-post": true, "___can-edit": entity.canEdit})}>
+                <a name={entity.guid}></a>
                 <Link to={owner.url} title={owner.name} style={{backgroundImage: `url(${owner.icon})`}} className="card-blog-post__picture" />
                 <div className="card-blog-post__post">
                     <div className="card-blog-post__meta">

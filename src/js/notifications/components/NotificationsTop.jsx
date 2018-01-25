@@ -167,6 +167,12 @@ const Query = gql`
                         url
                     }
                 }
+                container {
+                    guid
+                    ... on Group {
+                        name
+                    }
+                }
                 isUnread
                 timeCreated
             }

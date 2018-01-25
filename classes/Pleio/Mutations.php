@@ -819,6 +819,33 @@ class Mutations {
         throw new Exception("could_not_save");
     }
 
+    static function editGroupNotifications($input) {
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            throw new Exception("not_logged_in");
+        }
+
+        $group = get_entity(((int) $input["guid"]));
+        if (!$group || !$group instanceof \ElggGroup) {
+            throw new Exception("could_not_find");
+        }
+
+        if (!$group->isMember($user)) {
+            throw new Exception("user_not_member_of_group");
+        }
+
+        $getsNotifications = $input["getsNotifications"];
+        if ($getsNotifications) {
+            add_entity_relationship($user->guid, "subscribed", $group->guid);
+        } else {
+            remove_entity_relationship($user->guid, "subscribed", $group->guid);
+        }
+
+        return  [
+            "guid" => $group->guid
+        ];
+    }
+
     static function editEmailOverview($input) {
         $site = elgg_get_site_entity();
         $entity = get_entity(((int) $input["guid"]));

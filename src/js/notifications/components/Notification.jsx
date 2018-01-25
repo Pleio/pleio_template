@@ -45,9 +45,23 @@ class Notification extends React.Component {
                     </div>
                 )
                 break
+            case "created":
+                url = notification.entity.url
+                message = (
+                    <div>
+                        <strong>{notification.performer.name}</strong>
+                        &nbsp;heeft een nieuw item geplaatst&nbsp;
+                        {notification.entity.title || notification.entity.name}
+                        &nbsp;in&nbsp;
+                        <strong>{notification.container.name}</strong>
+                        <span className="___greyed">&nbsp;{timeSince(notification.timeCreated)}</span>
+                    </div>
+                )
+                break
             case "welcome":
                 url = `/profile/${notification.performer.username}/interests`
                 message = "Welkom op deze site. Klik hier om je meldingen in te stellen."
+                break
         }
 
         return (

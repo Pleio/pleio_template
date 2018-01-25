@@ -1569,4 +1569,18 @@ class Resolver {
             "edges" => $subgroups
         ];
     }
+
+    static function getsNotifications($group) {
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            return false;
+        }
+
+        $group = get_entity($group["guid"]);
+        if (!$group) {
+            return false;
+        }
+
+        return check_entity_relationship($user->guid, "subscribed", $group->guid) ? true : false;
+    }
 }
