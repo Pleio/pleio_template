@@ -14378,6 +14378,11 @@ body.___leraar .navigation__search input {
 .___no-padding {
   padding: 0;
 }
+@media (max-width: 679px) {
+  .___no-padding-mobile {
+    padding: 0;
+  }
+}
 .users-online {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
@@ -14448,6 +14453,18 @@ body.___leraar .navigation__search input {
   -ms-flex: none;
       flex: none;
   max-width: 50%;
+}
+.subnav {
+  margin-bottom: 2em;
+}
+.button__text.___export {
+  margin: 0 0 1rem 0;
+  padding: 0 1rem;
+  font-weight: normal;
+  color: #B4B4B4;
+}
+.button__text.___export:hover {
+  color: #009ee3;
 }
 #__bs_notify__ {
   opacity: .15 !important;
