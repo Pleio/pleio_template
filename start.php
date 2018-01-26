@@ -345,7 +345,7 @@ function pleio_template_notifications_handler($hook, $period, $return, $params) 
 }
 
 function pleio_template_email_overview_handler($hook, $period, $return, $params) {
-    Pleio\EmailOverviewHandler::sendToAll(true, $period);
+    Pleio\EmailOverviewHandler::sendToAll(false, $period);
 }
 
 function pleio_template_email_handler($hook, $type, $return, $params) {
