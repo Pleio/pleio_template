@@ -286,9 +286,14 @@ function pleio_template_export_handler($page) {
             set_input("group_guid", $page[1]);
             include("pages/exporting/group.php");
             return true;
+        case "event":
+            set_input("event_guid", $page[1]);
+            include("pages/exporting/event.php");
+            return true;
         case "calendar":
             include("pages/exporting/calendar.php");
             return true;
+        return true;
     }
 }
 

@@ -41,6 +41,7 @@ $english = array(
     "pleio_template:email:visit" => "For all new messages visit %s",
     "pleio_template:email:goto" => "Go to %s",
     "pleio_template:read_more" => "Read more",
+    "pleio_template:event_export" => "Allow event managers to export the attendees list",
     "pleio_template:member_export" => "Allow group admins to export the memberslist (including name and email)",
     "pleio_template:default_email_overview" => "Default e-mail overview configuration",
     "option:daily" => "Daily",

@@ -41,6 +41,7 @@ $dutch = array(
     "pleio_template:email:visit" => "Voor alle nieuwe berichten bekijk %s",
     "pleio_template:email:goto" => "Ga naar %s",
     "pleio_template:read_more" => "Lees meer",
+    "pleio_template:event_export" => "Sta evenementbeheerders toe om een export te maken",
     "pleio_template:member_export" => "Sta groepsbeheerders toe om een export te maken van de leden (inclusief naam en e-mail)",
     "pleio_template:default_email_overview" => "Standaard e-mail overzicht configuratie",
     "option:daily" => "Dagelijks",

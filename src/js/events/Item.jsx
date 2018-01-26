@@ -49,6 +49,15 @@ class Item extends React.Component {
         }
 
         if (entity.canEdit) {
+            let exportButton
+            if (window.__SETTINGS__["eventExport"]) {
+                exportButton = (
+                    <a className="button__text article-action ___export" href={`/exporting/event/${entity.guid}`}>
+                        Exporteer
+                    </a>
+                )
+            }
+
             edit = (
                 <div className="article-actions__justify">
                     <Link to={`${this.getRootURL()}/events/edit/${entity.guid}`}>
@@ -56,6 +65,7 @@ class Item extends React.Component {
                             Bewerken
                         </div>
                     </Link>
+                    {exportButton}
                 </div>
             )
         }
@@ -160,7 +170,7 @@ class Item extends React.Component {
                                     <div className="article-actions">
                                         {edit}
                                         <div className="article-actions__buttons">
-                                        <LoggedInButton title="Schrijf een reactie" className="button article-action ___comment" viewer={viewer} onClick={(e) => this.refs.addComment.toggle()} fromComment>
+                                            <LoggedInButton title="Schrijf een reactie" className="button article-action ___comment" viewer={viewer} onClick={(e) => this.refs.addComment.toggle()} fromComment>
                                                 Schrijf een reactie
                                             </LoggedInButton>
                                             <AddToCalendarButton entity={entity}>Toevoegen aan agenda</AddToCalendarButton>

@@ -140,6 +140,18 @@
 </div>
 
 <div>
+    <label><?php echo elgg_echo("pleio_template:event_export"); ?></label>
+    <?php echo elgg_view("input/dropdown", [
+        "name" => "params[event_export]",
+        "value" => $vars["plugin"]->event_export,
+        "options_values" => [
+            "no" => elgg_echo("option:no"),
+            "yes" => elgg_echo("option:yes")
+        ]
+    ]); ?>
+</div>
+
+<div>
     <label><?php echo elgg_echo("pleio_template:member_export"); ?></label>
     <?php echo elgg_view("input/dropdown", [
         "name" => "params[member_export]",
