@@ -136,7 +136,7 @@ function pleio_template_create_member_of_site_handler($event, $type, $relationsh
         VALUES
         ({$user->guid}, 'welcome', {$user->guid}, {$user->guid}, 0, {$site->guid}, {$time})");
 
-    $default_overview = elgg_get_plugin_setting("default_email_overview", "pleio_template");
+    $default_overview = elgg_get_plugin_setting("default_email_overview", "pleio_template") ?: "weekly";
     if ($default_overview && !$default_overview !== "never") {
         $user->setPrivateSetting("email_overview_{$site->guid}", $default_overview);
     }

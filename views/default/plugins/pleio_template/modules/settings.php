@@ -155,7 +155,7 @@
     <label><?php echo elgg_echo("pleio_template:default_email_overview"); ?></label>
     <?php echo elgg_view("input/dropdown", [
         "name" => "params[default_email_overview]",
-        "value" => $vars["plugin"]->default_email_overview,
+        "value" => $vars["plugin"]->default_email_overview ?: "weekly",
         "options_values" => [
             "daily" => elgg_echo("option:daily"),
             "weekly" => elgg_echo("option:weekly"),
