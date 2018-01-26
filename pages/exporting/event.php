@@ -2,11 +2,7 @@
 $event_guid = (int) get_input("event_guid");
 
 $event = get_entity($event_guid);
-if (!$event || !$event instanceof ElggObject) {
-    exit();
-}
-
-if (!$event->getSubtype() === "event") {
+if (!$event || !$event instanceof ElggObject || !$event->getSubtype() === "event") {
     exit();
 }
 
@@ -35,7 +31,7 @@ $headers = [
     "guid",
 	"name",
 	"username",
-	"email",
+	"email (only for admins)",
 	"status"
 ];
 
