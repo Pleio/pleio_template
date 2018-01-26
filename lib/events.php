@@ -135,6 +135,11 @@ function pleio_template_create_member_of_site_handler($event, $type, $relationsh
     insert_data("INSERT INTO {$dbprefix}notifications (user_guid, action, performer_guid, entity_guid, container_guid, site_guid, time_created)
         VALUES
         ({$user->guid}, 'welcome', {$user->guid}, {$user->guid}, 0, {$site->guid}, {$time})");
+
+    $default_overview = elgg_get_plugin_setting("default_email_overview", "pleio_template");
+    if ($default_overview && !$default_overview !== "never") {
+        $user->setPrivateSetting("email_overview_{$site->guid}", $default_overview);
+    }
 }
 
 function pleio_template_join_group_handler($event, $type, $params) {
