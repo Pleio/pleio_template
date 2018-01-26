@@ -77,7 +77,7 @@ class Row extends React.Component {
 
         return (
             <section className={classnames({"section cms-section": true, "___less-padding-top": (this.props.firstRow && entity.layout === "full")})}>
-                <div className={classnames({"container": true, "___no-padding": (this.props.firstRow && entity.layout === "full")})}>
+                <div className={classnames({"container": true, "___no-padding-mobile": (this.props.firstRow && entity.layout === "full")})}>
                     <div className="row">
                         {widgets}
                     </div>
