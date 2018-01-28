@@ -1,9 +1,7 @@
 import React from "react"
 import autobind from "autobind-decorator"
 import PropTypes from "prop-types"
-import { Editor, EditorState, ContentState, RichUtils, AtomicBlockUtils, DefaultDraftBlockRenderMap, CompositeDecorator, Modifier, convertToRaw, convertFromRaw } from "draft-js"
-import { stateFromHTML } from "draft-js-import-html"
-import { stateToHTML } from "draft-js-export-html"
+import { Editor, EditorState, ContentState, RichUtils, AtomicBlockUtils, DefaultDraftBlockRenderMap, CompositeDecorator, Modifier, convertToRaw, convertFromRaw, convertFromHTML } from "draft-js"
 import { humanFileSize } from "../../lib/helpers"
 import classnames from "classnames"
 import Validator from "validatorjs"
@@ -104,9 +102,16 @@ class RichTextField extends React.Component {
 
         let contentState
         if (this.props.richValue) {
-            contentState = convertFromRaw(JSON.parse(this.props.richValue))
+            try {
+                let string = JSON.parse(this.props.richValue)
+                contentState = convertFromRaw(string)
+            } catch (e) {
+                const blocksFromHTML = convertFromHTML(this.props.value)
+                contentState = ContentState.createFromBlockArray(blocksFromHTML)
+            }
         } else {
-            contentState = ContentState.createFromText(this.props.value || "")
+            const blocksFromHTML = convertFromHTML(this.props.value || "")
+            contentState = ContentState.createFromBlockArray(blocksFromHTML)
         }
 
         this.state = {
@@ -151,9 +156,16 @@ class RichTextField extends React.Component {
 
         let contentState
         if (nextProps.richValue) {
-            contentState = convertFromRaw(JSON.parse(nextProps.richValue))
+            try {
+                let string = JSON.parse(nextProps.richValue)
+                contentState = convertFromRaw(string)
+            } catch (e) {
+                const blocksFromHTML = convertFromHTML(nextProps.value)
+                contentState = ContentState.createFromBlockArray(blocksFromHTML)
+            }
         } else {
-            contentState = ContentState.createFromText(nextProps.value || "")
+            const blocksFromHTML = convertFromHTML(nextProps.value || "")
+            contentState = ContentState.createFromBlockArray(blocksFromHTML)
         }
 
         this.setState({

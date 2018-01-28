@@ -46,7 +46,7 @@ class DocumentSelect extends React.Component {
 
             const items = [
                 {title: "Uploaden", content: addDocument},
-                {title: "Selecteren", content: selectDocument}
+                {title: "Vanuit groepsbestanden", content: selectDocument}
             ]
 
             return (

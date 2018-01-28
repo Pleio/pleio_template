@@ -8,7 +8,8 @@ import { Set } from "immutable"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { logErrors } from "../../lib/helpers"
-import { stateToHTML } from "draft-js-export-html"
+import { convertToRaw } from "draft-js"
+import draftToHtml from "draftjs-to-html"
 import Errors from "../../core/components/Errors"
 import classnames from "classnames"
 import MembersModal from "./MembersModal"
@@ -58,7 +59,7 @@ class SendMessageForm extends React.Component {
                     clientMutationId: 1,
                     guid: group.guid,
                     subject: `${values.subject} (test)`,
-                    message: stateToHTML(values.message),
+                    message: draftToHtml(convertToRaw(values.message)),
                     isTest: true
                 }
             }

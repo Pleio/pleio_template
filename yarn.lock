@@ -1371,9 +1371,13 @@ core-js@^1.0.0:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
 
-core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0:
+core-js@^2.4.0, core-js@^2.5.0:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.1.tgz#ae6874dc66937789b80754ff5428df66819ca50b"
+
+core-js@^2.5.3:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.3.tgz#8acc38345824f16d8365b7c9b4259168e8ed603e"
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -1696,29 +1700,6 @@ domain-browser@^1.1.1:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.1.7.tgz#867aa4b093faa05f1de08c06f4d7b21fdf8698bc"
 
-draft-js-export-html@^0.5.0:
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/draft-js-export-html/-/draft-js-export-html-0.5.4.tgz#e24927da3efe6f3df17f1d7606a9dc6141dbf72d"
-  dependencies:
-    draft-js-utils "^0.1.5"
-
-draft-js-import-element@^0.4.1:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/draft-js-import-element/-/draft-js-import-element-0.4.3.tgz#785381a2e0323a9836cfa856c442e9013bd482a4"
-  dependencies:
-    draft-js-utils "^0.1.5"
-    synthetic-dom "^0.2.0"
-
-draft-js-import-html@^0.3.0:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/draft-js-import-html/-/draft-js-import-html-0.3.2.tgz#cc205a6192cac2c6520576688702ee31f5241810"
-  dependencies:
-    draft-js-import-element "^0.4.1"
-
-draft-js-utils@^0.1.5:
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/draft-js-utils/-/draft-js-utils-0.1.7.tgz#e2b6927ca620edf1855a4bfc1cf1d21080a70f16"
-
 draft-js@^0.10.4:
   version "0.10.4"
   resolved "https://registry.yarnpkg.com/draft-js/-/draft-js-0.10.4.tgz#147741642097c8120d8edc232e9503e8b7fb8d35"
@@ -1726,6 +1707,10 @@ draft-js@^0.10.4:
     fbjs "^0.8.15"
     immutable "~3.7.4"
     object-assign "^4.1.0"
+
+draftjs-to-html@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/draftjs-to-html/-/draftjs-to-html-0.8.2.tgz#fe502d5735bc6079b7b47b7e40997f2e8364e300"
 
 ecc-jsbn@~0.1.1:
   version "0.1.1"
@@ -5141,10 +5126,6 @@ symbol-observable@^1.0.2, symbol-observable@^1.0.3:
 symbol-tree@^3.2.1:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.2.tgz#ae27db38f660a7ae2e1c3b7d1bc290819b8519e6"
-
-synthetic-dom@^0.2.0:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/synthetic-dom/-/synthetic-dom-0.2.1.tgz#6c76fcf91ea9a5231318f8f415e27883d534df86"
 
 tapable@^0.2.7, tapable@~0.2.5:
   version "0.2.8"
