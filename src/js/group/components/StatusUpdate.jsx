@@ -51,19 +51,12 @@ class StatusUpdate extends React.Component {
     }
 
     render() {
-        const { viewer } = this.props.data
-
-        if (!viewer || !viewer.canWriteToContainer) {
-            return (
-                <div />
-            )
-        }
+        const { viewer } = this.props
 
         let errors
         if (this.state.errors) {
             errors = ( <Errors errors={this.state.errors} /> );
         }
-
 
         return (
             <div className="card ___indent">
@@ -82,19 +75,6 @@ class StatusUpdate extends React.Component {
     }
 }
 
-const Query = gql`
-    query addStatusUpdate($containerGuid: Int!) {
-        viewer {
-            guid
-            canWriteToContainer(containerGuid: $containerGuid, subtype: "thewire")
-            user {
-                guid
-                icon
-            }
-        }
-    }
-`
-
 const Mutation = gql`
     mutation addStatusUpdate($input: addEntityInput!) {
         addEntity(input: $input) {
@@ -108,4 +88,4 @@ const Mutation = gql`
     }
 `
 
-export default graphql(Mutation)(graphql(Query)(StatusUpdate))
+export default graphql(Mutation)(StatusUpdate)

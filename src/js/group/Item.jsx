@@ -19,7 +19,7 @@ class Item extends React.Component {
     }
 
     render() {
-        const { entity } = this.props.data
+        const { entity, viewer } = this.props.data
 
         if (!entity) {
             // Loading...
@@ -31,6 +31,13 @@ class Item extends React.Component {
         if (entity.status == 404) {
             return (
                 <NotFound />
+            )
+        }
+
+        let statusUpdate
+        if (viewer.canWriteToContainer) {
+            statusUpdate = (
+                <StatusUpdate containerGuid={entity.guid} viewer={viewer} />
             )
         }
 
@@ -52,7 +59,7 @@ class Item extends React.Component {
                             </div>
                             <div className="col-sm-12 col-lg-8">
                                 <Introduction entity={entity} />
-                                <StatusUpdate containerGuid={entity.guid} />
+                                {statusUpdate}
                                 <ActivityList containerGuid={entity.guid} containerClassName="" childClass={Card} offset={0} limit={20} tags={[]} />
                             </div>
                         </div>
@@ -68,6 +75,7 @@ const Query = gql`
         viewer {
             guid
             loggedIn
+            canWriteToContainer(containerGuid: $guid, subtype: "thewire")
             user {
                 guid
                 name
