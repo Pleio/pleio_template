@@ -1,28 +1,27 @@
 <?php
 $group_guid = (int) get_input("group_guid");
 
-if (empty($group_guid)) {
-	register_error(elgg_echo("InvalidParameterException:MissingParameter"));
-	forward(REFERER);
-}
-
 $group = get_entity($group_guid);
-if (empty($group) || !elgg_instanceof($group, "group")) {
-	register_error(elgg_echo("InvalidParameterException:GUIDNotFound", array($group_guid)));
-	forward(REFERER);
+if (!$group || !$group instanceof ElggGroup) {
+	exit();
 }
 
-if (!$group->canEdit() || (elgg_get_plugin_setting("member_export", "pleio_template") != "yes")) {
-	register_error(elgg_echo("groups:cantedit"));
-	forward(REFERER);
+if (!$group->canEdit()) {
+	exit();
 }
 
-$subpermissions = unserialize($group->subpermissions);
+if (elgg_get_plugin_setting("member_export", "pleio_template") !== "yes") {
+	exit();
+}
 
 $is_admin = elgg_is_admin_logged_in();
 
-// create temp file
-$fh = tmpfile();
+$subpermissions = unserialize($group->subpermissions);
+$slug = pleio_template_slugify($group->name);
+
+header("Content-Type: text/csv");
+header("Content-Disposition: attachment; filename=\"{$slug}.csv\"");
+$fp = fopen("php://output", "w");
 
 $headers = array(
 	"guid",
@@ -41,7 +40,7 @@ foreach($subpermissions as $subpermission) {
 	$headers[] = $acl->name;
 }
 
-fwrite($fh, "\"" . implode("\";\"", $headers) . "\"" . PHP_EOL);
+fputcsv($fp, $headers, ";");
 
 $options = array(
 	"type" => "user",
@@ -73,23 +72,7 @@ foreach ($members as $member) {
 		}
 	}
 
-	fwrite($fh, "\"" . implode("\";\"", $info) . "\"" . PHP_EOL);
+	fputcsv($fp, $info, ";");
 }
 
-// read the csv in to a var before output
-$contents = "";
-rewind($fh);
-while (!feof($fh)) {
-	$contents .= fread($fh, 2048);
-}
-
-// cleanup the temp file
-fclose($fh);
-
-// output the csv
-header("Content-Type: text/csv");
-header("Content-Disposition: attachment; filename=\"" . elgg_get_friendly_title($group->name) . ".csv\"");
-header("Content-Length: " . strlen($contents));
-
-echo $contents;
-exit();
+fclose($fp);
