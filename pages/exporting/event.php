@@ -35,7 +35,7 @@ $headers = [
 	"status"
 ];
 
-fputcsv($fp, $headers);
+fputcsv($fp, $headers, ";");
 
 foreach ($relationships as $relationship) {
     $users = elgg_get_entities_from_relationship([
@@ -57,7 +57,7 @@ foreach ($relationships as $relationship) {
             $user->username,
             $is_admin ? $user->email : "",
             str_replace("event_", "", $relationship)
-        ]);
+        ], ";");
     }
 }
 

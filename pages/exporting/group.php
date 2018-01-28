@@ -19,6 +19,8 @@ if (!$group->canEdit() || (elgg_get_plugin_setting("member_export", "pleio_templ
 
 $subpermissions = unserialize($group->subpermissions);
 
+$is_admin = elgg_is_admin_logged_in();
+
 // create temp file
 $fh = tmpfile();
 
@@ -26,7 +28,7 @@ $headers = array(
 	"guid",
 	"name",
 	"username",
-	"email",
+	"email (only for admin)",
 	"member since",
 	"last login",
 	"last action",
@@ -55,7 +57,7 @@ foreach ($members as $member) {
 		$member->guid,
 		$member->name,
 		$member->username,
-		$member->email
+		$is_admin ? $member->email : ""
 	);
 
 	$member_since = group_tools_get_membership_information($member, $group);
