@@ -12,7 +12,7 @@ import WikiItem from "../wiki/Item"
 class GroupItem extends React.Component {
     render() {
         const { match } = this.props
-        const { viewer } = this.props.data
+        const { viewer, entity } = this.props.data
 
         if (!viewer) {
             // Loading...
@@ -24,8 +24,14 @@ class GroupItem extends React.Component {
         let add
         if (viewer.canWriteToContainer) {
             add = (
-                <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
-                    <div className="button ___large ___add" onClick={(e) => this.refs.addModal.toggle()}><span>Maak een subpagina</span></div>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-12 end-sm">
+                            <button className="button ___add ___large ___margin-mobile-top ___margin-bottom" onClick={(e) => this.refs.addModal.toggle()}>
+                                Maak een subpagina
+                            </button>
+                        </div>
+                    </div>
                 </div>
             )
         }
@@ -39,7 +45,6 @@ class GroupItem extends React.Component {
 
         const buttons = (
             <div className="flexer ___gutter ___top">
-                {add}
                 {join}
             </div>
         )
@@ -47,6 +52,7 @@ class GroupItem extends React.Component {
         return (
             <GroupContainer buttons={buttons} match={this.props.match}>
                 <section className="section ___grow">
+                    {add}
                     <WikiItem match={this.props.match} />
                     <Modal ref="addModal" full title="Subpagina toevoegen">
                         <AddCore subtype="wiki" afterAdd={() => location.reload()} containerGuid={match.params.containerGuid || match.params.guid} />

@@ -43,7 +43,7 @@ class GroupList extends React.Component {
         let add
         if (viewer.canWriteToContainer) {
             add = (
-                <Link to={`events/add`} className="button ___add ___large ___margin-bottom">
+                <Link to={`events/add`} className="button ___add ___large ___margin-mobile-top ___margin-bottom">
                     Agenda-item toevoegen
                 </Link>
             )

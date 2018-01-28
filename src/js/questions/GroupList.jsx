@@ -28,10 +28,14 @@ class Item extends React.Component {
         let add
         if (viewer.canWriteToContainer) {
             add = (
-                <div className="buttons ___no-margin ___gutter ___hide-on-tablet">
-                    <Link to={`questions/add`} className="right-lg">
-                        <div className="button ___large ___add"><span>Stel een vraag</span></div>
-                    </Link>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-12 end-sm">
+                            <Link to={`questions/add`} className="button ___add ___large ___margin-mobile-top ___margin-bottom">
+                                Stel een vraag
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             )
         }
@@ -45,7 +49,6 @@ class Item extends React.Component {
 
         const buttons = (
             <div className="flexer ___gutter ___top">
-                {add}
                 {join}
             </div>
         )
@@ -54,6 +57,7 @@ class Item extends React.Component {
             <GroupContainer buttons={buttons} match={this.props.match}>
                 <Document title={entity.name} />
                 <section className="section ___grow">
+                    {add}
                     <QuestionList containerGuid={entity.guid} childClass={Card} subtype="question" offset={0} limit={20} tags={[]} match={this.props.match} />
                 </section>
             </GroupContainer>
