@@ -11,6 +11,8 @@ $settings = Pleio\Helpers::getSettings();
 $theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
 $font = elgg_get_plugin_setting("font", "pleio_template");
 
+$icon = elgg_get_plugin_setting("icon", "pleio_template");
+
 $custom_css = elgg_is_active_plugin("custom_css");
 $custom_js = elgg_is_active_plugin("custom_js");
 
@@ -21,9 +23,11 @@ $custom_js = elgg_is_active_plugin("custom_js");
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?php echo $vars["title"] ? $vars["title"] : elgg_get_config("sitename"); ?></title>
-    <link rel="icon" href="<?php echo pleio_template_assets("images/favicon.png"); ?>">
-    <link rel="shortcut icon" href="<?php echo pleio_template_assets("images/favicon.ico"); ?>">
-    <link rel="apple-touch-icon-precomposed" href="<?php echo pleio_template_assets("images/apple-touch-icon-precomposed.png"); ?>">
+    <?php if ($icon && $icon == "rijkshuisstijl"): ?>
+        <link rel="icon" href="<?php echo pleio_template_assets("images/favicon.png"); ?>">
+        <link rel="shortcut icon" href="<?php echo pleio_template_assets("images/favicon.ico"); ?>">
+        <link rel="apple-touch-icon-precomposed" href="<?php echo pleio_template_assets("images/apple-touch-icon-precomposed.png"); ?>">
+    <?php endif; ?>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
     <meta name="version" content="1.0.0">

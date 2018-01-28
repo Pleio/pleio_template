@@ -11,6 +11,18 @@
 </div>
 
 <div>
+    <label><?php echo elgg_echo("pleio_template:icon"); ?></label>
+    <?php echo elgg_view("input/dropdown", [
+        "name" => "params[icon]",
+        "value" => $vars["plugin"]->icon,
+        "options_values" => [
+            "none" => elgg_echo("pleio_template:none"),
+            "rijkshuisstijl" => elgg_echo("pleio_template:rijkshuisstijl")
+        ]
+    ]); ?>
+</div>
+
+<div>
     <label><?php echo elgg_echo("pleio_template:startpage"); ?></label>
     <?php echo elgg_view("input/dropdown", [
         "name" => "params[startpage]",
