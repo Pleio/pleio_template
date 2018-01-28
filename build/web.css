@@ -14466,6 +14466,12 @@ body.___leraar .navigation__search input {
 .button__text.___export:hover {
   color: #009ee3;
 }
+.activity-list {
+  width: 100%;
+}
+.___margin-mobile-top {
+  margin-top: 2rem;
+}
 #__bs_notify__ {
   opacity: .15 !important;
   pointer-events: none;
