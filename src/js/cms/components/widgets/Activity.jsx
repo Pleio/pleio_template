@@ -31,7 +31,7 @@ export default class Activity extends React.Component {
         const { entity, isEditing } = this.props
 
         return (
-            <ActivityList containerClassName="" childClass={Card} offset={0} limit={20} />
+            <ActivityList containerClassName="activity-list" childClass={Card} offset={0} limit={20} />
         )
     }
 }

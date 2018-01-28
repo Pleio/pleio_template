@@ -8,11 +8,18 @@ import Text from "./widgets/Text"
 import HTML from "./widgets/HTML"
 import Leader from "./widgets/Leader"
 import Activity from "./widgets/Activity"
+import Events from "./widgets/Events"
 
 const translate = {
     "text": "Tekst",
     "html": "Code",
     "other": "Anders"
+}
+
+const otherWidgets = {
+    activity: "Activiteiten",
+    leader: "Leader",
+    events: "Agenda"
 }
 
 class Widget extends React.Component {
@@ -31,8 +38,6 @@ class Widget extends React.Component {
             this.setState({ isSelectingType: true })
             return
         }
-
-        console.log(index, option)
 
         this.setState({ isSelectingType: false })
         this.props.addWidget(index, option)
@@ -92,6 +97,10 @@ class Widget extends React.Component {
                         <Leader ref="widget" entity={entity} isEditing={this.state.isEditing} onSave={this.onSave} />
                     )
                     break
+                case "events":
+                    widget = (
+                        <Events ref="widget" entity={entity} isEditing={this.state.isEditing} onSave={this.onSave} />
+                    )
             }
 
             let settings
@@ -132,7 +141,7 @@ class Widget extends React.Component {
             let selectType
             if (this.state.isSelectingType) {
                 selectType = (
-                    <Select name="selectType" onChange={(option) => this.addWidget(this.props.index, option)} options={{activity: "Activiteiten", leader:"Leader"}} />
+                    <Select name="selectType" onChange={(option) => this.addWidget(this.props.index, option)} options={otherWidgets} />
                 )
             }
 
