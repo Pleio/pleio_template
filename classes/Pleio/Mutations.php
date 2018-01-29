@@ -1197,6 +1197,10 @@ class Mutations {
             $group->isFeatured = $input["isFeatured"];
         }
 
+        if (isset($input["autoNotification"])) {
+            $group->autoNotification = $input["autoNotification"];
+        }
+
         $result = $group->save();
 
         if ($input["icon"]) {
@@ -1261,6 +1265,14 @@ class Mutations {
                 $group->isFeatured = $input["isFeatured"];
             } else {
                 unset($group->isFeatured);
+            }
+        }
+
+        if (isset($input["autoNotification"])) {
+            if ($input["autoNotification"]) {
+                $group->autoNotification = $input["autoNotification"];
+            } else {
+                unset($group->autoNotification);
             }
         }
 

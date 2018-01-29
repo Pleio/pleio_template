@@ -50,6 +50,7 @@ class Add extends React.Component {
             featured: values.featured,
             isClosed: (values.membership === "closed") ? true : false,
             isFeatured: values.isFeatured,
+            autoNotification: values.autoNotification,
             tags: values.tags,
             plugins: defaultGroupPlugins
         }
@@ -96,6 +97,7 @@ class Add extends React.Component {
                                     <IconField name="icon" />
                                     <SelectField label="Lidmaatschap" name="membership" type="text" className="form__input" options={{open: "Open", "closed": "Besloten"}} value="open" />
                                     {extraFields}
+                                    <SwitchField name="autoNotification" className="form__input" label="Gebruikers krijgen automatisch notificaties wanneer ze lid worden" value={true} />
 
                                     <TextField label="Beschrijving voor niet-leden" name="description" type="text" placeholder="Vertel wat over de groep voor niet-leden" className="form__input" rules="required" />
                                     <RichTextField label="Memo voor leden" name="introduction" type="text" placeholder="Hier kun je een korte introductie geven aan de leden van de groep" className="form__input" />

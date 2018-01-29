@@ -114,7 +114,10 @@ class Resolver {
 
         $notifications = [];
         foreach (get_data($sql) as $notification) {
-            $notifications[] = Mapper::getNotification($notification);
+            $notification = Mapper::getNotification($notification);
+            if ($notification) {
+                $notifications[] = $notification;
+            }
         }
 
         return [

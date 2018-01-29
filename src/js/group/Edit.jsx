@@ -66,6 +66,7 @@ class Edit extends React.Component {
             introduction: JSON.stringify(convertToRaw(values.introduction)),
             isClosed: (values.membership === "closed") ? true : false,
             isFeatured: values.isFeatured,
+            autoNotification: values.autoNotification,
             icon: values.icon,
             featured: values.featured,
             tags: values.tags,
@@ -133,6 +134,7 @@ class Edit extends React.Component {
                                             <IconField name="icon" value={entity.icon} />
                                             <SelectField label="Lidmaatschap" name="membership" type="text" className="form__input" options={{open: "Open", "closed": "Besloten"}} value={membership} />
                                             {extraFields}
+                                            <SwitchField name="autoNotification" className="form__input" label="Gebruikers krijgen automatisch notificaties wanneer ze lid worden" value={entity.autoNotification} />
 
                                             <TextField label="Beschrijving voor niet-leden" name="description" type="text" placeholder="Vertel wat over de groep voor niet-leden" className="form__input" rules="required" value={entity.description} />
                                             <RichTextField label="Memo voor leden" name="introduction" type="text" placeholder="Hier kun je een korte introductie geven aan de leden van de groep" className="form__input" richValue={entity.introduction} />
@@ -179,6 +181,7 @@ const Query = gql`
                 }
                 isClosed
                 isFeatured
+                autoNotification
                 plugins
                 canEdit
                 url
@@ -196,6 +199,7 @@ const Mutation = gql`
                 name
                 description
                 introduction
+                autoNotification
                 plugins
                 icon
                 isClosed

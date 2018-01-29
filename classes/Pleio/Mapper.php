@@ -39,6 +39,7 @@ class Mapper {
             "isFeatured" => $entity->isFeatured ? true : false,
             "membership" => Helpers::getGroupMembership($entity),
             "description" => strip_tags($entity->description),
+            "autoNotification" => $entity->autoNotification ? true : false,
             "excerpt" => elgg_get_excerpt(html_entity_decode($entity->description, ENT_COMPAT | ENT_QUOTES, 'UTF-8'), 150),
             "introduction" => Helpers::getGroupIntroduction($entity),
             "plugins" => $entity->plugins ? $entity->plugins : [],
@@ -146,6 +147,18 @@ class Mapper {
         $performer = get_entity($notification->performer_guid);
         $entity = get_entity($notification->entity_guid);
         $container = get_entity($notification->container_guid);
+
+        if (!$performer) {
+            return null;
+        }
+
+        if (!$entity) {
+            return null;
+        }
+
+        if (!$container) {
+            return null;
+        }
 
         return [
             "id" => $notification->id,
