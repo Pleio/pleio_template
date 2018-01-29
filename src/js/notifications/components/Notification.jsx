@@ -35,6 +35,12 @@ class Notification extends React.Component {
         let url, message
         switch (notification.action) {
             case "commented":
+                if (!notification.entity) {
+                    return (
+                        <div />
+                    )
+                }
+
                 url = notification.entity.url
                 message = (
                     <div>
@@ -46,6 +52,11 @@ class Notification extends React.Component {
                 )
                 break
             case "created":
+                if (!notification.entity || notification.container) {
+                    return (
+                        <div />
+                    )
+                }
                 url = notification.entity.url
                 message = (
                     <div>

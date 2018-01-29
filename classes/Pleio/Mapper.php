@@ -148,18 +148,6 @@ class Mapper {
         $entity = get_entity($notification->entity_guid);
         $container = get_entity($notification->container_guid);
 
-        if (!$performer) {
-            return null;
-        }
-
-        if (!$entity) {
-            return null;
-        }
-
-        if (!$container) {
-            return null;
-        }
-
         return [
             "id" => $notification->id,
             "action" => $notification->action,
