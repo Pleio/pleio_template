@@ -46,6 +46,7 @@ $dutch = array(
     "pleio_template:event_export" => "Sta evenementbeheerders toe om een export te maken",
     "pleio_template:member_export" => "Sta groepsbeheerders toe om een export te maken van de leden (inclusief naam en e-mail)",
     "pleio_template:default_email_overview" => "Standaard e-mail overzicht configuratie",
+    "admin:administer_utilities:notifications" => "Beheer notificaties",
     "option:daily" => "Dagelijks",
     "option:weekly" => "Wekelijks",
     "option:monthly" => "Maandelijk",
@@ -57,7 +58,8 @@ $dutch = array(
     'admin:users:edit' => 'Wijzig gebruiker',
     'admin:profile:details' => 'Profiel details',
     'admin:profile:edit' => 'Wijzig profiel',
-    'view_profile' => 'Bekijk profiel'
+    'view_profile' => 'Bekijk profiel',
+    'users' => 'Gebruikers'
 );
 
 add_translation("nl", $dutch);

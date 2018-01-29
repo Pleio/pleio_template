@@ -23,6 +23,14 @@ function pleio_template_init() {
     elgg_register_action("odt_editor/upload", dirname(__FILE__) . "/actions/odt_editor/upload.php");
     elgg_register_action("odt_editor/upload_asnew", dirname(__FILE__) . "/actions/odt_editor/upload_asnew.php");
 
+    elgg_register_action("admin/disable_email_overviews", dirname(__FILE__) . "/actions/admin/disable_email_overviews.php", "admin");
+    elgg_register_action("admin/enable_email_overviews", dirname(__FILE__) . "/actions/admin/enable_email_overviews.php", "admin");
+    elgg_register_action("admin/disable_auto_notifications", dirname(__FILE__) . "/actions/admin/disable_auto_notifications.php", "admin");
+    elgg_register_action("admin/enable_auto_notifications", dirname(__FILE__) . "/actions/admin/enable_auto_notifications.php", "admin");
+    elgg_register_action("admin/subscribe_users_to_auto_notification", dirname(__FILE__) . "/actions/admin/subscribe_users_to_auto_notification.php", "admin");
+    elgg_register_action("admin/unsubscribe_users_to_auto_notification", dirname(__FILE__) . "/actions/admin/unsubscribe_users_to_auto_notification.php", "admin");
+
+
     elgg_register_plugin_hook_handler("index", "system", "pleio_template_index_handler");
     elgg_register_plugin_hook_handler("container_permissions_check", "object", "pleio_template_container_permissions_check_hook");
     elgg_register_plugin_hook_handler("action", "plugins/settings/save", "pleio_template_plugins_settings_save");
@@ -80,6 +88,7 @@ function pleio_template_init() {
 
     elgg_register_simplecache_view("css/web");
 
+    elgg_register_admin_menu_item("administer", "notifications", "administer_utilities");
     elgg_register_admin_menu_item("administer", "all", "users");
     if (elgg_in_context("admin")) {
         elgg_register_plugin_hook_handler("register", "menu:entity", "pleio_template_user_setup_menu", 502);

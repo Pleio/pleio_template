@@ -46,6 +46,7 @@ $english = array(
     "pleio_template:event_export" => "Allow event managers to export the attendees list",
     "pleio_template:member_export" => "Allow group admins to export the memberslist (including name and email)",
     "pleio_template:default_email_overview" => "Default e-mail overview configuration",
+    "admin:administer_utilities:notifications" => "Notification management",
     "option:daily" => "Daily",
     "option:weekly" => "Weekly",
     "option:monthly" => "Monthly",
@@ -58,6 +59,7 @@ $english = array(
     'admin:profile:edit' => 'Edit profile',
     'members:search' => 'Search user',
     'view_profile' => 'View profile',
+    'users' => 'Users'
 );
 
 add_translation("en", $english);
