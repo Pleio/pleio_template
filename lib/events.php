@@ -145,11 +145,15 @@ function pleio_template_create_member_of_site_handler($event, $type, $relationsh
 function pleio_template_join_group_handler($event, $type, $params) {
     $group = elgg_extract("group", $params);
     $user = elgg_extract("user", $params);
-    add_entity_relationship($user->guid, "subscribed", $group->guid);
+
+    if ($group->autoNotification) {
+        add_entity_relationship($user->guid, "subscribed", $group->guid);
+    }
 }
 
 function pleio_template_leave_group_handler($event, $type, $params) {
     $group = elgg_extract("group", $params);
     $user = elgg_extract("user", $params);
+
     remove_entity_relationship($user->guid, "subscribed", $group->guid);
 }
