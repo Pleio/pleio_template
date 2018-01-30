@@ -26,6 +26,11 @@ class NotificationsHandler {
                 continue;
             }
 
+            if ($user->last_action < (time() - 3600*24*30*6)) {
+                // do not send a mail to users who did not log in for the last 6 months
+                return;
+            }
+
             $latest_notifications = (int) $user->getPrivateSetting("latest_notifications_{$site->guid}");
             if ($latest_notifications && $latest_notifications >= (int) $row->time_created) {
                 // do not send a mail when we have nothing new

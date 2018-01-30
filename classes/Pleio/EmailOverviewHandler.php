@@ -48,6 +48,11 @@ class EmailOverviewHandler {
             return;
         }
 
+        if ($user->last_action < (time() - 3600*24*30*6)) {
+            // do not send a mail to users who did not log in for the last 6 months
+            return;
+        }
+
         $dbprefix = elgg_get_config("dbprefix");
 
         $upper_bound = time();
