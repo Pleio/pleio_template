@@ -1,38 +1,20 @@
 import React from "react"
-import CheckField from "../../core/components/CheckField"
-import { graphql } from "react-apollo"
-import gql from "graphql-tag"
+import Errors from "../../core/components/Errors"
+import autobind from "autobind-decorator"
+import GroupNotificationSetting from "./GroupNotificationSetting"
 
-class SettingsGroupNotifications extends React.Component {
+export default class SettingsGroupNotifications extends React.Component {
     constructor(props) {
         super(props)
 
-        this.onChange = this.onChange.bind(this)
-        this.submit = this.submit.bind(this)
+        this.state = {
+            errors: []
+        }
     }
 
-    onChange(e) {
-        setTimeout(() => {
-            this.submit()
-        }, 10)
-    }
-
-    submit() {
-        let input = {
-            clientMutationId: 1,
-            guid: this.props.entity.guid,
-            emailNotifications: this.refs.emailNotifications.getValue(),
-        }
-
-        if (this.refs.newsletter) {
-            input['newsletter'] = this.refs.newsletter.getValue()
-        }
-
-        this.props.mutate({
-            variables: {
-                input
-            }
-        })
+    @autobind
+    setErrors(errors) {
+        this.setState({ errors })
     }
 
     render() {
@@ -45,12 +27,13 @@ class SettingsGroupNotifications extends React.Component {
         }
 
         const groupList = groups.edges.map((group) => (
-            <GroupNotificationSetting group={group} />
+            <GroupNotificationSetting key={group.guid} group={group} setErrors={this.setErrors} />
         ))
 
         return (
             <div className="card-profile">
                 <h3 className="card-profile__title">Groepsmeldingen</h3>
+                <Errors errors={this.state.errors} />
                 <div className="row">
                     {groupList}
                 </div>
@@ -58,17 +41,3 @@ class SettingsGroupNotifications extends React.Component {
         )
     }
 }
-
-const Mutation = gql`
-    mutation editNotifications($input: editNotificationsInput!) {
-        editNotifications(input: $input) {
-            user {
-                guid
-                getsNewsletter
-                emailNotifications
-            }
-        }
-    }
-`
-
-export default graphql(Mutation)(SettingsGroupNotifications)

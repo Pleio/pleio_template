@@ -32,6 +32,7 @@ class Interests extends React.Component {
                             <div className="col-md-8">
                                 {interests}
                                 <SettingsNotifications entity={entity} />
+                                <SettingsGroupNotifications entity={entity} groups={groups} />
                             </div>
                             <div className="col-md-4">
                                 <SettingsEmailOverview entity={entity} />
