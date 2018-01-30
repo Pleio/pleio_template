@@ -39,7 +39,8 @@ class EmailOverviewHandler {
         }
 
         $user = get_entity($user_guid);
-        if (!$user) {
+        if (!$user || $user->isBanned()) {
+            // do not send a mail to banned users
             return;
         }
 
