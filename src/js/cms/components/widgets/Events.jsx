@@ -26,7 +26,10 @@ class Events extends React.Component {
             <Accordeon title="Agenda" className="card" last side>
                 {items}
                 <div className="card__bottom">
-                    <Link to="/events" className="read-more" />
+                    <Link to="/events" className="read-more">
+                        <div className="read-more__circle" />
+                        <span>Alles</span>
+                    </Link>
                 </div>
             </Accordeon>
         )

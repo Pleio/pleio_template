@@ -26,7 +26,10 @@ class EventsCard extends React.Component {
             <Accordeon title="Agenda" className="card" last side>
                 {items}
                 <div className="card__bottom">
-                    <Link to={this.props.entity.url} className="read-more" />
+                    <Link to={`${this.props.entity.url}/events`} className="read-more">
+                        <div className="read-more__circle" />
+                        <span>Alles</span>
+                    </Link>
                 </div>
             </Accordeon>
         )
