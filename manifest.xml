@@ -49,4 +49,8 @@
         <type>plugin</type>
         <name>file_tools</name>
     </conflicts>
+    <conflicts>
+        <type>plugin</type>
+        <name>digest</name>
+    </conflicts>
 </plugin_manifest>

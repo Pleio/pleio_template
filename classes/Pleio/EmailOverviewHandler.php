@@ -2,7 +2,7 @@
 namespace Pleio;
 
 class EmailOverviewHandler {
-    static function sendToAll($use_queue = true, $interval = "daily") {
+    static function sendToAll($interval = "daily") {
         $dbprefix = elgg_get_config("dbprefix");
         $site = elgg_get_site_entity();
 
@@ -26,11 +26,7 @@ class EmailOverviewHandler {
 
         $rows = get_data($sql);
         foreach ($rows as $row) {
-            if ($use_queue) {
-                \PleioAsyncTaskhandler::get()->schedule("Pleio\EmailOverviewHandler::sendOverview", [ $row->guid_one, $site->guid ]);
-            } else {
-                EmailOverviewHandler::sendOverview($row->guid_one, $site->guid);
-            }
+            EmailOverviewHandler::sendOverview($row->guid_one, $site->guid);
         }
     }
 

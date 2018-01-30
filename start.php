@@ -76,10 +76,10 @@ function pleio_template_init() {
 
     elgg_unregister_plugin_hook_handler("route", "groups", "group_tools_route_groups_handler");
 
-    elgg_register_plugin_hook_handler("cron", "hourly", "pleio_template_notifications_handler");
-    elgg_register_plugin_hook_handler("cron", "daily", "pleio_template_email_overview_handler");
-    elgg_register_plugin_hook_handler("cron", "weekly", "pleio_template_email_overview_handler");
-    elgg_register_plugin_hook_handler("cron", "monthly", "pleio_template_email_overview_handler");
+    elgg_register_plugin_hook_handler("cron", "hourly", "pleio_template_cron_notifications_handler");
+    elgg_register_plugin_hook_handler("cron", "daily", "pleio_template_cron_email_overview_handler");
+    elgg_register_plugin_hook_handler("cron", "weekly", "pleio_template_cron_email_overview_handler");
+    elgg_register_plugin_hook_handler("cron", "monthly", "pleio_template_cron_email_overview_handler");
 
     elgg_unregister_plugin_hook_handler("email", "system", "html_email_handler_email_hook");
     elgg_register_plugin_hook_handler("email", "system", "pleio_template_email_handler");
@@ -99,20 +99,9 @@ function pleio_template_init() {
         $domain = ini_get("session.cookie_domain");
         setcookie("CSRF_TOKEN", $token, 0, "/", $domain);
     }
-
-    if (function_exists("pleio_register_console_handler")) {
-        pleio_register_console_handler('send:emailoverview', 'Send an e-mail overview to all the users.', 'pleio_console_send_emailoverview');
-    }
 }
 
 elgg_register_event_handler("init", "system", "pleio_template_init");
-
-function pleio_console_send_emailoverview() {
-    echo "Sending an e-mailoverview to all users." . PHP_EOL;
-    $ia = elgg_set_ignore_access(true);
-    Pleio\EmailOverviewHandler::sendToAll($use_queue = false);
-    elgg_set_ignore_access($ia);
-}
 
 function pleio_template_index_handler($hook, $type, $return_value, $params) {
     if ($return_value) {
@@ -354,12 +343,16 @@ function pleio_template_get_object($guid) {
     return $object;
 }
 
-function pleio_template_notifications_handler($hook, $period, $return, $params) {
+function pleio_template_cron_notifications_handler($hook, $period, $return, $params) {
+    $ia = elgg_set_ignore_access(true);
     Pleio\NotificationsHandler::sendToAll();
+    elgg_set_ignore_access($ia);
 }
 
-function pleio_template_email_overview_handler($hook, $period, $return, $params) {
-    Pleio\EmailOverviewHandler::sendToAll(false, $period);
+function pleio_template_cron_email_overview_handler($hook, $period, $return, $params) {
+    $ia = elgg_set_ignore_access(true);
+    Pleio\EmailOverviewHandler::sendToAll($period);
+    elgg_set_ignore_access($ia);
 }
 
 function pleio_template_email_handler($hook, $type, $return, $params) {
