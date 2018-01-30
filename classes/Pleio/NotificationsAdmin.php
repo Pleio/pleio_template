@@ -97,7 +97,8 @@ class NotificationsAdmin {
         $dbprefix = elgg_get_config("dbprefix");
         $site = elgg_get_site_entity();
 
-        $groups = get_data("SELECT guid FROM {$dbprefix}entities WHERE type='group' AND site_guid={$site->guid}");
+        $msid = get_metastring_id("autoNotification") ?: 0;
+        $groups = get_data("SELECT guid FROM {$dbprefix}entities e JOIN {$dbprefix}metadata md ON e.guid = md.entity_guid AND md.name_id = {$msid} WHERE e.type='group' AND e.site_guid={$site->guid}");
 
         foreach ($groups as $group) {
             $members = get_data("SELECT guid_one AS guid FROM {$dbprefix}entity_relationships WHERE relationship='member' AND guid_two={$group->guid}");
@@ -111,10 +112,11 @@ class NotificationsAdmin {
         $dbprefix = elgg_get_config("dbprefix");
         $site = elgg_get_site_entity();
 
-        $groups = get_data("SELECT guid FROM {$dbprefix}entities WHERE type='group' AND site_guid={$site->guid}");
+        $msid = get_metastring_id("autoNotification") ?: 0;
+        $groups = get_data("SELECT guid FROM {$dbprefix}entities e JOIN {$dbprefix}metadata md ON e.guid = md.entity_guid AND md.name_id = {$msid} WHERE e.type='group' AND e.site_guid={$site->guid}");
 
         foreach ($groups as $group) {
-            $members = get_data("SELECT guid_one AS guid FROM {$dbprefix}entity_relationships WHERE relationship='subscribed' AND guid_two={$group->guid}");
+            $members = get_data("SELECT guid_one AS guid FROM {$dbprefix}entity_relationships rel WHERE relationship='member' AND guid_two={$group->guid}");
             foreach ($members as $member) {
                 remove_entity_relationship($member->guid, "subscribed", $group->guid);
             }
