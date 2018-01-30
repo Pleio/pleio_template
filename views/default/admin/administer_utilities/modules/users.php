@@ -12,7 +12,7 @@ $users = Pleio\NotificationsAdmin::getUserStats();
     </tbody>
 </table>
 
-<?php echo elgg_view("output/url", [
+<?php echo elgg_view("output/confirmlink", [
     "href" => "/action/admin/disable_email_overviews",
     "text" => "Zet periodiek overzicht voor alle gebruikers uit",
     "class" => "elgg-button elgg-button-submit",
@@ -21,7 +21,7 @@ $users = Pleio\NotificationsAdmin::getUserStats();
 
 <br /><br />
 
-<?php echo elgg_view("output/url", [
+<?php echo elgg_view("output/confirmlink", [
     "href" => "/action/admin/enable_email_overviews",
     "text" => "Zet periodiek overzicht voor alle gebruikers op wekelijks",
     "class" => "elgg-button elgg-button-submit",
