@@ -52,7 +52,7 @@ class Notification extends React.Component {
                 )
                 break
             case "created":
-                if (!notification.entity || notification.container) {
+                if (!notification.entity || !notification.container) {
                     return (
                         <div />
                     )
