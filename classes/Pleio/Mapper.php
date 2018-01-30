@@ -66,7 +66,7 @@ class Mapper {
             "subtype" => $entity->getSubtype(),
             "source" => $entity->source,
             "location" => $entity->location,
-            "rsvp" => $entity->rsvp ? true : false,
+            "rsvp" => isset($entity->rsvp) ? $entity->rsvp : true,
             "isFeatured" => $entity->isFeatured,
             "isHighlighted" => $is_highlighted ? true : false,
             "featured" => [

@@ -268,8 +268,8 @@ class Mutations {
                 $entity->location = $input["location"];
             }
 
-            if ($input["rsvp"]) {
-                $entity->rsvp = true;
+            if (isset($input["rsvp"])) {
+                $entity->rsvp = $input["rsvp"];
             }
 
             $result = $entity->save();
@@ -386,10 +386,8 @@ class Mutations {
                 $entity->location = $input["location"];
             }
 
-            if ($input["rsvp"]) {
-                $entity->rsvp = true;
-            } else {
-                unset($entity->rsvp);
+            if (isset($input["rsvp"])) {
+                $entity->rsvp = $input["rsvp"];
             }
 
             $result &= $entity->save();
