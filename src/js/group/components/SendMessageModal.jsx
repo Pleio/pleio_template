@@ -90,7 +90,7 @@ class SendMessageForm extends React.Component {
             clientMutationId: 1,
             guid: group.guid,
             subject: values.subject,
-            message: stateToHTML(values.message)
+            message: draftToHtml(convertToRaw(values.message))
         }
 
         if (this.state.recipients.size > 0) {
