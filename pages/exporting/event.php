@@ -42,7 +42,6 @@ foreach ($relationships as $relationship) {
         "type" => "user",
         "relationship" => $relationship,
         "relationship_guid" => $event->guid,
-        "inverse_relationship" => true,
         "limit" => false
     ]);
 
