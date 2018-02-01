@@ -576,8 +576,7 @@ class Resolver {
         $options = [
             "type" => "user",
             "relationship" => $relationship,
-            "relationship_guid" => $entity->guid,
-            "inverse_relationship" => true
+            "relationship_guid" => $entity->guid
         ];
 
         $total = elgg_get_entities_from_relationship(array_merge($options, ["count" => true]));
@@ -610,15 +609,15 @@ class Resolver {
             return null;
         }
 
-        if (check_entity_relationship($user->guid, "event_attending", $entity->guid)) {
+        if (check_entity_relationship($entity->guid, "event_attending", $user->guid)) {
             return "accept";
         }
 
-        if (check_entity_relationship($user->guid, "event_maybe", $entity->guid)) {
+        if (check_entity_relationship($entity->guid, "event_maybe", $user->guid)) {
             return "maybe";
         }
 
-        if (check_entity_relationship($user->guid, "event_reject", $entity->guid)) {
+        if (check_entity_relationship($entity->guid, "event_reject", $user->guid)) {
             return "reject";
         }
     }

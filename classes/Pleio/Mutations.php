@@ -1874,21 +1874,21 @@ class Mutations {
         }
 
         if ($input["state"] === "accept") {
-            add_entity_relationship($user->guid, "event_attending", $event->guid);
+            add_entity_relationship($event->guid, "event_attending", $user->guid);
         } else {
-            remove_entity_relationship($user->guid, "event_attending", $event->guid);
+            remove_entity_relationship($event->guid, "event_attending", $user->guid);
         }
 
         if ($input["state"] === "maybe") {
-            add_entity_relationship($user->guid, "event_maybe", $event->guid);
+            add_entity_relationship($event->guid, "event_maybe", $user->guid);
         } else {
-            remove_entity_relationship($user->guid, "event_maybe", $event->guid);
+            remove_entity_relationship($event->guid, "event_maybe", $user->guid);
         }
 
         if ($input["state"] == "reject") {
-            add_entity_relationship($user->guid, "event_reject", $event->guid);
+            add_entity_relationship($event->guid, "event_reject", $user->guid);
         } else {
-            remove_entity_relationship($user->guid, "event_reject", $event->guid);
+            remove_entity_relationship($event->guid, "event_reject", $user->guid);
         }
 
         return [
