@@ -1635,7 +1635,7 @@ class Mutations {
             $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
             $user->email,
             "Toegangsaanvraag voor de groep {$group->name} goedgekeurd",
-            "De beheerder {$logged_in_user->name} heeft jouw aangevraagd tot de groep {$group->name} goedgekeurd. Volg de onderstaande link om direct naar de groep te gaan:<br />
+            "De beheerder {$logged_in_user->name} heeft jouw aanvraag tot de groep {$group->name} goedgekeurd. Volg de onderstaande link om direct naar de groep te gaan:<br />
             <a href=\"{$link}\">$link</a>
             "
         );
@@ -1670,7 +1670,7 @@ class Mutations {
             $site->email ? $site->email : "noreply@" . get_site_domain($site->guid),
             $user->email,
             "Toegangsaanvraag voor de groep {$group->name} afgewezen",
-            "De beheerder {$logged_in_user->name} heeft jouw aangevraagd tot de groep {$group->name} afgewezen. Neem contact op met de beheerder voor meer informatie."
+            "De beheerder {$logged_in_user->name} heeft jouw aanvraag tot de groep {$group->name} afgewezen. Neem contact op met de beheerder voor meer informatie."
         );
 
         return [
