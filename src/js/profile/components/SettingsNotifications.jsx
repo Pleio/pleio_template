@@ -12,9 +12,10 @@ class SettingsNotifications extends React.Component {
     }
 
     onChange(e) {
-        setTimeout(() => {
+        clearTimeout(this.timeout)
+        this.timeout = setTimeout(() => {
             this.submit()
-        }, 10)
+        }, 200)
     }
 
     submit() {

@@ -3,6 +3,7 @@ import ContentFiltersInputField from "../../core/components/ContentFiltersInputF
 import Select from "../../core/components/NewSelect"
 import Switches from "../../core/components/Switches"
 import Form from "../../core/components/Form"
+import autobind from "autobind-decorator"
 import { Set } from "immutable"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
@@ -10,18 +11,17 @@ import gql from "graphql-tag"
 class SettingsInterests extends React.Component {
     constructor(props) {
         super(props)
-
-        this.submit = this.submit.bind(this)
-        this.onChange = this.onChange.bind(this)
     }
 
+    @autobind
     onChange(name, isChecked) {
-        clearTimeout(this.submitTimeout)
-        this.submitTimeout = setTimeout(() => {
+        clearTimeout(this.timeout)
+        this.timeout = setTimeout(() => {
             this.submit()
-        }, 500)
+        }, 400)
     }
 
+    @autobind
     submit() {
         const { form } = this.refs
 

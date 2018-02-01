@@ -43,7 +43,7 @@ class GroupNotificationSetting extends React.Component {
 
         return (
             <div className="col-md-4 col-sm-6">
-                <SwitchField ref="switch" name={group.name} label={group.name} value={group.getsNotifications} onChange={this.onChange} />
+                <SwitchField ref="switch" name={group.name} label={group.name} value={group.getsNotifications} onChange={this.onChange} disabled={this.props.disabled} />
             </div>
         )
     }

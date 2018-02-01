@@ -27,7 +27,7 @@ export default class SettingsGroupNotifications extends React.Component {
         }
 
         const groupList = groups.edges.map((group) => (
-            <GroupNotificationSetting key={group.guid} group={group} setErrors={this.setErrors} />
+            <GroupNotificationSetting key={group.guid} group={group} setErrors={this.setErrors} disabled={!entity.emailNotifications} />
         ))
 
         return (
