@@ -473,7 +473,7 @@ class SchemaBuilder {
             "values" => [
                 "events" => [ "value" => "events" ],
                 "blog" => [ "value" => "blog" ],
-                "discussions" => [ "value" => "discussions" ],
+                "discussion" => [ "value" => "discussion" ],
                 "questions" => [ "value" => "questions" ],
                 "files" => [ "value" => "files" ],
                 "wiki" => [ "value" => "wiki" ],

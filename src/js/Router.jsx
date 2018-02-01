@@ -29,7 +29,7 @@ export default class Router extends React.Component {
                             <Route path="/news" component={NewsRoutes} />
                             <Route path="/blog" component={BlogRoutes} />
                             <Route path="/questions" component={QuestionsRoutes} />
-                            <Route path="/discussions" component={DiscussionsRoutes} />
+                            <Route path="/discussion" component={DiscussionsRoutes} />
                             <Route path="/events" component={EventsRoutes} />
                             <Route path="/groups" component={GroupRoutes} />
                             <Route path="/cms" component={CmsRoutes} />

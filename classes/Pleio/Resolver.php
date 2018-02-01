@@ -80,7 +80,7 @@ class Resolver {
             $menu = [
                 ["title" => "Blog", "link" => "/blog"],
                 ["title" => "Nieuws", "link" => "/news"],
-                ["title" => "Discussies", "link" => "/discussions"],
+                ["title" => "Discussies", "link" => "/discussion"],
                 ["title" => "Agenda", "link" => "/events"],
                 ["title" => "Groepen", "link" => "/groups"]
             ];

@@ -31,7 +31,7 @@ class Item extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-12 end-sm">
-                            <Link to={`discussions/add`} className="button ___add ___large ___margin-mobile-top ___margin-bottom">
+                            <Link to={`discussion/add`} className="button ___add ___large ___margin-mobile-top ___margin-bottom">
                                 Start een discussie
                             </Link>
                         </div>

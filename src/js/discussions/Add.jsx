@@ -20,12 +20,12 @@ export default class Add extends React.Component {
 
     @autobind
     onClose() {
-        this.props.history.push(`${this.getRootURL()}/discussions`)
+        this.props.history.push(`${this.getRootURL()}/discussion`)
     }
 
     @autobind
     afterAdd() {
-        window.location.href = `${this.getRootURL()}/discussions`
+        window.location.href = `${this.getRootURL()}/discussion`
     }
 
     render() {

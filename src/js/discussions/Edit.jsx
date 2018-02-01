@@ -28,16 +28,16 @@ class Edit extends React.Component {
 
     onClose() {
         const { entity } = this.props.data
-        this.props.history.push(`${this.getRootURL()}/discussions/view/${entity.guid}/${entity.title}`)
+        this.props.history.push(`${this.getRootURL()}/discussion/view/${entity.guid}/${entity.title}`)
     }
 
     afterEdit() {
         const { entity } = this.props.data
-        window.location.href = `${this.getRootURL()}/discussions/view/${entity.guid}/${entity.title}`
+        window.location.href = `${this.getRootURL()}/discussion/view/${entity.guid}/${entity.title}`
     }
 
     afterDelete() {
-        window.location.href = `${this.getRootURL()}/discussions`
+        window.location.href = `${this.getRootURL()}/discussion`
     }
 
     onDeleteClick(e) {

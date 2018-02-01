@@ -46,7 +46,7 @@ function pleio_template_init() {
     elgg_register_page_handler("blog", "pleio_template_page_handler");
     elgg_register_page_handler("news", "pleio_template_page_handler");
     elgg_register_page_handler("questions", "pleio_template_page_handler");
-    elgg_register_page_handler("discussions", "pleio_template_page_handler");
+    elgg_register_page_handler("discussion", "pleio_template_page_handler");
     elgg_register_page_handler("profile", "pleio_template_page_handler");
     elgg_register_page_handler("groups", "pleio_template_page_handler");
     elgg_register_page_handler("cms", "pleio_template_page_handler");

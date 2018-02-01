@@ -45,7 +45,7 @@ class Item extends React.Component {
         let edit = ""
         if (entity.canEdit) {
             edit = (
-                <Link to={`${this.getRootURL()}/discussions/edit/${entity.guid}`}>
+                <Link to={`${this.getRootURL()}/discussion/edit/${entity.guid}`}>
                     <div className="button__text article-action ___edit-post" onClick={this.onEdit}>
                         Bewerken
                     </div>
