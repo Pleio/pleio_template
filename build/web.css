@@ -14313,6 +14313,7 @@ body.modal__open {
 }
 .list-members.___scrollable {
   overflow-y: auto;
+  height: 100%;
 }
 .navigation__links {
   -ms-flex-negative: 0;
