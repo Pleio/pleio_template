@@ -576,7 +576,9 @@ class Resolver {
         $options = [
             "type" => "user",
             "relationship" => $relationship,
-            "relationship_guid" => $entity->guid
+            "relationship_guid" => $entity->guid,
+            "offset" => (int) $args["offset"],
+            "limit" => (int) $args["limit"]
         ];
 
         $total = elgg_get_entities_from_relationship(array_merge($options, ["count" => true]));
