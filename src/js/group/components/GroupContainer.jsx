@@ -159,6 +159,7 @@ const Query = gql`
                 name
                 plugins
                 description
+                richDescription
                 icon
                 featured {
                     video

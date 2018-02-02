@@ -91,6 +91,7 @@ const Query = gql`
                 url
                 plugins
                 description
+                richDescription
                 introduction
                 icon
                 featured {

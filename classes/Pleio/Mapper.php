@@ -39,6 +39,7 @@ class Mapper {
             "isFeatured" => $entity->isFeatured ? true : false,
             "membership" => Helpers::getGroupMembership($entity),
             "description" => strip_tags($entity->description),
+            "richDescription" => $entity->richDescription,
             "autoNotification" => $entity->autoNotification ? true : false,
             "excerpt" => elgg_get_excerpt(html_entity_decode($entity->description, ENT_COMPAT | ENT_QUOTES, 'UTF-8'), 150),
             "introduction" => Helpers::getGroupIntroduction($entity),

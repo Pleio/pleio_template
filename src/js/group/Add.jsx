@@ -44,7 +44,8 @@ class Add extends React.Component {
         let input = {
             clientMutationId: 1,
             name: values.name,
-            description: values.description,
+            description: values.description.getPlainText(),
+            richDescription: JSON.stringify(convertToRaw(values.description)),
             introduction: JSON.stringify(convertToRaw(values.introduction)),
             icon: values.icon,
             featured: values.featured,

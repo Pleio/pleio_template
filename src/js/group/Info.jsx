@@ -2,6 +2,7 @@ import React from "react"
 import Modal from "../core/components/Modal"
 import Errors from "../core/components/Errors"
 import LoggedInButton from "../core/components/LoggedInButton"
+import RichTextView from "../core/components/RichTextView"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import autobind from "autobind-decorator"
@@ -85,7 +86,7 @@ class Info extends React.Component {
                         <div className="group-info__state">{entity.isClosed ? "Gesloten groep" : "Openbare groep"}</div>
                         <div className="group-info__title">Beschrijving</div>
                         <div className="group-info__description">
-                            {entity.description}
+                            <RichTextView richValue={entity.richDescription} value={entity.description} />
                         </div>
                         <div className="group-info__access">
                             {errors}
@@ -123,6 +124,7 @@ const Query = gql`
                 name
                 plugins
                 description
+                richDescription
                 icon
                 url
                 isClosed

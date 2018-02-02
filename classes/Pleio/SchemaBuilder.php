@@ -489,6 +489,7 @@ class SchemaBuilder {
                 "status" => [ "type" => Type::int() ],
                 "name" => [ "type" => Type::string() ],
                 "description" => [ "type" => Type::string() ],
+                "richDescription" => [ "type" => Type::string() ],
                 "excerpt" => [ "type" => Type::string() ],
                 "introduction" => [ "type" => Type::string() ],
                 "icon" => [ "type" => Type::string() ],
@@ -1944,6 +1945,7 @@ class SchemaBuilder {
                 "isFeatured" => [ "type" => Type::boolean() ],
                 "autoNotification" => [ "type" => Type::boolean() ],
                 "description" => [ "type" => Type::string() ],
+                "richDescription" => [ "type" => Type::string() ],
                 "introduction" => [ "type" => Type::string() ],
                 "tags" => [ "type" => Type::listOf(Type::string()) ],
                 "plugins" => [ "type" => Type::listOf($pluginEnum) ]
@@ -1970,6 +1972,7 @@ class SchemaBuilder {
                 "isFeatured" => [ "type" => Type::boolean() ],
                 "autoNotification" => [ "type" => Type::boolean() ],
                 "description" => [ "type" => Type::string() ],
+                "richDescription" => [ "type" => Type::string() ],
                 "introduction" => [ "type" => Type::string() ],
                 "tags" => [ "type" => Type::listOf(Type::string()) ],
                 "plugins" => [ "type" => Type::listOf($pluginEnum) ]
