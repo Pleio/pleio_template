@@ -173,6 +173,8 @@ class Mutations {
                     $container = get_entity((int) $input["containerGuid"]);
                     if ($container instanceof \ElggGroup && $container->membership === ACCESS_PRIVATE && $container->group_acl) {
                         $defaultAccessId = $container->group_acl;
+                    } elseif ($input["subtype"] === "comment") {
+                        $defaultAccessId = $container->access_id;
                     } else {
                         $defaultAccessId = get_default_access();
                     }
