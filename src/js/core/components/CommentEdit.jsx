@@ -1,33 +1,23 @@
 import React from "react"
 import { graphql } from "react-apollo"
 import gql from "graphql-tag"
+import autobind from "autobind-decorator"
 import CommentDelete from "./CommentDelete"
 import { logErrors } from "../../lib/helpers"
+import { convertToRaw } from "draft-js"
+import Form from "../../core/components/Form"
+import RichTextField from "../../core/components/RichTextField"
 
 class CommentEdit extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            description: this.props.entity.description || "",
             errors: []
         }
-
-        this.onChange = (e) => this.setState({description: e.target.value})
-
-        this.onCancel = this.onCancel.bind(this)
-        this.onDelete = this.onDelete.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.entity !== this.props.entity) {
-            this.setState({
-                description: nextProps.entity.description
-            })
-        }
-    }
-
+    @autobind
     onCancel(e) {
         e.preventDefault()
         if (this.props.toggleEdit) {
@@ -35,13 +25,19 @@ class CommentEdit extends React.Component {
         }
     }
 
+    @autobind
     onDelete(e) {
         e.preventDefault()
         this.refs.commentDelete.getWrappedInstance().toggle()
     }
 
+    @autobind
     onSubmit(e) {
         e.preventDefault()
+
+        const { entity } = this.props
+
+        const values = this.refs.form.getValues()
 
         this.setState({
             errors: []
@@ -51,8 +47,9 @@ class CommentEdit extends React.Component {
             variables: {
                 input: {
                     clientMutationId: 1,
-                    guid: this.props.entity.guid,
-                    description: this.state.description
+                    guid: entity.guid,
+                    description: values.description.getPlainText(),
+                    richDescription: JSON.stringify(convertToRaw(values.description))
                 }
             }
         }).then(({data}) => {
@@ -61,24 +58,24 @@ class CommentEdit extends React.Component {
             }
         }).catch((errors) => {
             logErrors(errors)
-            this.setState({
-                errors: errors
-            })
+            this.setState({ errors: errors })
         })
     }
 
     render() {
+        const { entity } = this.props
+
         return (
-            <form className="comment-edit" onSubmit={this.onSubmit}>
+            <Form ref="form" className="comment-edit" onSubmit={this.onSubmit}>
                 <div title="Terug naar forum" className="comment-edit__close" onClick={this.onCancel}></div>
                 <h3 className="comment-edit__title">Bewerk antwoord</h3>
                 <div className="comment-edit__top">
-                    <img src={this.props.entity.owner.icon} className="comment-edit__image" />
-                    <div href={this.props.entity.owner.url} title="Bekijk profiel" className="comment-edit__name">
-                        {this.props.entity.owner.name}
+                    <img src={entity.owner.icon} className="comment-edit__image" />
+                    <div href={entity.owner.url} title="Bekijk profiel" className="comment-edit__name">
+                        {entity.owner.name}
                     </div>
                 </div>
-                <textarea placeholder="Voeg antwoord toe..." className="comment-edit__content" onChange={this.onChange} value={this.state.description} />
+                <RichTextField name="description" placeholder="Voeg een antwoord toe..." className="comment-add__content" value={entity.description} richValue={entity.richDescription} />
                 <div className="comment-edit__bottom buttons ___gutter">
                     <a className="button__underline" onClick={this.onDelete}>
                         Verwijder antwoord
@@ -90,8 +87,8 @@ class CommentEdit extends React.Component {
                         Opslaan
                     </button>
                 </div>
-                <CommentDelete ref="commentDelete" entity={this.props.entity} />
-            </form>
+                <CommentDelete ref="commentDelete" entity={entity} />
+            </Form>
         )
     }
 }
@@ -103,6 +100,7 @@ const Mutation = gql`
                 guid
                 ... on Object {
                     description
+                    richDescription
                 }
             }
         }

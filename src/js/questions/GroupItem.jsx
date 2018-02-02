@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import gql from "graphql-tag"
 import GroupContainer from "../group/components/GroupContainer"
 import JoinGroupButton from "../group/components/JoinGroupButton"
-import NotFound from "../core/components/NotFound"
+import NotFound from "../core/NotFound"
 import Document from "../core/components/Document"
 import QuestionsItem from "../questions/Item"
 

@@ -99,6 +99,7 @@ class Mapper {
             "guid" => $entity->guid ? $entity->guid : "annotation:" . $entity->id,
             "ownerGuid" => $entity->owner_guid,
             "description" => $entity->description ?: $entity->value,
+            "richDescription" => $entity->richDescription,
             "canEdit" => $entity->canEdit(),
             "timeCreated" => date("c", $entity->time_created),
             "timeUpdated" => date("c", $entity->time_updated)

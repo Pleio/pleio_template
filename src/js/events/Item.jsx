@@ -245,6 +245,7 @@ const Query = gql`
                 comments {
                     guid
                     description
+                    richDescription
                     timeCreated
                     canEdit
                     owner {

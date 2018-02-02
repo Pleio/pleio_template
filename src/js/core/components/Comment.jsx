@@ -41,20 +41,6 @@ export default class Comment extends React.Component {
                 </div>
             )
         } else {
-            let description
-
-            try {
-                JSON.parse(entity.description)
-                description = (
-                    <RichTextView richValue={entity.description} />
-                )
-            } catch (e) {
-                description = (
-                    <RichTextView value={entity.description} />
-                )
-            }
-
-
             return (
                 <div className={classnames({"comment-container": true, " ___is-editable": entity.canEdit})}>
                     <div className={classnames({comment: true, "___can-edit": entity.canEdit})}>
@@ -75,7 +61,7 @@ export default class Comment extends React.Component {
                             </div>
                         </div>
                         <div className="comment__body">
-                            {description}
+                            <RichTextView richValue={entity.richDescription} value={entity.description} />
                         </div>
                         {vote}
                     </div>

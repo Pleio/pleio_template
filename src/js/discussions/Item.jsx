@@ -139,6 +139,7 @@ const Query = gql`
                 comments {
                     guid
                     description
+                    richDescription
                     canEdit
                     timeCreated
                     hasVoted

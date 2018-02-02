@@ -1,19 +1,15 @@
 import React from "react"
 import classNames from "classnames"
-import { graphql } from "react-apollo"
-import { logErrors } from "../../lib/helpers"
 import gql from "graphql-tag"
+import autobind from "autobind-decorator"
+import { graphql } from "react-apollo"
+import { convertToRaw } from "draft-js"
+import Form from "../../core/components/Form"
+import RichTextField from "../../core/components/RichTextField"
+import { logErrors } from "../../lib/helpers"
 
 class AddCommentForm extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.onChangeDescription  = (e) => this.setState({description: e.target.value})
-        this.onSubmit = this.onSubmit.bind(this)
-
-        this.state = {description: ""}
-    }
-
+    @autobind
     onSubmit(e) {
         e.preventDefault()
 
@@ -21,13 +17,16 @@ class AddCommentForm extends React.Component {
             errors: null
         })
 
+        const values = this.refs.form.getValues()
+
         this.props.mutate({
             variables: {
                 input: {
                     clientMutationId: 1,
                     type: "object",
                     subtype: "comment",
-                    description: this.state.description,
+                    description: values.description.getPlainText(),
+                    richDescription: JSON.stringify(convertToRaw(values.description)),
                     containerGuid: this.props.object.guid
                 }
             },
@@ -36,13 +35,9 @@ class AddCommentForm extends React.Component {
             if (this.props.onSuccess) {
                 this.props.onSuccess()
             }
-
-            this.setState({description: ""})
         }).catch((errors) => {
             logErrors(errors)
-            this.setState({
-                errors: errors
-            })
+            this.setState({ errors: errors })
         })
     }
 
@@ -53,18 +48,18 @@ class AddCommentForm extends React.Component {
         }
 
         return (
-            <form className="comment-add" onSubmit={this.onSubmit}>
+            <Form ref="form" className="comment-add" onSubmit={this.onSubmit}>
                 <h3 className="comment-add__title">Geef antwoord</h3>
                 <div title="Terug naar forum" className="comment-add__close ___is-active" onClick={this.props.toggle}></div>
                 <div className="comment-add__top">
                     <img src={icon} className="comment-add__image" />
                     <div href={url} title="Bekijk profiel" className="comment-add__name">{name}</div>
                 </div>
-                <textarea id="data-forum-answer-textarea" placeholder="Voeg antwoord toe..." className="comment-add__content" onChange={this.onChangeDescription} value={this.state.description} />
+                <RichTextField name="description" placeholder="Voeg een antwoord toe..." className="comment-add__content" />
                 <div className="comment-add__bottom form__actions">
                     <button type="submit" className="button button--primary">Antwoord</button>
                 </div>
-            </form>
+            </Form>
         )
     }
 }

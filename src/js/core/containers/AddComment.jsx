@@ -23,7 +23,7 @@ export default class AddComment extends React.Component {
         let user = this.props.viewer.user || null
 
         return (
-            <div className={classNames({"comment-add__wrapper": true, "___is-open": this.state.isOpen})} style={{maxHeight: this.state.isOpen ? "450px" : "0px"}}>
+            <div className={classNames({"comment-add__wrapper": true, "___is-open": this.state.isOpen})} style={{maxHeight: this.state.isOpen ? null : "0px"}}>
                 <AddCommentForm user={user} object={this.props.object} onSuccess={this.toggle} refetchQueries={this.props.refetchQueries} toggle={this.toggle} />
             </div>
         )
