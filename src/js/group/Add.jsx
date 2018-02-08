@@ -100,7 +100,7 @@ class Add extends React.Component {
                                     {extraFields}
                                     <SwitchField name="autoNotification" className="form__input" label="Gebruikers krijgen automatisch notificaties wanneer ze lid worden" value={true} />
 
-                                    <TextField label="Beschrijving voor niet-leden" name="description" type="text" placeholder="Vertel wat over de groep voor niet-leden" className="form__input" rules="required" />
+                                    <RichTextField label="Beschrijving voor niet-leden" name="description" type="text" placeholder="Vertel wat over de groep voor niet-leden" className="form__input" rules="required" />
                                     <RichTextField label="Memo voor leden" name="introduction" type="text" placeholder="Hier kun je een korte introductie geven aan de leden van de groep" className="form__input" />
                                     <TagsField label="Steekwoorden (tags) toevoegen" name="tags" type="text" className="form__input" />
 
