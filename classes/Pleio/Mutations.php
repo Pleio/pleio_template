@@ -1016,7 +1016,7 @@ class Mutations {
         $site = elgg_get_site_entity();
 
         $entity = new \ElggObject();
-        $entity->subtype = "page";
+        $entity->subtype = "cms_page";
         $entity->title = $input["title"];
 
         if (isset($input["accessId"])) {
@@ -1088,7 +1088,7 @@ class Mutations {
 
     static function addRow($input) {
         $container = get_entity($input["containerGuid"]);
-        if (!$container || $container->getSubtype() !== "page") {
+        if (!$container || $container->getSubtype() !== "cms_page") {
             throw new Exception("could_not_find");
         }
 

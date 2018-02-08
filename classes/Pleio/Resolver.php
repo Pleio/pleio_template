@@ -427,7 +427,7 @@ class Resolver {
 
             $subtype = $entity->getSubtype();
             switch ($subtype) {
-                case "page":
+                case "cms_page":
                 case "static":
                     return Mapper::getPage($entity);
                 case "page_widget":
@@ -1077,6 +1077,8 @@ class Resolver {
                 $subtypes = ["discussion", "groupforumtopic"];
             } elseif ($args["subtype"] === "page") {
                 $subtypes = ["page", "static"];
+            } elseif ($args["subtype"] === "wiki") {
+                $subtypes = ["wiki", "page", "page_top"];
             } elseif ($args["subtype"]) {
                 $subtypes = $args["subtype"];
             }

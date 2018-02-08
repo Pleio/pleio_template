@@ -45,7 +45,7 @@ class List extends React.Component {
                     </div>
                 </ContentHeader>
                 <section className="section ___grey ___grow">
-                    <PageList childClass={Card} subtype="page" offset={0} limit={20} tags={this.state.tags} />
+                    <PageList childClass={Card} subtype="cms_page" offset={0} limit={20} tags={this.state.tags} />
                 </section>
             </div>
         )
@@ -57,7 +57,7 @@ const Query = gql`
         viewer {
             guid
             loggedIn
-            canWriteToContainer(type: object, subtype: "page")
+            canWriteToContainer(type: object, subtype: "cms_page")
         }
     }
 `

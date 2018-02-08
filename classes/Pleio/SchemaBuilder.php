@@ -97,7 +97,7 @@ class SchemaBuilder {
                     case "object":
                         switch ($object["subtype"]) {
                             case "static":
-                            case "page":
+                            case "cms_page":
                                 return $pageType;
                             default:
                                 return $objectType;

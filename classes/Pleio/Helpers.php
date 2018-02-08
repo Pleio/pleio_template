@@ -135,7 +135,7 @@ class Helpers {
                         $root .= "blog";
                         break;
                     case "static":
-                    case "page":
+                    case "cms_page":
                         $container = $entity->getContainerEntity();
                         if ($container->guid != $site->guid) {
                             $container_friendlytitle = elgg_get_friendly_title($container->title);
@@ -148,6 +148,8 @@ class Helpers {
                         $root .= "events";
                         break;
                     case "wiki":
+                    case "page":
+                    case "page_top":
                         $root .= "wiki";
                         break;
                     case "thewire":
