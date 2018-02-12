@@ -409,10 +409,46 @@ function pleio_template_email_handler($hook, $type, $return, $params) {
 	}
 }
 
+function pleio_template_get_month($datetime) {
+    $month = date("m", $datetime);
+
+    switch ($month) {
+        case "01":
+            return "januari";
+        case "02":
+            return "februari";
+        case "03":
+            return "maart";
+        case "04":
+            return "april";
+        case "05":
+            return "mei";
+        case "06":
+            return "juni";
+        case "07":
+            return "juli";
+        case "08":
+            return "augustus";
+        case "09":
+            return "september";
+        case "10":
+            return "oktober";
+        case "11":
+            return "november";
+        case "12":
+            return "december";
+        default:
+            return "";
+    }
+}
+
 function pleio_template_format_date($datetime, $type = "default") {
     switch ($type) {
         case "event":
-            return strftime("%d %B %Y", $datetime);
+            $day = date("d", $datetime);
+            $month = pleio_template_get_month($datetime);
+            $year = date("Y", $datetime);
+            return strftime("{$day} {$month} {$year}", $datetime);
         default:
             return strftime("%d-%m-%y", $datetime);
     }
