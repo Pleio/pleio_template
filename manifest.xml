@@ -53,4 +53,8 @@
         <type>plugin</type>
         <name>digest</name>
     </conflicts>
+    <conflicts>
+        <type>plugin</type>
+        <name>content_subscriptions</name>
+    </conflicts>
 </plugin_manifest>
