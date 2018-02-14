@@ -59,6 +59,7 @@ function pleio_template_init() {
     elgg_register_page_handler("bookmarks", "pleio_template_page_handler");
     elgg_register_page_handler("trending", "pleio_template_page_handler");
     elgg_register_page_handler("events", "pleio_template_events_handler");
+    elgg_register_page_handler("file", "pleio_template_file_page_handler");
 
     elgg_register_page_handler("login", "pleio_template_page_handler");
     elgg_register_page_handler("register", "pleio_template_page_handler");
@@ -280,6 +281,49 @@ function pleio_template_page_handler($page) {
     set_input("page", $page);
     include("pages/react.php");
     return true;
+}
+
+function pleio_template_file_page_handler($page) {
+	if (!isset($page[0])) {
+		$page[0] = "all";
+	}
+
+	$file_dir = elgg_get_plugins_path() . "file/pages/file";
+
+	$page_type = $page[0];
+	switch ($page_type) {
+		case "owner":
+		case "friends":
+		case "add":
+		case "edit":
+		case "search":
+		case "all":
+            forward("/");
+            break;
+
+        case "view":
+            $file = get_entity($page[1]);
+            if ($file) {
+                $container = $file->getContainerEntity();
+                if ($container instanceof ElggGroup) {
+                    forward(Pleio\Helpers::getURL($file));
+                } else {
+                    forward("/");
+                }
+            } else {
+                forward("/");
+            }
+			break;
+		case "group":
+			break;
+		case "download":
+			set_input("guid", $page[1]);
+			include "$file_dir/download.php";
+			break;
+		default:
+			return false;
+	}
+	return true;
 }
 
 function pleio_template_export_handler($page) {
