@@ -17,11 +17,6 @@ class NotificationsList extends React.Component {
     }
 
     @autobind
-    onBlur(e) {
-        this.setState({ isVisible: false })
-    }
-
-    @autobind
     toggleVisiblity(e) {
         this.setState({ isVisible: !this.state.isVisible })
     }
@@ -116,7 +111,7 @@ class NotificationsList extends React.Component {
         }
 
         return (
-            <div tabIndex="0" className="navigation__action ___notifications" title="Meldingen" onClick={this.toggleVisiblity} onBlur={this.onBlur}>
+            <div tabIndex="0" className="navigation__action ___notifications" title="Meldingen" onClick={this.toggleVisiblity}>
                 {badge}
                 <span>Meldingen</span>
                 <div className={classnames({"tooltip": true, "___is-visible": this.state.isVisible})}>
