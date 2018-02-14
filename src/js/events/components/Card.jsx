@@ -25,12 +25,14 @@ export default class Card extends React.Component {
 
         let style
         if (entity.featured.image) {
-            style = { backgroundImage: `url(${entity.featured.image}`}
+            style = { backgroundImage: `url('${entity.featured.image}')`}
         } else if (entity.featured.video) {
-            style = { backgroundImage: `url(${getVideoThumbnail(entity.featured.video)}`}
+            style = { backgroundImage: `url('${getVideoThumbnail(entity.featured.video)}')`}
         } else {
             style = { backgroundColor: "#8fcae7" }
         }
+
+        console.log(style)
 
         let playButton
         if (entity.featured.video) {
