@@ -32,8 +32,6 @@ export default class Card extends React.Component {
             style = { backgroundColor: "#8fcae7" }
         }
 
-        console.log(style)
-
         let playButton
         if (entity.featured.video) {
             playButton = (
