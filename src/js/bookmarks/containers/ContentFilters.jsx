@@ -1,18 +1,13 @@
 import React from "react"
 import Select from "../../core/components/Select"
-import { categoryOptions } from "../../lib/filters"
 
 const subtypeOptions = {
     blog: "Blog",
     news: "Nieuws",
     question: "Vragen",
+    discussion: "Discussies",
     all: "Alle soorten"
 }
-
-const extendedCategoryOptions = Object.assign({}, categoryOptions, {
-    mine: "Mijn categorieën",
-    all: "Alle categorieën"
-})
 
 export default class ContentFilters extends React.Component {
     constructor(props) {
@@ -58,9 +53,6 @@ export default class ContentFilters extends React.Component {
             <div className="row">
                 <div className="col-sm-4 col-lg-3">
                     <Select name="subtype" options={subtypeOptions} onChange={this.onChangeSubtype} value={this.state.subtype} className="selector ___margin-bottom-mobile" />
-                </div>
-                <div className="col-sm-4 col-lg-3">
-                    <Select name="category" options={extendedCategoryOptions} onChange={this.onChangeFilter} value={this.state.category} className="selector" />
                 </div>
                 {this.props.children}
             </div>

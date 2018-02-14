@@ -1,18 +1,16 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { getClassFromTags } from "../../lib/helpers"
+import autobind from "autobind-decorator"
 import classnames from "classnames"
 import NewsCard from "../../news/components/Card"
+import DiscussionCard from "../../discussions/components/Card"
 import BlogCard from "../../blog/components/Card"
 import QuestionCard from '../../questions/components/Card'
 
 export default class Card extends React.Component {
     constructor(props) {
         super(props)
-
-        this.renderNews = this.renderNews.bind(this)
-        this.renderBlog = this.renderBlog.bind(this)
-        this.renderQuestion = this.renderQuestion.bind(this)
     }
 
     render() {
@@ -27,6 +25,8 @@ export default class Card extends React.Component {
                 return this.renderNews()
             case "blog":
                 return this.renderBlog()
+            case "discussion":
+                return this.renderDiscussion()
             case "question":
                 return this.renderQuestion()
             default:
@@ -36,6 +36,7 @@ export default class Card extends React.Component {
         }
     }
 
+    @autobind
     renderNews() {
         const activity = this.props.entity
         const { object } = activity
@@ -45,12 +46,21 @@ export default class Card extends React.Component {
         )
     }
 
+    @autobind
     renderBlog() {
         return (
             <BlogCard entity={this.props.entity} inActivityFeed={true} />
         )
     }
 
+    @autobind
+    renderDiscussion() {
+        return (
+            <DiscussionCard entity={this.props.entity} inActivityFeed={true} />
+        )
+    }
+
+    @autobind
     renderQuestion() {
         return (
             <QuestionCard entity={this.props.entity} inActivityFeed={true} />
