@@ -17,14 +17,18 @@
         width: 100%;
         display: block;
         background: fade(@color-quaternary, 25%);
-        background: linear-gradient(to right, fade(@color-quaternary, 40%) 0%, fade(@color-quaternary, 0%) 100%);
+        background: linear-gradient(
+            to right,
+            fade(@color-quaternary, 40%) 0%,
+            fade(@color-quaternary, 0%) 100%
+        );
     }
 
     &.___rounded {
-        border-radius: .5rem;
+        border-radius: 0.5rem;
 
         &:before {
-            border-radius: .5rem;
+            border-radius: 0.5rem;
         }
 
         .lead__justify {
@@ -68,12 +72,12 @@
     }
 
     &.___group {
-        @media ( max-width: @screen-xs-max ) {
+        @media (max-width: @screen-xs-max) {
             margin-bottom: -2.3rem;
             padding-bottom: 2.3rem;
         }
 
-        @media ( min-width: @screen-sm ) {
+        @media (min-width: @screen-sm) {
             margin-bottom: -3rem;
             padding-bottom: 3rem;
         }
@@ -135,7 +139,7 @@
                     margin-left: 1.5rem;
                     font-size: 2.5rem;
                     position: absolute;
-                    bottom: -.2rem;
+                    bottom: -0.2rem;
                     line-height: inherit;
                 }
 
@@ -175,31 +179,30 @@
         }
 
         .lead__title {
-            @media ( min-width: @screen-sm ) {
+            @media (min-width: @screen-sm) {
                 .font(title-humongous);
             }
         }
 
         .flexer {
-            @media ( max-width: @screen-xs-max ) {
+            @media (max-width: @screen-xs-max) {
                 margin-top: 1.5rem;
-
             }
 
-            @media ( max-width: @screen-md-max ) {
+            @media (max-width: @screen-md-max) {
                 width: 100%;
                 flex-direction: column;
                 align-items: stretch;
             }
 
             > *:not(:last-child) {
-                @media ( max-width: @screen-md-max ) {
+                @media (max-width: @screen-md-max) {
                     margin-right: 0;
                 }
             }
         }
 
-        @media ( max-width: @screen-xs-max ) {
+        @media (max-width: @screen-xs-max) {
             margin-bottom: -5.5rem;
             padding-top: 1rem;
             padding-bottom: 3.5rem;
@@ -234,7 +237,8 @@
 
     &.___home {
         overflow: hidden;
-        transition: opacity @trans-normal, height @trans-material-normal, margin-top @trans-material-normal;
+        transition: opacity @trans-normal, height @trans-material-normal,
+            margin-top @trans-material-normal;
 
         .lead__justify {
             @media (max-width: @screen-xs-max) {
@@ -287,7 +291,6 @@
         }
 
         .lead__justify {
-
             @media (max-width: @screen-xs-max) {
                 min-height: 26rem;
             }
@@ -315,6 +318,11 @@
             }
         }
     }
+}
+
+.lead .read-more {
+    color: white;
+    text-shadow: none;
 }
 
 .lead__close {
@@ -356,11 +364,11 @@
     background-position: center center;
     background-size: cover;
 
-    @media ( max-width: @screen-xs-max ) {
+    @media (max-width: @screen-xs-max) {
         height: 13rem;
     }
 
-    @media ( min-width: @screen-sm ) {
+    @media (min-width: @screen-sm) {
         .lead.___forum &,
         .lead.___event &,
         .lead.___group & {
@@ -387,7 +395,11 @@
                 width: 100%;
                 display: block;
                 background: fade(@color-quaternary, 25%);
-                background: linear-gradient(to right, fade(@color-quaternary, 40%) 0%, fade(@color-quaternary, 0%) 100%);
+                background: linear-gradient(
+                    to right,
+                    fade(@color-quaternary, 40%) 0%,
+                    fade(@color-quaternary, 0%) 100%
+                );
             }
         }
     }
@@ -434,7 +446,7 @@
     margin-right: auto;
     .font(title-extra-large);
 
-    @media ( min-width: @screen-sm ) {
+    @media (min-width: @screen-sm) {
         .font(title-huge);
     }
 }
@@ -447,7 +459,7 @@
     font-weight: normal;
     .font(base);
 
-    @media ( min-width: @screen-sm ) {
+    @media (min-width: @screen-sm) {
         .font(title-small);
     }
 }

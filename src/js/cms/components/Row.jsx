@@ -8,7 +8,6 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 
 class Row extends React.Component {
-
     @autobind
     addWidget(position, type) {
         this.props.mutate({
@@ -17,7 +16,7 @@ class Row extends React.Component {
                     clientMutationId: 1,
                     rowGuid: this.props.entity.guid,
                     position,
-                    type,
+                    type
                 }
             },
             refetchQueries: ["PageItem"]
@@ -32,6 +31,9 @@ class Row extends React.Component {
 
         switch (entity.layout) {
             case "full":
+                cols = ["col-sm-12"]
+                break
+            case "12":
                 cols = ["col-sm-12"]
                 break
             case "text":
@@ -53,13 +55,21 @@ class Row extends React.Component {
         }
 
         let definedWidgets = {}
-        entity.widgets.forEach((widget) => {
+        entity.widgets.forEach(widget => {
             definedWidgets[widget.position] = widget
         })
 
         const widgets = cols.map((col, i) => {
             return (
-                <Widget key={i} index={i} container={entity} options={options} col={col} entity={definedWidgets[i]} addWidget={this.addWidget} />
+                <Widget
+                    key={i}
+                    index={i}
+                    container={entity}
+                    options={options}
+                    col={col}
+                    entity={definedWidgets[i]}
+                    addWidget={this.addWidget}
+                />
             )
         })
 
@@ -68,19 +78,36 @@ class Row extends React.Component {
             overlay = (
                 <div>
                     <div className="cms-section__buttons">
-                        <button className="___delete" onClick={(e) => this.refs.delete.toggle()} />
+                        <button
+                            className="___delete"
+                            onClick={e => this.refs.delete.toggle()}
+                        />
                     </div>
-                    <Delete ref="delete" entity={this.props.entity} refetchQueries={["PageItem"]} />
+                    <Delete
+                        ref="delete"
+                        entity={this.props.entity}
+                        refetchQueries={["PageItem"]}
+                    />
                 </div>
             )
         }
 
         return (
-            <section className={classnames({"section cms-section": true, "___less-padding-top": (this.props.firstRow && entity.layout === "full")})}>
-                <div className={classnames({"container": true, "___no-padding-mobile": (this.props.firstRow && entity.layout === "full")})}>
-                    <div className="row">
-                        {widgets}
-                    </div>
+            <section
+                className={classnames({
+                    "section cms-section": true,
+                    "___no-padding":
+                        this.props.firstRow && entity.layout === "full"
+                })}
+            >
+                <div
+                    className={classnames({
+                        container: entity.layout != "full",
+                        "___no-padding-mobile":
+                            this.props.firstRow && entity.layout === "full"
+                    })}
+                >
+                    <div className="row">{widgets}</div>
                 </div>
                 {overlay}
             </section>

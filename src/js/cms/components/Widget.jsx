@@ -7,6 +7,7 @@ import Delete from "../../core/Delete"
 import Text from "./widgets/Text"
 import HTML from "./widgets/HTML"
 import Leader from "./widgets/Leader"
+import Lead from "./widgets/Lead"
 import Activity from "./widgets/Activity"
 import Events from "./widgets/Events"
 
@@ -19,6 +20,7 @@ const translate = {
 const otherWidgets = {
     activity: "Activiteiten",
     leader: "Leader",
+    lead: "Lead",
     events: "Agenda"
 }
 
@@ -92,6 +94,11 @@ class Widget extends React.Component {
                         <Activity ref="widget" entity={entity} isEditing={this.state.isEditing} onSave={this.onSave} />
                     )
                     break
+                case "lead":
+                widget = (
+                    <Lead ref="widget" entity={entity} isEditing={this.state.isEditing} onSave={this.onSave} />
+                )
+                break
                 case "leader":
                     widget = (
                         <Leader ref="widget" entity={entity} isEditing={this.state.isEditing} onSave={this.onSave} />
@@ -130,7 +137,7 @@ class Widget extends React.Component {
 
             return (
                 <div className={this.props.col}>
-                    <div className={entity.canEdit ? "cms-block-filled" : ""}>
+                    <div className={entity.canEdit ? "cms-block cms-block-filled" : ""}>
                         {widget}
                         {overlay}
                     </div>

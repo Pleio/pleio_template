@@ -1,14 +1,68 @@
 .cms-block {
     position: relative;
-    height: 30rem;
     background-color: @color-grey--10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+    &:not(&-filled) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 30rem;        
+    }
+
+    &-filled {
+        display: flex;
+        position: relative;
+        width: 100%;
+        
+        .form {
+            width: 100%;
+        }
+        
+        .form textarea {
+            min-height: 30rem;
+        }
+        
+        .form__item,
+        .content {
+            margin: 0;
+        }
+        
+        .content {
+            padding: 1.4rem 1.6rem;
+        }
+    }
 
     &.___add {
+        height: 30rem;
         background-color: transparent;
-        background-image: repeating-linear-gradient(to right, @color-grey--50 0%, @color-grey--50 50%, transparent 50%, transparent 100%), repeating-linear-gradient(to right, @color-grey--50 0%, @color-grey--50 50%, transparent 50%, transparent 100%), repeating-linear-gradient(to bottom, @color-grey--50 0%, @color-grey--50 50%, transparent 50%, transparent 100%), repeating-linear-gradient(to bottom, @color-grey--50 0%, @color-grey--50 50%, transparent 50%, transparent 100%);
+        background-image: repeating-linear-gradient(
+                to right,
+                @color-grey--50 0%,
+                @color-grey--50 50%,
+                transparent 50%,
+                transparent 100%
+            ),
+            repeating-linear-gradient(
+                to right,
+                @color-grey--50 0%,
+                @color-grey--50 50%,
+                transparent 50%,
+                transparent 100%
+            ),
+            repeating-linear-gradient(
+                to bottom,
+                @color-grey--50 0%,
+                @color-grey--50 50%,
+                transparent 50%,
+                transparent 100%
+            ),
+            repeating-linear-gradient(
+                to bottom,
+                @color-grey--50 0%,
+                @color-grey--50 50%,
+                transparent 50%,
+                transparent 100%
+            );
         background-position: left top, left bottom, left top, right top;
         background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
         background-size: 10px 1px, 10px 1px, 1px 10px, 1px 10px;

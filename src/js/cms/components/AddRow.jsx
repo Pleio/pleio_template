@@ -86,6 +86,11 @@ class AddRow extends React.Component {
                         </div>
                         <div className="col-sm-3">
                             <div className="radio">
+                                <input type="radio" name="layout" id="12" value="12" onChange={() => this.onChange("12")} checked={this.state.layout == "12" ? true : false} />
+                                <label htmlFor="12">12</label>
+                                <div className="radio__check" />
+                            </div>                    
+                            <div className="radio">
                                 <input type="radio" name="layout" id="8/4" value="8/4" onChange={() => this.onChange("8/4")} checked={this.state.layout == "8/4" ? true : false} />
                                 <label htmlFor="8/4">8/4</label>
                                 <div className="radio__check" />
