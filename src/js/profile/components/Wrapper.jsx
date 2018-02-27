@@ -14,7 +14,7 @@ class Wrapper extends React.Component {
         if (!entity) {
             // Loading...
             return (
-                <div className="page-container"></div>
+                <div></div>
             )
         }
 
@@ -43,7 +43,7 @@ class Wrapper extends React.Component {
         }
 
         return (
-            <div className="page-container">
+            <div>
                 <ContentHeader className={classnames({"___no-padding-bottom":entity.canEdit})}>
                     <div className="row">
                         <div className="col-sm-6 middle-sm">

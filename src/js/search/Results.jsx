@@ -8,7 +8,7 @@ import { getQueryVariable } from "../lib/helpers"
 export default class Results extends React.Component {
     render() {
         return (
-            <div className="page-container">
+            <div>
                 <Document title="Zoeken" />
                 <Header q={getQueryVariable("q")} type={getQueryVariable("type")} subtype={getQueryVariable("subtype")} history={this.props.history} />
                 <section className="section ___grey ___grow">

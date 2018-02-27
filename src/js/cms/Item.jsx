@@ -138,7 +138,7 @@ class Item extends React.Component {
             }
 
             return (
-                <div className="page-container">
+                <div>
                     <Document title={entity.title} />
                     {cmsPanel}
                     <section className="section">
@@ -163,7 +163,7 @@ class Item extends React.Component {
             ))
     
             return (
-                <div className="page-container">
+                <div>
                     <Document title={entity.title} />
                     {rows}
                     {addRow}

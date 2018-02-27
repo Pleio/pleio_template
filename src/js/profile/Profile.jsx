@@ -27,7 +27,7 @@ class Profile extends React.Component {
         if (!entity) {
             // Loading...
             return (
-                <div className="page-container"></div>
+                <div></div>
             )
         }
 

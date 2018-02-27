@@ -119,7 +119,7 @@ class GroupContainer extends React.Component {
         }
 
         return (
-            <div className="page-container">
+            <div>
                 <Featured entity={entity} group showEmpty>
                     <h1 className="lead__title" onClick={() => this.refs.moreInfoModal.toggle()}>
                         {icon}

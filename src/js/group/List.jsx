@@ -49,7 +49,7 @@ class List extends React.Component {
         }
 
         return (
-            <div className="page-container">
+            <div>
                 <Document title={title} />
                 <ContentHeader className="___no-padding-bottom">
                     <div className="row">

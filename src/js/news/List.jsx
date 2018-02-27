@@ -33,7 +33,7 @@ class List extends React.Component {
         }
 
         return (
-            <div className="page-container">
+            <div>
                 <Document title="Nieuws" />
                 <ContentHeader>
                     <div className="row">
