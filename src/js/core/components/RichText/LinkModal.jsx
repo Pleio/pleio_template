@@ -53,7 +53,8 @@ export default class LinkModal extends React.Component {
     onSubmit(e) {
         let url = this.state.url
 
-        if (!/^(f|ht)tps?:\/\//i.test(url)) {
+        // check if the url does not contain http://, is not relative and is not a mail URL
+        if (!/^(f|ht)tps?:\/\//i.test(url) && !/^mailto:/i.test(url) && !/^\//i.test(url)) {
             url = "https://" + url;
         }
 
