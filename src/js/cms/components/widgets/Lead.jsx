@@ -67,8 +67,6 @@ export default class Lead extends React.Component {
             backgroundImage: `url(${this.getSetting("image", "/mod/pleio_template/src/images/lead-home2.png")})`
         }
 
-        console.log(this.getSetting("image"))
-
         let link = this.getSetting("leadlink")
 
         if (!this.state.visible) {
