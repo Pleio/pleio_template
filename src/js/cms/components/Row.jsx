@@ -59,19 +59,30 @@ class Row extends React.Component {
             definedWidgets[widget.position] = widget
         })
 
-        const widgets = cols.map((col, i) => {
-            return (
-                <Widget
-                    key={i}
-                    index={i}
-                    container={entity}
-                    options={options}
-                    col={col}
-                    entity={definedWidgets[i]}
-                    addWidget={this.addWidget}
-                />
+        let row
+        if (cols) {
+            const widgets = cols.map((col, i) => {
+                return (
+                    <Widget
+                        key={i}
+                        index={i}
+                        container={entity}
+                        options={options}
+                        col={col}
+                        entity={definedWidgets[i]}
+                        addWidget={this.addWidget}
+                    />
+                )
+            })
+
+            row = (
+                <div className="row">{widgets}</div>
             )
-        })
+        } else {
+            row = (
+                <Widget index={0} container={entity} options={optinos} col={col} entity={definedWidgets[0]} addWidget={this.addWidget} />
+            )
+        }
 
         let overlay
         if (entity.canEdit) {
@@ -93,21 +104,9 @@ class Row extends React.Component {
         }
 
         return (
-            <section
-                className={classnames({
-                    "section cms-section": true,
-                    "___no-padding":
-                        this.props.firstRow && entity.layout === "full"
-                })}
-            >
-                <div
-                    className={classnames({
-                        container: entity.layout != "full",
-                        "___no-padding-mobile":
-                            this.props.firstRow && entity.layout === "full"
-                    })}
-                >
-                    <div className="row">{widgets}</div>
+            <section className={classnames({"section cms-section": true, "___no-padding": this.props.firstRow && entity.layout === "full" })}>
+                <div className={classnames({ container: entity.layout != "full", "___no-padding-mobile": this.props.firstRow && entity.layout === "full" })}>
+                    {row}
                 </div>
                 {overlay}
             </section>

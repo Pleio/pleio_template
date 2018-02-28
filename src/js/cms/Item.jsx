@@ -161,7 +161,7 @@ class Item extends React.Component {
             const rows = entity.rows.map((row, i) => (
                 <Row key={row.guid} entity={row} firstRow={i === 0 ? true : false} />
             ))
-    
+
             return (
                 <div>
                     <Document title={entity.title} />
