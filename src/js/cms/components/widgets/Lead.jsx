@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import autobind from "autobind-decorator"
 import Form from "../../../core/components/Form"
 import InputField from "../../../core/components/InputField"
@@ -17,14 +18,18 @@ export default class Lead extends React.Component {
     getSetting(key, defaultValue) {
         const { entity } = this.props
 
-        let value = defaultValue || ""
+        let value
         entity.settings.forEach(setting => {
             if (setting.key === key) {
                 value = setting.value
             }
         })
 
-        return value
+        if (value) {
+            return value
+        }
+
+        return defaultValue || ""
     }
 
     @autobind
@@ -44,7 +49,11 @@ export default class Lead extends React.Component {
     onSave() {
         const values = this.refs.form.getValues()
 
-        this.props.onSave([{ key: "leadImage", value: values.leadImage }])
+        this.props.onSave([
+            { key: "image", value: values.image },
+            { key: "title", value: values.title },
+            { key: "link", value: values.link }
+        ])
     }
 
     render() {
@@ -55,11 +64,10 @@ export default class Lead extends React.Component {
             width: "100%",
             marginLeft: 0,
             marginRight: 0,
-            backgroundImage: `url(${this.getSetting(
-                "leadImage",
-                "/mod/pleio_template/src/images/lead-home2.png"
-            )})`
+            backgroundImage: `url(${this.getSetting("image", "/mod/pleio_template/src/images/lead-home2.png")})`
         }
+
+        console.log(this.getSetting("image"))
 
         let link = this.getSetting("leadlink")
 
@@ -73,16 +81,38 @@ export default class Lead extends React.Component {
             return (
                 <Form ref="form" className="form">
                     <InputField
-                        name="leadImage"
-                        placeholder="Hier komt de link naar de afbeelding..."
-                        value={this.getSetting("leadImage")}
+                        name="image"
+                        placeholder="Afbeelding..."
+                        value={this.getSetting("image")}
                     />
                     <InputField
-                        name="leadlink"
-                        placeholder="Hier komt de link naar de link..."
-                        value={this.getSetting("leadlink")}
+                        name="title"
+                        placeholder="Title..."
+                        value={this.getSetting("title")}
+                    />
+                    <InputField
+                        name="link"
+                        placeholder="Link..."
+                        value={this.getSetting("link")}
                     />
                 </Form>
+            )
+        }
+
+        let title
+        if (this.getSetting("title")) {
+            title = (
+                <h1 className="lead__title">{this.getSetting("title")}</h1>
+            )
+        }
+
+        let readMore
+        if (this.getSetting("link")) {
+            readMore = (
+                <Link to={this.getSetting("link")} className="read-more">
+                    <div className="read-more__circle" />
+                    <span>Lees meer</span>
+                </Link>
             )
         }
 
@@ -92,11 +122,8 @@ export default class Lead extends React.Component {
                     <div className="row">
                         <div className="col-xs-12 bottom-xs start-xs">
                             <div>
-                                <h1 className="lead__title">Titel</h1>
-                                <a className="read-more">
-                                    <div className="read-more__circle" />
-                                    <span>Lees meer</span>
-                                </a>
+                                {title}
+                                {readMore}
                             </div>
                         </div>
                     </div>
