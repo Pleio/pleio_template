@@ -2882,7 +2882,15 @@ body.___no-nav .page-layout__header {
   -ms-flex-direction: column;
       flex-direction: column;
 }
-.page-layout__main > * {
+.page-layout__main > div {
+  -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+}
+.page-layout__main > div > * {
   -ms-flex-negative: 0;
       flex-shrink: 0;
 }
@@ -7317,10 +7325,10 @@ body.___rijkshuisstijl .card-tile__picture {
   background: linear-gradient(to right, rgba(21, 66, 115, 0.4) 0%, rgba(21, 66, 115, 0) 100%);
 }
 .lead.___rounded {
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
 .lead.___rounded:before {
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
 @media (min-width: 680px) {
   .lead.___rounded .lead__justify {
@@ -7586,6 +7594,10 @@ body.___rijkshuisstijl .card-tile__picture {
         flex-direction: column;
     padding-top: 4rem;
   }
+}
+.lead .read-more {
+  color: white;
+  text-shadow: none;
 }
 .lead__close {
   display: -ms-flexbox;
@@ -13539,16 +13551,38 @@ body.___rijkshuisstijl .navigation-search-results {
 }
 .cms-block {
   position: relative;
-  height: 30rem;
   background-color: #FAFAFA;
+}
+.cms-block:not(.cms-block-filled) {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: center;
       justify-content: center;
   -ms-flex-align: center;
       align-items: center;
+  min-height: 30rem;
+}
+.cms-block-filled {
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+.cms-block-filled .form {
+  width: 100%;
+}
+.cms-block-filled .form textarea {
+  min-height: 30rem;
+}
+.cms-block-filled .form__item,
+.cms-block-filled .content {
+  margin: 0;
+}
+.cms-block-filled .content {
+  padding: 1.4rem 1.6rem;
 }
 .cms-block.___add {
+  height: 30rem;
   background-color: transparent;
   background-image: repeating-linear-gradient(to right, #CCCCCC 0%, #CCCCCC 50%, transparent 50%, transparent 100%), repeating-linear-gradient(to right, #CCCCCC 0%, #CCCCCC 50%, transparent 50%, transparent 100%), repeating-linear-gradient(to bottom, #CCCCCC 0%, #CCCCCC 50%, transparent 50%, transparent 100%), repeating-linear-gradient(to bottom, #CCCCCC 0%, #CCCCCC 50%, transparent 50%, transparent 100%);
   background-position: left top, left bottom, left top, right top;
@@ -13983,7 +14017,7 @@ body.modal__open {
 }
 .widget__add {
   position: absolute;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   z-index: 1;
   color: white;
   right: 0;
@@ -14135,7 +14169,7 @@ body.modal__open {
   right: 0;
 }
 .st0 {
-  fill: #B4B4B4;
+  fill: #b4b4b4;
 }
 .lead__background {
   position: absolute;
@@ -14168,26 +14202,6 @@ body.modal__open {
   /* autoprefixer: off */
   -webkit-box-orient: vertical;
   /* autoprefixer: on */
-}
-.cms-block-filled {
-  display: -ms-flexbox;
-  display: flex;
-  position: relative;
-  width: 100%;
-  min-height: 30rem;
-}
-.cms-block-filled .form {
-  width: 100%;
-}
-.cms-block-filled .form textarea {
-  min-height: 30rem;
-}
-.cms-block-filled .form__item,
-.cms-block-filled .content {
-  margin: 0;
-}
-.cms-block-filled .content {
-  padding: 1.4rem 1.6rem;
 }
 .cms-block-html {
   width: 100%;
@@ -14411,12 +14425,12 @@ body.___leraar .navigation__search input {
   max-height: 40rem;
 }
 .card-group.___is-highlighted:after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
-  width: .4rem;
+  width: 0.4rem;
   background-color: #00c6ff;
 }
 .file__owner span {
