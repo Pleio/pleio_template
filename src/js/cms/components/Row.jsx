@@ -26,12 +26,11 @@ class Row extends React.Component {
     render() {
         const { entity } = this.props
 
-        let cols = []
+        let cols
         let options = ["text", "html", "other"]
 
         switch (entity.layout) {
             case "full":
-                cols = ["col-sm-12"]
                 break
             case "12":
                 cols = ["col-sm-12"]
@@ -80,7 +79,7 @@ class Row extends React.Component {
             )
         } else {
             row = (
-                <Widget index={0} container={entity} options={optinos} col={col} entity={definedWidgets[0]} addWidget={this.addWidget} />
+                <Widget index={0} container={entity} options={options} entity={definedWidgets[0]} addWidget={this.addWidget} />
             )
         }
 
