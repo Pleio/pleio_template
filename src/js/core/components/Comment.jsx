@@ -4,6 +4,8 @@ import Likes from "./Likes"
 import CommentEdit from "./CommentEdit"
 import classnames from "classnames"
 import RichTextView from "../../core/components/RichTextView"
+import CommentVote from "./CommentVote"
+import CommentBestAnswer from "./CommentBestAnswer"
 
 export default class Comment extends React.Component {
     constructor(props) {
@@ -17,18 +19,33 @@ export default class Comment extends React.Component {
     }
 
     render() {
-        let vote, editButton, editWrapper
-        let { entity } = this.props
+        let { entity, canUpvote } = this.props
 
+        let editButton
         if (entity.canEdit) {
             editButton = (
                 <div className="comment__edit" onClick={this.toggleEdit}><span>Wijzig</span></div>
             )
         }
 
-        if (entity.canVote) {
+        let vote
+        if (entity.canVote && !canUpvote) {
             vote = (
                 <Likes entity={entity} />
+            )
+        }
+
+        let upvote
+        if (canUpvote) {
+            upvote = (
+                <CommentVote entity={entity} />
+            )
+        }
+
+        let bestanswer
+        if (entity.canChooseBestAnswer) {
+            bestanswer = (
+                <CommentBestAnswer entity={entity} />
             )
         }
 
@@ -43,6 +60,10 @@ export default class Comment extends React.Component {
         } else {
             return (
                 <div className={classnames({"comment-container": true, " ___is-editable": entity.canEdit})}>
+                    <div className="comment__side">
+                        {upvote}
+                        {bestanswer}
+                    </div>
                     <div className={classnames({comment: true, "___can-edit": entity.canEdit})}>
                         <div className="comment__top">
                             <a href={entity.owner.url}

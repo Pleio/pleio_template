@@ -1587,4 +1587,19 @@ class Resolver {
 
         return check_entity_relationship($user->guid, "subscribed", $group->guid) ? true : false;
     }
+
+    static function isBestAnswer($entity) {
+        $entity = get_entity($entity["guid"]);
+        if (!$entity) {
+            return false;
+        }
+
+        $question = $entity->getContainerEntity();
+        if (!$question) {
+            return false;
+        }
+        
+
+        return check_entity_relationship($question->guid, "correctAnswer", $entity->guid) ? true : false;
+    }
 }
