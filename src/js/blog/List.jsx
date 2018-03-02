@@ -36,11 +36,11 @@ class List extends React.Component {
 
         return (
             <div>
-                <Document title="Blog" />
+                <Document title="Blogs" />
                 <ContentHeader>
                     <div className="row">
                         <div className="col-sm-6">
-                            <h3 className="main__title">Blog</h3>
+                            <h3 className="main__title">Blogs</h3>
                         </div>
                         <div className="col-sm-6 end-sm">
                             {add}
