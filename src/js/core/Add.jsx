@@ -123,7 +123,7 @@ class Add extends React.Component {
                     <div>
                         <InputField name="source" type="text" placeholder="Externe link" className="form__input" />
                         <InputField name="location" type="text" placeholder="Locatie" className="form__input" />
-                        <SwitchField name="rsvp" type="text" className="form__input" label="Aanwezigheid registeren" value={true} />
+                        <SwitchField name="rsvp" type="text" className="form__input" label="Aanwezigheid registreren" value={true} />
                         <DateTimeField name="start" className="form__input" label="Startdatum" />
                         <DateTimeField name="end" className="form__input" label="Einddatum" />
                     </div>

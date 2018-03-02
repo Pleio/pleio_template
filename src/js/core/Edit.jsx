@@ -128,7 +128,7 @@ class Edit extends React.Component {
                     <div>
                         <InputField name="source" type="text" placeholder="Externe link" className="form__input" value={entity.source} />
                         <InputField name="location" type="text" placeholder="Locatie" className="form__input" value={entity.location} />
-                        <SwitchField name="rsvp" type="text" className="form__input" label="Aanwezigheid registeren" value={entity.rsvp} />
+                        <SwitchField name="rsvp" type="text" className="form__input" label="Aanwezigheid registreren" value={entity.rsvp} />
                         <DateTimeField name="start" className="form__input" label="Startdatum" value={entity.startDate} />
                         <DateTimeField name="end" className="form__input" label="Einddatum" value={entity.endDate} />
                     </div>
