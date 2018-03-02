@@ -49,7 +49,7 @@ class UserMenu extends React.Component {
                 [ { title: "Bewaard", link: "/bookmarks", className: "___bookmarks" }, ],
                 [
                     { title: "Profiel", link: `/profile/${viewer.user.username}` },
-                    { title: "Interesses", link: `/profile/${viewer.user.username}/interests` },
+                    { title: "Meldingen", link: `/profile/${viewer.user.username}/interests` },
                     { title: "Instellingen", link: `/profile/${viewer.user.username}/settings` }
                 ],
                 [
