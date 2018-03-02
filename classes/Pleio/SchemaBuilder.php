@@ -629,6 +629,10 @@ class SchemaBuilder {
                         return Resolver::canComment($object);
                     }
                 ],
+                "canChooseBestAnswer" => [
+                    "type" => Type::boolean(),
+                    "resolve" => function($object) { return true; }
+                ],
                 "canVote" => [
                     "type" => Type::boolean(),
                     "resolve" => function($object) {
@@ -665,6 +669,12 @@ class SchemaBuilder {
                     "type" => Type::int(),
                     "resolve" => function($object) {
                         return Resolver::getVotes($object);
+                    }
+                ],
+                "isBestAnswer" => [
+                    "type" => Type::boolean(),
+                    "resolve" => function($object) {
+                        return Resolver::isBestAnswer($object);
                     }
                 ],
                 "views" => [
@@ -2331,6 +2341,22 @@ class SchemaBuilder {
             "mutateAndGetPayload" => "Pleio\Mutations::markAllAsRead"
         ]);
 
+        $toggleBestAnswerMutation = Relay::mutationWithClientMutationId([
+            "name" => "toggleBestAnswer",
+            "inputFields" => [
+                "guid" => [ "type" => Type::string() ]
+            ],
+            "outputFields" => [
+                "object" => [
+                    "type" => Type::nonNull($objectType),
+                    "resolve" => function($entity) {
+                        return Resolver::getEntity(null, $entity, null);
+                    }
+                ],
+            ],
+            "mutateAndGetPayload" => "Pleio\Mutations::toggleBestAnswer"
+        ]);
+
         $mutationType = new ObjectType([
             "name" => "Mutation",
             "fields" => [
@@ -2381,7 +2407,8 @@ class SchemaBuilder {
                     "editTask" => $editTaskMutation,
                     "attendEvent" => $attendEventMutation,
                     "markAsRead" => $markAsReadMutation,
-                    "markAllAsRead" => $markAllAsReadMutation
+                    "markAllAsRead" => $markAllAsReadMutation,
+                    "toggleBestAnswer" => $toggleBestAnswerMutation
             ]
         ]);
 

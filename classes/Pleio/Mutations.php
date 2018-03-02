@@ -1954,4 +1954,26 @@ class Mutations {
 
         return [ "success" => false ];
     }
+
+    static function toggleBestAnswer($input) {
+        $entity = get_entity($input["guid"]);
+        if (!$entity || !in_array($entity->getSubtype(), ["comment", "answer"])) {
+            throw new Exception("could_not_save");
+        }
+
+        $question = $entity->getContainerEntity();
+        if (!$question) {
+            throw new Exception("could_not_find");
+        }
+
+        if (check_entity_relationship($question->guid, "correctAnswer", $entity->guid)) {
+            remove_entity_relationship($question->guid, "correctAnswer", $entity->guid);
+        } else {
+            add_entity_relationship($question->guid, "correctAnswer", $entity->guid);
+        }
+
+        return [
+            "guid" => $entity->guid
+        ];
+    }
 }

@@ -6,8 +6,8 @@
 
 .comment {
     position: relative; // position .vote-up-down next to comment
-    background-color: @color-secondary--lightest;
     margin: 0 0 2rem 0;
+    border: 1px solid @color-grey--40;
 
     &[data-comment-edit] {
         transition: opacity @trans-fast;
@@ -38,6 +38,49 @@
     }
 }
 
+.comment__side {
+    @media ( min-width: @screen-sm ) {
+        position: absolute;
+        top: 0;
+        left: -6rem;
+        width: 6rem;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.comment__best-answer {
+    margin-top: 2rem;
+    width: 4rem;
+    height: 4rem;
+    color: @color-grey--40;    
+    border-radius: 100%;
+    border: .2rem solid @color-grey--40;
+    cursor: pointer;
+
+    transition: color @trans-fast, border-color @trans-fast;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .icon(check);
+    &:before {
+        font-size: 1.5rem;
+    }
+
+    &:hover {
+        color: @color-secondary;
+    }
+
+    &.___is-chosen {
+        border-color: @color-secondary;
+        color: @color-secondary;
+    }
+}
+
 .comment__vote {
     display: flex;
     flex-direction: column;
@@ -47,12 +90,6 @@
     @media ( max-width: @screen-xs-max ) {
         margin: 1.5rem 0 0 0;
         order: 1;
-    }
-
-    @media ( min-width: @screen-sm ) {
-        position: absolute;
-        top: 0;
-        left: -4.4rem;
     }
 }
 
@@ -105,7 +142,6 @@
     .font(title-small);
     color: @color-primary;
 }
-
 
 .comment__top {
     width: 100%;

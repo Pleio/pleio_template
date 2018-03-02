@@ -20,7 +20,9 @@ class Item extends React.Component {
         const { match } = this.props
 
         if (match.params.groupGuid && match.params.groupSlug) {
-            return `/groups/view/${match.params.groupGuid}/${match.params.groupSlug}`
+            return `/groups/view/${match.params.groupGuid}/${
+                match.params.groupSlug
+            }`
         }
 
         return ""
@@ -31,26 +33,25 @@ class Item extends React.Component {
 
         if (!entity) {
             // Loading...
-            return (
-                <div></div>
-            )
+            return <div />
         }
 
         if (entity.status == 404) {
-            return (
-                <NotFound />
-            )
+            return <NotFound />
         }
 
         let edit = ""
         if (entity.canEdit) {
             edit = (
                 <Link to={`${this.getRootURL()}/questions/edit/${entity.guid}`}>
-                    <div className="button__text article-action ___edit-post" onClick={this.onEdit}>
+                    <div
+                        className="button__text article-action ___edit-post"
+                        onClick={this.onEdit}
+                    >
                         Bewerken
                     </div>
                 </Link>
-            );
+            )
         }
 
         return (
@@ -62,9 +63,21 @@ class Item extends React.Component {
                             <div className="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
                                 <article className="article">
                                     <div className="article-author ___margin-bottom">
-                                        <Link to={entity.owner.url} style={{backgroundImage: "url(" + entity.owner.icon + ")"}} className="article-author__picture"></Link>
+                                        <Link
+                                            to={entity.owner.url}
+                                            style={{
+                                                backgroundImage:
+                                                    "url(" +
+                                                    entity.owner.icon +
+                                                    ")"
+                                            }}
+                                            className="article-author__picture"
+                                        />
                                         <div className="article-author__justify">
-                                            <Link to={entity.owner.url} className="article-author__name">
+                                            <Link
+                                                to={entity.owner.url}
+                                                className="article-author__name"
+                                            >
                                                 {entity.owner.name}
                                             </Link>
                                             <div className="article-author__date">
@@ -72,22 +85,52 @@ class Item extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <h3 className="article__title">{entity.title}</h3>
-                                    <RichTextView richValue={entity.richDescription} value={entity.description} />
-                                    <LikeAndBookmark like={false} bookmark={true} viewer={viewer} entity={entity} />
+                                    <h3 className="article__title">
+                                        {entity.title}
+                                    </h3>
+                                    <RichTextView
+                                        richValue={entity.richDescription}
+                                        value={entity.description}
+                                    />
+                                    <LikeAndBookmark
+                                        like={false}
+                                        bookmark={true}
+                                        viewer={viewer}
+                                        entity={entity}
+                                    />
                                     <div className="article-actions">
                                         {edit}
                                         <div className="article-actions__buttons">
-                                            <LoggedInButton title="Schrijf een reactie" className="button article-action ___comment" viewer={viewer} onClick={(e) => this.refs.addComment.toggle()} fromComment>
-                                                Schrijf een reactie
+                                            <LoggedInButton
+                                                title="Schrijf een reactie"
+                                                className="button article-action ___comment"
+                                                viewer={viewer}
+                                                onClick={e =>
+                                                    this.refs.addComment.toggle()
+                                                }
+                                                fromComment
+                                            >
+                                                Reageer
                                             </LoggedInButton>
                                             <SocialShare />
                                         </div>
-                                        <Follow viewer={viewer} entity={entity} />
+                                        <Follow
+                                            viewer={viewer}
+                                            entity={entity}
+                                        />
                                     </div>
                                 </article>
-                                <AddComment ref="addComment" viewer={viewer} object={entity} refetchQueries={["QuestionsItem"]} />
-                                <CommentList comments={entity.comments} canVote={true} />
+                                <AddComment
+                                    ref="addComment"
+                                    viewer={viewer}
+                                    object={entity}
+                                    refetchQueries={["QuestionsItem"]}
+                                />
+                                <CommentList
+                                    comments={entity.comments}
+                                    canVote={true}
+                                    canUpvote={true}
+                                />
                             </div>
                         </div>
                     </div>
@@ -140,6 +183,8 @@ const Query = gql`
                     guid
                     description
                     richDescription
+                    isBestAnswer
+                    canChooseBestAnswer
                     canEdit
                     timeCreated
                     hasVoted
@@ -156,10 +201,10 @@ const Query = gql`
             }
         }
     }
-`;
+`
 
 const Settings = {
-    options: (ownProps) => {
+    options: ownProps => {
         return {
             variables: {
                 guid: ownProps.match.params.guid
