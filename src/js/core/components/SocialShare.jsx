@@ -42,7 +42,7 @@ export default class SocialShare extends React.Component {
     render() {
         return (
             <div className="article-actions__share">
-                <div title="Deel" className={classNames({"button article-action ___share": true, " ___is-open": this.state.isOpen})} onClick={this.toggleState}>
+                <div title="Deel" className={classNames({"button article-action ___line ___colored ___share": true, " ___is-open": this.state.isOpen})} onClick={this.toggleState}>
                     <span>Deel</span>
                 </div>
                 <div className={classNames({"article-share": true, " ___is-open": this.state.isOpen})}>

@@ -41,20 +41,19 @@
 
     &.___share {
         margin: 0 1rem 2rem 0;
-        background-color: @color-grey--50;
         .icon(share);
 
         &:before {
             font-size: 1.4rem;
             margin: 0 0.8rem 0.2rem 0;
-
-            @media ( max-width: @screen-xs-max ) {
-                margin-right: 0;
-            }
         }
 
         &.___is-open {
-            background-color: @color-primary;
+            border-color: @color-secondary;
+        }
+
+        &:hover {
+            background-color: white;
         }
 
         span {
