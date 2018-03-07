@@ -43,7 +43,6 @@
         font-size: 2rem;
         display: flex;
         justify-content: center;
-        color: @color-secondary;
         transition: opacity @trans-fast, color @trans-fast;
 
         @media ( max-width: @screen-xs-max ) {
@@ -52,14 +51,25 @@
         }
     }
 
-    &:after {
-        opacity: 0;
+    &:before {
+        color: @color-grey--60;
     }
 
-    &.___is-liked,
+    &:after {
+        color: @color-secondary;
+        opacity: 0;        
+    }
+
     &:hover {
         &:before {
+            color: @color-secondary;
+        }
+    }
+
+    &.___is-liked {
+        &:before {
             opacity: 0;
+            color: @color-secondary;
         }
 
         &:after {
