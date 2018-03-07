@@ -16,13 +16,20 @@ export default class Card extends React.Component {
             )
         }
 
+        let comments
+        if (entity.commentCount > 0) {
+            comments = (
+                <Link to={entity.url} className="card-topic__comments">
+                    {entity.commentCount} {(entity.commentCount === 1) ? " antwoord" : " antwoorden"}
+                </Link>
+            )
+        }
+
         let actions
         if (inActivityFeed) {
             actions = (
                 <div className="card-topic__actions">
-                    <Link to={entity.url} className="card-topic__comments">
-                        {entity.commentCount} {(entity.commentCount === 1) ? " antwoord" : " antwoorden"}
-                    </Link>
+                    {comments}
                     <Bookmark entity={entity} />
                 </div>
             )
@@ -35,9 +42,7 @@ export default class Card extends React.Component {
                         </div>
                         <Bookmark entity={entity} />
                     </div>
-                    <Link to={entity.url} className="card-topic__comments">
-                        {entity.commentCount} {(entity.commentCount === 1) ? " antwoord" : " antwoorden"}
-                    </Link>
+                    {comments}
                 </div>
             )
         }
