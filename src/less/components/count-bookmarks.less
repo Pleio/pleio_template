@@ -32,17 +32,13 @@
     }
 
     &:after {
-        color: @color-grey--60;
+        color: @color-secondary;
         opacity: 0;
     }
 
     &:hover {
         &:before {
-            opacity: 0;
-        }
-
-        &:after {
-            opacity: 1;
+            color: @color-secondary;
         }
     }
 
@@ -72,10 +68,10 @@
     &.___is-saved {
         &:before {
             opacity: 0;
+            color: @color-secondary;
         }
 
         &:after {
-            color: @color-secondary;
             opacity: 1;
         }
 
