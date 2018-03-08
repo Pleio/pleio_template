@@ -32,7 +32,7 @@ class List extends React.Component {
         if (viewer && viewer.canWriteToContainer) {
             add = (
                 <Link to={`events/add`} className="button ___large ___add ___stick">
-                    <span>Nieuw agenda-item</span>
+                    <span>Voeg agenda-item toe</span>
                 </Link>
             )
         }
