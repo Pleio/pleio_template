@@ -63,7 +63,7 @@ class UserMenu extends React.Component {
                     <form className="navigation__search" onSubmit={this.onSearch}>
                         <div className="search-bar">
                             <input name="q" onChange={this.onChange} value={this.state.q} placeholder="Zoeken" />
-                            <div className="search-bar__button" />
+                            <button className="search-bar__button" type="submit" />
                         </div>
                     </form>
                     <NotificationsTop />

@@ -98,7 +98,7 @@ export default class Header extends React.Component {
                         <div className="search-bar">
                             <form ref="form" method="GET" onSubmit={this.onSubmit}>
                                 <input name="q" onChange={this.onChange} value={this.state.q} />
-                                <div className="search-bar__button" onClick={this.onSubmit}></div>
+                                <button className="search-bar__button" onClick={this.onSubmit} />
                             </form>
                         </div>
                     </div>
