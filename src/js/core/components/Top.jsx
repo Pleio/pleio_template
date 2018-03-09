@@ -26,7 +26,6 @@ class Top extends React.Component {
                     <div style={{backgroundImage: "url(" + item.user.icon + ")"}} className="card-list-bloggers__picture" />
                     <div>
                         <div className="card-list-bloggers__name">{item.user.name}</div>
-                        <div className="card-list-bloggers__likes">{item.likes}</div>
                     </div>
                 </Link>
             )

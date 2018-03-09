@@ -20,9 +20,6 @@ class Trending extends React.Component {
                 <div className="card-list-trending__category">
                     {item.tag}
                 </div>
-                <div className="card-list-trending__likes">
-                    {item.likes}
-                </div>
             </Link>
         ))
 
