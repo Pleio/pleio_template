@@ -3,6 +3,7 @@ import { graphql } from "react-apollo"
 import { Link } from "react-router-dom"
 import gql from "graphql-tag"
 import CommentList from "../core/components/CommentList"
+import AddComment from "../core/containers/AddComment"
 import EditModal from "../core/Edit"
 import DeleteModal from "../core/Delete"
 import SocialShare from "../core/components/SocialShare"
@@ -10,6 +11,7 @@ import NotFound from "../core/NotFound"
 import showDate from "../lib/showDate"
 import RichTextView from "../core/components/RichTextView"
 import LikeAndBookmark from "../core/components/LikeAndBookmark"
+import LoggedInButton from "../core/components/LoggedInButton"
 import Document from "../core/components/Document"
 import Featured from "../core/components/Featured"
 
@@ -49,6 +51,38 @@ class Item extends React.Component {
             )
         }
 
+        let comments, commentButton
+        if (window.__SETTINGS__['commentsOnNews']) {
+            commentButton = (
+                <LoggedInButton
+                title="Schrijf een reactie"
+                className="button article-action ___comment"
+                viewer={viewer}
+                onClick={e =>
+                    this.refs.addComment.toggle()
+                }
+                fromComment
+                >
+                    Reageer
+                </LoggedInButton>
+            )
+
+            comments = (
+                <div>
+                    <AddComment
+                    ref="addComment"
+                    viewer={viewer}
+                    object={entity}
+                    refetchQueries={["NewsItem"]}
+                    />
+                    <CommentList
+                        comments={entity.comments}
+                        canVote={true}
+                    />
+                </div>
+            )
+        }
+
         return (
             <div>
                 <Document title={entity.title} />
@@ -70,10 +104,12 @@ class Item extends React.Component {
                                     <div className="article-actions">
                                         {edit}
                                         <div className="article-actions__buttons">
+                                            {commentButton}
                                             <SocialShare />
                                         </div>
                                     </div>
                                 </article>
+                                {comments}
                             </div>
                         </div>
                     </div>
@@ -115,6 +151,24 @@ const Query = gql`
                 tags
                 isBookmarked
                 canBookmark
+                comments {
+                    guid
+                    description
+                    richDescription
+                    canEdit
+                    timeCreated
+                    hasVoted
+                    canVote
+                    votes
+                    owner {
+                        guid
+                        username
+                        name
+                        icon
+                        url
+                    }
+                }
+
             }
         }
     }

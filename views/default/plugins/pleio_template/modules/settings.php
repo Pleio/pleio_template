@@ -164,6 +164,18 @@
 </div>
 
 <div>
+    <label><?php echo elgg_echo("pleio_template:comment_on_news"); ?></label>
+    <?php echo elgg_view("input/dropdown", [
+        "name" => "params[comments_on_news]",
+        "value" => $vars["plugin"]->comments_on_news,
+        "options_values" => [
+            "no" => elgg_echo("option:no"),
+            "yes" => elgg_echo("option:yes")
+        ]
+    ]); ?>
+</div>
+
+<div>
     <label><?php echo elgg_echo("pleio_template:member_export"); ?></label>
     <?php echo elgg_view("input/dropdown", [
         "name" => "params[member_export]",

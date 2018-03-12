@@ -44,6 +44,7 @@ $dutch = array(
     "pleio_template:email:goto" => "Ga naar %s",
     "pleio_template:read_more" => "Lees meer",
     "pleio_template:event_export" => "Sta evenementbeheerders toe om een export te maken",
+    "pleio_template:comment_on_news" => "Sta reacties op nieuws toe",
     "pleio_template:member_export" => "Sta groepsbeheerders toe om een export te maken van de leden (inclusief naam en e-mail)",
     "pleio_template:default_email_overview" => "Standaard e-mail overzicht configuratie",
     "admin:administer_utilities:notifications" => "Beheer notificaties",

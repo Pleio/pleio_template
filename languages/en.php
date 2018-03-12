@@ -44,6 +44,7 @@ $english = array(
     "pleio_template:email:goto" => "Go to %s",
     "pleio_template:read_more" => "Read more",
     "pleio_template:event_export" => "Allow event managers to export the attendees list",
+    "pleio_template:comment_on_news" => "Allow comments on news",
     "pleio_template:member_export" => "Allow group admins to export the memberslist (including name and email)",
     "pleio_template:default_email_overview" => "Default e-mail overview configuration",
     "admin:administer_utilities:notifications" => "Notification management",
