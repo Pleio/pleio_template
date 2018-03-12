@@ -59,12 +59,17 @@ class Mapper {
     }
 
     static function getObject($entity, $is_highlighted = false) {
+        $subtype = $entity->getSubtype();
+        if ($subtype === "groupforumtopic") {
+            $subtype = "discussion";
+        }
+
         return [
             "guid" => $entity->guid,
             "status" => 200,
             "ownerGuid" => $entity->owner_guid,
             "type" => $entity->type,
-            "subtype" => $entity->getSubtype(),
+            "subtype" => $subtype,
             "source" => $entity->source,
             "location" => $entity->location,
             "rsvp" => isset($entity->rsvp) ? $entity->rsvp : true,

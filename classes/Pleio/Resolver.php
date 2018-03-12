@@ -203,7 +203,7 @@ class Resolver {
 
         $options = [
             "type" => "object",
-            "subtype" => ["news", "blog", "question", "discussion", "thewire"],
+            "subtype" => ["news", "blog", "question", "discussion", "groupforumtopic", "thewire"],
             "offset" => (int) $args["offset"],
             "limit" => (int) $args["limit"],
             "joins" => $joins,
