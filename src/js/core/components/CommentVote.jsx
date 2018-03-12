@@ -1,15 +1,15 @@
 import React from "react"
 import showDate from "../../lib/showDate"
 import { graphql } from "react-apollo"
+import { withRouter } from "react-router-dom"
 import gql from "graphql-tag"
+import autobind from "autobind-decorator"
 
 class CommentVote extends React.Component {
-    constructor(props) {
-        super(props)
-        this.submitVote = this.submitVote.bind(this)
-    }
-
+    @autobind
     submitVote(score) {
+        const { history, location } = this.props
+
         this.props.mutate({
             variables: {
                 input: {
@@ -17,6 +17,10 @@ class CommentVote extends React.Component {
                     guid: this.props.entity.guid,
                     score
                 }
+            }
+        }).catch((error) => {
+            if (error.graphQLErrors[0].message === "not_logged_in") {
+                history.push({pathname: "/login", state: { fromComment: true, next: location.pathname }})
             }
         })
     }
@@ -50,5 +54,4 @@ const Query = gql`
     }
 `;
 
-const withQuery = graphql(Query)
-export default withQuery(CommentVote)
+export default graphql(Query)(withRouter(CommentVote))

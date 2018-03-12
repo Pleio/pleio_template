@@ -631,7 +631,9 @@ class SchemaBuilder {
                 ],
                 "canChooseBestAnswer" => [
                     "type" => Type::boolean(),
-                    "resolve" => function($object) { return true; }
+                    "resolve" => function($object) { 
+                        return Resolver::canChooseBestAnswer($object);
+                    }
                 ],
                 "canVote" => [
                     "type" => Type::boolean(),

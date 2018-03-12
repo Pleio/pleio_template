@@ -8,6 +8,12 @@ import autobind from "autobind-decorator"
 class CommentBestAnswer extends React.Component {
     @autobind
     toggleBestAnswer() {
+        const { entity } = this.props
+
+        if (!entity.canChooseBestAnswer) {
+            return
+        }
+
         this.props.mutate({
             variables: {
                 input: {
@@ -21,15 +27,24 @@ class CommentBestAnswer extends React.Component {
     render() {
         const { entity } = this.props
 
-        if (entity.isBestAnswer) {
-            return (
-                <button className="comment__best-answer ___is-chosen" title="Gekozen als beste antwoord" onClick={this.toggleBestAnswer} />
-            )
-        } else {
-            return (
-                <button className="comment__best-answer" title="Kies als beste antwoord" onClick={this.toggleBestAnswer} />
-            )
+        if (!entity.canChooseBestAnswer) {
+            if (entity.isBestAnswer) {
+                return (
+                    <button className="comment__best-answer ___is-chosen ___disabled" />
+                )
+            } else {
+                return (
+                    <div />
+                )
+            }
         }
+
+        return (
+            <button className={classnames({
+                "comment__best-answer": true,
+                "___is-chosen": entity.isBestAnswer
+            })} title="Gekozen als beste antwoord" onClick={this.toggleBestAnswer} />
+        )
     }
 }
 
@@ -39,7 +54,10 @@ const Mutation = gql`
         toggleBestAnswer(input: $input) {
             object {
                 guid
-                isBestAnswer
+                comments {
+                    guid
+                    isBestAnswer
+                }
             }
         }
     }

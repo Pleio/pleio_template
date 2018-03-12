@@ -1598,8 +1598,17 @@ class Resolver {
         if (!$question) {
             return false;
         }
-        
 
         return check_entity_relationship($question->guid, "correctAnswer", $entity->guid) ? true : false;
+    }
+
+    static function canChooseBestAnswer($entity) {
+        $site = elgg_get_site_entity();
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user) {
+            return false;
+        }
+
+        return check_entity_relationship($user->guid, "questions_expert", $site->guid);
     }
 }

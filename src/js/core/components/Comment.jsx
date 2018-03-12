@@ -42,13 +42,6 @@ export default class Comment extends React.Component {
             )
         }
 
-        let bestanswer
-        if (entity.canChooseBestAnswer) {
-            bestanswer = (
-                <CommentBestAnswer entity={entity} />
-            )
-        }
-
         if (this.state.editing) {
             return (
                 <div className="comment-container">
@@ -62,7 +55,7 @@ export default class Comment extends React.Component {
                 <div className={classnames({"comment-container": true, " ___is-editable": entity.canEdit})}>
                     <div className="comment__side">
                         {upvote}
-                        {bestanswer}
+                        <CommentBestAnswer entity={entity} />
                     </div>
                     <div className={classnames({comment: true, "___can-edit": entity.canEdit})}>
                         <div className="comment__top">

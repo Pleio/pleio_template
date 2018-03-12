@@ -1956,6 +1956,14 @@ class Mutations {
     }
 
     static function toggleBestAnswer($input) {
+        $site = elgg_get_site_entity();
+        $user = elgg_get_logged_in_user_entity();
+        if (!$user || !check_entity_relationship($user->guid, "questions_expert", $site->guid)) {
+            return [
+                "guid" => $question->guid
+            ];
+        }
+
         $entity = get_entity($input["guid"]);
         if (!$entity || !in_array($entity->getSubtype(), ["comment", "answer"])) {
             throw new Exception("could_not_save");
@@ -1969,11 +1977,18 @@ class Mutations {
         if (check_entity_relationship($question->guid, "correctAnswer", $entity->guid)) {
             remove_entity_relationship($question->guid, "correctAnswer", $entity->guid);
         } else {
+            $correctAnswers = $question->getEntitiesFromRelationship("correctAnswer", false, 0);
+            if ($correctAnswers) {
+                foreach ($correctAnswers as $correctAnswer) {
+                    remove_entity_relationship($question->guid, "correctAnswer", $correctAnswer->guid);
+                }
+            }
+
             add_entity_relationship($question->guid, "correctAnswer", $entity->guid);
         }
 
         return [
-            "guid" => $entity->guid
+            "guid" => $question->guid
         ];
     }
 }
