@@ -84,7 +84,26 @@ class InviteForm extends React.Component {
                 <InviteAutoComplete group={group} onSelect={this.onSelect} />
                 {list}
                 <div className="buttons ___end ___margin-top">
-                    <button className={classnames({"button": true, "___grey": this.state.users.size === 0})} type="submit">Uitnodigen</button>
+                    <button className=
+                        {classnames({
+                            "button": true
+                        })}
+                        type="submit"
+                        disabled={this.state.users.size === 0}                        
+                    >
+                        Uitnodigen
+                    </button>
+                    <button className=
+                        {classnames({
+                            "button": true,
+                            "___is-loading": true
+                        })}
+                        type="submit"
+                        disabled={this.state.users.size === 0}
+                    >
+                        <div className="button__loader"></div>
+                        Uitnodigen
+                    </button>
                 </div>
             </form>
         )

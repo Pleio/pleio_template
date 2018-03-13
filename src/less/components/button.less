@@ -21,6 +21,7 @@
     -webkit-appearance: none;
     -moz-appearance: none;
 
+    
     &.___is-active,
     &:hover,
     &:active {
@@ -28,9 +29,11 @@
     }
 
     &[disabled] {
-        background-color: @color-grey--40;
-        color: @color-grey--60;
-        cursor: default;
+        &:not(.___is-loading) {
+            background-color: @color-grey--40;
+            color: @color-grey--60;
+            cursor: default;
+        }
     }
 
     .toolbar.___blue & {
@@ -343,6 +346,47 @@ button.button {
             font-size: .55rem;
         }
     }
+}
+
+.button.___is-loading {
+    color: transparent;
+}
+
+.button__loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: transform @trans-material-normal, opacity @trans-normal;
+
+    button.___is-loading & {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    &:before {
+        content: '';
+        height: 2rem;
+        width: 2rem;
+        animation: rotate 0.8s infinite linear;
+        border: .4rem solid #fff;
+        border-right-color: transparent;
+        border-radius: 50%;
+    }
+}
+
+@keyframes rotate {
+  0%    { transform: rotate(0deg); }
+  100%  { transform: rotate(360deg); }
 }
 
 .button.___dropdown {
