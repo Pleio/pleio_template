@@ -1,4 +1,5 @@
 import React from "react"
+import autobind from "autobind-decorator"
 
 export default class Switch extends React.Component {
     constructor(props) {
@@ -7,8 +8,6 @@ export default class Switch extends React.Component {
         this.state = {
             checked: this.props.checked || false
         }
-
-        this.onChange = this.onChange.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -19,12 +18,13 @@ export default class Switch extends React.Component {
         }
     }
 
+    @autobind
     onChange(e) {
+        e.preventDefault()
+
         const newState = !this.state.checked
 
-        this.setState({
-            checked: newState
-        })
+        this.setState({ checked: newState })
 
         if (this.props.onChange) {
             this.props.onChange(this.props.name, newState)
