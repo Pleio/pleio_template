@@ -39,7 +39,7 @@ class TopMenu extends React.Component {
 
     render() {
         const { site, viewer } = this.props.data
-        let menuItems, footerItems, home, mobileHome, userMenu, pleio
+        let menuItems, footerItems, home, mobileHome, userMenu, pleio, search
 
         if (!site) {
             return (
@@ -80,6 +80,13 @@ class TopMenu extends React.Component {
             userMenu = (
                 <UserMenu onClick={this.closeMobileMenu} viewer={this.props.data.viewer} />
             )
+        } else {
+            search = (
+                <form className="navigation__search" onSubmit={this.onSearch}>
+                    <input onChange={this.changeSearchField} value={this.state.q} placeholder="Zoeken" name="q" />
+                    <button type="submit" />
+                </form>
+            )
         }
 
         return (
@@ -110,6 +117,7 @@ class TopMenu extends React.Component {
                                 </div>
                             </li>
                         </ul>
+                        {search}
                         {userMenu}
                     </div>
                     <div className="mobile-navigation__bar">

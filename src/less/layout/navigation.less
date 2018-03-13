@@ -525,6 +525,10 @@ body.___rijkshuisstijl {
         display: flex;
         align-items: stretch;
 
+        @media (max-width: @screen-md-max) {
+            display: none;
+        }
+
         input {
             flex: 1 0 auto;
             background-color: transparent;
