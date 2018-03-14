@@ -15,7 +15,10 @@ import classnames from "classnames"
 class InviteForm extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { users: new Set() }
+        this.state = {
+            users: new Set(),
+            loading: false
+        }
     }
 
     @autobind
@@ -44,6 +47,8 @@ class InviteForm extends React.Component {
             users: this.state.users.toJS().map((user) => ({guid: user.guid, email: user.email}))
         }
 
+        this.setState({ loading: true })
+
         this.props.mutate({
             variables: {
                 input
@@ -52,12 +57,14 @@ class InviteForm extends React.Component {
         }).then(({data}) => {
             this.setState({
                 users: new Set(),
-                completed: true
+                completed: true,
+                loading: false
             })
         }).catch((errors) => {
             logErrors(errors)
             this.setState({
-                errors: errors
+                errors: errors,
+                loading: false
             })
         })
     }
@@ -78,32 +85,29 @@ class InviteForm extends React.Component {
             )
         }
 
+        let button
+        if (this.state.loading) {
+            button = (
+                <button className={classnames({"button": true, "___is-loading": true})} type="submit" disabled={this.state.users.size === 0}>
+                    Uitnodigen
+                    <div className="button__loader"></div>
+                </button>
+            )
+        } else {
+            button = (
+                <button className={classnames({"button": true})} type="submit" disabled={this.state.users.size === 0}>
+                    Uitnodigen
+                </button>
+            )
+        }
+
         return (
             <form method="POST" onSubmit={this.onSubmit}>
                 <Errors errors={this.state.errors} />
                 <InviteAutoComplete group={group} onSelect={this.onSelect} />
                 {list}
                 <div className="buttons ___end ___margin-top">
-                    <button className=
-                        {classnames({
-                            "button": true
-                        })}
-                        type="submit"
-                        disabled={this.state.users.size === 0}                        
-                    >
-                        Uitnodigen
-                    </button>
-                    <button className=
-                        {classnames({
-                            "button": true,
-                            "___is-loading": true
-                        })}
-                        type="submit"
-                        disabled={this.state.users.size === 0}
-                    >
-                        <div className="button__loader"></div>
-                        Uitnodigen
-                    </button>
+                    {button}
                 </div>
             </form>
         )
