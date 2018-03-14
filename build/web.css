@@ -1127,6 +1127,7 @@ body.___rijkshuisstijl .navigation__search button:before,
 .contextual__tool.___inline:before,
 .contextual__tool.___info:before,
 .contextual__tool.___resize:before,
+.comment__best-answer:before,
 .comment__edit:before,
 .comment-add__close:before,
 .comment-edit__close:before,
@@ -2779,12 +2780,18 @@ body.___rijkshuisstijl .navigation__link {
 body.___rijkshuisstijl .navigation__search {
   -ms-flex: 1 0 auto;
       flex: 1 0 auto;
-  max-width: 31.466rem;
+  max-width: 26rem;
+  margin-left: auto;
   background-color: #bfe7f8;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: stretch;
       align-items: stretch;
+}
+@media (max-width: 1023px) {
+  body.___rijkshuisstijl .navigation__search {
+    display: none;
+  }
 }
 body.___rijkshuisstijl .navigation__search input {
   -ms-flex: 1 0 auto;
@@ -3273,7 +3280,7 @@ body.___no-nav .page-layout__header {
 .button:active {
   background-color: #01689b;
 }
-.button[disabled] {
+.button[disabled]:not(.___is-loading) {
   background-color: #E6E6E6;
   color: #B4B4B4;
   cursor: default;
@@ -3424,7 +3431,7 @@ button.button {
 .button.___line:hover,
 .button.___line:focus {
   color: #009ee3;
-  border-color: #33b1e9;
+  border-color: #009ee3;
 }
 .button.___line.___colored {
   color: #009ee3;
@@ -3558,6 +3565,47 @@ button.button {
     font-size: .55rem;
   }
 }
+.button.___is-loading {
+  color: transparent;
+}
+.button__loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+}
+button.___is-loading .button__loader {
+  opacity: 1;
+  transform: translateY(0);
+}
+.button__loader:before {
+  content: '';
+  height: 2rem;
+  width: 2rem;
+  animation: rotate 0.8s infinite linear;
+  border: .4rem solid #fff;
+  border-right-color: transparent;
+  border-radius: 50%;
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .button.___dropdown:after {
   content: "\E005";
 }
@@ -3568,7 +3616,7 @@ button.button {
   margin-bottom: .1rem;
 }
 .button.___dropdown.___is-open {
-  border-color: #33b1e9;
+  border-color: #009ee3;
 }
 .button__icon {
   position: relative;
@@ -6419,7 +6467,7 @@ body.___rijkshuisstijl .card-tile__picture {
 }
 .card-topic__comments:before {
   margin: 0 0.7rem 0 0;
-  color: #009ee3;
+  color: #B4B4B4;
   font-size: 1.9rem;
   transition: color 0.2s ease;
 }
@@ -6542,14 +6590,11 @@ body.___rijkshuisstijl .card-tile__picture {
   color: #B4B4B4;
 }
 .count-bookmarks:after {
-  color: #B4B4B4;
+  color: #009ee3;
   opacity: 0;
 }
 .count-bookmarks:hover:before {
-  opacity: 0;
-}
-.count-bookmarks:hover:after {
-  opacity: 1;
+  color: #009ee3;
 }
 .count-bookmarks span {
   white-space: nowrap;
@@ -6575,9 +6620,9 @@ body.___rijkshuisstijl .card-tile__picture {
 }
 .count-bookmarks.___is-saved:before {
   opacity: 0;
+  color: #009ee3;
 }
 .count-bookmarks.___is-saved:after {
-  color: #009ee3;
   opacity: 1;
 }
 .count-bookmarks.___is-saved .___save {
@@ -6643,7 +6688,6 @@ body.___rijkshuisstijl .card-tile__picture {
   display: flex;
   -ms-flex-pack: center;
       justify-content: center;
-  color: #009ee3;
   transition: opacity 0.2s ease, color 0.2s ease;
 }
 @media (max-width: 679px) {
@@ -6653,15 +6697,21 @@ body.___rijkshuisstijl .card-tile__picture {
     font-size: 1.8rem;
   }
 }
+.count-likes:before {
+  color: #B4B4B4;
+}
 .count-likes:after {
+  color: #009ee3;
   opacity: 0;
 }
-.count-likes.___is-liked:before,
 .count-likes:hover:before {
-  opacity: 0;
+  color: #009ee3;
 }
-.count-likes.___is-liked:after,
-.count-likes:hover:after {
+.count-likes.___is-liked:before {
+  opacity: 0;
+  color: #009ee3;
+}
+.count-likes.___is-liked:after {
   opacity: 1;
 }
 .count-likes.___margin-top {
@@ -8349,8 +8399,8 @@ body.___rijkshuisstijl .card-tile__picture {
 }
 .comment {
   position: relative;
-  background-color: #e6f5fc;
   margin: 0 0 2rem 0;
+  border: 1px solid #E6E6E6;
 }
 .comment[data-comment-edit] {
   transition: opacity 0.2s ease;
@@ -8379,6 +8429,49 @@ body.___rijkshuisstijl .card-tile__picture {
 .article-comments__more-container .comment:last-child {
   margin-bottom: 0;
 }
+@media (min-width: 680px) {
+  .comment__side {
+    position: absolute;
+    top: 0;
+    left: -6rem;
+    width: 6rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    -ms-flex-align: center;
+        align-items: center;
+  }
+}
+.comment__best-answer {
+  margin-top: 2rem;
+  width: 4rem;
+  height: 4rem;
+  color: #E6E6E6;
+  border-radius: 100%;
+  border: 0.2rem solid #E6E6E6;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+}
+.comment__best-answer:before {
+  content: "\E019";
+}
+.comment__best-answer:before {
+  font-size: 1.5rem;
+}
+.comment__best-answer:hover {
+  color: #009ee3;
+}
+.comment__best-answer.___is-chosen {
+  border-color: #009ee3;
+  color: #009ee3;
+}
 .comment__vote {
   display: -ms-flexbox;
   display: flex;
@@ -8393,13 +8486,6 @@ body.___rijkshuisstijl .card-tile__picture {
     margin: 1.5rem 0 0 0;
     -ms-flex-order: 1;
         order: 1;
-  }
-}
-@media (min-width: 680px) {
-  .comment__vote {
-    position: absolute;
-    top: 0;
-    left: -4.4rem;
   }
 }
 .comment__vote-up,
@@ -10741,7 +10827,6 @@ a.card-tile:hover .read-more__circle {
 }
 .article-action.___share {
   margin: 0 1rem 2rem 0;
-  background-color: #CCCCCC;
 }
 .article-action.___share:before {
   content: "\E051";
@@ -10750,13 +10835,11 @@ a.card-tile:hover .read-more__circle {
   font-size: 1.4rem;
   margin: 0 0.8rem 0.2rem 0;
 }
-@media (max-width: 679px) {
-  .article-action.___share:before {
-    margin-right: 0;
-  }
-}
 .article-action.___share.___is-open {
-  background-color: #01689b;
+  border-color: #009ee3;
+}
+.article-action.___share:hover {
+  background-color: white;
 }
 @media (max-width: 679px) {
   .article-action.___share span {
@@ -14489,6 +14572,9 @@ body.___leraar .navigation__search input {
 }
 .card-event__content {
   overflow: auto;
+}
+.___disabled {
+  cursor: auto;
 }
 #__bs_notify__ {
   opacity: .15 !important;
