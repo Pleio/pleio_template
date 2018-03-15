@@ -8,6 +8,7 @@
     padding: 1rem 0 .9rem;
     background-color: @color-white;
     text-align: left;
+    white-space: nowrap;
     box-shadow: @box-shadow;
     overflow-y: auto;
     cursor: default;
@@ -18,7 +19,8 @@
     transition: visibility @trans-fast, opacity @trans-fast;
 
     &.___is-open,
-    .button.___dropdown.___is-open > & {
+    .button.___dropdown.___is-open > &,
+    .button__icon.___is-open > & {
         visibility: visible;
         opacity: 1;
     }

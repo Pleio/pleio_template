@@ -5,6 +5,7 @@ import classnames from "classnames"
 import RichTextField from "../../core/components/RichTextField"
 import RichTextView from "../../core/components/RichTextView"
 import SwitchField from "../../core/components/SwitchField"
+import DropdownButton from "../../core/components/DropdownButton"
 import { convertToRaw } from "draft-js"
 import autobind from "autobind-decorator"
 
@@ -159,6 +160,11 @@ class ProfileField extends React.Component {
             )
         }
 
+        const options = [
+            { href: ``, name: "Publiek zichtbaar" },
+            { href: ``, name: "Zichtbaar voor andere leden" }
+        ]
+
         return (
             <li>
                 <label>{this.props.field.name}</label>
@@ -167,6 +173,7 @@ class ProfileField extends React.Component {
                     {fillNow}
                     {field}
                 </span>
+                <DropdownButton name="Voeg toe" options={options} icon isPublic />
             </li>
         )
     }

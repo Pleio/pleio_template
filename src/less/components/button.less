@@ -458,6 +458,22 @@ button.button {
             font-size: 1.8rem;
         }
     }
+
+    &.___privacy {
+        margin-left: auto;
+
+        .icon(eye-invisible);
+        &:before {
+            font-size: 1.8rem;
+        }
+
+        &.___is-public {
+            .icon(eye-visible);
+            &:before {
+                font-size: 1.8rem;
+            }
+        }
+    }
 }
 
 .button__text {

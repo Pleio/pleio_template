@@ -34,8 +34,21 @@ export default class DropdownButton extends React.Component {
         })
 
         return (
-            <div tabIndex="0" className={classnames({"button ___large ___dropdown": true, "___is-open": this.state.isOpen, "___line": this.props.line, "___colored": this.props.colored})} onClick={this.toggle} onBlur={this.onBlur}>
-                <span>{this.props.name}</span>
+            <div tabIndex="0" className={classnames({
+                    "button ___large ___dropdown": !this.props.icon,
+                    "button__icon ___privacy": this.props.icon,
+                    "___is-public": this.props.isPublic,
+                    "___is-open": this.state.isOpen,
+                    "___line": this.props.line,
+                    "___colored": this.props.colored
+                })}
+                onClick={this.toggle} onBlur={this.onBlur}
+            >
+                <span>
+                 {!this.props.icon &&
+                    this.props.name
+                 }
+                </span>
                 <div className="option-list">
                     {options}
                 </div>
