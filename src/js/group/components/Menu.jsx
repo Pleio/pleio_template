@@ -59,6 +59,11 @@ class Menu extends React.Component {
             return
         }
 
+        this.onSearch()
+    }
+
+    @autobind
+    onSearch() {
         const { history, match } = this.props
 
         let subtype
@@ -84,11 +89,10 @@ class Menu extends React.Component {
         }
 
         if (subtype) {
-            history.push(`/groups/view/${match.params.groupGuid}/${match.params.groupSlug}/search/results?q=${e.target.value}&type=object&subtype=${subtype}`)
+            history.push(`/groups/view/${match.params.groupGuid}/${match.params.groupSlug}/search/results?q=${this.state.value}&type=object&subtype=${subtype}`)
         } else {
-            history.push(`/groups/view/${match.params.groupGuid}/${match.params.groupSlug}/search/results?q=${e.target.value}`)
+            history.push(`/groups/view/${match.params.groupGuid}/${match.params.groupSlug}/search/results?q=${this.state.value}`)
         }
-
     }
 
     render() {
@@ -116,7 +120,7 @@ class Menu extends React.Component {
                 <div className="tabmenu__search-container">
                     <div className="search-bar">
                         <input name="q" onKeyDown={this.onKeyDown} onChange={this.onChange} value={this.state.value} placeholder="Zoeken in groep" />
-                        <div className="search-bar__button" />
+                        <div className="search-bar__button" onClick={this.onSearch} />
                     </div>
                 </div>
             </TabMenu>
