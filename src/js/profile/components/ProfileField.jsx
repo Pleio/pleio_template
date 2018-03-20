@@ -86,11 +86,6 @@ class ProfileField extends React.Component {
             return
         }
 
-        let accessId = 2
-        if (this.refs.accessId) {
-            accessId = this.refs.accessId.getValue() ? 2 : 0
-        }
-
         if (this.isMutating) {
             return
         }
@@ -104,7 +99,6 @@ class ProfileField extends React.Component {
                     clientMutationId: 1,
                     guid: this.props.entity.guid,
                     key: this.props.dataKey,
-                    accessId,
                     value
                 }
             }
@@ -114,6 +108,23 @@ class ProfileField extends React.Component {
 
         this.setState({
             isEditing: false
+        })
+    }
+
+    @autobind
+    changePermission(accessId) {
+        const { entity, field } = this.props
+
+        this.props.mutate({
+            variables: {
+                input: {
+                    clientMutationId: 1,
+                    guid: entity.guid,
+                    key: this.props.dataKey,
+                    value: field.value,
+                    accessId
+                }
+            }
         })
     }
 
@@ -147,23 +158,21 @@ class ProfileField extends React.Component {
             )
         }
 
-        let field
-        if (this.props.editAcl && this.state.isEditing) {
-            field = (
-                <div tabIndex={0} onBlur={this.onBlur}>
-                    <SwitchField ref="accessId" name="accessId" label="Maak publiek" value={this.state.accessId !== 0} />
-                </div>
-            )
-        } else {
-            field = (
-                <input type="text" ref="input" onChange={(e) => this.onChange(e.target.value)} onKeyPress={this.onKeyPress} onBlur={this.onBlur} value={this.state.value || ""} />
-            )
-        }
+        let field = (
+            <input type="text" ref="input" onChange={(e) => this.onChange(e.target.value)} onKeyPress={this.onKeyPress} onBlur={this.onBlur} value={this.state.value || ""} />
+        )
 
         const options = [
-            { href: ``, name: "Publiek zichtbaar" },
-            { href: ``, name: "Zichtbaar voor andere leden" }
+            { onClick: (e) => this.changePermission(1), name: "Zichtbaar voor andere leden" },
+            { onClick: (e) => this.changePermission(2), name: "Publiek zichtbaar" }
         ]
+
+        let dropdownButton
+        if (this.props.field.accessId) {
+            dropdownButton = (
+                <DropdownButton name="Voeg toe" options={options} icon isPublic={(this.props.field.accessId == 2)} />
+            )
+        }
 
         return (
             <li>
@@ -173,7 +182,7 @@ class ProfileField extends React.Component {
                     {fillNow}
                     {field}
                 </span>
-                <DropdownButton name="Voeg toe" options={options} icon isPublic />
+                {dropdownButton}
             </li>
         )
     }

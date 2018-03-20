@@ -59,7 +59,7 @@ class Profile extends React.Component {
         const topFields = new OrderedSet(["emailaddress", "site", "phone", "mobile"])
 
         const contactData = topFields.intersect(defaultFields).map((key, i) => (
-            <ProfileField key={i} entity={entity} canEdit={entity.canEdit} dataKey={key} field={profileByKey[key]} editAcl={key === "emailaddress"} />
+            <ProfileField key={i} entity={entity} canEdit={entity.canEdit} dataKey={key} field={profileByKey[key]} />
         ))
 
         const siteProfile = allFields.subtract(defaultFields).map((key, i) => (
