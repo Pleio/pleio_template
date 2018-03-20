@@ -64,7 +64,7 @@ class EmailOverviewHandler {
             $lower_bound = $latest_email_overview;
         }
 
-        $access = get_access_sql_suffix("{$dbprefix}entities", $user->guid);
+        $access = implode(",", pleio_template_get_access_array($user->guid));
 
         $new_entities = EmailOverviewHandler::getColumn("
             SELECT guid FROM elgg_entities
@@ -74,7 +74,7 @@ class EmailOverviewHandler {
             AND subtype IN ({$subtypes})
             AND owner_guid != {$user->guid}
             AND site_guid = {$site->guid}
-            AND {$access}
+            AND access_id IN ({$access})
             ORDER BY guid DESC",
             "guid"
         );

@@ -190,3 +190,58 @@ function pleio_template_slugify($text) {
 
   return $text;
 }
+
+function pleio_template_get_access_array($user_id = 0) {
+	global $CONFIG;
+
+	if ($user_id == 0) {
+		$user_id = elgg_get_logged_in_user_guid();
+	}
+
+	$site_id = $CONFIG->site_guid;
+
+	$user_id = (int) $user_id;
+	$site_id = (int) $site_id;
+
+    $access_array = array(ACCESS_PUBLIC);
+
+    // The following can only return sensible data if the user is logged in.
+    if ($user_id) {
+        $access_array[] = ACCESS_LOGGED_IN;
+
+        // Get ACL memberships
+        $query = "SELECT am.access_collection_id"
+            . " FROM {$CONFIG->dbprefix}access_collection_membership am"
+            . " LEFT JOIN {$CONFIG->dbprefix}access_collections ag ON ag.id = am.access_collection_id"
+            . " WHERE am.user_guid = $user_id AND (ag.site_guid = $site_id OR ag.site_guid = 0)";
+
+        $collections = get_data($query);
+        if ($collections) {
+            foreach ($collections as $collection) {
+                if (!empty($collection->access_collection_id)) {
+                    $access_array[] = (int)$collection->access_collection_id;
+                }
+            }
+        }
+
+        // Get ACLs owned.
+        $query = "SELECT ag.id FROM {$CONFIG->dbprefix}access_collections ag ";
+        $query .= "WHERE ag.owner_guid = $user_id AND (ag.site_guid = $site_id OR ag.site_guid = 0)";
+
+        $collections = get_data($query);
+        if ($collections) {
+            foreach ($collections as $collection) {
+                if (!empty($collection->id)) {
+                    $access_array[] = (int)$collection->id;
+                }
+            }
+        }
+	}
+
+	$options = array(
+		'user_id' => $user_id,
+		'site_id' => $site_id
+	);
+
+	return elgg_trigger_plugin_hook('access:collections:read', 'user', $options, $access_array);
+}
