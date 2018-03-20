@@ -731,7 +731,7 @@ class Mutations {
         }
 
         if ($value) {
-            if ($key == "name") {
+            if (in_array($key, ["name", "description"])) {
                 $entity->$key = $value;
                 $result = $entity->save();
             } else {
