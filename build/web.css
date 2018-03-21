@@ -991,8 +991,8 @@ hr {
 }
 @font-face {
   font-family: "icons-webfont";
-  src: url(/mod/pleio_template/build/171a79d8895bcccbac4c99a9d89a4eca.eot);
-  src: url(/mod/pleio_template/build/171a79d8895bcccbac4c99a9d89a4eca.eot?#iefix) format('eot'), url(/mod/pleio_template/build/b38532efe72ba4dcc51fe05fe468b7ed.woff2) format('woff2'), url(/mod/pleio_template/build/4f9d1173560fec2092f80cc4182b6d2f.woff) format('woff'), url(/mod/pleio_template/build/0d8d22bec81698eb63a4b496a8016db4.ttf) format('truetype'), url(/mod/pleio_template/build/10192da15d50c9353918c48f9ff49513.svg#icons-webfont) format('svg');
+  src: url(/mod/pleio_template/build/eadf8706c62728879e22d32effb418e1.eot);
+  src: url(/mod/pleio_template/build/eadf8706c62728879e22d32effb418e1.eot?#iefix) format('eot'), url(/mod/pleio_template/build/ac5d0a5328cb148bcbaa4294f4229fff.woff2) format('woff2'), url(/mod/pleio_template/build/880c7562f3d486603257539581859840.woff) format('woff'), url(/mod/pleio_template/build/18f76fcc2cf61687666f4171ab9ce5dd.ttf) format('truetype'), url(/mod/pleio_template/build/f7a10ae4e19cd3047f7d1c674cdb1ded.svg#icons-webfont) format('svg');
 }
 [class^="icon-"],
 [class*=" icon-"],
@@ -1032,6 +1032,8 @@ body.___rijkshuisstijl .navigation__search button:before,
 .button__icon.___settings:before,
 .button__icon.___list:before,
 .button__icon.___tiles:before,
+.button__icon.___privacy:before,
+.button__icon.___privacy.___is-public:before,
 .button__text.___edit-post:before,
 .breadcrumb a:not(:first-child):before,
 .card.___info .picture:before,
@@ -1328,173 +1330,185 @@ body.___rijkshuisstijl .navigation__search button:before,
 .icon-eye-fill:before {
   content: "\E027";
 }
-.icon-eye:before {
+.icon-eye-invisible:before {
   content: "\E028";
 }
-.icon-folder:before {
+.icon-eye-visible:before {
   content: "\E029";
 }
-.icon-heart-fill:before {
+.icon-eye:before {
   content: "\E02A";
 }
-.icon-heart:before {
+.icon-folder:before {
   content: "\E02B";
 }
-.icon-home:before {
+.icon-friends:before {
   content: "\E02C";
 }
-.icon-hyperlink:before {
+.icon-heart-fill:before {
   content: "\E02D";
 }
-.icon-image-inline:before {
+.icon-heart:before {
   content: "\E02E";
 }
-.icon-image:before {
+.icon-home:before {
   content: "\E02F";
 }
-.icon-indent-left:before {
+.icon-hyperlink:before {
   content: "\E030";
 }
-.icon-indent-right:before {
+.icon-image-inline:before {
   content: "\E031";
 }
-.icon-info-circle:before {
+.icon-image:before {
   content: "\E032";
 }
-.icon-info:before {
+.icon-indent-left:before {
   content: "\E033";
 }
-.icon-italic:before {
+.icon-indent-right:before {
   content: "\E034";
 }
-.icon-like-fill:before {
+.icon-info-circle:before {
   content: "\E035";
 }
-.icon-like:before {
+.icon-info:before {
   content: "\E036";
 }
-.icon-list:before {
+.icon-italic:before {
   content: "\E037";
 }
-.icon-lock:before {
+.icon-like-fill:before {
   content: "\E038";
 }
-.icon-logout:before {
+.icon-like:before {
   content: "\E039";
 }
-.icon-mobile-menu:before {
+.icon-list:before {
   content: "\E03A";
 }
-.icon-move:before {
+.icon-lock:before {
   content: "\E03B";
 }
-.icon-next:before {
+.icon-logout:before {
   content: "\E03C";
 }
-.icon-not-found:before {
+.icon-mobile-menu:before {
   content: "\E03D";
 }
-.icon-notification-fill:before {
+.icon-move:before {
   content: "\E03E";
 }
-.icon-notification:before {
+.icon-next:before {
   content: "\E03F";
 }
-.icon-ol:before {
+.icon-not-found:before {
   content: "\E040";
 }
-.icon-options:before {
+.icon-notification-fill:before {
   content: "\E041";
 }
-.icon-pdf:before {
+.icon-notification:before {
   content: "\E042";
 }
-.icon-pencil:before {
+.icon-ol:before {
   content: "\E043";
 }
-.icon-play:before {
+.icon-options:before {
   content: "\E044";
 }
-.icon-plus-large:before {
+.icon-pdf:before {
   content: "\E045";
 }
-.icon-plus:before {
+.icon-pencil:before {
   content: "\E046";
 }
-.icon-prev:before {
+.icon-play:before {
   content: "\E047";
 }
-.icon-print:before {
+.icon-plus-large:before {
   content: "\E048";
 }
-.icon-quote:before {
+.icon-plus:before {
   content: "\E049";
 }
-.icon-recommendation:before {
+.icon-prev:before {
   content: "\E04A";
 }
-.icon-resize:before {
+.icon-print:before {
   content: "\E04B";
 }
-.icon-save:before {
+.icon-public:before {
   content: "\E04C";
 }
-.icon-school:before {
+.icon-quote:before {
   content: "\E04D";
 }
-.icon-search:before {
+.icon-recommendation:before {
   content: "\E04E";
 }
-.icon-send:before {
+.icon-resize:before {
   content: "\E04F";
 }
-.icon-settings:before {
+.icon-save:before {
   content: "\E050";
 }
-.icon-share:before {
+.icon-school:before {
   content: "\E051";
 }
-.icon-social-facebook:before {
+.icon-search:before {
   content: "\E052";
 }
-.icon-social-google:before {
+.icon-send:before {
   content: "\E053";
 }
-.icon-social-linkedin:before {
+.icon-settings:before {
   content: "\E054";
 }
-.icon-social-twitter:before {
+.icon-share:before {
   content: "\E055";
 }
-.icon-star-fill:before {
+.icon-social-facebook:before {
   content: "\E056";
 }
-.icon-star:before {
+.icon-social-google:before {
   content: "\E057";
 }
-.icon-tiles:before {
+.icon-social-linkedin:before {
   content: "\E058";
 }
-.icon-topic:before {
+.icon-social-twitter:before {
   content: "\E059";
 }
-.icon-trending:before {
+.icon-star-fill:before {
   content: "\E05A";
 }
-.icon-ul:before {
+.icon-star:before {
   content: "\E05B";
 }
-.icon-underlined:before {
+.icon-tiles:before {
   content: "\E05C";
 }
-.icon-unlink:before {
+.icon-topic:before {
   content: "\E05D";
 }
-.icon-upload:before {
+.icon-trending:before {
   content: "\E05E";
 }
-.icon-users:before {
+.icon-ul:before {
   content: "\E05F";
+}
+.icon-underlined:before {
+  content: "\E060";
+}
+.icon-unlink:before {
+  content: "\E061";
+}
+.icon-upload:before {
+  content: "\E062";
+}
+.icon-users:before {
+  content: "\E063";
 }
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
@@ -1741,7 +1755,7 @@ strong {
   transition: color 0.2s ease;
 }
 .___is-editable-field .editable-field:after {
-  content: "\E043";
+  content: "\E046";
 }
 .___is-editable-field .editable-field:after {
   margin: 0 0 .2rem .5rem;
@@ -1800,7 +1814,7 @@ strong {
   display: none;
 }
 .___is-empty .card-profile__fill:after {
-  content: "\E043";
+  content: "\E046";
 }
 .___is-empty .card-profile__fill:after {
   margin: 0 0 .2rem .5rem;
@@ -1928,7 +1942,7 @@ strong {
   text-align: center;
 }
 .mobile-navigation__home:before {
-  content: "\E02C";
+  content: "\E02F";
 }
 .mobile-navigation__home:before {
   width: 100%;
@@ -2002,7 +2016,7 @@ strong {
   }
 }
 .mobile-navigation__action.___search:before {
-  content: "\E04E";
+  content: "\E052";
 }
 .mobile-navigation__action.___search:hover {
   color: #b4b4b4;
@@ -2090,7 +2104,7 @@ strong {
   text-align: center;
 }
 .mobile-navigation__trigger:before {
-  content: "\E03A";
+  content: "\E03D";
 }
 @media (max-width: 679px) {
   .mobile-navigation__trigger {
@@ -2138,7 +2152,7 @@ strong {
   }
 }
 .mobile-navigation__search:before {
-  content: "\E04E";
+  content: "\E052";
 }
 .mobile-navigation__search:before {
   position: absolute;
@@ -2192,7 +2206,7 @@ body.___rijkshuisstijl .mobile-navigation__trigger {
   text-align: center;
 }
 body.___rijkshuisstijl .mobile-navigation__trigger:before {
-  content: "\E03A";
+  content: "\E03D";
 }
 body.___rijkshuisstijl .mobile-navigation__trigger:before {
   line-height: inherit;
@@ -2251,7 +2265,7 @@ body.___rijkshuisstijl .mobile-navigation__search {
   }
 }
 body.___rijkshuisstijl .mobile-navigation__search:before {
-  content: "\E04E";
+  content: "\E052";
 }
 body.___rijkshuisstijl .mobile-navigation__search:before {
   position: absolute;
@@ -2355,7 +2369,7 @@ body.___campagne .navigation {
   border-left: 60px solid transparent;
 }
 .navigation__cms:after {
-  content: "\E043";
+  content: "\E046";
 }
 .navigation__cms:after {
   position: absolute;
@@ -2379,7 +2393,7 @@ body.___campagne .navigation {
   transition: background-color 0.2s ease;
 }
 .navigation__add-page:before {
-  content: "\E045";
+  content: "\E048";
 }
 .navigation__add-page:before {
   font-size: 1.6rem;
@@ -2496,7 +2510,7 @@ body.___campagne .navigation {
   }
 }
 .navigation__link.___home:before {
-  content: "\E02C";
+  content: "\E02F";
 }
 .navigation__link.___home:before {
   width: 100%;
@@ -2624,7 +2638,7 @@ body.___campagne .navigation {
   position: relative;
 }
 .navigation__action.___notifications:before {
-  content: "\E03F";
+  content: "\E042";
 }
 .navigation__action.___notifications:before {
   font-size: 2.1rem;
@@ -2647,7 +2661,7 @@ body.___campagne .navigation {
   }
 }
 .navigation__action.___search:before {
-  content: "\E04E";
+  content: "\E052";
 }
 .navigation__action.___search:before {
   font-size: 1.9rem;
@@ -2824,7 +2838,7 @@ body.___rijkshuisstijl .navigation__search button {
   padding: 0 2rem;
 }
 body.___rijkshuisstijl .navigation__search button:before {
-  content: "\E04E";
+  content: "\E052";
 }
 body.___rijkshuisstijl .navigation__search button:before {
   font-size: 1.8rem;
@@ -3298,7 +3312,7 @@ body.___no-nav .page-layout__header {
   margin-bottom: 2rem;
 }
 .button.___logout:before {
-  content: "\E039";
+  content: "\E03C";
 }
 .button.___logout:before {
   display: none;
@@ -3437,7 +3451,7 @@ button.button {
   color: #009ee3;
 }
 .button.___move:before {
-  content: "\E029";
+  content: "\E02B";
 }
 .button.___move:before {
   font-size: 1.1rem;
@@ -3446,7 +3460,7 @@ button.button {
   margin-bottom: .2rem;
 }
 .button.___edit:before {
-  content: "\E043";
+  content: "\E046";
 }
 .button.___edit:before {
   font-size: 1.3rem;
@@ -3463,7 +3477,7 @@ button.button {
   margin-right: .9rem;
 }
 .button.___add:before {
-  content: "\E046";
+  content: "\E049";
 }
 .button.___add:before {
   font-size: 1rem;
@@ -3502,7 +3516,7 @@ button.button {
   background-color: #55acee;
 }
 .button__share.___twitter:before {
-  content: "\E055";
+  content: "\E059";
 }
 .button__share.___twitter:before {
   font-size: 1.4rem;
@@ -3511,7 +3525,7 @@ button.button {
   background-color: #3664a2;
 }
 .button__share.___facebook:before {
-  content: "\E052";
+  content: "\E056";
 }
 .button__share.___facebook:before {
   font-size: 1.8rem;
@@ -3520,7 +3534,7 @@ button.button {
   background-color: #db4f3f;
 }
 .button__share.___google:before {
-  content: "\E053";
+  content: "\E057";
 }
 .button__share.___google:before {
   font-size: 1.4rem;
@@ -3529,7 +3543,7 @@ button.button {
   background-color: #0073b2;
 }
 .button__share.___linkedin:before {
-  content: "\E054";
+  content: "\E058";
 }
 .button__share.___linkedin:before {
   font-size: 1.8rem;
@@ -3547,7 +3561,7 @@ button.button {
   padding: 0;
 }
 .button.___options:before {
-  content: "\E041";
+  content: "\E044";
 }
 @media (max-width: 679px) {
   .button.___options {
@@ -3649,7 +3663,7 @@ button.___is-loading .button__loader {
   }
 }
 .button__icon.___settings:before {
-  content: "\E050";
+  content: "\E054";
 }
 .button__icon.___settings:before {
   font-size: 1.8rem;
@@ -3662,16 +3676,31 @@ button.___is-loading .button__loader {
   margin-left: auto;
 }
 .button__icon.___list:before {
-  content: "\E037";
+  content: "\E03A";
 }
 .button__icon.___list:before {
   font-size: 1.8rem;
 }
 .button__icon.___tiles:before {
-  content: "\E058";
+  content: "\E05C";
 }
 .button__icon.___tiles:before {
   font-size: 1.8rem;
+}
+.button__icon.___privacy {
+  margin-left: auto;
+}
+.button__icon.___privacy:before {
+  content: "\E02C";
+}
+.button__icon.___privacy:before {
+  font-size: 2.2rem;
+}
+.button__icon.___privacy.___is-public:before {
+  content: "\E04C";
+}
+.button__icon.___privacy.___is-public:before {
+  font-size: 2.2rem;
 }
 .button__text {
   position: relative;
@@ -3700,7 +3729,7 @@ button.___is-loading .button__loader {
   color: #B4B4B4;
 }
 .button__text.___edit-post:before {
-  content: "\E043";
+  content: "\E046";
 }
 .button__text.___edit-post:before {
   margin: 0 .8rem .1rem 0;
@@ -3964,7 +3993,7 @@ button.___is-loading .button__loader {
   border-radius: 0;
 }
 .card.___info .picture:before {
-  content: "\E033";
+  content: "\E036";
 }
 .card.___info .picture:before {
   font-size: 3rem;
@@ -4091,13 +4120,13 @@ a.card {
   transition: color 0.2s ease;
 }
 .calendar__months button:first-child:before {
-  content: "\E047";
+  content: "\E04A";
 }
 .calendar__months button:first-child:before {
   font-size: 1.2rem;
 }
 .calendar__months button:last-child:before {
-  content: "\E03C";
+  content: "\E03F";
 }
 .calendar__months button:last-child:before {
   font-size: 1.2rem;
@@ -4728,7 +4757,7 @@ a.card {
   color: #535353;
 }
 .card-list-bloggers__likes:before {
-  content: "\E02B";
+  content: "\E02E";
 }
 .card-list-bloggers__likes:before {
   margin: 0 0.5rem 0.2rem 0;
@@ -4844,7 +4873,7 @@ a.card {
   color: #535353;
 }
 .card-list-recommended__likes:before {
-  content: "\E02B";
+  content: "\E02E";
 }
 .card-list-recommended__likes:before {
   margin: 0 0.5rem 0.2rem 0;
@@ -5070,7 +5099,7 @@ a.card {
   right: 2.7rem;
 }
 .card-list-trending__icon:before {
-  content: "\E05A";
+  content: "\E05E";
 }
 .card-list-trending__icon:before {
   display: -ms-flexbox;
@@ -5129,7 +5158,7 @@ a.card {
   color: #535353;
 }
 .card-list-trending__likes:before {
-  content: "\E02B";
+  content: "\E02E";
 }
 .card-list-trending__likes:before {
   margin: 0 0.5rem 0.2rem 0;
@@ -5163,7 +5192,7 @@ a.card {
   transition: color 0.2s ease;
 }
 .card-profile .___is-editable .editable-field:after {
-  content: "\E043";
+  content: "\E046";
 }
 .card-profile .___is-editable .editable-field:after {
   margin: 0 0 .2rem .5rem;
@@ -5222,7 +5251,7 @@ a.card {
   display: none;
 }
 .card-profile .___is-empty .card-profile__fill:after {
-  content: "\E043";
+  content: "\E046";
 }
 .card-profile .___is-empty .card-profile__fill:after {
   margin: 0 0 .2rem .5rem;
@@ -5313,7 +5342,7 @@ a.card {
   }
 }
 .card-profile__icon:before {
-  content: "\E04D";
+  content: "\E051";
 }
 .card-profile__icon:before {
   font-size: 6.3rem;
@@ -5323,6 +5352,12 @@ a.card {
   .card-profile__icon {
     margin: 0 0 2rem 0;
   }
+}
+.card-profile__details li {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
 }
 .card-profile__details span {
   display: -ms-inline-flexbox;
@@ -6253,7 +6288,7 @@ body.___rijkshuisstijl .card-tile__picture {
       align-items: center;
 }
 .card-group__secret:before {
-  content: "\E038";
+  content: "\E03B";
 }
 .card-group__secret:before {
   margin: 0 0.5rem 0.2rem 0;
@@ -6446,7 +6481,7 @@ body.___rijkshuisstijl .card-tile__picture {
       align-items: center;
 }
 .card-topic__views:before {
-  content: "\E028";
+  content: "\E02A";
 }
 .card-topic__views:before {
   width: 2.4rem;
@@ -6645,10 +6680,10 @@ body.___rijkshuisstijl .card-tile__picture {
   font-weight: bold;
 }
 .count-likes.___thumbs-up:before {
-  content: "\E036";
+  content: "\E039";
 }
 .count-likes.___thumbs-up:after {
-  content: "\E035";
+  content: "\E038";
 }
 .count-likes.___thumbs-up:before,
 .count-likes.___thumbs-up:after {
@@ -6672,10 +6707,10 @@ body.___rijkshuisstijl .card-tile__picture {
   }
 }
 .count-likes:before {
-  content: "\E02B";
+  content: "\E02E";
 }
 .count-likes:after {
-  content: "\E02A";
+  content: "\E02D";
 }
 .count-likes:before,
 .count-likes:after {
@@ -6771,7 +6806,7 @@ body.___rijkshuisstijl .card-tile__picture {
   color: #81d9ff;
 }
 .file-tile.___folder .file-tile__image:before {
-  content: "\E029";
+  content: "\E02B";
 }
 .file-tile.___folder .file-tile__image:before {
   font-size: 4rem;
@@ -6801,7 +6836,7 @@ body.___rijkshuisstijl .card-tile__picture {
   color: #eeaaa5;
 }
 .file-tile.___pdf .file-tile__image:before {
-  content: "\E042";
+  content: "\E045";
 }
 .file-tile.___pdf .file-tile__image:before {
   font-size: 4.2rem;
@@ -6829,7 +6864,7 @@ body.___rijkshuisstijl .card-tile__picture {
   transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .file-tile__fav:before {
-  content: "\E057";
+  content: "\E05B";
 }
 .file-tile__fav:before {
   color: #B4B4B4;
@@ -6837,7 +6872,7 @@ body.___rijkshuisstijl .card-tile__picture {
   transition: opacity 0.2s ease, color 0.2s ease;
 }
 .file-tile__fav:after {
-  content: "\E056";
+  content: "\E05A";
 }
 .file-tile__fav:after {
   color: white;
@@ -6977,7 +7012,7 @@ body.___rijkshuisstijl .card-tile__picture {
   padding-bottom: .3rem;
 }
 .file__type.___folder:before {
-  content: "\E029";
+  content: "\E02B";
 }
 .file__type.___folder:before {
   font-size: 1.4rem;
@@ -7002,14 +7037,14 @@ body.___rijkshuisstijl .card-tile__picture {
   }
 }
 .file__type.___pdf:before {
-  content: "\E042";
+  content: "\E045";
 }
 .file__type.___pdf:before {
   font-size: 1.6rem;
   color: #d52b1e;
 }
 .file__type.___img:before {
-  content: "\E02F";
+  content: "\E032";
 }
 .file__type.___img:before {
   font-size: 1.6rem;
@@ -7019,7 +7054,7 @@ body.___rijkshuisstijl .card-tile__picture {
   position: relative;
 }
 .file__fav button:before {
-  content: "\E057";
+  content: "\E05B";
 }
 .file__fav button:before {
   color: #B4B4B4;
@@ -7027,7 +7062,7 @@ body.___rijkshuisstijl .card-tile__picture {
   transition: color 0.2s ease, opacity 0.2s ease;
 }
 .file__fav button:after {
-  content: "\E056";
+  content: "\E05A";
 }
 .file__fav button:after {
   color: white;
@@ -7469,7 +7504,7 @@ body.___rijkshuisstijl .card-tile__picture {
   cursor: pointer;
 }
 .lead.___group .lead__title span:after {
-  content: "\E033";
+  content: "\E036";
 }
 .lead.___group .lead__title span:after {
   margin-left: 1.5rem;
@@ -7944,7 +7979,7 @@ body.___rijkshuisstijl .card-tile__picture {
   height: 100%;
 }
 .list-members__add-icons span.___plus:before {
-  content: "\E046";
+  content: "\E049";
 }
 .list-members__add-icons span.___plus:before {
   font-size: 1.1rem;
@@ -7957,7 +7992,7 @@ body.___rijkshuisstijl .card-tile__picture {
   font-size: 1.2rem;
 }
 .list-members__add-icons span.___send:before {
-  content: "\E04F";
+  content: "\E053";
 }
 .list-members__add-icons span.___send:before {
   margin: 0 0 .1rem .3rem;
@@ -8204,13 +8239,13 @@ body.___rijkshuisstijl .card-tile__picture {
   color: #009ee3;
 }
 .mini-tabmenu__tab.___upload:before {
-  content: "\E05E";
+  content: "\E062";
 }
 .mini-tabmenu__tab.___upload:before {
   font-size: 1.5rem;
 }
 .mini-tabmenu__tab.___hyperlink:before {
-  content: "\E02D";
+  content: "\E030";
 }
 .mini-tabmenu__tab.___hyperlink:before {
   font-size: 1rem;
@@ -8346,13 +8381,13 @@ body.___rijkshuisstijl .card-tile__picture {
   font-size: 0.4rem;
 }
 .contextual__tool.___edit:before {
-  content: "\E043";
+  content: "\E046";
 }
 .contextual__tool.___edit:before {
   font-size: 1.4rem;
 }
 .contextual__tool.___unlink:before {
-  content: "\E05D";
+  content: "\E061";
 }
 .contextual__tool.___unlink:before {
   font-size: 1.5rem;
@@ -8370,25 +8405,25 @@ body.___rijkshuisstijl .card-tile__picture {
   font-size: 1.5rem;
 }
 .contextual__tool.___link:before {
-  content: "\E02D";
+  content: "\E030";
 }
 .contextual__tool.___link:before {
   font-size: 0.9rem;
 }
 .contextual__tool.___inline:before {
-  content: "\E02E";
+  content: "\E031";
 }
 .contextual__tool.___inline:before {
   font-size: 1.6rem;
 }
 .contextual__tool.___info:before {
-  content: "\E032";
+  content: "\E035";
 }
 .contextual__tool.___info:before {
   font-size: 1.6rem;
 }
 .contextual__tool.___resize:before {
-  content: "\E04B";
+  content: "\E04F";
 }
 .contextual__tool.___resize:before {
   font-size: 1.4rem;
@@ -8619,7 +8654,7 @@ body.___rijkshuisstijl .card-tile__picture {
   transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 .comment__edit:before {
-  content: "\E043";
+  content: "\E046";
 }
 .comment__edit:before {
   font-size: 1.5rem;
@@ -9375,6 +9410,7 @@ body.___rijkshuisstijl .card-tile__picture {
   padding: 1rem 0 .9rem;
   background-color: #fff;
   text-align: left;
+  white-space: nowrap;
   box-shadow: 0 0.1rem 0.5rem 0 rgba(0, 0, 0, 0.11), 0 1.5rem 3rem -2rem rgba(0, 0, 0, 0.16);
   overflow-y: auto;
   cursor: default;
@@ -9384,7 +9420,8 @@ body.___rijkshuisstijl .card-tile__picture {
   transition: visibility 0.2s ease, opacity 0.2s ease;
 }
 .option-list.___is-open,
-.button.___dropdown.___is-open > .option-list {
+.button.___dropdown.___is-open > .option-list,
+.button__icon.___is-open > .option-list {
   visibility: visible;
   opacity: 1;
 }
@@ -9474,7 +9511,7 @@ body.___rijkshuisstijl .card-tile__picture {
   text-shadow: none;
 }
 .play-button:before {
-  content: "\E044";
+  content: "\E047";
 }
 .play-button:before {
   position: relative;
@@ -9884,7 +9921,7 @@ a.card-tile:hover .read-more__circle {
   color: #B4B4B4;
 }
 .editor__tool-group#editor-insert .selector__select:before {
-  content: "\E046";
+  content: "\E049";
 }
 .editor__tool-group#editor-insert .selector__select:before {
   font-size: 1.4rem;
@@ -10006,7 +10043,7 @@ a.card-tile:hover .read-more__circle {
   color: #B4B4B4;
 }
 .editor__tool-group#editor-insert .selector__option.___is-disabled:before {
-  content: "\E046";
+  content: "\E049";
 }
 .editor__tool-group#editor-insert .selector__option.___is-disabled:before {
   font-size: 1.4rem;
@@ -10367,7 +10404,7 @@ a.card-tile:hover .read-more__circle {
   transition: color 0.2s ease;
 }
 .tabmenu__search-button:before {
-  content: "\E04E";
+  content: "\E052";
 }
 .tabmenu__search-button:before {
   font-size: 1.8rem;
@@ -10394,7 +10431,7 @@ a.card-tile:hover .read-more__circle {
   opacity: 1;
 }
 .tabmenu__search:before {
-  content: "\E04E";
+  content: "\E052";
 }
 .tabmenu__search:before {
   position: absolute;
@@ -10483,7 +10520,7 @@ a.card-tile:hover .read-more__circle {
   cursor: pointer;
 }
 .search-bar__button:before {
-  content: "\E04E";
+  content: "\E052";
 }
 .search-bar__button:before {
   font-size: 1.8rem;
@@ -10576,7 +10613,7 @@ a.card-tile:hover .read-more__circle {
           user-select: none;
 }
 .users-online:after {
-  content: "\E05F";
+  content: "\E063";
 }
 .users-online:after {
   font-size: 2.3rem;
@@ -10829,7 +10866,7 @@ a.card-tile:hover .read-more__circle {
   margin: 0 1rem 2rem 0;
 }
 .article-action.___share:before {
-  content: "\E051";
+  content: "\E055";
 }
 .article-action.___share:before {
   font-size: 1.4rem;
@@ -10854,7 +10891,7 @@ a.card-tile:hover .read-more__circle {
   }
 }
 .article-action.___comment:before {
-  content: "\E043";
+  content: "\E046";
 }
 .article-action.___comment:before {
   font-size: 1.5rem;
@@ -10951,10 +10988,10 @@ a.card-tile:hover .read-more__circle {
   font-weight: normal;
 }
 .article-actions__follow:before {
-  content: "\E03F";
+  content: "\E042";
 }
 .article-actions__follow:after {
-  content: "\E03E";
+  content: "\E041";
 }
 @media (max-width: 679px) {
   .article-actions__follow {
@@ -11494,32 +11531,32 @@ a.tooltip span {
   font-size: 1.4rem;
 }
 .editor__tool.___italic:before {
-  content: "\E034";
+  content: "\E037";
 }
 .editor__tool.___italic:before {
   font-size: 1.4rem;
 }
 .editor__tool.___underlined:before {
-  content: "\E05C";
+  content: "\E060";
 }
 .editor__tool.___underlined:before {
   margin: 0.1rem 0 0 0;
   font-size: 1.6rem;
 }
 .editor__tool.___ol:before {
-  content: "\E040";
+  content: "\E043";
 }
 .editor__tool.___ol:before {
   font-size: 1.6rem;
 }
 .editor__tool.___ul:before {
-  content: "\E05B";
+  content: "\E05F";
 }
 .editor__tool.___ul:before {
   font-size: 1.47rem;
 }
 .editor__tool.___hyperlink:before {
-  content: "\E02D";
+  content: "\E030";
 }
 .editor__tool.___hyperlink:before {
   font-size: 1rem;
@@ -11534,7 +11571,7 @@ a.tooltip span {
   font-size: 1.7rem;
 }
 .editor__tool.___quote:before {
-  content: "\E049";
+  content: "\E04D";
 }
 .editor__tool.___quote:before {
   font-size: 1.3rem;
@@ -12070,7 +12107,7 @@ body.navigation-search-open .navigation-search {
   padding: 0 0 0 2rem;
 }
 .navigation-search__icon:before {
-  content: "\E04E";
+  content: "\E052";
 }
 .navigation-search__icon:before {
   /* icon height */
@@ -12299,14 +12336,14 @@ body.___rijkshuisstijl .navigation-search-results {
   margin: 0 1rem 0 0;
 }
 .pagination__previous:before {
-  content: "\E047";
+  content: "\E04A";
 }
 .pagination__previous:before {
   font-size: 1.8rem;
   margin-right: 0.2rem;
 }
 .pagination__next:before {
-  content: "\E03C";
+  content: "\E03F";
 }
 .pagination__next:before {
   font-size: 1.8rem;
@@ -12573,7 +12610,7 @@ body.___rijkshuisstijl .navigation-search-results {
   color: #00c6ff;
 }
 .main__title.___trending:before {
-  content: "\E05A";
+  content: "\E05E";
 }
 .main__title.___trending:before {
   display: -ms-flexbox;
@@ -12613,7 +12650,7 @@ body.___rijkshuisstijl .navigation-search-results {
   transition: color 0.2s ease;
 }
 .main__title.___info > div:before {
-  content: "\E033";
+  content: "\E036";
 }
 .main__title.___info > div:before {
   font-size: 2.4rem;
@@ -12908,7 +12945,7 @@ body.___rijkshuisstijl .navigation-search-results {
   left: -1rem;
 }
 .slick-prev:before {
-  content: "\E047";
+  content: "\E04A";
 }
 .slick-prev:before {
   margin-right: 0.2rem;
@@ -12917,7 +12954,7 @@ body.___rijkshuisstijl .navigation-search-results {
   right: -1rem;
 }
 .slick-next:before {
-  content: "\E03C";
+  content: "\E03F";
 }
 .slick-next:before {
   margin-left: 0.2rem;
@@ -13053,7 +13090,7 @@ body.___rijkshuisstijl .navigation-search-results {
   }
 }
 .upload-image__box.___video .upload-image__placeholder:before {
-  content: "\E044";
+  content: "\E047";
 }
 .upload-image__box.___video .upload-image__placeholder:before {
   display: -ms-flexbox;
@@ -13138,7 +13175,7 @@ body.___rijkshuisstijl .navigation-search-results {
   }
 }
 .upload-image__edit:before {
-  content: "\E043";
+  content: "\E046";
 }
 .upload-image__edit:before {
   font-size: 1.5rem;
@@ -13504,7 +13541,7 @@ body.___rijkshuisstijl .navigation-search-results {
   font-size: 1.8rem;
 }
 .cms__panel button.___settings:before {
-  content: "\E050";
+  content: "\E054";
 }
 .cms__panel button.___settings:before {
   font-size: 2.2rem;
@@ -13614,13 +13651,13 @@ body.___rijkshuisstijl .navigation-search-results {
   background-color: rgba(255, 255, 255, 0.5);
 }
 .cms-overlay__buttons button.___edit:before {
-  content: "\E043";
+  content: "\E046";
 }
 .cms-overlay__buttons button.___edit:before {
   font-size: 1.8rem;
 }
 .cms-overlay__buttons button.___save:before {
-  content: "\E04C";
+  content: "\E050";
 }
 .cms-overlay__buttons button.___save:before {
   font-size: 1.8rem;
@@ -13678,7 +13715,7 @@ body.___rijkshuisstijl .navigation-search-results {
   height: 6rem;
 }
 .cms-block.___add:before {
-  content: "\E045";
+  content: "\E048";
 }
 .cms-block.___add:before {
   font-size: 1.8rem;
@@ -13742,7 +13779,7 @@ body.___rijkshuisstijl .navigation-search-results {
   opacity: 1;
 }
 .cms-section__buttons button.___move:before {
-  content: "\E03B";
+  content: "\E03E";
 }
 .cms-section__buttons button.___move:before {
   font-size: 2rem;
@@ -14123,7 +14160,7 @@ body.modal__open {
   cursor: pointer;
 }
 .widget__admin .___edit:before {
-  content: "\E043";
+  content: "\E046";
 }
 .widget__admin .___edit:before {
   margin: 0 0.5rem 0.2rem 0;
@@ -14348,7 +14385,7 @@ body.modal__open {
   margin-left: auto;
 }
 .card-document__format.___folder:before {
-  content: "\E029";
+  content: "\E02B";
 }
 .card-document__format.___folder:before {
   color: #fff;
@@ -14375,7 +14412,7 @@ body.modal__open {
   transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 .card-edit:before {
-  content: "\E043";
+  content: "\E046";
 }
 .card-edit:before {
   font-size: 1.5rem;
@@ -14465,7 +14502,7 @@ body.___leraar .navigation__search input {
   }
 }
 .cms__panel button.___add:before {
-  content: "\E046";
+  content: "\E049";
 }
 .cms__panel button.___add:before {
   font-size: 1.6rem;
