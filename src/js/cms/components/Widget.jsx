@@ -1,6 +1,7 @@
 import React from "react"
 import { gql, graphql } from "react-apollo"
 import autobind from "autobind-decorator"
+import classnames from "classnames"
 import Select from "../../core/components/NewSelect"
 import Delete from "../../core/Delete"
 
@@ -10,6 +11,7 @@ import Leader from "./widgets/Leader"
 import Lead from "./widgets/Lead"
 import Activity from "./widgets/Activity"
 import Events from "./widgets/Events"
+import Cards from "./widgets/Cards"
 
 const translate = {
     "text": "Tekst",
@@ -21,7 +23,8 @@ const otherWidgets = {
     activity: "Activiteiten",
     leader: "Leader",
     lead: "Lead",
-    events: "Agenda"
+    events: "Agenda",
+    // cards: "Kaarten"
 }
 
 class Widget extends React.Component {
@@ -98,7 +101,7 @@ class Widget extends React.Component {
                 widget = (
                     <Lead ref="widget" entity={entity} isEditing={this.state.isEditing} onSave={this.onSave} />
                 )
-                break
+                    break
                 case "leader":
                     widget = (
                         <Leader ref="widget" entity={entity} isEditing={this.state.isEditing} onSave={this.onSave} />
@@ -107,6 +110,11 @@ class Widget extends React.Component {
                 case "events":
                     widget = (
                         <Events ref="widget" entity={entity} isEditing={this.state.isEditing} onSave={this.onSave} />
+                    )
+                    break
+                case "cards":
+                    widget = (
+                        <Cards ref="widget" entity={entity} isEditing={this.state.isEditing} onSave={this.onSave} />
                     )
             }
 
@@ -137,7 +145,10 @@ class Widget extends React.Component {
 
             return (
                 <div className={this.props.col}>
-                    <div className={entity.canEdit ? "cms-block cms-block-filled" : ""}>
+                    <div className={classnames({
+                        "cms-block cms-block-filled": entity.canEdit,
+                        "cms-block-editing": this.state.isEditing
+                    })}>
                         {widget}
                         {overlay}
                     </div>
