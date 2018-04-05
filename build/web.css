@@ -6645,6 +6645,7 @@ body.___rijkshuisstijl .card-tile__picture {
 }
 .count-bookmarks span.___saved {
   position: absolute;
+  top: .8rem;
   left: 3rem;
   opacity: 0;
 }
@@ -7925,12 +7926,20 @@ body.___rijkshuisstijl .card-tile__picture {
 .list-members__member .selector {
   max-width: 14rem;
 }
+.list-members__link {
+  -ms-flex-positive: 1;
+      flex-grow: 1;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+}
 .list-members__picture {
   -ms-flex-negative: 0;
       flex-shrink: 0;
   width: 4rem;
   height: 4rem;
-  margin: 0 1rem 0 0;
+  margin: 0 1.5rem 0 0;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -9458,14 +9467,14 @@ body.___rijkshuisstijl .card-tile__picture {
 .option-list > * {
   -ms-flex: 0 0 auto;
       flex: 0 0 auto;
-  display: -ms-flexbox;
-  display: flex;
+  display: -ms-flexbox !important;
+  display: flex !important;
   -ms-flex-align: center;
       align-items: center;
   padding: .5rem 2rem;
   line-height: 2.4rem;
   color: #000;
-  font-weight: normal;
+  font-weight: normal !important;
   cursor: pointer;
   transition: color 0.2s ease;
 }
@@ -11036,6 +11045,7 @@ a.card-tile:hover .read-more__circle {
 }
 .article-actions__follow span.___save {
   position: absolute;
+  top: .8rem;
   left: 3rem;
   opacity: 1;
 }
@@ -13724,6 +13734,9 @@ body.___rijkshuisstijl .navigation-search-results {
 }
 .cms-block.___add:hover {
   background-color: #FAFAFA;
+}
+.cms-block-editing {
+  padding: 2rem 3rem;
 }
 .cms-block__buttons {
   display: -ms-flexbox;
