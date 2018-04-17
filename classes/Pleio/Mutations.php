@@ -719,7 +719,7 @@ class Mutations {
             [ "key" => "mobile", "name" => "Mobiel nummer" ],
             [ "key" => "emailaddress", "name" => "E-mailadres" ],
             [ "key" => "site", "name" => "Website" ],
-            [ "key" => "description", "name" => "Over mij" ]
+            [ "key" => "aboutme", "name" => "Over mij" ]
         ];
 
         $customFields = elgg_get_plugin_setting("profile", "pleio_template") ? json_decode(elgg_get_plugin_setting("profile", "pleio_template"), true) : [];
@@ -731,7 +731,7 @@ class Mutations {
         }
 
         if ($value) {
-            if (in_array($key, ["name", "description"])) {
+            if ($key === "name") {
                 $entity->$key = $value;
                 $result = $entity->save();
             } else {

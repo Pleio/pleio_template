@@ -893,7 +893,7 @@ class Resolver {
             [ "key" => "mobile", "name" => "Mobiel nummer" ],
             [ "key" => "emailaddress", "name" => "E-mailadres" ],
             [ "key" => "site", "name" => "Website" ],
-            [ "key" => "description", "name" => "Over mij" ]
+            [ "key" => "aboutme", "name" => "Over mij" ]
         ];
 
         $customFields = elgg_get_plugin_setting("profile", "pleio_template") ? json_decode(elgg_get_plugin_setting("profile", "pleio_template"), true) : [];
@@ -924,6 +924,9 @@ class Resolver {
             if (isset($metadata_by_key[$item["key"]])) {
                 $item["value"] = $metadata_by_key[$item["key"]]->value;
                 $item["accessId"] = $metadata_by_key[$item["key"]]->access_id;
+            } elseif ($item["key"] === "aboutme") {
+                $item["value"] = $user->description;
+                $item["accessId"] = ACCESS_PUBLIC;
             } else {
                 $item["value"] = "";
                 $item["accessId"] = ACCESS_PRIVATE;

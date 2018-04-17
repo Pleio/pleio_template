@@ -55,7 +55,7 @@ class Profile extends React.Component {
 
         const allFields = new OrderedSet(Object.keys(profileByKey))
 
-        const defaultFields = new OrderedSet(["emailaddress", "site", "phone", "mobile", "description"])
+        const defaultFields = new OrderedSet(["emailaddress", "site", "phone", "mobile", "aboutme"])
         const topFields = new OrderedSet(["emailaddress", "site", "phone", "mobile"])
 
         const contactData = topFields.intersect(defaultFields).map((key, i) => (
@@ -129,7 +129,7 @@ class Profile extends React.Component {
                                     <ul className="card-profile__details">
                                         {siteProfile}
                                     </ul>
-                                    <ProfileField type="richTextarea" entity={entity} canEdit={entity.canEdit} dataKey="description" field={profileByKey.description} className="card-profile__about" />
+                                    <ProfileField type="richTextarea" entity={entity} canEdit={entity.canEdit} dataKey="aboutme" field={profileByKey.aboutme} className="card-profile__about" />
                                 </div>
                                 <div className="col-lg-3"></div>
                             </div>

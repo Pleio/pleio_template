@@ -69,9 +69,11 @@ class ProfileField extends React.Component {
 
     @autobind
     onBlur(e) {
-        let value
+        let value = ""
         if (this.props.type == "richTextarea") {
-            value = JSON.stringify(convertToRaw(this.refs.input.getValue()))
+            if (this.refs.input.getTextValue()) {
+                value = JSON.stringify(convertToRaw(this.refs.input.getValue()))
+            }
         } else {
             value = this.state.value
         }
@@ -276,6 +278,18 @@ class ProfileField extends React.Component {
             )
         }
 
+        const options = [
+            { onClick: (e) => this.changePermission(1), name: "Zichtbaar voor andere leden" },
+            { onClick: (e) => this.changePermission(2), name: "Publiek zichtbaar" }
+        ]
+
+        let dropdownButton
+        if (this.props.field.accessId) {
+            dropdownButton = (
+                <DropdownButton name="Voeg toe" options={options} icon isPublic={(this.props.field.accessId == 2)} />
+            )
+        }
+
         let fillNow
         if (!this.state.value && !this.state.isEditing) {
             fillNow = (
@@ -344,6 +358,7 @@ class ProfileField extends React.Component {
                             <span className="editable-field">{value}</span>
                             {fillNow}
                         </span>
+                        {dropdownButton}
                     </li>
                 </ul>
                 {field}
