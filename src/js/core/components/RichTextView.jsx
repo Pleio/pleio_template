@@ -1,5 +1,6 @@
 import React from "react"
-import { Editor, EditorState, convertFromRaw, convertFromHTML, DefaultDraftBlockRenderMap, CompositeDecorator, ContentState, Entity } from "draft-js"
+import { Editor, EditorState, convertFromRaw, DefaultDraftBlockRenderMap, CompositeDecorator, ContentState, Entity } from "draft-js"
+import { convertFromHTML } from "draft-convert"
 import Immutable from "immutable"
 import { humanFileSize } from "../../lib/helpers"
 import AtomicBlock from "./RichText/AtomicBlock"
@@ -128,6 +129,32 @@ export default class RichTextView extends React.Component {
         }
     }
 
+    richConvertFromHTML(value) {
+        return convertFromHTML({
+            htmlToBlock: (nodeName, node) => {
+                if (nodeName === 'img') {
+                    return 'atomic';
+                }
+            },
+            htmlToEntity: (nodeName, node, createEntity) => {
+                switch (nodeName) {
+                    case "a":
+                        return createEntity(
+                            'LINK',
+                            'MUTABLE',
+                            {url: node.href}
+                        )
+                    case "img":
+                        return createEntity(
+                            'IMAGE',
+                            'MUTABLE',
+                            {src: node.src}
+                        )
+                }
+            }
+        })(value)
+    }
+
     render() {
         let contentState
         if (this.props.richValue) {
@@ -135,12 +162,10 @@ export default class RichTextView extends React.Component {
                 let string = JSON.parse(this.props.richValue)
                 contentState = convertFromRaw(string)
             } catch (e) {
-                const blocksFromHTML = convertFromHTML(this.props.value)
-                contentState = ContentState.createFromBlockArray(blocksFromHTML)
+                contentState = this.richConvertFromHTML(this.props.value)
             }
         } else {
-            const blocksFromHTML = convertFromHTML(this.props.value || "")
-            contentState = ContentState.createFromBlockArray(blocksFromHTML)
+            contentState = this.richConvertFromHTML(this.props.value || "")
         }
 
         // do not render editor on server-side because it's output is non-deterministic

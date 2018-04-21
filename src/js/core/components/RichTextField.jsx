@@ -1,7 +1,8 @@
 import React from "react"
 import autobind from "autobind-decorator"
 import PropTypes from "prop-types"
-import { Editor, EditorState, ContentState, RichUtils, AtomicBlockUtils, DefaultDraftBlockRenderMap, CompositeDecorator, Modifier, convertToRaw, convertFromRaw, convertFromHTML } from "draft-js"
+import { Editor, EditorState, ContentState, RichUtils, AtomicBlockUtils, DefaultDraftBlockRenderMap, CompositeDecorator, Modifier, convertToRaw, convertFromRaw } from "draft-js"
+import { convertFromHTML } from "draft-convert"
 import { humanFileSize } from "../../lib/helpers"
 import classnames from "classnames"
 import Validator from "validatorjs"
@@ -106,12 +107,10 @@ class RichTextField extends React.Component {
                 let string = JSON.parse(this.props.richValue)
                 contentState = convertFromRaw(string)
             } catch (e) {
-                const blocksFromHTML = convertFromHTML(this.props.value)
-                contentState = ContentState.createFromBlockArray(blocksFromHTML)
+                contentState = this.richConvertFromHTML(this.props.value)
             }
         } else {
-            const blocksFromHTML = convertFromHTML(this.props.value || "")
-            contentState = ContentState.createFromBlockArray(blocksFromHTML)
+            contentState = this.richConvertFromHTML(this.props.value || "")
         }
 
         this.state = {
@@ -160,12 +159,10 @@ class RichTextField extends React.Component {
                 let string = JSON.parse(nextProps.richValue)
                 contentState = convertFromRaw(string)
             } catch (e) {
-                const blocksFromHTML = convertFromHTML(nextProps.value)
-                contentState = ContentState.createFromBlockArray(blocksFromHTML)
+                contentState = this.richConvertFromHTML(nextProps.value)
             }
         } else {
-            const blocksFromHTML = convertFromHTML(nextProps.value || "")
-            contentState = ContentState.createFromBlockArray(blocksFromHTML)
+            contentState = this.richConvertFromHTML(nextProps.value || "")
         }
 
         this.setState({
@@ -414,6 +411,32 @@ class RichTextField extends React.Component {
         const newEditorState = AtomicBlockUtils.insertAtomicBlock(this.state.editorState, entityKey, " ")
         this.onChange(newEditorState)
         setTimeout(() => this.focus(), 0)
+    }
+
+    richConvertFromHTML(value) {
+        return convertFromHTML({
+            htmlToBlock: (nodeName, node) => {
+                if (nodeName === 'img') {
+                    return 'atomic';
+                }
+            },
+            htmlToEntity: (nodeName, node, createEntity) => {
+                switch (nodeName) {
+                    case "a":
+                        return createEntity(
+                            'LINK',
+                            'MUTABLE',
+                            {url: node.href}
+                        )
+                    case "img":
+                        return createEntity(
+                            'IMAGE',
+                            'MUTABLE',
+                            {src: node.src}
+                        )
+                }
+            }
+        })(value)
     }
 
     render() {

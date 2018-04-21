@@ -25,6 +25,7 @@
     "autobind-decorator": "^1.4.1",
     "classnames": "^2.2.5",
     "core-js": "^2.5.3",
+    "draft-convert": "^2.0.1",
     "draft-js": "^0.10.4",
     "draftjs-to-html": "^0.8.2",
     "fetch-jsonp": "^1.0.7",
