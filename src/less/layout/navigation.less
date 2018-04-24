@@ -51,6 +51,7 @@ This file contains the styling for the main navigation.
     position: absolute;
     top: 0;
     right: 0;
+    z-index: 12;
     cursor: pointer;
 
     &:before {
@@ -133,6 +134,10 @@ This file contains the styling for the main navigation.
     text-decoration: none;
     transition: color @trans-fast, background-color @trans-fast;
 
+    li {
+        position: relative;
+    }
+
     // MOBILE & TABLET
     @media (max-width: @screen-md-max) {
         display: block;
@@ -163,6 +168,7 @@ This file contains the styling for the main navigation.
 
     // DESKTOP
     @media (min-width: @screen-lg) {
+        flex-wrap: wrap;
         color: @color-white;
         line-height: 6rem;
 

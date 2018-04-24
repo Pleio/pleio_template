@@ -78,6 +78,7 @@ class InputField extends React.Component {
                 placeholder={this.props.placeholder}
                 onChange={this.onChange}
                 value={this.state.value}
+                disabled={this.props.disabled}
             />
         )
     }

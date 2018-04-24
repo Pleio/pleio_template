@@ -46,7 +46,7 @@
             margin-bottom: 1rem;
         }
 
-        > *:not(:last-child):not(.button__icon) {
+        > *:not(:last-child) {
             margin-right: 2rem;
 
             @media ( max-width: @screen-xs-max ) {
@@ -56,6 +56,35 @@
                     margin-right: 0;
                 }
             }
+        }
+    }
+
+    &.___gutter-small {
+        flex-wrap: nowrap;
+        margin-bottom: -1rem;
+
+        &.___margin-bottom {
+            margin-bottom: 1rem;
+
+            @media ( max-width: @screen-xs-max ) {
+                margin-bottom: .5rem;
+            }
+        }
+
+        > * {
+            margin-bottom: 1rem;
+        }
+
+        > *:not(:last-child) {
+            margin-right: 1rem;
+
+            @media ( max-width: @screen-xs-max ) {
+                margin-right: .5rem;
+            }
+        }
+
+        .form__item {
+            flex-grow: 1;
         }
     }
 
