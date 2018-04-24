@@ -1,5 +1,6 @@
 import React from "react"
 import { NavLink, withRouter } from "react-router-dom"
+import { List } from "immutable"
 import UserMenu from "./UserMenu"
 import UserMobileMenu from "./UserMobileMenu"
 import classnames from "classnames"
@@ -18,7 +19,7 @@ class TopMenu extends React.Component {
         this.state = {
             submenuIsOpen: false,
             q: "",
-            menu: [
+            menu: List([
                 {
                     label: "Yolo",
                     link: "/yolo"
@@ -27,7 +28,7 @@ class TopMenu extends React.Component {
                     label: "Nieuw",
                     link: "/nieuw"
                 }
-            ]
+            ])
         }
 
         this.changeSearchField = (e) => this.setState({q: e.target.value})
@@ -59,29 +60,27 @@ class TopMenu extends React.Component {
             return
         }
 
-        // const sourceRemoved = this.state.menu.splice(result.source.index, 1)
-        // const newMenu = sourceRemoved.splice(result.destination.index, 0, this.state.menu.get(result.source.index))
+        const sourceRemoved = this.state.menu.splice(result.source.index, 1)
+        const newMenu = sourceRemoved.splice(result.destination.index, 0, this.state.menu.get(result.source.index))
 
-        // this.setState({ menu: newMenu })
+        this.setState({ menu: newMenu })
     }
 
     @autobind    
     addSubpage() {
         this.setState({
-            menu: [...this.state.menu,
-                {
-                    label: "",
-                    link: ""
-                }
-            ],
+            menu: this.state.menu.push({
+                label: "",
+                link: ""
+            })
         })
     }
 
     @autobind    
-    deleteSubpage(index) {
-        this.setState((prevState) => ({
-            menu: prevState.menu.filter((_, i) => i !== index)
-        }))
+    deleteSubpage(i) {
+        this.setState({
+            menu: this.state.menu.delete(i)
+        })
     }
 
     render() {
@@ -97,16 +96,31 @@ class TopMenu extends React.Component {
         }
 
         menuItems = site.menu.map((item, i) => (
-            <li key={i}>
-                <NavLink to={item.link} onClick={this.closeMobileMenu} title={item.title} className="navigation__link" activeClassName="___is-active">
+            <li className="navigation__dropdown" key={i}>
+                <NavLink to={item.link} onClick={this.closeMobileMenu} title={item.title} className="navigation__link ___dropdown" activeClassName="___is-active">
                     {item.title}
                 </NavLink>
+
+                <div className="submenu ___dropdown">
+                    <div className="submenu__back" data-nav-back>
+                        Terug
+                    </div>
+                    <ul className="submenu__list">
+                        <li className="submenu__list-subject">
+                            <a href="">hoofdpagina</a>
+                        </li>
+                        <li className="submenu__list-item">
+                            <a href="">subpagina</a>
+                        </li>
+                    </ul>
+                </div>
+
                 {editModeEnabled &&
                     <div className="cms-overlay">
                         <div className="cms-overlay__actions">
-                        <div className="cms-overlay__buttons">
-                            <button className="___edit" onClick={(e) => this.refs.editPageModal.toggle()} />
-                        </div>
+                            <div className="cms-overlay__buttons">
+                                <button className="___edit" onClick={(e) => this.refs.editPageModal.toggle()} />
+                            </div>
                         </div>
                     </div>
                 }
@@ -156,7 +170,7 @@ class TopMenu extends React.Component {
                             <div className="row">
                                 <div className="col-sm-6">
                                     <div className="flexer ___gutter-small">
-                                        <button type="button" className="button__icon ___move ___is-grabbable" {...provided.dragHandleProps} />
+                                        <div {...provided.dragHandleProps} className="button__icon ___move" />
                                         <InputField value={subpage.label} name={subpage.label.toLowerCase()} type="text" placeholder="Voeg een titel toe" className="form__input" rules="required" autofocus />
                                     </div>
                                 </div>
@@ -174,6 +188,39 @@ class TopMenu extends React.Component {
                 </Draggable>
             )
         })
+
+        const pageForm = (
+            <form className="form" ref="form" onSubmit={this.onSubmit}>
+                <div className="form__item">
+                    <div className="row">
+                        <div className="col-sm-6">
+                            <InputField value="Pagina" name="title" type="text" placeholder="Voeg een titel toe" className="form__input" rules="required" autofocus />
+                        </div>
+                        <div className="col-sm-6">
+                            <InputField value="/pagina" name="url" type="text" placeholder="Voeg een URL toe" className="form__input" rules="required" disabled={this.state.menu && this.state.menu.length > 0} />
+                        </div>
+                    </div>
+                </div>
+                <div className="title">Subpagina's</div>
+                <DragDropContext onDragEnd={this.onDragEnd}>
+                    <Droppable droppableId="droppable-1">
+                        {(provided, snapshot) => (
+                            <div ref={provided.innerRef}>
+                                {subpages}
+                                {provided.placeholder}                                            
+                            </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
+                
+                <button type="button" className="button ___add ___line" onClick={() => this.addSubpage()}>Subpagina</button>
+                <div className="flexer ___end">
+                    <button className="button" onClick={this.onSubmit}>
+                        Toevoegen
+                    </button>
+                </div>
+            </form>
+        )
 
         return (
             <nav className={"navigation " + (this.props.className || "") + " " + classnames({"nav-level-one": this.state.submenuIsOpen})}>
@@ -215,67 +262,22 @@ class TopMenu extends React.Component {
                         <UserMobileMenu onClick={this.closeMobileMenu} viewer={this.props.data.viewer} />
                     </div>
                 </div>
+
+                {editModeEnabled &&                                
                     <Modal
                         ref="addPageModal"
                         title="Hoofdpagina toevoegen"
                     >
-                        <form className="form" ref="form" onSubmit={this.onSubmit}>
-                            <div className="form__item">
-                                <div className="row">
-                                    <div className="col-sm-6">
-                                        <InputField name="title" type="text" placeholder="Voeg een titel toe" className="form__input" rules="required" autofocus />
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <InputField name="url" type="text" placeholder="Voeg een URL toe" className="form__input" rules="required" disabled />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="title">Subpagina's</div>
-                            <DragDropContext onDragEnd={this.onDragEnd}>
-                                <Droppable droppableId="droppable-1">
-                                    {(provided, snapshot) => (
-                                        <div ref={provided.innerRef}>
-                                            {subpages}
-                                            {provided.placeholder}                                            
-                                        </div>
-                                    )}
-                                </Droppable>
-                            </DragDropContext>
-                            
-                            <button type="button" className="button ___add ___line" onClick={() => this.addSubpage()}>Subpagina</button>
-                            <div className="flexer ___end">
-                                <button className="button" onClick={this.onSubmit}>
-                                    Toevoegen
-                                </button>
-                            </div>
-                        </form>
+                        {pageForm}
                     </Modal>
+                }
                 
                 {editModeEnabled &&                
                     <Modal
                         ref="editPageModal"
                         title="Hoofdpagina bewerken"
                     >
-                        <Form className="form" ref="form" onSubmit={this.onSubmit}>
-                            <div className="form__item">
-                                <div className="row">
-                                    <div className="col-sm-6">
-                                        <InputField value="Hoofdpagina" name="title" type="text" placeholder="Voeg een titel toe" className="form__input" rules="required" autofocus />
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <InputField value="/link" name="url" type="text" placeholder="Voeg een URL toe" className="form__input" rules="required" disabled />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="title">Subpagina's</div>
-                            {/* {subpages} */}
-                            <button type="button" className="button ___add ___line">Subpagina</button>
-                            <div className="flexer ___end">
-                                <button className="button" onClick={this.onSubmit}>
-                                    Toevoegen
-                                </button>
-                            </div>
-                        </Form>
+                        {/* {pageForm} */}
                     </Modal>
                 }
             </nav>        
