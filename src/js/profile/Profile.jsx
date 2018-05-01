@@ -99,7 +99,7 @@ class Profile extends React.Component {
                                     <div className="row">
                                         <div className="col-sm-12 col-lg-8">
                                             <ul className="card-profile__details">
-                                                <li><span>Contactgegevens</span></li>
+                                                <li><strong>Contactgegevens</strong></li>
                                                 {contactData}
                                             </ul>
                                         </div>

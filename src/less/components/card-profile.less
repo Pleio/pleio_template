@@ -209,29 +209,34 @@
 .card-profile__details {
     li {
         display: flex;
-        align-items: center;
-    }
+        
+        label {
+            @media ( max-width: @screen-xs-max ) {
+                margin: 1rem 0 0 0;
+                width: 100%;
+            }
 
-    span {
-        display: inline-flex;
-        font-weight: bold;
+            @media ( min-width: @screen-sm ) {
+                display: inline-block;
+                width: 16rem;
+                flex-shrink: 0;
+            }
+        }
+
+        span {
+            display: inline-flex;
+            // font-weight: bold;
+            flex-grow: 1;            
+        }
     }
 
     @media ( max-width: @screen-xs-max ) {
-        label {
-            margin: 1rem 0 0 0;
-            display: block;
-        }
-    }
+        flex-wrap: wrap;
+    }    
 
     @media ( min-width: @screen-sm ) {
         line-height: 3rem;
-
-        label {
-            display: inline-block;
-            width: 16rem;
-        }
-    }
+    }    
 }
 
 .card-profile__status {

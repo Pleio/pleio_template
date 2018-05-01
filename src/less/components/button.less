@@ -411,6 +411,7 @@ button.button {
     width: 4rem;
     height: 4rem;
     color: @color-grey--60;
+    cursor: pointer;
     transition: color @trans-fast;
 
     &:not(.___is-active):hover {
@@ -460,7 +461,7 @@ button.button {
     }
 
     &.___privacy {
-        margin-left: auto;
+        flex-shrink: 0;
 
         .icon(friends);
         &:before {

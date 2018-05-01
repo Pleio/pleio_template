@@ -44,11 +44,11 @@ export default class DropdownButton extends React.Component {
                 })}
                 onClick={this.toggle} onBlur={this.onBlur}
             >
-                <span>
                  {!this.props.icon &&
-                    this.props.name
+                    <span>
+                        this.props.name
+                    </span>
                  }
-                </span>
                 <div className="option-list">
                     {options}
                 </div>
