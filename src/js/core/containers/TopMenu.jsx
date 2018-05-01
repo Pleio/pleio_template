@@ -12,6 +12,7 @@ import InputField from "../../core/components/InputField"
 import SelectField from "../../core/components/SelectField"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import autobind from "autobind-decorator"
+
 class TopMenu extends React.Component {
     constructor(props) {
         super(props)
@@ -55,7 +56,7 @@ class TopMenu extends React.Component {
     }
 
     @autobind
-    onDragEnd(result) {
+    onDragEndSubpages(result) {
         if (!result.destination) {
             return
         }
@@ -85,7 +86,7 @@ class TopMenu extends React.Component {
 
     render() {
         const { site, viewer } = this.props.data
-        let menuItems, footerItems, home, mobileHome, userMenu, pleio, search
+        let footerItems, home, mobileHome, userMenu, pleio, search
 
         const { editModeEnabled } = this.props
 
@@ -95,38 +96,45 @@ class TopMenu extends React.Component {
             )
         }
 
-        menuItems = site.menu.map((item, i) => (
-            <li className="navigation__dropdown" key={i}>
-                <NavLink to={item.link} onClick={this.closeMobileMenu} title={item.title} className="navigation__link ___dropdown" activeClassName="___is-active">
-                    {item.title}
-                </NavLink>
+        const pages = site.menu.map((page, i) => (
+            <Draggable key={i} draggableId={i.toString()} index={i}>
+                {(provided, snapshot) => (
+                    <div>
+                        <li {...provided.dragHandleProps} className="navigation__dropdown" ref={provided.innerRef} {...provided.draggableProps}>
+                            <NavLink to={page.link} onClick={this.closeMobileMenu} title={page.title} className="navigation__link ___dropdown" activeClassName="___is-active">
+                                {page.title}
+                            </NavLink>
 
-                {!editModeEnabled &&
-                <div className="submenu ___dropdown">
-                    <div className="submenu__back" data-nav-back>
-                        Terug
-                    </div>
-                    <ul className="submenu__list">
-                        <li className="submenu__list-subject">
-                            <a href="">hoofdpagina</a>
-                        </li>
-                        <li className="submenu__list-item">
-                            <a href="">subpagina</a>
-                        </li>
-                    </ul>
-                </div>
-                }
-                
-                {editModeEnabled &&
-                    <div className="cms-overlay">
-                        <div className="cms-overlay__actions">
-                            <div className="cms-overlay__buttons">
-                                <button className="___edit" onClick={(e) => this.refs.editPageModal.toggle()} />
+                            {!editModeEnabled &&
+                            <div className="submenu ___dropdown">
+                                <div className="submenu__back" data-nav-back>
+                                    Terug
+                                </div>
+                                <ul className="submenu__list">
+                                    <li className="submenu__list-subject">
+                                        <a href="">hoofdpagina</a>
+                                    </li>
+                                    <li className="submenu__list-item">
+                                        <a href="">subpagina</a>
+                                    </li>
+                                </ul>
                             </div>
-                        </div>
+                            }
+                            
+                            {editModeEnabled &&
+                                <div className="cms-overlay">
+                                    <div className="cms-overlay__actions">
+                                        <div className="cms-overlay__buttons">
+                                            <button className="___edit" onClick={(e) => this.refs.editPageModal.toggle()} />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </li>
+                        {provided.placeholder}                        
                     </div>
-                }
-            </li>
+                )}
+            </Draggable>
         ))
 
         footerItems = site.footer.map((item, i) => (
@@ -166,26 +174,26 @@ class TopMenu extends React.Component {
         const subpages = this.state.menu.map((subpage, i) => {
             return (
                 <Draggable key={i} draggableId={i.toString()} index={i}>
-                {(provided, snapshot) => (
-                    <div>
-                        <div className="form__item" ref={provided.innerRef} {...provided.draggableProps}>
-                            <div className="row">
-                                <div className="col-sm-6">
-                                    <div className="flexer ___gutter-small">
-                                        <div {...provided.dragHandleProps} className="button__icon ___move" />
-                                        <InputField value={subpage.label} name={subpage.label.toLowerCase()} type="text" placeholder="Voeg een titel toe" className="form__input" rules="required" autofocus />
+                    {(provided, snapshot) => (
+                        <div>
+                            <div className="form__item" ref={provided.innerRef} {...provided.draggableProps}>
+                                <div className="row">
+                                    <div className="col-sm-6">
+                                        <div className="flexer ___gutter-small">
+                                            <div {...provided.dragHandleProps} className="button__icon ___move" />
+                                            <InputField value={subpage.label} name={subpage.label.toLowerCase()} type="text" placeholder="Voeg een titel toe" className="form__input" rules="required" autofocus />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="col-sm-6">
-                                    <div className="flexer ___gutter-small">
-                                        <InputField value={subpage.link} name={subpage.link.toLowerCase()} type="text" placeholder="Voeg een URL toe" className="form__input" rules="required" />
-                                        <button type="button" className="button__icon ___delete" onClick={() => this.deleteSubpage(i)} />
+                                    <div className="col-sm-6">
+                                        <div className="flexer ___gutter-small">
+                                            <InputField value={subpage.link} name={subpage.link.toLowerCase()} type="text" placeholder="Voeg een URL toe" className="form__input" rules="required" />
+                                            <button type="button" className="button__icon ___delete" onClick={() => this.deleteSubpage(i)} />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            {provided.placeholder}                        
                         </div>
-                        {provided.placeholder}                        
-                    </div>
                     )}
                 </Draggable>
             )
@@ -204,8 +212,8 @@ class TopMenu extends React.Component {
                     </div>
                 </div>
                 <div className="title">Subpagina's</div>
-                <DragDropContext onDragEnd={this.onDragEnd}>
-                    <Droppable droppableId="droppable-1">
+                <DragDropContext onDragEnd={this.onDragEndSubpages}>
+                    <Droppable droppableId="droppable-subpages">
                         {(provided, snapshot) => (
                             <div ref={provided.innerRef}>
                                 {subpages}
@@ -239,7 +247,16 @@ class TopMenu extends React.Component {
                         </div>
                         <ul className="navigation__links">
                             {home}
-                            {menuItems}
+                            <DragDropContext onDragEnd={this.onDragEndPages}>
+                                <Droppable droppableId="droppable-pages">
+                                    {(provided, snapshot) => (
+                                        <div ref={provided.innerRef}>
+                                            {pages}
+                                            {provided.placeholder}                                     
+                                        </div>
+                                    )}
+                                </Droppable>
+                            </DragDropContext>
                             {editModeEnabled &&
                                 <button className="navigation__add-page" onClick={(e) => this.refs.addPageModal.toggle()}/>
                             }
