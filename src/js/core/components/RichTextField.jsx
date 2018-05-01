@@ -537,11 +537,23 @@ class RichTextField extends React.Component {
             }
         }
 
-        const embed = (
-            <div className="editor__tool-group" id="editor-insert">
-                <Select options={options} name="embed" placeholder="Invoegen" onChange={this.onEmbed} />
-            </div>
-        )
+        let embed
+        if (Object.keys(options).length === 1) {
+            embed = (
+                <div className="editor__tool-group" id="editor-insert">
+                    <div className="editor__tool ___insert" onClick={(e) => this.onEmbed("document")}>
+                        <span>Bestand(en)</span>
+                    </div>
+                </div>
+            )
+        } else {
+            embed = (
+                <div className="editor__tool-group" id="editor-insert">
+                    <Select options={options} name="embed" placeholder="Invoegen" onChange={this.onEmbed} />
+                </div>
+            )
+        }
+         
 
         let toolbarWidth
         if (this.refs.container && !this.props.isInline) {
