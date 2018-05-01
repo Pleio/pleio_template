@@ -4,9 +4,8 @@ import { graphql } from "react-apollo"
 import gql from "graphql-tag"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import autobind from "autobind-decorator"
-import SubSubNav from "./SubSubNav"
 
-class SubNav extends React.Component {
+class SubSubNav extends React.Component {
     @autobind
     onDragEnd(result) {
         if (!result.destination) {
@@ -28,11 +27,8 @@ class SubNav extends React.Component {
             <Draggable key={child.guid} draggableId={child.guid} index={i}>
                 {(provided, snapshot) => (
                     <div>
-                        <div ref={provided.innerRef} {...provided.draggableProps}>
-                            <div className="subnav__parent" {...provided.dragHandleProps}>
-                                <Link className="___is-grabbable" to={`/cms/view/${match.params.containerGuid || match.params.guid}/${match.params.containerSlug || match.params.slug}/${child.guid}`}>{child.title}</Link>
-                            </div>
-                            <SubSubNav guid={child.guid} />        
+                        <div {...provided.dragHandleProps} ref={provided.innerRef} {...provided.draggableProps}>
+                            <Link className="___is-grabbable" to={`/cms/view/`}>{child.title}</Link>
                         </div>
                         {provided.placeholder}
                     </div>
@@ -41,25 +37,22 @@ class SubNav extends React.Component {
         ))
 
         return (
-            <div className="subnav">
-                <Link to={entity.url}>{entity.title}</Link>
-                <DragDropContext onDragEnd={this.onDragEnd}>
-                    <Droppable type={entity.guid} droppableId={entity.guid}>
-                        {(provided, snapshot) => (
-                            <div ref={provided.innerRef}>
-                                {children}
-                                {provided.placeholder}
-                            </div>
-                        )}
-                    </Droppable>
-                </DragDropContext>
-            </div>
+            <Droppable type={entity.guid} droppableId={entity.guid}>
+                {(provided, snapshot) => (
+                    <div ref={provided.innerRef}>
+                        <div className="subnav__children">
+                            {children}
+                        </div>
+                        {provided.placeholder}
+                    </div>
+                )}
+            </Droppable>
         )
     }
 }
 
 const Query = gql`
-    query SubNav($guid: Int!) {
+    query SubNavItem($guid: Int!) {
         entity(guid: $guid) {
             guid
             ... on Page {
@@ -80,4 +73,4 @@ const Query = gql`
     }
 `
 
-export default graphql(Query)(SubNav)
+export default graphql(Query)(SubSubNav)

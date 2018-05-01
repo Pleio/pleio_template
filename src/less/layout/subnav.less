@@ -5,6 +5,11 @@
     .font(medium);
     box-shadow: @box-shadow;
 
+    // Main page
+    > a {
+        font-weight: bold;
+    }
+
     a {
         display: block;
         padding: .3rem 3rem .4rem;
@@ -22,22 +27,24 @@
 
 .subnav__parent {
     > a {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        .icon(angle-down, after);
-        &:after {
+        .icon(angle-down);
+        &:before {
+            position: absolute;
+            right: 2rem;
             font-size: .6rem;
             margin-bottom: .1rem;
             transition: transform @trans-material-fast;
         }
     }
 
-    &.___is-open,
-    &:hover {
+    &.___is-open {
         > a {
-            &:after {
+            &:before {
                 transform: scaleY(-1);
             }
         }
@@ -52,8 +59,8 @@
 }
 
 .subnav__children {
-    height: 0;
-    opacity: 0;
+    // height: 0;
+    // opacity: 0;
     overflow: hidden;
     transition: opacity @trans-fast, height @trans-material-fast;
 
