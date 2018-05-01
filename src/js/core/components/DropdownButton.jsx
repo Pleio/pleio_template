@@ -46,7 +46,7 @@ export default class DropdownButton extends React.Component {
             >
                  {!this.props.icon &&
                     <span>
-                        this.props.name
+                        {this.props.name}
                     </span>
                  }
                 <div className="option-list">
