@@ -8,7 +8,7 @@ $is_react = elgg_extract("is_react", $vars, false);
 
 $settings = Pleio\Helpers::getSettings();
 
-$theme = elgg_get_plugin_setting("theme", "pleio_template", "leraar");
+$theme = elgg_get_plugin_setting("theme", "pleio_template") ?: "leraar";
 $font = elgg_get_plugin_setting("font", "pleio_template");
 
 $icon = elgg_get_plugin_setting("icon", "pleio_template");
