@@ -101,6 +101,7 @@ class TopMenu extends React.Component {
                     {item.title}
                 </NavLink>
 
+                {!editModeEnabled &&
                 <div className="submenu ___dropdown">
                     <div className="submenu__back" data-nav-back>
                         Terug
@@ -114,7 +115,8 @@ class TopMenu extends React.Component {
                         </li>
                     </ul>
                 </div>
-
+                }
+                
                 {editModeEnabled &&
                     <div className="cms-overlay">
                         <div className="cms-overlay__actions">
