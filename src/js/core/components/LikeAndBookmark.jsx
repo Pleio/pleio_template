@@ -69,8 +69,8 @@ export default class LikeAndBookmark extends React.Component {
 
         return (
             <div ref="likeAndBookmark" className="article-actions__side" style={{paddingTop: this.state.paddingTop}}>
-                {like}
                 {bookmark}
+                {like}
             </div>
         )
     }

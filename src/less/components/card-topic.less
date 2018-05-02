@@ -59,7 +59,7 @@
     }
 
     @media ( min-width: @screen-sm ) {
-        margin: 0 0 1rem 0;
+        margin: 0 0 .5rem 0;
         .ellipsis(@line-height--title-small, 2);
     }
 }
@@ -132,10 +132,6 @@
         .card-topic.___feed & {
             margin: 1.5rem 0 0 0;
         }
-
-        .count-bookmarks {
-            display: none;
-        }
     }
 }
 
@@ -160,22 +156,19 @@
 .card-topic__comments {
     display: flex;
     align-items: center;
-    color: @color-grey--80;
+    
+    color: @color-grey--80;    
     font-weight: normal;
+    transition: color @trans-fast;
 
     .icon(comments);
     &:before {
-        margin: 0 0.7rem 0 0;
-        color: @color-grey--60;
-        font-size: 1.9rem;
-        transition: color @trans-fast;
+        color: @color-secondary;
+        margin: .1rem .7rem 0 0;
+        font-size: 1.8rem;
     }
 
-    &:hover:before {
-        color: @color-primary;
-    }
-
-    @media ( max-width: @screen-xs-max ) {
-        order: -1;
+    &:hover {
+        color: @color-secondary;
     }
 }

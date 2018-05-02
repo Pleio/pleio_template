@@ -68,17 +68,17 @@ class CommentEdit extends React.Component {
         return (
             <Form ref="form" className="comment-edit" onSubmit={this.onSubmit}>
                 <div title="Terug naar forum" className="comment-edit__close" onClick={this.onCancel}></div>
-                <h3 className="comment-edit__title">Bewerk antwoord</h3>
+                <h3 className="comment-edit__title">Bewerk reactie</h3>
                 <div className="comment-edit__top">
                     <img src={entity.owner.icon} className="comment-edit__image" />
                     <div href={entity.owner.url} title="Bekijk profiel" className="comment-edit__name">
                         {entity.owner.name}
                     </div>
                 </div>
-                <RichTextField name="description" placeholder="Voeg een antwoord toe..." className="comment-add__content" value={entity.description} richValue={entity.richDescription} />
+                <RichTextField name="description" placeholder="Voeg een reactie toe..." className="comment-add__content" value={entity.description} richValue={entity.richDescription} />
                 <div className="comment-edit__bottom buttons ___gutter">
                     <a className="button__underline" onClick={this.onDelete}>
-                        Verwijder antwoord
+                        Verwijder reactie
                     </a>
                     <button className="button ___grey comment-edit__cancel" onClick={this.onCancel}>
                         Annuleer

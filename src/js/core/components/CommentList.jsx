@@ -20,8 +20,8 @@ export default class CommentList extends React.Component {
                 <div className="article-comments__count">
                     {this.props.comments.length}{" "}
                     {this.props.comments.length === 1
-                        ? "antwoord"
-                        : "antwoorden"}
+                        ? "reactie"
+                        : "reacties"}
                 </div>
             )
         }

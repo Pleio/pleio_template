@@ -14,6 +14,7 @@ import LikeAndBookmark from "../core/components/LikeAndBookmark"
 import LoggedInButton from "../core/components/LoggedInButton"
 import Document from "../core/components/Document"
 import Featured from "../core/components/Featured"
+import Follow from "../core/components/Follow"
 
 class Item extends React.Component {
     render() {
@@ -100,13 +101,14 @@ class Item extends React.Component {
                                         {source}
                                     </div>
                                     <RichTextView richValue={entity.richDescription} value={entity.description} />
-                                    <LikeAndBookmark like={false} bookmark={true} viewer={viewer} entity={entity} />
+                                    <LikeAndBookmark like={true} bookmark={true} viewer={viewer} entity={entity} />
                                     <div className="article-actions">
                                         {edit}
                                         <div className="article-actions__buttons">
                                             {commentButton}
                                             <SocialShare />
                                         </div>
+                                        <Follow viewer={viewer} entity={entity} />                                        
                                     </div>
                                 </article>
                                 {comments}
@@ -149,7 +151,10 @@ const Query = gql`
                 }
                 canEdit
                 tags
+                votes
+                hasVoted
                 isBookmarked
+                isFollowing                
                 canBookmark
                 comments {
                     guid
