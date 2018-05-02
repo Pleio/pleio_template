@@ -118,5 +118,5 @@ export default function showDate(isoDate) {
     const y = date.getFullYear()
     const h = pad(date.getHours(), 2)
     const i = pad(date.getMinutes(), 2)
-    return `${d}-${m}-${y} ${h}:${i}`
+    return `${d}-${m}-${y}`
 }

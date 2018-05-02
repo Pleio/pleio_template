@@ -64,7 +64,7 @@ class CommentDelete extends React.Component {
                     <div className="modal__box">
                         <div className="modal__close" onClick={this.toggle} />
                         <h3 className="modal__title">
-                            Antwoord verwijderen
+                            Reactie verwijderen
                         </h3>
                         <p>Weet je zeker dat je het item {title} wil verwijderen?</p>
                         <button className="button" onClick={this.onSubmit}>Verwijder</button>

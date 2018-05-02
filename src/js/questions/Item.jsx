@@ -93,7 +93,7 @@ class Item extends React.Component {
                                         value={entity.description}
                                     />
                                     <LikeAndBookmark
-                                        like={false}
+                                        like={true}
                                         bookmark={true}
                                         viewer={viewer}
                                         entity={entity}
@@ -168,6 +168,8 @@ const Query = gql`
                 }
                 canEdit
                 tags
+                votes
+                hasVoted
                 isBookmarked
                 isFollowing
                 canBookmark

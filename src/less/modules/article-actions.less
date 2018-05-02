@@ -189,7 +189,7 @@
         font-size: 2.1rem;
         display: flex;
         justify-content: center;
-        transition: opacity @trans-fast, color @trans-fast;
+        transition: opacity @trans-fast;
 
         @media ( max-width: @screen-xs-max ) {
             top: 0.7rem;
@@ -202,17 +202,13 @@
     }
 
     &:after {
-        color: @color-grey--60;
+        color: @color-secondary;
         opacity: 0;
     }
 
     &:hover {
         &:before {
-            opacity: 0;
-        }
-
-        &:after {
-            opacity: 1;
+            color: @color-secondary;
         }
     }
 

@@ -49,15 +49,15 @@ class AddCommentForm extends React.Component {
 
         return (
             <Form ref="form" className="comment-add" onSubmit={this.onSubmit}>
-                <h3 className="comment-add__title">Geef antwoord</h3>
+                <h3 className="comment-add__title">Reageer</h3>
                 <div title="Terug naar forum" className="comment-add__close ___is-active" onClick={this.props.toggle}></div>
                 <div className="comment-add__top">
                     <img src={icon} className="comment-add__image" />
                     <div href={url} title="Bekijk profiel" className="comment-add__name">{name}</div>
                 </div>
-                <RichTextField name="description" placeholder="Voeg een antwoord toe..." className="comment-add__content" />
+                <RichTextField name="description" placeholder="Voeg een reactie toe..." className="comment-add__content" />
                 <div className="comment-add__bottom form__actions">
-                    <button type="submit" className="button button--primary">Antwoord</button>
+                    <button type="submit" className="button button--primary">Reageer</button>
                 </div>
             </Form>
         )

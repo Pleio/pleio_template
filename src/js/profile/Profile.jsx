@@ -107,7 +107,7 @@ class Profile extends React.Component {
                                             {profileScore}
                                             <ul className="card-profile__social">
                                                 <li>
-                                                    <label>Antwoorden:</label>
+                                                    <label>Reacties geplaatst:</label>
                                                     <span>{stats.answers || 0}</span>
                                                 </li>
                                                 <li>

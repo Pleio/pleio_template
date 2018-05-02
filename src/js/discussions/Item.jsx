@@ -74,7 +74,7 @@ class Item extends React.Component {
                                     </div>
                                     <h3 className="article__title">{entity.title}</h3>
                                     <RichTextView richValue={entity.richDescription} value={entity.description} />
-                                    <LikeAndBookmark like={false} bookmark={true} viewer={viewer} entity={entity} />
+                                    <LikeAndBookmark like={true} bookmark={true} viewer={viewer} entity={entity} />
                                     <div className="article-actions">
                                         {edit}
                                         <div className="article-actions__buttons">
@@ -125,6 +125,8 @@ const Query = gql`
                 }
                 canEdit
                 tags
+                votes
+                hasVoted
                 isBookmarked
                 isFollowing
                 canBookmark
