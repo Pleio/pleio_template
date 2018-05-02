@@ -264,6 +264,7 @@ This file contains the styling for the main navigation.
 
 .navigation__link.___pleio {
     margin: 3.2rem 0 0 0;
+
     @media (min-width: @screen-lg) {
         display: none;
     }
@@ -277,6 +278,7 @@ This file contains the styling for the main navigation.
         right: 2rem;
         line-height: inherit;
     }
+
     // DESKTOP
     @media (min-width: @screen-lg) {
         .icon(chevron-down, after);
@@ -291,11 +293,6 @@ This file contains the styling for the main navigation.
         }
 
         .navigation__dropdown:hover & {
-            color: @color-grey;            
-
-            &.___is-active {
-                background-color: @color-secondary;
-            }
             &:after {
                 transform: scaleY(-1);
             }
@@ -321,18 +318,17 @@ This file contains the styling for the main navigation.
     text-decoration: none;
     transition: background-color @trans-fast, color @trans-fast;
     cursor: pointer;
+
     @media (max-width: @screen-md-max) {
         padding: 0 2rem;
         color: @color-black;
         line-height: 3.2rem;
+
         &:hover {
             background-color: @color-secondary--lightest;
         }
-
-        &.___is-active:not(.___home) {
-            color: @color-secondary;
-        }
     }
+
     @media (min-width: @screen-lg) {
         padding: 0 1.2rem;
         color: @color-secondary--light;

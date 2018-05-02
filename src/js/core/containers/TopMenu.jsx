@@ -97,42 +97,39 @@ class TopMenu extends React.Component {
         }
 
         const pages = site.menu.map((page, i) => (
-            <Draggable key={i} draggableId={i.toString()} index={i}>
+            <Draggable key={i} draggableId={i.toString()} index={i} isDragDisabled={!editModeEnabled}>
                 {(provided, snapshot) => (
-                    <div>
-                        <li {...provided.dragHandleProps} className="navigation__dropdown" ref={provided.innerRef} {...provided.draggableProps}>
-                            <NavLink to={page.link} onClick={this.closeMobileMenu} title={page.title} className="navigation__link ___dropdown" activeClassName="___is-active">
-                                {page.title}
-                            </NavLink>
+                    <li {...provided.dragHandleProps} className="navigation__dropdown" ref={provided.innerRef} {...provided.draggableProps}>
+                        <NavLink to={page.link} onClick={this.closeMobileMenu} title={page.title} className="navigation__link ___dropdown" activeClassName="___is-active">
+                            {page.title}
+                        </NavLink>
 
-                            {!editModeEnabled &&
-                            <div className="submenu ___dropdown">
-                                <div className="submenu__back" data-nav-back>
-                                    Terug
-                                </div>
-                                <ul className="submenu__list">
-                                    <li className="submenu__list-subject">
-                                        <a href="">hoofdpagina</a>
-                                    </li>
-                                    <li className="submenu__list-item">
-                                        <a href="">subpagina</a>
-                                    </li>
-                                </ul>
+                        {!editModeEnabled &&
+                        <div className="submenu ___dropdown">
+                            <div className="submenu__back" data-nav-back>
+                                Terug
                             </div>
-                            }
-                            
-                            {editModeEnabled &&
-                                <div className="cms-overlay">
-                                    <div className="cms-overlay__actions">
-                                        <div className="cms-overlay__buttons">
-                                            <button className="___edit" onClick={(e) => this.refs.editPageModal.toggle()} />
-                                        </div>
+                            <ul className="submenu__list">
+                                <li className="submenu__list-subject">
+                                    <a href="">hoofdpagina</a>
+                                </li>
+                                <li className="submenu__list-item">
+                                    <a href="">subpagina</a>
+                                </li>
+                            </ul>
+                        </div>
+                        }
+                        
+                        {editModeEnabled &&
+                            <div className="cms-overlay">
+                                <div className="cms-overlay__actions">
+                                    <div className="cms-overlay__buttons">
+                                        <button className="___edit" onClick={(e) => this.refs.editPageModal.toggle()} />
                                     </div>
                                 </div>
-                            }
-                        </li>
-                        {provided.placeholder}                        
-                    </div>
+                            </div>
+                        }
+                    </li>
                 )}
             </Draggable>
         ))
@@ -245,33 +242,30 @@ class TopMenu extends React.Component {
                                 <input id="mobile-navigation-search" placeholder="Zoeken" name="q" onChange={this.changeSearchField} value={this.state.q} />
                             </form>
                         </div>
-                        <ul className="navigation__links">
-                            {home}
-                            <DragDropContext onDragEnd={this.onDragEndPages}>
-                                <Droppable droppableId="droppable-pages">
-                                    {(provided, snapshot) => (
-                                        <div ref={provided.innerRef}>
-                                            {pages}
-                                            {provided.placeholder}                                     
-                                        </div>
-                                    )}
-                                </Droppable>
-                            </DragDropContext>
-                            {editModeEnabled &&
-                                <button className="navigation__add-page" onClick={(e) => this.refs.addPageModal.toggle()}/>
-                            }
-                            <li className="navigation__dropdown ___mobile">
-                                <a href="#" title="Meer" className="navigation__link ___dropdown" onClick={this.toggleSubmenu}>Meer</a>
-                                <div className={classnames({"submenu ___dropdown":true, "___open": this.state.submenuIsOpen})}>
-                                    <div className="submenu__back" onClick={this.toggleSubmenu}>Terug</div>
-                                    <ul className="submenu__list">
-                                        <li className="submenu__list-item">
-                                            {footerItems}
+                        <DragDropContext onDragEnd={this.onDragEndPages}>
+                            <Droppable droppableId="droppable-pages" direction="horizontal">
+                                {(provided, snapshot) => (
+                                    <ul className="navigation__links" ref={provided.innerRef}>
+                                        {home}
+                                        {pages}
+                                        {editModeEnabled &&
+                                            <button className="navigation__add-page" onClick={(e) => this.refs.addPageModal.toggle()}/>
+                                        }
+                                        <li className="navigation__dropdown ___mobile">
+                                            <a href="#" title="Meer" className="navigation__link ___dropdown" onClick={this.toggleSubmenu}>Meer</a>
+                                            <div className={classnames({"submenu ___dropdown":true, "___open": this.state.submenuIsOpen})}>
+                                                <div className="submenu__back" onClick={this.toggleSubmenu}>Terug</div>
+                                                <ul className="submenu__list">
+                                                    <li className="submenu__list-item">
+                                                        {footerItems}
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </li>
                                     </ul>
-                                </div>
-                            </li>
-                        </ul>
+                                )}
+                            </Droppable>
+                        </DragDropContext>
                         {search}
                         {userMenu}
                     </div>

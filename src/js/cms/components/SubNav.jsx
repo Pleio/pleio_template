@@ -27,14 +27,11 @@ class SubNav extends React.Component {
         const children = entities.edges.map((child, i) => (
             <Draggable key={child.guid} draggableId={child.guid} index={i}>
                 {(provided, snapshot) => (
-                    <div>
-                        <div ref={provided.innerRef} {...provided.draggableProps}>
-                            <div className="subnav__parent" {...provided.dragHandleProps}>
-                                <Link className="___is-grabbable" to={`/cms/view/${match.params.containerGuid || match.params.guid}/${match.params.containerSlug || match.params.slug}/${child.guid}`}>{child.title}</Link>
-                            </div>
-                            <SubSubNav guid={child.guid} />        
+                    <div ref={provided.innerRef} {...provided.draggableProps}>
+                        <div className="subnav__parent" {...provided.dragHandleProps}>
+                            <Link className="___is-grabbable" to={`/cms/view/${match.params.containerGuid || match.params.guid}/${match.params.containerSlug || match.params.slug}/${child.guid}`}>{child.title}</Link>
                         </div>
-                        {provided.placeholder}
+                        <SubSubNav guid={child.guid} />        
                     </div>
                 )}
             </Draggable>
@@ -48,7 +45,6 @@ class SubNav extends React.Component {
                         {(provided, snapshot) => (
                             <div ref={provided.innerRef}>
                                 {children}
-                                {provided.placeholder}
                             </div>
                         )}
                     </Droppable>
