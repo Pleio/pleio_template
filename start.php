@@ -89,6 +89,8 @@ function pleio_template_init() {
     elgg_unregister_plugin_hook_handler("email", "system", "html_email_handler_email_hook");
     elgg_register_plugin_hook_handler("email", "system", "pleio_template_email_handler");
 
+    elgg_register_plugin_hook_handler("object:notifications", "object", "pleio_template_object_notifications_handler");
+
     elgg_extend_view("css/admin", "pleio_template/css/admin");
 
     elgg_register_simplecache_view("css/web");
@@ -401,6 +403,11 @@ function pleio_template_cron_email_overview_handler($hook, $period, $return, $pa
     $ia = elgg_set_ignore_access(true);
     Pleio\EmailOverviewHandler::sendToAll($period);
     elgg_set_ignore_access($ia);
+}
+
+function pleio_template_object_notifications_handler($hook, $type, $return, $params) {
+    // always return to to make sure object notifications are not sent by the Elgg engine
+    return true;
 }
 
 function pleio_template_email_handler($hook, $type, $return, $params) {
