@@ -9,7 +9,7 @@ export default class LinkModal extends React.Component {
 
         this.state = {
             isOpen: false,
-            url: data.url || "https://",
+            url: data.url || "",
             isTargetBlank: (data.target && data.target === "_blank") ? true : false
         }
 
@@ -28,7 +28,7 @@ export default class LinkModal extends React.Component {
         const { data } = nextProps
 
         this.setState({
-            url: data.url || "https://",
+            url: data.url || "",
             isTargetBlank: (data.target && data.target === "_blank") ? true : false
         })
     }
@@ -77,7 +77,7 @@ export default class LinkModal extends React.Component {
                         </h3>
                         <div className="form">
                             <label className="form__item">
-                                <input ref="url" type="text" name="url" placeholder="Url" onKeyPress={this.onKeyPress} onChange={this.changeUrl} value={this.state.url} />
+                                <input ref="url" type="text" name="url" placeholder="Link" onKeyPress={this.onKeyPress} onChange={this.changeUrl} value={this.state.url} />
                             </label>
                             <div className="checkbox" onClick={this.changeTarget}>
                                 <input readOnly name="condition-hyperlink" type="checkbox" checked={this.state.isTargetBlank} />
