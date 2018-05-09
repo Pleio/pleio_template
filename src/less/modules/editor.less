@@ -140,13 +140,21 @@
         &.___bold,
         &.___italic,
         &.___ul,
-        &.___ol {
+        &.___ol,
+        &.___insert {
             display: flex;
+        }
+
+        &.___insert {
+            margin-left: auto;
+
+            span {
+                display: none;
+            }
         }
     }
 
     &.___insert {
-        flex-grow: 1;
         width: auto;
         padding: 0 1rem;
         justify-content: flex-start;
@@ -157,6 +165,10 @@
             margin-right: .8rem;
             margin-bottom: .3rem;
         }
+
+        @media ( min-width: @screen-sm ) {
+            flex-grow: 1;            
+        }        
     }
 }
 
