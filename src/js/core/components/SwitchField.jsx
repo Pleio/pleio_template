@@ -71,6 +71,7 @@ class SwitchField extends React.Component {
                 onChange={this.onChange}
                 checked={this.state.checked}
                 label={this.props.label}
+                disabled={this.props.disabled}
             />
         )
     }

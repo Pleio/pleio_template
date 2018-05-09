@@ -33,8 +33,8 @@ export default class Switch extends React.Component {
 
     render() {
         return (
-            <div className="switch" onClick={this.onChange}>
-                <input tabIndex={0} ref="checkbox" type="checkbox" id={this.props.id} name={this.props.name} checked={this.state.checked} readOnly={true} />
+            <div className="switch" onClick={!this.props.disabled && this.onChange}>
+                <input tabIndex={0} ref="checkbox" type="checkbox" id={this.props.id} name={this.props.name} checked={this.state.checked} disabled={this.props.disabled} readOnly={true} />
                 <label htmlFor={this.props.id}>
                     {this.props.label}
                 </label>

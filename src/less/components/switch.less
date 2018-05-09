@@ -7,7 +7,6 @@
         align-items: center;
         padding: 0.7rem 0 0.7rem 5rem;
         user-select: none;
-        cursor: pointer;
 
         &:before {
             content: '';
@@ -53,6 +52,14 @@
         }
         &:focus + label:after {
             border-color: @color-primary;
+        }
+
+        &[disabled] + label {
+            color: @color-grey--60;
+        }
+
+        &:not([disabled]) + label {
+            cursor: pointer;
         }
     }
 }
