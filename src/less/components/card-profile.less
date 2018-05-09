@@ -241,69 +241,9 @@
     display: flex;
 }
 
-.card-profile__status {
-    height: 3.4rem;
-    max-width: 22.6rem;
-    margin: 1rem 0;
-    background-color: @color-grey--40;
-    border-radius: 3.4rem;
-    overflow: hidden;
-    user-select: none;
-
-    span {
-        display: block;
-        height: 100%;
-        line-height: 3.5rem;
-        width: 72%;
-        padding: 0 1.5rem;
-        background-color: @color-green;
-        color: @color-white;
-        font-weight: bold;
-        border-radius: 3.4rem;
-    }
-
-    @media ( min-width: @screen-sm ) {
-        margin: 2rem 0;
-    }
-
-    @media ( min-width: @screen-lg ) {
-        margin: 0 0 2rem 0;
-    }
-
-    &.___is-ok span {
-        background-color: @color-leren;
-        width: 58%;
-    }
-
-    &.___is-reasonable span {
-        background-color: @color-green;
-        width: 72%;
-    }
-
-    &.___is-good span {
-        background-color: @color-secondary;
-        width: 86%;
-    }
-
-    &.___is-perfect span {
-        background-color: @color-primary;
-        width: 100%;
-    }
-
-    /*
-    .card-profile__status.___is-ok
-        span Ok profiel
-    .card-profile__status.___is-reasonable
-        span Redelijk profiel
-    .card-profile__status.___is-good
-        span Goed profiel
-    .card-profile__status.___is-perfect
-        span Uitstekend profiel
-    */
-}
 .card-profile__social {
+    margin-top: 3.4rem;
     max-width: 22.6rem;
-    color: @color-primary;
 
     li {
         display: flex;

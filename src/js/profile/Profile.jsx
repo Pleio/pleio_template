@@ -5,7 +5,6 @@ import ProfilePicture from "./ProfilePicture"
 import NotFound from "../core/NotFound"
 import Document from "../core/components/Document"
 import ProfileField from "./components/ProfileField"
-import ProfileScore from "./components/ProfileScore"
 import Modal from "../core/components/Modal"
 import Wrapper from "./components/Wrapper"
 import { OrderedSet } from "immutable"
@@ -66,15 +65,12 @@ class Profile extends React.Component {
             <ProfileField key={i} entity={entity} canEdit={entity.canEdit} dataKey={key} field={profileByKey[key]} />
         ))
 
-        let editProfile, profileScore
+        let editProfile
         if (entity.canEdit) {
             editProfile = (
                 <div className="card-profile__edit-picture" onClick={this.editPicture}>
                     Profielfoto bewerken
                 </div>
-            )
-            profileScore = (
-                <ProfileScore entity={entity} />
             )
         }
 
@@ -104,7 +100,6 @@ class Profile extends React.Component {
                                             </ul>
                                         </div>
                                         <div className="col-sm-12 col-lg-4">
-                                            {profileScore}
                                             <ul className="card-profile__social">
                                                 <li>
                                                     <label>Reacties geplaatst:</label>
