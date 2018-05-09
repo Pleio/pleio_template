@@ -5375,11 +5375,19 @@ a.card {
 .card-profile__details li {
   display: -ms-flexbox;
   display: flex;
+  margin-bottom: 10px;
+}
+@media (max-width: 679px) {
+  .card-profile__details li {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
 }
 @media (max-width: 679px) {
   .card-profile__details li label {
     margin: 1rem 0 0 0;
     width: 100%;
+    font-weight: bold;
   }
 }
 @media (min-width: 680px) {
@@ -5396,16 +5404,11 @@ a.card {
   -ms-flex-positive: 1;
       flex-grow: 1;
 }
-@media (max-width: 679px) {
-  .card-profile__details {
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-  }
-}
-@media (min-width: 680px) {
-  .card-profile__details {
-    line-height: 3rem;
-  }
+.card-profile__detail-wrapper {
+  -ms-flex-positive: 1;
+      flex-grow: 1;
+  display: -ms-flexbox;
+  display: flex;
 }
 .card-profile__status {
   height: 3.4rem;
@@ -5486,6 +5489,10 @@ a.card {
   .card-profile__about {
     margin: 2.5rem 0 0 0;
   }
+}
+.card-profile__about li {
+  display: -ms-flexbox;
+  display: flex;
 }
 .card-tile-container {
   display: -ms-flexbox;
@@ -10289,7 +10296,6 @@ a.card-tile:hover .read-more__circle {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  cursor: pointer;
 }
 .switch label:before {
   content: '';
@@ -10330,6 +10336,12 @@ a.card-tile:hover .read-more__circle {
 }
 .switch input[type=checkbox]:focus + label:after {
   border-color: #01689b;
+}
+.switch input[type=checkbox][disabled] + label {
+  color: #B4B4B4;
+}
+.switch input[type=checkbox]:not([disabled]) + label {
+  cursor: pointer;
 }
 .tabber {
   -ms-flex: 1 1 auto;
@@ -11633,14 +11645,19 @@ a.tooltip span {
   .editor__tool.___bold,
   .editor__tool.___italic,
   .editor__tool.___ul,
-  .editor__tool.___ol {
+  .editor__tool.___ol,
+  .editor__tool.___insert {
     display: -ms-flexbox;
     display: flex;
   }
+  .editor__tool.___insert {
+    margin-left: auto;
+  }
+  .editor__tool.___insert span {
+    display: none;
+  }
 }
 .editor__tool.___insert {
-  -ms-flex-positive: 1;
-      flex-grow: 1;
   width: auto;
   padding: 0 1rem;
   -ms-flex-pack: start;
@@ -11653,6 +11670,12 @@ a.tooltip span {
   font-size: 1.4rem;
   margin-right: .8rem;
   margin-bottom: .3rem;
+}
+@media (min-width: 680px) {
+  .editor__tool.___insert {
+    -ms-flex-positive: 1;
+        flex-grow: 1;
+  }
 }
 .editor__input {
   padding: 1.4rem 1.6rem;
@@ -14489,6 +14512,7 @@ body.modal__open {
   color: #01689b;
   cursor: pointer;
   opacity: 0;
+  z-index: 1;
   visibility: hidden;
   transition: opacity 0.2s ease, visibility 0.2s ease;
 }
