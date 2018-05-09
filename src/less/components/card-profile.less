@@ -209,11 +209,17 @@
 .card-profile__details {
     li {
         display: flex;
+        margin-bottom: 10px;
+
+        @media ( max-width: @screen-xs-max ) {
+            flex-wrap: wrap;
+        }
         
         label {
             @media ( max-width: @screen-xs-max ) {
                 margin: 1rem 0 0 0;
                 width: 100%;
+                font-weight: bold;
             }
 
             @media ( min-width: @screen-sm ) {
@@ -225,18 +231,14 @@
 
         span {
             display: inline-flex;
-            // font-weight: bold;
             flex-grow: 1;            
         }
     }
+}
 
-    @media ( max-width: @screen-xs-max ) {
-        flex-wrap: wrap;
-    }    
-
-    @media ( min-width: @screen-sm ) {
-        line-height: 3rem;
-    }    
+.card-profile__detail-wrapper {
+    flex-grow: 1;
+    display: flex;
 }
 
 .card-profile__status {
@@ -318,5 +320,9 @@
 
     @media ( min-width: @screen-sm ) {
         margin: 2.5rem 0 0 0;
+    }
+
+    li {
+        display: flex;
     }
 }

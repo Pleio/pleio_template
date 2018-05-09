@@ -179,12 +179,14 @@ class ProfileField extends React.Component {
         return (
             <li>
                 <label>{this.props.field.name}</label>
-                <span className={classnames({"___is-editable-field": true, "___is-editing": this.state.isEditing, "___is-empty": !this.state.value, "___is-private": (this.state.accessId === 0)})} onClick={this.onClick}>
-                    <span className="editable-field">{this.state.value || "..."}</span>
-                    {fillNow}
-                    {field}
-                </span>
-                {dropdownButton}
+                <div className="card-profile__detail-wrapper">
+                    <span className={classnames({"___is-editable-field": true, "___is-editing": this.state.isEditing, "___is-empty": !this.state.value, "___is-private": (this.state.accessId === 0)})} onClick={this.onClick}>
+                        <span className="editable-field">{this.state.value || "..."}</span>
+                        {fillNow}
+                        {field}
+                    </span>
+                    {dropdownButton}
+                </div>
             </li>
         )
     }
