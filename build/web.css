@@ -7524,11 +7524,6 @@ body.___rijkshuisstijl .card-tile__picture {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
 }
-@media (max-width: 679px) {
-  .lead.___group .flexer {
-    display: none;
-  }
-}
 @media (min-width: 768px) {
   .lead.___group .flexer {
     -ms-flex-negative: 0;
