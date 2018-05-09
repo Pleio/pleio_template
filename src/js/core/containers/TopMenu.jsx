@@ -67,7 +67,7 @@ class TopMenu extends React.Component {
         this.setState({ menu: newMenu })
     }
 
-    @autobind    
+    @autobind
     addSubpage() {
         this.setState({
             menu: this.state.menu.push({
@@ -77,7 +77,7 @@ class TopMenu extends React.Component {
         })
     }
 
-    @autobind    
+    @autobind
     deleteSubpage(i) {
         this.setState({
             menu: this.state.menu.delete(i)
@@ -90,6 +90,9 @@ class TopMenu extends React.Component {
 
         const { editModeEnabled } = this.props
 
+        // change this to true to enable WIP of new menu
+        const enableNewMenu = false
+
         if (!site) {
             return (
                 <div></div>
@@ -97,14 +100,14 @@ class TopMenu extends React.Component {
         }
 
         const pages = site.menu.map((page, i) => (
-            <Draggable key={i} draggableId={i.toString()} index={i} isDragDisabled={!editModeEnabled}>
+            <Draggable key={i} draggableId={i.toString()} index={i} isDragDisabled={!editModeEnabled || !enableNewMenu}>
                 {(provided, snapshot) => (
                     <li {...provided.dragHandleProps} className="navigation__dropdown" ref={provided.innerRef} {...provided.draggableProps}>
-                        <NavLink to={page.link} onClick={this.closeMobileMenu} title={page.title} className="navigation__link ___dropdown" activeClassName="___is-active">
+                        <NavLink to={page.link} onClick={this.closeMobileMenu} title={page.title} className={classnames({"navigation__link": true, "___dropdown": enableNewMenu})} activeClassName="___is-active">
                             {page.title}
                         </NavLink>
 
-                        {!editModeEnabled &&
+                        {!editModeEnabled && enableNewMenu &&
                         <div className="submenu ___dropdown">
                             <div className="submenu__back" data-nav-back>
                                 Terug
@@ -119,8 +122,8 @@ class TopMenu extends React.Component {
                             </ul>
                         </div>
                         }
-                        
-                        {editModeEnabled &&
+
+                        {editModeEnabled && enableNewMenu &&
                             <div className="cms-overlay">
                                 <div className="cms-overlay__actions">
                                     <div className="cms-overlay__buttons">
@@ -189,7 +192,7 @@ class TopMenu extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            {provided.placeholder}                        
+                            {provided.placeholder}
                         </div>
                     )}
                 </Draggable>
@@ -214,12 +217,12 @@ class TopMenu extends React.Component {
                         {(provided, snapshot) => (
                             <div ref={provided.innerRef}>
                                 {subpages}
-                                {provided.placeholder}                                            
+                                {provided.placeholder}
                             </div>
                         )}
                     </Droppable>
                 </DragDropContext>
-                
+
                 <button type="button" className="button ___add ___line" onClick={() => this.addSubpage()}>Subpagina</button>
                 <div className="flexer ___end">
                     <button className="button" onClick={this.onSubmit}>
@@ -248,7 +251,7 @@ class TopMenu extends React.Component {
                                     <ul className="navigation__links" ref={provided.innerRef}>
                                         {home}
                                         {pages}
-                                        {editModeEnabled &&
+                                        {editModeEnabled && enableNewMenu &&
                                             <button className="navigation__add-page" onClick={(e) => this.refs.addPageModal.toggle()}/>
                                         }
                                         <li className="navigation__dropdown ___mobile">
@@ -276,7 +279,7 @@ class TopMenu extends React.Component {
                     </div>
                 </div>
 
-                {editModeEnabled &&                                
+                {editModeEnabled &&
                     <Modal
                         ref="addPageModal"
                         title="Hoofdpagina toevoegen"
@@ -284,8 +287,8 @@ class TopMenu extends React.Component {
                         {pageForm}
                     </Modal>
                 }
-                
-                {editModeEnabled &&                
+
+                {editModeEnabled &&
                     <Modal
                         ref="editPageModal"
                         title="Hoofdpagina bewerken"
@@ -293,7 +296,7 @@ class TopMenu extends React.Component {
                         {/* {pageForm} */}
                     </Modal>
                 }
-            </nav>        
+            </nav>
         )
     }
 }

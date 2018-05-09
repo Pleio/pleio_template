@@ -54,7 +54,7 @@ class Container extends React.Component {
                 {editModeEnabled &&
                     <div className="cms__panel">
                         <button className="___close" onClick={this.toggleEditMode} />
-                        <Link to={`/admin/`}><button className="___settings" /></Link>
+                        <a href="/admin/"><button className="___settings" /></a>
                     </div>
                 }
             </div>
