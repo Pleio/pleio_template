@@ -5410,68 +5410,9 @@ a.card {
   display: -ms-flexbox;
   display: flex;
 }
-.card-profile__status {
-  height: 3.4rem;
-  max-width: 22.6rem;
-  margin: 1rem 0;
-  background-color: #E6E6E6;
-  border-radius: 3.4rem;
-  overflow: hidden;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  /*
-    .card-profile__status.___is-ok
-        span Ok profiel
-    .card-profile__status.___is-reasonable
-        span Redelijk profiel
-    .card-profile__status.___is-good
-        span Goed profiel
-    .card-profile__status.___is-perfect
-        span Uitstekend profiel
-    */
-}
-.card-profile__status span {
-  display: block;
-  height: 100%;
-  line-height: 3.5rem;
-  width: 72%;
-  padding: 0 1.5rem;
-  background-color: #7cb928;
-  color: #fff;
-  font-weight: bold;
-  border-radius: 3.4rem;
-}
-@media (min-width: 680px) {
-  .card-profile__status {
-    margin: 2rem 0;
-  }
-}
-@media (min-width: 1024px) {
-  .card-profile__status {
-    margin: 0 0 2rem 0;
-  }
-}
-.card-profile__status.___is-ok span {
-  background-color: #ffb612;
-  width: 58%;
-}
-.card-profile__status.___is-reasonable span {
-  background-color: #7cb928;
-  width: 72%;
-}
-.card-profile__status.___is-good span {
-  background-color: #009ee3;
-  width: 86%;
-}
-.card-profile__status.___is-perfect span {
-  background-color: #01689b;
-  width: 100%;
-}
 .card-profile__social {
+  margin-top: 3.4rem;
   max-width: 22.6rem;
-  color: #01689b;
 }
 .card-profile__social li {
   display: -ms-flexbox;
