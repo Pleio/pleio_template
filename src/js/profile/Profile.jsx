@@ -117,9 +117,7 @@ class Profile extends React.Component {
                         </div>
                         <div className="card-profile">
                             <div className="row">
-                                <div className="col-sm-4 col-lg-3">
-                                    <div className="card-profile__icon"></div>
-                                </div>
+                                <div className="col-sm-4 col-lg-3"></div>
                                 <div className="col-sm-8 col-lg-6">
                                     <ul className="card-profile__details">
                                         {siteProfile}

@@ -194,18 +194,6 @@
     }
 }
 
-.card-profile__icon {
-    .icon(school);
-    &:before {
-        font-size: 6.3rem;
-        color: @color-grey--50;
-    }
-
-    @media ( max-width: @screen-xs-max ) {
-        margin: 0 0 2rem 0;
-    }
-}
-
 .card-profile__details {
     li {
         display: flex;
@@ -239,6 +227,7 @@
 .card-profile__detail-wrapper {
     flex-grow: 1;
     display: flex;
+    word-break: break-all;
 }
 
 .card-profile__social {
