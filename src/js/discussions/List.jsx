@@ -8,6 +8,16 @@ import DiscussionList from "./containers/DiscussionList"
 import Document from "../core/components/Document"
 import Card from "./components/Card"
 
+class DiscussionCard extends React.Component {
+    render() {
+        return (
+            <div className="col-lg-6">
+                <Card {...this.props} />
+            </div>
+        )
+    }
+}
+
 class List extends React.Component {
     constructor(props) {
         super(props)
@@ -46,7 +56,7 @@ class List extends React.Component {
                     <ContentFilters page="discussions" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags} />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
-                    <DiscussionList childClass={Card} subtype="discussion" offset={0} limit={20} tags={this.state.tags} />
+                    <DiscussionList childClass={DiscussionCard} subtype="discussion" offset={0} limit={20} tags={this.state.tags} hasRows />
                 </section>
             </div>
         )
