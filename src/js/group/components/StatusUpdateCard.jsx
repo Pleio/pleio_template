@@ -97,6 +97,23 @@ class StatusUpdateCard extends React.Component {
             )
         }
 
+        const meta = (
+            <div className="card-topic__meta">
+                <div>
+                    <span>
+                        Door&nbsp;
+                    </span>
+                    <Link to={entity.owner.url} className="card-topic__user">
+                        {entity.owner.name}
+                    </Link>
+                    <span>, op {showDate(entity.timeCreated)}</span>
+                    {group &&
+                        <span>, in <Link to={group.url}>{group.name}</Link></span>
+                    }
+                </div>
+            </div>
+        )
+
         let content, editButton
         if (this.state.isEditing) {
             content = (
@@ -123,18 +140,10 @@ class StatusUpdateCard extends React.Component {
 
         return (
             <div className={classnames({"card-blog-post": true, "___can-edit": entity.canEdit})}>
-                <a name={entity.guid}></a>
                 <Link to={owner.url} title={owner.name} style={{backgroundImage: `url(${owner.icon})`}} className="card-blog-post__picture" />
                 <div className="card-blog-post__post">
-                    <div className="card-blog-post__meta">
-                        <div className="comment__justify">
-                            {ownerLink}
-                            {editButton}
-                        </div>
-                        <div className="card-blog-post__date">
-                            {showDate(entity.timeCreated)}
-                        </div>
-                    </div>
+                    {editButton}
+                    {meta}
 
                     <div className="card__content">
                         {content}
