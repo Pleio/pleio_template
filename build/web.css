@@ -1051,7 +1051,6 @@ body.___rijkshuisstijl .navigation__search button:before,
 .card-list-trending__likes:before,
 .card-profile .___is-editable .editable-field:after,
 .card-profile .___is-empty .card-profile__fill:after,
-.card-profile__icon:before,
 .card-tile.___full-image.___no-image.___nieuws:after,
 .card-tile.___full-video.___no-image.___nieuws:after,
 .card-tile.___full-image.___no-image.___leren:after,
@@ -5360,18 +5359,6 @@ a.card {
     display: none;
   }
 }
-.card-profile__icon:before {
-  content: "\E051";
-}
-.card-profile__icon:before {
-  font-size: 6.3rem;
-  color: #CCCCCC;
-}
-@media (max-width: 679px) {
-  .card-profile__icon {
-    margin: 0 0 2rem 0;
-  }
-}
 .card-profile__details li {
   display: -ms-flexbox;
   display: flex;
@@ -5409,6 +5396,7 @@ a.card {
       flex-grow: 1;
   display: -ms-flexbox;
   display: flex;
+  word-break: break-all;
 }
 .card-profile__social {
   margin-top: 3.4rem;
@@ -10263,10 +10251,10 @@ a.card-tile:hover .read-more__circle {
   width: 0;
   opacity: 0;
 }
-.switch input[type=checkbox]:checked + label:before {
+.switch input[type=checkbox]:not([disabled]):checked + label:before {
   background-color: #009ee3;
 }
-.switch input[type=checkbox]:checked + label:after {
+.switch input[type=checkbox]:not([disabled]):checked + label:after {
   left: 1.6rem;
   border-color: #01689b;
 }
@@ -14441,8 +14429,8 @@ body.modal__open {
 }
 .card-edit {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 3rem;
+  right: 3rem;
   font-size: 1.6rem;
   line-height: 2.2rem;
   color: #01689b;
