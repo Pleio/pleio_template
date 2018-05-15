@@ -1,6 +1,10 @@
 .article-actions {
     display: flex;
     flex-wrap: wrap;
+
+    @media ( min-width: @screen-lg ) {
+        margin-top: 3rem;
+    }
 }
 
 .article-actions__share {
@@ -150,6 +154,7 @@
 
     @media ( max-width: @screen-md-max ) {
         flex-direction: row;
+        margin-top: 2rem;
         margin-left: auto;
         margin-bottom: 1rem;
 
