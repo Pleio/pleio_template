@@ -6289,6 +6289,14 @@ body.___rijkshuisstijl .card-tile__picture {
     padding: 3rem 3rem 2rem 8rem;
   }
 }
+.row.fill .card-topic {
+  -ms-flex-positive: 1;
+      flex-grow: 1;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+}
 .card-topic__picture {
   width: 4rem;
   height: 4rem;
@@ -6950,6 +6958,9 @@ body.___rijkshuisstijl .card-tile__picture {
 .file__check .checkbox label:after {
   top: 1.7rem;
 }
+.file__name {
+  position: relative;
+}
 .file__name a {
   display: block;
   white-space: nowrap;
@@ -6960,6 +6971,24 @@ body.___rijkshuisstijl .card-tile__picture {
 }
 .file__name a:hover {
   color: #01689b;
+}
+.file__name span {
+  position: absolute;
+  top: 0;
+  left: -1rem;
+  padding: 1rem;
+  background-color: white;
+  white-space: nowrap;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  box-shadow: 0 1rem 1.5rem -0.5rem rgba(0, 0, 0, 0.1);
+}
+.file__name:hover span {
+  opacity: 1;
+  visibility: visible;
 }
 .file__type {
   text-align: center;
@@ -10816,6 +10845,11 @@ a.card-tile:hover .read-more__circle {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
 }
+@media (min-width: 1024px) {
+  .article-actions {
+    margin-top: 3rem;
+  }
+}
 .article-actions__share {
   display: -ms-flexbox;
   display: flex;
@@ -10956,6 +10990,7 @@ a.card-tile:hover .read-more__circle {
   .article-actions__side {
     -ms-flex-direction: row;
         flex-direction: row;
+    margin-top: 2rem;
     margin-left: auto;
     margin-bottom: 1rem;
   }
@@ -14292,9 +14327,6 @@ body.modal__open {
 .article-meta__source span {
   color: #01689b;
 }
-.content {
-  margin: 0 0 3rem;
-}
 .page-layout.___no-nav {
   padding-top: 0 !important;
 }
@@ -14366,9 +14398,6 @@ body.modal__open {
 }
 .editor.___is-inline .editor__input {
   height: 100%;
-}
-.editor.___is-inline .content {
-  margin: 0;
 }
 .section {
   position: relative;
