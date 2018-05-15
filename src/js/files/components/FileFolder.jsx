@@ -77,6 +77,7 @@ class FileFolder extends React.Component {
                 <td className={classnames({"file__type": true, [className]: true})}></td>
                 <td className="file__name">
                     <a href={this.getLink()} onClick={this.onClick}>{entity.title}</a>
+                    <span>{entity.title}</span>
                 </td>
                 <td className="file__fav"></td>
                 <td className="file__date">{showDate(entity.timeCreated)}</td>
