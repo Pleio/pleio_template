@@ -53,14 +53,7 @@ $english = array(
     "option:monthly" => "Monthly",
     "option:never" => "Never",
     "file_tools:forms:edit:parent" => "Parent",
-    "file_tools:input:folder_select:main" => "Main folder",
-    'admin:users:all' => 'All users',
-    'admin:users:edit' => 'Edit user',
-    'admin:profile:details' => 'Profile details',
-    'admin:profile:edit' => 'Edit profile',
-    'members:search' => 'Search user',
-    'view_profile' => 'View profile',
-    'users' => 'Users'
+    "file_tools:input:folder_select:main" => "Main folder"
 );
 
 add_translation("en", $english);

@@ -53,14 +53,7 @@ $dutch = array(
     "option:monthly" => "Maandelijk",
     "option:never" => "Nooit",
     "file_tools:forms:edit:parent" => "Map",
-    "file_tools:input:folder_select:main" => "Hoofdmap",
-    'admin:users:all' => 'Alle gebruikers',
-    'members:search' => 'Zoek gebruiker',
-    'admin:users:edit' => 'Wijzig gebruiker',
-    'admin:profile:details' => 'Profiel details',
-    'admin:profile:edit' => 'Wijzig profiel',
-    'view_profile' => 'Bekijk profiel',
-    'users' => 'Gebruikers'
+    "file_tools:input:folder_select:main" => "Hoofdmap"
 );
 
 add_translation("nl", $dutch);
