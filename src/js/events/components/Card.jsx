@@ -76,7 +76,7 @@ export default class Card extends React.Component {
                 {picture}
                 <div className="card-event__content">
                     <div className="date">{showFullDate(entity.startDate)} tot {showTimeDiff(entity.endDate, entity.startDate)}</div>
-                    <Link to={entity.url} className="title ___colored">{entity.title}</Link>
+                    <Link to={entity.url} className="title">{entity.title}</Link>
                     <div className="card-event__bottom">
                         <Bookmark entity={entity} />                    
                         {attendees}
