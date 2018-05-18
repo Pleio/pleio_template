@@ -18,6 +18,8 @@ const Query = gql`
                     location
                     url
                     inGroup
+                    isBookmarked
+                    canBookmark
                     excerpt
                     rsvp
                     featured {

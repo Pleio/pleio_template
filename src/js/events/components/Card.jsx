@@ -9,6 +9,7 @@ import AttendButtons from "./AttendButtons"
 import VideoModal from "../../core/components/VideoModal"
 import Select from "../../core/components/NewSelect"
 import People from "../../core/components/People"
+import Bookmark from "../../bookmarks/components/Bookmark"
 
 export default class Card extends React.Component {
     @autobind
@@ -62,13 +63,13 @@ export default class Card extends React.Component {
         }
 
         let attendees
-        if (entity.rsvp) {
+        // if (entity.rsvp) {
             attendees = (
                 <Link to={entity.url}>
                     <People users={entity.attendees} />
                 </Link>
             )
-        }
+        // }
 
         return (
             <div className="card-event">
@@ -77,6 +78,7 @@ export default class Card extends React.Component {
                     <div className="date">{showFullDate(entity.startDate)} tot {showTimeDiff(entity.endDate, entity.startDate)}</div>
                     <Link to={entity.url} className="title ___colored">{entity.title}</Link>
                     <div className="card-event__bottom">
+                        <Bookmark entity={entity} />                    
                         {attendees}
                     </div>
                 </div>
