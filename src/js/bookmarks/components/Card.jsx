@@ -20,7 +20,6 @@ export default class Card extends React.Component {
                 <div></div>
             )
         }
-console.log(this.props.entity);
 
         switch (this.props.entity.subtype) {
             case "news":
@@ -42,9 +41,6 @@ console.log(this.props.entity);
 
     @autobind
     renderNews() {
-        const activity = this.props.entity
-        const { object } = activity
-
         return (
             <NewsCard entity={this.props.entity} inActivityFeed={true} />
         )
