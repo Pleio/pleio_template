@@ -6,7 +6,7 @@ const subtypeOptions = {
     news: "Nieuws",
     question: "Vragen",
     discussion: "Discussies",
-    // thewire: "Updates",
+    update: "Updates",
     all: "Alle soorten"
 }
 

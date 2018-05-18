@@ -7,6 +7,7 @@ import NewsCard from "../../news/components/Card"
 import DiscussionCard from "../../discussions/components/Card"
 import BlogCard from "../../blog/components/Card"
 import QuestionCard from '../../questions/components/Card'
+import StatusUpdateCard from '../../group/components/StatusUpdateCard'
 
 export default class Card extends React.Component {
     constructor(props) {
@@ -29,6 +30,8 @@ export default class Card extends React.Component {
                 return this.renderDiscussion()
             case "question":
                 return this.renderQuestion()
+            case "update":
+                return this.renderUpdate()
             default:
                 return (
                     <div></div>
@@ -64,6 +67,13 @@ export default class Card extends React.Component {
     renderQuestion() {
         return (
             <QuestionCard entity={this.props.entity} inActivityFeed={true} />
+        )
+    }
+
+    @autobind
+    renderUpdate() {
+        return (
+            <StatusUpdateCard entity={this.props.entity} inActivityFeed={true} />
         )
     }
 }
