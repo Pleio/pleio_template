@@ -2,6 +2,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 import { getClassFromTags } from "../../lib/helpers"
 import classnames from "classnames"
+import Bookmark from "../../bookmarks/components/Bookmark"
 
 export default class Card extends React.Component {
     render() {
@@ -17,6 +18,10 @@ export default class Card extends React.Component {
 
                 <div className="card__content">
                     {entity.excerpt}
+                </div>
+
+                <div className="card-topic__actions">
+                    <Bookmark entity={entity} />
                 </div>
             </div>
         )

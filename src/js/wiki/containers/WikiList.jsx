@@ -15,6 +15,8 @@ const Query = gql`
                     title
                     excerpt
                     url
+                    isBookmarked
+                    canBookmark
                 }
             }
         }

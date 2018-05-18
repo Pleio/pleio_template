@@ -19,7 +19,7 @@ export default class Card extends React.Component {
             )
         }
 
-        let actions = (
+        const actions = (
             <div className="card-topic__actions">
                 <Bookmark entity={entity} />
                 {comments}                

@@ -114,6 +114,13 @@ class StatusUpdateCard extends React.Component {
             </div>
         )
 
+        const actions = (
+            <div className="card-topic__actions">
+                <Bookmark entity={entity} />
+                <Likes entity={entity} />
+            </div>
+        )
+
         let content, editButton
         if (this.state.isEditing) {
             content = (
@@ -150,9 +157,7 @@ class StatusUpdateCard extends React.Component {
                     </div>
                 </div>
 
-                <div className="card-blog-post__actions">
-                    <Likes entity={entity} />
-                </div>
+                {actions}
             </div>
        )
     }
@@ -171,6 +176,8 @@ const Mutation = gql`
                     accessId
                     writeAccessId
                     source
+                    isBookmarked
+                    canBookmark
                     isFeatured
                     isRecommended
                     featured {
