@@ -20,6 +20,7 @@ export default class Card extends React.Component {
                 <div></div>
             )
         }
+console.log(this.props.entity);
 
         switch (this.props.entity.subtype) {
             case "news":
@@ -30,7 +31,7 @@ export default class Card extends React.Component {
                 return this.renderDiscussion()
             case "question":
                 return this.renderQuestion()
-            case "update":
+            case "thewire":
                 return this.renderUpdate()
             default:
                 return (

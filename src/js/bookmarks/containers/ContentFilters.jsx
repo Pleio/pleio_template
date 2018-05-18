@@ -2,12 +2,12 @@ import React from "react"
 import Select from "../../core/components/Select"
 
 const subtypeOptions = {
+    all: "Alle soorten",
     blog: "Blog",
     news: "Nieuws",
-    question: "Vragen",
     discussion: "Discussies",
-    update: "Updates",
-    all: "Alle soorten"
+    question: "Vragen",
+    thewire: "Updates"
 }
 
 export default class ContentFilters extends React.Component {
