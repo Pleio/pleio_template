@@ -1192,7 +1192,7 @@ class Mutations {
         $group->introduction = $input["introduction"];
         $group->plugins = array_unique($input["plugins"]);
         $group->tags = filter_tags($input["tags"]);
-        $group->access_id = get_default_access();
+        $group->access_id = ACCESS_PUBLIC;
 
         if (elgg_is_admin_logged_in() && isset($input["isFeatured"])) {
             $group->isFeatured = $input["isFeatured"];
@@ -1256,6 +1256,7 @@ class Mutations {
 
         $group->name = $input["name"];
         $group->membership = $input["isClosed"] ? ACCESS_PRIVATE : ACCESS_PUBLIC;
+        $group->access_id = ACCESS_PUBLIC;
         $group->description = $input["description"];
         $group->richDescription = $input["richDescription"];
         $group->introduction = $input["introduction"];
