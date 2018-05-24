@@ -145,8 +145,12 @@ class InfiniteList extends React.Component {
                 )
             } else {
                 return (
-                    <div ref="infiniteScroll">
-                        Er zijn geen items in deze categorie.
+                    <div className={getAttribute("containerClassName", this.props, "container")} ref="infiniteScroll">
+                        <div className={getAttribute("rowClassName", this.props, "row fill")}>
+                            <div className="col-sm-12">
+                                Er zijn geen items in deze categorie.
+                            </div>
+                        </div>
                     </div>
                 )
             }
@@ -183,7 +187,7 @@ class InfiniteList extends React.Component {
             )
         } else {
             return (
-                <div ref="infiniteScroll">
+                <div className={getAttribute("containerClassName", this.props, "container")} ref="infiniteScroll">
                     {items}
                     {loading}
                 </div>
