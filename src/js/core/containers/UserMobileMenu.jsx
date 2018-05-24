@@ -18,7 +18,7 @@ class UserMobileMenu extends React.Component {
                         <NavLink to="/search" title="Zoeken" className="mobile-navigation__action ___search" />
                     </li>
                     <li>
-                        <NavLink to="/bookmarks" onClick={this.props.onClick} title="Bewaard" className="mobile-navigation__action ___bookmarks" activeClassName="___is_active" />
+                        <NavLink to="/saved" onClick={this.props.onClick} title="Bewaard" className="mobile-navigation__action ___bookmarks" activeClassName="___is_active" />
                     </li>
                     <li>
                         <NavLink to={"/profile/" + this.props.viewer.user.username} onClick={this.props.onClick} title="Account" className="mobile-navigation__action ___account" activeClassName="___is_active">

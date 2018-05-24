@@ -28,7 +28,7 @@ export default class Routes extends React.Component {
                         <Route exact path="/pages/privacy" component={Privacy} />
                         <Route exact path="/pages/terms" component={Terms} />
                         <Route exact path="/pages/contact" component={Contact} />
-                        <Route exact path="/bookmarks" component={BookmarksList} />
+                        <Route exact path="/saved" component={BookmarksList} />
                         <Route exact path="/trending/:tag" component={TrendingList} />
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/logout" component={Logout} />

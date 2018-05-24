@@ -46,7 +46,7 @@ class UserMenu extends React.Component {
 
         if (viewer.loggedIn) {
             const userMenu = [
-                [ { title: "Bewaard", link: "/bookmarks", className: "___bookmarks" }, ],
+                [ { title: "Bewaard", link: "/saved", className: "___bookmarks" }, ],
                 [
                     { title: "Profiel", link: `/profile/${viewer.user.username}` },
                     { title: "Meldingen", link: `/profile/${viewer.user.username}/interests` },
