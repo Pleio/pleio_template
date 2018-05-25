@@ -185,7 +185,9 @@ class ProfileField extends React.Component {
                         {fillNow}
                         {field}
                     </span>
-                    {dropdownButton}
+                    {!window.__SETTINGS__.site.isClosed &&
+                        dropdownButton
+                    }
                 </div>
             </li>
         )
@@ -360,7 +362,9 @@ class ProfileField extends React.Component {
                             <span className="editable-field">{value}</span>
                             {fillNow}
                         </span>
-                        {dropdownButton}
+                        {!window.__SETTINGS__.site.isClosed &&
+                            dropdownButton
+                        }
                     </li>
                 </ul>
                 {field}
