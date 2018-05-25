@@ -11,9 +11,7 @@ import Card from "./components/Card"
 class QuestionCard extends React.Component {
     render() {
         return (
-            <div className="col-lg-6">
-                <Card {...this.props} />
-            </div>
+            <Card {...this.props} />
         )
     }
 }
@@ -56,7 +54,7 @@ class List extends React.Component {
                     <ContentFilters page="questions" onClickAdd={this.onClickAdd} onChange={this.onChangeFilter} value={this.state.tags} />
                 </ContentHeader>
                 <section className="section ___grey ___grow">
-                    <QuestionList childClass={QuestionCard} subtype="question" offset={0} limit={20} tags={this.state.tags} hasRows />
+                    <QuestionList childClass={QuestionCard} subtype="question" offset={0} limit={20} tags={this.state.tags} />
                 </section>
             </div>
         )
