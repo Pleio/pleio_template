@@ -99,18 +99,6 @@ class Profile extends React.Component {
                                                 {contactData}
                                             </ul>
                                         </div>
-                                        <div className="col-sm-12 col-lg-4">
-                                            <ul className="card-profile__social">
-                                                <li>
-                                                    <label>Reacties geplaatst:</label>
-                                                    <span>{stats.answers || 0}</span>
-                                                </li>
-                                                <li>
-                                                    <label>Likes gegeven:</label>
-                                                    <span>{stats.upvotes || 0}</span>
-                                                </li>
-                                            </ul>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
