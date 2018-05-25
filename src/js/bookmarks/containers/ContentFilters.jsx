@@ -7,8 +7,8 @@ const subtypeOptions = {
     news: "Nieuws",
     discussion: "Discussies",
     question: "Vragen",
-    thewire: "Updates"
-    // wiki: "Wiki's"
+    thewire: "Updates",
+    wiki: "Wiki's"
 }
 
 export default class ContentFilters extends React.Component {

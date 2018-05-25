@@ -15,6 +15,7 @@ const Query = gql`
                     subtype
                     url
                     excerpt
+                    description
                     votes
                     hasVoted
                     isBookmarked

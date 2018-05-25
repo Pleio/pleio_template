@@ -8,6 +8,7 @@ import DiscussionCard from "../../discussions/components/Card"
 import BlogCard from "../../blog/components/Card"
 import QuestionCard from '../../questions/components/Card'
 import StatusUpdateCard from '../../group/components/StatusUpdateCard'
+import WikiCard from "../../wiki/components/Card"
 
 export default class Card extends React.Component {
     constructor(props) {
@@ -15,62 +16,43 @@ export default class Card extends React.Component {
     }
 
     render() {
-        if (!this.props.entity) {
+        const { entity } = this.props
+
+        if (!entity) {
             return (
-                <div></div>
+                <div />
             )
         }
 
-        switch (this.props.entity.subtype) {
+        switch (entity.subtype) {
             case "news":
-                return this.renderNews()
+                return (
+                    <NewsCard entity={entity} inActivityFeed={true} />
+                )
             case "blog":
-                return this.renderBlog()
+                return (
+                    <BlogCard entity={entity} inActivityFeed={true} />
+                )
             case "discussion":
-                return this.renderDiscussion()
+                return (
+                    <DiscussionCard entity={entity} inActivityFeed={true} />
+                )
             case "question":
-                return this.renderQuestion()
+                return (
+                    <QuestionCard entity={entity} inActivityFeed={true} />
+                )
             case "thewire":
-                return this.renderUpdate()
+                return (
+                    <StatusUpdateCard entity={entity} inActivityFeed={true} />
+                )
+            case "wiki":
+                return (
+                    <WikiCard entity={entity} inActivityFeed={true} />
+                )
             default:
                 return (
-                    <div></div>
+                    <div />
                 )
         }
-    }
-
-    @autobind
-    renderNews() {
-        return (
-            <NewsCard entity={this.props.entity} inActivityFeed={true} />
-        )
-    }
-
-    @autobind
-    renderBlog() {
-        return (
-            <BlogCard entity={this.props.entity} inActivityFeed={true} />
-        )
-    }
-
-    @autobind
-    renderDiscussion() {
-        return (
-            <DiscussionCard entity={this.props.entity} inActivityFeed={true} />
-        )
-    }
-
-    @autobind
-    renderQuestion() {
-        return (
-            <QuestionCard entity={this.props.entity} inActivityFeed={true} />
-        )
-    }
-
-    @autobind
-    renderUpdate() {
-        return (
-            <StatusUpdateCard entity={this.props.entity} inActivityFeed={true} />
-        )
     }
 }
