@@ -698,6 +698,7 @@ class Helpers {
                 "startPage" => elgg_get_plugin_setting("startpage", "pleio_template") ?: "activity",
                 "startPageCms" => elgg_get_plugin_setting("startpage_cms", "pleio_template"),
                 "newsletter" => elgg_get_plugin_setting("newsletter", "pleio_template") === "no" ? false : true,
+                "isClosed" => elgg_get_config("walled_garden") ? true : false,
             ],
             "odtEnabled" => elgg_is_active_plugin("odt_editor") ? true : false,
             "externalLogin" => elgg_is_active_plugin("pleio") ? true : false,
