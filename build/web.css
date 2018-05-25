@@ -6415,26 +6415,11 @@ body.___rijkshuisstijl .card-tile__picture {
 }
 @media (min-width: 680px) {
   .card-topic__actions {
-    -ms-flex-direction: column;
-        flex-direction: column;
-    width: 15rem;
-  }
-  .card-topic.___feed .card-topic__actions {
-    -ms-flex-direction: row;
-        flex-direction: row;
-    -ms-flex-pack: justify;
-        justify-content: space-between;
-    width: auto;
     margin: 2.5rem 0 0 0;
   }
 }
-@media (min-width: 1024px) {
-  .card-topic__actions {
-    width: 20rem;
-  }
-}
 @media (max-width: 679px) {
-  .card-topic.___feed .card-topic__actions {
+  .card-topic__actions {
     margin: 1.5rem 0 0 0;
   }
 }
@@ -13758,9 +13743,6 @@ body.___rijkshuisstijl .navigation-search-results {
 .cms-block-filled .content {
   margin: 0;
 }
-.cms-block-filled .content {
-  padding: 1.4rem 1.6rem;
-}
 .cms-block.___add {
   height: 30rem;
   background-color: transparent;
@@ -13784,9 +13766,6 @@ body.___rijkshuisstijl .navigation-search-results {
 }
 .cms-block.___add:hover {
   background-color: #FAFAFA;
-}
-.cms-block-editing {
-  padding: 2rem 3rem;
 }
 .cms-block__buttons {
   display: -ms-flexbox;
