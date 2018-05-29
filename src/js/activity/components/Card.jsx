@@ -6,6 +6,7 @@ import NewsCard from "../../news/components/Card"
 import BlogCard from "../../blog/components/Card"
 import DiscussionCard from "../../discussions/components/Card"
 import QuestionCard from "../../questions/components/Card"
+import EventCard from "../../events/components/Card"
 import StatusUpdateCard from "../../group/components/StatusUpdateCard"
 
 export default class Card extends React.Component {

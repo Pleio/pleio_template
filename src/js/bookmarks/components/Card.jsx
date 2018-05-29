@@ -7,6 +7,7 @@ import NewsCard from "../../news/components/Card"
 import DiscussionCard from "../../discussions/components/Card"
 import BlogCard from "../../blog/components/Card"
 import QuestionCard from '../../questions/components/Card'
+import EventCard from '../../events/components/Card'
 import StatusUpdateCard from '../../group/components/StatusUpdateCard'
 import WikiCard from "../../wiki/components/Card"
 
@@ -40,6 +41,10 @@ export default class Card extends React.Component {
             case "question":
                 return (
                     <QuestionCard entity={entity} inActivityFeed={true} />
+                )
+            case "event":
+                return (
+                    <EventCard entity={entity} inActivityFeed={true} />
                 )
             case "thewire":
                 return (

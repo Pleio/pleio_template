@@ -16,6 +16,8 @@ const Query = gql`
                     url
                     excerpt
                     description
+                    startDate
+                    endDate
                     votes
                     hasVoted
                     isBookmarked

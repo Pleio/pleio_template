@@ -7,6 +7,7 @@ const subtypeOptions = {
     news: "Nieuws",
     discussion: "Discussies",
     question: "Vragen",
+    event: "Agenda-items",
     thewire: "Updates",
     wiki: "Wiki's"
 }

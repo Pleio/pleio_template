@@ -1454,7 +1454,7 @@ class Resolver {
                 "order_by" => "r.id DESC"
             ];
 
-            if ($subtype && in_array($subtype, ["news", "question", "blog", "discussion", "thewire", "wiki"])) {
+            if ($subtype && in_array($subtype, ["news", "question", "blog", "discussion", "thewire", "wiki", "event"])) {
                 $options["type"] = "object";
                 $options["subtype"] = $subtype;
             }
